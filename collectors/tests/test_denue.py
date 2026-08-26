@@ -1,4 +1,5 @@
 import json
+import sys
 from pathlib import Path
 
 import httpx
@@ -46,3 +47,16 @@ def test_denue_client_rejects_invalid_radius():
         assert "5000" in str(error)
     else:
         raise AssertionError("expected invalid radius to fail")
+
+
+def test_denue_cli_reports_missing_token_without_traceback(monkeypatch, capsys, tmp_path):
+    from pruevia_collectors import cli
+
+    monkeypatch.delenv("DENUE_API_TOKEN", raising=False)
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        ["pruevia-denue", "--latitude", "19.04", "--longitude", "-98.20", "--artifact-root", str(tmp_path)],
+    )
+    assert cli.main() == 2
+    assert '"status": "blocked"' in capsys.readouterr().out

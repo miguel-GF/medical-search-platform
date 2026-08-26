@@ -20,8 +20,12 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main() -> int:
     args = build_parser().parse_args()
-    query = DenueQuery(args.condition, args.latitude, args.longitude, args.radius_meters)
-    adapter = DenueAdapter(DenueClient(), [query])
+    try:
+        query = DenueQuery(args.condition, args.latitude, args.longitude, args.radius_meters)
+        adapter = DenueAdapter(DenueClient(), [query])
+    except ValueError as error:
+        print(json.dumps({"status": "blocked", "error": str(error)}, ensure_ascii=False, indent=2))
+        return 2
     summary = CollectorRunner(args.artifact_root).run(adapter)
     print(json.dumps(summary.__dict__, ensure_ascii=False, indent=2))
     return 0 if summary.status == "succeeded" else 2
