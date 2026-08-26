@@ -15,6 +15,7 @@ dependencies = [
 [project.scripts]
 pruevia-denue = "pruevia_collectors.cli:main"
 pruevia-chopo = "pruevia_collectors.cli_chopo:main"
+pruevia-ruiz = "pruevia_collectors.cli_ruiz:main"
 pruevia-publish = "pruevia_collectors.cli_publish:main"
 
 [project.optional-dependencies]

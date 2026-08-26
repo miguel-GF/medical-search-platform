@@ -1,0 +1,45 @@
+{
+  "home": {
+    "departments": [
+      {"id": 1, "title": "ANÁLISIS CLÍNICOS", "url": "analisis-clinicos"},
+      {"id": 20, "title": "CARDIOLOGÍA", "url": "cardiologia"}
+    ]
+  },
+  "departments": {
+    "analisis-clinicos": [
+      {
+        "id": 6146,
+        "title": "BIOMETRÍA HEMÁTICA",
+        "url": "biometria-hematica",
+        "synonymous": "BH01",
+        "price_list": "250.00",
+        "blue_card": "200",
+        "gold_card": null,
+        "price_promotion": "",
+        "prepaid_price": null,
+        "active": 1,
+        "zone_id": 4,
+        "updated_at": "2026-08-25 10:00:00"
+      },
+      {
+        "id": 6147,
+        "title": "DESACTIVADO",
+        "url": "desactivado",
+        "price_list": "100",
+        "active": 0,
+        "zone_id": 4
+      }
+    ],
+    "cardiologia": [
+      {
+        "id": 701,
+        "title": "ELECTROCARDIOGRAMA",
+        "url": "electrocardiograma",
+        "synonymous": "ECG01",
+        "price_list": "300.5",
+        "active": 1,
+        "zone_id": 4
+      }
+    ]
+  }
+}
