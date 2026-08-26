@@ -1,0 +1,77 @@
+# Pruevia V1 Table Catalog
+
+The executable foundation currently creates **45 tables**. That is larger than the early ~30-table estimate because the physical review kept provenance, data quality, scope inheritance, geographic integrity and audit concerns separate instead of hiding them in JSON.
+
+## `geo` (1)
+
+- `areas` — hierarchical official/commercial geography with PostGIS support.
+
+## `core` (10)
+
+- `organizations` — legal/operator entities.
+- `provider_brands` — public-facing provider brands.
+- `provider_brand_organizations` — ownership/operator/franchise relationships.
+- `provider_locations` — physical sites.
+- `provider_location_hours` — regular opening windows.
+- `provider_location_closures` — exceptional closures.
+- `provider_markets` — provider commercial/pricing regions.
+- `provider_market_locations` — market/location membership.
+- `provider_external_ids` — DENUE/other brand identifiers.
+- `location_external_ids` — DENUE/other location identifiers.
+
+## `catalog` (8)
+
+- `domains`
+- `items`
+- `item_names`
+- `item_aliases`
+- `categories`
+- `item_categories`
+- `item_identifiers`
+- `item_relations`
+
+## `health` (7)
+
+- `anatomical_sites`
+- `services`
+- `service_anatomy`
+- `specimen_types`
+- `service_specimens`
+- `service_components`
+- `service_preparations`
+
+## `supply` (5)
+
+- `offers`
+- `offer_scopes`
+- `price_versions`
+- `offer_links`
+- `availability_current`
+
+## `ingest` (10)
+
+- `sources`
+- `source_endpoints`
+- `crawl_runs`
+- `raw_documents`
+- `raw_records`
+- `source_observations`
+- `normalization_runs`
+- `normalization_candidates`
+- `normalization_decisions`
+- `data_quality_issues`
+
+## `identity` (1)
+
+- `user_profiles`
+
+## `audit` (1)
+
+- `events`
+
+## `ops` (2)
+
+- `system_alerts`
+- `feature_flags`
+
+The `analytics`, `marketplace`, `sensitive`, and `billing` schemas are reserved but intentionally empty until those phases begin.

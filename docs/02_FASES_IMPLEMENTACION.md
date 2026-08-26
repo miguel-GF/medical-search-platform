@@ -1,0 +1,849 @@
+# Pruevia — Plan de implementación por fases
+
+**Versión:** 1.0  
+**Fecha:** 22 de agosto de 2026  
+**Estado general:** arquitectura aprobada; **base de datos V1 ya iniciada y generada como migraciones ejecutables**, pendiente de despliegue/prueba física en Supabase DEV.
+
+---
+
+# Convención de estado
+
+- ✅ Terminado / decisión cerrada
+- 🟢 En curso / siguiente trabajo inmediato
+- ⏳ Pendiente
+- 🧪 Gate de validación
+- 🚫 Deliberadamente fuera de alcance por ahora
+
+---
+
+# Fase -1 — Descubrimiento del problema
+
+**Estado:** ✅
+
+Objetivos completados:
+
+- identificar problema real de estudios médicos;
+- investigar fuentes públicas;
+- revisar cadenas y procedimientos;
+- validar que existen precios/catálogos recuperables;
+- descubrir DENUE como fuente de proveedores pequeños;
+- revisar competidores;
+- descartar comparador simple como diferenciador suficiente;
+- definir B2C + B2B;
+- explorar monetización.
+
+Resultado:
+
+> Pruevia no será un simple comparador. Será un motor de interpretación/normalización + descubrimiento/comparación + marketplace/inteligencia de demanda futura.
+
+---
+
+# Fase 0 — Arquitectura de producto y software
+
+**Estado:** ✅
+
+Definido:
+
+- Flutter Android/iOS/Web;
+- Nuxt 3 SEO;
+- Vue 3 + Element Plus admin/provider;
+- Cloudflare Workers + TypeScript API;
+- PostgreSQL/Supabase;
+- Cloudflare R2;
+- Python collectors;
+- GitHub CI/CD;
+- reusable core + health domain;
+- Big-Data-ready/no Big-Data-now;
+- dominio único + subdominios.
+
+Entregable:
+
+- `01_ARQUITECTURA_CANONICA.md`
+
+---
+
+# Fase 1 — Base de datos V1
+
+**Estado:** 🟢 INICIADA / diseño y SQL generados
+
+## Ya realizado ✅
+
+- modelo conceptual completo;
+- separación por schemas;
+- 45 tablas V1;
+- migraciones PostgreSQL/Supabase;
+- PostGIS;
+- pg_trgm;
+- provenance;
+- RAW ingest;
+- normalización;
+- scope brand/market/location;
+- precio versionado;
+- función de resolución de precios;
+- integridad para mercados/sucursales;
+- package component cycle guard;
+- audit/ops básicos;
+- seeds;
+- tests SQL;
+- README y documentación.
+
+Archivo:
+
+- `PRUEVIA_DB_V1.zip`
+
+## Falta ⏳
+
+1. crear Supabase DEV;
+2. ejecutar todas las migraciones desde cero;
+3. ejecutar tests;
+4. resolver incompatibilidades reales si aparecen;
+5. repetir `db reset` hasta obtener ejecución limpia;
+6. marcar tag Git `db-v1.0.0`.
+
+## Criterio de salida 🧪
+
+```text
+fresh database
+↓
+all migrations
+↓
+seed
+↓
+tests
+↓
+0 errors
+```
+
+No avanzar con ingest masivo hasta tener esta fase verde.
+
+---
+
+# Fase 2 — Fundación de repositorio e infraestructura DEV
+
+**Estado:** ⏳ siguiente inmediata junto con Fase 1
+
+## Entregables
+
+Repositorio privado con:
+
+```text
+/apps/api
+/apps/admin
+/apps/provider
+/apps/patient
+/apps/web
+/collectors
+/database
+/docs
+/packages
+```
+
+Infra DEV:
+
+- Cloudflare account/project;
+- Worker DEV;
+- R2 buckets DEV;
+- Supabase DEV;
+- GitHub secrets;
+- CI/CD API;
+- CI de migraciones/tests;
+- backup automático inicial.
+
+## Buckets previstos
+
+```text
+raw-dev
+transient-dev
+provider-docs-dev
+backups-dev
+```
+
+## Criterio de salida 🧪
+
+Un push a `develop` debe:
+
+```text
+lint
+→ tests
+→ build
+→ deploy Worker DEV
+```
+
+Y la DB DEV debe poder reconstruirse por migraciones.
+
+---
+
+# Fase 3 — Collector DENUE / discovery de proveedores
+
+**Estado:** ⏳
+
+Objetivo:
+
+Crear el universo inicial de proveedores/sucursales en Puebla.
+
+## Construir
+
+- cliente DENUE;
+- mapeo actividad económica;
+- deduplicación inicial;
+- `provider_external_ids`;
+- `location_external_ids`;
+- ingest RAW;
+- observations;
+- publisher controlado.
+
+## Resultado esperado
+
+```text
+Puebla
+→ providers/locations descubiertos
+→ coordenadas
+→ datos oficiales básicos
+```
+
+## Criterio de salida 🧪
+
+- run reproducible;
+- no duplicados obvios;
+- provenance disponible;
+- registros aparecen en admin/raw.
+
+---
+
+# Fase 4 — Collectors de proveedores reales
+
+**Estado:** ⏳
+
+Orden recomendado:
+
+1. Chopo;
+2. Ruiz;
+3. MAC;
+4. Salud Digna;
+5. siguientes según cobertura.
+
+Cada adapter debe implementar conceptualmente:
+
+```text
+discover()
+fetch()
+parse()
+validate()
+observe()
+publish_candidate()
+```
+
+## Crawler safety obligatorio
+
+Si el volumen cae por encima del umbral:
+
+```text
+QUARANTINE
+```
+
+No publicar deletes.
+
+## Criterio de salida 🧪
+
+Para cada fuente:
+
+- catálogo recuperado;
+- URLs/evidencia;
+- precios cuando existan;
+- branches/markets;
+- `first_seen_at` / `last_seen_at`;
+- repeat run idempotente.
+
+---
+
+# Fase 5 — Normalization Engine V1
+
+**Estado:** ⏳
+
+Orden:
+
+```text
+normalized text
+→ exact
+→ aliases
+→ provider aliases
+→ pg_trgm
+→ terminology
+→ rules
+→ manual review
+```
+
+IA todavía no es requisito principal.
+
+## Construir
+
+- servicio de normalización;
+- scoring;
+- candidatos;
+- decisiones;
+- alias creation workflow;
+- ambigüedad explícita.
+
+## Conjunto inicial de prueba
+
+100–200 estudios/procedimientos reales y variados:
+
+- laboratorio;
+- imagen;
+- neurología;
+- cardiología;
+- otros especializados.
+
+## Criterio de salida 🧪
+
+Medir:
+
+- exact/high confidence rate;
+- manual review rate;
+- ambiguous rate;
+- false match rate.
+
+No aceptar falsos equivalentes médicos por presión de cobertura.
+
+---
+
+# Fase 6 — Admin interno V1
+
+**Estado:** ⏳
+
+Tecnología:
+
+```text
+Vue 3 + TypeScript + Element Plus
+```
+
+Pantallas mínimas:
+
+1. dashboard técnico;
+2. providers;
+3. locations;
+4. offers;
+5. prices;
+6. crawl runs;
+7. raw evidence;
+8. normalization queue;
+9. data quality issues;
+10. alerts.
+
+## Criterio de salida 🧪
+
+Un operador debe poder:
+
+- revisar un mapping;
+- corregirlo;
+- aprobar alias;
+- ver fuente;
+- detectar crawler fallido;
+- revisar precio y evidencia;
+
+sin tocar SQL manualmente.
+
+---
+
+# Fase 7 — Search API V1
+
+**Estado:** ⏳
+
+Endpoints iniciales:
+
+```text
+GET /api/v1/search
+GET /api/v1/services/{id}
+GET /api/v1/services/{id}/providers
+GET /api/v1/providers/{id}
+GET /api/v1/providers/{id}/services
+```
+
+## Primer milestone técnico 🧪
+
+Request:
+
+```text
+/search?q=electromiografia+pierrnas&lat=...&lng=...
+```
+
+Response:
+
+- canonical service;
+- confidence;
+- providers;
+- branch;
+- distance;
+- price(s);
+- source/freshness;
+- contact URL.
+
+Todo con información real de Puebla.
+
+---
+
+# Gate A — Viabilidad del Data Engine
+
+**Estado:** ⏳
+
+Antes de Flutter completo, evaluar:
+
+- cobertura real;
+- 2+/3+ proveedores por servicio;
+- precios vigentes;
+- zero-result rate;
+- precisión de normalización;
+- frecuencia de rotura de fuentes;
+- costo operacional.
+
+### Continuar si
+
+El sistema resuelve de forma útil una masa suficiente de búsquedas reales.
+
+### Detener/replantear si
+
+La cobertura depende demasiado de trabajo manual o los mappings son clínicamente inseguros.
+
+---
+
+# Fase 8 — Patient MVP: Flutter Web
+
+**Estado:** ⏳
+
+Primero web para validar sin esperar tiendas.
+
+URL futura:
+
+```text
+app.marca.com
+```
+
+Pantallas:
+
+1. inicio;
+2. texto de búsqueda;
+3. resultados normalizados;
+4. providers;
+5. compare;
+6. provider detail;
+7. map;
+8. website/phone/WhatsApp.
+
+No login obligatorio para la búsqueda básica.
+
+## Criterio de salida 🧪
+
+Una persona externa debe resolver una búsqueda sin ayuda del equipo.
+
+---
+
+# Fase 9 — OCR / orden médica
+
+**Estado:** ⏳
+
+Después de estabilizar texto.
+
+Flow:
+
+```text
+camera/file
+→ OCR local cuando sea posible
+→ extracted text
+→ normalization
+→ detected items
+```
+
+Fallback visual/IA solo cuando sea necesario.
+
+## Criterio de salida 🧪
+
+- detectar varios estudios;
+- marcar ambigüedades;
+- no almacenar permanentemente imagen por defecto.
+
+---
+
+# Fase 10 — Optimización multi-estudio
+
+**Estado:** ⏳
+
+Resolver una orden completa.
+
+Opciones:
+
+- menor costo;
+- menos establecimientos;
+- más cercano;
+- todo en uno;
+- balance costo/distancia.
+
+Esto requerirá algoritmo de combinación y reglas sobre compatibilidad de ofertas.
+
+---
+
+# Fase 11 — Web pública SEO
+
+**Estado:** ⏳
+
+Tecnología:
+
+```text
+Nuxt 3
+```
+
+Crear páginas únicamente cuando tengan valor real.
+
+Tipos:
+
+- servicio + ciudad;
+- servicio general;
+- provider;
+- location.
+
+## Criterio de salida 🧪
+
+- HTML indexable;
+- sitemap;
+- canonical URLs;
+- metadata;
+- velocidad;
+- CTA a Flutter Web.
+
+No crear SEO programático vacío.
+
+---
+
+# Fase 12 — Provider Claim / Verification
+
+**Estado:** ⏳
+
+Construir:
+
+- memberships;
+- claims;
+- verification workflow;
+- provider documents;
+- roles brand/region/location.
+
+Perfil gratuito puede:
+
+- corregir información;
+- publicar catálogo;
+- precios;
+- horarios;
+- contacto;
+- availability básica.
+
+## Criterio de salida 🧪
+
+Primer proveedor externo reclama su perfil y actualiza datos sin intervención SQL.
+
+---
+
+# Fase 13 — Analytics B2B V1
+
+**Estado:** ⏳
+
+Agregar eventos:
+
+- search;
+- impression;
+- provider_view;
+- click;
+- WhatsApp;
+- phone;
+- compare.
+
+Tablas previstas:
+
+- search requests;
+- search items;
+- impressions;
+- engagement events;
+- daily provider metrics;
+- daily demand metrics.
+
+## Dashboard provider
+
+Mostrar:
+
+- impresiones;
+- visitas;
+- contactos;
+- demanda por servicio;
+- servicios buscados no publicados;
+- posición de precios cuando sea confiable.
+
+## Criterio de salida 🧪
+
+Poder decir a un proveedor con datos reales:
+
+> “X personas buscaron esto alrededor de tu sucursal y tú no apareces.”
+
+---
+
+# Fase 14 — Leads
+
+**Estado:** ⏳
+
+Introducir flujo atribuible:
+
+```text
+usuario
+→ solicitar contacto
+→ lead_id
+→ provider
+```
+
+Separar PII de entidad operativa.
+
+Consentimiento y retention definidos.
+
+---
+
+# Fase 15 — Reservas
+
+**Estado:** ⏳
+
+Crear:
+
+- appointments;
+- status history;
+- idempotency;
+- attribution;
+- external booking references;
+- webhooks futuros.
+
+## Criterio de salida 🧪
+
+Una reserva creada desde Pruevia puede atribuirse de extremo a extremo.
+
+---
+
+# Fase 16 — PRO beta
+
+**Estado:** ⏳
+
+Primeros proveedores:
+
+```text
+Founding Provider
+PRO gratuito temporal
+```
+
+Objetivo:
+
+- demostrar valor;
+- obtener feedback;
+- medir demanda;
+- validar disposición de pago.
+
+No cobrar antes de que el proveedor vea actividad suficiente.
+
+---
+
+# Fase 17 — Monetización
+
+**Estado:** ⏳
+
+Opciones a validar, no asumir:
+
+### SaaS PRO
+
+- analytics;
+- demanda;
+- opportunities;
+- reservations;
+- multi-location;
+- herramientas.
+
+### Performance
+
+Lead/reserva atribuible bajo modelo jurídico/comercial validado.
+
+### Sponsored
+
+Claramente etiquetado.
+
+El ranking orgánico no se corrompe por pago.
+
+### Enterprise futuro
+
+- API;
+- aseguradoras;
+- empresas;
+- redes médicas;
+- intelligence.
+
+---
+
+# Fase 18 — Android / iOS stores
+
+**Estado:** ⏳
+
+Una vez validado Flutter Web:
+
+- Android;
+- iOS;
+- deep links;
+- universal/app links;
+- store compliance.
+
+Mismo codebase paciente.
+
+---
+
+# Fase 19 — Expansión geográfica
+
+**Estado:** ⏳
+
+Orden tentativo después de Puebla según datos/mercado:
+
+- Querétaro;
+- CDMX;
+- Guadalajara;
+- Monterrey;
+- otras.
+
+No se crea código especial por ciudad.
+
+Proceso:
+
+```text
+geo
+→ DENUE/discovery
+→ provider matching
+→ locations
+→ collectors
+→ normalize
+→ publish
+```
+
+---
+
+# Fase 20 — Big Data / Data Platform
+
+**Estado:** 🚫 no ahora / preparado
+
+Trigger para evaluarla:
+
+- 100M+ eventos;
+- Postgres presionado por analytics;
+- TBs de histórico;
+- enterprise analytics;
+- necesidad de near-real-time.
+
+Camino posible:
+
+```text
+events
+→ R2 Parquet
+→ ClickHouse / BigQuery
+```
+
+Solo introducir streaming/Kafka/Spark si las métricas operativas lo justifican.
+
+---
+
+# Orden inmediato de trabajo desde HOY
+
+## Paso 1 — Supabase DEV
+
+Crear proyecto y aplicar `PRUEVIA_DB_V1`.
+
+## Paso 2 — Validar DB
+
+```text
+migrate
+seed
+test
+reset
+test
+```
+
+## Paso 3 — GitHub monorepo
+
+Subir DB como primera pieza versionada.
+
+## Paso 4 — Cloudflare DEV + R2
+
+Preparar API mínima y buckets.
+
+## Paso 5 — DENUE
+
+Primer collector real.
+
+## Paso 6 — Chopo Puebla
+
+Primer proveedor comercial con catálogo/precios.
+
+## Paso 7 — Ruiz Puebla
+
+Segundo proveedor; validar reglas más complejas.
+
+## Paso 8 — Admin mínimo
+
+Visualizar RAW/normalized/crawls.
+
+## Paso 9 — Search API
+
+Primer `/search` real.
+
+---
+
+# Estado del proyecto al 22/08/2026
+
+| Componente | Estado |
+|---|---|
+| Idea/problema | ✅ |
+| Investigación de mercado | ✅ inicial fuerte |
+| Monetización conceptual | ✅ |
+| Arquitectura de software | ✅ |
+| Arquitectura DB | ✅ |
+| **DB V1 SQL** | **✅ generada / 🟢 pendiente deploy físico** |
+| Supabase DEV | ⏳ |
+| Cloudflare DEV | ⏳ |
+| GitHub monorepo | ⏳ |
+| DENUE collector | ⏳ |
+| Chopo collector | ⏳ |
+| Ruiz collector | ⏳ |
+| Admin | ⏳ |
+| API Search | ⏳ |
+| Flutter Web | ⏳ |
+| OCR | ⏳ |
+| Nuxt SEO | ⏳ |
+| Provider portal | ⏳ |
+| Analytics B2B | ⏳ |
+| Marketplace | ⏳ |
+| PRO/Billing | ⏳ |
+| Big Data | 🚫 futuro |
+
+---
+
+# Definition of Done del primer MVP técnico
+
+Pruevia V0 técnica se considera funcional cuando:
+
+1. DB se reconstruye completamente por migraciones;
+2. DENUE + mínimo 2 proveedores comerciales ingieren correctamente;
+3. RAW → observation → canonical funciona;
+4. 100–200 estudios seleccionados están normalizados;
+5. `/search` devuelve proveedores reales;
+6. precio incluye fuente y frescura;
+7. ubicación usa PostGIS;
+8. admin permite corregir mappings;
+9. crawler roto entra a quarantine;
+10. todo está versionado y reproducible.
+
+Solo entonces se acelera la construcción del producto paciente.
+
+---
+
+# Referencias
+
+- `00_CONVERSACION_CANONICA.md`
+- `01_ARQUITECTURA_CANONICA.md`
+- `PRUEVIA_DB_V1.zip`
+- `DB_ARCHITECTURE_V1.md`
+- `DB_TABLE_CATALOG_V1.md`
+

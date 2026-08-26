@@ -1,0 +1,35 @@
+erDiagram
+  GEO_AREAS ||--o{ PROVIDER_LOCATIONS : contains
+  PROVIDER_BRANDS ||--o{ PROVIDER_LOCATIONS : has
+  PROVIDER_BRANDS ||--o{ PROVIDER_MARKETS : segments
+  PROVIDER_MARKETS }o--o{ PROVIDER_LOCATIONS : groups
+  ORGANIZATIONS }o--o{ PROVIDER_BRANDS : operates
+
+  DOMAINS ||--o{ ITEMS : owns
+  ITEMS ||--o{ ITEM_NAMES : named_as
+  ITEMS ||--o{ ITEM_ALIASES : aliased_as
+  ITEMS }o--o{ CATEGORIES : categorized
+  ITEMS ||--o{ ITEM_IDENTIFIERS : mapped_to
+  ITEMS ||--o{ ITEM_RELATIONS : relates
+
+  ITEMS ||--o| HEALTH_SERVICES : health_detail
+  HEALTH_SERVICES }o--o{ ANATOMICAL_SITES : targets
+  HEALTH_SERVICES }o--o{ SPECIMEN_TYPES : uses
+  HEALTH_SERVICES ||--o{ SERVICE_COMPONENTS : contains
+
+  PROVIDER_BRANDS ||--o{ OFFERS : publishes
+  ITEMS ||--o{ OFFERS : canonicalizes
+  OFFERS ||--o{ OFFER_SCOPES : contextualized_by
+  OFFER_SCOPES ||--o{ PRICE_VERSIONS : priced_by
+  OFFER_SCOPES ||--o{ OFFER_LINKS : links
+  OFFER_SCOPES ||--o| AVAILABILITY_CURRENT : availability
+
+  SOURCES ||--o{ SOURCE_ENDPOINTS : exposes
+  SOURCE_ENDPOINTS ||--o{ CRAWL_RUNS : crawled
+  CRAWL_RUNS ||--o{ RAW_DOCUMENTS : stores
+  CRAWL_RUNS ||--o{ RAW_RECORDS : parses
+  RAW_RECORDS ||--o{ SOURCE_OBSERVATIONS : evidences
+  RAW_RECORDS ||--o{ NORMALIZATION_RUNS : normalizes
+  NORMALIZATION_RUNS ||--o{ NORMALIZATION_CANDIDATES : suggests
+  ITEMS ||--o{ NORMALIZATION_CANDIDATES : candidate
+  NORMALIZATION_RUNS ||--o{ NORMALIZATION_DECISIONS : resolved_by
