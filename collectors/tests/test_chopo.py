@@ -60,3 +60,21 @@ def test_chopo_client_reuses_client_and_retries_transient_statuses():
     assert page.page_number == 2
     assert len(fake.calls) == 2
     assert all(call[1]["headers"]["User-Agent"] == "PrueviaCollector/0.1" for call in fake.calls)
+
+
+def test_chopo_client_retries_transport_errors():
+    class FakeClient:
+        def __init__(self):
+            self.calls = 0
+
+        def get(self, url, **kwargs):
+            self.calls += 1
+            if self.calls == 1:
+                raise httpx.ConnectError("temporary connection reset")
+            return httpx.Response(200, text="<html>ok</html>", request=httpx.Request("GET", url))
+
+    fake = FakeClient()
+    client = ChopoClient(client=fake, max_attempts=2, retry_backoff_seconds=0)
+
+    assert client.fetch_page(1).html == "<html>ok</html>"
+    assert fake.calls == 2

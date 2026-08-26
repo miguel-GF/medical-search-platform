@@ -56,8 +56,11 @@ class ChopoClient:
                 response.raise_for_status()
                 response.encoding = "utf-8"
                 return ChopoPage(page_number=page_number, url=str(response.url), html=response.text)
-            except httpx.HTTPStatusError as error:
-                if error.response.status_code not in {429, 500, 502, 503, 504} or attempt == self.max_attempts:
+            except (httpx.HTTPStatusError, httpx.RequestError) as error:
+                if (
+                    isinstance(error, httpx.HTTPStatusError)
+                    and error.response.status_code not in {429, 500, 502, 503, 504}
+                ) or attempt == self.max_attempts:
                     raise
                 time.sleep(self.retry_backoff_seconds * attempt)
 
