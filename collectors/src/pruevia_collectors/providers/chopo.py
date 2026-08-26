@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+import time
 from dataclasses import dataclass
 from decimal import Decimal, ROUND_HALF_UP
 from html.parser import HTMLParser
@@ -28,26 +29,37 @@ class ChopoClient:
         *,
         base_url: str = CHOPO_PUEBLA_URL,
         timeout_seconds: float = 30.0,
+        max_attempts: int = 3,
+        retry_backoff_seconds: float = 1.5,
         client: httpx.Client | None = None,
     ) -> None:
         self.base_url = base_url
         self.timeout_seconds = timeout_seconds
-        self._client = client
+        if max_attempts < 1:
+            raise ValueError("max_attempts must be positive")
+        self.max_attempts = max_attempts
+        self.retry_backoff_seconds = retry_backoff_seconds
+        self._owns_client = client is None
+        self._client = client or httpx.Client(timeout=self.timeout_seconds, follow_redirects=True)
+
+    def close(self) -> None:
+        if self._owns_client:
+            self._client.close()
 
     def fetch_page(self, page_number: int) -> ChopoPage:
         if page_number < 1:
             raise ValueError("Chopo page number must be positive")
         url = self.base_url if page_number == 1 else f"{self.base_url}?p={page_number}"
-        owns_client = self._client is None
-        client = self._client or httpx.Client(timeout=self.timeout_seconds, follow_redirects=True)
-        try:
-            response = client.get(url, headers={"Accept": "text/html", "User-Agent": "PrueviaCollector/0.1"})
-            response.raise_for_status()
-            response.encoding = "utf-8"
-            return ChopoPage(page_number=page_number, url=str(response.url), html=response.text)
-        finally:
-            if owns_client:
-                client.close()
+        for attempt in range(1, self.max_attempts + 1):
+            try:
+                response = self._client.get(url, headers={"Accept": "text/html", "User-Agent": "PrueviaCollector/0.1"})
+                response.raise_for_status()
+                response.encoding = "utf-8"
+                return ChopoPage(page_number=page_number, url=str(response.url), html=response.text)
+            except httpx.HTTPStatusError as error:
+                if error.response.status_code not in {429, 500, 502, 503, 504} or attempt == self.max_attempts:
+                    raise
+                time.sleep(self.retry_backoff_seconds * attempt)
 
 
 class ChopoListingParser(HTMLParser):
@@ -123,15 +135,18 @@ class ChopoAdapter:
         usage_policy_status="review_required",
     )
 
-    def __init__(self, client: ChopoClient, *, max_pages: int = 1) -> None:
+    def __init__(self, client: ChopoClient, *, max_pages: int = 1, page_delay_seconds: float = 0.5) -> None:
         if max_pages < 1:
             raise ValueError("max_pages must be positive")
         self.client = client
         self.max_pages = max_pages
+        self.page_delay_seconds = page_delay_seconds
 
     def collect(self) -> Iterable[SourceRecord]:
         seen: set[str] = set()
         for page_number in range(1, self.max_pages + 1):
+            if page_number > 1 and self.page_delay_seconds:
+                time.sleep(self.page_delay_seconds)
             page = self.client.fetch_page(page_number)
             records = parse_chopo_page(page)
             if not records:

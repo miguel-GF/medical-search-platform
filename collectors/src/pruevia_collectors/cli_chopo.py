@@ -13,7 +13,11 @@ def main() -> int:
     parser.add_argument("--max-pages", type=int, default=1)
     parser.add_argument("--artifact-root", type=Path, default=Path("artifacts"))
     args = parser.parse_args()
-    summary = CollectorRunner(args.artifact_root).run(ChopoAdapter(ChopoClient(), max_pages=args.max_pages))
+    client = ChopoClient()
+    try:
+        summary = CollectorRunner(args.artifact_root).run(ChopoAdapter(client, max_pages=args.max_pages))
+    finally:
+        client.close()
     print(json.dumps(summary.__dict__, ensure_ascii=False, indent=2))
     return 0 if summary.status == "succeeded" else 2
 

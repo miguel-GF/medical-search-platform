@@ -1,6 +1,8 @@
 from pathlib import Path
 
-from pruevia_collectors.providers.chopo import ChopoPage, ChopoListingParser, parse_chopo_page, parse_price_text
+import httpx
+
+from pruevia_collectors.providers.chopo import ChopoClient, ChopoPage, ChopoListingParser, parse_chopo_page, parse_price_text
 
 
 def fixture_page() -> ChopoPage:
@@ -27,3 +29,34 @@ def test_chopo_parser_does_not_capture_search_autocomplete_items():
     parser = ChopoListingParser(page_url="https://www.chopo.com.mx/puebla/estudios")
     parser.feed('<dd><div class="product-name">AUTOCOMPLETE</div></dd>')
     assert parser.finish() == []
+
+
+def test_chopo_client_reuses_client_and_retries_transient_statuses():
+    class FakeClient:
+        def __init__(self):
+            self.calls = []
+            self.responses = [
+                httpx.Response(503, request=httpx.Request("GET", "https://example.test/puebla/estudios?p=2")),
+                httpx.Response(
+                    200,
+                    text="<html>ok</html>",
+                    request=httpx.Request("GET", "https://example.test/puebla/estudios?p=2"),
+                ),
+            ]
+
+        def get(self, url, **kwargs):
+            self.calls.append((url, kwargs))
+            return self.responses.pop(0)
+
+    fake = FakeClient()
+    client = ChopoClient(
+        base_url="https://example.test/puebla/estudios",
+        client=fake,
+        max_attempts=2,
+        retry_backoff_seconds=0,
+    )
+    page = client.fetch_page(2)
+
+    assert page.page_number == 2
+    assert len(fake.calls) == 2
+    assert all(call[1]["headers"]["User-Agent"] == "PrueviaCollector/0.1" for call in fake.calls)
