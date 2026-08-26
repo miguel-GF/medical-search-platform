@@ -136,6 +136,10 @@ def render(fixture: dict, ruiz_artifact: Path, chopo_artifact: Path) -> str:
             f"insert into supply.offer_scopes(offer_id,scope_type,provider_market_id,status) values ({q(offer_id)},'market',{q(market_id)},'active') on conflict do nothing;"
         )
         for price_key, amount in (payload.get("prices") or {}).items():
+            # Provider APIs use zero as a sentinel for an unavailable discount.
+            # It is not a real free diagnostic service and must not reach search.
+            if not isinstance(amount, (int, float)) or isinstance(amount, bool) or int(amount) <= 0:
+                continue
             type_map = {"regular": ("regular", "default"), "online": ("online", "default"), "promotion": ("promo", "default"), "blue_card": ("member", "blue_card"), "gold_card": ("member", "gold_card"), "prepaid": ("other", "prepaid")}
             price_type, db_price_key = type_map.get(price_key, ("other", price_key))
             obs_lookup = f"(select so.id from ingest.source_observations so join ingest.raw_records rr on rr.id=so.raw_record_id where rr.crawl_run_id={q(artifacts[source_key][0]['run_id'])}::uuid and rr.record_hash={q(mapping['record_hash'])} and so.entity_type='price' and so.attribute_name='prices' limit 1)"
