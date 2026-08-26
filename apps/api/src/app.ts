@@ -1,5 +1,5 @@
 import { SupabaseRpcClient } from './supabase.js';
-import type { Env, RpcClient, SearchRow } from './types.js';
+import type { AdminCatalogItem, Env, RpcClient, SearchRow } from './types.js';
 
 interface Dependencies {
   rpc: RpcClient;
@@ -91,6 +91,16 @@ async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClien
   if (request.method === 'GET' && url.pathname === '/api/v1/admin/raw-records') {
     return json(
       await rpc.call('api_admin_raw_records', { p_limit: parseBoundedInt(url.searchParams.get('limit'), 50, 1, 200) }, { admin: true }),
+      200,
+      origin,
+    );
+  }
+  if (request.method === 'GET' && url.pathname === '/api/v1/admin/catalog-items') {
+    return json(
+      await rpc.call<AdminCatalogItem[]>('api_admin_catalog_items', {
+        p_query: url.searchParams.get('q'),
+        p_limit: parseBoundedInt(url.searchParams.get('limit'), 25, 1, 100),
+      }, { admin: true }),
       200,
       origin,
     );

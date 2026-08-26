@@ -74,4 +74,11 @@ describe('Pruevia API', () => {
     expect(allowed.status).toBe(200);
     expect(rpc.call).toHaveBeenCalledWith('api_admin_update_alias', expect.objectContaining({ p_alias: 'BH' }), { admin: true });
   });
+
+  it('forwards the admin catalog lookup', async () => {
+    const rpc = rpcWith([{ item_id: row.service_id, display_name: 'Biometría hemática', service_type: 'lab_test', status: 'active' }]);
+    const response = await createHandler({ rpc })(new Request('https://api.test/api/v1/admin/catalog-items?q=biometria&limit=10', { headers: { authorization: 'Bearer admin-secret' } }), env);
+    expect(response.status).toBe(200);
+    expect(rpc.call).toHaveBeenCalledWith('api_admin_catalog_items', { p_query: 'biometria', p_limit: 10 }, { admin: true });
+  });
 });

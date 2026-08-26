@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
-import { createAdminApi, formatDate, type Dashboard, type NormalizationRow, type RawRecord } from './api';
+import { createAdminApi, formatDate, type CatalogItem, type Dashboard, type NormalizationRow, type RawRecord } from './api';
 
 type Tab = 'overview' | 'queue' | 'records';
 const api = createAdminApi(import.meta.env.VITE_API_URL ?? 'http://localhost:8787', import.meta.env.VITE_ADMIN_TOKEN ?? '');
@@ -13,6 +13,7 @@ const queue = ref<NormalizationRow[]>([]);
 const records = ref<RawRecord[]>([]);
 const selected = ref<NormalizationRow | null>(null);
 const selectedItemId = ref('');
+const catalogItems = ref<CatalogItem[]>([]);
 const alias = ref('');
 const reason = ref('Validación manual del catálogo dorado');
 
@@ -38,14 +39,30 @@ async function refresh() {
 async function switchTab(next: Tab) {
   tab.value = next;
   notice.value = '';
-  if (next === 'queue' && !queue.value.length) queue.value = await api.normalizationQueue();
-  if (next === 'records' && !records.value.length) records.value = await api.rawRecords();
+  try {
+    if (next === 'queue' && !queue.value.length) queue.value = await api.normalizationQueue();
+    if (next === 'records' && !records.value.length) records.value = await api.rawRecords();
+  } catch (cause) {
+    error.value = cause instanceof Error ? cause.message : 'No se pudo cargar la sección';
+  }
 }
 
 function openRow(row: NormalizationRow) {
   selected.value = row;
   alias.value = row.raw_text;
   selectedItemId.value = '';
+  catalogItems.value = [];
+}
+
+async function lookupCatalog() {
+  if (selectedItemId.value.length < 2) { catalogItems.value = []; return; }
+  try { catalogItems.value = await api.catalogItems(selectedItemId.value); }
+  catch (cause) { error.value = cause instanceof Error ? cause.message : 'No se pudo consultar el catálogo'; }
+}
+
+function chooseCatalogItem(itemId: string) {
+  selectedItemId.value = itemId;
+  catalogItems.value = [];
 }
 
 async function resolve() {
@@ -91,6 +108,6 @@ onMounted(refresh);
 
     <main v-else class="panel"><div class="panel-title"><div><p class="eyebrow">AUDITORÍA</p><h2>Raw records recientes</h2></div><span class="muted">{{ records.length }} registros cargados</span></div><div class="table-wrap"><table><thead><tr><th>Fuente</th><th>Tipo</th><th>ID externo</th><th>Parse</th><th>Observado</th><th>Payload</th></tr></thead><tbody><tr v-for="record in records" :key="record.raw_record_id"><td>{{ record.source_name }}</td><td>{{ record.record_type }}</td><td>{{ record.external_record_id ?? '—' }}</td><td><span class="status" :class="record.parse_status">{{ record.parse_status }}</span></td><td>{{ formatDate(record.observed_at) }}</td><td><details><summary>ver JSON</summary><pre>{{ JSON.stringify(record.payload, null, 2) }}</pre></details></td></tr><tr v-if="!records.length"><td colspan="6" class="empty">Sin raw records cargados.</td></tr></tbody></table></div></main>
 
-    <div v-if="selected" class="modal-backdrop" @click.self="selected = null"><section class="modal"><div class="panel-title"><div><p class="eyebrow">RESOLVER</p><h2>Asignar alias</h2></div><button class="close" @click="selected = null">×</button></div><p class="muted">{{ selected.raw_text }} · {{ selected.provider_brand_name ?? 'Proveedor desconocido' }}</p><label>UUID del servicio canónico<input v-model="selectedItemId" placeholder="81aa9f9f-…" /></label><label>Alias aprobado<input v-model="alias" /></label><label>Razón<textarea v-model="reason" rows="3" /></label><div class="modal-actions"><button class="secondary" @click="selected = null">Cancelar</button><button class="primary" :disabled="loading || !selectedItemId || !alias" @click="resolve">{{ loading ? 'Guardando…' : 'Resolver y aprobar' }}</button></div></section></div>
+    <div v-if="selected" class="modal-backdrop" @click.self="selected = null"><section class="modal"><div class="panel-title"><div><p class="eyebrow">RESOLVER</p><h2>Asignar alias</h2></div><button class="close" @click="selected = null">×</button></div><p class="muted">{{ selected.raw_text }} · {{ selected.provider_brand_name ?? 'Proveedor desconocido' }}</p><label>Buscar servicio canónico<input v-model="selectedItemId" placeholder="mastografía, biometría…" @input="lookupCatalog" /></label><div v-if="catalogItems.length" class="catalog-suggestions"><button v-for="item in catalogItems" :key="item.item_id" type="button" @click="chooseCatalogItem(item.item_id)"><strong>{{ item.display_name }}</strong><small>{{ item.item_id }} · {{ item.service_type }}</small></button></div><p v-else-if="selectedItemId.length >= 2" class="hint">Selecciona un servicio de la lista o pega directamente su UUID.</p><label>Alias aprobado<input v-model="alias" /></label><label>Razón<textarea v-model="reason" rows="3" /></label><div class="modal-actions"><button class="secondary" @click="selected = null">Cancelar</button><button class="primary" :disabled="loading || !selectedItemId || !alias" @click="resolve">{{ loading ? 'Guardando…' : 'Resolver y aprobar' }}</button></div></section></div>
   </div>
 </template>

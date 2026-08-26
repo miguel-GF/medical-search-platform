@@ -46,10 +46,18 @@ export interface RawRecord {
   crawl_run_id: string;
 }
 
+export interface CatalogItem {
+  item_id: string;
+  display_name: string;
+  service_type: string;
+  status: string;
+}
+
 export interface AdminApi {
   dashboard(): Promise<Dashboard>;
   normalizationQueue(status?: string): Promise<NormalizationRow[]>;
   rawRecords(): Promise<RawRecord[]>;
+  catalogItems(query: string): Promise<CatalogItem[]>;
   resolveNormalization(id: string, input: { selected_item_id: string; alias: string; provider_brand_id?: string; reason?: string }): Promise<unknown>;
 }
 
@@ -71,6 +79,7 @@ export function createAdminApi(baseUrl: string, token: string, fetcher: typeof f
     dashboard: () => request<Dashboard>('/api/v1/admin/dashboard'),
     normalizationQueue: (status = 'no_match') => request<NormalizationRow[]>(`/api/v1/admin/normalization-queue?status=${encodeURIComponent(status)}&limit=100`),
     rawRecords: () => request<RawRecord[]>('/api/v1/admin/raw-records?limit=100'),
+    catalogItems: (query) => request<CatalogItem[]>(`/api/v1/admin/catalog-items?q=${encodeURIComponent(query)}&limit=25`),
     resolveNormalization: (id, input) => request(`/api/v1/admin/normalization/${id}/resolve`, { method: 'POST', body: JSON.stringify(input) }),
   };
 }

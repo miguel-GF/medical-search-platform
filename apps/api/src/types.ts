@@ -33,3 +33,10 @@ export interface SearchRow {
   currency: string | null;
   price_last_seen_at: string | null;
 }
+
+export interface AdminCatalogItem {
+  item_id: string;
+  display_name: string;
+  service_type: string;
+  status: string;
+}

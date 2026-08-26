@@ -2,7 +2,7 @@
 
 begin;
 create extension if not exists pgtap with schema extensions;
-select extensions.plan(9);
+select extensions.plan(11);
 
 select extensions.has_function(
   'public',
@@ -10,6 +10,7 @@ select extensions.has_function(
   array['text','text','double precision','double precision','uuid','integer'],
   'public.api_search is exposed as a typed RPC'
 );
+select extensions.has_function('public', 'api_admin_catalog_items', array['text','integer'], 'admin catalog lookup RPC exists');
 select extensions.has_function('public', 'api_admin_dashboard', array[]::text[], 'admin dashboard RPC exists');
 select extensions.has_function(
   'public',
@@ -86,6 +87,11 @@ select extensions.is(
   (select count(*)::bigint from catalog.item_aliases where item_id = '00000000-0000-0000-0000-000000000904' and normalized_alias = 'bh api'),
   1::bigint,
   'admin alias update creates approved provider alias'
+);
+select extensions.is(
+  (select count(*)::bigint from public.api_admin_catalog_items('api fixture', 10)),
+  1::bigint,
+  'admin catalog lookup returns the canonical fixture'
 );
 
 select * from extensions.finish();
