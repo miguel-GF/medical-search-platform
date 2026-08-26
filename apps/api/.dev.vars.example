@@ -1,4 +1,5 @@
 SUPABASE_URL="https://<project-ref>.supabase.co"
 SUPABASE_ANON_KEY="<publishable-anon-key>"
 SUPABASE_SERVICE_ROLE_KEY="<server-only-service-role-key>"
+SUPABASE_TIMEOUT_MS="5000"
 ADMIN_TOKEN="<long-random-admin-token>"
