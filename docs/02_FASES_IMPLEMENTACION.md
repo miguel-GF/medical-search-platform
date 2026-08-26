@@ -601,6 +601,12 @@ Consentimiento y retention definidos.
 
 ---
 
+## Estado ejecutado antes de Flutter (26 de agosto de 2026)
+
+Las fases previas a Flutter ya tienen implementacion funcional en DEV: base Supabase enlazada con migraciones 001-074; collectors Chopo y Ruiz con RAW/observaciones/runs publicados; catalogo dorado de 143 servicios y 144 mappings; Admin V1 en `apps/admin`; Search API V1 en `apps/api`; y Gate A remoto con 10/10 aserciones. DENUE queda listo para correr cuando exista `DENUE_API_TOKEN` oficial. Flutter sigue despues de cerrar cobertura y revision clinica.
+
+---
+
 # Fase 15 — Reservas
 
 **Estado:** ⏳
@@ -846,4 +852,3 @@ Solo entonces se acelera la construcción del producto paciente.
 - `PRUEVIA_DB_V1.zip`
 - `DB_ARCHITECTURE_V1.md`
 - `DB_TABLE_CATALOG_V1.md`
-
