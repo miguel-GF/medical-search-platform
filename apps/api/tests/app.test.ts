@@ -54,6 +54,7 @@ describe('Pruevia API', () => {
   it('rejects incomplete coordinates and empty queries', async () => {
     const handler = createHandler({ rpc: rpcWith([]) });
     expect((await handler(new Request('https://api.test/api/v1/search?lat=19'), env)).status).toBe(400);
+    expect((await handler(new Request('https://api.test/api/v1/search?q=biometria&lat=not-a-number&lng=-98.2'), env)).status).toBe(400);
     expect((await handler(new Request('https://api.test/api/v1/search?q='), env)).status).toBe(400);
   });
 
