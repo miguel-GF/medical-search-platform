@@ -1,0 +1,4964 @@
+{
+  "version": "golden-catalog-v1",
+  "generated_from": {
+    "ruiz": "official Laboratorios Ruiz Puebla collector artifact",
+    "chopo": "official Chopo Puebla collector artifact"
+  },
+  "policy": "Exact observed labels are active; no fuzzy medical equivalence is auto-approved.",
+  "brands": {
+    "ruiz_puebla": {
+      "brand_key": "ruiz",
+      "brand_name": "Laboratorios Ruiz",
+      "slug": "laboratorios-ruiz"
+    },
+    "chopo_puebla": {
+      "brand_key": "chopo",
+      "brand_name": "Laboratorio Médico del Chopo",
+      "slug": "laboratorio-medico-del-chopo"
+    }
+  },
+  "items": [
+    {
+      "item_id": "77bf8597-0552-52d0-bb6d-5bfd709668d0",
+      "catalog_key": "ruiz:1",
+      "canonical_name": "1 ANTICUERPO IHQ",
+      "normalized_name": "1 anticuerpo ihq",
+      "item_type": "service",
+      "service_type": "lab_test",
+      "category_code": "laboratory",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "1 ANTICUERPO IHQ",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "98291f78-56fd-5248-b3a2-313a6f6a4391",
+      "catalog_key": "ruiz:4344",
+      "canonical_name": "1,2 ciclohexanodiol en orina",
+      "normalized_name": "1 2 ciclohexanodiol en orina",
+      "item_type": "service",
+      "service_type": "lab_test",
+      "category_code": "laboratory",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "1,2 ciclohexanodiol en orina",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "d2f7e5d1-2a47-500d-8747-aa3c00b9994f",
+      "catalog_key": "ruiz:3239",
+      "canonical_name": "11-DEOXICORTISOL EN SUERO (15)",
+      "normalized_name": "11 deoxicortisol en suero 15",
+      "item_type": "service",
+      "service_type": "lab_test",
+      "category_code": "laboratory",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "11-DEOXICORTISOL EN SUERO (15)",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "e93b24ed-f696-5f49-ab79-e4684aa953a4",
+      "catalog_key": "ruiz:3",
+      "canonical_name": "12 - 15 ANTICUERPOS IHQ",
+      "normalized_name": "12 15 anticuerpos ihq",
+      "item_type": "service",
+      "service_type": "lab_test",
+      "category_code": "laboratory",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "12 - 15 ANTICUERPOS IHQ",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "0ee4eaf1-36d7-5e43-8322-0c2a20c96fd9",
+      "catalog_key": "ruiz:5",
+      "canonical_name": "17 ALFA-HIDROXIPROG.",
+      "normalized_name": "17 alfa hidroxiprog",
+      "item_type": "service",
+      "service_type": "lab_test",
+      "category_code": "laboratory",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "17 ALFA-HIDROXIPROG.",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "9c1dd949-f31a-501c-baa1-b3aea3f01106",
+      "catalog_key": "ruiz:8569",
+      "canonical_name": "17 alfa-hidroxiprogesterona (17-OHP) en lactantes",
+      "normalized_name": "17 alfa hidroxiprogesterona 17 ohp en lactantes",
+      "item_type": "service",
+      "service_type": "lab_test",
+      "category_code": "laboratory",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "17 alfa-hidroxiprogesterona (17-OHP) en lactantes",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "ea7ce7fd-821e-5653-962a-89d065677e17",
+      "catalog_key": "ruiz:8733",
+      "canonical_name": "17 hidroxipregnenolona",
+      "normalized_name": "17 hidroxipregnenolona",
+      "item_type": "service",
+      "service_type": "lab_test",
+      "category_code": "laboratory",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "17 hidroxipregnenolona",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "e2bcba04-a94d-5fa4-abca-9045953431a6",
+      "catalog_key": "ruiz:3643",
+      "canonical_name": "18 Hidroxicorticosterona",
+      "normalized_name": "18 hidroxicorticosterona",
+      "item_type": "service",
+      "service_type": "lab_test",
+      "category_code": "laboratory",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "18 Hidroxicorticosterona",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "07e94698-5772-55fd-b13f-a9cdc71d2a19",
+      "catalog_key": "ruiz:7",
+      "canonical_name": "2 ANTICUERPOS IHQ",
+      "normalized_name": "2 anticuerpos ihq",
+      "item_type": "service",
+      "service_type": "lab_test",
+      "category_code": "laboratory",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "2 ANTICUERPOS IHQ",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "add5e1db-6829-5ff5-b081-cbb02acc7a6a",
+      "catalog_key": "ruiz:7854",
+      "canonical_name": "2,5 Hexanodiona total",
+      "normalized_name": "2 5 hexanodiona total",
+      "item_type": "service",
+      "service_type": "lab_test",
+      "category_code": "laboratory",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "2,5 Hexanodiona total",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "c19f74ad-6654-50a8-86eb-981f1a2c94f2",
+      "catalog_key": "ruiz:3649",
+      "canonical_name": "2- hidroxi-n-metilsuccinimida en orina",
+      "normalized_name": "2 hidroxi n metilsuccinimida en orina",
+      "item_type": "service",
+      "service_type": "lab_test",
+      "category_code": "laboratory",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "2- hidroxi-n-metilsuccinimida en orina",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "891990de-cfa6-5f81-bc08-d6824f417df1",
+      "catalog_key": "ruiz:3645",
+      "canonical_name": "21 Desoxicortisol",
+      "normalized_name": "21 desoxicortisol",
+      "item_type": "service",
+      "service_type": "lab_test",
+      "category_code": "laboratory",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "21 Desoxicortisol",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "61c11231-818a-5637-b5e0-71b57496f167",
+      "catalog_key": "ruiz:9",
+      "canonical_name": "3 ANTICUERPOS IHQ",
+      "normalized_name": "3 anticuerpos ihq",
+      "item_type": "service",
+      "service_type": "lab_test",
+      "category_code": "laboratory",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "3 ANTICUERPOS IHQ",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "1d6473cc-06d8-5ad2-a3b9-904c7e980469",
+      "catalog_key": "ruiz:8465",
+      "canonical_name": "3 Metoxi 4 Hidroxifeniletilenglicol",
+      "normalized_name": "3 metoxi 4 hidroxifeniletilenglicol",
+      "item_type": "service",
+      "service_type": "lab_test",
+      "category_code": "laboratory",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "3 Metoxi 4 Hidroxifeniletilenglicol",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "0ba56d43-bf87-51c1-8ef5-d03c0b1feb5e",
+      "catalog_key": "ruiz:3653",
+      "canonical_name": "3-metoxitiramina en orina",
+      "normalized_name": "3 metoxitiramina en orina",
+      "item_type": "service",
+      "service_type": "lab_test",
+      "category_code": "laboratory",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "3-metoxitiramina en orina",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "18a78c3e-4594-598f-b687-f75dbebca8b5",
+      "catalog_key": "ruiz:11",
+      "canonical_name": "4 ANTICUERPOS IHQ",
+      "normalized_name": "4 anticuerpos ihq",
+      "item_type": "service",
+      "service_type": "lab_test",
+      "category_code": "laboratory",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "4 ANTICUERPOS IHQ",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "9b483f19-474c-5700-9596-b6f1ae86d3de",
+      "catalog_key": "ruiz:4398",
+      "canonical_name": "4 Clorocatecol en orina",
+      "normalized_name": "4 clorocatecol en orina",
+      "item_type": "service",
+      "service_type": "lab_test",
+      "category_code": "laboratory",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "4 Clorocatecol en orina",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "d861f5f3-33aa-5451-83cb-53d87e07110d",
+      "catalog_key": "ruiz:13",
+      "canonical_name": "5 ANTICUERPOS IHQ",
+      "normalized_name": "5 anticuerpos ihq",
+      "item_type": "service",
+      "service_type": "lab_test",
+      "category_code": "laboratory",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "5 ANTICUERPOS IHQ",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "3e080173-1b5f-503c-a324-bd65cf092031",
+      "catalog_key": "ruiz:4590",
+      "canonical_name": "5 alfa dihidrotestosterona",
+      "normalized_name": "5 alfa dihidrotestosterona",
+      "item_type": "service",
+      "service_type": "lab_test",
+      "category_code": "laboratory",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "5 alfa dihidrotestosterona",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "e7ed396a-ab24-5bfd-8312-6dd32d793d53",
+      "catalog_key": "ruiz:337",
+      "canonical_name": "AGUJEROS OPTICOS -1",
+      "normalized_name": "agujeros opticos 1",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "AGUJEROS OPTICOS -1",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "580c53d0-6c4f-57c2-9404-2b3721f4447c",
+      "catalog_key": "ruiz:3329",
+      "canonical_name": "ANÁLISIS DE INBODY",
+      "normalized_name": "analisis de inbody",
+      "item_type": "service",
+      "service_type": "other",
+      "category_code": "other",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "ANÁLISIS DE INBODY",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "d07dc841-962c-59d1-a2ed-9301dde450de",
+      "catalog_key": "ruiz:3465",
+      "canonical_name": "AUDIOMETRIA (1)",
+      "normalized_name": "audiometria 1",
+      "item_type": "service",
+      "service_type": "functional_test",
+      "category_code": "functional_tests",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "AUDIOMETRIA (1)",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "7ea6fed5-1710-58a0-afe8-423d7c703231",
+      "catalog_key": "ruiz:443",
+      "canonical_name": "B.CON AGUJA DE CORTE GUIADA POR US 2 LESIONES(7)",
+      "normalized_name": "b con aguja de corte guiada por us 2 lesiones 7",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "B.CON AGUJA DE CORTE GUIADA POR US 2 LESIONES(7)",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "00208efc-9065-56da-81ec-ef1bbf00cfbb",
+      "catalog_key": "ruiz:445",
+      "canonical_name": "B.CON AGUJA DE CORTE GUIADA POR US(7)",
+      "normalized_name": "b con aguja de corte guiada por us 7",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "B.CON AGUJA DE CORTE GUIADA POR US(7)",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "0aa7c306-2939-5736-a9c6-0d400fdc5236",
+      "catalog_key": "ruiz:447",
+      "canonical_name": "B.CON AGUJA DE CORTE Y 3 MARCADORES IHQ(7)",
+      "normalized_name": "b con aguja de corte y 3 marcadores ihq 7",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "B.CON AGUJA DE CORTE Y 3 MARCADORES IHQ(7)",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "af7a5670-ec01-5500-bf23-bb5520033145",
+      "catalog_key": "ruiz:449",
+      "canonical_name": "B.CON AGUJA DE CORTE Y 4 MARCADORES IHQ(7)",
+      "normalized_name": "b con aguja de corte y 4 marcadores ihq 7",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "B.CON AGUJA DE CORTE Y 4 MARCADORES IHQ(7)",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "7cc46f10-e5b4-5cd1-9bdc-b5ce75a40929",
+      "catalog_key": "ruiz:555",
+      "canonical_name": "CERTIFICADO MEDICO (1)",
+      "normalized_name": "certificado medico 1",
+      "item_type": "service",
+      "service_type": "other",
+      "category_code": "other",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "CERTIFICADO MEDICO (1)",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "c8389561-8169-5e30-bf4d-e91d05371f17",
+      "catalog_key": "ruiz:613",
+      "canonical_name": "COLPOSCOPIA",
+      "normalized_name": "colposcopia",
+      "item_type": "service",
+      "service_type": "other",
+      "category_code": "other",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "COLPOSCOPIA",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "d579bfb3-1be2-5934-8cd0-5afba6214c50",
+      "catalog_key": "ruiz:615",
+      "canonical_name": "COLUMNA LUMBAR 4 PROYECCIONES DINAMICA",
+      "normalized_name": "columna lumbar 4 proyecciones dinamica",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "COLUMNA LUMBAR 4 PROYECCIONES DINAMICA",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "0adaa007-42a4-5006-9878-e9a362f494ed",
+      "catalog_key": "ruiz:9595",
+      "canonical_name": "CONO DE COMPRESION PARA MASTOGRAFIA",
+      "normalized_name": "cono de compresion para mastografia",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "CONO DE COMPRESION PARA MASTOGRAFIA",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "8749da53-fa47-50de-9d3b-53e5a1e0e0be",
+      "catalog_key": "ruiz:3111",
+      "canonical_name": "COOMBS DIRECTO EN COLUMNA",
+      "normalized_name": "coombs directo en columna",
+      "item_type": "service",
+      "service_type": "other",
+      "category_code": "other",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "COOMBS DIRECTO EN COLUMNA",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "b5b57684-7ad5-5d0c-8b63-4dc28b0c3d75",
+      "catalog_key": "ruiz:9587",
+      "canonical_name": "D.O. CADERA Y ANTEBRAZO (1)",
+      "normalized_name": "d o cadera y antebrazo 1",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "D.O. CADERA Y ANTEBRAZO (1)",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "bbbc33d3-eaa8-50c4-b902-85575f120325",
+      "catalog_key": "ruiz:3113",
+      "canonical_name": "DENSITOMETRÍA ANTEBRAZO",
+      "normalized_name": "densitometria antebrazo",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "DENSITOMETRÍA ANTEBRAZO",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "acae8edf-0d1b-5883-8e47-697834d9b3f1",
+      "catalog_key": "ruiz:3115",
+      "canonical_name": "DENSITOMETRÍA ANTEBRAZO DUAL",
+      "normalized_name": "densitometria antebrazo dual",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "DENSITOMETRÍA ANTEBRAZO DUAL",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "513f8c29-200f-5205-a954-5eb3bf5ba478",
+      "catalog_key": "ruiz:3117",
+      "canonical_name": "DENSITOMETRÍA CADERA",
+      "normalized_name": "densitometria cadera",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "DENSITOMETRÍA CADERA",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "b829b973-64ca-5424-b05a-83d93cdea5dd",
+      "catalog_key": "ruiz:3119",
+      "canonical_name": "DENSITOMETRÍA CADERA DUAL",
+      "normalized_name": "densitometria cadera dual",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "DENSITOMETRÍA CADERA DUAL",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "166e7ba8-3e88-54ac-83be-cbf15692d19a",
+      "catalog_key": "ruiz:3121",
+      "canonical_name": "DENSITOMETRÍA CADERA DUAL Y ANTEBRAZO",
+      "normalized_name": "densitometria cadera dual y antebrazo",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "DENSITOMETRÍA CADERA DUAL Y ANTEBRAZO",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "580717cd-4d8f-52bd-ba36-42112546cdca",
+      "catalog_key": "ruiz:3125",
+      "canonical_name": "DENSITOMETRÍA COLUMNA LUMBAR",
+      "normalized_name": "densitometria columna lumbar",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "DENSITOMETRÍA COLUMNA LUMBAR",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "669f7084-3b53-5187-a68d-6a41cc5d61df",
+      "catalog_key": "ruiz:3131",
+      "canonical_name": "DENSITOMETRÍA COLUMNA LUMBAR Y CADERA DUAL",
+      "normalized_name": "densitometria columna lumbar y cadera dual",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "DENSITOMETRÍA COLUMNA LUMBAR Y CADERA DUAL",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "b6e39b46-ebf0-5095-9e82-dacd11250c54",
+      "catalog_key": "ruiz:761",
+      "canonical_name": "DENSITOMETRÍA ÓSEA CADERA Y ANTEBRAZO (1)",
+      "normalized_name": "densitometria osea cadera y antebrazo 1",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "DENSITOMETRÍA ÓSEA CADERA Y ANTEBRAZO (1)",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "0c0bcc9e-d9d5-51f9-b9d5-dd41c8442282",
+      "catalog_key": "ruiz:763",
+      "canonical_name": "DENSITOMETRÍA ÓSEA COLUMNA Y ANTEBRAZO (1)",
+      "normalized_name": "densitometria osea columna y antebrazo 1",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "DENSITOMETRÍA ÓSEA COLUMNA Y ANTEBRAZO (1)",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "5bd35412-4e3c-5a2a-a809-ab0b10fe3ce6",
+      "catalog_key": "ruiz:765",
+      "canonical_name": "DENSITOMETRÍA ÓSEA COLUMNA Y CADERA (1)",
+      "normalized_name": "densitometria osea columna y cadera 1",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "DENSITOMETRÍA ÓSEA COLUMNA Y CADERA (1)",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "aaf0e812-11e1-53b2-9147-fae018b20fc6",
+      "catalog_key": "ruiz:767",
+      "canonical_name": "DENSITOMETRÍA ÓSEA COLUMNA, CADERA Y ANTEBRAZO (1)",
+      "normalized_name": "densitometria osea columna cadera y antebrazo 1",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "DENSITOMETRÍA ÓSEA COLUMNA, CADERA Y ANTEBRAZO (1)",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "d9aa15c4-0d92-5e01-8607-d9d6d60dae7b",
+      "catalog_key": "ruiz:769",
+      "canonical_name": "DENSITOMETRÍA ÓSEA CUERPO COMPLETO (1)",
+      "normalized_name": "densitometria osea cuerpo completo 1",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "DENSITOMETRÍA ÓSEA CUERPO COMPLETO (1)",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "91330b57-50fd-54d6-901b-2ecc268176ec",
+      "catalog_key": "ruiz:3123",
+      "canonical_name": "DENSITOMETRÍACADERA Y ANTEBRAZO DUAL",
+      "normalized_name": "densitometriacadera y antebrazo dual",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "DENSITOMETRÍACADERA Y ANTEBRAZO DUAL",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "ec5cea4a-c359-5a9d-bbc6-f89655f69049",
+      "catalog_key": "ruiz:3127",
+      "canonical_name": "DENSITOMETRÍACOLUMNA LUMBAR LATERAL",
+      "normalized_name": "densitometriacolumna lumbar lateral",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "DENSITOMETRÍACOLUMNA LUMBAR LATERAL",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "736930ea-55f1-565c-a704-a786ba61c781",
+      "catalog_key": "ruiz:3129",
+      "canonical_name": "DENSITOMETRÍACOLUMNA LUMBAR Y ANTEBRAZO DUAL",
+      "normalized_name": "densitometriacolumna lumbar y antebrazo dual",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "DENSITOMETRÍACOLUMNA LUMBAR Y ANTEBRAZO DUAL",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "8d9377ea-9678-5c4f-ac29-ce6e200fbd01",
+      "catalog_key": "ruiz:793",
+      "canonical_name": "DETECCION DE CD52 EN LEUCOCITOS (3)",
+      "normalized_name": "deteccion de cd52 en leucocitos 3",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "DETECCION DE CD52 EN LEUCOCITOS (3)",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "551146a4-c28d-52c8-84f5-d908190062be",
+      "catalog_key": "ruiz:813",
+      "canonical_name": "DOPPLER VENOSO DE MIEMBRO SUPERIOR IZQUERDO",
+      "normalized_name": "doppler venoso de miembro superior izquerdo",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "DOPPLER VENOSO DE MIEMBRO SUPERIOR IZQUERDO",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "f6db0831-a7f4-59f7-a4bf-4ac897142211",
+      "catalog_key": "ruiz:6146",
+      "canonical_name": "Deficiencia creatina cerebral 2 (GAMT)",
+      "normalized_name": "deficiencia creatina cerebral 2 gamt",
+      "item_type": "service",
+      "service_type": "lab_test",
+      "category_code": "laboratory",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "Deficiencia creatina cerebral 2 (GAMT)",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "c2c10805-c1e4-5f65-a9a5-b62f20675945",
+      "catalog_key": "ruiz:3539",
+      "canonical_name": "ECOCARDIOGRAMA TRANSTORACICO",
+      "normalized_name": "ecocardiograma transtoracico",
+      "item_type": "service",
+      "service_type": "cardiology",
+      "category_code": "cardiology",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "ECOCARDIOGRAMA TRANSTORACICO",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "b6f15c15-29b4-5dd4-b2a2-944e9d0e1b20",
+      "catalog_key": "ruiz:3369",
+      "canonical_name": "ELECTROCARDIOGRAMA EN ESFUERZO",
+      "normalized_name": "electrocardiograma en esfuerzo",
+      "item_type": "service",
+      "service_type": "cardiology",
+      "category_code": "cardiology",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "ELECTROCARDIOGRAMA EN ESFUERZO",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "c9d9a832-8146-5831-94f5-ec653dea2126",
+      "catalog_key": "ruiz:821",
+      "canonical_name": "ELECTROCARDIOGRAMA EN REPOSO",
+      "normalized_name": "electrocardiograma en reposo",
+      "item_type": "service",
+      "service_type": "cardiology",
+      "category_code": "cardiology",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "ELECTROCARDIOGRAMA EN REPOSO",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "ff01230e-0c64-5774-a4c2-1740e9a0580b",
+      "catalog_key": "ruiz:3599",
+      "canonical_name": "ELECTROCARDIOGRAMA PEDIATRICO",
+      "normalized_name": "electrocardiograma pediatrico",
+      "item_type": "service",
+      "service_type": "cardiology",
+      "category_code": "cardiology",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "ELECTROCARDIOGRAMA PEDIATRICO",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "5627c136-27fe-57c1-85d0-22ccfd6d5d7f",
+      "catalog_key": "ruiz:867",
+      "canonical_name": "ESPIROMETRIA CHEQUEO",
+      "normalized_name": "espirometria chequeo",
+      "item_type": "service",
+      "service_type": "functional_test",
+      "category_code": "functional_tests",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "ESPIROMETRIA CHEQUEO",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "dfa3afca-fb22-5c20-8e3c-34168fe1961f",
+      "catalog_key": "ruiz:869",
+      "canonical_name": "ESPIROMETRIA CON BRONCODILATADOR (1)",
+      "normalized_name": "espirometria con broncodilatador 1",
+      "item_type": "service",
+      "service_type": "functional_test",
+      "category_code": "functional_tests",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "ESPIROMETRIA CON BRONCODILATADOR (1)",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "971b189f-eafb-5ac9-bb90-9374dbed5f6e",
+      "catalog_key": "ruiz:871",
+      "canonical_name": "ESPIROMETRIA SIMPLE (1)",
+      "normalized_name": "espirometria simple 1",
+      "item_type": "service",
+      "service_type": "functional_test",
+      "category_code": "functional_tests",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "ESPIROMETRIA SIMPLE (1)",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "83c6fbe5-8b5e-50e9-a5bd-31a3a58dcf1e",
+      "catalog_key": "ruiz:913",
+      "canonical_name": "EXAMEN MEDICO",
+      "normalized_name": "examen medico",
+      "item_type": "service",
+      "service_type": "other",
+      "category_code": "other",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "EXAMEN MEDICO",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "7a2487d2-2cdf-59d9-bc87-b2af476f756c",
+      "catalog_key": "ruiz:993",
+      "canonical_name": "FISTULOGRAFIA -1",
+      "normalized_name": "fistulografia 1",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "FISTULOGRAFIA -1",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "71c7e789-31c8-5da0-8dd5-ef0a7088222c",
+      "catalog_key": "ruiz:3379",
+      "canonical_name": "GASOMETRIA VENOSA",
+      "normalized_name": "gasometria venosa",
+      "item_type": "service",
+      "service_type": "cardiology",
+      "category_code": "cardiology",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "GASOMETRIA VENOSA",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "b31050d8-70d5-5d7e-a170-3fd68177c4b6",
+      "catalog_key": "ruiz:1083",
+      "canonical_name": "GRAPA DE TITANIO LOCALIZADORA DE LESION (1)",
+      "normalized_name": "grapa de titanio localizadora de lesion 1",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "GRAPA DE TITANIO LOCALIZADORA DE LESION (1)",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "fba52c7e-ecff-5c72-b827-783f33ae69f7",
+      "catalog_key": "ruiz:3349",
+      "canonical_name": "HOLTER CARDIACO",
+      "normalized_name": "holter cardiaco",
+      "item_type": "service",
+      "service_type": "cardiology",
+      "category_code": "cardiology",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "HOLTER CARDIACO",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "2d17283e-3fe2-5e9e-8df8-7c305121af54",
+      "catalog_key": "ruiz:3549",
+      "canonical_name": "HOLTER MAPA TA",
+      "normalized_name": "holter mapa ta",
+      "item_type": "service",
+      "service_type": "cardiology",
+      "category_code": "cardiology",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "HOLTER MAPA TA",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "da58bbaf-9a01-5a59-b41d-8e47d8bafe14",
+      "catalog_key": "ruiz:1313",
+      "canonical_name": "MARCAJE CON ARPON POR MASTOGRAFIA",
+      "normalized_name": "marcaje con arpon por mastografia",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "MARCAJE CON ARPON POR MASTOGRAFIA",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "a608745b-e3e5-597b-800f-34c2fe77b7f6",
+      "catalog_key": "ruiz:1315",
+      "canonical_name": "MARCAJE CON ARPON POR US (1)",
+      "normalized_name": "marcaje con arpon por us 1",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "MARCAJE CON ARPON POR US (1)",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "b4994aa8-b7c4-52f3-8f46-c74356d62d4a",
+      "catalog_key": "ruiz:1321",
+      "canonical_name": "MASTOGRAFIA",
+      "normalized_name": "mastografia",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "MASTOGRAFIA",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "5e21aef5-5328-5ffc-af37-aef84fb1d6a7",
+      "catalog_key": "ruiz:1325",
+      "canonical_name": "MASTOGRAFIA BILATERAL",
+      "normalized_name": "mastografia bilateral",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "MASTOGRAFIA BILATERAL",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "81aa9f9f-737b-537d-9c18-2b023e3e1139",
+      "catalog_key": "ruiz:1327",
+      "canonical_name": "MASTOGRAFIA UNILATERAL",
+      "normalized_name": "mastografia unilateral",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "MASTOGRAFIA UNILATERAL",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        },
+        {
+          "provider_key": "chopo_puebla",
+          "alias": "MASTOGRAFÍA UNILATERAL",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Exact normalized match across official provider catalogs; reviewable mapping."
+        }
+      ]
+    },
+    {
+      "item_id": "1adac9c4-62ca-51a6-a5df-13d974c8590f",
+      "catalog_key": "ruiz:1329",
+      "canonical_name": "MASTOIDES Y/O PEÑASCOS (2RAD) (1)",
+      "normalized_name": "mastoides y o penascos 2rad 1",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "MASTOIDES Y/O PEÑASCOS (2RAD) (1)",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "b106b600-9935-5075-8aa4-be071349bfa9",
+      "catalog_key": "ruiz:1403",
+      "canonical_name": "MUTACIONES EN KRAS (6)",
+      "normalized_name": "mutaciones en kras 6",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "MUTACIONES EN KRAS (6)",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "a9554f2c-9489-52a7-8e13-5a96f78288f2",
+      "catalog_key": "ruiz:1405",
+      "canonical_name": "MUTACIONES TET2 EXONES 3 - 11",
+      "normalized_name": "mutaciones tet2 exones 3 11",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "MUTACIONES TET2 EXONES 3 - 11",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "5e13d1f7-a0f1-5b1a-a9ee-e3acd2e62881",
+      "catalog_key": "ruiz:1451",
+      "canonical_name": "PANORAMICA DE COLUMNA AP",
+      "normalized_name": "panoramica de columna ap",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "PANORAMICA DE COLUMNA AP",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "ebd9fad8-d2b2-5160-aede-2b09a71c5f55",
+      "catalog_key": "ruiz:3383",
+      "canonical_name": "PENEOSCOPIA",
+      "normalized_name": "peneoscopia",
+      "item_type": "service",
+      "service_type": "other",
+      "category_code": "other",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "PENEOSCOPIA",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "d66b304c-afeb-53c9-9cae-1cdd529db5ad",
+      "catalog_key": "ruiz:3311",
+      "canonical_name": "PERFIL ANTICUERPOS COVID (IGG IGM S)",
+      "normalized_name": "perfil anticuerpos covid igg igm s",
+      "item_type": "package",
+      "service_type": "lab_panel",
+      "category_code": "laboratory",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "PERFIL ANTICUERPOS COVID (IGG IGM S)",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "dd018aa7-8f27-5485-8332-e590ed544249",
+      "catalog_key": "ruiz:1683",
+      "canonical_name": "PRUEBA COVID-19 POR PCR",
+      "normalized_name": "prueba covid 19 por pcr",
+      "item_type": "service",
+      "service_type": "lab_test",
+      "category_code": "laboratory",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "PRUEBA COVID-19 POR PCR",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "69e729be-be23-5e55-8e25-b971e16ea5d2",
+      "catalog_key": "ruiz:3431",
+      "canonical_name": "PRUEBA RÁPIDA ANTÍGENO NASAL SARS-COV-2 (COVID)",
+      "normalized_name": "prueba rapida antigeno nasal sars cov 2 covid",
+      "item_type": "service",
+      "service_type": "lab_test",
+      "category_code": "laboratory",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "PRUEBA RÁPIDA ANTÍGENO NASAL SARS-COV-2 (COVID)",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "d2969c40-c066-570c-8907-d8e32541c2e6",
+      "catalog_key": "ruiz:1687",
+      "canonical_name": "PRUEBA RÁPIDA ANTÍGENO SARS-COV-2 (COVID-19)",
+      "normalized_name": "prueba rapida antigeno sars cov 2 covid 19",
+      "item_type": "service",
+      "service_type": "lab_test",
+      "category_code": "laboratory",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "PRUEBA RÁPIDA ANTÍGENO SARS-COV-2 (COVID-19)",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "b53fc6f3-4d51-5a8a-b919-cec0ddbbc66a",
+      "catalog_key": "ruiz:1713",
+      "canonical_name": "RAYOS X ABDOMEN AP DE PIE-1",
+      "normalized_name": "rayos x abdomen ap de pie 1",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "RAYOS X ABDOMEN AP DE PIE-1",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "22258a25-fb19-549a-a729-ddf198e8d266",
+      "catalog_key": "ruiz:1715",
+      "canonical_name": "RAYOS X ABDOMEN DE PIE Y DECUBITO-2",
+      "normalized_name": "rayos x abdomen de pie y decubito 2",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "RAYOS X ABDOMEN DE PIE Y DECUBITO-2",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "e8028e0a-a6b0-5100-b70c-b90a667a1847",
+      "catalog_key": "ruiz:1717",
+      "canonical_name": "RAYOS X ABDOMEN DOS PROYECCIONES AP Y LAT",
+      "normalized_name": "rayos x abdomen dos proyecciones ap y lat",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "RAYOS X ABDOMEN DOS PROYECCIONES AP Y LAT",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "b79cede5-4e29-5b58-816e-b1a0a074b433",
+      "catalog_key": "ruiz:1719",
+      "canonical_name": "RAYOS X ABDOMEN UNA POSICION-1",
+      "normalized_name": "rayos x abdomen una posicion 1",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "RAYOS X ABDOMEN UNA POSICION-1",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "c08b8d35-b72e-5be5-a489-49b562099785",
+      "catalog_key": "ruiz:1721",
+      "canonical_name": "RAYOS X ANTEBRAZO AP COMPARATIVOS - 1",
+      "normalized_name": "rayos x antebrazo ap comparativos 1",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "RAYOS X ANTEBRAZO AP COMPARATIVOS - 1",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "279605a8-a918-5e77-ba6e-d929de66d39a",
+      "catalog_key": "ruiz:1723",
+      "canonical_name": "RAYOS X ANTEBRAZO AP Y LATERAL - 2",
+      "normalized_name": "rayos x antebrazo ap y lateral 2",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "RAYOS X ANTEBRAZO AP Y LATERAL - 2",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "4e9c797a-6d51-5549-b687-f2a0ae290ddf",
+      "catalog_key": "ruiz:1725",
+      "canonical_name": "RAYOS X ANTEBRAZO AP Y OBLICUA - 2",
+      "normalized_name": "rayos x antebrazo ap y oblicua 2",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "RAYOS X ANTEBRAZO AP Y OBLICUA - 2",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "878d4f3a-65c1-5d43-952d-3ca94b52dd66",
+      "catalog_key": "ruiz:1727",
+      "canonical_name": "RAYOS X ANTEBRAZO AP, LAT Y OBLICUA - 3",
+      "normalized_name": "rayos x antebrazo ap lat y oblicua 3",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "RAYOS X ANTEBRAZO AP, LAT Y OBLICUA - 3",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "54f2840f-5eb0-5f4e-b76b-050597982e78",
+      "catalog_key": "ruiz:1729",
+      "canonical_name": "RAYOS X ANTEBRAZO AP-1",
+      "normalized_name": "rayos x antebrazo ap 1",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "RAYOS X ANTEBRAZO AP-1",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "e81f9598-8fe6-5da9-9f75-00adfd9e30fc",
+      "catalog_key": "ruiz:1731",
+      "canonical_name": "RAYOS X ANTEBRAZO LATERAL-1",
+      "normalized_name": "rayos x antebrazo lateral 1",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "RAYOS X ANTEBRAZO LATERAL-1",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "28d54cbb-9cd5-5605-ab0d-3ae27020ec9e",
+      "catalog_key": "ruiz:1733",
+      "canonical_name": "RAYOS X ANTEBRAZO OBLICUA - 1",
+      "normalized_name": "rayos x antebrazo oblicua 1",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "RAYOS X ANTEBRAZO OBLICUA - 1",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "c1e55d88-d559-5193-94f3-669279e3d88c",
+      "catalog_key": "ruiz:1735",
+      "canonical_name": "RAYOS X AP AXIAL DE RODILLA ESCOTADURA INTERCONDILLA (CAMP CONVENTRY)",
+      "normalized_name": "rayos x ap axial de rodilla escotadura intercondilla camp conventry",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "RAYOS X AP AXIAL DE RODILLA ESCOTADURA INTERCONDILLA (CAMP CONVENTRY)",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "5d2125b6-706b-5080-b214-c00c956884e7",
+      "catalog_key": "ruiz:1737",
+      "canonical_name": "RAYOS X AP ESCAPULA - 1",
+      "normalized_name": "rayos x ap escapula 1",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "RAYOS X AP ESCAPULA - 1",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "33f225e9-a4bc-5b44-acf6-b272d65ce161",
+      "catalog_key": "ruiz:1739",
+      "canonical_name": "RAYOS X APICOGRAMA -1",
+      "normalized_name": "rayos x apicograma 1",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "RAYOS X APICOGRAMA -1",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "4b784c5c-8654-5e0b-ab4a-027730c39281",
+      "catalog_key": "ruiz:1741",
+      "canonical_name": "RAYOS X ARTICULACION TEMPOROMANDIBULAR CON BOCA ABIERTA Y CERRADA COMPARATIVAS - 4",
+      "normalized_name": "rayos x articulacion temporomandibular con boca abierta y cerrada comparativas 4",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "RAYOS X ARTICULACION TEMPOROMANDIBULAR CON BOCA ABIERTA Y CERRADA COMPARATIVAS - 4",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "a5e81a16-5e13-5258-a4d1-538219cecb52",
+      "catalog_key": "ruiz:3417",
+      "canonical_name": "RC CONTRASTE EXTRA",
+      "normalized_name": "rc contraste extra",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "RC CONTRASTE EXTRA",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "ceff2afb-eada-5095-9e74-ab7ebbfa21e6",
+      "catalog_key": "ruiz:2211",
+      "canonical_name": "RESONANCIA MAGNÉTICA ABDOMEN COMPLETO",
+      "normalized_name": "resonancia magnetica abdomen completo",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "RESONANCIA MAGNÉTICA ABDOMEN COMPLETO",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "de354e6e-412d-565f-a5f7-8e6fe27a7680",
+      "catalog_key": "ruiz:2213",
+      "canonical_name": "RESONANCIA MAGNÉTICA ABDOMEN COMPLETO CON CONTRASTE GADOLINIO",
+      "normalized_name": "resonancia magnetica abdomen completo con contraste gadolinio",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "RESONANCIA MAGNÉTICA ABDOMEN COMPLETO CON CONTRASTE GADOLINIO",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "61a79b38-ff41-580a-84b2-79549e5ec021",
+      "catalog_key": "ruiz:2215",
+      "canonical_name": "RESONANCIA MAGNÉTICA ABDOMEN INFERIOR O PELVIS",
+      "normalized_name": "resonancia magnetica abdomen inferior o pelvis",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "RESONANCIA MAGNÉTICA ABDOMEN INFERIOR O PELVIS",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "a7496ee8-e33f-5bb7-a10a-9fea7975ed0e",
+      "catalog_key": "ruiz:2217",
+      "canonical_name": "RESONANCIA MAGNÉTICA ABDOMEN INFERIOR O PELVIS CON CONTRASTE GADOLINIO",
+      "normalized_name": "resonancia magnetica abdomen inferior o pelvis con contraste gadolinio",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "RESONANCIA MAGNÉTICA ABDOMEN INFERIOR O PELVIS CON CONTRASTE GADOLINIO",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "8906a3ba-9d0f-5be0-8cd9-d6cb956356ff",
+      "catalog_key": "ruiz:2219",
+      "canonical_name": "RESONANCIA MAGNÉTICA ABDOMEN SUPERIOR",
+      "normalized_name": "resonancia magnetica abdomen superior",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "RESONANCIA MAGNÉTICA ABDOMEN SUPERIOR",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "11e0ac3a-e10e-5b21-99ec-ab557993664d",
+      "catalog_key": "ruiz:2221",
+      "canonical_name": "RESONANCIA MAGNÉTICA ABDOMEN SUPERIOR CON CONTRASTE GADOLINIO",
+      "normalized_name": "resonancia magnetica abdomen superior con contraste gadolinio",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "RESONANCIA MAGNÉTICA ABDOMEN SUPERIOR CON CONTRASTE GADOLINIO",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "bef50d19-7f00-5057-9a3e-22d80b84cdba",
+      "catalog_key": "ruiz:2223",
+      "canonical_name": "RESONANCIA MAGNÉTICA ANGIORESONANCIA DE ANTEBRAZO DERECHO CON CONTRASTE GADOLINIO",
+      "normalized_name": "resonancia magnetica angioresonancia de antebrazo derecho con contraste gadolinio",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "RESONANCIA MAGNÉTICA ANGIORESONANCIA DE ANTEBRAZO DERECHO CON CONTRASTE GADOLINIO",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "4077cf47-4538-547a-a9d7-38f53aacf55f",
+      "catalog_key": "ruiz:2225",
+      "canonical_name": "RESONANCIA MAGNÉTICA ANGIORESONANCIA DE ANTEBRAZO IZQUIERDO CON CONTRASTE GADOLINIO",
+      "normalized_name": "resonancia magnetica angioresonancia de antebrazo izquierdo con contraste gadolinio",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "RESONANCIA MAGNÉTICA ANGIORESONANCIA DE ANTEBRAZO IZQUIERDO CON CONTRASTE GADOLINIO",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "224e7dcf-d6ff-54a2-9612-504ae9fca5e9",
+      "catalog_key": "ruiz:2227",
+      "canonical_name": "RESONANCIA MAGNÉTICA ANGIORESONANCIA DE ARTERIAS PULMONARES CON CONTRASTE GADOLINIO",
+      "normalized_name": "resonancia magnetica angioresonancia de arterias pulmonares con contraste gadolinio",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "RESONANCIA MAGNÉTICA ANGIORESONANCIA DE ARTERIAS PULMONARES CON CONTRASTE GADOLINIO",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "37bd6a75-04d4-57f7-9607-81aeef80755f",
+      "catalog_key": "ruiz:2229",
+      "canonical_name": "RESONANCIA MAGNÉTICA ANGIORESONANCIA DE BRAZO DERECHO CON CONTRASTE GADOLINIO",
+      "normalized_name": "resonancia magnetica angioresonancia de brazo derecho con contraste gadolinio",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "RESONANCIA MAGNÉTICA ANGIORESONANCIA DE BRAZO DERECHO CON CONTRASTE GADOLINIO",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "77b3d480-92ae-58e8-ac53-d97738b04394",
+      "catalog_key": "ruiz:2231",
+      "canonical_name": "RESONANCIA MAGNÉTICA ANGIORESONANCIA DE BRAZO IZQUIERDO CON CONTRASTE GADOLINIO",
+      "normalized_name": "resonancia magnetica angioresonancia de brazo izquierdo con contraste gadolinio",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "RESONANCIA MAGNÉTICA ANGIORESONANCIA DE BRAZO IZQUIERDO CON CONTRASTE GADOLINIO",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "faf3524d-76d3-5b37-8199-89e424f85e11",
+      "catalog_key": "ruiz:2233",
+      "canonical_name": "RESONANCIA MAGNÉTICA ANGIORESONANCIA DE PIERNA DERECHA CON CONTRASTE",
+      "normalized_name": "resonancia magnetica angioresonancia de pierna derecha con contraste",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "RESONANCIA MAGNÉTICA ANGIORESONANCIA DE PIERNA DERECHA CON CONTRASTE",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "4dabc670-fd4f-565d-ac77-eb4e43c9d9c3",
+      "catalog_key": "ruiz:2235",
+      "canonical_name": "RESONANCIA MAGNÉTICA ANGIORESONANCIA DE PIERNA IZQUIERDA CON CONTRASTE",
+      "normalized_name": "resonancia magnetica angioresonancia de pierna izquierda con contraste",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "RESONANCIA MAGNÉTICA ANGIORESONANCIA DE PIERNA IZQUIERDA CON CONTRASTE",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "08aab601-f52b-5772-980d-b83c41f60e3c",
+      "catalog_key": "ruiz:2237",
+      "canonical_name": "RESONANCIA MAGNÉTICA ANGIORESONANCIA DE POLIGONO DE WILLIS",
+      "normalized_name": "resonancia magnetica angioresonancia de poligono de willis",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "RESONANCIA MAGNÉTICA ANGIORESONANCIA DE POLIGONO DE WILLIS",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "6280cf28-1d91-5ba0-8cf8-afef151b6105",
+      "catalog_key": "ruiz:2239",
+      "canonical_name": "RESONANCIA MAGNÉTICA ANGIORESONANCIA DE POLIGONO DE WILLIS CON CONTRASTE GADOLINIO",
+      "normalized_name": "resonancia magnetica angioresonancia de poligono de willis con contraste gadolinio",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "RESONANCIA MAGNÉTICA ANGIORESONANCIA DE POLIGONO DE WILLIS CON CONTRASTE GADOLINIO",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "d7bb634e-23b9-56e8-abd7-554af6d9ed36",
+      "catalog_key": "ruiz:2241",
+      "canonical_name": "RESONANCIA MAGNÉTICA ANGIORESONANCIA DE SISTEMA PORTAL CON CONTRASTE GADOLINIO",
+      "normalized_name": "resonancia magnetica angioresonancia de sistema portal con contraste gadolinio",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "RESONANCIA MAGNÉTICA ANGIORESONANCIA DE SISTEMA PORTAL CON CONTRASTE GADOLINIO",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "9128e055-04f4-5e4c-9ff4-c274d1f3bc84",
+      "catalog_key": "ruiz:3175",
+      "canonical_name": "SARS-COV-2 (COVID-19) ANTICUERPOS IgG",
+      "normalized_name": "sars cov 2 covid 19 anticuerpos igg",
+      "item_type": "service",
+      "service_type": "lab_test",
+      "category_code": "laboratory",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "SARS-COV-2 (COVID-19) ANTICUERPOS IgG",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "46ea6820-7a3f-5651-87ab-fee5b64ac450",
+      "catalog_key": "ruiz:3393",
+      "canonical_name": "TC GLANDULAS SUPRARENALES",
+      "normalized_name": "tc glandulas suprarenales",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "TC GLANDULAS SUPRARENALES",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "ed7e83db-f394-5171-ae4d-ca347b648028",
+      "catalog_key": "ruiz:2627",
+      "canonical_name": "TOMOGRAFÍA ABDOMEN COMPLETO CONTRASTE",
+      "normalized_name": "tomografia abdomen completo contraste",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "TOMOGRAFÍA ABDOMEN COMPLETO CONTRASTE",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "2ae7ac0c-4e14-5aec-96bb-af81d5099e8a",
+      "catalog_key": "ruiz:2629",
+      "canonical_name": "TOMOGRAFÍA ABDOMEN COMPLETO SIMPLE",
+      "normalized_name": "tomografia abdomen completo simple",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "TOMOGRAFÍA ABDOMEN COMPLETO SIMPLE",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "5418efe4-d4d0-5cdb-bedf-689a04a518c8",
+      "catalog_key": "ruiz:2631",
+      "canonical_name": "TOMOGRAFÍA ABDOMEN INFERIOR CON CONTRASTE",
+      "normalized_name": "tomografia abdomen inferior con contraste",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "TOMOGRAFÍA ABDOMEN INFERIOR CON CONTRASTE",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "a43d2047-89f1-50c5-99e1-c0d006fe13f4",
+      "catalog_key": "ruiz:2633",
+      "canonical_name": "TOMOGRAFÍA ABDOMEN INFERIOR SIMPLE",
+      "normalized_name": "tomografia abdomen inferior simple",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "TOMOGRAFÍA ABDOMEN INFERIOR SIMPLE",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "bbc0edbc-d4b7-5987-8aa3-5057fc5a864f",
+      "catalog_key": "ruiz:2635",
+      "canonical_name": "TOMOGRAFÍA ABDOMEN SUPERIOR CON CONTRASTE",
+      "normalized_name": "tomografia abdomen superior con contraste",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "TOMOGRAFÍA ABDOMEN SUPERIOR CON CONTRASTE",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "3b8beb63-d709-541e-941f-83a739dba3ea",
+      "catalog_key": "ruiz:2637",
+      "canonical_name": "TOMOGRAFÍA ABDOMEN SUPERIOR SIMPLE",
+      "normalized_name": "tomografia abdomen superior simple",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "TOMOGRAFÍA ABDOMEN SUPERIOR SIMPLE",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "fdfe35e3-517e-582f-91c7-ca19565faed0",
+      "catalog_key": "ruiz:2639",
+      "canonical_name": "TOMOGRAFÍA ANGIOTOMOGRAFIA CEREBRAL POLIGONO DE WILLIS",
+      "normalized_name": "tomografia angiotomografia cerebral poligono de willis",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "TOMOGRAFÍA ANGIOTOMOGRAFIA CEREBRAL POLIGONO DE WILLIS",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "0463b625-617d-5442-8dfd-2e86da535083",
+      "catalog_key": "ruiz:2641",
+      "canonical_name": "TOMOGRAFÍA ANGIOTOMOGRAFIA DE AORTA ABDOMINAL",
+      "normalized_name": "tomografia angiotomografia de aorta abdominal",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "TOMOGRAFÍA ANGIOTOMOGRAFIA DE AORTA ABDOMINAL",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "d52a6bd0-0637-515f-b13d-b02396fb9b3e",
+      "catalog_key": "ruiz:2643",
+      "canonical_name": "TOMOGRAFÍA ANGIOTOMOGRAFIA DE AORTA TORACICA",
+      "normalized_name": "tomografia angiotomografia de aorta toracica",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "TOMOGRAFÍA ANGIOTOMOGRAFIA DE AORTA TORACICA",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "e57125df-68b4-5678-bf6f-80e6f5c7c8b4",
+      "catalog_key": "ruiz:2645",
+      "canonical_name": "TOMOGRAFÍA ANGIOTOMOGRAFIA DE AORTA TORACO-ABDOMINAL",
+      "normalized_name": "tomografia angiotomografia de aorta toraco abdominal",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "TOMOGRAFÍA ANGIOTOMOGRAFIA DE AORTA TORACO-ABDOMINAL",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "6412e8e6-39b8-5290-9819-84e3739c3672",
+      "catalog_key": "ruiz:2647",
+      "canonical_name": "TOMOGRAFÍA ANGIOTOMOGRAFIA DE CAROTIDAS",
+      "normalized_name": "tomografia angiotomografia de carotidas",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "TOMOGRAFÍA ANGIOTOMOGRAFIA DE CAROTIDAS",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "2736829a-5e59-5e60-96e6-137dd91ef367",
+      "catalog_key": "ruiz:2649",
+      "canonical_name": "TOMOGRAFÍA ANGIOTOMOGRAFIA DE EXTREMIDAD SUPERIOR DERECHA",
+      "normalized_name": "tomografia angiotomografia de extremidad superior derecha",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "TOMOGRAFÍA ANGIOTOMOGRAFIA DE EXTREMIDAD SUPERIOR DERECHA",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "082a5663-6e6c-51f2-b8d5-8fdadad33781",
+      "catalog_key": "ruiz:2651",
+      "canonical_name": "TOMOGRAFÍA ANGIOTOMOGRAFIA DE EXTREMIDAD SUPERIOR IZQUIERDA",
+      "normalized_name": "tomografia angiotomografia de extremidad superior izquierda",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "TOMOGRAFÍA ANGIOTOMOGRAFIA DE EXTREMIDAD SUPERIOR IZQUIERDA",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "c2322064-f938-5991-89f8-62d5452fb845",
+      "catalog_key": "ruiz:2653",
+      "canonical_name": "TOMOGRAFÍA ANGIOTOMOGRAFIA DE EXTREMIDADES INFERIORES",
+      "normalized_name": "tomografia angiotomografia de extremidades inferiores",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "TOMOGRAFÍA ANGIOTOMOGRAFIA DE EXTREMIDADES INFERIORES",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "2648f17e-0aba-509a-844b-484950bdab8f",
+      "catalog_key": "ruiz:2655",
+      "canonical_name": "TOMOGRAFÍA ANGIOTOMOGRAFIA POLIGONO DE WILLIS Y CAROTIDAS",
+      "normalized_name": "tomografia angiotomografia poligono de willis y carotidas",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "TOMOGRAFÍA ANGIOTOMOGRAFIA POLIGONO DE WILLIS Y CAROTIDAS",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "53f598c7-7554-50bc-b0e7-d355d331efa2",
+      "catalog_key": "ruiz:2657",
+      "canonical_name": "TOMOGRAFÍA ANGIOTOMOGRAFIA PULMONAR",
+      "normalized_name": "tomografia angiotomografia pulmonar",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "TOMOGRAFÍA ANGIOTOMOGRAFIA PULMONAR",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "e47057d4-90a3-5964-bd3c-d3b255143273",
+      "catalog_key": "ruiz:2659",
+      "canonical_name": "TOMOGRAFÍA ANGIOTOMOGRAFIA RENAL",
+      "normalized_name": "tomografia angiotomografia renal",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "TOMOGRAFÍA ANGIOTOMOGRAFIA RENAL",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "82fb01ce-3677-55a5-8423-c216a1f8c3cf",
+      "catalog_key": "ruiz:2661",
+      "canonical_name": "TOMOGRAFÍA ANTEBRAZO DERECHO CON CONTRASTE",
+      "normalized_name": "tomografia antebrazo derecho con contraste",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "TOMOGRAFÍA ANTEBRAZO DERECHO CON CONTRASTE",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "ad0bd322-3623-5b13-9fc2-775a0587f5d1",
+      "catalog_key": "ruiz:2663",
+      "canonical_name": "TOMOGRAFÍA ANTEBRAZO DERECHO SIMPLE",
+      "normalized_name": "tomografia antebrazo derecho simple",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "TOMOGRAFÍA ANTEBRAZO DERECHO SIMPLE",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "1afa8fa6-94c8-5f16-a78d-6ced19216a08",
+      "catalog_key": "ruiz:2867",
+      "canonical_name": "ULTRASONIDO 4A DIMENSION",
+      "normalized_name": "ultrasonido 4a dimension",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "ULTRASONIDO 4A DIMENSION",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "7f317fce-9c66-5542-aea0-92e5759f19dc",
+      "catalog_key": "ruiz:2869",
+      "canonical_name": "ULTRASONIDO 4A DIMENSION GEMELAR",
+      "normalized_name": "ultrasonido 4a dimension gemelar",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "ULTRASONIDO 4A DIMENSION GEMELAR",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "a1f81444-4b20-5d82-bdf6-b48c27245fa0",
+      "catalog_key": "ruiz:2871",
+      "canonical_name": "ULTRASONIDO ABDOMEN COMPLETO",
+      "normalized_name": "ultrasonido abdomen completo",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "ULTRASONIDO ABDOMEN COMPLETO",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "b3ec7d1e-9e20-55ec-9bfc-d72c0836c7dd",
+      "catalog_key": "ruiz:2873",
+      "canonical_name": "ULTRASONIDO ABDOMINAL SUPERIOR",
+      "normalized_name": "ultrasonido abdominal superior",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "ULTRASONIDO ABDOMINAL SUPERIOR",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "856b3bf3-9c10-5a98-81b7-e2ad118c5d3b",
+      "catalog_key": "ruiz:2875",
+      "canonical_name": "ULTRASONIDO CUELLO (1)",
+      "normalized_name": "ultrasonido cuello 1",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "ULTRASONIDO CUELLO (1)",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "2b90785a-8f47-5eb1-9daf-341b9868b42c",
+      "catalog_key": "ruiz:2877",
+      "canonical_name": "ULTRASONIDO DE ABDOMEN CON PRUEBA DE BOYDEN",
+      "normalized_name": "ultrasonido de abdomen con prueba de boyden",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "ULTRASONIDO DE ABDOMEN CON PRUEBA DE BOYDEN",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "82fba42d-fda6-57ca-91c6-292cfab0a9b9",
+      "catalog_key": "ruiz:2879",
+      "canonical_name": "ULTRASONIDO DOPPLER 1 REGION",
+      "normalized_name": "ultrasonido doppler 1 region",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "ULTRASONIDO DOPPLER 1 REGION",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "f89fe179-1ee7-549b-ba45-538ee80f0278",
+      "catalog_key": "ruiz:2881",
+      "canonical_name": "ULTRASONIDO DOPPLER 2 REGIONES",
+      "normalized_name": "ultrasonido doppler 2 regiones",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "ULTRASONIDO DOPPLER 2 REGIONES",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "864084d2-d69f-5e79-86eb-cf26f6f0734e",
+      "catalog_key": "ruiz:2883",
+      "canonical_name": "ULTRASONIDO DOPPLER ARTERIAL BILATERAL DE MIEMBROS INFERIORES",
+      "normalized_name": "ultrasonido doppler arterial bilateral de miembros inferiores",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "ULTRASONIDO DOPPLER ARTERIAL BILATERAL DE MIEMBROS INFERIORES",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "1ea42453-02e1-5236-9783-fc259ef5c147",
+      "catalog_key": "ruiz:2885",
+      "canonical_name": "ULTRASONIDO DOPPLER ARTERIAL BILATERAL MIEMBROS SUPERIORES",
+      "normalized_name": "ultrasonido doppler arterial bilateral miembros superiores",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "ULTRASONIDO DOPPLER ARTERIAL BILATERAL MIEMBROS SUPERIORES",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "129d6bb0-eba6-5dba-8706-06ca0dc68952",
+      "catalog_key": "ruiz:2887",
+      "canonical_name": "ULTRASONIDO DOPPLER ARTERIAL DE MIEMBRO INFERIOR DERECHO",
+      "normalized_name": "ultrasonido doppler arterial de miembro inferior derecho",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "ULTRASONIDO DOPPLER ARTERIAL DE MIEMBRO INFERIOR DERECHO",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "40a8e8b4-93a8-51f2-81d4-f514e58723b5",
+      "catalog_key": "ruiz:2889",
+      "canonical_name": "ULTRASONIDO DOPPLER ARTERIAL DE MIEMBRO INFERIOR IZQUIERDO",
+      "normalized_name": "ultrasonido doppler arterial de miembro inferior izquierdo",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "ULTRASONIDO DOPPLER ARTERIAL DE MIEMBRO INFERIOR IZQUIERDO",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    },
+    {
+      "item_id": "a2f40eaf-bc01-539f-8b25-14daf8ea77b6",
+      "catalog_key": "ruiz:2891",
+      "canonical_name": "ULTRASONIDO DOPPLER ARTERIAL DE MIEMBRO SUPERIOR DERECHO",
+      "normalized_name": "ultrasonido doppler arterial de miembro superior derecho",
+      "item_type": "service",
+      "service_type": "imaging",
+      "category_code": "imaging",
+      "clinical_equivalence_policy": "manual_if_ambiguous",
+      "status": "active",
+      "source_note": "Golden V1: exact official Ruiz provider label; no cross-provider equivalence inferred.",
+      "provider_aliases": [
+        {
+          "provider_key": "ruiz_puebla",
+          "alias": "ULTRASONIDO DOPPLER ARTERIAL DE MIEMBRO SUPERIOR DERECHO",
+          "alias_type": "provider_name",
+          "confidence": 1.0,
+          "source_note": "Official Laboratorios Ruiz catalog observation."
+        }
+      ]
+    }
+  ],
+  "mappings": [
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "6146",
+      "record_hash": "e9d0194440c372ca93f863bfaa344178fd9e44553620f10eae30a7cadb09c098",
+      "catalog_key": "ruiz:6146"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "1",
+      "record_hash": "88ddc2a5f4adf696276d380f5a1a6fe7bb78abc0d7a68617f15fde17f20a6c4e",
+      "catalog_key": "ruiz:1"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "4344",
+      "record_hash": "56dd52aab5aadcfe175871ec1de1acd456f4c022919c70983e91bd9fb57ad342",
+      "catalog_key": "ruiz:4344"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "3239",
+      "record_hash": "dbdfd3038bd3945482c27c4f2ac7c59b28cd1bc41ada29cbf697bd7da59f07d8",
+      "catalog_key": "ruiz:3239"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "3",
+      "record_hash": "b9c858d97ec4e8e55294d87a073f0bd6fd04f93c9326c6f7fccd43032d659e56",
+      "catalog_key": "ruiz:3"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "5",
+      "record_hash": "96b5610e0f3f0f1ef86c9575e25a85dcff241ccd9ddd9956e16b18e987767802",
+      "catalog_key": "ruiz:5"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "8569",
+      "record_hash": "06d34d34b67e26003859876107a907dbc69247ef7cd08b52f543c7e70c49ba1f",
+      "catalog_key": "ruiz:8569"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "8733",
+      "record_hash": "d32dd1a369cf752ca7c74a2e27ac09113242e0b62a4924b78167ca1fbe249155",
+      "catalog_key": "ruiz:8733"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "3643",
+      "record_hash": "05780bfb1501d03bb481cc45db459f924dbaa462ba8f4430310adaec1d5f4f0e",
+      "catalog_key": "ruiz:3643"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "7",
+      "record_hash": "dc7a5c9fc03a38780aaebb1907c438b7da834e0351b9cee40641a97b595b33da",
+      "catalog_key": "ruiz:7"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "3649",
+      "record_hash": "12763f65cebdeb298645009dc1bdf17ba90921cf9fe0a1a826e97e561bf771b3",
+      "catalog_key": "ruiz:3649"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "7854",
+      "record_hash": "f36fd3722d0a8fee3dc1c56622b531f0d9fa09fd2c000533a779a815ae276907",
+      "catalog_key": "ruiz:7854"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "3645",
+      "record_hash": "1e8fff29c8782468367d9ef1f5679d27ffcd48dbc214d3820d964e28dd697046",
+      "catalog_key": "ruiz:3645"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "9",
+      "record_hash": "75927ebb3d68e2a9ef155345b142e85b084804a87cbfe0f7af605c3672894748",
+      "catalog_key": "ruiz:9"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "8465",
+      "record_hash": "7e2e744c96400575ef4d4be3d5b048f53f8d7e07b9ec8c1e4ab047cf3429024d",
+      "catalog_key": "ruiz:8465"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "3653",
+      "record_hash": "d094d53b853275e38fada22b9c242170faaa241b47c35b4008a169b46df930eb",
+      "catalog_key": "ruiz:3653"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "11",
+      "record_hash": "6dc0b942a84daeca1b2adfec4c131dcf113fccf0c6ad72cf9c5838bbb1c25c16",
+      "catalog_key": "ruiz:11"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "4398",
+      "record_hash": "3857a856ad280ff220f4ac326ec3d49f2cd7665aea875c3233ab772cfdbe726a",
+      "catalog_key": "ruiz:4398"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "4590",
+      "record_hash": "c43aaf41aeb906fa50a9ba6e6b50aa832f5f43ccdddf6e00f9e749b1e57590de",
+      "catalog_key": "ruiz:4590"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "13",
+      "record_hash": "f360f8a831049e33978df5bef791049e56f140c812f7b7706c23c574091b229a",
+      "catalog_key": "ruiz:13"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "3465",
+      "record_hash": "55af2e7c1399221278507ae464e0a76b6163cf49feb9d3a0d3190899da67a4e3",
+      "catalog_key": "ruiz:3465"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "3539",
+      "record_hash": "89c70e91aff1c66799a292ca7f391f2c3e966207031a3c2a97327449c5d2d9e1",
+      "catalog_key": "ruiz:3539"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "3369",
+      "record_hash": "9d24649ffc068c0c1a8fa34496f4499102d6d9a17234790dfdeb6078007f17b9",
+      "catalog_key": "ruiz:3369"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "821",
+      "record_hash": "afae0b1929d72f9632b83ac5277ebde794e7d752a2438c5c4e9d005aff6779d3",
+      "catalog_key": "ruiz:821"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "3599",
+      "record_hash": "fafe8cf9b74c3df99f590f037cca02fd7261378d3f41f703dd2db94a0a1e9312",
+      "catalog_key": "ruiz:3599"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "3379",
+      "record_hash": "5b4fd72c4c5818487ad32be3f05556df822facdc2f8a74a62ecec9036387a176",
+      "catalog_key": "ruiz:3379"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "3349",
+      "record_hash": "1e93257a7da606d13a1eb59860c5407d4efd2abc92e638ca7bd5c649794311a9",
+      "catalog_key": "ruiz:3349"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "3549",
+      "record_hash": "6c2540e21c63ded0110f831b8b4993d9014178915400da889462a9b6779897f2",
+      "catalog_key": "ruiz:3549"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "613",
+      "record_hash": "b63b63c4a0cef418b7ef7de8d46d057042b983e4cf627c6fee0e7e1a7fcc3e0a",
+      "catalog_key": "ruiz:613"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "3383",
+      "record_hash": "b84fd3892a3d584078d4af40a1a499a108ead5eae4263b2f96f6986f216c013e",
+      "catalog_key": "ruiz:3383"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "9587",
+      "record_hash": "3082e0334fcdcb7053d94f621dd2f79802aae369dccd787b46feb613dc1b8c54",
+      "catalog_key": "ruiz:9587"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "3113",
+      "record_hash": "c53154df293517d0c772748d7b952cb78b5c7fa13e87e0f5ece6545ed5632b45",
+      "catalog_key": "ruiz:3113"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "3115",
+      "record_hash": "665333ac22a8051531efb52b0e70bc1cb83e66f1df15539e23c20a5a703917c1",
+      "catalog_key": "ruiz:3115"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "3117",
+      "record_hash": "15c3d075e8ef1699c06ac31bd1632618592bac5ff75952b218af0d95101af933",
+      "catalog_key": "ruiz:3117"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "3119",
+      "record_hash": "7d3cb56add7d2c32d3f5fbe34143c6f9bd7832039548ca85eafacdf123eb1feb",
+      "catalog_key": "ruiz:3119"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "3121",
+      "record_hash": "efda912c3efdf003e21e71b06c5189bc3ea556eebac9c06422446d4d067a1d19",
+      "catalog_key": "ruiz:3121"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "3125",
+      "record_hash": "8b0cb8adce76ce1f77ab8294f9368402199fb5b3d6907527b64ee8305dbcb81c",
+      "catalog_key": "ruiz:3125"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "3131",
+      "record_hash": "423a72ed9d69e7edaa7daf5332b8f2b331469250dccf0df534ed4abaa2e55fcf",
+      "catalog_key": "ruiz:3131"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "761",
+      "record_hash": "e72f2d1cd3ee9bf8b022e23af9d17b466d51a771913fcef88cc515155f4a7237",
+      "catalog_key": "ruiz:761"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "763",
+      "record_hash": "0190159c33d47a3e5a373908d6c75d9eca0a59ffce351d03eac8aeacf96b3352",
+      "catalog_key": "ruiz:763"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "765",
+      "record_hash": "2724fc97b4b23757391b63cecfb9c64e83473e508da68dd61542f51aadb1d068",
+      "catalog_key": "ruiz:765"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "767",
+      "record_hash": "4eecd8c35292abf6d1baf0c6fca6adbf3fb43d49cbb6912f4f1acbbfed28d2b7",
+      "catalog_key": "ruiz:767"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "769",
+      "record_hash": "96ec5de5ff05c1e42d55e9c760038c73e442916d246c2ab5e2f5f095f203e297",
+      "catalog_key": "ruiz:769"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "3123",
+      "record_hash": "2534cd3fb1be184f1519f16c7d165e4027b96c52e12d676137fabf11407ee5b4",
+      "catalog_key": "ruiz:3123"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "3127",
+      "record_hash": "aafb144f27d1fd6f01b27d9a4ac22f73254a7a9268b15fc9e068a408237301de",
+      "catalog_key": "ruiz:3127"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "3129",
+      "record_hash": "6bca049c8c43bfb41088cdd52f0ed9d61c2c7502783005a753409d9f4d7225d3",
+      "catalog_key": "ruiz:3129"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "867",
+      "record_hash": "dcafa454f444ec5d665d24cd35ad0d06d012e4aaff4f9390342c3acb962c6211",
+      "catalog_key": "ruiz:867"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "869",
+      "record_hash": "ec32d19389e16243d003323502bba7abbdbd8be120fecd678ea238b380760ac5",
+      "catalog_key": "ruiz:869"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "871",
+      "record_hash": "b0265c4f4dd7b2b5c85f96cea48c7880d121cfd300c173c1cc1e2a4419e9dfd2",
+      "catalog_key": "ruiz:871"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "9595",
+      "record_hash": "e78b80c66622e0e8745dfad131fc3f921232eb9b690f4f7067246a8a84526b91",
+      "catalog_key": "ruiz:9595"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "1313",
+      "record_hash": "1c712dc0a9ca218aa52b61b4917b5dbd5e02a157bbd86a5a01b5cdbe00da41a1",
+      "catalog_key": "ruiz:1313"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "1321",
+      "record_hash": "58622d6d6320c711b594a4d0617e6340656f1d51f29e547a693ba153ff73a56d",
+      "catalog_key": "ruiz:1321"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "1325",
+      "record_hash": "fa14857f3a3d3aed21c1575c477cf865516c78e9970d266cc0d7daf32fb301d8",
+      "catalog_key": "ruiz:1325"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "1327",
+      "record_hash": "3c69b2a6d9969685910bca33bb44bffe2cf51fc22ef59d08b7376482f5496f7b",
+      "catalog_key": "ruiz:1327"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "3311",
+      "record_hash": "4911869ad40f11522845f866984944bf7e0ec47a9b3141ed19bbb43ca01e57d0",
+      "catalog_key": "ruiz:3311"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "1683",
+      "record_hash": "414743322873c9185e12a7c422d357320722ace596190d9c5c69a87bb16f29a9",
+      "catalog_key": "ruiz:1683"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "3431",
+      "record_hash": "05d90481436d09f975f15579b853c2b8ea9fe7071cd18b6841a27ee46558260b",
+      "catalog_key": "ruiz:3431"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "1687",
+      "record_hash": "efb692fd5adabf54c23cd6944c78d8ebdc9b5d7b7f61456612bb3e34525f814e",
+      "catalog_key": "ruiz:1687"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "3175",
+      "record_hash": "5626ec9b4342f0c22e95708438ad1bd3ac5d49f27d57ee2cb509a63a6b7371d8",
+      "catalog_key": "ruiz:3175"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "337",
+      "record_hash": "0f2205116272b93f42e37f2b1be8c3b7af8f5b93130cf99965ab43e57471c1e5",
+      "catalog_key": "ruiz:337"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "615",
+      "record_hash": "b7d74be2de49634775f93154add2ae919b6f1fdc22f90197ed06846536173baa",
+      "catalog_key": "ruiz:615"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "993",
+      "record_hash": "57bf1d4b50dc48be3e0dcf59e9bfcf6629f002111df4dab3eea7d9d02afdaa23",
+      "catalog_key": "ruiz:993"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "1329",
+      "record_hash": "ceb5c4a9e004470c0801bc33b301bb4b5b46844399a48e6b36f514e847f241f6",
+      "catalog_key": "ruiz:1329"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "1451",
+      "record_hash": "48ef56078d1dffb2db29bae8c5e4dcb6e5a56041d255b8da15a77b2c41664e78",
+      "catalog_key": "ruiz:1451"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "1713",
+      "record_hash": "16c1c032ba05d6ffdd1c7e1c75c8ca80ef9abd76ec0e75aafdf1aabb5bf29b8b",
+      "catalog_key": "ruiz:1713"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "1715",
+      "record_hash": "79ac63ffeb6a20b873e64d0eb66b016374feb07d9e8d61b9fa7146680936fd4c",
+      "catalog_key": "ruiz:1715"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "1717",
+      "record_hash": "75c4f27a6ed607c1c82210a88df4460cdeb42bd6ba9be6030d04f525d3cf8d0f",
+      "catalog_key": "ruiz:1717"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "1719",
+      "record_hash": "4a70025e3a4d121e543560006cf255f06c4cada6c6f73bf241a24e7c793f9305",
+      "catalog_key": "ruiz:1719"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "1721",
+      "record_hash": "3af9eb71fa5cfe702bc4ed443de22874338bf625065afe9a4c5f683d60cac829",
+      "catalog_key": "ruiz:1721"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "1723",
+      "record_hash": "f6b618d3fa8de0e87db69087ada8117286e1b59ebac889753fc096d044ed1c50",
+      "catalog_key": "ruiz:1723"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "1725",
+      "record_hash": "f98aea6a7f912107ef7ea2d61fe08d2eba9c371c97d6580affc0cbef00bab2c5",
+      "catalog_key": "ruiz:1725"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "1729",
+      "record_hash": "df8ab7360c98418f16c7ee1c4e5e64449b88cd6157c1553a70508cc8ac3ed5dd",
+      "catalog_key": "ruiz:1729"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "1727",
+      "record_hash": "a446fc7541859e854606aa9e849e4e0141e225173f002fa926d41e737fac2cf2",
+      "catalog_key": "ruiz:1727"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "1731",
+      "record_hash": "fe1c2ad248540325eb3ad9a6b85687bbbddba61da22b12afe30a7ac0b800c3e6",
+      "catalog_key": "ruiz:1731"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "1733",
+      "record_hash": "5f0fab639dcbd53e2a40f067e588c894f791175af5136beb0c79f747c34f7d2b",
+      "catalog_key": "ruiz:1733"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "1735",
+      "record_hash": "31b1715b6530ec6b67bf3439d57443256b9dd1c023dcc92f0382df45a90271c1",
+      "catalog_key": "ruiz:1735"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "1737",
+      "record_hash": "2a9b35691efd295ac130846b8ceed887f8465e8bb06da709376b5b39afedb3d3",
+      "catalog_key": "ruiz:1737"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "1739",
+      "record_hash": "b9cf356e22a441b7618d236f740331e7166aa1cf85b69c6c645cd0d75cde353b",
+      "catalog_key": "ruiz:1739"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "1741",
+      "record_hash": "a1d860da5f01d369df88416f264c0f13cb3adc5fd365ea29e767ab0b9ce16fbc",
+      "catalog_key": "ruiz:1741"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "793",
+      "record_hash": "a262a0175180b6998f68694e6c365ff16d6ecbbeb2a0654cfd2a961c76540271",
+      "catalog_key": "ruiz:793"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "1403",
+      "record_hash": "af48c0a583a70d2ec87738a63c5e590cafd24500b7572e0b75544f0cdab3854c",
+      "catalog_key": "ruiz:1403"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "1405",
+      "record_hash": "e6d3185fc9073015761dc23e9dca5186498c0192c46ccccd9f835ed2c9fefe52",
+      "catalog_key": "ruiz:1405"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "3417",
+      "record_hash": "92c64baa24f6e86b326fe97320d15536531e3283ebe91770cb4014ff67a7c356",
+      "catalog_key": "ruiz:3417"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2211",
+      "record_hash": "9969dc30f6c456a2799e6bfc9011ce4f9e74bda24fdea12528e8a953e5c9f1bb",
+      "catalog_key": "ruiz:2211"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2213",
+      "record_hash": "916b3e69bbe2ac7ca966259d52883ccab07874418c4fdda2f465f69c2f891817",
+      "catalog_key": "ruiz:2213"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2215",
+      "record_hash": "b7894d716af9dbaeff50316ecb57223b94077a876bd0b8bf1dfa36e1f274c55c",
+      "catalog_key": "ruiz:2215"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2217",
+      "record_hash": "b41f9ef3feb7dbd52dc80d6b7d527a37964bffb1bc8219af4cc4d899f3c4a131",
+      "catalog_key": "ruiz:2217"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2219",
+      "record_hash": "a3c54e8add5a934c093fd258c64af6f0512dfb792fcb05ab7308fcca2e9a6bdb",
+      "catalog_key": "ruiz:2219"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2221",
+      "record_hash": "3bf90870f1dc141a4d09d11480913478b1da668eeeccd43d7983cae9b43bad0a",
+      "catalog_key": "ruiz:2221"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2223",
+      "record_hash": "cc35a81562527f6b2db0d6386138f9272ae1a43abe3275a9248ecac5f34255f5",
+      "catalog_key": "ruiz:2223"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2225",
+      "record_hash": "9d3e8f518969dc9985d0802b8c35e5242f35c662c31f77d8bb3c036208803c61",
+      "catalog_key": "ruiz:2225"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2227",
+      "record_hash": "fdb1393cdf8233a2362cd1817ca7676ded41e6b9c0cc29a8f74b928ae79a3ee6",
+      "catalog_key": "ruiz:2227"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2229",
+      "record_hash": "e6e4f559a95bb48061546e0f71b7379a05927539668fee97506bb4fe4591f893",
+      "catalog_key": "ruiz:2229"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2231",
+      "record_hash": "f2cedd0fe91ebb2da3039bdf82c389bfe8ceaa3771ddab09f7fdfd0707f9a7d0",
+      "catalog_key": "ruiz:2231"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2233",
+      "record_hash": "b870416c428f1cf0757bc97d8f91ca4a87ac25e45bae2a1ef6bd35f945bcf1e7",
+      "catalog_key": "ruiz:2233"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2235",
+      "record_hash": "2d7697f238a3086e6854f02d324f91a1fc1d559c0a2ebe7fb283b9af57ae02b7",
+      "catalog_key": "ruiz:2235"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2237",
+      "record_hash": "f952e91c6d1e772d341bef1a667de3626dd318505a3de35c6d1b8ec35b78f9b5",
+      "catalog_key": "ruiz:2237"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2239",
+      "record_hash": "26cde87de06a2d48e14df381afb0f91c0050f1eee0e7a8486be434ada7b84582",
+      "catalog_key": "ruiz:2239"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2241",
+      "record_hash": "b629bbcbf5d7aaf5daff396511fbcdedfa0efb722fbf527364ea006913543128",
+      "catalog_key": "ruiz:2241"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "3329",
+      "record_hash": "b7919b9a88eb4a97032af03a93f8c793908052583a681b7d6e7fd952a90ff80e",
+      "catalog_key": "ruiz:3329"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "555",
+      "record_hash": "f1f62f220394964800be8a31e62d21ad2a8b905fa2ea21fbbd581968588e773e",
+      "catalog_key": "ruiz:555"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "3111",
+      "record_hash": "df19fb802a5b88c7bfbadb7bc770cf2e88f51958f3c75c039ae2d8d719eea008",
+      "catalog_key": "ruiz:3111"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "913",
+      "record_hash": "5c6aedb788e4777d7525de95d8206de604db2122e4f0877d8697cee35f8eca83",
+      "catalog_key": "ruiz:913"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "3393",
+      "record_hash": "f64caa60850e44a12cb516c3a2a5e6f7abd9e2c15d78aa4c7d4113eb250aa5b6",
+      "catalog_key": "ruiz:3393"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2627",
+      "record_hash": "713227d2c8139590aa2e0851272852cbdd151d9c7b01ce7c9dd6a100c4f6e6c1",
+      "catalog_key": "ruiz:2627"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2629",
+      "record_hash": "63fe6dbe557d780ef12b4fd89500fee23ae4b534fb57f02e04b9cf8fe9a9cfc3",
+      "catalog_key": "ruiz:2629"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2631",
+      "record_hash": "934a3365b23c7af512c17d68d0adbd93019c90aaed893931b9897e602c870b2d",
+      "catalog_key": "ruiz:2631"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2633",
+      "record_hash": "8065c9fa839404af602406da12edd9df313640419f2205b8184378143aed3ab0",
+      "catalog_key": "ruiz:2633"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2635",
+      "record_hash": "a188ac724b1168c04bce5c0f14bc0ead35d143250b406c94e2713ac1e5b630e6",
+      "catalog_key": "ruiz:2635"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2637",
+      "record_hash": "7489340a542e77ecaae98be034ca9c0963891f70614657492d38807f05cf2e98",
+      "catalog_key": "ruiz:2637"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2639",
+      "record_hash": "883c50c4c01d78f068f6d99de30217bb4b562cb30b28a3be297b30a432b7a38b",
+      "catalog_key": "ruiz:2639"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2641",
+      "record_hash": "e17933f56afe7c411c4e2cb2db4c987669167d31c6f4d400704085a647aa96c1",
+      "catalog_key": "ruiz:2641"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2643",
+      "record_hash": "5bbe27db49969cbf92fe3ca1549c404970df5474c74293b504fef46f7acf49d3",
+      "catalog_key": "ruiz:2643"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2645",
+      "record_hash": "4c37cbffea94693aa55352867faf115f7ba60b229e8c03abb55799138a6acb66",
+      "catalog_key": "ruiz:2645"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2647",
+      "record_hash": "9f21c8b30192a7ce6b7f422dfaa5778333a1d21e26ed3f9cc9a92fff020f3508",
+      "catalog_key": "ruiz:2647"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2649",
+      "record_hash": "c601394ec0bfdd31bb1bfb8598094e525f335a35b585cff73193bc8219d4e459",
+      "catalog_key": "ruiz:2649"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2651",
+      "record_hash": "5e58177dc23152715f640084f69be23d77323da433069d2af3917a0b59b864e6",
+      "catalog_key": "ruiz:2651"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2653",
+      "record_hash": "5615af009a5f2d09f4cfb01cc4fb5b9bb312ff9d92e0d7b7e210f3241ebde631",
+      "catalog_key": "ruiz:2653"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2655",
+      "record_hash": "4843ba4c6d87f95a524b1c4b21f33a0bbe531b928d38b5a8909a89d35fd21201",
+      "catalog_key": "ruiz:2655"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2657",
+      "record_hash": "f9f8edad31317e8bd0623e880314ea50fceb783bb61c9373434f168520183339",
+      "catalog_key": "ruiz:2657"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2659",
+      "record_hash": "8f6fce6466991501481fcbd9ca12db26ad3a5e1919d7527456cbb48073df8832",
+      "catalog_key": "ruiz:2659"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2661",
+      "record_hash": "a8e7151bcf8553df8680ddaaae4fa29d17b2295d5b11d27426713d6e8c659797",
+      "catalog_key": "ruiz:2661"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2663",
+      "record_hash": "51b85435b9d0c89819b416b5210c305f89212822e0d299acbdc6116781b70e3a",
+      "catalog_key": "ruiz:2663"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "443",
+      "record_hash": "f1c303d7e76cf048a54d91b6be5c5eed743a46a5e87b5f1f584f2a3b5dc55c49",
+      "catalog_key": "ruiz:443"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "445",
+      "record_hash": "7c82dd935894da698720c949ff1c7a172f42360c4b85046db5a5d84155683435",
+      "catalog_key": "ruiz:445"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "447",
+      "record_hash": "33e4f0cb489d349986b0a40f798b6ba78513e49cef203ae39745e97b086df695",
+      "catalog_key": "ruiz:447"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "449",
+      "record_hash": "8e12a6a223adccdaa942fcd884a384dd8a5bc620f7f2e9a4cacc485696e3cbb0",
+      "catalog_key": "ruiz:449"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "813",
+      "record_hash": "ea88daf480fd206069b69b6f1a2a3d1040bcc539e7b7444fa702e6b2f65f56f9",
+      "catalog_key": "ruiz:813"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "1083",
+      "record_hash": "edf440e5e6aac60f500cc8f590b8de6c012be7c6d530869769708f604f668328",
+      "catalog_key": "ruiz:1083"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "1315",
+      "record_hash": "12d42b73d882cf185b812250887f8bb6e9d2baf2b57f90d6b2a97112eea179de",
+      "catalog_key": "ruiz:1315"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2867",
+      "record_hash": "91bce198d6098fc50dad249ec38614a298c5cce887976f60eb6c53c8deec0690",
+      "catalog_key": "ruiz:2867"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2869",
+      "record_hash": "0e4064d903973ef901b323b086fcec24e3d6d96aa7a24cc3b17903cf3daff009",
+      "catalog_key": "ruiz:2869"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2871",
+      "record_hash": "e1a867a3f504ea80b0d983fef999dc0573e0a7094dc5b920e2a8c80494d52ad1",
+      "catalog_key": "ruiz:2871"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2873",
+      "record_hash": "2c3712f4692cb3c9992ddefd8059d9f71d5eb580fbd89503a909f5e57a3a0fb8",
+      "catalog_key": "ruiz:2873"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2875",
+      "record_hash": "df36623d20b2f14c8b3d1a5b0c00b586dde5d9f7c101d5592b11872ade6b631c",
+      "catalog_key": "ruiz:2875"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2877",
+      "record_hash": "c17ce4e5d08a7bb8be5e59d8eff884cfd2e9239aa652885a31a528e072f064cd",
+      "catalog_key": "ruiz:2877"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2879",
+      "record_hash": "4b09ad6b518d8631c4552bc39bb99e9a2d3ca0c031e9ef8add6c79496bef89ad",
+      "catalog_key": "ruiz:2879"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2881",
+      "record_hash": "70af9d0c6d517b271f98dd3dbc5a546f60bfc1da874960dd1bd33db7f93a0b4d",
+      "catalog_key": "ruiz:2881"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2883",
+      "record_hash": "4dd30a4b107d7b91be38dcd887cd33df18d26ee387342ac12f9f83bb0ac4260c",
+      "catalog_key": "ruiz:2883"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2885",
+      "record_hash": "591ab37f696035b838c8f4339eca794604d96bb3d71aa14ff797e3527d0bb274",
+      "catalog_key": "ruiz:2885"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2887",
+      "record_hash": "b91edcf5c2ffa494f872db12ebca0c927290eefa54cf8f75732e40acd0b2b3f2",
+      "catalog_key": "ruiz:2887"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2889",
+      "record_hash": "7fe0163b7b9bd5c678f43c3b15235921e7ce96e926dd4b7da1b2c69b331594cc",
+      "catalog_key": "ruiz:2889"
+    },
+    {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "2891",
+      "record_hash": "d17073960b11b3a4f2e1e72da626e107c0e5f27b14f9a599ad6fe9eda48eedc4",
+      "catalog_key": "ruiz:2891"
+    },
+    {
+      "source_key": "chopo_puebla",
+      "provider_key": "chopo",
+      "external_record_id": "11002",
+      "record_hash": "474bbb3b2b6d0b0b624ac74709707b0be0b3edd29376a43b1025f00ce6d60f35",
+      "catalog_key": "ruiz:1327"
+    }
+  ],
+  "normalization_queue": [
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "16167",
+      "raw_text": "QUÍMICA INTEGRAL DE 45 ELEMENTOS",
+      "normalized_input": "quimica integral de 45 elementos",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "17002",
+      "raw_text": "BIOMETRÍA HEMÁTICA",
+      "normalized_input": "biometria hematica",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "23006",
+      "raw_text": "EXAMEN GENERAL DE ORINA",
+      "normalized_input": "examen general de orina",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "22042",
+      "raw_text": "PERFIL TIROIDEO EN SUERO",
+      "normalized_input": "perfil tiroideo en suero",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "22211",
+      "raw_text": "25 HIDROXI VITAMINA D TOTAL (CALCIFEROL)",
+      "normalized_input": "25 hidroxi vitamina d total calciferol",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "4005",
+      "raw_text": "ELECTROCARDIOGRAMA DIGITAL EN REPOSO",
+      "normalized_input": "electrocardiograma digital en reposo",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "8149",
+      "raw_text": "RX DE TÓRAX POSTERO-ANTERIOR",
+      "normalized_input": "rx de torax postero anterior",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "13300",
+      "raw_text": "RESONANCIA MAGNÉTICA DE DIFUSIÓN DE CUERPO ENTERO",
+      "normalized_input": "resonancia magnetica de difusion de cuerpo entero",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "13299",
+      "raw_text": "RESONANCIA MAGNETICA MULTIPARAMETRICA DE PROSTATA",
+      "normalized_input": "resonancia magnetica multiparametrica de prostata",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "20336",
+      "raw_text": "GALACTOSA NEONATAL EN SANGRE SECA",
+      "normalized_input": "galactosa neonatal en sangre seca",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "25319",
+      "raw_text": "PANEL ÚLCERAS GENITALES (7 PATÓGENOS)",
+      "normalized_input": "panel ulceras genitales 7 patogenos",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "25320",
+      "raw_text": "PANEL ENFERMEDADES TRANSMISIÓN SEXUAL (14 PATÓGENOS)",
+      "normalized_input": "panel enfermedades transmision sexual 14 patogenos",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "2048",
+      "raw_text": "PRUEBA RÁPIDA AG DUO DETECCIÓN COVID-19/INFLUENZA A/B",
+      "normalized_input": "prueba rapida ag duo deteccion covid 19 influenza a b",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "25254",
+      "raw_text": "TEST PRENATAL NO INVASIVO (NIPT), ANEUPLOIDÍAS Y MICRODELECIONES",
+      "normalized_input": "test prenatal no invasivo nipt aneuploidias y microdeleciones",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "22162",
+      "raw_text": "COCIENTE sFlt 1/PlGF (PRONÓSTICO DE PREECLAMPSIA)",
+      "normalized_input": "cociente sflt 1 plgf pronostico de preeclampsia",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "18094",
+      "raw_text": "INMUNOHISTOQUÍMICA MAMA PANEL SELECTIVO",
+      "normalized_input": "inmunohistoquimica mama panel selectivo",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "24010",
+      "raw_text": "DETECCIÓN DE HER2/NEU POR FISH",
+      "normalized_input": "deteccion de her2 neu por fish",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "25289",
+      "raw_text": "PANEL CANCER HEREDITARIO NGS",
+      "normalized_input": "panel cancer hereditario ngs",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "25290",
+      "raw_text": "PANEL CANCER MAMA-OVARIO NGS",
+      "normalized_input": "panel cancer mama ovario ngs",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "25306",
+      "raw_text": "PANEL CANCER DE MAMA BRCA1-BRCA2",
+      "normalized_input": "panel cancer de mama brca1 brca2",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "15144",
+      "raw_text": "PRUEBA DE ALIENTO PARA HELICOBACTER PYLORI",
+      "normalized_input": "prueba de aliento para helicobacter pylori",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "21046",
+      "raw_text": "PRUEBA INMUNOLÓGICA ESPECIFICA PARA HEMOGLOBINA HUMANA EN HECES (FIT)",
+      "normalized_input": "prueba inmunologica especifica para hemoglobina humana en heces fit",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "8183",
+      "raw_text": "ORTOPANTOMOGRAFÍA",
+      "normalized_input": "ortopantomografia",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "10286",
+      "raw_text": "UROTOMOGRAFIA SIMPLE (BARRIDO RENAL)",
+      "normalized_input": "urotomografia simple barrido renal",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "10000747",
+      "raw_text": "PER.COTESTING BASE LÍQUIDA YGENOTIPO VPH",
+      "normalized_input": "per cotesting base liquida ygenotipo vph",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "10000748",
+      "raw_text": "PERFIL GINECOLOGICO CERVICO VAGINAL",
+      "normalized_input": "perfil ginecologico cervico vaginal",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "19972",
+      "raw_text": "AC IgA BRUCELLA ABORTUS",
+      "normalized_input": "ac iga brucella abortus",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "24070",
+      "raw_text": "MICROARREGLO PRENATAL (CytoScan OPTIMA)",
+      "normalized_input": "microarreglo prenatal cytoscan optima",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "24071",
+      "raw_text": "MICROARRAY EN PRODUCTO DE ABORTO (CYTOSCAN HD)",
+      "normalized_input": "microarray en producto de aborto cytoscan hd",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "24072",
+      "raw_text": "MICROARRAY GENOMICO (CYTOSCAN HD)",
+      "normalized_input": "microarray genomico cytoscan hd",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "24073",
+      "raw_text": "MICROARRAY PARA ENFERMEDADES HEMATOLOGICAS (CYTOSCAN HD)",
+      "normalized_input": "microarray para enfermedades hematologicas cytoscan hd",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "24074",
+      "raw_text": "MICROARREGLO ONCOLOGICO (ONCOSCAN)",
+      "normalized_input": "microarreglo oncologico oncoscan",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "10000786",
+      "raw_text": "PERFIL PREVENCION DE CANCER 1",
+      "normalized_input": "perfil prevencion de cancer 1",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "10000799",
+      "raw_text": "CHECK-UP BASICO FEMENINO Q45",
+      "normalized_input": "check up basico femenino q45",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "39319",
+      "raw_text": "PRUEBA RÁPIDA DE INFLUENZA (dos horas)",
+      "normalized_input": "prueba rapida de influenza dos horas",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "100155",
+      "raw_text": "PAQUETE PREVENCIÓN MUJER 2",
+      "normalized_input": "paquete prevencion mujer 2",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "100681",
+      "raw_text": "PAQUETE PREVENCIÓN MUJER 3",
+      "normalized_input": "paquete prevencion mujer 3",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "13699",
+      "raw_text": "PAQUETE PREVENCION MUJER",
+      "normalized_input": "paquete prevencion mujer",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "100688",
+      "raw_text": "CHECK UP INTEGRAL Q45",
+      "normalized_input": "check up integral q45",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "10000645",
+      "raw_text": "PERFIL SARS-CoV-2, INFLUENZA A y B por RT-qPCR",
+      "normalized_input": "perfil sars cov 2 influenza a y b por rt qpcr",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "16181",
+      "raw_text": "GLYCOMARK",
+      "normalized_input": "glycomark",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "20315",
+      "raw_text": "QUANTOSE IR",
+      "normalized_input": "quantose ir",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "25277",
+      "raw_text": "MATERGEN",
+      "normalized_input": "matergen",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "25278",
+      "raw_text": "DIABETES PREDICT",
+      "normalized_input": "diabetes predict",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "21045",
+      "raw_text": "CALPROTECTINA EN HECES",
+      "normalized_input": "calprotectina en heces",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "25276",
+      "raw_text": "PANEL SARS-CoV-2, INFLUENZA A y B por RT-qPCR",
+      "normalized_input": "panel sars cov 2 influenza a y b por rt qpcr",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "100721",
+      "raw_text": "PERFIL MONITOREO MATERNO FETAL QUÍMICA DE 45 ELEMENTOS",
+      "normalized_input": "perfil monitoreo materno fetal quimica de 45 elementos",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "10000335",
+      "raw_text": "COLANGIOGRAFIA ENDOVENOSA",
+      "normalized_input": "colangiografia endovenosa",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "25263",
+      "raw_text": "PANEL DE VIRUS RESPIRATORIO POR PCR",
+      "normalized_input": "panel de virus respiratorio por pcr",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "20093",
+      "raw_text": "METACUALONA EN ORINA",
+      "normalized_input": "metacualona en orina",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "16117",
+      "raw_text": "COLESTEROL DE ALTA/BAJA DENSIDAD EN SUERO",
+      "normalized_input": "colesterol de alta baja densidad en suero",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "13015",
+      "raw_text": "MEDIO DE CONTRASTE PARA RESONANCIA MAGNÉTICA",
+      "normalized_input": "medio de contraste para resonancia magnetica",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "10032",
+      "raw_text": "MEDIO DE CONTRASTE",
+      "normalized_input": "medio de contraste",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "39294",
+      "raw_text": "PRUEBA DE ANTÍGENO DE SARS-COV-2 (COVID-19)",
+      "normalized_input": "prueba de antigeno de sars cov 2 covid 19",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "12477",
+      "raw_text": "PERFIL HEPÁTICO",
+      "normalized_input": "perfil hepatico",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "100699",
+      "raw_text": "PERFIL ENFERMEDAD RENAL QUÍMICA DE 45 ELEMENTOS III",
+      "normalized_input": "perfil enfermedad renal quimica de 45 elementos iii",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "12076",
+      "raw_text": "PERFIL REUMATOLOGICO II",
+      "normalized_input": "perfil reumatologico ii",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "13598",
+      "raw_text": "PERFIL DIABETES CONTROL COMPLETO CR",
+      "normalized_input": "perfil diabetes control completo cr",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "99960",
+      "raw_text": "PAQUETE SALUDABLE BÁSICO",
+      "normalized_input": "paquete saludable basico",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "99997",
+      "raw_text": "PERFIL BÁSICO",
+      "normalized_input": "perfil basico",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "12077",
+      "raw_text": "PERFIL REUMATOLOGICO III",
+      "normalized_input": "perfil reumatologico iii",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "98817",
+      "raw_text": "PERFIL TIROIDEO",
+      "normalized_input": "perfil tiroideo",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "10000111",
+      "raw_text": "PERFIL CLIMATERIO",
+      "normalized_input": "perfil climaterio",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "10000124",
+      "raw_text": "PERFIL ANDROGENOS TOTALES BAN",
+      "normalized_input": "perfil androgenos totales ban",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "10000336",
+      "raw_text": "PERFIL GENÉTICO",
+      "normalized_input": "perfil genetico",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "10000360",
+      "raw_text": "PAQUETE SEGUIMIENTO COVID-19 PLUS",
+      "normalized_input": "paquete seguimiento covid 19 plus",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "10000361",
+      "raw_text": "PAQUETE SEGUIMIENTO COVID-19 BÁSICO",
+      "normalized_input": "paquete seguimiento covid 19 basico",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "10000386",
+      "raw_text": "PERFIL BACTERIOLÓGICO",
+      "normalized_input": "perfil bacteriologico",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "100156",
+      "raw_text": "PERFIL HEPÁTICO",
+      "normalized_input": "perfil hepatico",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "100157",
+      "raw_text": "PERFIL BÁSICO PROSTÁTICO",
+      "normalized_input": "perfil basico prostatico",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "100228",
+      "raw_text": "CHEQUEO BÁSICO",
+      "normalized_input": "chequeo basico",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "100238",
+      "raw_text": "PERFIL HORMONAL",
+      "normalized_input": "perfil hormonal",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "100246",
+      "raw_text": "CONTROL DIABETES",
+      "normalized_input": "control diabetes",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "100389",
+      "raw_text": "PERFIL PREOPERATORIO PRENATAL",
+      "normalized_input": "perfil preoperatorio prenatal",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "100460",
+      "raw_text": "COMPLEMENTO C3 Y C4",
+      "normalized_input": "complemento c3 y c4",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "100679",
+      "raw_text": "PERFIL PREOPERATORIO QUÍMICA DE 45 ELEMENTOS II",
+      "normalized_input": "perfil preoperatorio quimica de 45 elementos ii",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "100683",
+      "raw_text": "CHECK UP BASICO HORMONAL Q45",
+      "normalized_input": "check up basico hormonal q45",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "100694",
+      "raw_text": "PERFIL DEPORTISTAS QUÍMICA DE 45 ELEMENTOS 1",
+      "normalized_input": "perfil deportistas quimica de 45 elementos 1",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "100698",
+      "raw_text": "PERFIL ENFERMEDAD RENAL Q45 II",
+      "normalized_input": "perfil enfermedad renal q45 ii",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "100711",
+      "raw_text": "PERFIL PRENATAL PRIMER TRIMESTRE Q4",
+      "normalized_input": "perfil prenatal primer trimestre q4",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "100749",
+      "raw_text": "PERFIL PARA PACIENTE DIABETICO",
+      "normalized_input": "perfil para paciente diabetico",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "100750",
+      "raw_text": "PERFIL PARA PACIENTE NO DIABÉTICO",
+      "normalized_input": "perfil para paciente no diabetico",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "100760",
+      "raw_text": "PERFIL PARA PACIENTE DIABETICO",
+      "normalized_input": "perfil para paciente diabetico",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "100820",
+      "raw_text": "PERFIL DE EVALUACIÓN DE ENTRENAMIENTO",
+      "normalized_input": "perfil de evaluacion de entrenamiento",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "100850",
+      "raw_text": "PERFIL METALES PESADOS",
+      "normalized_input": "perfil metales pesados",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "100950",
+      "raw_text": "PERFIL PAQUETE BASICO HEPATICO",
+      "normalized_input": "perfil paquete basico hepatico",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "100975",
+      "raw_text": "PERFIL MEDICO HOMBRE",
+      "normalized_input": "perfil medico hombre",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "100977",
+      "raw_text": "PERFIL MÉDICO MUJER",
+      "normalized_input": "perfil medico mujer",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "101003",
+      "raw_text": "PERFIL GASTROINTESTINAL",
+      "normalized_input": "perfil gastrointestinal",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "101013",
+      "raw_text": "PERFIL NIÑOS Y ADOLESCENTES",
+      "normalized_input": "perfil ninos y adolescentes",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "101052",
+      "raw_text": "PERFIL BÁSICO MUJER",
+      "normalized_input": "perfil basico mujer",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "101130",
+      "raw_text": "PERFIL SEGUIMIENTO DIABETES 1",
+      "normalized_input": "perfil seguimiento diabetes 1",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "101133",
+      "raw_text": "DIAGNÓSTICO HIPERTENSIÓN",
+      "normalized_input": "diagnostico hipertension",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "101141",
+      "raw_text": "PANEL VIRAL PARA INSUFICIENCIA HEPÁ",
+      "normalized_input": "panel viral para insuficiencia hepa",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "101142",
+      "raw_text": "PERFIL DE ENFERMEDAD RENAL CRONICA",
+      "normalized_input": "perfil de enfermedad renal cronica",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "101145",
+      "raw_text": "PERFIL CINEMÁTICA DE HIERRO",
+      "normalized_input": "perfil cinematica de hierro",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "101265",
+      "raw_text": "CHECK UP PREVENTIVO",
+      "normalized_input": "check up preventivo",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "101266",
+      "raw_text": "PERFIL TIROIDEO AUTOINMUNE",
+      "normalized_input": "perfil tiroideo autoinmune",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "101299",
+      "raw_text": "PERFIL LUPUS",
+      "normalized_input": "perfil lupus",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "101344",
+      "raw_text": "PERFIL PERFIL DE TESTOSTERONA TOTAL",
+      "normalized_input": "perfil perfil de testosterona total",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "101430",
+      "raw_text": "PERFIL FEMENINO II",
+      "normalized_input": "perfil femenino ii",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "101431",
+      "raw_text": "CHECK UP BASICO TIROIDEO",
+      "normalized_input": "check up basico tiroideo",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "101435",
+      "raw_text": "CHECK UP BASICO TIROIDEO",
+      "normalized_input": "check up basico tiroideo",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "12048",
+      "raw_text": "PERFIL CONTROL DIABETES 1",
+      "normalized_input": "perfil control diabetes 1",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "12052",
+      "raw_text": "PERFIL HIPERTENSIÓN 1",
+      "normalized_input": "perfil hipertension 1",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "12053",
+      "raw_text": "PERFIL HIPERTENSIÓN 2",
+      "normalized_input": "perfil hipertension 2",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "12061",
+      "raw_text": "PERFIL DIAG. DIABETES I",
+      "normalized_input": "perfil diag diabetes i",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "12067",
+      "raw_text": "PERFIL PRENATAL II",
+      "normalized_input": "perfil prenatal ii",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "12068",
+      "raw_text": "PERFIL PRENATAL III",
+      "normalized_input": "perfil prenatal iii",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "12075",
+      "raw_text": "PERFIL REUMATOLOGICO I",
+      "normalized_input": "perfil reumatologico i",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "12078",
+      "raw_text": "PERFIL PROSTATICO I",
+      "normalized_input": "perfil prostatico i",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "12081",
+      "raw_text": "PERFIL INFERTILIDAD II",
+      "normalized_input": "perfil infertilidad ii",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "12084",
+      "raw_text": "PERFIL ENF.TRANS. SEXUAL I FEM",
+      "normalized_input": "perfil enf trans sexual i fem",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "12094",
+      "raw_text": "PERFIL PROBLEMAS FEBRILES I",
+      "normalized_input": "perfil problemas febriles i",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "raw_record_id": "12097",
+      "raw_text": "PERFIL HEPATICO I",
+      "normalized_input": "perfil hepatico i",
+      "status": "no_match",
+      "reason": "No exact golden catalog term; fuzzy candidates require manual clinical review."
+    }
+  ]
+}
