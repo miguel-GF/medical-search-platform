@@ -2,7 +2,7 @@
 
 begin;
 create extension if not exists pgtap with schema extensions;
-select extensions.plan(11);
+select extensions.plan(19);
 
 select extensions.has_function(
   'public',
@@ -15,9 +15,15 @@ select extensions.has_function('public', 'api_admin_dashboard', array[]::text[],
 select extensions.has_function(
   'public',
   'api_admin_update_alias',
-  array['uuid','uuid','text','uuid','text'],
+  array['uuid','uuid','text','uuid','text','uuid'],
   'admin alias update RPC exists'
 );
+select extensions.has_function('public', 'api_admin_providers', array['integer'], 'admin providers lookup exists');
+select extensions.has_function('public', 'api_admin_locations', array['integer'], 'admin locations lookup exists');
+select extensions.has_function('public', 'api_admin_offers', array['integer'], 'admin offers lookup exists');
+select extensions.has_function('public', 'api_admin_prices', array['integer'], 'admin prices lookup exists');
+select extensions.has_function('public', 'api_admin_quality_issues', array['text','integer'], 'admin quality lookup exists');
+select extensions.has_function('public', 'api_admin_alerts', array['text','integer'], 'admin alerts lookup exists');
 select extensions.is(jsonb_typeof(public.api_admin_dashboard()), 'object', 'admin dashboard returns JSON object');
 
 insert into core.provider_brands(id, name, normalized_name, slug)
@@ -68,6 +74,11 @@ select extensions.ok(
   (select distance_meters is not null from public.api_search('hemograma api', 'health_diagnostics', 19.04, -98.20, null, 1) limit 1),
   'api_search calculates distance when coordinates are provided'
 );
+select extensions.is(
+  (select count(*)::bigint from public.api_search('---', 'health_diagnostics', null, null, null, 20)),
+  0::bigint,
+  'api_search rejects queries that normalize to empty text'
+);
 
 insert into ingest.normalization_runs(id, input_type, raw_text, normalized_input, engine_version, status)
 values ('00000000-0000-0000-0000-000000000906', 'manual', 'Hemograma API', 'hemograma api', 'test', 'ambiguous');
@@ -75,8 +86,9 @@ select public.api_admin_update_alias(
   '00000000-0000-0000-0000-000000000906',
   '00000000-0000-0000-0000-000000000904',
   'BH API',
-  '00000000-0000-0000-0000-000000000901',
-  'Fixture manual review'
+  null,
+  'Fixture manual review',
+  '00000000-0000-0000-0000-000000000999'
 );
 select extensions.is(
   (select status from ingest.normalization_runs where id = '00000000-0000-0000-0000-000000000906'),
@@ -87,6 +99,11 @@ select extensions.is(
   (select count(*)::bigint from catalog.item_aliases where item_id = '00000000-0000-0000-0000-000000000904' and normalized_alias = 'bh api'),
   1::bigint,
   'admin alias update creates approved provider alias'
+);
+select extensions.is(
+  (select count(*)::bigint from audit.events where action = 'normalization.resolve' and entity_id = '00000000-0000-0000-0000-000000000904'),
+  1::bigint,
+  'admin alias update writes an audit event'
 );
 select extensions.is(
   (select count(*)::bigint from public.api_admin_catalog_items('api fixture', 10)),

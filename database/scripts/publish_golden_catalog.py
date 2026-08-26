@@ -7,10 +7,13 @@ mapping set; all other collected labels become explicit normalization runs.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
+import math
 import re
 import unicodedata
 from pathlib import Path
+from urllib.parse import urlparse
 from uuid import NAMESPACE_URL, uuid5
 
 
@@ -36,7 +39,62 @@ def jb(value: object) -> str:
 def sql_geography(coordinates: dict | None) -> str:
     if not coordinates:
         return "NULL"
-    return f"gis.ST_SetSRID(gis.ST_MakePoint({coordinates['longitude']}, {coordinates['latitude']}), 4326)::gis.geography"
+    try:
+        longitude = float(coordinates["longitude"])
+        latitude = float(coordinates["latitude"])
+    except (KeyError, TypeError, ValueError) as error:
+        raise ValueError("provider coordinates must contain numeric latitude and longitude") from error
+    if not all(math.isfinite(value) for value in (latitude, longitude)) or not -90 <= latitude <= 90 or not -180 <= longitude <= 180:
+        raise ValueError("provider coordinates are outside valid geographic bounds")
+    return f"gis.ST_SetSRID(gis.ST_MakePoint({longitude:.15g}, {latitude:.15g}), 4326)::gis.geography"
+
+
+def artifact_record_hash(payload: object) -> str:
+    encoded = json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
+
+
+def validate_url(value: object, label: str) -> None:
+    if value is None:
+        return
+    parsed = urlparse(str(value))
+    if parsed.scheme not in {"http", "https"} or not parsed.netloc:
+        raise ValueError(f"{label} must be an absolute HTTP(S) URL")
+
+
+def validate_artifact(manifest: dict, raw: list[dict], observations: list[dict], expected_source_key: str) -> None:
+    if manifest.get("status") != "succeeded":
+        raise ValueError(f"{expected_source_key} artifact is not succeeded")
+    if manifest.get("errors"):
+        raise ValueError(f"{expected_source_key} artifact contains collector errors")
+    if manifest.get("source_key") != expected_source_key:
+        raise ValueError(f"artifact source key mismatch for {expected_source_key}")
+    if len(raw) != int(manifest.get("records_received", -1)):
+        raise ValueError(f"{expected_source_key} raw record count does not match its manifest")
+    parsed_hashes: set[str] = set()
+    parsed_count = 0
+    rejected_count = 0
+    for row in raw:
+        if row.get("source_key") != expected_source_key:
+            raise ValueError(f"{expected_source_key} artifact contains another source")
+        if row.get("parse_status") != "parsed":
+            rejected_count += 1
+            continue
+        parsed_count += 1
+        record_hash = row.get("record_hash")
+        if not isinstance(record_hash, str) or not re.fullmatch(r"[0-9a-f]{64}", record_hash):
+            raise ValueError(f"{expected_source_key} artifact contains an invalid record hash")
+        if artifact_record_hash(row.get("payload")) != record_hash:
+            raise ValueError(f"{expected_source_key} artifact record hash mismatch")
+        parsed_hashes.add(record_hash)
+        validate_url(row.get("source_url"), f"{expected_source_key} source_url")
+        payload = row.get("payload") or {}
+        validate_url(payload.get("product_url"), f"{expected_source_key} product_url")
+    if parsed_count != int(manifest.get("records_valid", -1)) or rejected_count != int(manifest.get("records_rejected", -1)):
+        raise ValueError(f"{expected_source_key} artifact counts do not match its manifest")
+    for row in observations:
+        if row.get("record_hash") not in parsed_hashes:
+            raise ValueError(f"{expected_source_key} contains an orphan observation")
 
 
 def read_artifact(path: Path) -> tuple[dict, list[dict], list[dict]]:
@@ -51,6 +109,8 @@ def read_artifact(path: Path) -> tuple[dict, list[dict], list[dict]]:
 def render(fixture: dict, ruiz_artifact: Path, chopo_artifact: Path) -> str:
     ruiz_manifest, ruiz_raw, ruiz_observations = read_artifact(ruiz_artifact)
     chopo_manifest, chopo_raw, chopo_observations = read_artifact(chopo_artifact)
+    validate_artifact(ruiz_manifest, ruiz_raw, ruiz_observations, "ruiz_puebla")
+    validate_artifact(chopo_manifest, chopo_raw, chopo_observations, "chopo_puebla")
     artifacts = {
         "ruiz_puebla": (ruiz_manifest, ruiz_raw, ruiz_observations),
         "chopo_puebla": (chopo_manifest, chopo_raw, chopo_observations),
@@ -121,7 +181,7 @@ def render(fixture: dict, ruiz_artifact: Path, chopo_artifact: Path) -> str:
         provider_key = mapping["provider_key"]
         row = raw_by_source_hash.get((source_key, mapping["record_hash"]))
         if not row:
-            continue
+            raise ValueError(f"golden mapping does not exist in {source_key}: {mapping['record_hash']}")
         payload = row["payload"]
         item = item_by_key[mapping["catalog_key"]]
         brand_id = brand_ids[source_key]
@@ -138,13 +198,20 @@ def render(fixture: dict, ruiz_artifact: Path, chopo_artifact: Path) -> str:
         for price_key, amount in (payload.get("prices") or {}).items():
             # Provider APIs use zero as a sentinel for an unavailable discount.
             # It is not a real free diagnostic service and must not reach search.
-            if not isinstance(amount, (int, float)) or isinstance(amount, bool) or int(amount) <= 0:
+            if not isinstance(amount, (int, float)) or isinstance(amount, bool) or not math.isfinite(float(amount)):
+                raise ValueError(f"invalid price amount for {mapping['external_record_id']}: {amount!r}")
+            if int(amount) <= 0:
                 continue
+            if float(amount) != float(int(amount)):
+                raise ValueError(f"price amount must be an integer minor-unit value: {amount!r}")
             type_map = {"regular": ("regular", "default"), "online": ("online", "default"), "promotion": ("promo", "default"), "blue_card": ("member", "blue_card"), "gold_card": ("member", "gold_card"), "prepaid": ("other", "prepaid")}
             price_type, db_price_key = type_map.get(price_key, ("other", price_key))
             obs_lookup = f"(select so.id from ingest.source_observations so join ingest.raw_records rr on rr.id=so.raw_record_id where rr.crawl_run_id={q(artifacts[source_key][0]['run_id'])}::uuid and rr.record_hash={q(mapping['record_hash'])} and so.entity_type='price' and so.attribute_name='prices' limit 1)"
             lines.append(
-                f"insert into supply.price_versions(offer_scope_id,price_type,channel,price_key,amount_minor,currency,source_observation_id,confidence) select os.id,{q(price_type)},'any',{q(db_price_key)},{int(amount)},'MXN',{obs_lookup},1.0 from supply.offer_scopes os where os.offer_id={q(offer_id)} and os.scope_type='market' on conflict (offer_scope_id,price_type,channel,price_key) where is_current do update set amount_minor=excluded.amount_minor,last_seen_at=now(),source_observation_id=excluded.source_observation_id,is_current=true;"
+                f"update supply.price_versions pv set is_current=false,valid_to=now(),last_seen_at=now() from supply.offer_scopes os where pv.offer_scope_id=os.id and os.offer_id={q(offer_id)} and os.scope_type='market' and pv.price_type={q(price_type)} and pv.channel='any' and pv.price_key={q(db_price_key)} and pv.is_current and pv.amount_minor is distinct from {int(amount)};"
+            )
+            lines.append(
+                f"insert into supply.price_versions(offer_scope_id,price_type,channel,price_key,amount_minor,currency,source_observation_id,confidence) select os.id,{q(price_type)},'any',{q(db_price_key)},{int(amount)},'MXN',{obs_lookup},1.0 from supply.offer_scopes os where os.offer_id={q(offer_id)} and os.scope_type='market' on conflict (offer_scope_id,price_type,channel,price_key) where is_current do update set last_seen_at=now(),source_observation_id=excluded.source_observation_id,is_current=true;"
             )
         lines.append(
             f"insert into supply.offer_links(offer_scope_id,link_type,url,label,status) select os.id,'details',{q(payload.get('product_url'))},{q('Provider details')},'active' from supply.offer_scopes os where os.offer_id={q(offer_id)} and not exists(select 1 from supply.offer_links l where l.offer_scope_id=os.id and l.link_type='details' and l.url={q(payload.get('product_url'))});"
@@ -166,7 +233,7 @@ def render(fixture: dict, ruiz_artifact: Path, chopo_artifact: Path) -> str:
     for queue in fixture["normalization_queue"]:
         row = queue_by_external.get(str(queue["raw_record_id"]))
         if not row:
-            continue
+            raise ValueError(f"normalization queue record does not exist in Chopo artifact: {queue['raw_record_id']}")
         run_id = stable_id("normalization-run", f"chopo_puebla:{row.get('record_hash')}")
         lines.append(
             f"insert into ingest.normalization_runs(id,input_type,raw_record_id,provider_brand_id,raw_text,normalized_input,engine_version,status) select {q(run_id)},'crawler',rr.id,{q(brand_ids['chopo_puebla'])},{q(queue['raw_text'])},{q(queue['normalized_input'])},{q(fixture['version'])},'no_match' from ingest.raw_records rr where rr.crawl_run_id={q(chopo_manifest['run_id'])}::uuid and rr.record_hash={q(row.get('record_hash'))} on conflict(id) do nothing;"

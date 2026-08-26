@@ -2,7 +2,7 @@
 
 **Versión:** 1.0  
 **Fecha:** 22 de agosto de 2026  
-**Estado general:** fases 1–7 y Gate A implementados y verificados en Supabase DEV; Flutter queda deliberadamente después de cerrar cobertura clínica y de fuentes.
+**Estado general:** fases 1–7 tienen implementación técnica verificada en Supabase DEV; Gate A de viabilidad permanece abierto hasta demostrar cobertura clínica/comercial y operación sostenida. Flutter queda deliberadamente después de ese cierre.
 
 ---
 
@@ -309,7 +309,7 @@ No aceptar falsos equivalentes médicos por presión de cobertura.
 
 # Fase 6 — Admin interno V1
 
-**Estado:** ✅ Admin V1 operativo y probado
+**Estado:** ✅ Admin V1 operativo y probado; las diez vistas operativas están disponibles y protegidas por Supabase Auth
 
 Tecnología:
 
@@ -384,7 +384,7 @@ Todo con información real de Puebla.
 
 # Gate A — Viabilidad del Data Engine
 
-**Estado:** ✅ 10/10 aserciones remotas; cobertura clínica continúa como métrica de operación
+**Estado:** 🧪 smoke técnico 10/10; Gate A de viabilidad continúa abierto
 
 Antes de Flutter completo, evaluar:
 
@@ -603,7 +603,7 @@ Consentimiento y retention definidos.
 
 ## Estado ejecutado antes de Flutter (26 de agosto de 2026)
 
-Las fases previas a Flutter ya tienen implementacion funcional en DEV: base Supabase enlazada con migraciones 001-075; collectors Chopo y Ruiz con RAW/observaciones/runs publicados; catalogo dorado de 143 servicios y 144 mappings; Admin V1 en `apps/admin` con búsqueda de servicios canónicos; Search API V1 en `apps/api`; y Gate A remoto con 10/10 aserciones. DENUE queda listo para correr cuando exista `DENUE_API_TOKEN` oficial. Flutter sigue despues de cerrar cobertura y revision clinica.
+Las fases previas a Flutter tienen implementación técnica en DEV: base Supabase enlazada con migraciones 001-081; collectors Chopo y Ruiz con RAW/observaciones/runs publicados; catálogo dorado de 143 servicios y 144 mappings; Admin V1 en `apps/admin` con Supabase Auth y búsqueda de servicios canónicos; Search API V1 en `apps/api`; y smoke test Gate A remoto con 10/10 aserciones. La viabilidad continúa abierta porque sólo 1 de 143 servicios tiene dos proveedores. DENUE queda listo para correr cuando exista `DENUE_API_TOKEN` oficial. Flutter sigue después de cerrar cobertura y revisión clínica.
 
 ---
 
@@ -813,7 +813,7 @@ Primer `/search` real.
 | DENUE collector | 🟢 adapter listo; live requiere token oficial |
 | Chopo collector | ✅ live publicado |
 | Ruiz collector | ✅ live publicado |
-| Admin | ✅ V1 operativo |
+| Admin | ✅ V1 operativo; diez vistas y Supabase Auth |
 | API Search | ✅ V1 probado |
 | Flutter Web | ⏳ |
 | OCR | ⏳ |

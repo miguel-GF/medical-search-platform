@@ -10,4 +10,4 @@ SUPABASE_TIMEOUT_MS = "5000"
 # SUPABASE_URL
 # SUPABASE_ANON_KEY
 # SUPABASE_SERVICE_ROLE_KEY
-# ADMIN_TOKEN
+# ADMIN_USER_IDS (comma-separated Supabase auth user UUIDs allowed into Admin)

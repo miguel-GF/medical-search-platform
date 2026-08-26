@@ -1,3 +1,4 @@
+import hashlib
 import json
 from pathlib import Path
 from unittest.mock import MagicMock
@@ -57,13 +58,16 @@ def test_publisher_does_not_publish_without_a_raw_record(tmp_path: Path):
 
 
 def test_publisher_is_idempotent_for_an_existing_crawl_run(tmp_path: Path):
-    (tmp_path / "raw_records.jsonl").write_text('{"record_hash":"hash"}\n', encoding="utf-8")
+    payload = {"name": "fixture"}
+    record_hash = hashlib.sha256(json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
+    (tmp_path / "raw_records.jsonl").write_text(json.dumps({"source_key": "fixture", "record_hash": record_hash, "parse_status": "parsed", "record_type": "fixture", "payload": payload}) + "\n", encoding="utf-8")
     (tmp_path / "observations.jsonl").write_text("", encoding="utf-8")
     connection = MagicMock()
     connection.transaction.return_value.__enter__.return_value = connection
     connection.execute.side_effect = [
         MagicMock(fetchone=MagicMock(return_value=("source-id",))),
         MagicMock(fetchone=MagicMock(return_value=("endpoint-id",))),
+        MagicMock(),
         MagicMock(fetchone=MagicMock(return_value=None)),
         MagicMock(fetchone=MagicMock(return_value=("run-1",))),
         MagicMock(fetchone=MagicMock(return_value=(7,))),

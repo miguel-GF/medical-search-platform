@@ -89,3 +89,19 @@ def test_adapter_failure_after_partial_data_is_quarantined(tmp_path: Path):
     summary = CollectorRunner(tmp_path).run(FailingCollector())
     assert summary.status == "quarantined"
     assert "collector failure" in summary.errors[0]
+
+
+def test_last_success_uses_manifest_time_not_uuid_order(tmp_path: Path):
+    source = SourceSpec("fixture", "Fixture", "manual")
+    store = CollectorRunner(tmp_path).store
+    for run_id, finished_at, count in (
+        ("ffffffff-ffff-4fff-8fff-ffffffffffff", "2026-01-01T00:00:00Z", 10),
+        ("00000000-0000-4000-8000-000000000000", "2026-01-02T00:00:00Z", 20),
+    ):
+        run_dir = store.source_root(source.source_key) / run_id
+        run_dir.mkdir(parents=True)
+        (run_dir / "run_manifest.json").write_text(
+            json.dumps({"status": "succeeded", "records_received": count, "finished_at": finished_at}),
+            encoding="utf-8",
+        )
+    assert store.last_success_count(source.source_key) == 20

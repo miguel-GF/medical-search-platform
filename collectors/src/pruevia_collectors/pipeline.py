@@ -48,14 +48,19 @@ class JsonlRunStore:
         return self.root / slugify(source_key)
 
     def last_success_count(self, source_key: str) -> int | None:
-        manifests = sorted(self.source_root(source_key).glob("*/run_manifest.json"), reverse=True)
-        for manifest_path in manifests:
+        candidates: list[tuple[str, Path, dict]] = []
+        for manifest_path in self.source_root(source_key).glob("*/run_manifest.json"):
             try:
                 manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
             except (OSError, json.JSONDecodeError):
                 continue
             if manifest.get("status") == "succeeded":
+                candidates.append((str(manifest.get("finished_at", "")), manifest_path, manifest))
+        for _, _, manifest in sorted(candidates, key=lambda item: item[0], reverse=True):
+            try:
                 return int(manifest["records_received"])
+            except (KeyError, TypeError, ValueError):
+                continue
         return None
 
     def create_run(self, source_key: str) -> tuple[str, Path]:

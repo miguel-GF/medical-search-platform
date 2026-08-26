@@ -1,8 +1,9 @@
 import { SupabaseRpcClient } from './supabase.js';
-import type { AdminCatalogItem, Env, RpcClient, SearchRow } from './types.js';
+import type { AdminAlert, AdminCatalogItem, AdminQualityIssue, AdminUser, Env, RpcClient, SearchRow } from './types.js';
 
 interface Dependencies {
   rpc: RpcClient;
+  authenticateAdmin?: (request: Request, env: Env) => Promise<AdminUser | null>;
 }
 
 const JSON_HEADERS = { 'content-type': 'application/json; charset=utf-8' };
@@ -24,23 +25,27 @@ export function createHandler(dependencies: Dependencies) {
       if (url.pathname === '/api/v1/services' && request.method === 'GET') {
         return json({ error: { code: 'route_requires_id', message: 'Use /api/v1/services/{id}' } }, 400, origin);
       }
-      const serviceMatch = url.pathname.match(/^\/api\/v1\/services\/([0-9a-f-]{36})(?:\/(providers))?$/i);
+      const serviceMatch = url.pathname.match(/^\/api\/v1\/services\/([^/]+)(?:\/(providers))?$/i);
       if (serviceMatch && request.method === 'GET') {
+        if (!isUuid(serviceMatch[1])) return json({ error: { code: 'invalid_id', message: 'service id must be a UUID' } }, 400, origin);
         const payload = await dependencies.rpc.call('api_service_detail', { p_service_id: serviceMatch[1] });
-        return json(payload ?? null, payload ? 200 : 404, origin);
+        if (!payload) return json(null, 404, origin);
+        return json(serviceMatch[2] ? { service_id: serviceMatch[1], providers: (payload as { offers?: unknown[] }).offers ?? [] } : payload, 200, origin);
       }
-      const providerMatch = url.pathname.match(/^\/api\/v1\/providers\/([0-9a-f-]{36})(?:\/(services))?$/i);
+      const providerMatch = url.pathname.match(/^\/api\/v1\/providers\/([^/]+)(?:\/(services))?$/i);
       if (providerMatch && request.method === 'GET') {
+        if (!isUuid(providerMatch[1])) return json({ error: { code: 'invalid_id', message: 'provider id must be a UUID' } }, 400, origin);
         const payload = await dependencies.rpc.call('api_provider_detail', { p_provider_brand_id: providerMatch[1] });
-        return json(payload ?? null, payload ? 200 : 404, origin);
+        if (!payload) return json(null, 404, origin);
+        return json(providerMatch[2] ? { provider_id: providerMatch[1], services: (payload as { services?: unknown[] }).services ?? [] } : payload, 200, origin);
       }
       if (url.pathname.startsWith('/api/v1/admin/')) {
-        return await adminResponse(request, url, env, dependencies.rpc, origin);
+        return await adminResponse(request, url, env, dependencies.rpc, origin, dependencies.authenticateAdmin ?? verifyAdmin);
       }
       return json({ error: { code: 'not_found', message: 'Route not found' } }, 404, origin);
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Unexpected error';
-      return json({ error: { code: 'internal_error', message } }, 500, origin);
+      console.error('Pruevia API request failed', error);
+      return json({ error: { code: 'internal_error', message: 'The request could not be completed' } }, 500, origin);
     }
   };
 }
@@ -51,7 +56,7 @@ export function createWorkerHandler(env: Env) {
 
 async function searchResponse(url: URL, rpc: RpcClient, origin: string): Promise<Response> {
   const query = (url.searchParams.get('q') ?? '').trim();
-  if (!query || query.length > 200) {
+  if (!query || query.length > 200 || !/[\p{L}\p{N}]/u.test(query)) {
     return json({ error: { code: 'invalid_query', message: 'q is required and must be at most 200 characters' } }, 400, origin);
   }
   const limit = parseBoundedInt(url.searchParams.get('limit'), 20, 1, 100);
@@ -60,19 +65,28 @@ async function searchResponse(url: URL, rpc: RpcClient, origin: string): Promise
   if ((latitude === null) !== (longitude === null) || Number.isNaN(latitude) || Number.isNaN(longitude)) {
     return json({ error: { code: 'invalid_coordinates', message: 'lat and lng must be provided together' } }, 400, origin);
   }
+  const domain = url.searchParams.get('domain') ?? 'health_diagnostics';
+  if (!/^[a-z][a-z0-9_]{1,63}$/.test(domain)) {
+    return json({ error: { code: 'invalid_domain', message: 'domain is invalid' } }, 400, origin);
+  }
+  const locationId = url.searchParams.get('location_id');
+  if (locationId && !isUuid(locationId)) {
+    return json({ error: { code: 'invalid_location_id', message: 'location_id must be a UUID' } }, 400, origin);
+  }
   const rows = await rpc.call<SearchRow[]>('api_search', {
     p_query: query,
-    p_domain_code: url.searchParams.get('domain') ?? 'health_diagnostics',
+    p_domain_code: domain,
     p_latitude: latitude,
     p_longitude: longitude,
-    p_location_id: url.searchParams.get('location_id'),
+    p_location_id: locationId,
     p_limit: limit,
   });
   return json({ query, results: groupSearchRows(rows ?? []) }, 200, origin);
 }
 
-async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClient, origin: string): Promise<Response> {
-  if (!env.ADMIN_TOKEN || request.headers.get('authorization') !== `Bearer ${env.ADMIN_TOKEN}`) {
+async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClient, origin: string, authenticateAdmin: (request: Request, env: Env) => Promise<AdminUser | null>): Promise<Response> {
+  const user = await authenticateAdmin(request, env);
+  if (!user) {
     return json({ error: { code: 'unauthorized', message: 'Admin authorization required' } }, 401, origin);
   }
   if (request.method === 'GET' && url.pathname === '/api/v1/admin/dashboard') {
@@ -105,11 +119,34 @@ async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClien
       origin,
     );
   }
-  const resolveMatch = url.pathname.match(/^\/api\/v1\/admin\/normalization\/([0-9a-f-]{36})\/resolve$/i);
+  const adminLookups: Record<string, { rpc: string; limit: number }> = {
+    '/api/v1/admin/providers': { rpc: 'api_admin_providers', limit: 200 },
+    '/api/v1/admin/locations': { rpc: 'api_admin_locations', limit: 200 },
+    '/api/v1/admin/offers': { rpc: 'api_admin_offers', limit: 200 },
+    '/api/v1/admin/prices': { rpc: 'api_admin_prices', limit: 200 },
+  };
+  const lookup = adminLookups[url.pathname];
+  if (request.method === 'GET' && lookup) {
+    return json(await rpc.call(lookup.rpc, { p_limit: parseBoundedInt(url.searchParams.get('limit'), 100, 1, lookup.limit) }, { admin: true }), 200, origin);
+  }
+  if (request.method === 'GET' && url.pathname === '/api/v1/admin/quality-issues') {
+    return json(await rpc.call<AdminQualityIssue[]>('api_admin_quality_issues', { p_status: url.searchParams.get('status'), p_limit: parseBoundedInt(url.searchParams.get('limit'), 100, 1, 200) }, { admin: true }), 200, origin);
+  }
+  if (request.method === 'GET' && url.pathname === '/api/v1/admin/alerts') {
+    return json(await rpc.call<AdminAlert[]>('api_admin_alerts', { p_status: url.searchParams.get('status'), p_limit: parseBoundedInt(url.searchParams.get('limit'), 100, 1, 200) }, { admin: true }), 200, origin);
+  }
+  const resolveMatch = url.pathname.match(/^\/api\/v1\/admin\/normalization\/([^/]+)\/resolve$/i);
   if (resolveMatch && request.method === 'POST') {
+    if (!isUuid(resolveMatch[1])) return json({ error: { code: 'invalid_id', message: 'normalization run id must be a UUID' } }, 400, origin);
     const body = await request.json().catch(() => null) as Record<string, unknown> | null;
-    if (!body || typeof body.selected_item_id !== 'string' || typeof body.alias !== 'string') {
+    if (!body || typeof body.selected_item_id !== 'string' || !isUuid(body.selected_item_id) || typeof body.alias !== 'string' || body.alias.trim().length === 0 || body.alias.length > 200) {
       return json({ error: { code: 'invalid_body', message: 'selected_item_id and alias are required' } }, 400, origin);
+    }
+    if (typeof body.provider_brand_id === 'string' && !isUuid(body.provider_brand_id)) {
+      return json({ error: { code: 'invalid_body', message: 'provider_brand_id must be a UUID' } }, 400, origin);
+    }
+    if (typeof body.reason === 'string' && body.reason.length > 1000) {
+      return json({ error: { code: 'invalid_body', message: 'reason is too long' } }, 400, origin);
     }
     return json(await rpc.call('api_admin_update_alias', {
       p_normalization_run_id: resolveMatch[1],
@@ -117,9 +154,34 @@ async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClien
       p_alias: body.alias,
       p_provider_brand_id: typeof body.provider_brand_id === 'string' ? body.provider_brand_id : null,
       p_reason: typeof body.reason === 'string' ? body.reason : 'Manual admin review',
+      p_reviewer_user_id: user.id,
     }, { admin: true }), 200, origin);
   }
   return json({ error: { code: 'not_found', message: 'Admin route not found' } }, 404, origin);
+}
+
+async function verifyAdmin(request: Request, env: Env): Promise<AdminUser | null> {
+  const authorization = request.headers.get('authorization') ?? '';
+  const match = authorization.match(/^Bearer\s+([^\s]+)$/i);
+  if (!match || !env.SUPABASE_URL || !env.SUPABASE_ANON_KEY) return null;
+  const allowedIds = new Set((env.ADMIN_USER_IDS ?? '').split(',').map((value) => value.trim().toLowerCase()).filter(isUuid));
+  if (allowedIds.size === 0) return null;
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 5000);
+  try {
+    const response = await fetch(`${env.SUPABASE_URL.replace(/\/$/, '')}/auth/v1/user`, {
+      headers: { apikey: env.SUPABASE_ANON_KEY, Authorization: `Bearer ${match[1]}` },
+      signal: controller.signal,
+    });
+    if (!response.ok) return null;
+    const user = await response.json() as { id?: unknown };
+    if (typeof user.id !== 'string' || !isUuid(user.id) || !allowedIds.has(user.id.toLowerCase())) return null;
+    return { id: user.id };
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 function groupSearchRows(rows: SearchRow[]) {
@@ -197,6 +259,10 @@ function parseCoordinate(value: string | null, min: number, max: number): number
   if (value === null || value.trim() === '') return null;
   const parsed = Number(value);
   return Number.isFinite(parsed) && parsed >= min && parsed <= max ? parsed : Number.NaN;
+}
+
+function isUuid(value: string): boolean {
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value);
 }
 
 function json(value: unknown, status: number, origin: string): Response {

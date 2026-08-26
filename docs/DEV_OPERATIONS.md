@@ -45,7 +45,7 @@ npx.cmd wrangler login
 npx.cmd wrangler secret put SUPABASE_URL
 npx.cmd wrangler secret put SUPABASE_ANON_KEY
 npx.cmd wrangler secret put SUPABASE_SERVICE_ROLE_KEY
-npx.cmd wrangler secret put ADMIN_TOKEN
+npx.cmd wrangler secret put ADMIN_USER_IDS
 npx.cmd wrangler deploy
 ```
 
@@ -53,11 +53,14 @@ El deploy real requiere autenticación Cloudflare; el dry-run ya está verificad
 
 ## Admin V1
 
+El Admin autentica operadores con Supabase Auth. El Worker valida el JWT contra Supabase y comprueba el UUID en `ADMIN_USER_IDS`; nunca se compila un token administrativo en el frontend.
+
 Desde `apps/admin/`:
 
 ```powershell
 $env:VITE_API_URL = "https://<worker>.workers.dev"
-$env:VITE_ADMIN_TOKEN = "<admin-token>"
+$env:VITE_SUPABASE_URL = "https://<project-ref>.supabase.co"
+$env:VITE_SUPABASE_ANON_KEY = "<public-anon-key>"
 npm.cmd ci
 npm.cmd run typecheck
 npm.cmd test

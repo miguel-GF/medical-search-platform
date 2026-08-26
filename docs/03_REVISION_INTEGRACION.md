@@ -1,22 +1,24 @@
 # Pruevia — Revisión de integración
 
 **Fecha:** 25 de agosto de 2026  
-**Alcance:** documentación canónica, 7 migraciones SQL, seed y pruebas pgTAP de Database V1.  
+**Alcance:** documentación canónica, migraciones SQL 001-081, seed y pruebas pgTAP de Database V1.
 **Veredicto:** propuesta coherente y con una base técnica fuerte; la incertidumbre principal está en validar operación de datos y demanda, no en la idea central.
 
 ## Estado operativo actualizado
 
 ### Corte ejecutado: 26 de agosto de 2026
 
-El flujo previo a Flutter esta operativo en DEV. Supabase contiene 143 servicios activos, 144 ofertas, 15 sucursales Ruiz, 290 precios vigentes y 259 corridas de normalizacion (144 resueltas y 115 `no_match`). Los precios cero usados por Ruiz como sentinela de descuento no disponible fueron eliminados y ahora existe una restriccion positiva en `supply.price_versions`. La migración 075 agrega un lookup de servicios canónicos para que Admin resuelva aliases sin SQL.
+El flujo previo a Flutter está operativo técnicamente en DEV. Supabase contiene 143 servicios activos, 144 ofertas (143 Ruiz y 1 Chopo), 15 sucursales Ruiz, 290 precios vigentes y 259 corridas de normalización (144 resueltas y 115 `no_match`). La cobertura multi-proveedor actual es 1 de 143 servicios. Los precios cero usados por Ruiz como sentinela de descuento no disponible fueron eliminados y ahora existe una restricción positiva en `supply.price_versions`. Las migraciones 075-077 agregan lookup administrativo, hardening de integridad y búsqueda con diversidad de proveedores.
 
-La prueba Gate A confirma 10/10 aserciones. `public.api_search` fue ejecutada con coordenadas reales de Puebla: para `mastografia unilateral` devuelve ofertas de Laboratorios Ruiz y Laboratorio Medico del Chopo, con sucursal, distancia, URL de fuente y precio. El Worker REST y el Admin V1 tienen typecheck, tests y build verdes.
+El smoke test Gate A confirma 10/10 aserciones, pero el Gate A de viabilidad permanece abierto. Con el límite normal de 20, `public.api_search` prioriza ambos proveedores cuando existe oferta compartida; la cobertura comercial todavía es insuficiente para declarar validado el producto. El Worker REST y el Admin V1 tienen typecheck, tests y build verdes.
+
+Admin V1 ahora expone dashboard, providers, locations, offers, prices, crawl runs, RAW, cola de normalización, calidad y alertas. Las lecturas operativas usan RPCs `service_role`; la sesión del operador usa Supabase Auth y el allowlist `ADMIN_USER_IDS` del Worker.
 
 Limitaciones explicitas: DENUE requiere `DENUE_API_TOKEN` oficial para una corrida live; la cobertura de dos proveedores actualmente se demuestra con la coincidencia exacta de mastografia y no implica equivalencia clinica de etiquetas fuzzy. La cola `no_match` se mantiene visible para revision humana.
 
-La base ya no está solo en revisión estática. El proyecto Supabase enlazado (`pruevia-dev`, región `us-east-1`) recibió las migraciones 001-074 y el seed mediante `db push --include-seed`. La validación remota confirmó 13 schemas, 45 tablas, las extensiones `postgis`, `pg_trgm`, `unaccent` y `pgcrypto`, un dominio de salud, 9 tipos de muestra y 4 feature flags.
+La base ya no está solo en revisión estática. El proyecto Supabase enlazado (`pruevia-dev`, región `us-east-1`) recibió las migraciones 001-077 y el seed mediante `db push --include-seed`. La validación remota confirmó 13 schemas, 45 tablas, las extensiones `postgis`, `pg_trgm`, `unaccent` y `pgcrypto`, un dominio de salud, 9 tipos de muestra y 4 feature flags.
 
-Las 15 pruebas estructurales/precio existentes, 10 invariantes nuevas, 9 pruebas de API y 10 pruebas de Gate A se ejecutaron contra la base enlazada con `db query`; el runner pgTAP integrado sigue requiriendo Docker local, que no está disponible en este entorno.
+Las pruebas estructurales, invariantes, API y Gate A se ejecutaron contra la base enlazada con `db query`; el runner pgTAP integrado sigue requiriendo Docker local, que no está disponible en este entorno.
 
 El motor de collectors ya tiene artefactos RAW reproducibles, cuarentena por caídas parciales o descensos anómalos, adaptadores DENUE, Chopo Puebla y Ruiz Puebla, y normalización determinista. Una corrida real de Chopo produjo 116 registros válidos y 576 observaciones; Ruiz aportó 143 ofertas y 15 sucursales. El catálogo dorado publica solo equivalencias exactas y conserva los casos restantes para revisión clínica.
 
@@ -78,7 +80,7 @@ La conexión Worker → Supabase quedó fijada en un ADR: el Worker usa RPCs RES
 La inspección estática confirmó:
 
 - 45 sentencias `CREATE TABLE`, consistentes con el catálogo;
-- 7 migraciones transaccionales y ordenadas por responsabilidad;
+- migraciones transaccionales y ordenadas por responsabilidad;
 - extensiones PostGIS, `pg_trgm`, `unaccent` y `pgcrypto` declaradas;
 - función `catalog.search_items()`;
 - función `supply.resolve_prices()` con prioridad location > market > brand;

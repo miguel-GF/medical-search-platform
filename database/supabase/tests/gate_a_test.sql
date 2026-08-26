@@ -35,7 +35,7 @@ select extensions.ok(
   'unmatched labels remain explicitly reviewable'
 );
 select extensions.is(
-  (select count(distinct provider_name)::bigint from public.api_search('mastografia unilateral', 'health_diagnostics', 19.0433, -98.2011, null, 100)),
+  (select count(distinct provider_name)::bigint from public.api_search('mastografia unilateral', 'health_diagnostics', 19.0433, -98.2011, null, 20)),
   2::bigint,
   'search returns both commercial providers for a shared exact service'
 );

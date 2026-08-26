@@ -6,16 +6,16 @@ El piloto inicial está enfocado en Puebla, México. El nombre **Pruevia** es pr
 
 ## Estado ejecutado al 26 de agosto de 2026
 
-El Data Engine previo a Flutter ya esta funcionando en Supabase DEV: 143 servicios activos, 144 ofertas, collectors Chopo/Ruiz publicados, Search API V1, Admin V1 y Gate A remoto con 10/10 aserciones. La busqueda real de `mastografia unilateral` retorna resultados de ambos proveedores con precio, sucursal y distancia. DENUE queda pendiente solo de su token oficial.
+El Data Engine previo a Flutter funciona técnicamente en Supabase DEV, pero Gate A de viabilidad sigue abierto: hay 143 servicios activos, 144 ofertas (143 Ruiz y 1 Chopo), y sólo 1 servicio con dos proveedores. La búsqueda por defecto ya prioriza diversidad de proveedores, pero todavía falta ampliar cobertura clínica y comercial antes de Flutter. DENUE queda pendiente de su token oficial.
 
 Consulta el detalle y los comandos reproducibles en [docs/03_REVISION_INTEGRACION.md](docs/03_REVISION_INTEGRACION.md) y [docs/02_FASES_IMPLEMENTACION.md](docs/02_FASES_IMPLEMENTACION.md).
 
 ## Estado actual
 
 - Arquitectura de producto y software: definida.
-- Base de datos V1: 45 tablas y 7 migraciones generadas.
+- Base de datos V1: migraciones 001-081 aplicadas y verificadas.
 - Despliegue y validación física en Supabase DEV: completado para el Data Engine previo a Flutter.
-- Collectors Chopo/Ruiz, Search API V1 y Admin V1: implementados y probados; Flutter y DENUE live siguen condicionados por sus respectivos gates.
+- Collectors Chopo/Ruiz, Search API V1 y Admin V1: implementados y probados; el Admin usa Supabase Auth y Flutter/DENUE live siguen condicionados por sus respectivos gates.
 
 ## Repositorio
 
