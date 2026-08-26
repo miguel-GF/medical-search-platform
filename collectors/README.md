@@ -33,6 +33,15 @@ Desde `collectors/`:
 python -m pytest
 ```
 
+Smoke run de Chopo Puebla (solo escribe artefactos locales):
+
+```powershell
+$env:PYTHONPATH = "src"
+python -m pruevia_collectors.cli_chopo --max-pages 1
+```
+
+El collector de DENUE requiere `DENUE_API_TOKEN` y recibe coordenadas/radio explícitos.
+
 ## Contrato de un adapter
 
 Un adapter debe separar descubrimiento/recuperación de la persistencia:

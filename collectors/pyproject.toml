@@ -14,6 +14,7 @@ dependencies = [
 
 [project.scripts]
 pruevia-denue = "pruevia_collectors.cli:main"
+pruevia-chopo = "pruevia_collectors.cli_chopo:main"
 
 [project.optional-dependencies]
 dev = ["pytest>=8,<9"]
