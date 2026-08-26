@@ -79,6 +79,7 @@ class CollectorRunner:
         raw_path = run_dir / "raw_records.jsonl"
         observations_path = run_dir / "observations.jsonl"
         errors: list[str] = []
+        collector_failure = False
         seen_hashes: set[str] = set()
         records_received = records_valid = records_rejected = 0
 
@@ -138,6 +139,7 @@ class CollectorRunner:
                             + "\n"
                         )
             except Exception as error:  # adapters must not hide transport/parser failures
+                collector_failure = True
                 errors.append(f"collector failure: {error}")
 
         deviation = None
@@ -145,8 +147,8 @@ class CollectorRunner:
             deviation = round((records_received - previous_success_count) / previous_success_count * 100, 4)
 
         status = "succeeded"
-        if errors and records_valid == 0:
-            status = "failed"
+        if collector_failure:
+            status = "failed" if records_valid == 0 else "quarantined"
         if source.expected_min_records is not None and records_received < source.expected_min_records:
             status = "quarantined"
             errors.append(f"received {records_received}, below expected minimum {source.expected_min_records}")

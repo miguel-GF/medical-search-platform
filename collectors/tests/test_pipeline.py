@@ -73,3 +73,19 @@ def test_expected_minimum_quarantines_empty_result(tmp_path: Path):
 
     assert summary.status == "quarantined"
     assert summary.records_received == 0
+
+
+def test_adapter_failure_after_partial_data_is_quarantined(tmp_path: Path):
+    source = SourceSpec("fixture", "Fixture", "manual")
+
+    class FailingCollector:
+        def __init__(self):
+            self.source = source
+
+        def collect(self):
+            yield record("fixture", "1")
+            raise RuntimeError("upstream returned 503")
+
+    summary = CollectorRunner(tmp_path).run(FailingCollector())
+    assert summary.status == "quarantined"
+    assert "collector failure" in summary.errors[0]
