@@ -39,16 +39,19 @@ const row: SearchRow = {
 
 describe('Pruevia API', () => {
   it('returns a grouped search response', async () => {
-    const rpc = rpcWith([row]);
+    const rpc = rpcWith([row, { ...row, price_type: 'member', price_key: 'blue_card', amount_minor: 22000 }]);
     const response = await createHandler({ rpc })(new Request('https://api.test/api/v1/search?q=biometria'), env);
     expect(response.status).toBe(200);
-    expect(await response.json()).toEqual({
+    const payload = await response.json() as { results: Array<{ offers: Array<{ prices: unknown[] }> }> };
+    expect(payload).toEqual(expect.objectContaining({
       query: 'biometria',
       results: [{
         service: expect.objectContaining({ id: row.service_id, display_name: row.display_name }),
-        offers: [expect.objectContaining({ id: row.offer_id, price: expect.objectContaining({ amount_minor: 25000 }) })],
+        offers: [expect.objectContaining({ id: row.offer_id, price: expect.objectContaining({ amount_minor: 25000 }), prices: expect.any(Array) })],
       }],
-    });
+    }));
+    expect(payload.results[0].offers).toHaveLength(1);
+    expect(payload.results[0].offers[0].prices).toHaveLength(2);
   });
 
   it('rejects incomplete coordinates and empty queries', async () => {

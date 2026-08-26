@@ -113,7 +113,16 @@ async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClien
 }
 
 function groupSearchRows(rows: SearchRow[]) {
-  const services = new Map<string, { service: Record<string, unknown>; offers: Record<string, unknown>[] }>();
+  type GroupedOffer = {
+    id: string;
+    provider: Record<string, unknown>;
+    location: Record<string, unknown> | null;
+    distance_meters: number | null;
+    price: Record<string, unknown> | null;
+    prices: Map<string, Record<string, unknown>>;
+    source: Record<string, unknown> | null;
+  };
+  const services = new Map<string, { service: Record<string, unknown>; offers: Map<string, GroupedOffer> }>();
   for (const row of rows) {
     const existing = services.get(row.service_id) ?? {
       service: {
@@ -123,9 +132,10 @@ function groupSearchRows(rows: SearchRow[]) {
         term_source: row.term_source,
         confidence: row.confidence,
       },
-      offers: [],
+      offers: new Map<string, GroupedOffer>(),
     };
-    existing.offers.push({
+    const offerKey = `${row.offer_id}:${row.provider_location_id ?? 'brand'}`;
+    const offer = existing.offers.get(offerKey) ?? {
       id: row.offer_id,
       provider: { id: row.provider_brand_id, name: row.provider_name },
       location: row.provider_location_id ? {
@@ -135,18 +145,37 @@ function groupSearchRows(rows: SearchRow[]) {
         longitude: row.longitude,
       } : null,
       distance_meters: row.distance_meters,
-      price: row.amount_minor === null ? null : {
+      price: null,
+      prices: new Map<string, Record<string, unknown>>(),
+      source: row.source_url ? { url: row.source_url, last_seen_at: row.price_last_seen_at } : null,
+    };
+    if (row.amount_minor !== null) {
+      const price = {
         type: row.price_type,
         key: row.price_key,
         amount_minor: row.amount_minor,
         currency: row.currency,
         last_seen_at: row.price_last_seen_at,
-      },
-      source: row.source_url ? { url: row.source_url, last_seen_at: row.price_last_seen_at } : null,
-    });
+      };
+      const priceKey = `${row.price_type ?? 'unknown'}:${row.price_key ?? 'default'}`;
+      offer.prices.set(priceKey, price);
+      offer.price ??= price;
+    }
+    existing.offers.set(offerKey, offer);
     services.set(row.service_id, existing);
   }
-  return [...services.values()].map((entry) => ({ service: entry.service, offers: entry.offers }));
+  return [...services.values()].map((entry) => ({
+    service: entry.service,
+    offers: [...entry.offers.values()].map((offer) => ({
+      id: offer.id,
+      provider: offer.provider,
+      location: offer.location,
+      distance_meters: offer.distance_meters,
+      price: offer.price,
+      prices: [...offer.prices.values()],
+      source: offer.source,
+    })),
+  }));
 }
 
 function parseBoundedInt(value: string | null, fallback: number, min: number, max: number): number {
