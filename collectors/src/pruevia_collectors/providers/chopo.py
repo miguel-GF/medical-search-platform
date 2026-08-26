@@ -133,6 +133,8 @@ class ChopoAdapter:
         name="Laboratorio Médico del Chopo — Puebla",
         source_type="provider_official",
         usage_policy_status="review_required",
+        endpoint_type="html",
+        endpoint_url=CHOPO_PUEBLA_URL,
     )
 
     def __init__(self, client: ChopoClient, *, max_pages: int = 1, page_delay_seconds: float = 0.5) -> None:

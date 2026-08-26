@@ -31,7 +31,13 @@ class IngestPublisher:
         with self.connection.transaction():
             source_id = self._ensure_source(source)
             endpoint_id = self._ensure_endpoint(source_id, source)
-            crawl_run_id = self._create_crawl_run(endpoint_id, summary)
+            crawl_run_id, inserted = self._create_crawl_run(endpoint_id, summary)
+            if not inserted:
+                row = self.connection.execute(
+                    "select records_published from ingest.crawl_runs where id = %s",
+                    (crawl_run_id,),
+                ).fetchone()
+                return int(row[0]) if row else 0
             raw_record_ids = self._insert_raw_records(source_id, crawl_run_id, raw_path)
             self._insert_observations(source_id, raw_record_ids, observations_path)
             self._finish_crawl_run(crawl_run_id, summary, len(raw_record_ids))
@@ -80,14 +86,17 @@ class IngestPublisher:
                 """
                 insert into ingest.source_endpoints(
                   source_id, name, endpoint_type, parser_name, parser_version,
-                  expected_min_records, expected_max_records, max_negative_deviation_pct
+                  url, expected_min_records, expected_max_records, max_negative_deviation_pct
                 )
-                values (%s, %s, 'api', 'pruevia_collectors', '0.1.0', %s, %s, %s)
+                values (%s, %s, %s, 'pruevia_collectors', %s, %s, %s, %s, %s)
                 returning id
                 """,
                 (
                     source_id,
                     endpoint_name,
+                    source.endpoint_type,
+                    source.parser_version,
+                    source.endpoint_url,
                     source.expected_min_records,
                     source.expected_max_records,
                     source.max_negative_deviation_pct,
@@ -95,32 +104,40 @@ class IngestPublisher:
             ).fetchone()[0]
         )
 
-    def _create_crawl_run(self, endpoint_id: str, summary: RunSummary) -> str:
-        return str(
-            self.connection.execute(
-                """
+    def _create_crawl_run(self, endpoint_id: str, summary: RunSummary) -> tuple[str, bool]:
+        row = self.connection.execute(
+            """
                 insert into ingest.crawl_runs(
                   id, source_endpoint_id, started_at, finished_at, status,
                   records_received, records_valid, records_rejected, records_published,
                   previous_success_count, deviation_percentage, error_summary, metadata
                 )
                 values (%s, %s, now(), now(), %s, %s, %s, %s, 0, %s, %s, %s, %s)
+                on conflict (id) do nothing
                 returning id
                 """,
-                (
-                    summary.run_id,
-                    endpoint_id,
-                    summary.status,
-                    summary.records_received,
-                    summary.records_valid,
-                    summary.records_rejected,
-                    summary.previous_success_count,
-                    summary.deviation_percentage,
-                    "\n".join(summary.errors) or None,
-                    Jsonb({"artifact_directory": summary.artifact_directory}),
-                ),
-            ).fetchone()[0]
-        )
+            (
+                summary.run_id,
+                endpoint_id,
+                summary.status,
+                summary.records_received,
+                summary.records_valid,
+                summary.records_rejected,
+                summary.previous_success_count,
+                summary.deviation_percentage,
+                "\n".join(summary.errors) or None,
+                Jsonb({"artifact_directory": summary.artifact_directory}),
+            ),
+        ).fetchone()
+        if row:
+            return str(row[0]), True
+        existing = self.connection.execute(
+            "select id from ingest.crawl_runs where id = %s",
+            (summary.run_id,),
+        ).fetchone()
+        if not existing:
+            raise RuntimeError(f"crawl run {summary.run_id} was not created")
+        return str(existing[0]), False
 
     def _insert_raw_records(self, source_id: str, crawl_run_id: str, raw_path: Path) -> dict[str, str]:
         record_ids: dict[str, str] = {}

@@ -24,6 +24,9 @@ class SourceSpec:
     expected_min_records: int | None = None
     expected_max_records: int | None = None
     max_negative_deviation_pct: float = 50.0
+    endpoint_type: str = "other"
+    endpoint_url: str | None = None
+    parser_version: str = "0.1.0"
 
 
 @dataclass(frozen=True)

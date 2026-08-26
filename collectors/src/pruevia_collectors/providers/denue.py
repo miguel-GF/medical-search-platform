@@ -74,6 +74,8 @@ class DenueAdapter:
         name="INEGI DENUE",
         source_type="government",
         usage_policy_status="approved",
+        endpoint_type="api",
+        endpoint_url=DENUE_BASE_URL,
     )
 
     def __init__(self, client: DenueClient, queries: Sequence[DenueQuery]) -> None:
