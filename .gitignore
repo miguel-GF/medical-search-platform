@@ -1,0 +1,11 @@
+# Node dependency trees are restored from package-lock.json.
+node_modules/
+
+# Local environment and generated build output.
+.env
+.env.*
+dist/
+coverage/
+
+# Collector outputs are reproducible but can be large and machine-local.
+collectors/artifacts/

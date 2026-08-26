@@ -1,0 +1,12 @@
+name = "pruevia-api-dev"
+main = "src/index.ts"
+compatibility_date = "2026-08-25"
+
+[vars]
+API_VERSION = "v1"
+
+# Secrets are set with `wrangler secret put` and never committed:
+# SUPABASE_URL
+# SUPABASE_ANON_KEY
+# SUPABASE_SERVICE_ROLE_KEY
+# ADMIN_TOKEN
