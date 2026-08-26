@@ -4,6 +4,14 @@
 **Alcance:** documentación canónica, 7 migraciones SQL, seed y pruebas pgTAP de Database V1.  
 **Veredicto:** propuesta coherente y con una base técnica fuerte; la incertidumbre principal está en validar operación de datos y demanda, no en la idea central.
 
+## Estado operativo actualizado
+
+La base ya no está solo en revisión estática. El proyecto Supabase enlazado (`pruevia-dev`, región `us-east-1`) recibió las 7 migraciones y el seed mediante `db push --include-seed`. La validación remota confirmó 13 schemas, 45 tablas, las extensiones `postgis`, `pg_trgm`, `unaccent` y `pgcrypto`, un dominio de salud, 9 tipos de muestra y 4 feature flags.
+
+Las 15 pruebas estructurales/precio existentes y 10 invariantes nuevas se ejecutaron contra la base enlazada con `db query`; el runner pgTAP integrado sigue requiriendo Docker local, que no está disponible en este entorno.
+
+El motor de collectors ya tiene artefactos RAW reproducibles, cuarentena por caídas parciales o descensos anómalos, adaptadores DENUE y Chopo Puebla, y normalización determinista. Una corrida real de Chopo produjo 116 registros válidos y 576 observaciones; esa evidencia se publicó en `ingest` como un `crawl_run` exitoso. No se crearon entidades canónicas automáticamente: esa separación es intencional hasta revisar equivalencias clínicas.
+
 ## Opinión ejecutiva
 
 Sí existe un problema valioso: el paciente no debería necesitar conocer el nombre comercial exacto de un estudio para encontrar dónde realizarlo. La combinación de interpretación de orden, normalización clínica prudente, comparación por ubicación/precio y resolución de varios estudios es una propuesta más defendible que un comparador simple.
@@ -77,7 +85,7 @@ Deuda técnica antes de declarar `db-v1.0.0`:
 - definir la integridad futura de campos de revisión como `approved_by`, `reviewer_user_id` y `resolved_by`;
 - documentar el modelo de credenciales del servidor y confirmar que los schemas internos permanezcan inaccesibles para clientes directos.
 
-Esta revisión fue estática. No se marcó la fase DB como terminada porque en el entorno de integración no estaban disponibles Supabase CLI ni Docker y no había una instancia Supabase enlazada.
+La deuda de despliegue de esta revisión queda resuelta para DEV enlazado. Falta repetir el flujo en CI con Docker o un runner pgTAP nativo, y mantener el mismo control de migraciones antes de declarar una versión productiva.
 
 ## Recomendación de ejecución
 

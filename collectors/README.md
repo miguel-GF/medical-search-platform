@@ -62,3 +62,18 @@ class Adapter:
 ```
 
 La implementación de cada fuente será responsable de respetar sus políticas de acceso, ritmo de solicitudes y evidencia disponible. El núcleo solo controla integridad, trazabilidad y seguridad del run.
+
+## Publicar un artefacto
+
+La publicación se detiene en `ingest`; no crea ítems canónicos ni ofertas comerciales. Primero valida el artefacto:
+
+```powershell
+$env:PYTHONPATH = "src"
+python -m pruevia_collectors.cli_publish artifacts/<source>/<run-id> --dry-run
+```
+
+Para publicar, usa un DSN de servidor en `PRUEVIA_DATABASE_URL` (nunca una clave `anon` del cliente):
+
+```powershell
+python -m pruevia_collectors.cli_publish artifacts/<source>/<run-id>
+```
