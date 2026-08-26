@@ -42,6 +42,13 @@ python -m pruevia_collectors.cli_chopo --max-pages 1
 
 El collector de DENUE requiere `DENUE_API_TOKEN` y recibe coordenadas/radio explícitos.
 
+## Normalización V1
+
+`pruevia_collectors.normalization` comparte la regla de normalización de `core.normalized_text`.
+Los nombres canónicos y alias aprobados se resuelven de forma determinista; una coincidencia
+difusa solo produce candidatos y queda `ambiguous` para revisión. Esto evita convertir por
+similitud textual dos servicios clínicos que no sean equivalentes.
+
 ## Contrato de un adapter
 
 Un adapter debe separar descubrimiento/recuperación de la persistencia:
