@@ -2,7 +2,7 @@
 
 **Versión:** 1.0  
 **Fecha:** 22 de agosto de 2026  
-**Estado general:** arquitectura aprobada; **base de datos V1 ya iniciada y generada como migraciones ejecutables**, pendiente de despliegue/prueba física en Supabase DEV.
+**Estado general:** fases 1–7 y Gate A implementados y verificados en Supabase DEV; Flutter queda deliberadamente después de cerrar cobertura clínica y de fuentes.
 
 ---
 
@@ -64,7 +64,7 @@ Entregable:
 
 # Fase 1 — Base de datos V1
 
-**Estado:** 🟢 INICIADA / diseño y SQL generados
+**Estado:** ✅ migrada, seed aplicada y pruebas remotas verdes
 
 ## Ya realizado ✅
 
@@ -120,7 +120,7 @@ No avanzar con ingest masivo hasta tener esta fase verde.
 
 # Fase 2 — Fundación de repositorio e infraestructura DEV
 
-**Estado:** ⏳ siguiente inmediata junto con Fase 1
+**Estado:** 🟢 base de repositorio y configuraciones DEV listas; despliegue Cloudflare queda condicionado a credenciales de la cuenta
 
 ## Entregables
 
@@ -175,7 +175,7 @@ Y la DB DEV debe poder reconstruirse por migraciones.
 
 # Fase 3 — Collector DENUE / discovery de proveedores
 
-**Estado:** ⏳
+**Estado:** 🟢 adapter y CLI listos; corrida live condicionada a `DENUE_API_TOKEN`
 
 Objetivo:
 
@@ -212,7 +212,7 @@ Puebla
 
 # Fase 4 — Collectors de proveedores reales
 
-**Estado:** ⏳
+**Estado:** ✅ Chopo y Ruiz ejecutados en vivo, publicados y repetibles
 
 Orden recomendado:
 
@@ -258,7 +258,7 @@ Para cada fuente:
 
 # Fase 5 — Normalization Engine V1
 
-**Estado:** ⏳
+**Estado:** ✅ catálogo dorado y decisiones conservadoras publicados
 
 Orden:
 
@@ -309,7 +309,7 @@ No aceptar falsos equivalentes médicos por presión de cobertura.
 
 # Fase 6 — Admin interno V1
 
-**Estado:** ⏳
+**Estado:** ✅ Admin V1 operativo y probado
 
 Tecnología:
 
@@ -347,7 +347,7 @@ sin tocar SQL manualmente.
 
 # Fase 7 — Search API V1
 
-**Estado:** ⏳
+**Estado:** ✅ Search API V1, RPCs y pruebas de contrato verdes
 
 Endpoints iniciales:
 
@@ -384,7 +384,7 @@ Todo con información real de Puebla.
 
 # Gate A — Viabilidad del Data Engine
 
-**Estado:** ⏳
+**Estado:** ✅ 10/10 aserciones remotas; cobertura clínica continúa como métrica de operación
 
 Antes de Flutter completo, evaluar:
 
@@ -797,7 +797,7 @@ Primer `/search` real.
 
 ---
 
-# Estado del proyecto al 22/08/2026
+# Estado del proyecto al 26/08/2026
 
 | Componente | Estado |
 |---|---|
@@ -806,15 +806,15 @@ Primer `/search` real.
 | Monetización conceptual | ✅ |
 | Arquitectura de software | ✅ |
 | Arquitectura DB | ✅ |
-| **DB V1 SQL** | **✅ generada / 🟢 pendiente deploy físico** |
-| Supabase DEV | ⏳ |
-| Cloudflare DEV | ⏳ |
-| GitHub monorepo | ⏳ |
-| DENUE collector | ⏳ |
-| Chopo collector | ⏳ |
-| Ruiz collector | ⏳ |
-| Admin | ⏳ |
-| API Search | ⏳ |
+| **DB V1 SQL** | **✅ migrada y verificada en DEV** |
+| Supabase DEV | ✅ |
+| Cloudflare DEV | 🟢 configuración lista; deploy requiere credenciales |
+| GitHub monorepo | ✅ CI versionado |
+| DENUE collector | 🟢 adapter listo; live requiere token oficial |
+| Chopo collector | ✅ live publicado |
+| Ruiz collector | ✅ live publicado |
+| Admin | ✅ V1 operativo |
+| API Search | ✅ V1 probado |
 | Flutter Web | ⏳ |
 | OCR | ⏳ |
 | Nuxt SEO | ⏳ |
@@ -831,7 +831,7 @@ Primer `/search` real.
 Pruevia V0 técnica se considera funcional cuando:
 
 1. DB se reconstruye completamente por migraciones;
-2. DENUE + mínimo 2 proveedores comerciales ingieren correctamente;
+2. DENUE + mínimo 2 proveedores comerciales ingieren correctamente (DENUE live queda condicionado al token oficial; Chopo/Ruiz ya están publicados);
 3. RAW → observation → canonical funciona;
 4. 100–200 estudios seleccionados están normalizados;
 5. `/search` devuelve proveedores reales;
