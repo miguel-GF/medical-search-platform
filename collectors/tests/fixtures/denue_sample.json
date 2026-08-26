@@ -1,0 +1,21 @@
+[
+  {
+    "CLEE": "0100100010000001",
+    "Id": "900001",
+    "Nombre": "Laboratorio Puebla Norte",
+    "Razon_social": "Diagnóstico Puebla SA de CV",
+    "Clase_actividad": "621511",
+    "Estrato": "3",
+    "Calle": "Avenida Reforma",
+    "Num_Exterior": "123",
+    "Colonia": "Centro",
+    "CP": "72000",
+    "Localidad": "Heroica Puebla de Zaragoza",
+    "Municipio": "Puebla",
+    "Entidad": "Puebla",
+    "Telefono": "2220000000",
+    "www": "https://example.test/laboratorio-puebla-norte",
+    "Latitud": "19.0437",
+    "Longitud": "-98.1982"
+  }
+]
