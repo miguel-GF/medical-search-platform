@@ -1,0 +1,92 @@
+-- Public RPC contract tests for Search API and Admin API.
+
+begin;
+create extension if not exists pgtap with schema extensions;
+select extensions.plan(9);
+
+select extensions.has_function(
+  'public',
+  'api_search',
+  array['text','text','double precision','double precision','uuid','integer'],
+  'public.api_search is exposed as a typed RPC'
+);
+select extensions.has_function('public', 'api_admin_dashboard', array[]::text[], 'admin dashboard RPC exists');
+select extensions.has_function(
+  'public',
+  'api_admin_update_alias',
+  array['uuid','uuid','text','uuid','text'],
+  'admin alias update RPC exists'
+);
+select extensions.is(jsonb_typeof(public.api_admin_dashboard()), 'object', 'admin dashboard returns JSON object');
+
+insert into core.provider_brands(id, name, normalized_name, slug)
+values ('00000000-0000-0000-0000-000000000901', 'API Fixture Brand', 'api fixture brand', 'api-fixture-brand');
+insert into core.provider_locations(id, provider_brand_id, name, normalized_name, coordinates)
+values (
+  '00000000-0000-0000-0000-000000000902',
+  '00000000-0000-0000-0000-000000000901',
+  'API Fixture Location',
+  'api fixture location',
+  gis.st_geogfromtext('SRID=4326;POINT(-98.2001 19.0401)')
+);
+insert into core.provider_markets(id, provider_brand_id, name, normalized_name, slug)
+values ('00000000-0000-0000-0000-000000000903', '00000000-0000-0000-0000-000000000901', 'API Puebla', 'api puebla', 'api-puebla');
+insert into core.provider_market_locations(provider_market_id, provider_location_id)
+values ('00000000-0000-0000-0000-000000000903', '00000000-0000-0000-0000-000000000902');
+
+insert into catalog.items(id, domain_id, item_type, status)
+select '00000000-0000-0000-0000-000000000904', id, 'service', 'active'
+from catalog.domains where code = 'health_diagnostics';
+insert into catalog.item_names(item_id, name, normalized_name, is_primary)
+values ('00000000-0000-0000-0000-000000000904', 'API Fixture Hemograma', 'api fixture hemograma', true);
+insert into health.services(catalog_item_id, service_type)
+values ('00000000-0000-0000-0000-000000000904', 'lab_test');
+insert into supply.offers(id, provider_brand_id, catalog_item_id, provider_display_name, normalized_provider_name)
+values ('00000000-0000-0000-0000-000000000905', '00000000-0000-0000-0000-000000000901', '00000000-0000-0000-0000-000000000904', 'Hemograma API', 'hemograma api');
+insert into supply.offer_scopes(offer_id, scope_type, provider_market_id)
+values ('00000000-0000-0000-0000-000000000905', 'market', '00000000-0000-0000-0000-000000000903');
+insert into supply.price_versions(offer_scope_id, amount_minor)
+select id, 12345 from supply.offer_scopes
+where offer_id = '00000000-0000-0000-0000-000000000905' and scope_type = 'market';
+insert into supply.offer_links(offer_scope_id, link_type, url)
+select id, 'details', 'https://example.test/api-fixture'
+from supply.offer_scopes
+where offer_id = '00000000-0000-0000-0000-000000000905' and scope_type = 'market';
+
+select extensions.is(
+  (select count(*)::bigint from public.api_search('hemograma api', 'health_diagnostics', 19.04, -98.20, null, 1)),
+  1::bigint,
+  'api_search returns one provider row'
+);
+select extensions.is(
+  (select amount_minor from public.api_search('hemograma api', 'health_diagnostics', 19.04, -98.20, null, 1) limit 1),
+  12345::bigint,
+  'api_search includes current price'
+);
+select extensions.ok(
+  (select distance_meters is not null from public.api_search('hemograma api', 'health_diagnostics', 19.04, -98.20, null, 1) limit 1),
+  'api_search calculates distance when coordinates are provided'
+);
+
+insert into ingest.normalization_runs(id, input_type, raw_text, normalized_input, engine_version, status)
+values ('00000000-0000-0000-0000-000000000906', 'manual', 'Hemograma API', 'hemograma api', 'test', 'ambiguous');
+select public.api_admin_update_alias(
+  '00000000-0000-0000-0000-000000000906',
+  '00000000-0000-0000-0000-000000000904',
+  'BH API',
+  '00000000-0000-0000-0000-000000000901',
+  'Fixture manual review'
+);
+select extensions.is(
+  (select status from ingest.normalization_runs where id = '00000000-0000-0000-0000-000000000906'),
+  'resolved',
+  'admin alias update resolves normalization run'
+);
+select extensions.is(
+  (select count(*)::bigint from catalog.item_aliases where item_id = '00000000-0000-0000-0000-000000000904' and normalized_alias = 'bh api'),
+  1::bigint,
+  'admin alias update creates approved provider alias'
+);
+
+select * from extensions.finish();
+rollback;
