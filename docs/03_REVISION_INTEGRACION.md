@@ -8,7 +8,7 @@
 
 ### Corte ejecutado: 26 de agosto de 2026
 
-El flujo previo a Flutter esta operativo en DEV. Supabase contiene 143 servicios activos, 144 ofertas, 15 sucursales Ruiz, 290 precios vigentes y 259 corridas de normalizacion (144 resueltas y 115 `no_match`). Los precios cero usados por Ruiz como sentinela de descuento no disponible fueron eliminados y ahora existe una restriccion positiva en `supply.price_versions`.
+El flujo previo a Flutter esta operativo en DEV. Supabase contiene 143 servicios activos, 144 ofertas, 15 sucursales Ruiz, 290 precios vigentes y 259 corridas de normalizacion (144 resueltas y 115 `no_match`). Los precios cero usados por Ruiz como sentinela de descuento no disponible fueron eliminados y ahora existe una restriccion positiva en `supply.price_versions`. La migración 075 agrega un lookup de servicios canónicos para que Admin resuelva aliases sin SQL.
 
 La prueba Gate A confirma 10/10 aserciones. `public.api_search` fue ejecutada con coordenadas reales de Puebla: para `mastografia unilateral` devuelve ofertas de Laboratorios Ruiz y Laboratorio Medico del Chopo, con sucursal, distancia, URL de fuente y precio. El Worker REST y el Admin V1 tienen typecheck, tests y build verdes.
 

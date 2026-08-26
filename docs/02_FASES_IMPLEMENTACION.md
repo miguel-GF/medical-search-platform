@@ -603,7 +603,7 @@ Consentimiento y retention definidos.
 
 ## Estado ejecutado antes de Flutter (26 de agosto de 2026)
 
-Las fases previas a Flutter ya tienen implementacion funcional en DEV: base Supabase enlazada con migraciones 001-074; collectors Chopo y Ruiz con RAW/observaciones/runs publicados; catalogo dorado de 143 servicios y 144 mappings; Admin V1 en `apps/admin`; Search API V1 en `apps/api`; y Gate A remoto con 10/10 aserciones. DENUE queda listo para correr cuando exista `DENUE_API_TOKEN` oficial. Flutter sigue despues de cerrar cobertura y revision clinica.
+Las fases previas a Flutter ya tienen implementacion funcional en DEV: base Supabase enlazada con migraciones 001-075; collectors Chopo y Ruiz con RAW/observaciones/runs publicados; catalogo dorado de 143 servicios y 144 mappings; Admin V1 en `apps/admin` con búsqueda de servicios canónicos; Search API V1 en `apps/api`; y Gate A remoto con 10/10 aserciones. DENUE queda listo para correr cuando exista `DENUE_API_TOKEN` oficial. Flutter sigue despues de cerrar cobertura y revision clinica.
 
 ---
 
