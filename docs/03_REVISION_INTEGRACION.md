@@ -71,7 +71,7 @@ Cada collector necesita una decisión documentada sobre permiso/política de uso
 
 ### 5. Acceso Workers ↔ PostgreSQL
 
-La arquitectura aún no fija el mecanismo concreto de conexión, pooling, timeouts y recuperación entre Cloudflare Workers y Supabase. Debe cerrarse con un ADR y una prueba pequeña antes de consolidar la API. El contrato REST versionado permite cambiar la implementación después, lo cual reduce el riesgo.
+La conexión Worker → Supabase quedó fijada en un ADR: el Worker usa RPCs REST `/rest/v1/rpc/*`, anon key para búsqueda pública y service role únicamente para operaciones Admin. El transporte tiene timeout configurable de 5 s y las pruebas cubren headers, credenciales y respuesta JSON. El pool queda del lado de Supabase, fuera del runtime efímero del Worker.
 
 ## Revisión de Database V1
 
