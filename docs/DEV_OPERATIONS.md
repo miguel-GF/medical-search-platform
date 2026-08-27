@@ -27,7 +27,8 @@ python -m pruevia_collectors.cli_salud_digna --location-slug puebla-municipio-li
 python -m pruevia_collectors.cli --condition laboratorio --latitude 19.0433 --longitude -98.2011 --radius-meters 5000
 ```
 
-El comando de DENUE requiere `DENUE_API_TOKEN` oficial. Los artefactos se validan antes de publicar:
+El comando de DENUE carga `DENUE_API_TOKEN` desde `collectors/.env` (o desde una
+variable del proceso/CI, que tiene prioridad). Los artefactos se validan antes de publicar:
 
 ```powershell
 python -m pruevia_collectors.cli_publish artifacts/<source>/<run-id> --dry-run

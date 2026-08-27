@@ -4,8 +4,13 @@ import argparse
 import json
 from pathlib import Path
 
+from .config import load_local_environment
 from .pipeline import CollectorRunner
 from .providers.denue import DenueAdapter, DenueClient, DenueQuery
+
+
+# Load local secrets before ``main`` is called.
+load_local_environment()
 
 
 def build_parser() -> argparse.ArgumentParser:

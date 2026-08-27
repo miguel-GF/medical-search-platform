@@ -55,6 +55,22 @@ proveedor publique oficialmente otro endpoint.
 
 El collector de DENUE requiere `DENUE_API_TOKEN` y recibe coordenadas/radio explícitos.
 
+### Configuración local
+
+Para desarrollo, copia `.env.example` como `.env` y completa `DENUE_API_TOKEN`.
+El archivo `.env` está ignorado por Git; nunca pongas el token en el código, en
+un commit ni en una clave `anon` del cliente. Las variables definidas en el
+proceso (CI/producción) tienen prioridad sobre `.env`.
+
+```powershell
+Copy-Item .env.example .env
+$env:PYTHONPATH = "src"
+python -m pruevia_collectors.cli --latitude 19.0437 --longitude -98.1982
+```
+
+Para publicación, el mismo `.env` puede contener `PRUEVIA_DATABASE_URL`; usa
+un DSN de servidor y no una credencial pública del frontend.
+
 ## Normalización V1
 
 `pruevia_collectors.normalization` comparte la regla de normalización de `core.normalized_text`.

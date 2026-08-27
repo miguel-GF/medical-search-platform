@@ -175,7 +175,7 @@ Y la DB DEV debe poder reconstruirse por migraciones.
 
 # Fase 3 — Collector DENUE / discovery de proveedores
 
-**Estado:** 🟢 adapter y CLI listos; corrida live condicionada a `DENUE_API_TOKEN`
+**Estado:** 🟢 adapter, CLI y corrida live verificados; 489 registros válidos en Puebla
 
 Objetivo:
 
@@ -609,7 +609,7 @@ Consentimiento y retention definidos.
 
 ## Estado ejecutado antes de Flutter (27 de agosto de 2026)
 
-Las fases previas a Flutter tienen implementación técnica en DEV: base Supabase enlazada con migraciones 001-081; collectors Chopo, Ruiz y Salud Digna con RAW/observaciones/runs publicados; catálogo dorado de 143 servicios, 147 mappings y 942 labels explícitamente pendientes de revisión; Admin V1 en `apps/admin` con Supabase Auth y búsqueda de servicios canónicos; Search API V1 en `apps/api`; y smoke test Gate A remoto con 10/10 aserciones. La viabilidad continúa abierta porque sólo 4 de 143 servicios tienen dos proveedores (los umbrales de salida son 30 compartidos y 10 compartidos con precio). DENUE queda listo para correr cuando exista `DENUE_API_TOKEN` oficial. Flutter sigue después de cerrar cobertura y revisión clínica.
+Las fases previas a Flutter tienen implementación técnica en DEV: base Supabase enlazada con migraciones 001-081; collectors Chopo, Ruiz, Salud Digna y DENUE con RAW/observaciones/runs reproducibles; catálogo dorado de 143 servicios, 147 mappings y 942 labels explícitamente pendientes de revisión; Admin V1 en `apps/admin` con Supabase Auth y búsqueda de servicios canónicos; Search API V1 en `apps/api`; y smoke test Gate A remoto con 10/10 aserciones. La viabilidad continúa abierta porque sólo 4 de 143 servicios tienen dos proveedores (los umbrales de salida son 30 compartidos y 10 compartidos con precio). Flutter sigue después de cerrar cobertura y revisión clínica.
 
 ---
 

@@ -7,6 +7,7 @@ from pathlib import Path
 
 import psycopg
 
+from .config import load_local_environment
 from .models import RunSummary, SourceSpec
 from .publisher import IngestPublisher
 
@@ -75,6 +76,7 @@ def artifact_counts(artifact_directory: Path) -> dict[str, int]:
 
 
 def main() -> int:
+    load_local_environment()
     args = build_parser().parse_args()
     source, summary = load_summary(args.artifact_directory)
     counts = artifact_counts(args.artifact_directory)
