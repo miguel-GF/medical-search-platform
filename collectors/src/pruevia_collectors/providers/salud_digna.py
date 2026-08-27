@@ -13,6 +13,11 @@ from typing import Any
 import certifi
 import httpx
 
+try:
+    import truststore
+except ImportError:  # pragma: no cover - dependency is installed in supported environments
+    truststore = None  # type: ignore[assignment]
+
 from ..models import Observation, SourceRecord, SourceSpec
 
 SALUD_DIGNA_ORIGIN = "https://www.salud-digna.org"
@@ -54,7 +59,7 @@ class SaludDignaClient:
         self._client = client or httpx.Client(
             timeout=timeout_seconds,
             follow_redirects=True,
-            verify=ssl.create_default_context(cafile=certifi.where()),
+            verify=_ssl_context(),
         )
 
     def close(self) -> None:
@@ -103,6 +108,14 @@ class SaludDignaClient:
             return response.json()
         except ValueError as error:
             raise ValueError(f"Salud Digna response is not valid JSON: {url}") from error
+
+
+def _ssl_context() -> ssl.SSLContext:
+    """Use the OS trust store, with certifi as a portable fallback."""
+    if truststore is not None:
+        return truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+    # Keep a verified fallback for environments where truststore is absent.
+    return ssl.create_default_context(cafile=certifi.where())
 
 
 class SaludDignaAdapter:
