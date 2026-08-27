@@ -27,11 +27,42 @@ python -m pruevia_collectors.cli_salud_digna --location-slug puebla-municipio-li
 python -m pruevia_collectors.cli --condition laboratorio --latitude 19.0433 --longitude -98.2011 --radius-meters 5000
 ```
 
-El tercer comando requiere `DENUE_API_TOKEN` oficial. Los artefactos se validan antes de publicar:
+El comando de DENUE requiere `DENUE_API_TOKEN` oficial. Los artefactos se validan antes de publicar:
 
 ```powershell
 python -m pruevia_collectors.cli_publish artifacts/<source>/<run-id> --dry-run
 ```
+
+Con un DSN de servidor, el artefacto se publica con `cli_publish` sin `--dry-run`.
+Si sólo está disponible el proyecto enlazado de Supabase, los renderers generan
+SQL idempotente en lotes (la API rechaza archivos grandes):
+
+```powershell
+python database/scripts/render_ingest_artifact.py artifacts/<source>/<run-id> `
+  --chunk-dir $env:TEMP/pruevia-ingest-chunks --max-bytes 400000
+Get-ChildItem $env:TEMP/pruevia-ingest-chunks/*.sql | Sort-Object Name | ForEach-Object {
+  npx.cmd supabase@latest db query --linked --file $_.FullName
+}
+
+python database/scripts/build_golden_catalog.py `
+  --ruiz artifacts/ruiz-puebla/<run-id>/raw_records.jsonl `
+  --chopo artifacts/chopo-puebla/<run-id>/raw_records.jsonl `
+  --salud-digna $env:TEMP/pruevia-salud-digna/<source>/<run-id>/raw_records.jsonl `
+  --output $env:TEMP/catalog_golden_v1.json
+python database/scripts/publish_golden_catalog.py `
+  --fixture $env:TEMP/catalog_golden_v1.json `
+  --ruiz-artifact artifacts/ruiz-puebla/<run-id> `
+  --chopo-artifact artifacts/chopo-puebla/<run-id> `
+  --salud-digna-artifact $env:TEMP/pruevia-salud-digna/<source>/<run-id> `
+  --chunk-dir $env:TEMP/pruevia-catalog-chunks --max-bytes 400000
+Get-ChildItem $env:TEMP/pruevia-catalog-chunks/*.sql | Sort-Object Name | ForEach-Object {
+  npx.cmd supabase@latest db query --linked --file $_.FullName
+}
+```
+
+Los lotes sólo insertan o actualizan evidencia, catálogo y decisiones exactas; no
+ejecutan `DROP`, `DELETE` ni `TRUNCATE`. Los labels no exactos quedan en
+`ingest.normalization_runs` con estado `no_match` para revisión clínica.
 
 ## Gate A coverage report
 

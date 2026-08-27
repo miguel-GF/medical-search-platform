@@ -212,14 +212,14 @@ Puebla
 
 # Fase 4 — Collectors de proveedores reales
 
-**Estado:** ✅ Chopo y Ruiz ejecutados en vivo, publicados y repetibles
+**Estado:** ✅ Chopo, Ruiz y Salud Digna ejecutados en vivo, publicados y repetibles
 
-La implementación actual mantiene Chopo y Ruiz publicados y añade el adapter
-dedicado de Salud Digna (`salud_digna_puebla`), con CLI, fixtures y pruebas.
-La primera corrida live produjo 833 registros, 831 válidos y 2 duplicados
-rechazados; los artefactos se publican primero en `ingest` y no crean
-equivalencias clínicas automáticas. La publicación DEV requiere un DSN de
-servidor configurado.
+La implementación mantiene Chopo y Ruiz publicados y añade el adapter dedicado
+de Salud Digna (`salud_digna_puebla`), con CLI, fixtures, deduplicación de filas
+idénticas y pruebas. La corrida live canónica produjo 830 registros válidos,
+0 rechazados y 4,150 observaciones; se publicó en `ingest` y en el catálogo
+revisado de Supabase DEV. Los artefactos no crean equivalencias clínicas
+automáticas: los labels no exactos permanecen en la cola de normalización.
 
 Orden recomendado:
 
@@ -608,9 +608,9 @@ Consentimiento y retention definidos.
 
 ---
 
-## Estado ejecutado antes de Flutter (26 de agosto de 2026)
+## Estado ejecutado antes de Flutter (27 de agosto de 2026)
 
-Las fases previas a Flutter tienen implementación técnica en DEV: base Supabase enlazada con migraciones 001-081; collectors Chopo y Ruiz con RAW/observaciones/runs publicados; catálogo dorado de 143 servicios y 144 mappings; Admin V1 en `apps/admin` con Supabase Auth y búsqueda de servicios canónicos; Search API V1 en `apps/api`; y smoke test Gate A remoto con 10/10 aserciones. La viabilidad continúa abierta porque sólo 1 de 143 servicios tiene dos proveedores. DENUE queda listo para correr cuando exista `DENUE_API_TOKEN` oficial. Flutter sigue después de cerrar cobertura y revisión clínica.
+Las fases previas a Flutter tienen implementación técnica en DEV: base Supabase enlazada con migraciones 001-081; collectors Chopo, Ruiz y Salud Digna con RAW/observaciones/runs publicados; catálogo dorado de 143 servicios, 147 mappings y 942 labels explícitamente pendientes de revisión; Admin V1 en `apps/admin` con Supabase Auth y búsqueda de servicios canónicos; Search API V1 en `apps/api`; y smoke test Gate A remoto con 10/10 aserciones. La viabilidad continúa abierta porque sólo 4 de 143 servicios tienen dos proveedores (los umbrales de salida son 30 compartidos y 10 compartidos con precio). DENUE queda listo para correr cuando exista `DENUE_API_TOKEN` oficial. Flutter sigue después de cerrar cobertura y revisión clínica.
 
 ---
 
@@ -820,6 +820,7 @@ Primer `/search` real.
 | DENUE collector | 🟢 adapter listo; live requiere token oficial |
 | Chopo collector | ✅ live publicado |
 | Ruiz collector | ✅ live publicado |
+| Salud Digna collector | ✅ live publicado; 830 registros válidos |
 | Admin | ✅ V1 operativo; diez vistas y Supabase Auth |
 | API Search | ✅ V1 probado |
 | Flutter Web | ⏳ |

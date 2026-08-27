@@ -4,9 +4,9 @@ Pruevia busca convertir el texto o la fotografía de una orden médica en una li
 
 El piloto inicial está enfocado en Puebla, México. El nombre **Pruevia** es provisional.
 
-## Estado ejecutado al 26 de agosto de 2026
+## Estado ejecutado al 27 de agosto de 2026
 
-El Data Engine previo a Flutter funciona técnicamente en Supabase DEV, pero Gate A de viabilidad sigue abierto: hay 143 servicios activos, 144 ofertas (143 Ruiz y 1 Chopo), y sólo 1 servicio con dos proveedores. La búsqueda por defecto ya prioriza diversidad de proveedores, pero todavía falta ampliar cobertura clínica y comercial antes de Flutter. DENUE queda pendiente de su token oficial.
+El Data Engine previo a Flutter funciona técnicamente en Supabase DEV, pero Gate A de viabilidad sigue abierto: hay 143 servicios activos, 147 ofertas (143 Ruiz, 1 Chopo y 3 Salud Digna) y 4 servicios con dos proveedores. Hay 16 sucursales activas con coordenadas y 293 precios vigentes. La búsqueda ya prioriza diversidad de proveedores, pero todavía falta ampliar cobertura clínica y comercial antes de Flutter. DENUE queda pendiente de su token oficial.
 
 Consulta el detalle y los comandos reproducibles en [docs/03_REVISION_INTEGRACION.md](docs/03_REVISION_INTEGRACION.md) y [docs/02_FASES_IMPLEMENTACION.md](docs/02_FASES_IMPLEMENTACION.md).
 
@@ -15,7 +15,7 @@ Consulta el detalle y los comandos reproducibles en [docs/03_REVISION_INTEGRACIO
 - Arquitectura de producto y software: definida.
 - Base de datos V1: migraciones 001-081 aplicadas y verificadas.
 - Despliegue y validación física en Supabase DEV: completado para el Data Engine previo a Flutter.
-- Collectors Chopo/Ruiz y el adapter Salud Digna (fixtures, pruebas y corrida live reproducible), Search API V1 y Admin V1: implementados y probados; la publicación de Salud Digna en Supabase DEV requiere un DSN de servidor, y DENUE live su token oficial.
+- Collectors Chopo/Ruiz y el adapter Salud Digna (fixtures, pruebas y corrida live reproducible), Search API V1 y Admin V1: implementados y probados. Salud Digna ya está publicado en Supabase DEV (830 registros válidos y 4,150 observaciones); puede usarse DSN de servidor o el renderer por lotes para la API enlazada de Supabase. DENUE live sigue requiriendo su token oficial.
 
 ## Repositorio
 
