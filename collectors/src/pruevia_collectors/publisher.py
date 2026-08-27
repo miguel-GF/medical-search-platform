@@ -99,7 +99,7 @@ class IngestPublisher:
                 set endpoint_type = %s, parser_version = %s, url = %s,
                     expected_min_records = %s, expected_max_records = %s,
                     max_negative_deviation_pct = %s, updated_at = now()
-                where id = %s
+                where source_id = %s and name = %s
                 """,
                 (
                     source.endpoint_type,
@@ -109,6 +109,7 @@ class IngestPublisher:
                     source.expected_max_records,
                     source.max_negative_deviation_pct,
                     row[0],
+                    f"{source.name} collector endpoint",
                 ),
             )
             return str(row[0])
