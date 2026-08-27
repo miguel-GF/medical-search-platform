@@ -105,8 +105,8 @@ def test_salud_digna_adapter_deduplicates_only_identical_payloads():
         def fetch_studies(self, *, location_id):
             return [
                 {"Id": 17, "Descripcion": "Glucosa", "Precio": "119.99"},
-                {"Id": 17, "Descripcion": "Glucosa", "Precio": "119.99"},
-                {"Id": 17, "Descripcion": "Glucosa", "Precio": "129.99"},
+                {"Id": 17, "Descripcion": "Glucosa", "Precio": "119.99", "Preparacion": "Ayuno"},
+                {"Id": 18, "Descripcion": "Glucosa", "Precio": "129.99"},
             ]
 
         def location_url(self, slug):
@@ -119,6 +119,24 @@ def test_salud_digna_adapter_deduplicates_only_identical_payloads():
         {"regular": 11999},
         {"regular": 12999},
     ]
+
+
+def test_salud_digna_adapter_rejects_conflicting_duplicate_ids():
+    class ConflictingClient:
+        def fetch_location(self, slug):
+            return SaludDignaLocationPage(slug, f"https://example.test/{slug}", FIXTURE.read_text(encoding="utf-8"))
+
+        def fetch_studies(self, *, location_id):
+            return [
+                {"Id": 17, "Descripcion": "Glucosa", "Precio": "119.99"},
+                {"Id": 17, "Descripcion": "Glucosa", "Precio": "129.99"},
+            ]
+
+        def location_url(self, slug):
+            return f"https://example.test/{slug}"
+
+    with pytest.raises(ValueError, match="conflicting duplicate"):
+        list(SaludDignaAdapter(ConflictingClient(), ("puebla-municipio-libre",)).collect())
 
 
 def test_salud_digna_adapter_rejects_empty_catalog():

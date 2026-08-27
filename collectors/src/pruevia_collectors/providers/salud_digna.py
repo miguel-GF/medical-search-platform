@@ -182,6 +182,7 @@ class SaludDignaAdapter:
             if not studies:
                 raise ValueError(f"Salud Digna returned no studies for location: {slug}")
             seen_payload_hashes: set[str] = set()
+            seen_external_ids: dict[str, tuple[str, tuple[tuple[str, int], ...]]] = {}
             for row in studies:
                 record = salud_digna_study_to_record(row, location=location, client=self.client)
                 # The provider endpoint currently repeats two study rows across
@@ -194,6 +195,17 @@ class SaludDignaAdapter:
                 if payload_hash in seen_payload_hashes:
                     continue
                 seen_payload_hashes.add(payload_hash)
+                external_id = record.external_record_id
+                identity = (
+                    str(record.payload["provider_display_name"]),
+                    tuple(sorted((str(key), int(value)) for key, value in (record.payload.get("prices") or {}).items())),
+                )
+                previous_identity = seen_external_ids.get(external_id)
+                if previous_identity is not None:
+                    if previous_identity != identity:
+                        raise ValueError(f"conflicting duplicate Salud Digna study id: {external_id}")
+                    continue
+                seen_external_ids[external_id] = identity
                 yield record
 
 
