@@ -24,4 +24,4 @@ docs/       Decisiones canónicas, arquitectura, roadmap y revisión
 database/   Migraciones, seed y pruebas ejecutables de PostgreSQL/Supabase
 ```
 
-Comienza por el [índice de documentación](docs/README.md). La siguiente acción técnica es ejecutar y corregir la DB V1 en un entorno Supabase DEV limpio.
+Comienza por el [índice de documentación](docs/README.md). La siguiente acción técnica es ampliar la cobertura multi-proveedor (DENUE/MAC y revisión de labels) y cerrar Gate A antes de construir Flutter.
