@@ -144,7 +144,11 @@ def render(fixture: dict, ruiz_artifact: Path, chopo_artifact: Path, salud_digna
                 continue
             payload = row["payload"]
             external_id = str(payload.get("provider_external_id") or row.get("external_record_id"))
-            location_id = stable_id("provider-location", f"{source_key}:{external_id}")
+            # Ruiz locations were published in V1 with the historical
+            # ``ruiz:<external_id>`` key; preserve those IDs while allowing
+            # additional providers to use their source key without collisions.
+            location_key = f"ruiz:{external_id}" if source_key == "ruiz_puebla" else f"{source_key}:{external_id}"
+            location_id = stable_id("provider-location", location_key)
             lines.append(
                 f"insert into core.provider_locations(id,provider_brand_id,name,normalized_name,location_code,address_line_1,address_line_2,locality_text,postal_code,coordinates,timezone,phone,website_url,status) values ({q(location_id)},{q(brand_ids[source_key])},{q(payload.get('provider_display_name'))},{q(normalize(str(payload.get('provider_display_name') or '')))},{q(external_id)},{q(payload.get('address_line_1'))},{q(payload.get('address_line_2'))},{q(payload.get('locality_text'))},{q(payload.get('postal_code'))},{sql_geography(payload.get('coordinates'))},{q('America/Mexico_City')},{q(payload.get('phone'))},{q(payload.get('location_url'))},'active') on conflict(id) do update set name=excluded.name,address_line_1=excluded.address_line_1,coordinates=excluded.coordinates,phone=excluded.phone,updated_at=now();"
             )
