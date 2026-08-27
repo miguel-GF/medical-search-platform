@@ -97,6 +97,30 @@ def test_salud_digna_adapter_emits_location_and_catalog_records():
     assert records[1].payload["prices"] == {"regular": 11999}
 
 
+def test_salud_digna_adapter_deduplicates_only_identical_payloads():
+    class DuplicateClient:
+        def fetch_location(self, slug):
+            return SaludDignaLocationPage(slug, f"https://example.test/{slug}", FIXTURE.read_text(encoding="utf-8"))
+
+        def fetch_studies(self, *, location_id):
+            return [
+                {"Id": 17, "Descripcion": "Glucosa", "Precio": "119.99"},
+                {"Id": 17, "Descripcion": "Glucosa", "Precio": "119.99"},
+                {"Id": 17, "Descripcion": "Glucosa", "Precio": "129.99"},
+            ]
+
+        def location_url(self, slug):
+            return f"https://example.test/{slug}"
+
+    records = list(SaludDignaAdapter(DuplicateClient(), ("puebla-municipio-libre",)).collect())
+
+    assert len(records) == 3
+    assert [record.payload["prices"] for record in records[1:]] == [
+        {"regular": 11999},
+        {"regular": 12999},
+    ]
+
+
 def test_salud_digna_adapter_rejects_empty_catalog():
     class EmptyClient:
         def fetch_location(self, slug):

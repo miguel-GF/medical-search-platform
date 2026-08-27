@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import ssl
@@ -180,8 +181,20 @@ class SaludDignaAdapter:
             studies = self.client.fetch_studies(location_id=location_id)
             if not studies:
                 raise ValueError(f"Salud Digna returned no studies for location: {slug}")
+            seen_payload_hashes: set[str] = set()
             for row in studies:
-                yield salud_digna_study_to_record(row, location=location, client=self.client)
+                record = salud_digna_study_to_record(row, location=location, client=self.client)
+                # The provider endpoint currently repeats two study rows across
+                # categories. Suppress only byte-equivalent payloads so the
+                # runner's record-hash invariant remains intact; records with
+                # the same external id but different prices are retained.
+                payload_hash = hashlib.sha256(
+                    json.dumps(record.payload, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+                ).hexdigest()
+                if payload_hash in seen_payload_hashes:
+                    continue
+                seen_payload_hashes.add(payload_hash)
+                yield record
 
 
 def parse_salud_digna_location(page: SaludDignaLocationPage) -> SourceRecord:
