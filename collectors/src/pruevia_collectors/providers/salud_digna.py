@@ -160,6 +160,8 @@ class SaludDignaAdapter:
             if not location_id:
                 raise ValueError(f"Salud Digna location has no stable IdSucursal: {slug}")
             studies = self.client.fetch_studies(location_id=location_id)
+            if not studies:
+                raise ValueError(f"Salud Digna returned no studies for location: {slug}")
             for row in studies:
                 yield salud_digna_study_to_record(row, location=location, client=self.client)
 

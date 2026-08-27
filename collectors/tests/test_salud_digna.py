@@ -92,3 +92,15 @@ def test_salud_digna_adapter_emits_location_and_catalog_records():
 
     assert [record.record_type for record in records] == ["provider_location_discovered", "provider_offer_price"]
     assert records[1].payload["prices"] == {"regular": 11999}
+
+
+def test_salud_digna_adapter_rejects_empty_catalog():
+    class EmptyClient:
+        def fetch_location(self, slug):
+            return SaludDignaLocationPage(slug, f"https://example.test/{slug}", FIXTURE.read_text(encoding="utf-8"))
+
+        def fetch_studies(self, *, location_id):
+            return []
+
+    with pytest.raises(ValueError, match="no studies"):
+        list(SaludDignaAdapter(EmptyClient(), ("puebla-municipio-libre",)).collect())
