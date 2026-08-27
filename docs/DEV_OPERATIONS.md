@@ -37,27 +37,33 @@ Con un DSN de servidor, el artefacto se publica con `cli_publish` sin `--dry-run
 Si sólo está disponible el proyecto enlazado de Supabase, los renderers generan
 SQL idempotente en lotes (la API rechaza archivos grandes):
 
+Desde la raíz del repositorio:
+
 ```powershell
-python database/scripts/render_ingest_artifact.py artifacts/<source>/<run-id> `
+python database/scripts/render_ingest_artifact.py collectors/artifacts/<source>/<run-id> `
   --chunk-dir $env:TEMP/pruevia-ingest-chunks --max-bytes 400000
+Push-Location database/supabase
 Get-ChildItem $env:TEMP/pruevia-ingest-chunks/*.sql | Sort-Object Name | ForEach-Object {
   npx.cmd supabase@latest db query --linked --file $_.FullName
 }
+Pop-Location
 
 python database/scripts/build_golden_catalog.py `
-  --ruiz artifacts/ruiz-puebla/<run-id>/raw_records.jsonl `
-  --chopo artifacts/chopo-puebla/<run-id>/raw_records.jsonl `
+  --ruiz collectors/artifacts/ruiz-puebla/<run-id>/raw_records.jsonl `
+  --chopo collectors/artifacts/chopo-puebla/<run-id>/raw_records.jsonl `
   --salud-digna $env:TEMP/pruevia-salud-digna/<source>/<run-id>/raw_records.jsonl `
   --output $env:TEMP/catalog_golden_v1.json
 python database/scripts/publish_golden_catalog.py `
   --fixture $env:TEMP/catalog_golden_v1.json `
-  --ruiz-artifact artifacts/ruiz-puebla/<run-id> `
-  --chopo-artifact artifacts/chopo-puebla/<run-id> `
+  --ruiz-artifact collectors/artifacts/ruiz-puebla/<run-id> `
+  --chopo-artifact collectors/artifacts/chopo-puebla/<run-id> `
   --salud-digna-artifact $env:TEMP/pruevia-salud-digna/<source>/<run-id> `
   --chunk-dir $env:TEMP/pruevia-catalog-chunks --max-bytes 400000
+Push-Location database/supabase
 Get-ChildItem $env:TEMP/pruevia-catalog-chunks/*.sql | Sort-Object Name | ForEach-Object {
   npx.cmd supabase@latest db query --linked --file $_.FullName
 }
+Pop-Location
 ```
 
 Los lotes sólo insertan o actualizan evidencia, catálogo y decisiones exactas; no
