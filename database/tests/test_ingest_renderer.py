@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from database.scripts.render_ingest_artifact import render
+from database.scripts.render_ingest_artifact import render, render_chunks
 
 
 def _write_artifact(root: Path, *, duplicate: bool = False) -> Path:
@@ -76,3 +76,11 @@ def test_render_ingest_artifact_is_idempotent_and_evidence_only(tmp_path):
 def test_render_ingest_artifact_rejects_duplicate_hashes(tmp_path):
     with pytest.raises(ValueError, match="duplicate record hashes"):
         render(_write_artifact(tmp_path, duplicate=True))
+
+
+def test_render_ingest_artifact_chunks_are_transactions(tmp_path):
+    chunks = render_chunks(_write_artifact(tmp_path), 1024)
+
+    assert len(chunks) >= 2
+    assert all(chunk.startswith("begin;\n") and chunk.endswith("commit;\n") for chunk in chunks)
+    assert all(len(chunk.encode("utf-8")) <= 1024 for chunk in chunks)

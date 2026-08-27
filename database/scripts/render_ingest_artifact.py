@@ -118,15 +118,51 @@ def render(artifact: Path) -> str:
     return "\n".join(lines) + "\n"
 
 
+def render_chunks(artifact: Path, max_bytes: int) -> list[str]:
+    if max_bytes < 1024:
+        raise ValueError("max_bytes must be at least 1024")
+    statements = render(artifact).splitlines()
+    if statements[0] != "begin;" or statements[-1] != "commit;":
+        raise ValueError("rendered SQL must be a transaction")
+    chunks: list[str] = []
+    current: list[str] = []
+    current_bytes = len(b"begin;\ncommit;\n")
+    for statement in statements[1:-1]:
+        statement_bytes = len(statement.encode("utf-8")) + 1
+        if statement_bytes + len(b"begin;\ncommit;\n") > max_bytes:
+            raise ValueError("a single SQL statement exceeds max_bytes")
+        if current and current_bytes + statement_bytes > max_bytes:
+            chunks.append("begin;\n" + "\n".join(current) + "\ncommit;\n")
+            current = []
+            current_bytes = len(b"begin;\ncommit;\n")
+        current.append(statement)
+        current_bytes += statement_bytes
+    if current:
+        chunks.append("begin;\n" + "\n".join(current) + "\ncommit;\n")
+    return chunks
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("artifact", type=Path)
-    parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--output", type=Path)
+    parser.add_argument("--chunk-dir", type=Path)
+    parser.add_argument("--max-bytes", type=int, default=450_000)
     args = parser.parse_args()
+    if bool(args.output) == bool(args.chunk_dir):
+        raise SystemExit("exactly one of --output or --chunk-dir is required")
+    source_key = json.loads((args.artifact / "run_manifest.json").read_text(encoding="utf-8"))["source_key"]
+    if args.chunk_dir:
+        chunks = render_chunks(args.artifact, args.max_bytes)
+        args.chunk_dir.mkdir(parents=True, exist_ok=True)
+        for index, chunk in enumerate(chunks, start=1):
+            (args.chunk_dir / f"part-{index:03d}.sql").write_text(chunk, encoding="utf-8")
+        print(json.dumps({"source_key": source_key, "chunks": len(chunks), "bytes": sum(len(chunk.encode('utf-8')) for chunk in chunks)}, ensure_ascii=False))
+        return 0
     sql = render(args.artifact)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(sql, encoding="utf-8")
-    print(json.dumps({"source_key": json.loads((args.artifact / 'run_manifest.json').read_text(encoding='utf-8'))["source_key"], "records": sql.count("insert into ingest.raw_records"), "bytes": len(sql.encode('utf-8'))}, ensure_ascii=False))
+    print(json.dumps({"source_key": source_key, "records": sql.count("insert into ingest.raw_records"), "bytes": len(sql.encode('utf-8'))}, ensure_ascii=False))
     return 0
 
 
