@@ -15,7 +15,7 @@ Consulta el detalle y los comandos reproducibles en [docs/03_REVISION_INTEGRACIO
 - Arquitectura de producto y software: definida.
 - Base de datos V1: migraciones 001-081 aplicadas y verificadas.
 - Despliegue y validación física en Supabase DEV: completado para el Data Engine previo a Flutter.
-- Collectors Chopo/Ruiz y el adapter Salud Digna (fixtures y pruebas), Search API V1 y Admin V1: implementados y probados; la corrida live de Salud Digna queda condicionada a resolver la cadena TLS del endpoint externo, y DENUE live a su token oficial.
+- Collectors Chopo/Ruiz y el adapter Salud Digna (fixtures, pruebas y smoke de sucursal), Search API V1 y Admin V1: implementados y probados; el endpoint externo de catálogo de Salud Digna queda pendiente por timeout, y DENUE live por su token oficial.
 
 ## Repositorio
 
