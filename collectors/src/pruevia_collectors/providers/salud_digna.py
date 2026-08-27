@@ -21,9 +21,10 @@ except ImportError:  # pragma: no cover - dependency is installed in supported e
 from ..models import Observation, SourceRecord, SourceSpec
 
 SALUD_DIGNA_ORIGIN = "https://www.salud-digna.org"
-SALUD_DIGNA_SERVICES_URL = "https://servicios.salud-digna.org"
+SALUD_DIGNA_SERVICES_URL = "https://api.emarketingsd.org"
 SALUD_DIGNA_LOCATION_PREFIX = f"{SALUD_DIGNA_ORIGIN}/"
-SALUD_DIGNA_STUDIES_PATH = "/Citas2/EstudiosPorSucursal"
+SALUD_DIGNA_CATEGORIES_PATH = "/Citas/Citas2/EstudiosPorSucursal"
+SALUD_DIGNA_STUDIES_PATH = "/Citas/Citas2/SubEstudiosPorSucursalPP"
 
 
 @dataclass(frozen=True)
@@ -79,12 +80,29 @@ class SaludDignaClient:
         return SaludDignaLocationPage(slug=slug.strip().strip("/"), url=str(response.url), html=response.text)
 
     def fetch_studies(self, *, location_id: str | int) -> list[Mapping[str, Any]]:
-        payload = self._request_json(
+        categories_payload = self._request_json(
             "GET",
-            f"{self.services_base_url}{SALUD_DIGNA_STUDIES_PATH}",
+            f"{self.services_base_url}{SALUD_DIGNA_CATEGORIES_PATH}",
             params={"idSucursal": str(location_id)},
         )
-        return _decode_rows(payload, keys=("Estudios", "estudios", "data", "Data", "result", "results", "items"))
+        categories = _decode_rows(categories_payload, keys=("Estudios", "estudios", "data", "Data", "result", "results", "items"))
+        studies: list[Mapping[str, Any]] = []
+        for category in categories:
+            category_id = _first_value(category, "Id", "id", "IdEstudio", "idEstudio")
+            if category_id in (None, ""):
+                continue
+            payload = self._request_json(
+                "GET",
+                f"{self.services_base_url}{SALUD_DIGNA_STUDIES_PATH}",
+                params={
+                    "estudio[Id]": str(category_id),
+                    "sucursal[Id]": str(location_id),
+                    "filtro": "1",
+                    "busqueda": "",
+                },
+            )
+            studies.extend(_decode_rows(payload, keys=("Estudios", "estudios", "data", "Data", "result", "results", "items")))
+        return studies
 
     def _request(self, method: str, url: str, **kwargs: Any) -> httpx.Response:
         for attempt in range(1, self.max_attempts + 1):

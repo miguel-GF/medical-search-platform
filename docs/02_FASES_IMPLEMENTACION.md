@@ -216,9 +216,10 @@ Puebla
 
 La implementación actual mantiene Chopo y Ruiz publicados y añade el adapter
 dedicado de Salud Digna (`salud_digna_puebla`), con CLI, fixtures y pruebas.
-La corrida live depende de que la fuente siga disponible y de una revisión de
-política de uso; los artefactos se publican primero en `ingest` y no crean
-equivalencias clínicas automáticas.
+La primera corrida live produjo 833 registros, 831 válidos y 2 duplicados
+rechazados; los artefactos se publican primero en `ingest` y no crean
+equivalencias clínicas automáticas. La publicación DEV requiere un DSN de
+servidor configurado.
 
 Orden recomendado:
 

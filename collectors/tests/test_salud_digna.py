@@ -56,6 +56,8 @@ def test_salud_digna_client_requests_page_and_studies():
         calls.append((request.method, str(request.url), dict(request.headers)))
         if request.url.path == "/puebla-municipio-libre":
             return httpx.Response(200, text=FIXTURE.read_text(encoding="utf-8"), request=request)
+        if request.url.path.endswith("/EstudiosPorSucursal"):
+            return httpx.Response(200, json={"data": [{"Id": 2, "Descripcion": "LABORATORIO"}]}, request=request)
         return httpx.Response(200, json={"data": [{"Id": 17, "Descripcion": "Glucosa", "Precio": "119.99"}]}, request=request)
 
     client = SaludDignaClient(
@@ -72,7 +74,8 @@ def test_salud_digna_client_requests_page_and_studies():
     assert page.slug == "puebla-municipio-libre"
     assert studies[0]["Descripcion"] == "Glucosa"
     assert calls[0][1] == "https://example.test/puebla-municipio-libre"
-    assert calls[1][1] == "https://services.test/Citas2/EstudiosPorSucursal?idSucursal=332"
+    assert calls[1][1] == "https://services.test/Citas/Citas2/EstudiosPorSucursal?idSucursal=332"
+    assert "estudio%5BId%5D=2" in calls[2][1]
     assert calls[0][2]["user-agent"] == "PrueviaCollector/0.1"
 
 
