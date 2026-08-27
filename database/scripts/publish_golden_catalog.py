@@ -256,17 +256,55 @@ def render(fixture: dict, ruiz_artifact: Path, chopo_artifact: Path, salud_digna
     return "\n".join(lines) + "\n"
 
 
+def chunk_transaction(sql: str, max_bytes: int = 450_000) -> list[str]:
+    """Split a rendered transaction into re-runnable linked-query batches."""
+    if max_bytes < 1024:
+        raise ValueError("max_bytes must be at least 1024")
+    statements = sql.splitlines()
+    if not statements or statements[0] != "begin;" or statements[-1] != "commit;":
+        raise ValueError("SQL must start with begin; and end with commit;")
+    chunks: list[str] = []
+    current: list[str] = []
+    overhead = len(b"begin;\ncommit;\n")
+    current_bytes = overhead
+    for statement in statements[1:-1]:
+        statement_bytes = len(statement.encode("utf-8")) + 1
+        if statement_bytes + overhead > max_bytes:
+            raise ValueError("a single SQL statement exceeds max_bytes")
+        if current and current_bytes + statement_bytes > max_bytes:
+            chunks.append("begin;\n" + "\n".join(current) + "\ncommit;\n")
+            current = []
+            current_bytes = overhead
+        current.append(statement)
+        current_bytes += statement_bytes
+    if current:
+        chunks.append("begin;\n" + "\n".join(current) + "\ncommit;\n")
+    return chunks
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--fixture", type=Path, required=True)
     parser.add_argument("--ruiz-artifact", type=Path, required=True)
     parser.add_argument("--chopo-artifact", type=Path, required=True)
     parser.add_argument("--salud-digna-artifact", type=Path)
-    parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--output", type=Path)
+    parser.add_argument("--chunk-dir", type=Path)
+    parser.add_argument("--max-bytes", type=int, default=450_000)
     args = parser.parse_args()
+    if bool(args.output) == bool(args.chunk_dir):
+        raise SystemExit("exactly one of --output or --chunk-dir is required")
     sql = render(json.loads(args.fixture.read_text(encoding="utf-8")), args.ruiz_artifact, args.chopo_artifact, args.salud_digna_artifact)
-    args.output.write_text(sql, encoding="utf-8")
-    print(json.dumps({"statements": sql.count(";"), "bytes": len(sql.encode('utf-8'))}))
+    if args.chunk_dir:
+        chunks = chunk_transaction(sql, args.max_bytes)
+        args.chunk_dir.mkdir(parents=True, exist_ok=True)
+        for index, chunk in enumerate(chunks, start=1):
+            (args.chunk_dir / f"part-{index:03d}.sql").write_text(chunk, encoding="utf-8")
+        print(json.dumps({"chunks": len(chunks), "bytes": sum(len(chunk.encode('utf-8')) for chunk in chunks)}))
+    else:
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        args.output.write_text(sql, encoding="utf-8")
+        print(json.dumps({"statements": sql.count(";"), "bytes": len(sql.encode('utf-8'))}))
     return 0
 
 

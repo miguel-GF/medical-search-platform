@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 
 from database.scripts.build_golden_catalog import build
-from database.scripts.publish_golden_catalog import render
+from database.scripts.publish_golden_catalog import chunk_transaction, render
 
 
 def _hash(payload):
@@ -39,3 +39,11 @@ def test_golden_catalog_and_publisher_accept_salud_digna_artifact(tmp_path: Path
     assert any(mapping["source_key"] == "salud_digna_puebla" for mapping in fixture["mappings"])
     assert "salud-digna" in sql
     assert "salud_digna_puebla" in sql
+
+
+def test_golden_catalog_sql_can_be_chunked_for_linked_queries():
+    chunks = chunk_transaction("begin;\nselect 1;\nselect 2;\ncommit;\n", max_bytes=1024)
+
+    assert len(chunks) == 1
+    assert chunks[0].startswith("begin;\n")
+    assert chunks[0].endswith("commit;\n")
