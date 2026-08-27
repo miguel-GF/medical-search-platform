@@ -40,6 +40,17 @@ $env:PYTHONPATH = "src"
 python -m pruevia_collectors.cli_chopo --max-pages 1
 ```
 
+Smoke run de Salud Digna Puebla (sucursal + estudios por sucursal):
+
+```powershell
+$env:PYTHONPATH = "src"
+python -m pruevia_collectors.cli_salud_digna --location-slug puebla-municipio-libre
+```
+
+Para varias sucursales repite `--location-slug`. `--no-catalog` permite hacer
+solo discovery de sucursales cuando el endpoint de estudios está temporalmente
+indisponible; ese artefacto no debe usarse para publicar ofertas.
+
 El collector de DENUE requiere `DENUE_API_TOKEN` y recibe coordenadas/radio explícitos.
 
 ## Normalización V1

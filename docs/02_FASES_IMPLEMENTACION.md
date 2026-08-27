@@ -214,6 +214,12 @@ Puebla
 
 **Estado:** ✅ Chopo y Ruiz ejecutados en vivo, publicados y repetibles
 
+La implementación actual mantiene Chopo y Ruiz publicados y añade el adapter
+dedicado de Salud Digna (`salud_digna_puebla`), con CLI, fixtures y pruebas.
+La corrida live depende de que la fuente siga disponible y de una revisión de
+política de uso; los artefactos se publican primero en `ingest` y no crean
+equivalencias clínicas automáticas.
+
 Orden recomendado:
 
 1. Chopo;

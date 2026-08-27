@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import time
 from dataclasses import dataclass
 from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 from typing import Any, Iterable, Mapping, Sequence
@@ -27,10 +28,16 @@ class RuizClient:
         *,
         base_url: str = RUIZ_BASE_URL,
         timeout_seconds: float = 30.0,
+        max_attempts: int = 3,
+        retry_backoff_seconds: float = 1.5,
         client: httpx.Client | None = None,
     ) -> None:
+        if max_attempts < 1:
+            raise ValueError("max_attempts must be positive")
         self.base_url = base_url.rstrip("/")
         self.timeout_seconds = timeout_seconds
+        self.max_attempts = max_attempts
+        self.retry_backoff_seconds = retry_backoff_seconds
         self._owns_client = client is None
         self._client = client or httpx.Client(timeout=timeout_seconds, follow_redirects=True)
 
@@ -49,15 +56,23 @@ class RuizClient:
         return [row for row in rows if isinstance(row, Mapping)]
 
     def _get_json(self, path: str) -> Mapping[str, Any]:
-        response = self._client.get(
-            f"{self.base_url}{path}",
-            headers={"Accept": "application/json", "User-Agent": "PrueviaCollector/0.1"},
-        )
-        response.raise_for_status()
-        payload = response.json()
-        if not isinstance(payload, Mapping):
-            raise ValueError(f"Ruiz response must be an object: {path}")
-        return payload
+        url = f"{self.base_url}{path}"
+        for attempt in range(1, self.max_attempts + 1):
+            try:
+                response = self._client.get(
+                    url,
+                    headers={"Accept": "application/json", "User-Agent": "PrueviaCollector/0.1"},
+                )
+                response.raise_for_status()
+                payload = response.json()
+                if not isinstance(payload, Mapping):
+                    raise ValueError(f"Ruiz response must be an object: {path}")
+                return payload
+            except (httpx.HTTPStatusError, httpx.RequestError):
+                if attempt == self.max_attempts:
+                    raise
+                time.sleep(self.retry_backoff_seconds * attempt)
+        raise RuntimeError("unreachable")
 
 
 class RuizAdapter:

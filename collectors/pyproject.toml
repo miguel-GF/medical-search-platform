@@ -9,6 +9,7 @@ description = "Reproducible RAW ingestion and collector framework for Pruevia"
 requires-python = ">=3.10"
 dependencies = [
   "httpx>=0.27,<1",
+  "certifi>=2024.2.2",
   "psycopg[binary]>=3.2,<4",
 ]
 
@@ -16,6 +17,7 @@ dependencies = [
 pruevia-denue = "pruevia_collectors.cli:main"
 pruevia-chopo = "pruevia_collectors.cli_chopo:main"
 pruevia-ruiz = "pruevia_collectors.cli_ruiz:main"
+pruevia-salud-digna = "pruevia_collectors.cli_salud_digna:main"
 pruevia-publish = "pruevia_collectors.cli_publish:main"
 
 [project.optional-dependencies]

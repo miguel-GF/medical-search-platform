@@ -106,7 +106,7 @@ def read_artifact(path: Path) -> tuple[dict, list[dict], list[dict]]:
     return manifest, raw, observations
 
 
-def render(fixture: dict, ruiz_artifact: Path, chopo_artifact: Path) -> str:
+def render(fixture: dict, ruiz_artifact: Path, chopo_artifact: Path, salud_digna_artifact: Path | None = None) -> str:
     ruiz_manifest, ruiz_raw, ruiz_observations = read_artifact(ruiz_artifact)
     chopo_manifest, chopo_raw, chopo_observations = read_artifact(chopo_artifact)
     validate_artifact(ruiz_manifest, ruiz_raw, ruiz_observations, "ruiz_puebla")
@@ -115,10 +115,13 @@ def render(fixture: dict, ruiz_artifact: Path, chopo_artifact: Path) -> str:
         "ruiz_puebla": (ruiz_manifest, ruiz_raw, ruiz_observations),
         "chopo_puebla": (chopo_manifest, chopo_raw, chopo_observations),
     }
+    if salud_digna_artifact:
+        salud_manifest, salud_raw, salud_observations = read_artifact(salud_digna_artifact)
+        validate_artifact(salud_manifest, salud_raw, salud_observations, "salud_digna_puebla")
+        artifacts["salud_digna_puebla"] = (salud_manifest, salud_raw, salud_observations)
     brands = fixture["brands"]
     brand_ids = {key: stable_id("provider-brand", data["brand_key"]) for key, data in brands.items()}
     market_ids = {key: stable_id("provider-market", f"{data['brand_key']}:puebla") for key, data in brands.items()}
-    source_ids = {key: stable_id("source", key) for key in brands}
     item_by_key = {item["catalog_key"]: item for item in fixture["items"]}
     lines = ["begin;", "-- Generated from catalog_golden_v1.json; no fuzzy mappings are created."]
 
@@ -126,28 +129,31 @@ def render(fixture: dict, ruiz_artifact: Path, chopo_artifact: Path) -> str:
         brand_id = brand_ids[source_key]
         market_id = market_ids[source_key]
         lines.append(
-            f"insert into core.provider_brands(id,name,normalized_name,slug,website_url) values ({q(brand_id)},{q(data['brand_name'])},{q(normalize(data['brand_name']))},{q(data['slug'])},{q('https://www.chopo.com.mx' if data['brand_key']=='chopo' else 'https://laboratoriosruiz.com')}) on conflict(id) do update set name=excluded.name, normalized_name=excluded.normalized_name, website_url=excluded.website_url;"
+            f"insert into core.provider_brands(id,name,normalized_name,slug,website_url) values ({q(brand_id)},{q(data['brand_name'])},{q(normalize(data['brand_name']))},{q(data['slug'])},{q({'chopo':'https://www.chopo.com.mx','ruiz':'https://laboratoriosruiz.com','salud_digna':'https://www.salud-digna.org'}[data['brand_key']])}) on conflict(id) do update set name=excluded.name, normalized_name=excluded.normalized_name, website_url=excluded.website_url;"
         )
         lines.append(
             f"insert into core.provider_markets(id,provider_brand_id,name,normalized_name,slug,market_type) values ({q(market_id)},{q(brand_id)},{q('Puebla')},{q('puebla')},{q('puebla')},'city') on conflict(id) do update set name=excluded.name, normalized_name=excluded.normalized_name;"
         )
 
-    # Ruiz locations are official API observations and are safe to publish as candidates.
-    for row in ruiz_raw:
-        if row.get("record_type") != "provider_location_discovered":
+    # Official provider locations are safe to publish as candidates.
+    for source_key, (_, raw, _) in artifacts.items():
+        if source_key not in brand_ids:
             continue
-        payload = row["payload"]
-        external_id = str(payload.get("provider_external_id") or row.get("external_record_id"))
-        location_id = stable_id("provider-location", f"ruiz:{external_id}")
-        lines.append(
-            f"insert into core.provider_locations(id,provider_brand_id,name,normalized_name,location_code,address_line_1,address_line_2,locality_text,postal_code,coordinates,timezone,phone,website_url,status) values ({q(location_id)},{q(brand_ids['ruiz_puebla'])},{q(payload.get('provider_display_name'))},{q(normalize(str(payload.get('provider_display_name') or '')))},{q(external_id)},{q(payload.get('address_line_1'))},{q(payload.get('address_line_2'))},{q(payload.get('locality_text'))},{q(payload.get('postal_code'))},{sql_geography(payload.get('coordinates'))},{q('America/Mexico_City')},{q(payload.get('phone'))},{q(payload.get('location_url'))},'active') on conflict(id) do update set name=excluded.name,address_line_1=excluded.address_line_1,coordinates=excluded.coordinates,phone=excluded.phone,updated_at=now();"
-        )
-        lines.append(
-            f"insert into core.location_external_ids(provider_location_id,source_system,external_id,external_url) values ({q(location_id)},{q('ruiz_puebla')},{q(external_id)},{q(payload.get('location_url'))}) on conflict(source_system,external_id) do nothing;"
-        )
-        lines.append(
-            f"insert into core.provider_market_locations(provider_market_id,provider_location_id) values ({q(market_ids['ruiz_puebla'])},{q(location_id)}) on conflict do nothing;"
-        )
+        for row in raw:
+            if row.get("record_type") != "provider_location_discovered":
+                continue
+            payload = row["payload"]
+            external_id = str(payload.get("provider_external_id") or row.get("external_record_id"))
+            location_id = stable_id("provider-location", f"{source_key}:{external_id}")
+            lines.append(
+                f"insert into core.provider_locations(id,provider_brand_id,name,normalized_name,location_code,address_line_1,address_line_2,locality_text,postal_code,coordinates,timezone,phone,website_url,status) values ({q(location_id)},{q(brand_ids[source_key])},{q(payload.get('provider_display_name'))},{q(normalize(str(payload.get('provider_display_name') or '')))},{q(external_id)},{q(payload.get('address_line_1'))},{q(payload.get('address_line_2'))},{q(payload.get('locality_text'))},{q(payload.get('postal_code'))},{sql_geography(payload.get('coordinates'))},{q('America/Mexico_City')},{q(payload.get('phone'))},{q(payload.get('location_url'))},'active') on conflict(id) do update set name=excluded.name,address_line_1=excluded.address_line_1,coordinates=excluded.coordinates,phone=excluded.phone,updated_at=now();"
+            )
+            lines.append(
+                f"insert into core.location_external_ids(provider_location_id,source_system,external_id,external_url) values ({q(location_id)},{q(source_key)},{q(external_id)},{q(payload.get('location_url'))}) on conflict(source_system,external_id) do nothing;"
+            )
+            lines.append(
+                f"insert into core.provider_market_locations(provider_market_id,provider_location_id) values ({q(market_ids[source_key])},{q(location_id)}) on conflict do nothing;"
+            )
 
     # Canonical catalog + category + health metadata.
     for item in fixture["items"]:
@@ -217,7 +223,7 @@ def render(fixture: dict, ruiz_artifact: Path, chopo_artifact: Path) -> str:
             f"insert into supply.offer_links(offer_scope_id,link_type,url,label,status) select os.id,'details',{q(payload.get('product_url'))},{q('Provider details')},'active' from supply.offer_scopes os where os.offer_id={q(offer_id)} and not exists(select 1 from supply.offer_links l where l.offer_scope_id=os.id and l.link_type='details' and l.url={q(payload.get('product_url'))});"
         )
         normalization_id = stable_id("normalization-run", f"{source_key}:{mapping['record_hash']}")
-        method = "alias" if source_key == "chopo_puebla" else "exact"
+        method = "exact" if source_key == "ruiz_puebla" else "alias"
         lines.append(
             f"insert into ingest.normalization_runs(id,input_type,raw_record_id,provider_brand_id,raw_text,normalized_input,engine_version,status,resolved_at) select {q(normalization_id)},'crawler',rr.id,{q(brand_id)},{q(display_name)},{q(normalize(display_name))},{q(fixture['version'])},'resolved',now() from ingest.raw_records rr where rr.crawl_run_id={q(artifacts[source_key][0]['run_id'])}::uuid and rr.record_hash={q(mapping['record_hash'])} on conflict(id) do nothing;"
         )
@@ -228,15 +234,19 @@ def render(fixture: dict, ruiz_artifact: Path, chopo_artifact: Path) -> str:
             f"insert into ingest.normalization_decisions(normalization_run_id,selected_item_id,decision_type,reason) select {q(normalization_id)},{q(item['item_id'])},'automatic',{q('Exact normalized provider label approved in golden catalog V1')} where not exists(select 1 from ingest.normalization_decisions where normalization_run_id={q(normalization_id)} and decision_type='automatic');"
         )
 
-    # Keep every unresolved Chopo label auditable in the normalization queue.
-    queue_by_external = {str(row.get("external_record_id")): row for row in chopo_raw}
+    # Keep every unresolved provider label auditable in the normalization queue.
     for queue in fixture["normalization_queue"]:
+        source_key = queue.get("source_key", "chopo_puebla")
+        source_artifact = artifacts.get(source_key)
+        if not source_artifact:
+            raise ValueError(f"normalization queue source has no artifact: {source_key}")
+        queue_by_external = {str(row.get("external_record_id")): row for row in source_artifact[1]}
         row = queue_by_external.get(str(queue["raw_record_id"]))
         if not row:
-            raise ValueError(f"normalization queue record does not exist in Chopo artifact: {queue['raw_record_id']}")
-        run_id = stable_id("normalization-run", f"chopo_puebla:{row.get('record_hash')}")
+            raise ValueError(f"normalization queue record does not exist in {source_key} artifact: {queue['raw_record_id']}")
+        run_id = stable_id("normalization-run", f"{source_key}:{row.get('record_hash')}")
         lines.append(
-            f"insert into ingest.normalization_runs(id,input_type,raw_record_id,provider_brand_id,raw_text,normalized_input,engine_version,status) select {q(run_id)},'crawler',rr.id,{q(brand_ids['chopo_puebla'])},{q(queue['raw_text'])},{q(queue['normalized_input'])},{q(fixture['version'])},'no_match' from ingest.raw_records rr where rr.crawl_run_id={q(chopo_manifest['run_id'])}::uuid and rr.record_hash={q(row.get('record_hash'))} on conflict(id) do nothing;"
+            f"insert into ingest.normalization_runs(id,input_type,raw_record_id,provider_brand_id,raw_text,normalized_input,engine_version,status) select {q(run_id)},'crawler',rr.id,{q(brand_ids[source_key])},{q(queue['raw_text'])},{q(queue['normalized_input'])},{q(fixture['version'])},'no_match' from ingest.raw_records rr where rr.crawl_run_id={q(source_artifact[0]['run_id'])}::uuid and rr.record_hash={q(row.get('record_hash'))} on conflict(id) do nothing;"
         )
         lines.append(
             f"insert into ingest.normalization_decisions(normalization_run_id,decision_type,reason) select {q(run_id)},'no_match',{q(queue['reason'])} where not exists(select 1 from ingest.normalization_decisions where normalization_run_id={q(run_id)} and decision_type='no_match');"
@@ -251,9 +261,10 @@ def main() -> int:
     parser.add_argument("--fixture", type=Path, required=True)
     parser.add_argument("--ruiz-artifact", type=Path, required=True)
     parser.add_argument("--chopo-artifact", type=Path, required=True)
+    parser.add_argument("--salud-digna-artifact", type=Path)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
-    sql = render(json.loads(args.fixture.read_text(encoding="utf-8")), args.ruiz_artifact, args.chopo_artifact)
+    sql = render(json.loads(args.fixture.read_text(encoding="utf-8")), args.ruiz_artifact, args.chopo_artifact, args.salud_digna_artifact)
     args.output.write_text(sql, encoding="utf-8")
     print(json.dumps({"statements": sql.count(";"), "bytes": len(sql.encode('utf-8'))}))
     return 0

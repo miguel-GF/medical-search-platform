@@ -81,3 +81,27 @@ def test_ruiz_client_requests_json_endpoints():
         client._client.close()
 
     assert calls == ["https://example.test/general-home", "https://example.test/departments-studies/analisis-clinicos"]
+
+
+def test_ruiz_client_retries_transient_http_errors():
+    calls = 0
+
+    def handler(request: httpx.Request):
+        nonlocal calls
+        calls += 1
+        if calls == 1:
+            return httpx.Response(503, request=request)
+        return httpx.Response(200, json={"departments": []}, request=request)
+
+    client = RuizClient(
+        base_url="https://example.test",
+        client=httpx.Client(transport=httpx.MockTransport(handler)),
+        max_attempts=2,
+        retry_backoff_seconds=0,
+    )
+    try:
+        assert client.fetch_home() == {"departments": []}
+    finally:
+        client._client.close()
+
+    assert calls == 2

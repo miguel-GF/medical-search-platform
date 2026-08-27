@@ -23,6 +23,7 @@ Desde `collectors/`:
 $env:PYTHONPATH = "src"
 python -m pruevia_collectors.cli_chopo --max-pages 4
 python -m pruevia_collectors.cli_ruiz --max-records 200 --per-department 20
+python -m pruevia_collectors.cli_salud_digna --location-slug puebla-municipio-libre
 python -m pruevia_collectors.cli --condition laboratorio --latitude 19.0433 --longitude -98.2011 --radius-meters 5000
 ```
 
@@ -31,6 +32,22 @@ El tercer comando requiere `DENUE_API_TOKEN` oficial. Los artefactos se validan 
 ```powershell
 python -m pruevia_collectors.cli_publish artifacts/<source>/<run-id> --dry-run
 ```
+
+## Gate A coverage report
+
+El reporte es de solo lectura y resume cobertura comparable, precios vigentes,
+coordenadas, frescura y corridas fallidas. Usa `PRUEVIA_DATABASE_URL` con un DSN
+de servidor:
+
+Ejecuta este comando desde la raÃ­z del repositorio:
+
+```powershell
+python database/scripts/report_gate_a.py
+```
+
+Los umbrales por defecto son 30 servicios compartidos, 10 con precio vigente
+en dos proveedores y 90% de sucursales con coordenadas. Un resultado distinto
+de cero significa que la viabilidad aún no está demostrada.
 
 ## API Worker
 
