@@ -225,9 +225,8 @@ Orden recomendado:
 
 1. Chopo;
 2. Ruiz;
-3. MAC;
-4. Salud Digna;
-5. siguientes según cobertura.
+3. Salud Digna;
+4. MAC u otros proveedores según cobertura.
 
 Cada adapter debe implementar conceptualmente:
 
