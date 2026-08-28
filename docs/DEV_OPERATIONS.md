@@ -74,6 +74,29 @@ Los lotes sólo insertan o actualizan evidencia, catálogo y decisiones exactas;
 ejecutan `DROP`, `DELETE` ni `TRUNCATE`. Los labels no exactos quedan en
 `ingest.normalization_runs` con estado `no_match` para revisión clínica.
 
+Para publicar una equivalencia clínica revisada contra un ítem canónico ya
+existente (por ejemplo, BH o EGO), usa el fixture explícito; el renderer exige
+que el `external_record_id`, el label observado y el precio sigan coincidiendo
+con el artefacto descargado:
+
+```powershell
+python database/scripts/render_clinical_mappings.py `
+  --fixture database/fixtures/clinical_provider_mappings_v1.json `
+  --artifact chopo_puebla=collectors/artifacts/chopo-puebla/<run-id> `
+  --artifact salud_digna_puebla=collectors/artifacts/salud-digna-puebla/<run-id> `
+  --chunk-dir $env:TEMP/pruevia-clinical-mappings --max-bytes 100000
+Push-Location database/supabase
+Get-ChildItem $env:TEMP/pruevia-clinical-mappings/*.sql | Sort-Object Name | ForEach-Object {
+  npx.cmd supabase@latest db query --linked --file $_.FullName
+}
+Pop-Location
+```
+
+Los nombres parecidos que no estén en el fixture no se publican: permanecen
+en la cola de normalización para revisión humana. El artefacto DENUE sigue una
+ruta separada y sirve como evidencia de identidad/ubicación para un reclamo,
+no como prueba de que el proveedor ofrece un estudio o precio.
+
 ## Gate A coverage report
 
 El reporte es de solo lectura y resume cobertura comparable, precios vigentes,

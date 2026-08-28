@@ -617,6 +617,23 @@ Consentimiento y retention definidos.
 
 Las fases previas a Flutter tienen implementación técnica en DEV: base Supabase enlazada con migraciones 001-081; collectors Chopo, Ruiz, Salud Digna y DENUE con RAW/observaciones/runs reproducibles; catálogo dorado de 175 servicios, 219 ofertas y 41 equivalencias Chopo↔Ruiz revisadas explícitamente; Admin V1 en `apps/admin` con Supabase Auth y búsqueda de servicios canónicos; Search API V1 en `apps/api`; y pruebas remotas de base, API y Gate A con todas las aserciones verdes. La viabilidad queda cerrada en este corte: 44 servicios tienen dos proveedores y 44 tienen precio vigente en ambos; Flutter no se inicia dentro de esta fase.
 
+## Corte Gate B y lote comercial (28 de agosto de 2026)
+
+Se ejecutó una recolección acotada de Puebla y se cargó primero en `ingest`:
+
+- 489 establecimientos DENUE para evidencia de identidad y ubicación;
+- 15 sucursales Ruiz y 143 estudios con precios;
+- 30 estudios Chopo;
+- 1 sucursal Salud Digna y 829 estudios con precios.
+
+La normalización publicó únicamente 7 mapeos clínicos revisados (BH, EGO,
+glucosa, creatinina y TSH). Las etiquetas restantes, incluido `PERFIL
+TIROIDEO EN SUERO`, no se equiparan automáticamente a un panel básico o
+ampliado: permanecen en la cola para revisión de composición. DENUE tampoco
+verifica por sí solo que un proveedor realice un estudio; su uso correcto en
+claims es aportar evidencia independiente de identidad, razón social y
+ubicación.
+
 ---
 
 # Fase 15 — Reservas

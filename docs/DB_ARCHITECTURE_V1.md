@@ -238,6 +238,13 @@ The resolver currently uses PostgreSQL only. Vector retrieval and LLM-assisted
 curation remain optional future candidate generators and cannot make the final
 clinical equivalence decision.
 
+Provider ingestion follows the same evidence boundary. Official catalogs are
+stored in `ingest.raw_records`/`ingest.source_observations`; only reviewed exact
+clinical mappings from `clinical_provider_mappings_v1.json` create
+`supply.offers` and current prices. DENUE records remain an independent
+identity/location evidence source and can support a later provider claim, but
+do not establish clinical capability or price validity.
+
 ## 13. Merge/split strategy
 
 Catalog IDs are stable. If duplicate concepts are discovered, mark one item `merged` and use `redirect_to_item_id`. Do not hard-delete historical IDs.
