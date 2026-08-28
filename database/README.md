@@ -53,7 +53,9 @@ The first migration enables:
 - `unaccent`
 - `pgcrypto`
 
-PostGIS powers radius/distance searches. `pg_trgm` powers fuzzy names/aliases.
+PostGIS powers radius/distance searches. `pg_trgm` powers bounded candidate
+generation; the clinical resolver adds token coverage and hard attribute
+conflict checks before an item can be considered resolved.
 
 ## Data flow
 
@@ -67,7 +69,7 @@ ingest.raw_documents / raw_records
 normalization candidates + decisions
         |
         v
-catalog canonical item
+catalog canonical item / clinical resolver
         |
         v
 supply offer -> scope -> price / availability

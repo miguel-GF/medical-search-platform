@@ -673,6 +673,12 @@ embedding futuro
 LLM último recurso
 ```
 
+En Gate B, fuzzy/full-text sólo generan candidatos. El resolvedor clínico
+determinista valida tipo de servicio, método, anatomía, lateralidad, contraste,
+muestra y composición de paneles. Cada consulta devuelve `resolved`,
+`ambiguous` o `no_match`; las variantes ambiguas se muestran por separado y
+nunca se elige una silenciosamente.
+
 Cada intento genera:
 
 - run;
@@ -746,6 +752,7 @@ Primeros endpoints:
 
 ```text
 GET /api/v1/search
+POST /api/v1/resolve
 GET /api/v1/services/{id}
 GET /api/v1/services/{id}/providers
 GET /api/v1/providers/{id}
@@ -935,4 +942,3 @@ No construir inicialmente:
 - `PRUEVIA_DB_V1.zip`
 - `DB_ARCHITECTURE_V1.md`
 - `DB_TABLE_CATALOG_V1.md`
-

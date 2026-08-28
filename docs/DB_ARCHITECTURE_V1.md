@@ -213,6 +213,31 @@ Future ranking may combine:
 - domain-specific rules;
 - embeddings.
 
+### 12.1 Clinical resolver gate B
+
+Search is split into two decisions:
+
+```text
+text/OCR
+  -> deterministic resolver
+  -> resolved | ambiguous | no_match
+  -> provider offers and prices
+```
+
+`pg_trgm` and full-text search only generate candidates. The resolver validates
+structured health attributes (service type, method, anatomy, laterality,
+contrast, specimen and panel components) and rejects hard contradictions. A
+short abbreviation is accepted only when it is an approved, unambiguous alias.
+
+Ambiguous local terms such as `QS completa` or `perfil tiroideo` return all
+reviewed variants separately; no variant is silently selected. The first public
+contract is `POST /api/v1/resolve`, while the existing `GET /api/v1/search`
+contract remains compatible.
+
+The resolver currently uses PostgreSQL only. Vector retrieval and LLM-assisted
+curation remain optional future candidate generators and cannot make the final
+clinical equivalence decision.
+
 ## 13. Merge/split strategy
 
 Catalog IDs are stable. If duplicate concepts are discovered, mark one item `merged` and use `redirect_to_item_id`. Do not hard-delete historical IDs.

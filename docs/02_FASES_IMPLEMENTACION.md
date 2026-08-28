@@ -359,11 +359,17 @@ Endpoints iniciales:
 
 ```text
 GET /api/v1/search
+POST /api/v1/resolve
 GET /api/v1/services/{id}
 GET /api/v1/services/{id}/providers
 GET /api/v1/providers/{id}
 GET /api/v1/providers/{id}/services
 ```
+
+`POST /api/v1/resolve` recibe `{ "text": "..." }` y devuelve el estado
+determinista (`resolved`, `ambiguous` o `no_match`), la explicación de cada
+candidato y sus ofertas/precios. Las variantes ambiguas se conservan separadas
+para que el paciente pueda confirmar la composición indicada.
 
 ## Primer milestone técnico 🧪
 
