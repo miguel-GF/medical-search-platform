@@ -654,6 +654,13 @@ El fixture es una lista de candidatos y evidencia, no una publicacion en
 `core.provider_locations`: antes de crear una sede canonica se debe confirmar
 la identidad y la oferta con una fuente del proveedor.
 
+El cruce de este fixture contra las corridas comerciales de Ruiz, Chopo y
+Salud Digna produjo 0 enlaces automÃ¡ticos, 20 sedes en revisiÃ³n y 193 sin
+marca conocida. Las cuatro sedes `L.R.` de Ruiz tienen proximidad y nombre de
+sucursal compatibles, pero la abreviatura no es suficiente para publicarlas;
+Chopo no aportÃ³ un artefacto de sucursales en esa corrida y Salud Digna sÃ³lo
+aportÃ³ una sede que no coincide geogrÃ¡ficamente con las cinco filas DENUE.
+
 ---
 
 # Fase 15 — Reservas

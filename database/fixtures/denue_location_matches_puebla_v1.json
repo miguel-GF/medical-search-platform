@@ -1,0 +1,4593 @@
+{
+  "version": "denue-location-matcher-v1",
+  "source_fixture": "database/fixtures/denue_candidates_puebla_v1.json",
+  "source_run_id": "49e31077-8cbc-438a-9d08-eccad850f30e",
+  "provider_artifacts": {
+    "chopo": {
+      "artifact": "collectors/artifacts/live/chopo-puebla/eb4b6029-f4f7-461e-98ff-3ab078a7b8dd",
+      "location_records": 0
+    },
+    "ruiz": {
+      "artifact": "collectors/artifacts/live/ruiz-puebla/955b342d-f006-41f5-b5eb-3d128ab0a7e5",
+      "location_records": 15
+    },
+    "salud_digna": {
+      "artifact": "collectors/artifacts/live/salud-digna-puebla/e6037a75-fb7c-47a2-8037-c142fdee7d43",
+      "location_records": 1
+    }
+  },
+  "summary": {
+    "denue_candidates": 213,
+    "matched": 0,
+    "review_required": 20,
+    "nearby_review_leads": 4,
+    "unmatched": 193
+  },
+  "matches": [],
+  "review_queue": [
+    {
+      "external_record_id": "12271891",
+      "source_record_ids": [
+        "12271891"
+      ],
+      "source_record_hashes": [
+        "0a664798adb64fbc47448beefde5deeee909004f47312003c5350e91c9038b37"
+      ],
+      "record_hash": "0a664798adb64fbc47448beefde5deeee909004f47312003c5350e91c9038b37",
+      "name": "CENTRO ANALITICO LABORATORIO PUEBLA",
+      "legal_name": "SALUD DIGNA",
+      "coordinates": {
+        "latitude": 19.03621986,
+        "longitude": -98.2121738
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/12271891",
+      "brand_match": {
+        "brand_key": "salud_digna",
+        "status": "matched",
+        "confidence": 0.99,
+        "method": "explicit_name"
+      },
+      "status": "review_required",
+      "reason": "Brand signal exists, but no nearby provider location corroborates this site",
+      "provider_location": {
+        "source_key": "salud_digna_puebla",
+        "source_run_id": "e6037a75-fb7c-47a2-8037-c142fdee7d43",
+        "external_record_id": "332",
+        "record_hash": "4660fe862d4600b4ec6ffa0a6218b3e4f873130ae956165fbd66104e6a3245d3",
+        "source_url": "https://www.salud-digna.org/puebla-municipio-libre",
+        "name": "Puebla Municipio Libre",
+        "address": "Blvd. Municipio Libre #547 Int 6, Col. Jardín, C.P. 72474, Puebla, Puebla. Entre Calles 5 Sur Y 5-a Sur.",
+        "postal_code": "",
+        "coordinates": {
+          "latitude": 19.00012285276625,
+          "longitude": -98.22797800253191
+        }
+      },
+      "comparison": {
+        "distance_meters": 4344.07,
+        "name_similarity": 0.3333,
+        "same_postal_code": false,
+        "score": 0.18333
+      }
+    },
+    {
+      "external_record_id": "3361080",
+      "source_record_ids": [
+        "3361080"
+      ],
+      "source_record_hashes": [
+        "d4a7ef0b5a107c5a9600c0e796cc31fc65e34f315e1694589ef5130b81cd6b7f"
+      ],
+      "record_hash": "d4a7ef0b5a107c5a9600c0e796cc31fc65e34f315e1694589ef5130b81cd6b7f",
+      "name": "L.R. ANZURES",
+      "legal_name": "LABORATORIO MEDICO POLANCO",
+      "coordinates": {
+        "latitude": 19.02728963,
+        "longitude": -98.20099064
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3361080",
+      "brand_match": {
+        "brand_key": "ruiz",
+        "status": "review_required",
+        "confidence": 0.55,
+        "method": "legal_name_plus_abbreviation"
+      },
+      "status": "review_required",
+      "reason": "Location is a lead, but brand or branch identity still requires review",
+      "provider_location": {
+        "source_key": "ruiz_puebla",
+        "source_run_id": "955b342d-f006-41f5-b5eb-3d128ab0a7e5",
+        "external_record_id": "1",
+        "record_hash": "22b4b8c913f777fdd30b01cbfc322fe2bf88fcaec54a3bf93cb3504e9c9ce6c1",
+        "source_url": "https://laboratoriosruiz.com/sucursales/anzures",
+        "name": "Anzures",
+        "address": "Blvd Diaz Ordaz 808",
+        "postal_code": "72530",
+        "coordinates": {
+          "latitude": 19.0266118,
+          "longitude": -98.2033348
+        }
+      },
+      "comparison": {
+        "distance_meters": 257.69,
+        "name_similarity": 1.0,
+        "same_postal_code": true,
+        "score": 0.94846
+      }
+    },
+    {
+      "external_record_id": "3348729",
+      "source_record_ids": [
+        "3348729"
+      ],
+      "source_record_hashes": [
+        "74f9aa28d00609caea611c1af0635fd1f65fb85ae6303662b151473e11afb13c"
+      ],
+      "record_hash": "74f9aa28d00609caea611c1af0635fd1f65fb85ae6303662b151473e11afb13c",
+      "name": "L R FUERTES",
+      "legal_name": "LABORATORIO MEDICO POLANCO",
+      "coordinates": {
+        "latitude": 19.06798753,
+        "longitude": -98.17645262
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3348729",
+      "brand_match": {
+        "brand_key": "ruiz",
+        "status": "review_required",
+        "confidence": 0.55,
+        "method": "legal_name_plus_abbreviation"
+      },
+      "status": "review_required",
+      "reason": "Location is a lead, but brand or branch identity still requires review",
+      "provider_location": {
+        "source_key": "ruiz_puebla",
+        "source_run_id": "955b342d-f006-41f5-b5eb-3d128ab0a7e5",
+        "external_record_id": "5",
+        "record_hash": "b0e6197b1b3bbb501a310da4059adb2c5432f1191e0c138abc904d61d58654b3",
+        "source_url": "https://laboratoriosruiz.com/sucursales/fuertes",
+        "name": "Fuertes",
+        "address": "Calz. Ignacio Zaragoza #298, Local A",
+        "postal_code": "72260",
+        "coordinates": {
+          "latitude": 19.0685476,
+          "longitude": -98.1755902
+        }
+      },
+      "comparison": {
+        "distance_meters": 109.97,
+        "name_similarity": 1.0,
+        "same_postal_code": true,
+        "score": 0.97801
+      }
+    },
+    {
+      "external_record_id": "6708136",
+      "source_record_ids": [
+        "6708136"
+      ],
+      "source_record_hashes": [
+        "b4a5110f5fde02d5d4d70ba06423d2650b96b9c2243d0892f084558186d7602c"
+      ],
+      "record_hash": "b4a5110f5fde02d5d4d70ba06423d2650b96b9c2243d0892f084558186d7602c",
+      "name": "L.R. LA PAZ",
+      "legal_name": "LABORATORIO MEDICO POLANCO",
+      "coordinates": {
+        "latitude": 19.05442648,
+        "longitude": -98.22356391
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6708136",
+      "brand_match": {
+        "brand_key": "ruiz",
+        "status": "review_required",
+        "confidence": 0.55,
+        "method": "legal_name_plus_abbreviation"
+      },
+      "status": "review_required",
+      "reason": "Location is a lead, but brand or branch identity still requires review",
+      "provider_location": {
+        "source_key": "ruiz_puebla",
+        "source_run_id": "955b342d-f006-41f5-b5eb-3d128ab0a7e5",
+        "external_record_id": "8",
+        "record_hash": "f4767f19f0c1f4a09401bc60c530e683b5d410137365918db7809180815f9f9f",
+        "source_url": "https://laboratoriosruiz.com/sucursales/la-paz",
+        "name": "La Paz",
+        "address": "Av. Juarez 3116",
+        "postal_code": "72160",
+        "coordinates": {
+          "latitude": 19.0545602,
+          "longitude": -98.2236907
+        }
+      },
+      "comparison": {
+        "distance_meters": 19.97,
+        "name_similarity": 1.0,
+        "same_postal_code": true,
+        "score": 0.99601
+      }
+    },
+    {
+      "external_record_id": "3460789",
+      "source_record_ids": [
+        "3460789"
+      ],
+      "source_record_hashes": [
+        "e1ea78c4e65a9bd76638bc3457454425c5ae61fcb3f27eb33be3675673157767"
+      ],
+      "record_hash": "e1ea78c4e65a9bd76638bc3457454425c5ae61fcb3f27eb33be3675673157767",
+      "name": "L.R. VERGEL",
+      "legal_name": "LABORATORIO MEDICO POLANCO",
+      "coordinates": {
+        "latitude": 19.04404983,
+        "longitude": -98.22823566
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3460789",
+      "brand_match": {
+        "brand_key": "ruiz",
+        "status": "review_required",
+        "confidence": 0.55,
+        "method": "legal_name_plus_abbreviation"
+      },
+      "status": "review_required",
+      "reason": "Location is a lead, but brand or branch identity still requires review",
+      "provider_location": {
+        "source_key": "ruiz_puebla",
+        "source_run_id": "955b342d-f006-41f5-b5eb-3d128ab0a7e5",
+        "external_record_id": "14",
+        "record_hash": "00606ce39a0ad76314259c000ad6c737e1a4636914f773663052f273951aa32b",
+        "source_url": "https://laboratoriosruiz.com/sucursales/vergel",
+        "name": "Vergel",
+        "address": "31 Sur #3103",
+        "postal_code": "72400",
+        "coordinates": {
+          "latitude": 19.0439244,
+          "longitude": -98.2309503
+        }
+      },
+      "comparison": {
+        "distance_meters": 285.67,
+        "name_similarity": 1.0,
+        "same_postal_code": true,
+        "score": 0.94287
+      }
+    },
+    {
+      "external_record_id": "9412334",
+      "source_record_ids": [
+        "9412334"
+      ],
+      "source_record_hashes": [
+        "1357da72de4215d185c21f165b39b6508615d113800a442a4f924e7978d3b0d2"
+      ],
+      "record_hash": "1357da72de4215d185c21f165b39b6508615d113800a442a4f924e7978d3b0d2",
+      "name": "LABORATORIO MEDICO DEL CHOPO SUCURSAL AV 5 DE MAYO PUEBLA",
+      "legal_name": "GRUPO DIAGNOSTICO MEDICO PROA",
+      "coordinates": {
+        "latitude": 19.0495222,
+        "longitude": -98.18909456
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/9412334",
+      "brand_match": {
+        "brand_key": "chopo",
+        "status": "matched",
+        "confidence": 0.99,
+        "method": "explicit_name"
+      },
+      "status": "review_required",
+      "reason": "Brand signal exists but no provider location artifact was supplied or had coordinates"
+    },
+    {
+      "external_record_id": "9447318",
+      "source_record_ids": [
+        "9447318"
+      ],
+      "source_record_hashes": [
+        "a04013a761bb500ad6dde1ee33413ffdaf0b6c21c3662073e98d0109f67d9e94"
+      ],
+      "record_hash": "a04013a761bb500ad6dde1ee33413ffdaf0b6c21c3662073e98d0109f67d9e94",
+      "name": "LABORATORIO MEDICO DEL CHOPO SUCURSAL DEFENSORES",
+      "legal_name": "GRUPO DIAGNOSTICO MEDICO PROA",
+      "coordinates": {
+        "latitude": 19.06646661,
+        "longitude": -98.17756509
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/9447318",
+      "brand_match": {
+        "brand_key": "chopo",
+        "status": "matched",
+        "confidence": 0.99,
+        "method": "explicit_name"
+      },
+      "status": "review_required",
+      "reason": "Brand signal exists but no provider location artifact was supplied or had coordinates"
+    },
+    {
+      "external_record_id": "9412333",
+      "source_record_ids": [
+        "9412333"
+      ],
+      "source_record_hashes": [
+        "e45f403b6e37774ac60c7133f8da2a65161dce5d68a00b8dd4a1aea0dcfd3b7a"
+      ],
+      "record_hash": "e45f403b6e37774ac60c7133f8da2a65161dce5d68a00b8dd4a1aea0dcfd3b7a",
+      "name": "LABORATORIO MEDICO DEL CHOPO SUCURSAL PASEO BRAVO",
+      "legal_name": "GRUPO DIAGNOSTICO MEDICO PROA",
+      "coordinates": {
+        "latitude": 19.04198897,
+        "longitude": -98.20971753
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/9412333",
+      "brand_match": {
+        "brand_key": "chopo",
+        "status": "matched",
+        "confidence": 0.99,
+        "method": "explicit_name"
+      },
+      "status": "review_required",
+      "reason": "Brand signal exists but no provider location artifact was supplied or had coordinates"
+    },
+    {
+      "external_record_id": "9415645",
+      "source_record_ids": [
+        "9415645"
+      ],
+      "source_record_hashes": [
+        "86775332dddc30a8acc4e160304b02cd5dbd86e86170498e596fc53c76e4d7ea"
+      ],
+      "record_hash": "86775332dddc30a8acc4e160304b02cd5dbd86e86170498e596fc53c76e4d7ea",
+      "name": "LABORATORIO MEDICO DEL CHOPO SUCURSAL PLAZA AQUA",
+      "legal_name": "GRUPO DIAGNOSTICO MEDICO PROA",
+      "coordinates": {
+        "latitude": 19.06683013,
+        "longitude": -98.21217607
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/9415645",
+      "brand_match": {
+        "brand_key": "chopo",
+        "status": "matched",
+        "confidence": 0.99,
+        "method": "explicit_name"
+      },
+      "status": "review_required",
+      "reason": "Brand signal exists but no provider location artifact was supplied or had coordinates"
+    },
+    {
+      "external_record_id": "9409296",
+      "source_record_ids": [
+        "9409296"
+      ],
+      "source_record_hashes": [
+        "c3b4229ce261b6aa121d454e7093397334901a0d9ff63257bb715ab46adc7fb7"
+      ],
+      "record_hash": "c3b4229ce261b6aa121d454e7093397334901a0d9ff63257bb715ab46adc7fb7",
+      "name": "LABORATORIO MEDICO DEL CHOPO SUCURSAL PLAZA CIRCUITO",
+      "legal_name": "GRUPO DIAGNOSTICO MEDICO PROA",
+      "coordinates": {
+        "latitude": 19.02457813,
+        "longitude": -98.21561068
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/9409296",
+      "brand_match": {
+        "brand_key": "chopo",
+        "status": "matched",
+        "confidence": 0.99,
+        "method": "explicit_name"
+      },
+      "status": "review_required",
+      "reason": "Brand signal exists but no provider location artifact was supplied or had coordinates"
+    },
+    {
+      "external_record_id": "9455541",
+      "source_record_ids": [
+        "9455541"
+      ],
+      "source_record_hashes": [
+        "69fcdd09cc95c49cf0469d5967a6ff938dba8d5b7c45811263ba0fc1235c70d0"
+      ],
+      "record_hash": "69fcdd09cc95c49cf0469d5967a6ff938dba8d5b7c45811263ba0fc1235c70d0",
+      "name": "LABORATORIO MEDICO DEL CHOPO SUCURSAL PLAZA EL VERGEL",
+      "legal_name": "GRUPO DIAGNOSTICO MEDICO PROA",
+      "coordinates": {
+        "latitude": 19.04373595,
+        "longitude": -98.22745954
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/9455541",
+      "brand_match": {
+        "brand_key": "chopo",
+        "status": "matched",
+        "confidence": 0.99,
+        "method": "explicit_name"
+      },
+      "status": "review_required",
+      "reason": "Brand signal exists but no provider location artifact was supplied or had coordinates"
+    },
+    {
+      "external_record_id": "9412339",
+      "source_record_ids": [
+        "9412339"
+      ],
+      "source_record_hashes": [
+        "883336427f9e09e952afb3c20826496d77a6dfb642f6c588ea68c383ad01a522"
+      ],
+      "record_hash": "883336427f9e09e952afb3c20826496d77a6dfb642f6c588ea68c383ad01a522",
+      "name": "LABORATORIO MEDICO DEL CHOPO SUCURSAL PLAZA SERDAN",
+      "legal_name": "GRUPO DIAGNOSTICO MEDICO PROA",
+      "coordinates": {
+        "latitude": 19.06069137,
+        "longitude": -98.22006045
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/9412339",
+      "brand_match": {
+        "brand_key": "chopo",
+        "status": "matched",
+        "confidence": 0.99,
+        "method": "explicit_name"
+      },
+      "status": "review_required",
+      "reason": "Brand signal exists but no provider location artifact was supplied or had coordinates"
+    },
+    {
+      "external_record_id": "9469206",
+      "source_record_ids": [
+        "9469206"
+      ],
+      "source_record_hashes": [
+        "146c1a393d775f7c4a585f9f0e1fe9b259c1200a951f3448fa75a919d470a802"
+      ],
+      "record_hash": "146c1a393d775f7c4a585f9f0e1fe9b259c1200a951f3448fa75a919d470a802",
+      "name": "LABORATORIO MEDICO DEL CHOPO SUCURSAL PLAZA ULTRA",
+      "legal_name": "GRUPO DIAGNOSTICO MEDICO PROA",
+      "coordinates": {
+        "latitude": 19.03011595,
+        "longitude": -98.2004097
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/9469206",
+      "brand_match": {
+        "brand_key": "chopo",
+        "status": "matched",
+        "confidence": 0.99,
+        "method": "explicit_name"
+      },
+      "status": "review_required",
+      "reason": "Brand signal exists but no provider location artifact was supplied or had coordinates"
+    },
+    {
+      "external_record_id": "9417229",
+      "source_record_ids": [
+        "9417229"
+      ],
+      "source_record_hashes": [
+        "faefb6257cb0ad2526ddf63d2b5feeac4bdc37a5192db0342c3abeac2688962c"
+      ],
+      "record_hash": "faefb6257cb0ad2526ddf63d2b5feeac4bdc37a5192db0342c3abeac2688962c",
+      "name": "LABORATORIO MEDICO DEL CHOPO SUCURSAL SAN MANUEL",
+      "legal_name": "GRUPO DIAGNOSTICO MEDICO PROA",
+      "coordinates": {
+        "latitude": 19.01822014,
+        "longitude": -98.19888106
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/9417229",
+      "brand_match": {
+        "brand_key": "chopo",
+        "status": "matched",
+        "confidence": 0.99,
+        "method": "explicit_name"
+      },
+      "status": "review_required",
+      "reason": "Brand signal exists but no provider location artifact was supplied or had coordinates"
+    },
+    {
+      "external_record_id": "6786273",
+      "source_record_ids": [
+        "6786273"
+      ],
+      "source_record_hashes": [
+        "598ef8871073b3b9c611b8a8635ecc2d0693d8087c8df3cc5465ff03a2ce7fb1"
+      ],
+      "record_hash": "598ef8871073b3b9c611b8a8635ecc2d0693d8087c8df3cc5465ff03a2ce7fb1",
+      "name": "LABORATORIO MEDICO DEL CHOPO SUCUSAL AVENIDA JUAREZ",
+      "legal_name": "GRUPO DIAGNOSTICO MEDICO PROA",
+      "coordinates": {
+        "latitude": 19.0542481,
+        "longitude": -98.22316518
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6786273",
+      "brand_match": {
+        "brand_key": "chopo",
+        "status": "matched",
+        "confidence": 0.99,
+        "method": "explicit_name"
+      },
+      "status": "review_required",
+      "reason": "Brand signal exists but no provider location artifact was supplied or had coordinates"
+    },
+    {
+      "external_record_id": "11645975",
+      "source_record_ids": [
+        "11645975",
+        "6813095"
+      ],
+      "source_record_hashes": [
+        "e0aaf81831db879d3a9d1afb4d913987be98c6be3e0b9d7146ec93d837993c0d",
+        "bcdd6878971ac76bce2f8b0ce7ec57836782d7127e37db8722a46d9fc54fc543"
+      ],
+      "record_hash": "e0aaf81831db879d3a9d1afb4d913987be98c6be3e0b9d7146ec93d837993c0d",
+      "name": "LABORATORIO RUIZ",
+      "legal_name": "LABORATORIO MEDICO POLANCO",
+      "coordinates": {
+        "latitude": 19.02756896,
+        "longitude": -98.23168846
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/11645975",
+      "brand_match": {
+        "brand_key": "ruiz",
+        "status": "matched",
+        "confidence": 0.99,
+        "method": "explicit_name"
+      },
+      "status": "review_required",
+      "reason": "Location is a lead, but brand or branch identity still requires review",
+      "provider_location": {
+        "source_key": "ruiz_puebla",
+        "source_run_id": "955b342d-f006-41f5-b5eb-3d128ab0a7e5",
+        "external_record_id": "10",
+        "record_hash": "e284bef2498e8bacedba0aa3d50956f1db1e78e44fcd2fe5616c3990c95cb687",
+        "source_url": "https://laboratoriosruiz.com/sucursales/palmas",
+        "name": "Palmas",
+        "address": "Vía Atlixcayotl #5302 Local 55",
+        "postal_code": "72810",
+        "coordinates": {
+          "latitude": 19.0270685,
+          "longitude": -98.2347487
+        }
+      },
+      "comparison": {
+        "distance_meters": 326.47,
+        "name_similarity": 0.0,
+        "same_postal_code": true,
+        "score": 0.38471
+      }
+    },
+    {
+      "external_record_id": "6700174",
+      "source_record_ids": [
+        "6700174"
+      ],
+      "source_record_hashes": [
+        "962a3572dc223c8c4e33e2168c6419c0ee166e5738bddaf18049c5f04176836f"
+      ],
+      "record_hash": "962a3572dc223c8c4e33e2168c6419c0ee166e5738bddaf18049c5f04176836f",
+      "name": "SALUD DIGNA PUEBLA",
+      "legal_name": "SALUD DIGNA",
+      "coordinates": {
+        "latitude": 19.04886561,
+        "longitude": -98.20531364
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6700174",
+      "brand_match": {
+        "brand_key": "salud_digna",
+        "status": "matched",
+        "confidence": 0.99,
+        "method": "explicit_name"
+      },
+      "status": "review_required",
+      "reason": "Brand signal exists, but no nearby provider location corroborates this site",
+      "provider_location": {
+        "source_key": "salud_digna_puebla",
+        "source_run_id": "e6037a75-fb7c-47a2-8037-c142fdee7d43",
+        "external_record_id": "332",
+        "record_hash": "4660fe862d4600b4ec6ffa0a6218b3e4f873130ae956165fbd66104e6a3245d3",
+        "source_url": "https://www.salud-digna.org/puebla-municipio-libre",
+        "name": "Puebla Municipio Libre",
+        "address": "Blvd. Municipio Libre #547 Int 6, Col. Jardín, C.P. 72474, Puebla, Puebla. Entre Calles 5 Sur Y 5-a Sur.",
+        "postal_code": "",
+        "coordinates": {
+          "latitude": 19.00012285276625,
+          "longitude": -98.22797800253191
+        }
+      },
+      "comparison": {
+        "distance_meters": 5920.49,
+        "name_similarity": 0.3333,
+        "same_postal_code": false,
+        "score": 0.18333
+      }
+    },
+    {
+      "external_record_id": "12271871",
+      "source_record_ids": [
+        "12271871"
+      ],
+      "source_record_hashes": [
+        "324877d9897935a86bc9e90f3bdf49458e2085f243d3faad9afb0142170a28b6"
+      ],
+      "record_hash": "324877d9897935a86bc9e90f3bdf49458e2085f243d3faad9afb0142170a28b6",
+      "name": "SALUD DIGNA PUEBLA AZCARATE",
+      "legal_name": "SALUD DIGNA",
+      "coordinates": {
+        "latitude": 19.03747212,
+        "longitude": -98.18377083
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/12271871",
+      "brand_match": {
+        "brand_key": "salud_digna",
+        "status": "matched",
+        "confidence": 0.99,
+        "method": "explicit_name"
+      },
+      "status": "review_required",
+      "reason": "Brand signal exists, but no nearby provider location corroborates this site",
+      "provider_location": {
+        "source_key": "salud_digna_puebla",
+        "source_run_id": "e6037a75-fb7c-47a2-8037-c142fdee7d43",
+        "external_record_id": "332",
+        "record_hash": "4660fe862d4600b4ec6ffa0a6218b3e4f873130ae956165fbd66104e6a3245d3",
+        "source_url": "https://www.salud-digna.org/puebla-municipio-libre",
+        "name": "Puebla Municipio Libre",
+        "address": "Blvd. Municipio Libre #547 Int 6, Col. Jardín, C.P. 72474, Puebla, Puebla. Entre Calles 5 Sur Y 5-a Sur.",
+        "postal_code": "",
+        "coordinates": {
+          "latitude": 19.00012285276625,
+          "longitude": -98.22797800253191
+        }
+      },
+      "comparison": {
+        "distance_meters": 6232.58,
+        "name_similarity": 0.25,
+        "same_postal_code": false,
+        "score": 0.1375
+      }
+    },
+    {
+      "external_record_id": "6865928",
+      "source_record_ids": [
+        "6865928"
+      ],
+      "source_record_hashes": [
+        "4caa7ae3ae34bf0ccf791b9565f52f2531f8b94862f8b1dee51dfd1a98826cfa"
+      ],
+      "record_hash": "4caa7ae3ae34bf0ccf791b9565f52f2531f8b94862f8b1dee51dfd1a98826cfa",
+      "name": "SALUD DIGNA PUEBLA CAPU",
+      "legal_name": "SALUD DIGNA",
+      "coordinates": {
+        "latitude": 19.07209031,
+        "longitude": -98.20519308
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6865928",
+      "brand_match": {
+        "brand_key": "salud_digna",
+        "status": "matched",
+        "confidence": 0.99,
+        "method": "explicit_name"
+      },
+      "status": "review_required",
+      "reason": "Brand signal exists, but no nearby provider location corroborates this site",
+      "provider_location": {
+        "source_key": "salud_digna_puebla",
+        "source_run_id": "e6037a75-fb7c-47a2-8037-c142fdee7d43",
+        "external_record_id": "332",
+        "record_hash": "4660fe862d4600b4ec6ffa0a6218b3e4f873130ae956165fbd66104e6a3245d3",
+        "source_url": "https://www.salud-digna.org/puebla-municipio-libre",
+        "name": "Puebla Municipio Libre",
+        "address": "Blvd. Municipio Libre #547 Int 6, Col. Jardín, C.P. 72474, Puebla, Puebla. Entre Calles 5 Sur Y 5-a Sur.",
+        "postal_code": "",
+        "coordinates": {
+          "latitude": 19.00012285276625,
+          "longitude": -98.22797800253191
+        }
+      },
+      "comparison": {
+        "distance_meters": 8353.13,
+        "name_similarity": 0.25,
+        "same_postal_code": false,
+        "score": 0.1375
+      }
+    },
+    {
+      "external_record_id": "9448642",
+      "source_record_ids": [
+        "9448642"
+      ],
+      "source_record_hashes": [
+        "146d86df125f6be2af60832c0784a4e8a3df4c6204a420c9684d5fbb0d10862d"
+      ],
+      "record_hash": "146d86df125f6be2af60832c0784a4e8a3df4c6204a420c9684d5fbb0d10862d",
+      "name": "SALUD DIGNA PUEBLA PORVENIR",
+      "legal_name": "SALUD DIGNA",
+      "coordinates": {
+        "latitude": 19.04370229,
+        "longitude": -98.15845591
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/9448642",
+      "brand_match": {
+        "brand_key": "salud_digna",
+        "status": "matched",
+        "confidence": 0.99,
+        "method": "explicit_name"
+      },
+      "status": "review_required",
+      "reason": "Brand signal exists, but no nearby provider location corroborates this site",
+      "provider_location": {
+        "source_key": "salud_digna_puebla",
+        "source_run_id": "e6037a75-fb7c-47a2-8037-c142fdee7d43",
+        "external_record_id": "332",
+        "record_hash": "4660fe862d4600b4ec6ffa0a6218b3e4f873130ae956165fbd66104e6a3245d3",
+        "source_url": "https://www.salud-digna.org/puebla-municipio-libre",
+        "name": "Puebla Municipio Libre",
+        "address": "Blvd. Municipio Libre #547 Int 6, Col. Jardín, C.P. 72474, Puebla, Puebla. Entre Calles 5 Sur Y 5-a Sur.",
+        "postal_code": "",
+        "coordinates": {
+          "latitude": 19.00012285276625,
+          "longitude": -98.22797800253191
+        }
+      },
+      "comparison": {
+        "distance_meters": 8768.93,
+        "name_similarity": 0.25,
+        "same_postal_code": false,
+        "score": 0.1375
+      }
+    }
+  ],
+  "unmatched": [
+    {
+      "external_record_id": "8849277",
+      "source_record_ids": [
+        "8849277"
+      ],
+      "source_record_hashes": [
+        "cc008e2d682780bd30e91cb715e8f3f9756cab069b89fca84cbf1357f966ba7c"
+      ],
+      "record_hash": "cc008e2d682780bd30e91cb715e8f3f9756cab069b89fca84cbf1357f966ba7c",
+      "name": "ADMINISTRACION",
+      "legal_name": "GABINETE DE RADIOOLOGIA Y ULTRASONIDO CASTILLO",
+      "coordinates": {
+        "latitude": 19.03783886,
+        "longitude": -98.20497854
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/8849277",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3462318",
+      "source_record_ids": [
+        "3462318"
+      ],
+      "source_record_hashes": [
+        "8f2eaf9baf037c52048fbe744ee203dbab41e2ae665c5cbc7f2a14d594cdaf9e"
+      ],
+      "record_hash": "8f2eaf9baf037c52048fbe744ee203dbab41e2ae665c5cbc7f2a14d594cdaf9e",
+      "name": "ADN EXAMEN LABORATORIO DE PRUEBAS GENETICAS",
+      "legal_name": "ADN EXAM BIODIAGNOSTICOS LABORATORIOS",
+      "coordinates": {
+        "latitude": 19.02733456,
+        "longitude": -98.21671114
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3462318",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "11087498",
+      "source_record_ids": [
+        "11087498"
+      ],
+      "source_record_hashes": [
+        "aa557fac4180a42b9a9b56104dc231d99bfbb0cdaa85ee71e195d461e3080c72"
+      ],
+      "record_hash": "aa557fac4180a42b9a9b56104dc231d99bfbb0cdaa85ee71e195d461e3080c72",
+      "name": "ANA CLIN VET",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.04203208,
+        "longitude": -98.16511382
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/11087498",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3360225",
+      "source_record_ids": [
+        "3360225"
+      ],
+      "source_record_hashes": [
+        "330759506a9127d4c49ed2acf5e0be640ed34c85406c70404b67ed8fa515797e"
+      ],
+      "record_hash": "330759506a9127d4c49ed2acf5e0be640ed34c85406c70404b67ed8fa515797e",
+      "name": "ANALIS CLINICOS FEMYLAB",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.05657385,
+        "longitude": -98.22267305
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3360225",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "6218896",
+      "source_record_ids": [
+        "6218896"
+      ],
+      "source_record_hashes": [
+        "bb57d3e1d2660a66122fef2d3d71c6ac39d4205fcfde6e5c069f9a64ae5f5a00"
+      ],
+      "record_hash": "bb57d3e1d2660a66122fef2d3d71c6ac39d4205fcfde6e5c069f9a64ae5f5a00",
+      "name": "ANALISIS CLINICO DEL DR SIMI",
+      "legal_name": "FARMACIAS LIDERES",
+      "coordinates": {
+        "latitude": 19.00681751,
+        "longitude": -98.21928778
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6218896",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "8849278",
+      "source_record_ids": [
+        "8849278"
+      ],
+      "source_record_hashes": [
+        "3bbbd15b87c22f17b3a08fab4a2255bfe805685ca3e672778c7cf79af3dc82e5"
+      ],
+      "record_hash": "3bbbd15b87c22f17b3a08fab4a2255bfe805685ca3e672778c7cf79af3dc82e5",
+      "name": "ANALISIS CLINICOS",
+      "legal_name": "GABINNETE DE RADIOLOGIA Y ULTRASONIDO CASTILLO",
+      "coordinates": {
+        "latitude": 19.03783886,
+        "longitude": -98.20497854
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/8849278",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3361915",
+      "source_record_ids": [
+        "3361915"
+      ],
+      "source_record_hashes": [
+        "fe6d29d600ff174afbb8afca11ee8400db92e8715a3994fad3545a92388ca1bc"
+      ],
+      "record_hash": "fe6d29d600ff174afbb8afca11ee8400db92e8715a3994fad3545a92388ca1bc",
+      "name": "ANÁLISIS CLÍNICOS DEL DOCTOR SIMI",
+      "legal_name": "SISTEMAS DE SALUD DEL DOCTOR SIMI",
+      "coordinates": {
+        "latitude": 19.03890349,
+        "longitude": -98.21134439
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3361915",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3408171",
+      "source_record_ids": [
+        "3408171"
+      ],
+      "source_record_hashes": [
+        "351b8af3de34d7a328c1354883d030ff5973fa6af432c847cbdefd8ea9a87904"
+      ],
+      "record_hash": "351b8af3de34d7a328c1354883d030ff5973fa6af432c847cbdefd8ea9a87904",
+      "name": "ANALISIS CLINICOS LACP",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.03738423,
+        "longitude": -98.2102874
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3408171",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3362813",
+      "source_record_ids": [
+        "3362813"
+      ],
+      "source_record_hashes": [
+        "14a18a139950049f8d2d78f13c1a895a8f03dd53c4e53541556e97aa9eb31daa"
+      ],
+      "record_hash": "14a18a139950049f8d2d78f13c1a895a8f03dd53c4e53541556e97aa9eb31daa",
+      "name": "ANATOMIA PATOLOGICA Y CITOLOGIA EXFOLIATIVA",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.03043627,
+        "longitude": -98.19908737
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3362813",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "10858172",
+      "source_record_ids": [
+        "10858172"
+      ],
+      "source_record_hashes": [
+        "9926bfc2eac16e78fe6d69b2f5f99a73cbc90317701f9bfb2c7a127d4e5b8225"
+      ],
+      "record_hash": "9926bfc2eac16e78fe6d69b2f5f99a73cbc90317701f9bfb2c7a127d4e5b8225",
+      "name": "ASESORES DIAGNOSTICO CLINICO",
+      "legal_name": "ASESORES DIAGNOSTICO CLINICO",
+      "coordinates": {
+        "latitude": 19.06051182,
+        "longitude": -98.19666847
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/10858172",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "6377353",
+      "source_record_ids": [
+        "6377353"
+      ],
+      "source_record_hashes": [
+        "bf6f88ab7a74a8cbc8019f036bc8e11029eec5ce16ee2098ec7e700e9770ffa5"
+      ],
+      "record_hash": "bf6f88ab7a74a8cbc8019f036bc8e11029eec5ce16ee2098ec7e700e9770ffa5",
+      "name": "ASESORES DIAGNOSTICO CLINICO",
+      "legal_name": "ASESORES ESPECIALIZADOS EN LABORATORIOS",
+      "coordinates": {
+        "latitude": 19.06054368,
+        "longitude": -98.1965179
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6377353",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "6378112",
+      "source_record_ids": [
+        "6378112"
+      ],
+      "source_record_hashes": [
+        "97ef8232dba4e0c043e59eed319e85f209d60826582367f5e388afe52c4155f5"
+      ],
+      "record_hash": "97ef8232dba4e0c043e59eed319e85f209d60826582367f5e388afe52c4155f5",
+      "name": "ASESORES DIAGNOSTICO CLINICO",
+      "legal_name": "ASESORES ESPECIALIZADOS EN LABORATORIOS",
+      "coordinates": {
+        "latitude": 19.06054582,
+        "longitude": -98.19652123
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6378112",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "6379371",
+      "source_record_ids": [
+        "6379371"
+      ],
+      "source_record_hashes": [
+        "2d01ee1f4ab02f57d86c528980bc18b6bed3a2fe78f7d51c17e5072bef400458"
+      ],
+      "record_hash": "2d01ee1f4ab02f57d86c528980bc18b6bed3a2fe78f7d51c17e5072bef400458",
+      "name": "ASESORES DIAGNOSTICO CLINICO",
+      "legal_name": "ASESORES ESPECIALIZADOS EN LABORATORIOS",
+      "coordinates": {
+        "latitude": 19.05108504,
+        "longitude": -98.23152527
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6379371",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "6379372",
+      "source_record_ids": [
+        "6379372"
+      ],
+      "source_record_hashes": [
+        "fe1fe7a78ef63e4c0e9b3aa4e32df72b72270455db1cbc9ae03a60ad0566c9ce"
+      ],
+      "record_hash": "fe1fe7a78ef63e4c0e9b3aa4e32df72b72270455db1cbc9ae03a60ad0566c9ce",
+      "name": "ASESORES DIAGNOSTICO CLINICO",
+      "legal_name": "ASESORES ESPECIALIZADOS EN LABORATORIOS",
+      "coordinates": {
+        "latitude": 19.01590789,
+        "longitude": -98.19268134
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6379372",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "6378378",
+      "source_record_ids": [
+        "6378378"
+      ],
+      "source_record_hashes": [
+        "f40136b2e0201638f418d3104edc986769bef13af6eb39bdc8660517aa4705f2"
+      ],
+      "record_hash": "f40136b2e0201638f418d3104edc986769bef13af6eb39bdc8660517aa4705f2",
+      "name": "BIO ANALISIS LABORATORIO CLINICO",
+      "legal_name": "QUIMICA EXACTA",
+      "coordinates": {
+        "latitude": 19.05175692,
+        "longitude": -98.2218681
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6378378",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "10192332",
+      "source_record_ids": [
+        "10192332"
+      ],
+      "source_record_hashes": [
+        "69296f01eeb89b62067754b0e28f6f5b07de75b2aa1db87b65cd6fa0107fd450"
+      ],
+      "record_hash": "69296f01eeb89b62067754b0e28f6f5b07de75b2aa1db87b65cd6fa0107fd450",
+      "name": "BIO LAB",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.08117222,
+        "longitude": -98.18127544
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/10192332",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "8743356",
+      "source_record_ids": [
+        "8743356"
+      ],
+      "source_record_hashes": [
+        "c56a8c5a6278454ccf89e73abd931fbd15f28eab6036546e42810a1cf47adb01"
+      ],
+      "record_hash": "c56a8c5a6278454ccf89e73abd931fbd15f28eab6036546e42810a1cf47adb01",
+      "name": "BIOQUIMIC LAB ANALISIS CLINICOS",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.03738144,
+        "longitude": -98.19438961
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/8743356",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "6876806",
+      "source_record_ids": [
+        "6876806"
+      ],
+      "source_record_hashes": [
+        "7df5f5d3e41748828ce96e809170e0385c31310233e5c5ff284d1279dbbbd404"
+      ],
+      "record_hash": "7df5f5d3e41748828ce96e809170e0385c31310233e5c5ff284d1279dbbbd404",
+      "name": "CA PUEBLA CARPERMOR",
+      "legal_name": "GRUPO DIAGNOSTICO MEDICO PROA",
+      "coordinates": {
+        "latitude": 19.01758992,
+        "longitude": -98.19873244
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6876806",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3254144",
+      "source_record_ids": [
+        "3254144"
+      ],
+      "source_record_hashes": [
+        "8eaa3cfb328373ef5de03593145f534dd27c5c69a062a51df9c9f8cc133f3b5e"
+      ],
+      "record_hash": "8eaa3cfb328373ef5de03593145f534dd27c5c69a062a51df9c9f8cc133f3b5e",
+      "name": "CEDIC LABORATORIOS",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.07948694,
+        "longitude": -98.18366755
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3254144",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3362007",
+      "source_record_ids": [
+        "3362007"
+      ],
+      "source_record_hashes": [
+        "d520dd8f5da76fc6800cac33e01d14ca44c69ea488bf4a505d42cb450f53ebbb"
+      ],
+      "record_hash": "d520dd8f5da76fc6800cac33e01d14ca44c69ea488bf4a505d42cb450f53ebbb",
+      "name": "CENTRO DE DIAGNOSTICO RADIOLOGIA",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.03386676,
+        "longitude": -98.18962858
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3362007",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3458823",
+      "source_record_ids": [
+        "3458823"
+      ],
+      "source_record_hashes": [
+        "a9c2955c2ace8de236771160f112f9f9607058c90df01caa2d5c43e86a0ed507"
+      ],
+      "record_hash": "a9c2955c2ace8de236771160f112f9f9607058c90df01caa2d5c43e86a0ed507",
+      "name": "CENTRO DE IMAGENES MEDICAS RADIOLOGIA GENERAL Y PEDIATRICA",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.05468038,
+        "longitude": -98.23167799
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3458823",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3268666",
+      "source_record_ids": [
+        "3268666"
+      ],
+      "source_record_hashes": [
+        "8c3da53e409cd30c3381a6e2fe92134182fb7f6cc745a1df048633bfbdce7438"
+      ],
+      "record_hash": "8c3da53e409cd30c3381a6e2fe92134182fb7f6cc745a1df048633bfbdce7438",
+      "name": "CENTRO DE RADIOLOGIA DENTAL",
+      "legal_name": "CENTRO DE RADIOLOGIA DENTAL",
+      "coordinates": {
+        "latitude": 19.04513348,
+        "longitude": -98.20021587
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3268666",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "6448127",
+      "source_record_ids": [
+        "6448127"
+      ],
+      "source_record_hashes": [
+        "e972c67aa44f2c5f80b07ac397ba3998fa14e77353cf87b0f570c83cc62d4319"
+      ],
+      "record_hash": "e972c67aa44f2c5f80b07ac397ba3998fa14e77353cf87b0f570c83cc62d4319",
+      "name": "CENTRO DE RADIOLOGIA DENTAL",
+      "legal_name": "CENTRO DE RADIOLOGIA DENTAL",
+      "coordinates": {
+        "latitude": 19.04897223,
+        "longitude": -98.21911243
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6448127",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "8617305",
+      "source_record_ids": [
+        "8617305"
+      ],
+      "source_record_hashes": [
+        "1e64157ee559403f019a8cba8b0fd717c2159cdedd26e52f14f6a221b16675ea"
+      ],
+      "record_hash": "1e64157ee559403f019a8cba8b0fd717c2159cdedd26e52f14f6a221b16675ea",
+      "name": "CENTRO DE RADIOLOGIA DENTAL",
+      "legal_name": "CENTRO DE RADIOLOGIA DENTAL",
+      "coordinates": {
+        "latitude": 19.0212408,
+        "longitude": -98.19259053
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/8617305",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3350274",
+      "source_record_ids": [
+        "3350274"
+      ],
+      "source_record_hashes": [
+        "cc61ba31d2b9306fa007bc463d124654a79ce9f52cb9798ec578a0035153a47f"
+      ],
+      "record_hash": "cc61ba31d2b9306fa007bc463d124654a79ce9f52cb9798ec578a0035153a47f",
+      "name": "CENTRO MEDICO MEDICI",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.05789625,
+        "longitude": -98.20959274
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3350274",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3271783",
+      "source_record_ids": [
+        "3271783"
+      ],
+      "source_record_hashes": [
+        "1dc7c85c07dee978d64a32a80c34f04b0175a996093b2eff76c92579c9378fd3"
+      ],
+      "record_hash": "1dc7c85c07dee978d64a32a80c34f04b0175a996093b2eff76c92579c9378fd3",
+      "name": "CENTRO MEDICO NACIONAL DE BIOLOGIA MOLECULAR",
+      "legal_name": "CENTRO MEDICO NACIONAL DE BIOLOGIA MOLECULAR",
+      "coordinates": {
+        "latitude": 19.06126644,
+        "longitude": -98.22598321
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3271783",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3277978",
+      "source_record_ids": [
+        "3277978"
+      ],
+      "source_record_hashes": [
+        "85a25cbeb9a1334b7a4681dad47d9bfe5dc90f84ef5371ce60462b4ee53ac919"
+      ],
+      "record_hash": "85a25cbeb9a1334b7a4681dad47d9bfe5dc90f84ef5371ce60462b4ee53ac919",
+      "name": "CENTRO NEUROLOGICO UNNE",
+      "legal_name": "ELECTRODIAGNOSTICO CEREBRAL DE PUEBLA",
+      "coordinates": {
+        "latitude": 19.02624832,
+        "longitude": -98.21853173
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3277978",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "10809888",
+      "source_record_ids": [
+        "10809888"
+      ],
+      "source_record_hashes": [
+        "a6319bd8e58513915f5316845d8b8b23f212201467f31cd52061c78c629f17e7"
+      ],
+      "record_hash": "a6319bd8e58513915f5316845d8b8b23f212201467f31cd52061c78c629f17e7",
+      "name": "CETIN CENTRO DE TAMIZAJE INFANTIL",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.02588498,
+        "longitude": -98.2117272
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/10809888",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3458890",
+      "source_record_ids": [
+        "3458890"
+      ],
+      "source_record_hashes": [
+        "59d595d6eebbc94faa87e2dc3296041f89182e82f9c9481d0777b80df8c9b871"
+      ],
+      "record_hash": "59d595d6eebbc94faa87e2dc3296041f89182e82f9c9481d0777b80df8c9b871",
+      "name": "CLINICA DE DIAGNOSTICO RADIOLOGIA Y ULTRASONIDO",
+      "legal_name": "CENTRO DE APAYO DIAGNOSTICO",
+      "coordinates": {
+        "latitude": 19.05286458,
+        "longitude": -98.22516172
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3458890",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3261867",
+      "source_record_ids": [
+        "3261867"
+      ],
+      "source_record_hashes": [
+        "fa159902e233e2826f15ce9cae4f6ca324cf938c338404575d11118d97c9940b"
+      ],
+      "record_hash": "fa159902e233e2826f15ce9cae4f6ca324cf938c338404575d11118d97c9940b",
+      "name": "CONSULTORIA EN PATOLOGIA QUIRURGICA",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.04286853,
+        "longitude": -98.20952178
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3261867",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3459105",
+      "source_record_ids": [
+        "3459105"
+      ],
+      "source_record_hashes": [
+        "f792c6618579ba713ab8724e45604bf64f4e446fb581628fdf1d56e6d49cdbc7"
+      ],
+      "record_hash": "f792c6618579ba713ab8724e45604bf64f4e446fb581628fdf1d56e6d49cdbc7",
+      "name": "CONSULTORIO ANATOMOPATOLOGIA",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.03503105,
+        "longitude": -98.18720145
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3459105",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3459180",
+      "source_record_ids": [
+        "3459180"
+      ],
+      "source_record_hashes": [
+        "a5bf5003587c967da828ba8547157fd4d8e99a932f245453b76f5722c6aa4db9"
+      ],
+      "record_hash": "a5bf5003587c967da828ba8547157fd4d8e99a932f245453b76f5722c6aa4db9",
+      "name": "CONSULTORIO DE MEDICINA NUCLEAR SIN NOMBRE",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.03416628,
+        "longitude": -98.19146722
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3459180",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3459133",
+      "source_record_ids": [
+        "3459133"
+      ],
+      "source_record_hashes": [
+        "0ebda4260239b8b6cb5be55cd5372422f9493d3479548558a9e67d1cbbdd18ce"
+      ],
+      "record_hash": "0ebda4260239b8b6cb5be55cd5372422f9493d3479548558a9e67d1cbbdd18ce",
+      "name": "CONSULTORIO DE RADIOLOGIA",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.03395355,
+        "longitude": -98.18795754
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3459133",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3365311",
+      "source_record_ids": [
+        "3365311"
+      ],
+      "source_record_hashes": [
+        "d35d44121797b4d00d7fc57564bffce29bb34639b3171a4eaa956562d2c0a407"
+      ],
+      "record_hash": "d35d44121797b4d00d7fc57564bffce29bb34639b3171a4eaa956562d2c0a407",
+      "name": "CONSULTORIO DE SENOLOGIA",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.03078108,
+        "longitude": -98.22899097
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3365311",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3538295",
+      "source_record_ids": [
+        "3538295"
+      ],
+      "source_record_hashes": [
+        "f48926c57c8a2162564905d3720a3637202d318f5f238fddf1505c3a8f7e7272"
+      ],
+      "record_hash": "f48926c57c8a2162564905d3720a3637202d318f5f238fddf1505c3a8f7e7272",
+      "name": "CONSULTORIO DE ULTRASONIDO",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.05657385,
+        "longitude": -98.22267305
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3538295",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "10893938",
+      "source_record_ids": [
+        "10893938"
+      ],
+      "source_record_hashes": [
+        "4cb4414f089aade716a936f0487e56dfd7f1bab7bad394f27bfc4b54ea22ef66"
+      ],
+      "record_hash": "4cb4414f089aade716a936f0487e56dfd7f1bab7bad394f27bfc4b54ea22ef66",
+      "name": "CONSULTORIO DENTAL DENTIK",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.02799219,
+        "longitude": -98.21035537
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/10893938",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "10610402",
+      "source_record_ids": [
+        "10610402"
+      ],
+      "source_record_hashes": [
+        "35341d52d9f78233e27dc8af9f6bc44cb1acc6e1cd98188e482c986dc8be640e"
+      ],
+      "record_hash": "35341d52d9f78233e27dc8af9f6bc44cb1acc6e1cd98188e482c986dc8be640e",
+      "name": "CONSULTORIO DIAGNOSTICO UNIDAD DE PATOLOGIA DIAGNOSTICA",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.02772516,
+        "longitude": -98.2104395
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/10610402",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "7909119",
+      "source_record_ids": [
+        "7909119"
+      ],
+      "source_record_hashes": [
+        "5b341527f4af421641e33168adf9fa228378e3a5c40f2e71fb59c9d086cc4172"
+      ],
+      "record_hash": "5b341527f4af421641e33168adf9fa228378e3a5c40f2e71fb59c9d086cc4172",
+      "name": "CONSULTORIO EN RADIOLOGIA",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.02213529,
+        "longitude": -98.23463108
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/7909119",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3459153",
+      "source_record_ids": [
+        "3459153"
+      ],
+      "source_record_hashes": [
+        "52f70c805501ead57b9755dc0650636372f1ce42520d0a8bb120dd9159db0ed9"
+      ],
+      "record_hash": "52f70c805501ead57b9755dc0650636372f1ce42520d0a8bb120dd9159db0ed9",
+      "name": "CONSULTORIO MEDICINA NUCLEAR SIN NOMBRE",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.03416628,
+        "longitude": -98.19146722
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3459153",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "8551353",
+      "source_record_ids": [
+        "8551353"
+      ],
+      "source_record_hashes": [
+        "3058efeb73799dee2e9203c753dc0cec58d56565322814ec85641bf0d670ac85"
+      ],
+      "record_hash": "3058efeb73799dee2e9203c753dc0cec58d56565322814ec85641bf0d670ac85",
+      "name": "CONSULTORIO MEDICO",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.0456465,
+        "longitude": -98.21311572
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/8551353",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3421519",
+      "source_record_ids": [
+        "3421519"
+      ],
+      "source_record_hashes": [
+        "c4da1b76152328051c82fd7f191c1bba0f2e31f4f5e0aff2d68d90ed177dd7e8"
+      ],
+      "record_hash": "c4da1b76152328051c82fd7f191c1bba0f2e31f4f5e0aff2d68d90ed177dd7e8",
+      "name": "CONSULTORIO MEDICO PATOLOGICO",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.02952264,
+        "longitude": -98.19588361
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3421519",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3265013",
+      "source_record_ids": [
+        "3265013"
+      ],
+      "source_record_hashes": [
+        "8db8fb1a1e16ab3db2fbb448651ec0bad45c17ec4b82b4d6eb0e896a12087e40"
+      ],
+      "record_hash": "8db8fb1a1e16ab3db2fbb448651ec0bad45c17ec4b82b4d6eb0e896a12087e40",
+      "name": "DENTA X",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.04910357,
+        "longitude": -98.20766605
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3265013",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "9263447",
+      "source_record_ids": [
+        "9263447"
+      ],
+      "source_record_hashes": [
+        "08d4ce09981056152ca40083ff41d41e4b5b87741ae7330885161b4eb6f2a283"
+      ],
+      "record_hash": "08d4ce09981056152ca40083ff41d41e4b5b87741ae7330885161b4eb6f2a283",
+      "name": "DENTAL MG RX",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.01664956,
+        "longitude": -98.19910105
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/9263447",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3421520",
+      "source_record_ids": [
+        "3421520"
+      ],
+      "source_record_hashes": [
+        "f69c76017dba693f45aec08500afbd043626cb0b6c2718d102557961fdfd30a2"
+      ],
+      "record_hash": "f69c76017dba693f45aec08500afbd043626cb0b6c2718d102557961fdfd30a2",
+      "name": "DIAGNOSTICO DIGITAL AVANZADO",
+      "legal_name": "DIAGNOSTICO DIGITAL AVANZADO",
+      "coordinates": {
+        "latitude": 19.02952264,
+        "longitude": -98.19588361
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3421520",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "8800800",
+      "source_record_ids": [
+        "8800800"
+      ],
+      "source_record_hashes": [
+        "a85dbe215ffe691a51ecf44b92e7859abc4920ead42cd945ca76d5357b9040f0"
+      ],
+      "record_hash": "a85dbe215ffe691a51ecf44b92e7859abc4920ead42cd945ca76d5357b9040f0",
+      "name": "DIAGNOSTICO DIGITAL AVANZADO",
+      "legal_name": "DIAGNOSTICO DIGITAL AVANZADO",
+      "coordinates": {
+        "latitude": 19.04015403,
+        "longitude": -98.22725344
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/8800800",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3439807",
+      "source_record_ids": [
+        "3439807"
+      ],
+      "source_record_hashes": [
+        "284fbb88d844e39d859d599e5895251f39080b1aea918fb62b4e472e0ee8bd3b"
+      ],
+      "record_hash": "284fbb88d844e39d859d599e5895251f39080b1aea918fb62b4e472e0ee8bd3b",
+      "name": "DIAGNOSTICO POR IMAGEN HUMBOLDT",
+      "legal_name": "DIAGNOSTICO POR IMAGEN HUMBOLDT",
+      "coordinates": {
+        "latitude": 19.04540036,
+        "longitude": -98.17884456
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3439807",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "8150854",
+      "source_record_ids": [
+        "8150854"
+      ],
+      "source_record_hashes": [
+        "3b2455c8f93f1c4010183cf63a37e31f4f343228190d9b46697070fabb4bd889"
+      ],
+      "record_hash": "3b2455c8f93f1c4010183cf63a37e31f4f343228190d9b46697070fabb4bd889",
+      "name": "DIAGNOSTICOS INTEGRALES",
+      "legal_name": "DIAGNOSTICOS INTEGRALES",
+      "coordinates": {
+        "latitude": 19.03239518,
+        "longitude": -98.21539674
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/8150854",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "9934429",
+      "source_record_ids": [
+        "9934429"
+      ],
+      "source_record_hashes": [
+        "e6bdd83fc79c8197e63b1a1e9343cbe523397abb4c4d57bbb13d34e99546661f"
+      ],
+      "record_hash": "e6bdd83fc79c8197e63b1a1e9343cbe523397abb4c4d57bbb13d34e99546661f",
+      "name": "ECO DIAGNOSTICO",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.03506808,
+        "longitude": -98.20130099
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/9934429",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "11214555",
+      "source_record_ids": [
+        "11214555"
+      ],
+      "source_record_hashes": [
+        "611ad29aef5d0fc8afa855482520072cd814c05ee1f907c3c40b582b4dcc7cd3"
+      ],
+      "record_hash": "611ad29aef5d0fc8afa855482520072cd814c05ee1f907c3c40b582b4dcc7cd3",
+      "name": "ELECTROENCEFALOGRAMA Y MAPEO CEREBRAL",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.03431058,
+        "longitude": -98.19073041
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/11214555",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "8724286",
+      "source_record_ids": [
+        "8724286"
+      ],
+      "source_record_hashes": [
+        "8ca432109b5e3cf1d0eb0cfd668390824ece28f98a28b324498809b7f1adbedb"
+      ],
+      "record_hash": "8ca432109b5e3cf1d0eb0cfd668390824ece28f98a28b324498809b7f1adbedb",
+      "name": "EQUIPOS MEDICOS ENDOLAB",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.01610135,
+        "longitude": -98.19887161
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/8724286",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "12272043",
+      "source_record_ids": [
+        "12272043"
+      ],
+      "source_record_hashes": [
+        "dd965fa97d9f37fad03d85542954fde96e4c8e2baa56e11721df4118478c5ff5"
+      ],
+      "record_hash": "dd965fa97d9f37fad03d85542954fde96e4c8e2baa56e11721df4118478c5ff5",
+      "name": "EXAKTA LABORATORIOS",
+      "legal_name": "QUIMICA EXACTA",
+      "coordinates": {
+        "latitude": 19.02681329,
+        "longitude": -98.24192727
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/12272043",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "11767714",
+      "source_record_ids": [
+        "11767714"
+      ],
+      "source_record_hashes": [
+        "1d0060f267545ac78403fc5c5c77bda0686f50c16dd003ce6877e1e6063109c1"
+      ],
+      "record_hash": "1d0060f267545ac78403fc5c5c77bda0686f50c16dd003ce6877e1e6063109c1",
+      "name": "FAMILY LABS",
+      "legal_name": "LABORATEK",
+      "coordinates": {
+        "latitude": 19.07277677,
+        "longitude": -98.19337569
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/11767714",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "6378831",
+      "source_record_ids": [
+        "6378831"
+      ],
+      "source_record_hashes": [
+        "af4c1e3de75aa8db13aad6a6f384d0db42aadc1fba96f2526c71b3d34086dd14"
+      ],
+      "record_hash": "af4c1e3de75aa8db13aad6a6f384d0db42aadc1fba96f2526c71b3d34086dd14",
+      "name": "FAMILY LABS",
+      "legal_name": "LABORATEK",
+      "coordinates": {
+        "latitude": 19.02668908,
+        "longitude": -98.24172426
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6378831",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "9432876",
+      "source_record_ids": [
+        "9432876"
+      ],
+      "source_record_hashes": [
+        "c869dfc9b833adda2ae5c338cdbeb4b965ce80e7c4d35fe9ef7c5d22d732bc6b"
+      ],
+      "record_hash": "c869dfc9b833adda2ae5c338cdbeb4b965ce80e7c4d35fe9ef7c5d22d732bc6b",
+      "name": "FARMACIAS DEL AHORRO PUE PEDF PUEBLA DEFENSORES LAB",
+      "legal_name": "COMERCIALIZADORA FARMACEUTICA DE CHIAPAS",
+      "coordinates": {
+        "latitude": 19.05855952,
+        "longitude": -98.20981442
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/9432876",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "9467285",
+      "source_record_ids": [
+        "9467285"
+      ],
+      "source_record_hashes": [
+        "0b5831f51b2ec5a4aab9791b1c9468a7ebd183d9d6e3d9f2d53619b03c088ed7"
+      ],
+      "record_hash": "0b5831f51b2ec5a4aab9791b1c9468a7ebd183d9d6e3d9f2d53619b03c088ed7",
+      "name": "FARMACIAS DEL AHORRO PUE PEGA PUEBLA GABRIEL PASTOR LAB",
+      "legal_name": "COMERCIALIZADORA FARMACEUTICA DE CHIAPAS",
+      "coordinates": {
+        "latitude": 19.03000144,
+        "longitude": -98.21274529
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/9467285",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "9432873",
+      "source_record_ids": [
+        "9432873"
+      ],
+      "source_record_hashes": [
+        "58efb072222dfc39b8d61abf33e3d59ad98a7c6aaa2643d8385e7ba276948457"
+      ],
+      "record_hash": "58efb072222dfc39b8d61abf33e3d59ad98a7c6aaa2643d8385e7ba276948457",
+      "name": "FARMACIAS DEL AHORRO PUE PEIL PUEBLA LA LIBERTAD LAB",
+      "legal_name": "COMERCIALIZADORA FARMACEUTICA DE CHIAPAS",
+      "coordinates": {
+        "latitude": 19.0647807,
+        "longitude": -98.23445921
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/9432873",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "9449438",
+      "source_record_ids": [
+        "9449438"
+      ],
+      "source_record_hashes": [
+        "ad34d68a976b90ae4d71cf36df97cbd97fc7309dea1ccfe4d482637e2d103169"
+      ],
+      "record_hash": "ad34d68a976b90ae4d71cf36df97cbd97fc7309dea1ccfe4d482637e2d103169",
+      "name": "FARMACIAS DEL AHORRO PUE PES1 PUEBLA 14 SUR LAB",
+      "legal_name": "COMERCIALIZADORA FARMACEUTICA DE CHIAPAS",
+      "coordinates": {
+        "latitude": 19.02807271,
+        "longitude": -98.19632852
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/9449438",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "9398365",
+      "source_record_ids": [
+        "9398365"
+      ],
+      "source_record_hashes": [
+        "1f3735f9306ead0e5b770dd7948e20f9cb2b1ea9ed8b1f6520082d5959fbe18d"
+      ],
+      "record_hash": "1f3735f9306ead0e5b770dd7948e20f9cb2b1ea9ed8b1f6520082d5959fbe18d",
+      "name": "FARMACIAS DEL AHORRO PUE PEZB PUEBLA CENTRO DE PROCESAMIENTO ZAVALETA LAB",
+      "legal_name": "COMERCIALIZADORA FARMACEUTICA DE CHIAPAS",
+      "coordinates": {
+        "latitude": 19.05402662,
+        "longitude": -98.2400956
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/9398365",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "6217786",
+      "source_record_ids": [
+        "6217786"
+      ],
+      "source_record_hashes": [
+        "906ff79eca3422bb747f3c15016b3c5b3e1641c1c19597cf041888e7f8c3e6f5"
+      ],
+      "record_hash": "906ff79eca3422bb747f3c15016b3c5b3e1641c1c19597cf041888e7f8c3e6f5",
+      "name": "GABINETE CASTILLO",
+      "legal_name": "GABINETE DE RADIOLOGIA Y ULTRASONIDO CASTILLO",
+      "coordinates": {
+        "latitude": 19.06216996,
+        "longitude": -98.21109406
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6217786",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "7908919",
+      "source_record_ids": [
+        "7908919"
+      ],
+      "source_record_hashes": [
+        "17de93eadf973c785f9db4bfd4828ab68a23565aefef0e077e9d8bd877bb8b15"
+      ],
+      "record_hash": "17de93eadf973c785f9db4bfd4828ab68a23565aefef0e077e9d8bd877bb8b15",
+      "name": "GABINETE DE IMAGEN TOMOGRAFIA Y RADIOLOGIA SIN NOMBRE",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.032225,
+        "longitude": -98.21549562
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/7908919",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3462188",
+      "source_record_ids": [
+        "3462188"
+      ],
+      "source_record_hashes": [
+        "902f98cedad0d9ec53d496861fc01442e8a21855ca1f62b60b9c0f967c8702dd"
+      ],
+      "record_hash": "902f98cedad0d9ec53d496861fc01442e8a21855ca1f62b60b9c0f967c8702dd",
+      "name": "GABINETE DE RADIOLOGIA DENTAL DENTA X",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.03060601,
+        "longitude": -98.21263001
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3462188",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "10167592",
+      "source_record_ids": [
+        "10167592"
+      ],
+      "source_record_hashes": [
+        "278ef22d849aa934edbc6c9617b30198ae7de8d2d73dcf7eba4f455fbfc8ab01"
+      ],
+      "record_hash": "278ef22d849aa934edbc6c9617b30198ae7de8d2d73dcf7eba4f455fbfc8ab01",
+      "name": "GABINETE DIAGNOSTICO DE PUEBLA",
+      "legal_name": "GABINETE DIAGNOSTICO DE PUEBLA",
+      "coordinates": {
+        "latitude": 19.05034117,
+        "longitude": -98.21406287
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/10167592",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "11669957",
+      "source_record_ids": [
+        "11669957"
+      ],
+      "source_record_hashes": [
+        "b383210e26c738f825101a60e36b5f37a84655a4967e8840b501abf82ea5a6b3"
+      ],
+      "record_hash": "b383210e26c738f825101a60e36b5f37a84655a4967e8840b501abf82ea5a6b3",
+      "name": "GAMMA MEDICINA NUCLEAR",
+      "legal_name": "GAMMA MEDICINA NUCLEAR",
+      "coordinates": {
+        "latitude": 19.03507555,
+        "longitude": -98.20154816
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/11669957",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "7595998",
+      "source_record_ids": [
+        "7595998"
+      ],
+      "source_record_hashes": [
+        "be26d19dbd895e46e693f4e1423bd86cffe54a3ddd925507b667b96f11fa3c4b"
+      ],
+      "record_hash": "be26d19dbd895e46e693f4e1423bd86cffe54a3ddd925507b667b96f11fa3c4b",
+      "name": "GARADET",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.070746,
+        "longitude": -98.20685531
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/7595998",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "7852650",
+      "source_record_ids": [
+        "7852650"
+      ],
+      "source_record_hashes": [
+        "291da41dfc473e86c49c84b432f119378f035fe79a65b797df855934280abcfe"
+      ],
+      "record_hash": "291da41dfc473e86c49c84b432f119378f035fe79a65b797df855934280abcfe",
+      "name": "GENICH LAB",
+      "legal_name": "LABORATORIO CLINICO Y DE GENETICA GENICH LAB",
+      "coordinates": {
+        "latitude": 19.02261077,
+        "longitude": -98.21876697
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/7852650",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "12271848",
+      "source_record_ids": [
+        "12271848"
+      ],
+      "source_record_hashes": [
+        "57c4cc88e5bbd9801e7bc84d581556a96c9a13753a1e1c9421088faaacc2005f"
+      ],
+      "record_hash": "57c4cc88e5bbd9801e7bc84d581556a96c9a13753a1e1c9421088faaacc2005f",
+      "name": "GRUPO ARJAVA",
+      "legal_name": "GRUPO ARJAVA",
+      "coordinates": {
+        "latitude": 19.0370527,
+        "longitude": -98.21439484
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/12271848",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "12272332",
+      "source_record_ids": [
+        "12272332"
+      ],
+      "source_record_hashes": [
+        "242eb16ab7c9513fd969c4caded30e96b7540199cea7f377bcb3583920da0a07"
+      ],
+      "record_hash": "242eb16ab7c9513fd969c4caded30e96b7540199cea7f377bcb3583920da0a07",
+      "name": "GRUPO CLINICO DE LA HOZ & CRISTAL",
+      "legal_name": "GRUPO CLINICO DE LA HOZ & CRISTAL",
+      "coordinates": {
+        "latitude": 19.05171896,
+        "longitude": -98.23244822
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/12272332",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3461824",
+      "source_record_ids": [
+        "3461824"
+      ],
+      "source_record_hashes": [
+        "29d15d4cfb8bf5ecb2bb5a8e55c15b980ef2d6ccc5ea28907b79e84fc5d27aad"
+      ],
+      "record_hash": "29d15d4cfb8bf5ecb2bb5a8e55c15b980ef2d6ccc5ea28907b79e84fc5d27aad",
+      "name": "GRUPO MEDICO LA NORIA",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.0393208,
+        "longitude": -98.22271555
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3461824",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "10047402",
+      "source_record_ids": [
+        "10047402"
+      ],
+      "source_record_hashes": [
+        "35670575c7d9848e4bfae4773ef3ec0c5c117b991a54b048a35dd8436ceb9301"
+      ],
+      "record_hash": "35670575c7d9848e4bfae4773ef3ec0c5c117b991a54b048a35dd8436ceb9301",
+      "name": "HEI LAB",
+      "legal_name": "LABORATORIO DE PATOLOGIA Y CITOLOGIA QUIRURGICA",
+      "coordinates": {
+        "latitude": 19.02756896,
+        "longitude": -98.23168846
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/10047402",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "9067154",
+      "source_record_ids": [
+        "9067154"
+      ],
+      "source_record_hashes": [
+        "8b4872d03218cfadd07fa012c1e6fc59127c6c81e9d73052b1a5bdfcf6c45f46"
+      ],
+      "record_hash": "8b4872d03218cfadd07fa012c1e6fc59127c6c81e9d73052b1a5bdfcf6c45f46",
+      "name": "IMAGEN GABINETE DE DIAGNOSTICO",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.078959,
+        "longitude": -98.18148294
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/9067154",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "10725372",
+      "source_record_ids": [
+        "10725372"
+      ],
+      "source_record_hashes": [
+        "8f8a04de52fc7c80b8549d509f3fa415b5fde6f4786ae5206af6a21e305481b9"
+      ],
+      "record_hash": "8f8a04de52fc7c80b8549d509f3fa415b5fde6f4786ae5206af6a21e305481b9",
+      "name": "IMAGENES MEDICAS ESPECIALIZADAS",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.0558524,
+        "longitude": -98.19313049
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/10725372",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "6272270",
+      "source_record_ids": [
+        "6272270"
+      ],
+      "source_record_hashes": [
+        "843f8a2b0ba23dbda244230c76779758d30c09e2d1066b770cd98a273ab809c2"
+      ],
+      "record_hash": "843f8a2b0ba23dbda244230c76779758d30c09e2d1066b770cd98a273ab809c2",
+      "name": "L.C.P. CAE",
+      "legal_name": "LABORATORIO MEDICO POLANCO",
+      "coordinates": {
+        "latitude": 19.02742512,
+        "longitude": -98.20102354
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6272270",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3366446",
+      "source_record_ids": [
+        "3366446"
+      ],
+      "source_record_hashes": [
+        "31e1cfb23bacb4a9fa1e4c1f9957803963d72ee46d3327280ce6a709076e3312"
+      ],
+      "record_hash": "31e1cfb23bacb4a9fa1e4c1f9957803963d72ee46d3327280ce6a709076e3312",
+      "name": "LABCLIVET",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.00937619,
+        "longitude": -98.20345395
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3366446",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "10229281",
+      "source_record_ids": [
+        "10229281"
+      ],
+      "source_record_hashes": [
+        "35540e55a1ec986451f19ac509f80f18c7639ecde3b275b8d0623fc56a99c842"
+      ],
+      "record_hash": "35540e55a1ec986451f19ac509f80f18c7639ecde3b275b8d0623fc56a99c842",
+      "name": "LABO PAT",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.05236553,
+        "longitude": -98.23433627
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/10229281",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "8774238",
+      "source_record_ids": [
+        "8774238"
+      ],
+      "source_record_hashes": [
+        "d0ba1829b6246cf6c3e412a7949dda0bbe92f4d50018c46b64d7c92d209073aa"
+      ],
+      "record_hash": "d0ba1829b6246cf6c3e412a7949dda0bbe92f4d50018c46b64d7c92d209073aa",
+      "name": "LABOPAT DIAGNOSTICOS",
+      "legal_name": "LABORATORIO DE PATOLOGIA QUIRURGICA Y CITOLOGIA DE PUEBLA",
+      "coordinates": {
+        "latitude": 19.02756896,
+        "longitude": -98.23168846
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/8774238",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3463507",
+      "source_record_ids": [
+        "3463507"
+      ],
+      "source_record_hashes": [
+        "2653613b3f6c048bc186c8dbccd899444ab599ad312fbcba8aa49dc85625c0e2"
+      ],
+      "record_hash": "2653613b3f6c048bc186c8dbccd899444ab599ad312fbcba8aa49dc85625c0e2",
+      "name": "LABORATORIO BIO VELAB DIAGNOSTICO",
+      "legal_name": "LABORATORIO BIO VELAB DIAGNOSTICOS",
+      "coordinates": {
+        "latitude": 19.00402707,
+        "longitude": -98.21566265
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3463507",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "9657491",
+      "source_record_ids": [
+        "9657491"
+      ],
+      "source_record_hashes": [
+        "30aa9138cc529ec1ce9f118eb8d7cb403e10ec074053abc8b564207470873604"
+      ],
+      "record_hash": "30aa9138cc529ec1ce9f118eb8d7cb403e10ec074053abc8b564207470873604",
+      "name": "LABORATORIO BIOQUIM ALMEIDA",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.02375229,
+        "longitude": -98.20565422
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/9657491",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3366817",
+      "source_record_ids": [
+        "3366817"
+      ],
+      "source_record_hashes": [
+        "a13af8a983c89f2fc7da34bc12db8f7514baffcc5c3ae7e4bbe4922e9b4ebbf3"
+      ],
+      "record_hash": "a13af8a983c89f2fc7da34bc12db8f7514baffcc5c3ae7e4bbe4922e9b4ebbf3",
+      "name": "LABORATORIO BLS ANALISIS CLINICOS",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.01809112,
+        "longitude": -98.20347945
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3366817",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3365512",
+      "source_record_ids": [
+        "3365512"
+      ],
+      "source_record_hashes": [
+        "db376766b505a6b159ac71fdbe3b8d8f462d7cafd01ec8e50cd6d06e9355794c"
+      ],
+      "record_hash": "db376766b505a6b159ac71fdbe3b8d8f462d7cafd01ec8e50cd6d06e9355794c",
+      "name": "LABORATORIO CASTILLO",
+      "legal_name": "GABINETE DE RADIOLOGIA Y ULTRASONIDO CASTILLO",
+      "coordinates": {
+        "latitude": 19.02882335,
+        "longitude": -98.21954436
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3365512",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3421453",
+      "source_record_ids": [
+        "3421453"
+      ],
+      "source_record_hashes": [
+        "dfdbfab4f490c2127f3ab4470d338ff74fef30100561de828cdae4f0583dba64"
+      ],
+      "record_hash": "dfdbfab4f490c2127f3ab4470d338ff74fef30100561de828cdae4f0583dba64",
+      "name": "LABORATORIO CLINICO AYALA",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.03111654,
+        "longitude": -98.19585802
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3421453",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3460070",
+      "source_record_ids": [
+        "3460070"
+      ],
+      "source_record_hashes": [
+        "bee0679df73fe0ffb47f41cf3464d5fbcf3fdbeeae3ff8b997c5154ea6fdc93f"
+      ],
+      "record_hash": "bee0679df73fe0ffb47f41cf3464d5fbcf3fdbeeae3ff8b997c5154ea6fdc93f",
+      "name": "LABORATORIO CLINICO CELULAB",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.02795694,
+        "longitude": -98.18447078
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3460070",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "10029629",
+      "source_record_ids": [
+        "10029629"
+      ],
+      "source_record_hashes": [
+        "90b2899e34c1638968525aa5c6ca4f157bf9366379d1d5206a47c895bad4eae8"
+      ],
+      "record_hash": "90b2899e34c1638968525aa5c6ca4f157bf9366379d1d5206a47c895bad4eae8",
+      "name": "LABORATORIO CLINICO ESPECIALIZADO LOS ANGELES",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.03667829,
+        "longitude": -98.22000331
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/10029629",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "10428165",
+      "source_record_ids": [
+        "10428165"
+      ],
+      "source_record_hashes": [
+        "296838839fd1aa5454440d81fef2f30940e6c29d2c7ccc54887ca6f68fd27aa7"
+      ],
+      "record_hash": "296838839fd1aa5454440d81fef2f30940e6c29d2c7ccc54887ca6f68fd27aa7",
+      "name": "LABORATORIO CLINICO OMICS",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.03631003,
+        "longitude": -98.18997065
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/10428165",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3254375",
+      "source_record_ids": [
+        "3254375"
+      ],
+      "source_record_hashes": [
+        "651734b4501061aed412b675057e07f4aac505373e998bf298f2e3017f6afd9c"
+      ],
+      "record_hash": "651734b4501061aed412b675057e07f4aac505373e998bf298f2e3017f6afd9c",
+      "name": "LABORATORIO CLINICO SAN PABLO",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.08518319,
+        "longitude": -98.20593837
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3254375",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3445658",
+      "source_record_ids": [
+        "3445658"
+      ],
+      "source_record_hashes": [
+        "b7dcf2726bccae1a460e78bf4bcdd9bea06a8f859fad62621fd1d0f6a4294888"
+      ],
+      "record_hash": "b7dcf2726bccae1a460e78bf4bcdd9bea06a8f859fad62621fd1d0f6a4294888",
+      "name": "LABORATORIO CLINICO VITALAB",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.03625071,
+        "longitude": -98.17354033
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3445658",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3352104",
+      "source_record_ids": [
+        "3352104"
+      ],
+      "source_record_hashes": [
+        "631cebe1c0655357c5a2727904fc0fcb1adc7325b28f8e12289d740d5e7d10ff"
+      ],
+      "record_hash": "631cebe1c0655357c5a2727904fc0fcb1adc7325b28f8e12289d740d5e7d10ff",
+      "name": "LABORATORIO CLINICO Y MOLECULAR MARI-LAB",
+      "legal_name": "LABORATORIO CLINICO Y MOLECULA MARI- LAB",
+      "coordinates": {
+        "latitude": 19.04575353,
+        "longitude": -98.17868775
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3352104",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3265051",
+      "source_record_ids": [
+        "3265051"
+      ],
+      "source_record_hashes": [
+        "35ffa30d1bd01427208114f604cca335eec8ec692770e905d137bbec6993b621"
+      ],
+      "record_hash": "35ffa30d1bd01427208114f604cca335eec8ec692770e905d137bbec6993b621",
+      "name": "LABORATORIO DE ANALIS CLINICOS",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.04410539,
+        "longitude": -98.21017742
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3265051",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3406913",
+      "source_record_ids": [
+        "3406913"
+      ],
+      "source_record_hashes": [
+        "b4db8dd44710164f2411aedc4dab6d3a55afd974aa08a594c39edade9a4f06e8"
+      ],
+      "record_hash": "b4db8dd44710164f2411aedc4dab6d3a55afd974aa08a594c39edade9a4f06e8",
+      "name": "LABORATORIO DE ANALIS CLINICOS",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.04129262,
+        "longitude": -98.21794145
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3406913",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3460332",
+      "source_record_ids": [
+        "3460332"
+      ],
+      "source_record_hashes": [
+        "34be1e4cdc71e0d0de119ee59645e0ce36e5963136da4900973c0e4f25edcc28"
+      ],
+      "record_hash": "34be1e4cdc71e0d0de119ee59645e0ce36e5963136da4900973c0e4f25edcc28",
+      "name": "LABORATORIO DE ANALISIS CLINICO QUI-ROM",
+      "legal_name": "LABORATORIO DE ANALISIS CLINICOS QUI-ROM",
+      "coordinates": {
+        "latitude": 19.05025759,
+        "longitude": -98.21924702
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3460332",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "10889439",
+      "source_record_ids": [
+        "10889439"
+      ],
+      "source_record_hashes": [
+        "839852e02704037c63721e4c7dcf0f10b5520759a251fa5401035c59f7433d86"
+      ],
+      "record_hash": "839852e02704037c63721e4c7dcf0f10b5520759a251fa5401035c59f7433d86",
+      "name": "LABORATORIO DE ANALISIS CLINICOS GALAVIZ",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.02337971,
+        "longitude": -98.19614927
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/10889439",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3265480",
+      "source_record_ids": [
+        "3265480"
+      ],
+      "source_record_hashes": [
+        "e1e2789b43fe1d0cfd594cd052b54226056e585066bf1d06da41503162c85be5"
+      ],
+      "record_hash": "e1e2789b43fe1d0cfd594cd052b54226056e585066bf1d06da41503162c85be5",
+      "name": "LABORATORIO DE ANALISIS CLINICOS HERMES",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.05259139,
+        "longitude": -98.20274046
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3265480",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3256126",
+      "source_record_ids": [
+        "3256126"
+      ],
+      "source_record_hashes": [
+        "9486238e6169e5e2edafc6618a5cb15e2384bc67dca933b5fba61f4ff6836e31"
+      ],
+      "record_hash": "9486238e6169e5e2edafc6618a5cb15e2384bc67dca933b5fba61f4ff6836e31",
+      "name": "LABORATORIO DE ANALISIS CLINICOS MADAME PASTEUR",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.06449332,
+        "longitude": -98.19423729
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3256126",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3463496",
+      "source_record_ids": [
+        "3463496"
+      ],
+      "source_record_hashes": [
+        "447a1927d1797630adeb38a71ac45a01b2a41de054c2ed601ce574c64b380ac9"
+      ],
+      "record_hash": "447a1927d1797630adeb38a71ac45a01b2a41de054c2ed601ce574c64b380ac9",
+      "name": "LABORATORIO DE ANALISIS CLINICOS QUIMILAB",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.0037987,
+        "longitude": -98.21616353
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3463496",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3258525",
+      "source_record_ids": [
+        "3258525"
+      ],
+      "source_record_hashes": [
+        "48402d477a01bc7103f94a06bb0152685bc6db0714fbc0b201bcbf18c9f1cea2"
+      ],
+      "record_hash": "48402d477a01bc7103f94a06bb0152685bc6db0714fbc0b201bcbf18c9f1cea2",
+      "name": "LABORATORIO DE ANALISIS CLINICOS SAN FRANCISCO",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.04962991,
+        "longitude": -98.19049447
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3258525",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3364183",
+      "source_record_ids": [
+        "3364183"
+      ],
+      "source_record_hashes": [
+        "09462f313e6f507a1e35ba3988ed3506c0d789c53a3523ab0faf54114b80b7bd"
+      ],
+      "record_hash": "09462f313e6f507a1e35ba3988ed3506c0d789c53a3523ab0faf54114b80b7bd",
+      "name": "LABORATORIO DE ANALISIS CLINICOS TOMA DE MUESTRA JICOLAB",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.02013138,
+        "longitude": -98.18943394
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3364183",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3420483",
+      "source_record_ids": [
+        "3420483"
+      ],
+      "source_record_hashes": [
+        "da823d44e11768180e4a97be38c5f4afc8de4751e1d73d4a5c3954e63ef5aab1"
+      ],
+      "record_hash": "da823d44e11768180e4a97be38c5f4afc8de4751e1d73d4a5c3954e63ef5aab1",
+      "name": "LABORATORIO DE ANATOMIA PATOLOGICA CITOLOGIA EXFOLIATIVA",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.01610135,
+        "longitude": -98.19887161
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3420483",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "9734440",
+      "source_record_ids": [
+        "9734440"
+      ],
+      "source_record_hashes": [
+        "047843623ef471a84cdcafd00b375973f17bf139eef78eae028463c2717dd935"
+      ],
+      "record_hash": "047843623ef471a84cdcafd00b375973f17bf139eef78eae028463c2717dd935",
+      "name": "LABORATORIO DE PATOLOGA SERRANOLAB",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.03806433,
+        "longitude": -98.20739109
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/9734440",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3365930",
+      "source_record_ids": [
+        "3365930"
+      ],
+      "source_record_hashes": [
+        "a9e95278e35d29c520c29e7d4faf8b1af7d5d41e35f8d297429bd2131d8b6743"
+      ],
+      "record_hash": "a9e95278e35d29c520c29e7d4faf8b1af7d5d41e35f8d297429bd2131d8b6743",
+      "name": "LABORATORIO DE PATOLOGIA QUIRURGICA LABOPAT",
+      "legal_name": "LABORATORIO DE PATOLOGIA Y CITOLOGIA DE PUEBA",
+      "coordinates": {
+        "latitude": 19.02213529,
+        "longitude": -98.23463108
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3365930",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3408302",
+      "source_record_ids": [
+        "3408302"
+      ],
+      "source_record_hashes": [
+        "4fbf007505601f243fabaadb2f70c0e26e3afa0bde2b8f832e38b178524cc380"
+      ],
+      "record_hash": "4fbf007505601f243fabaadb2f70c0e26e3afa0bde2b8f832e38b178524cc380",
+      "name": "LABORATORIO DE QUIMICA CLINICA",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.03873922,
+        "longitude": -98.20687726
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3408302",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3441869",
+      "source_record_ids": [
+        "3441869"
+      ],
+      "source_record_hashes": [
+        "c526f5330cf9d751d6a158421f4bd23d61b895ae773a894608dc91fc38255359"
+      ],
+      "record_hash": "c526f5330cf9d751d6a158421f4bd23d61b895ae773a894608dc91fc38255359",
+      "name": "LABORATORIO DOCTOR FEDERICO TEJEDA",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.04727932,
+        "longitude": -98.18770919
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3441869",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3439708",
+      "source_record_ids": [
+        "3439708"
+      ],
+      "source_record_hashes": [
+        "e17a13ad5cbfa04bc107506adc0fea2fdfd429ce4f5fd0b2d0412757944a9cd2"
+      ],
+      "record_hash": "e17a13ad5cbfa04bc107506adc0fea2fdfd429ce4f5fd0b2d0412757944a9cd2",
+      "name": "LABORATORIO E IMAGEN RADIOLOGICA ALTHE",
+      "legal_name": "LABORATORIO E IMAGEN RADIOLOGICA ALTHE",
+      "coordinates": {
+        "latitude": 19.04811923,
+        "longitude": -98.17091621
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3439708",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "9201143",
+      "source_record_ids": [
+        "9201143"
+      ],
+      "source_record_hashes": [
+        "c4705da1a22523c865357a81391f984b079b594584f378277d65240d13bb98fb"
+      ],
+      "record_hash": "c4705da1a22523c865357a81391f984b079b594584f378277d65240d13bb98fb",
+      "name": "LABORATORIO E IMAGEN RADIOLOGICA ALTHE",
+      "legal_name": "LABORATORIO E IMAGEN RADIOLOGICA ALTHE",
+      "coordinates": {
+        "latitude": 19.04413139,
+        "longitude": -98.17243432
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/9201143",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "9904125",
+      "source_record_ids": [
+        "9904125"
+      ],
+      "source_record_hashes": [
+        "983948699658a0a4b669b94899f661c4b7dfdd90ab462808cb746fb5c157e67b"
+      ],
+      "record_hash": "983948699658a0a4b669b94899f661c4b7dfdd90ab462808cb746fb5c157e67b",
+      "name": "LABORATORIO EVOLUCION DIAGNOSTICA",
+      "legal_name": "EVOLUCION DIAGNOSTICA PUEBLA",
+      "coordinates": {
+        "latitude": 19.02219923,
+        "longitude": -98.19865577
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/9904125",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "6218029",
+      "source_record_ids": [
+        "6218029"
+      ],
+      "source_record_hashes": [
+        "4f8549519101c95a5214a21b81fb3819806c77cfcdde83e47bf8ed2bfe6cd812"
+      ],
+      "record_hash": "4f8549519101c95a5214a21b81fb3819806c77cfcdde83e47bf8ed2bfe6cd812",
+      "name": "LABORATORIO GAYA",
+      "legal_name": "LABORATORIO GAYA",
+      "coordinates": {
+        "latitude": 19.0502593,
+        "longitude": -98.15548204
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6218029",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "6272355",
+      "source_record_ids": [
+        "6272355"
+      ],
+      "source_record_hashes": [
+        "53325c62f55bd9698902b078c8049190615730c25a97c0c336ee3a0443d8d99e"
+      ],
+      "record_hash": "53325c62f55bd9698902b078c8049190615730c25a97c0c336ee3a0443d8d99e",
+      "name": "LABORATORIO GUADALUPE",
+      "legal_name": "LABORATORIO GUADALUPE",
+      "coordinates": {
+        "latitude": 19.03446481,
+        "longitude": -98.19116518
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6272355",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3459233",
+      "source_record_ids": [
+        "3459233"
+      ],
+      "source_record_hashes": [
+        "cbf9f70a176f2e913c43b6ef87be22859e725d44d47ae209c68d67b72698e90c"
+      ],
+      "record_hash": "cbf9f70a176f2e913c43b6ef87be22859e725d44d47ae209c68d67b72698e90c",
+      "name": "LABORATORIO HARVEY",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.06096113,
+        "longitude": -98.22330862
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3459233",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3422211",
+      "source_record_ids": [
+        "3422211"
+      ],
+      "source_record_hashes": [
+        "4eae6a65e1364a287376d6494f4a9d5c1bceed7306fe72b374c549ad7ff06fff"
+      ],
+      "record_hash": "4eae6a65e1364a287376d6494f4a9d5c1bceed7306fe72b374c549ad7ff06fff",
+      "name": "LABORATORIO KAMPROL LAB",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.00551682,
+        "longitude": -98.19765928
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3422211",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "10967096",
+      "source_record_ids": [
+        "10967096"
+      ],
+      "source_record_hashes": [
+        "14dcfb107ac1dafd3889af0c40e9c440f0c1d07205336114b1d1b877b64b92ba"
+      ],
+      "record_hash": "14dcfb107ac1dafd3889af0c40e9c440f0c1d07205336114b1d1b877b64b92ba",
+      "name": "LABORATORIO KIIK",
+      "legal_name": "LABORATORIOS KIIK",
+      "coordinates": {
+        "latitude": 19.06321835,
+        "longitude": -98.23177602
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/10967096",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "6421398",
+      "source_record_ids": [
+        "6421398"
+      ],
+      "source_record_hashes": [
+        "5c9d5617a83f150033bfee5b2f254874d9b45bdeab9a555ed8951099747a8e5c"
+      ],
+      "record_hash": "5c9d5617a83f150033bfee5b2f254874d9b45bdeab9a555ed8951099747a8e5c",
+      "name": "LABORATORIO LINFOLAB CAPU",
+      "legal_name": "LABORATORIO DE PREDIAGNOSTICO Y DIAGNOSTICO CADENA",
+      "coordinates": {
+        "latitude": 19.07793222,
+        "longitude": -98.20386497
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6421398",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "10445690",
+      "source_record_ids": [
+        "10445690"
+      ],
+      "source_record_hashes": [
+        "57b28d7ecd6294a35cf8112b1b8f887776f5e9762b12b1af4866457e703efc2e"
+      ],
+      "record_hash": "57b28d7ecd6294a35cf8112b1b8f887776f5e9762b12b1af4866457e703efc2e",
+      "name": "LABORATORIO LINFOLAB CENTRO QUIRURGICO ANGELOPOLIS",
+      "legal_name": "ANALISIS CLINICO EMPRESIARALES",
+      "coordinates": {
+        "latitude": 19.02790576,
+        "longitude": -98.22825289
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/10445690",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "6421322",
+      "source_record_ids": [
+        "6421322"
+      ],
+      "source_record_hashes": [
+        "3ad5c0308300fe8ce86fb601ad2ee9a887d6710bb8f13f39df9947b57cd43c66"
+      ],
+      "record_hash": "3ad5c0308300fe8ce86fb601ad2ee9a887d6710bb8f13f39df9947b57cd43c66",
+      "name": "LABORATORIO LINFOLAB GABRIEL PASTOR",
+      "legal_name": "LABORATORIO MEDICO LINFOLAB",
+      "coordinates": {
+        "latitude": 19.03279633,
+        "longitude": -98.21147358
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6421322",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "11022740",
+      "source_record_ids": [
+        "11022740"
+      ],
+      "source_record_hashes": [
+        "72704048c1bae0065e1acde84eeb00d056c032298d118dcff179ce2f6c5a34ad"
+      ],
+      "record_hash": "72704048c1bae0065e1acde84eeb00d056c032298d118dcff179ce2f6c5a34ad",
+      "name": "LABORATORIO LINFOLAB PARQUE ECOLOGICO",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.03772295,
+        "longitude": -98.18379504
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/11022740",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "6421395",
+      "source_record_ids": [
+        "6421395"
+      ],
+      "source_record_hashes": [
+        "3e42c9a5ed2ad19b18d3184dfe7ed47ba7699c3847c89005902bad982f17537b"
+      ],
+      "record_hash": "3e42c9a5ed2ad19b18d3184dfe7ed47ba7699c3847c89005902bad982f17537b",
+      "name": "LABORATORIO LINFOLAB PLAZA NORTE",
+      "legal_name": "ANALISIS CLINICOS EMPRESARIALES GRUPO CADENA",
+      "coordinates": {
+        "latitude": 19.06689669,
+        "longitude": -98.21161131
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6421395",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "6421396",
+      "source_record_ids": [
+        "6421396"
+      ],
+      "source_record_hashes": [
+        "5bafbf3777f74af2531ebaf7e4ec8815e6f49e133b47f2cd5b8c14731e69c521"
+      ],
+      "record_hash": "5bafbf3777f74af2531ebaf7e4ec8815e6f49e133b47f2cd5b8c14731e69c521",
+      "name": "LABORATORIO LINFOLAB TOLIN",
+      "legal_name": "LABORATORIO MEDICO LINFOLAB",
+      "coordinates": {
+        "latitude": 19.07248928,
+        "longitude": -98.17284113
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6421396",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3433719",
+      "source_record_ids": [
+        "3433719"
+      ],
+      "source_record_hashes": [
+        "2174145de3ac19b132e8e19054a2608b84636a948134a86e56c230989d6367e3"
+      ],
+      "record_hash": "2174145de3ac19b132e8e19054a2608b84636a948134a86e56c230989d6367e3",
+      "name": "LABORATORIO MEDICO DE ANALISIS CLINICOS SAN JOSE",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.01960196,
+        "longitude": -98.22776997
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3433719",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3278298",
+      "source_record_ids": [
+        "3278298"
+      ],
+      "source_record_hashes": [
+        "ce7eaa5a951da4ec9a8b15047d834b37b8b3cd46c9e0ce5bca1f11945302de4c"
+      ],
+      "record_hash": "ce7eaa5a951da4ec9a8b15047d834b37b8b3cd46c9e0ce5bca1f11945302de4c",
+      "name": "LABORATORIO MEDICO DE DIAGNOSTICO",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.03788654,
+        "longitude": -98.19727242
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3278298",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "6759968",
+      "source_record_ids": [
+        "6759968"
+      ],
+      "source_record_hashes": [
+        "e2a5c6f60002e62570bf80e7eb262ae1d2ba5d713be81c5fab1b63434ffba649"
+      ],
+      "record_hash": "e2a5c6f60002e62570bf80e7eb262ae1d2ba5d713be81c5fab1b63434ffba649",
+      "name": "LABORATORIO MEDICO LINFOLAB SERDAN",
+      "legal_name": "LABORATORIO DE PREDIAGNOSTICO Y DIAGNOSTICO CADENA",
+      "coordinates": {
+        "latitude": 19.07764458,
+        "longitude": -98.22845947
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6759968",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "6421413",
+      "source_record_ids": [
+        "6421413"
+      ],
+      "source_record_hashes": [
+        "c4a28c077605ff9433a2e04b30797ef6c2688ff75e16b59405613b2a9a51af5f"
+      ],
+      "record_hash": "c4a28c077605ff9433a2e04b30797ef6c2688ff75e16b59405613b2a9a51af5f",
+      "name": "LABORATORIO MEDICO LINFOLAB XONACA",
+      "legal_name": "LABORATORIO MEDICO LINFOLAB",
+      "coordinates": {
+        "latitude": 19.05060531,
+        "longitude": -98.16804243
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6421413",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3408400",
+      "source_record_ids": [
+        "3408400"
+      ],
+      "source_record_hashes": [
+        "97cf4dccb7b9e124bdc5b0571bc4c1fe60cfa54eb5704880331768864d846fa2"
+      ],
+      "record_hash": "97cf4dccb7b9e124bdc5b0571bc4c1fe60cfa54eb5704880331768864d846fa2",
+      "name": "LABORATORIO MEDICO UNILAB",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.03707629,
+        "longitude": -98.20696273
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3408400",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "9679210",
+      "source_record_ids": [
+        "9679210"
+      ],
+      "source_record_hashes": [
+        "d978827d0cdc15ff049b02c700bbd25c9f4bbe77363346d5a65933f9d7df43bb"
+      ],
+      "record_hash": "d978827d0cdc15ff049b02c700bbd25c9f4bbe77363346d5a65933f9d7df43bb",
+      "name": "LABORATORIO ORBE",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.08478681,
+        "longitude": -98.20663725
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/9679210",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3421340",
+      "source_record_ids": [
+        "3421340"
+      ],
+      "source_record_hashes": [
+        "6e39893c1c290da38ebb7a383eef317e1ea6a3ebb3e13936ac20cfea31400d65"
+      ],
+      "record_hash": "6e39893c1c290da38ebb7a383eef317e1ea6a3ebb3e13936ac20cfea31400d65",
+      "name": "LABORATORIO ROENTGEN",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.03212545,
+        "longitude": -98.19392587
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3421340",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3275327",
+      "source_record_ids": [
+        "3275327"
+      ],
+      "source_record_hashes": [
+        "bcdb6e6691fec3ceeeab2bf202d72d597c4194ef7860a6498392ce7b9a40346a"
+      ],
+      "record_hash": "bcdb6e6691fec3ceeeab2bf202d72d597c4194ef7860a6498392ce7b9a40346a",
+      "name": "LABORATORIO SEMIN SIGLO XXI",
+      "legal_name": "LABORATORIOS SEMIN SIGLO XXI",
+      "coordinates": {
+        "latitude": 19.0390914,
+        "longitude": -98.19561895
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3275327",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3441765",
+      "source_record_ids": [
+        "3441765"
+      ],
+      "source_record_hashes": [
+        "73153e9aa44f2f89d7c2e9f1cca2ed839ac924986d9ed2ef26b145c5170f78be"
+      ],
+      "record_hash": "73153e9aa44f2f89d7c2e9f1cca2ed839ac924986d9ed2ef26b145c5170f78be",
+      "name": "LABORATORIOS BIQUISER",
+      "legal_name": "SERVICIOS PROFESIONALES QUIMICO BIOLOGICOS",
+      "coordinates": {
+        "latitude": 19.0425857,
+        "longitude": -98.18705293
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3441765",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "11693758",
+      "source_record_ids": [
+        "11693758"
+      ],
+      "source_record_hashes": [
+        "54806fdf5d009c3e37d16956b5ca3fd388fa0a17902715479164dda5376dc26c"
+      ],
+      "record_hash": "54806fdf5d009c3e37d16956b5ca3fd388fa0a17902715479164dda5376dc26c",
+      "name": "LABORATORIOS BY ANALISIS CLINICOS",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.066107,
+        "longitude": -98.23606027
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/11693758",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "11019755",
+      "source_record_ids": [
+        "11019755"
+      ],
+      "source_record_hashes": [
+        "3aa28e9d18293f4682f1808d32526602813247fac026cf2489642e22c416b5e5"
+      ],
+      "record_hash": "3aa28e9d18293f4682f1808d32526602813247fac026cf2489642e22c416b5e5",
+      "name": "LABORATORIOS CLINICOS LAFER",
+      "legal_name": "GRUPO ANDROLOGIA Y FERTILIDAD",
+      "coordinates": {
+        "latitude": 19.02330071,
+        "longitude": -98.19699299
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/11019755",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "8285013",
+      "source_record_ids": [
+        "8285013"
+      ],
+      "source_record_hashes": [
+        "22addeccfd55a279b7139b6b2d72524907403099bdb88a15132b8d3f2dde34af"
+      ],
+      "record_hash": "22addeccfd55a279b7139b6b2d72524907403099bdb88a15132b8d3f2dde34af",
+      "name": "LABORATORIOS CLINICOS REFERENCIAS DE MICROTECNICA DE LABORATORIO",
+      "legal_name": "REFERENCIAS DE MICROTECNICA DE LABORATORIO",
+      "coordinates": {
+        "latitude": 19.0496307,
+        "longitude": -98.23257206
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/8285013",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "10751287",
+      "source_record_ids": [
+        "10751287"
+      ],
+      "source_record_hashes": [
+        "8fd1e05c52f5f6624e4c41e478d576a2b03133ad5d0a37884018a0c38dadedbc"
+      ],
+      "record_hash": "8fd1e05c52f5f6624e4c41e478d576a2b03133ad5d0a37884018a0c38dadedbc",
+      "name": "LABORATORIOS DE ANALISIS CLINICOS DEL CARMEN",
+      "legal_name": "SURTIDORA MEDICA DEL CARMEN",
+      "coordinates": {
+        "latitude": 19.073756,
+        "longitude": -98.19970346
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/10751287",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3256459",
+      "source_record_ids": [
+        "3256459"
+      ],
+      "source_record_hashes": [
+        "c6fe6f3178afee496afd9270713a7067028e3a260c78b27dcaa90508d68997f0"
+      ],
+      "record_hash": "c6fe6f3178afee496afd9270713a7067028e3a260c78b27dcaa90508d68997f0",
+      "name": "LABORATORIOS DE ANALISIS CLINICOS LOS ANGELES",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.06834182,
+        "longitude": -98.18797224
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3256459",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "11525837",
+      "source_record_ids": [
+        "11525837"
+      ],
+      "source_record_hashes": [
+        "f04d7e6435d362fae9efbbbbd091cb1b236112b89bc1b2113da6de04cd345a45"
+      ],
+      "record_hash": "f04d7e6435d362fae9efbbbbd091cb1b236112b89bc1b2113da6de04cd345a45",
+      "name": "LABORATORIOS EXACTA",
+      "legal_name": "LABORATORIOS BIO ANALISIS",
+      "coordinates": {
+        "latitude": 19.01610135,
+        "longitude": -98.19887161
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/11525837",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "9667546",
+      "source_record_ids": [
+        "9667546"
+      ],
+      "source_record_hashes": [
+        "5a4821a23e6bbdfe4054925c58640777e77b520f8416929aa2e267abe0e74513"
+      ],
+      "record_hash": "5a4821a23e6bbdfe4054925c58640777e77b520f8416929aa2e267abe0e74513",
+      "name": "LABORATORIOS EXACTA",
+      "legal_name": "LABORATORIO BIO ANALISIS",
+      "coordinates": {
+        "latitude": 19.03446305,
+        "longitude": -98.22153594
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/9667546",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3260938",
+      "source_record_ids": [
+        "3260938"
+      ],
+      "source_record_hashes": [
+        "687f4fd1020f39a40968144b27420bce46746f5c5b1c19b1dc892c92c4a7be35"
+      ],
+      "record_hash": "687f4fd1020f39a40968144b27420bce46746f5c5b1c19b1dc892c92c4a7be35",
+      "name": "LABORATORIOS EXAKTA",
+      "legal_name": "LABORATORIOS BIO ANALISIS",
+      "coordinates": {
+        "latitude": 19.06594388,
+        "longitude": -98.21286969
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3260938",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3359631",
+      "source_record_ids": [
+        "3359631"
+      ],
+      "source_record_hashes": [
+        "48ea5dc440ac878f379713c6213e437ecccda150db4b894c214b5155957ca842"
+      ],
+      "record_hash": "48ea5dc440ac878f379713c6213e437ecccda150db4b894c214b5155957ca842",
+      "name": "LABORATORIOS EXAKTA",
+      "legal_name": "QUIMICA EXACTA",
+      "coordinates": {
+        "latitude": 19.05791568,
+        "longitude": -98.22945066
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3359631",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3360180",
+      "source_record_ids": [
+        "3360180"
+      ],
+      "source_record_hashes": [
+        "3b4df2d5b42224164dffe562f984026274abf54c01c4e61e9762f99caa0e690b"
+      ],
+      "record_hash": "3b4df2d5b42224164dffe562f984026274abf54c01c4e61e9762f99caa0e690b",
+      "name": "LABORATORIOS EXAKTA",
+      "legal_name": "LABORATORIOS BIO ANALISIS",
+      "coordinates": {
+        "latitude": 19.0427388,
+        "longitude": -98.23664296
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3360180",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "6377340",
+      "source_record_ids": [
+        "6377340"
+      ],
+      "source_record_hashes": [
+        "c87cbc39f81738ff1f8c48bceeb93d64aadb382278a9e770ad13a144ed1ad657"
+      ],
+      "record_hash": "c87cbc39f81738ff1f8c48bceeb93d64aadb382278a9e770ad13a144ed1ad657",
+      "name": "LABORATORIOS EXAKTA",
+      "legal_name": "QUIMICA EXACTA",
+      "coordinates": {
+        "latitude": 19.06612485,
+        "longitude": -98.17766902
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6377340",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "6380663",
+      "source_record_ids": [
+        "6380663"
+      ],
+      "source_record_hashes": [
+        "a670381ae376208997d6036783053def701a603c356ac50a4c572117d1e5419d"
+      ],
+      "record_hash": "a670381ae376208997d6036783053def701a603c356ac50a4c572117d1e5419d",
+      "name": "LABORATORIOS EXAKTA",
+      "legal_name": "QUIMICA EXACTA",
+      "coordinates": {
+        "latitude": 19.0315461,
+        "longitude": -98.20324812
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6380663",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "6380664",
+      "source_record_ids": [
+        "6380664"
+      ],
+      "source_record_hashes": [
+        "1be301e61f06d53fa198e61502b76ca08040827db6f853fada5995d3d55b3c6e"
+      ],
+      "record_hash": "1be301e61f06d53fa198e61502b76ca08040827db6f853fada5995d3d55b3c6e",
+      "name": "LABORATORIOS EXAKTA",
+      "legal_name": "LABORATORIOS BIO ANALISIS",
+      "coordinates": {
+        "latitude": 19.01581859,
+        "longitude": -98.21464261
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6380664",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "8493087",
+      "source_record_ids": [
+        "8493087"
+      ],
+      "source_record_hashes": [
+        "5e18c804fb5b701b18df8540196b36f93a241e662df390c372ce96470f252fc5"
+      ],
+      "record_hash": "5e18c804fb5b701b18df8540196b36f93a241e662df390c372ce96470f252fc5",
+      "name": "LABORATORIOS EXAKTA",
+      "legal_name": "QUIMICA EXACTA",
+      "coordinates": {
+        "latitude": 19.03160175,
+        "longitude": -98.20336167
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/8493087",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "6740764",
+      "source_record_ids": [
+        "6740764"
+      ],
+      "source_record_hashes": [
+        "3a1003e89c5474aeb10485eca8efcb2f283932a36e29127e69a9cf586048c1a5"
+      ],
+      "record_hash": "3a1003e89c5474aeb10485eca8efcb2f283932a36e29127e69a9cf586048c1a5",
+      "name": "LABORATORIOS GAYA",
+      "legal_name": "BIOTEC GENUS",
+      "coordinates": {
+        "latitude": 19.0089339,
+        "longitude": -98.20702956
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6740764",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "12272317",
+      "source_record_ids": [
+        "12272317"
+      ],
+      "source_record_hashes": [
+        "00d0ba3a604b7ac835a546c5d83b15343d70b22d338bda2f43b6a0a66a40c284"
+      ],
+      "record_hash": "00d0ba3a604b7ac835a546c5d83b15343d70b22d338bda2f43b6a0a66a40c284",
+      "name": "LABORATORIOS GUADALUPE",
+      "legal_name": "LABORATORIOS GUADALUPE",
+      "coordinates": {
+        "latitude": 19.08400264,
+        "longitude": -98.2151699
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/12272317",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "6272943",
+      "source_record_ids": [
+        "6272943"
+      ],
+      "source_record_hashes": [
+        "a6760f61bd26153b3946a9e1a3ed2b570b315579f9c123605889788d0b1afeee"
+      ],
+      "record_hash": "a6760f61bd26153b3946a9e1a3ed2b570b315579f9c123605889788d0b1afeee",
+      "name": "LABORATORIOS GUADALUPE DE PUEBLA",
+      "legal_name": "LABORATORIO GUADALUPE DE PUEBLA",
+      "coordinates": {
+        "latitude": 19.03447274,
+        "longitude": -98.19141983
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6272943",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "7908918",
+      "source_record_ids": [
+        "7908918"
+      ],
+      "source_record_hashes": [
+        "20a51035f8f8f6ebcfe16d8d6485a0d5a987da1e77bdbc8c8d2260e9d3455858"
+      ],
+      "record_hash": "20a51035f8f8f6ebcfe16d8d6485a0d5a987da1e77bdbc8c8d2260e9d3455858",
+      "name": "LABORATORIOS ITALO GAYA",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.032225,
+        "longitude": -98.21549562
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/7908918",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3407460",
+      "source_record_ids": [
+        "3407460"
+      ],
+      "source_record_hashes": [
+        "b554ee55cbcd7ea5ae05221261228dfdbc1416facb1214097c4bc35ee0c02a67"
+      ],
+      "record_hash": "b554ee55cbcd7ea5ae05221261228dfdbc1416facb1214097c4bc35ee0c02a67",
+      "name": "LABORATORIOS ITALO GAYA CAPELLINI",
+      "legal_name": "LABORATORIOS ITALO GAYA CAPELLINI",
+      "coordinates": {
+        "latitude": 19.0416795,
+        "longitude": -98.21164775
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3407460",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3256230",
+      "source_record_ids": [
+        "3256230"
+      ],
+      "source_record_hashes": [
+        "92af8c5ffb4ce90ebc1708a960ff47ad4a8c05be1c00b0dba353e94f7bcc291d"
+      ],
+      "record_hash": "92af8c5ffb4ce90ebc1708a960ff47ad4a8c05be1c00b0dba353e94f7bcc291d",
+      "name": "LABORATORIOS JIRIS",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.07075275,
+        "longitude": -98.18952149
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3256230",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "8150681",
+      "source_record_ids": [
+        "8150681"
+      ],
+      "source_record_hashes": [
+        "dd31eef8cfb6dd5cfa7281562b28124717cbe818fa2c8c4f29592f9d990e82ec"
+      ],
+      "record_hash": "dd31eef8cfb6dd5cfa7281562b28124717cbe818fa2c8c4f29592f9d990e82ec",
+      "name": "LABORATORIOS JORDAN",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.0171698,
+        "longitude": -98.20748047
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/8150681",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "8656872",
+      "source_record_ids": [
+        "8656872"
+      ],
+      "source_record_hashes": [
+        "ee4f9ee41dd1de9aa3f809843cd295e43361c3379b5f91b1306d9ff36e7c318b"
+      ],
+      "record_hash": "ee4f9ee41dd1de9aa3f809843cd295e43361c3379b5f91b1306d9ff36e7c318b",
+      "name": "LABORATORIOS LACOCS",
+      "legal_name": "LABORATORIOS DE CONTROL DE CALIDAD Y SUPERVISION",
+      "coordinates": {
+        "latitude": 19.07076142,
+        "longitude": -98.21140976
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/8656872",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3406919",
+      "source_record_ids": [
+        "3406919"
+      ],
+      "source_record_hashes": [
+        "e90d7b23c2a726666463b3f397385fa8fa2848bdbba2a3c61da3450e280ce511"
+      ],
+      "record_hash": "e90d7b23c2a726666463b3f397385fa8fa2848bdbba2a3c61da3450e280ce511",
+      "name": "LABORATORIOS MEDICOS Y DE DIAGNOSTICO DEL SECTOR PRIVADO SIN NOMBRE",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.04129262,
+        "longitude": -98.21794145
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3406919",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3256251",
+      "source_record_ids": [
+        "3256251"
+      ],
+      "source_record_hashes": [
+        "8c9103a19d92c16c1f40fed604c0867a7727a4fc36f05387cc53efc2c26b5adb"
+      ],
+      "record_hash": "8c9103a19d92c16c1f40fed604c0867a7727a4fc36f05387cc53efc2c26b5adb",
+      "name": "LABORATORIOS PUEBLA",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.06961972,
+        "longitude": -98.1898575
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3256251",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "6377846",
+      "source_record_ids": [
+        "6377846"
+      ],
+      "source_record_hashes": [
+        "6e8485f8c6dabd34b6e4f516dccc07e24f68d5b0e2cd42aafd887841f278068c"
+      ],
+      "record_hash": "6e8485f8c6dabd34b6e4f516dccc07e24f68d5b0e2cd42aafd887841f278068c",
+      "name": "LABORATORIOS SEMIN SIGLO XXI",
+      "legal_name": "SEMIN SIGLO XXI",
+      "coordinates": {
+        "latitude": 19.02901389,
+        "longitude": -98.20017403
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6377846",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "6377849",
+      "source_record_ids": [
+        "6377849"
+      ],
+      "source_record_hashes": [
+        "68a26f5f31b31d722685faf18f04d2f7f9a7aca5df2b031bc6e087232d4ddafd"
+      ],
+      "record_hash": "68a26f5f31b31d722685faf18f04d2f7f9a7aca5df2b031bc6e087232d4ddafd",
+      "name": "LABORATORIOS SEMIN SIGLO XXI",
+      "legal_name": "SEMIN SIGLO XXI",
+      "coordinates": {
+        "latitude": 19.05081841,
+        "longitude": -98.1678095
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6377849",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "6378322",
+      "source_record_ids": [
+        "6378322"
+      ],
+      "source_record_hashes": [
+        "6c40cf7b1ce170ed1802d915201ed7353fc36d3a1bc481fb748dadddc9fe4ed2"
+      ],
+      "record_hash": "6c40cf7b1ce170ed1802d915201ed7353fc36d3a1bc481fb748dadddc9fe4ed2",
+      "name": "LABORATORIOS SEMIN SIGLO XXI",
+      "legal_name": "SEMIN SIGLO XXI",
+      "coordinates": {
+        "latitude": 19.03698935,
+        "longitude": -98.21425546
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6378322",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "6380438",
+      "source_record_ids": [
+        "6380438"
+      ],
+      "source_record_hashes": [
+        "94050aac63eae65b6a5f033a107000cca8ffe8709257f67da1ca50646c439bc8"
+      ],
+      "record_hash": "94050aac63eae65b6a5f033a107000cca8ffe8709257f67da1ca50646c439bc8",
+      "name": "LABORATORIOS SEMIN SIGLO XXI",
+      "legal_name": "SEMIN SIGLO XXI",
+      "coordinates": {
+        "latitude": 19.01359459,
+        "longitude": -98.19288906
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6380438",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3255726",
+      "source_record_ids": [
+        "3255726"
+      ],
+      "source_record_hashes": [
+        "afeae6364e6cc7b6bb1b3632aa8da94af2bb5b5f282b0e33465953c111eed64c"
+      ],
+      "record_hash": "afeae6364e6cc7b6bb1b3632aa8da94af2bb5b5f282b0e33465953c111eed64c",
+      "name": "LABORATORIOS ULTRALAB",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.07249149,
+        "longitude": -98.21091353
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3255726",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "10598243",
+      "source_record_ids": [
+        "10598243"
+      ],
+      "source_record_hashes": [
+        "c1400e6147629b791ce42b75a70bd995be2bd9fd0b34031a7ee90f2c95dfcc91"
+      ],
+      "record_hash": "c1400e6147629b791ce42b75a70bd995be2bd9fd0b34031a7ee90f2c95dfcc91",
+      "name": "LABORATORIOS XONACA XPRESS",
+      "legal_name": "LABORATORIOS XONACA XPRESS",
+      "coordinates": {
+        "latitude": 19.03066767,
+        "longitude": -98.19537616
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/10598243",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "10895483",
+      "source_record_ids": [
+        "10895483"
+      ],
+      "source_record_hashes": [
+        "04b8ad0109b141bc5ea1efaf41fbdcb949a411bfcc2bb67b61c582449ce111e8"
+      ],
+      "record_hash": "04b8ad0109b141bc5ea1efaf41fbdcb949a411bfcc2bb67b61c582449ce111e8",
+      "name": "LABORATORIOS Y ANALISIS CLINICOS DEL CARMEN",
+      "legal_name": "SUTIDORA MEDICA DEL CARMEN",
+      "coordinates": {
+        "latitude": 19.04094764,
+        "longitude": -98.21029565
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/10895483",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "7596394",
+      "source_record_ids": [
+        "7596394"
+      ],
+      "source_record_hashes": [
+        "c6be181cc74007792dccef988f810fc73aa057cd0cdf4680517ddc2d5d536540"
+      ],
+      "record_hash": "c6be181cc74007792dccef988f810fc73aa057cd0cdf4680517ddc2d5d536540",
+      "name": "LEDH LABORATORIO DE ESPECIALIDADES Y DIAGNOSTICOS EN HEMATOLOGIA",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.08090778,
+        "longitude": -98.21008866
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/7596394",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "10160302",
+      "source_record_ids": [
+        "10160302"
+      ],
+      "source_record_hashes": [
+        "1cebe5c5d699fc5a7fd2c86589d0567a53d4723bf7efae254a7540f2c4a0f592"
+      ],
+      "record_hash": "1cebe5c5d699fc5a7fd2c86589d0567a53d4723bf7efae254a7540f2c4a0f592",
+      "name": "LINVEC",
+      "legal_name": "LINVEC",
+      "coordinates": {
+        "latitude": 19.05491543,
+        "longitude": -98.22993534
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/10160302",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "10869696",
+      "source_record_ids": [
+        "10869696"
+      ],
+      "source_record_hashes": [
+        "cbdd25324a39131087802858c3c7a6b260380da67728fb4cafbe66d8ab5c4322"
+      ],
+      "record_hash": "cbdd25324a39131087802858c3c7a6b260380da67728fb4cafbe66d8ab5c4322",
+      "name": "MEDICINA Y LABORATORIO",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.03387544,
+        "longitude": -98.19000936
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/10869696",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "8800952",
+      "source_record_ids": [
+        "8800952"
+      ],
+      "source_record_hashes": [
+        "53fcbcc3c95eca2f377f28a38436f910455873353bd665effa4c01fd02ea21e1"
+      ],
+      "record_hash": "53fcbcc3c95eca2f377f28a38436f910455873353bd665effa4c01fd02ea21e1",
+      "name": "MEDICO RADIOLOGO",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.044513,
+        "longitude": -98.22861703
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/8800952",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "10336249",
+      "source_record_ids": [
+        "10336249"
+      ],
+      "source_record_hashes": [
+        "2c815433ca05bfa642c0ef102155d86b3046dd9cc198bc9ed9ba01efdacb206b"
+      ],
+      "record_hash": "2c815433ca05bfa642c0ef102155d86b3046dd9cc198bc9ed9ba01efdacb206b",
+      "name": "MICROLAB",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.02180761,
+        "longitude": -98.21148956
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/10336249",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "10841077",
+      "source_record_ids": [
+        "10841077"
+      ],
+      "source_record_hashes": [
+        "60d5586c772707c21d86c978d3db5526303510cf55cb92c8091fcb74b5a33b4f"
+      ],
+      "record_hash": "60d5586c772707c21d86c978d3db5526303510cf55cb92c8091fcb74b5a33b4f",
+      "name": "OFICINAS LINFOLAB",
+      "legal_name": "OFICINAS LINFOLAB",
+      "coordinates": {
+        "latitude": 19.05166025,
+        "longitude": -98.21270984
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/10841077",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3459594",
+      "source_record_ids": [
+        "3459594"
+      ],
+      "source_record_hashes": [
+        "7191df110fb53cde52b17287bfc2703bccf3302c9e2ad9a97c6d9d7fa789c660"
+      ],
+      "record_hash": "7191df110fb53cde52b17287bfc2703bccf3302c9e2ad9a97c6d9d7fa789c660",
+      "name": "OMEGA IMAGEN Y LABORATORIO",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.03399888,
+        "longitude": -98.18581899
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3459594",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "11732482",
+      "source_record_ids": [
+        "11732482"
+      ],
+      "source_record_hashes": [
+        "70b28eacf2013a6e102f75b4e427b608677355c248f2f243df1d9abbf5dd3670"
+      ],
+      "record_hash": "70b28eacf2013a6e102f75b4e427b608677355c248f2f243df1d9abbf5dd3670",
+      "name": "OPTICA CARE",
+      "legal_name": "ESTUDIOS PARA LA SALUD OCUPACIONAL",
+      "coordinates": {
+        "latitude": 19.04189335,
+        "longitude": -98.23098556
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/11732482",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "8150259",
+      "source_record_ids": [
+        "8150259"
+      ],
+      "source_record_hashes": [
+        "e5041e845f619c2987d3b3a77950e0a85ae3badbf484dc43db6f528e1d493f72"
+      ],
+      "record_hash": "e5041e845f619c2987d3b3a77950e0a85ae3badbf484dc43db6f528e1d493f72",
+      "name": "PAEZ LABORATORIOS",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.03872094,
+        "longitude": -98.21311888
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/8150259",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3421988",
+      "source_record_ids": [
+        "3421988"
+      ],
+      "source_record_hashes": [
+        "2422b0409f4c32e15a724501dda286c60b626687e7beee7aec7949ade12504ed"
+      ],
+      "record_hash": "2422b0409f4c32e15a724501dda286c60b626687e7beee7aec7949ade12504ed",
+      "name": "PATOLOGO",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.01722171,
+        "longitude": -98.19553315
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3421988",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "6378625",
+      "source_record_ids": [
+        "6378625"
+      ],
+      "source_record_hashes": [
+        "cc9a63ce553aabe899e860b50db25235be120d3f890b20e9be26a68d13c2a058"
+      ],
+      "record_hash": "cc9a63ce553aabe899e860b50db25235be120d3f890b20e9be26a68d13c2a058",
+      "name": "PUEBLA 1 1",
+      "legal_name": "SISTEMAS DE SALUD DEL DR SIMI",
+      "coordinates": {
+        "latitude": 19.04812804,
+        "longitude": -98.19602752
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6378625",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "6378623",
+      "source_record_ids": [
+        "6378623"
+      ],
+      "source_record_hashes": [
+        "16e178d0295d64c93eae1584f709e4bb0ecedfc12cc08a4ef4d6ab58d4bade51"
+      ],
+      "record_hash": "16e178d0295d64c93eae1584f709e4bb0ecedfc12cc08a4ef4d6ab58d4bade51",
+      "name": "PUEBLA 3 5",
+      "legal_name": "SISTEMAS DE SALUD DEL DR SIMI",
+      "coordinates": {
+        "latitude": 19.01342049,
+        "longitude": -98.19293787
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6378623",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "6378619",
+      "source_record_ids": [
+        "6378619"
+      ],
+      "source_record_hashes": [
+        "cbb711785a10d0831146d5cc1fdbcc1c4ad0eebbb6196981f6ff38e5df741aae"
+      ],
+      "record_hash": "cbb711785a10d0831146d5cc1fdbcc1c4ad0eebbb6196981f6ff38e5df741aae",
+      "name": "PUEBLA 6 2",
+      "legal_name": "SISTEMAS DE SALUD DEL DR SIMI",
+      "coordinates": {
+        "latitude": 19.03890466,
+        "longitude": -98.21133564
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6378619",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "11443209",
+      "source_record_ids": [
+        "11443209"
+      ],
+      "source_record_hashes": [
+        "712793f24067955a3a89c9e3d8f4b8b81481aa2381bb1fb6ae21141b11323fda"
+      ],
+      "record_hash": "712793f24067955a3a89c9e3d8f4b8b81481aa2381bb1fb6ae21141b11323fda",
+      "name": "RADIOGRAFIAS IMAGEN DENTAL",
+      "legal_name": "DIANA SOSA",
+      "coordinates": {
+        "latitude": 19.02215784,
+        "longitude": -98.1962159
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/11443209",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3362076",
+      "source_record_ids": [
+        "3362076"
+      ],
+      "source_record_hashes": [
+        "67be4f321fb1b314d7d221fd73fc66bb00131312245467c2acb7b9d3db38347e"
+      ],
+      "record_hash": "67be4f321fb1b314d7d221fd73fc66bb00131312245467c2acb7b9d3db38347e",
+      "name": "RAYOS X GUADALUPE",
+      "legal_name": "RAYOS X GUADALUPE SA DE CV",
+      "coordinates": {
+        "latitude": 19.03446481,
+        "longitude": -98.19116518
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3362076",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "10683189",
+      "source_record_ids": [
+        "10683189"
+      ],
+      "source_record_hashes": [
+        "61a17e4f3f21d8c408fc5bcbf7d99770b115814005ff072c09d0db7fd2a039c0"
+      ],
+      "record_hash": "61a17e4f3f21d8c408fc5bcbf7d99770b115814005ff072c09d0db7fd2a039c0",
+      "name": "RELEVANT LAB DIAGNOSTICO CLINICO",
+      "legal_name": "RELEVANT LAB DIAGNOSTICO CLINICO",
+      "coordinates": {
+        "latitude": 19.03276774,
+        "longitude": -98.19445511
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/10683189",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "11001488",
+      "source_record_ids": [
+        "11001488"
+      ],
+      "source_record_hashes": [
+        "165ab65bbb59ba8fbce03fbb432eba69be01f9ae3782e4a260663bb1425b9b0b"
+      ],
+      "record_hash": "165ab65bbb59ba8fbce03fbb432eba69be01f9ae3782e4a260663bb1425b9b0b",
+      "name": "RIEX RADIOLOGIA DENTAL",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.03508416,
+        "longitude": -98.22496251
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/11001488",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "6378437",
+      "source_record_ids": [
+        "6378437"
+      ],
+      "source_record_hashes": [
+        "3e971756662b376bed2f13637a5b802b74c213ace4b65e27443a7153001db5c5"
+      ],
+      "record_hash": "3e971756662b376bed2f13637a5b802b74c213ace4b65e27443a7153001db5c5",
+      "name": "SEMIN LABORATORIOS MEDICOS",
+      "legal_name": "SEMIN SIGLO XXI",
+      "coordinates": {
+        "latitude": 19.03717681,
+        "longitude": -98.21450148
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6378437",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "6380439",
+      "source_record_ids": [
+        "6380439"
+      ],
+      "source_record_hashes": [
+        "9bdb6c56a7f927e2fa589c80f012ae496ee5e0d939bc6987deef1aa527ed59de"
+      ],
+      "record_hash": "9bdb6c56a7f927e2fa589c80f012ae496ee5e0d939bc6987deef1aa527ed59de",
+      "name": "SEMIN LABORATORIOS MEDICOS",
+      "legal_name": "SEMIN SIGLO XXI",
+      "coordinates": {
+        "latitude": 19.05959111,
+        "longitude": -98.21817311
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6380439",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "6727552",
+      "source_record_ids": [
+        "6727552"
+      ],
+      "source_record_hashes": [
+        "b2c4dc1c3d5fba855d5d8bf7d408ed618188a153e3918967a75bfb550a706356"
+      ],
+      "record_hash": "b2c4dc1c3d5fba855d5d8bf7d408ed618188a153e3918967a75bfb550a706356",
+      "name": "SEMIN LABORATORIOS MEDICOS",
+      "legal_name": "SEMIN SIGLO XXI",
+      "coordinates": {
+        "latitude": 19.01174872,
+        "longitude": -98.18653371
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/6727552",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3352102",
+      "source_record_ids": [
+        "3352102"
+      ],
+      "source_record_hashes": [
+        "e3ffe63f6376b190d8e15938ca33633e00ff0e229f38d9cc1264c9182dd422a1"
+      ],
+      "record_hash": "e3ffe63f6376b190d8e15938ca33633e00ff0e229f38d9cc1264c9182dd422a1",
+      "name": "SERVICIO DE TOMOGRAFIA HUMBOLDT",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.04575353,
+        "longitude": -98.17868775
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3352102",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3346931",
+      "source_record_ids": [
+        "3346931"
+      ],
+      "source_record_hashes": [
+        "3ef946dba51789894a4a4109635d89bfb5a3f66b9bcfd54e1dbe17d614d30f78"
+      ],
+      "record_hash": "3ef946dba51789894a4a4109635d89bfb5a3f66b9bcfd54e1dbe17d614d30f78",
+      "name": "SIEMSO",
+      "legal_name": "SERVICIOS INTEGRALES Y ESTUDIOS MEDICOS EN SALUD OCUPACIONAL",
+      "coordinates": {
+        "latitude": 19.07309696,
+        "longitude": -98.20443832
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3346931",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "8801390",
+      "source_record_ids": [
+        "8801390"
+      ],
+      "source_record_hashes": [
+        "913f218429984da8fc9f59cc631778ad3e5777ed43e028bb3aa1b40d776fdaf0"
+      ],
+      "record_hash": "913f218429984da8fc9f59cc631778ad3e5777ed43e028bb3aa1b40d776fdaf0",
+      "name": "SUVEX CENTRO RADIOLOGICO DENTAL",
+      "legal_name": "SOCIEDAD SUVEXE",
+      "coordinates": {
+        "latitude": 19.03904791,
+        "longitude": -98.24176655
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/8801390",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "12272197",
+      "source_record_ids": [
+        "12272197"
+      ],
+      "source_record_hashes": [
+        "8aff2343c01f39c8ac40cfafc4d6b496b1ac6d73e5237f3bc52f92015b847b59"
+      ],
+      "record_hash": "8aff2343c01f39c8ac40cfafc4d6b496b1ac6d73e5237f3bc52f92015b847b59",
+      "name": "SVEIKA RX CENTRO DE RADIOLOGIA DENTAL",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.03105343,
+        "longitude": -98.18941294
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/12272197",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3436637",
+      "source_record_ids": [
+        "3436637"
+      ],
+      "source_record_hashes": [
+        "97070ff90bb2675e6fe04ac14c46ec0528153cb0b312a5f13322ee7bb4b0594c"
+      ],
+      "record_hash": "97070ff90bb2675e6fe04ac14c46ec0528153cb0b312a5f13322ee7bb4b0594c",
+      "name": "T0MA DE MUESTRAS PARA ANALISIS CLINICOS",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.05399994,
+        "longitude": -98.16720837
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3436637",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3366771",
+      "source_record_ids": [
+        "3366771"
+      ],
+      "source_record_hashes": [
+        "5952436318de84563910f7fb5ad8d897a47d768299555bc54e494510361d3e96"
+      ],
+      "record_hash": "5952436318de84563910f7fb5ad8d897a47d768299555bc54e494510361d3e96",
+      "name": "TOMA DE MUESTRAS LABORATORIO CLINICO PIEDAD LAB",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.01797456,
+        "longitude": -98.19911105
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3366771",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "3410829",
+      "source_record_ids": [
+        "3410829"
+      ],
+      "source_record_hashes": [
+        "8993a5e681ca43e18ce75f32c4588a6fc08899fb46b155151409aead4d133c83"
+      ],
+      "record_hash": "8993a5e681ca43e18ce75f32c4588a6fc08899fb46b155151409aead4d133c83",
+      "name": "ULTRASONIDO 4D Y COLOR",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.03492186,
+        "longitude": -98.2032607
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/3410829",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "7852251",
+      "source_record_ids": [
+        "7852251"
+      ],
+      "source_record_hashes": [
+        "dfd82cc5750bc51299b2dabf3661ad6ad76cf1868c524b18bd07ae0819ff8603"
+      ],
+      "record_hash": "dfd82cc5750bc51299b2dabf3661ad6ad76cf1868c524b18bd07ae0819ff8603",
+      "name": "ULTRASONIDO DIAGNOSTICO DOPPLER DE COLOR",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.04250076,
+        "longitude": -98.20844034
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/7852251",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "8774237",
+      "source_record_ids": [
+        "8774237"
+      ],
+      "source_record_hashes": [
+        "b4c3ea32f8f97aaa1a7d7272c25bda42c6549ee5e915ce26f394331515c2c426"
+      ],
+      "record_hash": "b4c3ea32f8f97aaa1a7d7272c25bda42c6549ee5e915ce26f394331515c2c426",
+      "name": "ULTRASONIDO PUEBLA",
+      "legal_name": "GABINETE ULTRASONOGRAFICO",
+      "coordinates": {
+        "latitude": 19.02756896,
+        "longitude": -98.23168846
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/8774237",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "10000692",
+      "source_record_ids": [
+        "10000692"
+      ],
+      "source_record_hashes": [
+        "623e99042eb9729c52c2db2c5d976b0594c5a67e7ffdb46c9edaff93737aacc8"
+      ],
+      "record_hash": "623e99042eb9729c52c2db2c5d976b0594c5a67e7ffdb46c9edaff93737aacc8",
+      "name": "ULTRASONIDO SIN NOMBRE",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.04540036,
+        "longitude": -98.17884456
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/10000692",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "11493387",
+      "source_record_ids": [
+        "11493387"
+      ],
+      "source_record_hashes": [
+        "03ce4469a5060fc2e3c2826de375fc0b857a6a4a11b29a154f3607164a347b5d"
+      ],
+      "record_hash": "03ce4469a5060fc2e3c2826de375fc0b857a6a4a11b29a154f3607164a347b5d",
+      "name": "ULTRASONIDO SIN NOMBRE",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.04164436,
+        "longitude": -98.21166888
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/11493387",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "12272198",
+      "source_record_ids": [
+        "12272198"
+      ],
+      "source_record_hashes": [
+        "3e8a61db082a87df3662aa39569bf731318a81ec558bab7dec7d90c93ace5b0b"
+      ],
+      "record_hash": "3e8a61db082a87df3662aa39569bf731318a81ec558bab7dec7d90c93ace5b0b",
+      "name": "ULTRASONIDO Y DOPPLER",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.0243212,
+        "longitude": -98.22387414
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/12272198",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "12272155",
+      "source_record_ids": [
+        "12272155"
+      ],
+      "source_record_hashes": [
+        "496d31b6fc26bd509fbb5e5404bf3b8108b7779e544808246eca590524bfedbd"
+      ],
+      "record_hash": "496d31b6fc26bd509fbb5e5404bf3b8108b7779e544808246eca590524bfedbd",
+      "name": "ULTRASONIDOS FARRED",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.07858935,
+        "longitude": -98.18214801
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/12272155",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "8279531",
+      "source_record_ids": [
+        "8279531"
+      ],
+      "source_record_hashes": [
+        "e6d1fdf8dfc2b9ac3e61e8c66088d8866bdf89ad792f8681bbacb1f706eff0b4"
+      ],
+      "record_hash": "e6d1fdf8dfc2b9ac3e61e8c66088d8866bdf89ad792f8681bbacb1f706eff0b4",
+      "name": "UNIDAD DE ULTRA SONIDO MEDICO",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.03351625,
+        "longitude": -98.21419554
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/8279531",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "9162066",
+      "source_record_ids": [
+        "9162066"
+      ],
+      "source_record_hashes": [
+        "e02519cbb5468ca762a9cf9a6825fa169ba247daa41fee6f25521f50753f7599"
+      ],
+      "record_hash": "e02519cbb5468ca762a9cf9a6825fa169ba247daa41fee6f25521f50753f7599",
+      "name": "UNIDAD INTEGRAL DE ESPECIALIDADES MEDICO RADIOLOGO",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.03471988,
+        "longitude": -98.19090134
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/9162066",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "10620203",
+      "source_record_ids": [
+        "10620203"
+      ],
+      "source_record_hashes": [
+        "83a48705d96ea691b907a5cfbc4afa218258b8e3885dffa1afb2ca5d746adbd4"
+      ],
+      "record_hash": "83a48705d96ea691b907a5cfbc4afa218258b8e3885dffa1afb2ca5d746adbd4",
+      "name": "VERTENLAB",
+      "legal_name": "IMAGEN DIAGNOSTICA MEDICA",
+      "coordinates": {
+        "latitude": 19.03847133,
+        "longitude": -98.21944141
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/10620203",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "11185784",
+      "source_record_ids": [
+        "11185784"
+      ],
+      "source_record_hashes": [
+        "129fa903b997b61df8a6bdbed4139e0828404d2e5763488e0dd9ff9fa7a28d3b"
+      ],
+      "record_hash": "129fa903b997b61df8a6bdbed4139e0828404d2e5763488e0dd9ff9fa7a28d3b",
+      "name": "VIBA ENDESCOPIA",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.02756896,
+        "longitude": -98.23168846
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/11185784",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "10763811",
+      "source_record_ids": [
+        "10763811"
+      ],
+      "source_record_hashes": [
+        "5a047101fdca3fa8acafcb09e2c42865fba57c9b282f9ba0915708784be3eae5"
+      ],
+      "record_hash": "5a047101fdca3fa8acafcb09e2c42865fba57c9b282f9ba0915708784be3eae5",
+      "name": "VISION RADIOLOGICA",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.02756896,
+        "longitude": -98.23168846
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/10763811",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    },
+    {
+      "external_record_id": "9841841",
+      "source_record_ids": [
+        "9841841"
+      ],
+      "source_record_hashes": [
+        "84f24c63258fb30b87e84836910dca597db34e83c90123996ff92cd46e787b7f"
+      ],
+      "record_hash": "84f24c63258fb30b87e84836910dca597db34e83c90123996ff92cd46e787b7f",
+      "name": "VIVE LABORATORIOS DE ANALISIS CLINICOS",
+      "legal_name": "",
+      "coordinates": {
+        "latitude": 19.06376964,
+        "longitude": -98.23271788
+      },
+      "source_url": "https://www.inegi.org.mx/app/api/denue/v1/consulta/Ficha/9841841",
+      "brand_match": null,
+      "status": "unmatched",
+      "reason": "No known provider brand signal in DENUE"
+    }
+  ]
+}

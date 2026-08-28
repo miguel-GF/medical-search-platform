@@ -111,6 +111,21 @@ coincidencias de marca son unicamente una senal de identidad; los alias
 abreviados (por ejemplo `L.R.`) requieren revision y no crean proveedores
 canonicos automaticamente.
 
+Para cruzar esos candidatos contra artefactos de sucursales ya recolectados:
+
+```powershell
+python database/scripts/match_denue_locations.py `
+  --candidates database/fixtures/denue_candidates_puebla_v1.json `
+  --provider-artifact chopo=collectors/artifacts/live/chopo-puebla/<run-id> `
+  --provider-artifact ruiz=collectors/artifacts/live/ruiz-puebla/<run-id> `
+  --provider-artifact salud_digna=collectors/artifacts/live/salud-digna-puebla/<run-id> `
+  --output database/fixtures/denue_location_matches_puebla_v1.json
+```
+
+El matcher exige marca explÃ­cita, cercanÃ­a geogrÃ¡fica y coincidencia de
+sucursal/cÃ³digo postal para un enlace automÃ¡tico. Si falta la fuente de
+sucursales o el nombre es ambiguo, el resultado queda en `review_queue`.
+
 ## Gate A coverage report
 
 El reporte es de solo lectura y resume cobertura comparable, precios vigentes,
