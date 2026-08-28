@@ -1,0 +1,76 @@
+{
+  "version": "clinical-provider-mappings-v1",
+  "policy": "Only reviewed exact normalized provider labels are published to canonical clinical concepts; panel variants remain unmapped until composition is verified.",
+  "mappings": [
+    {
+      "source_key": "chopo_puebla",
+      "provider_key": "chopo",
+      "external_record_id": "17002",
+      "catalog_item_id": "00000000-0000-0000-0000-000000001103",
+      "provider_alias": "BIOMETRÍA HEMÁTICA",
+      "observed_label": "BIOMETRÍA HEMÁTICA",
+      "method": "manual",
+      "reason": "Exact official Chopo label for the reviewed Biometría hemática concept."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "provider_key": "chopo",
+      "external_record_id": "23006",
+      "catalog_item_id": "00000000-0000-0000-0000-000000001104",
+      "provider_alias": "EXAMEN GENERAL DE ORINA",
+      "observed_label": "EXAMEN GENERAL DE ORINA",
+      "method": "manual",
+      "reason": "Exact official Chopo label for the reviewed Examen general de orina concept."
+    },
+    {
+      "source_key": "salud_digna_puebla",
+      "provider_key": "salud_digna",
+      "external_record_id": "332:888346",
+      "catalog_item_id": "00000000-0000-0000-0000-000000001103",
+      "provider_alias": "BIOMETRIA HEMATICA",
+      "observed_label": "BIOMETRIA HEMATICA",
+      "method": "manual",
+      "reason": "Exact official Salud Digna label for the reviewed Biometría hemática concept."
+    },
+    {
+      "source_key": "salud_digna_puebla",
+      "provider_key": "salud_digna",
+      "external_record_id": "332:888385",
+      "catalog_item_id": "00000000-0000-0000-0000-000000001104",
+      "provider_alias": "EXAMEN GENERAL DE ORINA",
+      "observed_label": "EXAMEN GENERAL DE ORINA",
+      "method": "manual",
+      "reason": "Exact official Salud Digna label for the reviewed Examen general de orina concept."
+    },
+    {
+      "source_key": "salud_digna_puebla",
+      "provider_key": "salud_digna",
+      "external_record_id": "332:888410",
+      "catalog_item_id": "00000000-0000-0000-0000-000000001109",
+      "provider_alias": "GLUCOSA",
+      "observed_label": "GLUCOSA",
+      "method": "manual",
+      "reason": "Exact official Salud Digna label for the reviewed Glucosa concept."
+    },
+    {
+      "source_key": "salud_digna_puebla",
+      "provider_key": "salud_digna",
+      "external_record_id": "332:888373",
+      "catalog_item_id": "00000000-0000-0000-0000-000000001110",
+      "provider_alias": "CREATININA",
+      "observed_label": "CREATININA",
+      "method": "manual",
+      "reason": "Exact official Salud Digna label for the reviewed Creatinina concept."
+    },
+    {
+      "source_key": "salud_digna_puebla",
+      "provider_key": "salud_digna",
+      "external_record_id": "332:888472",
+      "catalog_item_id": "00000000-0000-0000-0000-000000001111",
+      "provider_alias": "TSH",
+      "observed_label": "TSH",
+      "method": "manual",
+      "reason": "Exact official Salud Digna label for the reviewed TSH concept."
+    }
+  ]
+}
