@@ -193,6 +193,35 @@ python database/scripts/report_generic_coverage.py `
   --denue-source-records 489
 ```
 
+### Revision de labels genericos pendientes
+
+La corrida hardened descubrio 48 ofertas: cuatro tienen mapping exacto
+publicado y 44 siguen pendientes. La cola versionada vive en
+`database/fixtures/generic_provider_review_puebla_v1.json`; no contiene
+aprobaciones. Cada label queda en una de estas clases: `reject_noise`,
+`category_not_service`, `ambiguous_modality`, `ambiguous_panel`,
+`new_concept_candidate` o `possible_alias`.
+
+El builder exige una decision para cada registro no mapeado y falla cerrado si
+aparece un label nuevo, desaparece evidencia esperada o una decision intenta
+publicar. El reporte conserva el id externo, proveedor, host, URL y metodo de
+evidencia para que la revision clinica sea reproducible:
+
+```powershell
+python database/scripts/build_generic_review.py `
+  --artifact-root collectors/artifacts/puebla-generic-depth1-hardened `
+  --manifest collectors/artifacts/puebla-generic-depth1-hardened/puebla_generic_discovery_manifest.json `
+  --mapping-fixture database/fixtures/generic_provider_mappings_puebla_v1.json `
+  --review-fixture database/fixtures/generic_provider_review_puebla_v1.json `
+  --output collectors/artifacts/generic-next/generic_review_report.json
+```
+
+En esta revision quedan 19 candidatos de concepto nuevo, ocho modalidades
+ambiguas, cuatro paneles ambiguos, ocho categorias/no-servicios, cuatro textos
+de ruido y un posible alias. Ninguno se publica sin composicion o validacion
+clinica; en particular, no se convierte una etiqueta amplia en una oferta
+canonica mediante fuzzy matching.
+
 ## Gate A coverage report
 
 El reporte es de solo lectura y resume cobertura comparable, precios vigentes,

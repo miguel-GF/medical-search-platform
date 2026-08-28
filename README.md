@@ -18,7 +18,7 @@ Consulta el detalle y los comandos reproducibles en [docs/03_REVISION_INTEGRACIO
 - Collectors Chopo/Ruiz/Salud Digna/DENUE (fixtures, pruebas y corridas live reproducibles), Search API V1 y Admin V1: implementados y probados. Chopo, Ruiz, Salud Digna y DENUE están publicados en Supabase DEV. El gate remoto, los invariantes de base, la API pública y la cuarentena de colectores pasan; no se inicia Flutter hasta un nuevo corte de producto.
 - Collector genérico de proveedores: discovery acotado por dominio, respeto de robots.txt, JSON-LD/patrones de precio-servicio y evidencia candidata para laboratorios pequeños.
 - Fan-out de discovery Puebla: agrupa los sitios web declarados por DENUE y conserva el vínculo de cada host con sus candidatos para medir cobertura sin captura manual.
-- Publicación genérica revisada: cuatro coincidencias exactas enlazadas a siete sedes DENUE; el resto permanece en revisión y los reintentos sólo cubren fallos transitorios.
+- Publicación genérica revisada: cuatro coincidencias exactas enlazadas a siete sedes DENUE; 44 ofertas restantes tienen una cola de revisión auditable y no publicable. Los reintentos sólo cubren fallos transitorios.
 
 ## Repositorio
 

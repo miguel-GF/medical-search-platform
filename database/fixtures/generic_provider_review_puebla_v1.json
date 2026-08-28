@@ -1,0 +1,386 @@
+{
+  "version": "generic-provider-review-puebla-v1",
+  "policy": "Every unmapped generic offer stays pending. No classification in this fixture publishes an offer or invents a canonical catalog item.",
+  "decisions": [
+    {
+      "source_key": "generic_clinicadediagnostico_com",
+      "label_key": "unidad de radiologia especializada a precios accesibles",
+      "expected_record_count": 2,
+      "classification": "reject_noise",
+      "review_status": "pending",
+      "publish": false,
+      "action": "do_not_publish",
+      "reason": "Marketing and location positioning text; it does not identify one billable clinical study."
+    },
+    {
+      "source_key": "generic_exakta_mx",
+      "label_key": "realizamos mas de 1 200 estudios de laboratorio",
+      "expected_record_count": 1,
+      "classification": "reject_noise",
+      "review_status": "pending",
+      "publish": false,
+      "action": "do_not_publish",
+      "reason": "Aggregate marketing claim with no study name, analyte set or clinical scope."
+    },
+    {
+      "source_key": "generic_familylabs_com_mx",
+      "label_key": "antigeno covid prueba rapida de influenza",
+      "expected_record_count": 1,
+      "classification": "ambiguous_panel",
+      "review_status": "pending",
+      "publish": false,
+      "action": "request_verified_components",
+      "reason": "Combines two tests; the specimen, analytes, methodology and whether it is one package are not verified."
+    },
+    {
+      "source_key": "generic_familylabs_com_mx",
+      "label_key": "electrocardiograma con interpretacion",
+      "expected_record_count": 1,
+      "classification": "new_concept_candidate",
+      "review_status": "pending",
+      "publish": false,
+      "action": "create_canonical_concept_after_clinical_review",
+      "reason": "Likely a real ECG service, but interpretation is an added scope and no exact canonical concept is currently approved."
+    },
+    {
+      "source_key": "generic_familylabs_com_mx",
+      "label_key": "quimica sanguinea completa",
+      "expected_record_count": 1,
+      "classification": "ambiguous_panel",
+      "review_status": "pending",
+      "publish": false,
+      "action": "request_verified_components",
+      "reason": "Panel name does not define the analytes or distinguish the approved basic and extended chemistry concepts."
+    },
+    {
+      "source_key": "generic_familylabs_com_mx",
+      "label_key": "quimica sanguinea de 10 elementos",
+      "expected_record_count": 1,
+      "classification": "ambiguous_panel",
+      "review_status": "pending",
+      "publish": false,
+      "action": "request_verified_components",
+      "reason": "A numeric panel variant needs an authoritative component list before it can map to a canonical panel."
+    },
+    {
+      "source_key": "generic_familylabs_com_mx",
+      "label_key": "rx columna lumbar ap y lat",
+      "expected_record_count": 1,
+      "classification": "new_concept_candidate",
+      "review_status": "pending",
+      "publish": false,
+      "action": "create_canonical_concept_after_clinical_review",
+      "reason": "Specific radiology study with projection details, but no exact approved canonical item is available."
+    },
+    {
+      "source_key": "generic_familylabs_com_mx",
+      "label_key": "rx tele de torax",
+      "expected_record_count": 1,
+      "classification": "new_concept_candidate",
+      "review_status": "pending",
+      "publish": false,
+      "action": "create_canonical_concept_after_clinical_review",
+      "reason": "Specific chest radiography study, pending clinical naming and canonical modality attributes."
+    },
+    {
+      "source_key": "generic_familylabs_com_mx",
+      "label_key": "ultrasonido abdomen superior",
+      "expected_record_count": 1,
+      "classification": "possible_alias",
+      "review_status": "pending",
+      "publish": false,
+      "action": "manual_alias_review_only",
+      "reason": "May be an alias of the approved abdominal-superior ultrasound, but the wording is not an exact normalized match."
+    },
+    {
+      "source_key": "generic_familylabs_com_mx",
+      "label_key": "ultrasonido higado y vias biliares",
+      "expected_record_count": 1,
+      "classification": "new_concept_candidate",
+      "review_status": "pending",
+      "publish": false,
+      "action": "create_canonical_concept_after_clinical_review",
+      "reason": "Organ-specific ultrasound scope is clinically meaningful and needs its own reviewed canonical concept or component rule."
+    },
+    {
+      "source_key": "generic_familylabs_com_mx",
+      "label_key": "ultrasonido partes blandas",
+      "expected_record_count": 1,
+      "classification": "new_concept_candidate",
+      "review_status": "pending",
+      "publish": false,
+      "action": "create_canonical_concept_after_clinical_review",
+      "reason": "Real imaging service, but body region and protocol are not represented by an exact approved catalog concept."
+    },
+    {
+      "source_key": "generic_familylabs_com_mx",
+      "label_key": "ultrasonido pelvico",
+      "expected_record_count": 1,
+      "classification": "new_concept_candidate",
+      "review_status": "pending",
+      "publish": false,
+      "action": "create_canonical_concept_after_clinical_review",
+      "reason": "Real imaging service pending reviewed canonical scope and patient preparation attributes."
+    },
+    {
+      "source_key": "generic_familylabs_com_mx",
+      "label_key": "ultrasonido prostata",
+      "expected_record_count": 1,
+      "classification": "new_concept_candidate",
+      "review_status": "pending",
+      "publish": false,
+      "action": "create_canonical_concept_after_clinical_review",
+      "reason": "Real organ-specific imaging service pending reviewed canonical scope and route/protocol details."
+    },
+    {
+      "source_key": "generic_familylabs_com_mx",
+      "label_key": "vdrl reacciones serolueticas",
+      "expected_record_count": 1,
+      "classification": "new_concept_candidate",
+      "review_status": "pending",
+      "publish": false,
+      "action": "create_canonical_concept_after_clinical_review",
+      "reason": "Recognizable syphilis serology test, but the canonical catalog has no approved VDRL concept yet."
+    },
+    {
+      "source_key": "generic_laboratorioasesores_com",
+      "label_key": "electrocardiograma",
+      "expected_record_count": 1,
+      "classification": "new_concept_candidate",
+      "review_status": "pending",
+      "publish": false,
+      "action": "create_canonical_concept_after_clinical_review",
+      "reason": "Likely a real ECG service, pending a reviewed canonical concept and interpretation scope."
+    },
+    {
+      "source_key": "generic_laboratorioasesores_com",
+      "label_key": "ultrasonido",
+      "expected_record_count": 1,
+      "classification": "ambiguous_modality",
+      "review_status": "pending",
+      "publish": false,
+      "action": "request_specific_study",
+      "reason": "Modality-only label; it omits body region, protocol and clinical scope."
+    },
+    {
+      "source_key": "generic_labxonaca_com",
+      "label_key": "electrocardiograma",
+      "expected_record_count": 1,
+      "classification": "new_concept_candidate",
+      "review_status": "pending",
+      "publish": false,
+      "action": "create_canonical_concept_after_clinical_review",
+      "reason": "Likely a real ECG service, pending a reviewed canonical concept and interpretation scope."
+    },
+    {
+      "source_key": "generic_labxonaca_com",
+      "label_key": "prueba de embarazo",
+      "expected_record_count": 1,
+      "classification": "new_concept_candidate",
+      "review_status": "pending",
+      "publish": false,
+      "action": "create_canonical_concept_after_clinical_review",
+      "reason": "Real diagnostic test, but specimen and method are not specified and no exact canonical item is approved."
+    },
+    {
+      "source_key": "generic_labxonaca_com",
+      "label_key": "quimica sanguinea",
+      "expected_record_count": 1,
+      "classification": "ambiguous_panel",
+      "review_status": "pending",
+      "publish": false,
+      "action": "request_verified_components",
+      "reason": "Generic panel name with no analyte composition; it cannot safely map to basic or extended chemistry."
+    },
+    {
+      "source_key": "generic_labxonaca_com",
+      "label_key": "tomografia",
+      "expected_record_count": 1,
+      "classification": "ambiguous_modality",
+      "review_status": "pending",
+      "publish": false,
+      "action": "request_specific_study",
+      "reason": "Modality-only label; body region, contrast and protocol are absent."
+    },
+    {
+      "source_key": "generic_labxonaca_com",
+      "label_key": "ultrasonido musculo esqueletico",
+      "expected_record_count": 1,
+      "classification": "new_concept_candidate",
+      "review_status": "pending",
+      "publish": false,
+      "action": "create_canonical_concept_after_clinical_review",
+      "reason": "Real imaging domain, but the target body region and protocol need canonical clinical review."
+    },
+    {
+      "source_key": "generic_lafer_mx",
+      "label_key": "evaluacion de orina post eyaculado eyaculacion retrograda",
+      "expected_record_count": 2,
+      "classification": "new_concept_candidate",
+      "review_status": "pending",
+      "publish": false,
+      "action": "create_canonical_concept_after_clinical_review",
+      "reason": "Specific and plausible andrology test, but absent from the canonical catalog and requiring specialist validation."
+    },
+    {
+      "source_key": "generic_lafer_mx",
+      "label_key": "laboratorio de andrologia",
+      "expected_record_count": 1,
+      "classification": "category_not_service",
+      "review_status": "pending",
+      "publish": false,
+      "action": "hold_until_specific_service",
+      "reason": "Department/category heading rather than one billable laboratory study."
+    },
+    {
+      "source_key": "generic_lafer_mx",
+      "label_key": "laboratorio de fertilidad masculina",
+      "expected_record_count": 3,
+      "classification": "category_not_service",
+      "review_status": "pending",
+      "publish": false,
+      "action": "hold_until_specific_service",
+      "reason": "Service area/category that may contain multiple tests; it is not a single canonical item."
+    },
+    {
+      "source_key": "generic_lafer_mx",
+      "label_key": "prueba hiposmotica",
+      "expected_record_count": 2,
+      "classification": "new_concept_candidate",
+      "review_status": "pending",
+      "publish": false,
+      "action": "create_canonical_concept_after_clinical_review",
+      "reason": "Specific andrology test, but absent from the canonical catalog and requiring specialist validation."
+    },
+    {
+      "source_key": "generic_lafer_mx",
+      "label_key": "prueba post coital sims huhner",
+      "expected_record_count": 2,
+      "classification": "new_concept_candidate",
+      "review_status": "pending",
+      "publish": false,
+      "action": "create_canonical_concept_after_clinical_review",
+      "reason": "Specific fertility test, but absent from the canonical catalog and requiring specialist validation."
+    },
+    {
+      "source_key": "generic_lafer_mx",
+      "label_key": "servicios de laboratorio de andrologia",
+      "expected_record_count": 1,
+      "classification": "category_not_service",
+      "review_status": "pending",
+      "publish": false,
+      "action": "hold_until_specific_service",
+      "reason": "Category/service-area heading without one identifiable study."
+    },
+    {
+      "source_key": "generic_lafer_mx",
+      "label_key": "servicios de laboratorio lafer",
+      "expected_record_count": 1,
+      "classification": "category_not_service",
+      "review_status": "pending",
+      "publish": false,
+      "action": "hold_until_specific_service",
+      "reason": "Provider marketing/category text, not a clinical study."
+    },
+    {
+      "source_key": "generic_riex_com_mx",
+      "label_key": "tomografia 3d conebeam",
+      "expected_record_count": 1,
+      "classification": "new_concept_candidate",
+      "review_status": "pending",
+      "publish": false,
+      "action": "create_canonical_concept_after_clinical_review",
+      "reason": "Specific 3D dental imaging study, pending domain classification and canonical attributes."
+    },
+    {
+      "source_key": "generic_semindigital_com",
+      "label_key": "bienvenido a semin tu laboratorio de confianza",
+      "expected_record_count": 1,
+      "classification": "reject_noise",
+      "review_status": "pending",
+      "publish": false,
+      "action": "do_not_publish",
+      "reason": "Welcome/marketing heading with no clinical study."
+    },
+    {
+      "source_key": "generic_semindigital_com",
+      "label_key": "laboratorio clinico",
+      "expected_record_count": 1,
+      "classification": "category_not_service",
+      "review_status": "pending",
+      "publish": false,
+      "action": "hold_until_specific_service",
+      "reason": "Generic laboratory category, not a billable study."
+    },
+    {
+      "source_key": "generic_semindigital_com",
+      "label_key": "resonancia",
+      "expected_record_count": 1,
+      "classification": "ambiguous_modality",
+      "review_status": "pending",
+      "publish": false,
+      "action": "request_specific_study",
+      "reason": "Modality-only label; body region, contrast and protocol are absent."
+    },
+    {
+      "source_key": "generic_semindigital_com",
+      "label_key": "tomografia",
+      "expected_record_count": 1,
+      "classification": "ambiguous_modality",
+      "review_status": "pending",
+      "publish": false,
+      "action": "request_specific_study",
+      "reason": "Modality-only label; body region, contrast and protocol are absent."
+    },
+    {
+      "source_key": "generic_semindigital_com",
+      "label_key": "ultrasonido",
+      "expected_record_count": 1,
+      "classification": "ambiguous_modality",
+      "review_status": "pending",
+      "publish": false,
+      "action": "request_specific_study",
+      "reason": "Modality-only label; body region and protocol are absent."
+    },
+    {
+      "source_key": "generic_verkenlab_com",
+      "label_key": "laboratorio",
+      "expected_record_count": 1,
+      "classification": "category_not_service",
+      "review_status": "pending",
+      "publish": false,
+      "action": "hold_until_specific_service",
+      "reason": "Generic category heading, not a billable study."
+    },
+    {
+      "source_key": "generic_verkenlab_com",
+      "label_key": "resonancia",
+      "expected_record_count": 1,
+      "classification": "ambiguous_modality",
+      "review_status": "pending",
+      "publish": false,
+      "action": "request_specific_study",
+      "reason": "Modality-only label; body region, contrast and protocol are absent."
+    },
+    {
+      "source_key": "generic_verkenlab_com",
+      "label_key": "tomografia",
+      "expected_record_count": 1,
+      "classification": "ambiguous_modality",
+      "review_status": "pending",
+      "publish": false,
+      "action": "request_specific_study",
+      "reason": "Modality-only label; body region, contrast and protocol are absent."
+    },
+    {
+      "source_key": "generic_verkenlab_com",
+      "label_key": "ultrasonido",
+      "expected_record_count": 1,
+      "classification": "ambiguous_modality",
+      "review_status": "pending",
+      "publish": false,
+      "action": "request_specific_study",
+      "reason": "Modality-only label; body region and protocol are absent."
+    }
+  ]
+}
