@@ -51,10 +51,47 @@ def service_type(department_slug: str, title: str) -> tuple[str, str]:
     return "lab_test", "laboratory"
 
 
-def build(ruiz_path: Path, chopo_path: Path, salud_digna_path: Path | None = None) -> dict:
+def build(
+    ruiz_path: Path,
+    chopo_path: Path,
+    salud_digna_path: Path | None = None,
+    *,
+    approved_mappings_path: Path | None = None,
+    baseline_fixture_path: Path | None = None,
+) -> dict:
     ruiz_rows = read_rows(ruiz_path)
     chopo_rows = read_rows(chopo_path)
     salud_digna_rows = read_rows(salud_digna_path) if salud_digna_path else []
+    approved_rows: list[dict] = []
+    if approved_mappings_path:
+        approved_data = json.loads(approved_mappings_path.read_text(encoding="utf-8"))
+        approved_rows = approved_data.get("mappings", []) if isinstance(approved_data, dict) else approved_data
+        if not isinstance(approved_rows, list):
+            raise ValueError("approved mappings must contain a mappings list")
+    approved_by_chopo: dict[str, dict] = {}
+    approved_ruiz_ids: set[str] = set()
+    for mapping in approved_rows:
+        if not isinstance(mapping, dict):
+            raise ValueError("approved mapping entries must be objects")
+        chopo_id = str(mapping.get("chopo_external_record_id") or "").strip()
+        ruiz_id = str(mapping.get("ruiz_external_record_id") or "").strip()
+        reason = str(mapping.get("reason") or "").strip()
+        if not chopo_id or not ruiz_id or not reason:
+            raise ValueError("approved mappings require Chopo ID, Ruiz ID and reason")
+        if chopo_id in approved_by_chopo:
+            raise ValueError(f"duplicate approved Chopo mapping: {chopo_id}")
+        approved_by_chopo[chopo_id] = {"ruiz_external_record_id": ruiz_id, "reason": reason}
+        approved_ruiz_ids.add(ruiz_id)
+
+    ruiz_allowed_ids: set[str] | None = None
+    if baseline_fixture_path:
+        baseline = json.loads(baseline_fixture_path.read_text(encoding="utf-8"))
+        ruiz_allowed_ids = {
+            str(mapping.get("external_record_id"))
+            for mapping in baseline.get("mappings", [])
+            if mapping.get("source_key") == "ruiz_puebla"
+        }
+        ruiz_allowed_ids.update(approved_ruiz_ids)
     items: dict[str, dict] = {}
     mappings: list[dict] = []
     normalization_queue: list[dict] = []
@@ -66,6 +103,8 @@ def build(ruiz_path: Path, chopo_path: Path, salud_digna_path: Path | None = Non
         external_id = str(payload.get("provider_external_id") or row.get("external_record_id") or "")
         title = str(payload.get("provider_display_name") or "").strip()
         if not external_id or not title:
+            continue
+        if ruiz_allowed_ids is not None and external_id not in ruiz_allowed_ids:
             continue
         key = f"ruiz:{external_id}"
         kind, category = service_type(str(payload.get("department_slug") or ""), title)
@@ -110,6 +149,35 @@ def build(ruiz_path: Path, chopo_path: Path, salud_digna_path: Path | None = Non
         if row.get("record_type") != "provider_offer_price":
             continue
         title = str(payload.get("provider_display_name") or "").strip()
+        external_id = str(row.get("external_record_id") or payload.get("provider_external_id") or "")
+        manual_mapping = approved_by_chopo.get(external_id)
+        if manual_mapping:
+            target = items.get(f"ruiz:{manual_mapping['ruiz_external_record_id']}")
+            if target is None:
+                raise ValueError(
+                    f"approved mapping target is not in the selected Ruiz catalog: {manual_mapping['ruiz_external_record_id']}"
+                )
+            target["provider_aliases"].append(
+                {
+                    "provider_key": "chopo_puebla",
+                    "alias": title,
+                    "alias_type": "provider_name",
+                    "confidence": 0.95,
+                    "source_note": f"Manual Gate A review: {manual_mapping['reason']}",
+                }
+            )
+            mappings.append(
+                {
+                    "source_key": "chopo_puebla",
+                    "provider_key": "chopo",
+                    "external_record_id": external_id,
+                    "record_hash": row.get("record_hash"),
+                    "catalog_key": target["catalog_key"],
+                    "method": "manual",
+                    "reason": manual_mapping["reason"],
+                }
+            )
+            continue
         normalized = normalize(title)
         target = ruiz_by_normalized.get(normalized)
         if target:
@@ -188,6 +256,15 @@ def build(ruiz_path: Path, chopo_path: Path, salud_digna_path: Path | None = Non
     if salud_digna_path:
         active_sources.add("salud_digna_puebla")
 
+    if approved_by_chopo:
+        missing = set(approved_by_chopo) - {
+            str(mapping.get("external_record_id"))
+            for mapping in mappings
+            if mapping.get("source_key") == "chopo_puebla"
+        }
+        if missing:
+            raise ValueError(f"approved mappings reference missing Chopo records: {sorted(missing)}")
+
     return {
         "version": "golden-catalog-v1",
         "generated_from": {
@@ -195,7 +272,7 @@ def build(ruiz_path: Path, chopo_path: Path, salud_digna_path: Path | None = Non
             "chopo": "official Chopo Puebla collector artifact",
             **({"salud_digna": "official Salud Digna Puebla collector artifact"} if salud_digna_path else {}),
         },
-        "policy": "Exact observed labels are active; no fuzzy medical equivalence is auto-approved.",
+        "policy": "Exact observed labels and explicit reviewed Gate A mappings are active; no fuzzy medical equivalence is auto-approved.",
         "brands": {key: BRANDS[key] for key in BRANDS if key in active_sources},
         "items": sorted(items.values(), key=lambda item: item["canonical_name"]),
         "mappings": mappings,
@@ -208,9 +285,17 @@ def main() -> int:
     parser.add_argument("--ruiz", type=Path, required=True)
     parser.add_argument("--chopo", type=Path, required=True)
     parser.add_argument("--salud-digna", type=Path)
+    parser.add_argument("--approved-mappings", type=Path)
+    parser.add_argument("--baseline-fixture", type=Path)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
-    fixture = build(args.ruiz, args.chopo, args.salud_digna)
+    fixture = build(
+        args.ruiz,
+        args.chopo,
+        args.salud_digna,
+        approved_mappings_path=args.approved_mappings,
+        baseline_fixture_path=args.baseline_fixture,
+    )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(fixture, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({"items": len(fixture["items"]), "mappings": len(fixture["mappings"]), "queue": len(fixture["normalization_queue"])}, ensure_ascii=False))

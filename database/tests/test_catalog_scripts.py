@@ -47,3 +47,52 @@ def test_golden_catalog_sql_can_be_chunked_for_linked_queries():
     assert len(chunks) == 1
     assert chunks[0].startswith("begin;\n")
     assert chunks[0].endswith("commit;\n")
+
+
+def test_reviewed_gate_mapping_is_explicit_and_scoped(tmp_path: Path):
+    ruiz_payload = {
+        "provider_display_name": "Prueba Ruiz",
+        "provider_external_id": "ruiz-1",
+        "provider_sku": "ruiz-1",
+        "product_url": "https://example.test/ruiz/1",
+        "prices": {"regular": 10000},
+    }
+    chopo_payload = {
+        "provider_display_name": "PRUEBA CHOPO",
+        "provider_external_id": "chopo-1",
+        "provider_sku": "chopo-1",
+        "product_url": "https://www.chopo.com.mx/puebla/prueba-chopo",
+        "prices": {"regular": 12000},
+    }
+    ruiz = _artifact(tmp_path, "ruiz_puebla", [{"external_record_id": "ruiz-1", "source_url": ruiz_payload["product_url"], "payload": ruiz_payload}])
+    chopo = _artifact(tmp_path, "chopo_puebla", [{"external_record_id": "chopo-1", "source_url": chopo_payload["product_url"], "payload": chopo_payload}])
+    baseline = {"mappings": [{"source_key": "ruiz_puebla", "external_record_id": "ruiz-1"}]}
+    baseline_path = tmp_path / "baseline.json"
+    baseline_path.write_text(json.dumps(baseline), encoding="utf-8")
+    approvals_path = tmp_path / "approvals.json"
+    approvals_path.write_text(
+        json.dumps(
+            {
+                "mappings": [
+                    {
+                        "chopo_external_record_id": "chopo-1",
+                        "ruiz_external_record_id": "ruiz-1",
+                        "reason": "Reviewed fixture equivalence",
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    fixture = build(
+        ruiz / "raw_records.jsonl",
+        chopo / "raw_records.jsonl",
+        approved_mappings_path=approvals_path,
+        baseline_fixture_path=baseline_path,
+    )
+
+    mapping = next(item for item in fixture["mappings"] if item["source_key"] == "chopo_puebla")
+    assert mapping["method"] == "manual"
+    assert mapping["reason"] == "Reviewed fixture equivalence"
+    assert fixture["normalization_queue"] == []

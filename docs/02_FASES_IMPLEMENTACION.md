@@ -2,7 +2,7 @@
 
 **Versión:** 1.0  
 **Fecha:** 22 de agosto de 2026  
-**Estado general:** fases 1–7 tienen implementación técnica verificada en Supabase DEV; Gate A de viabilidad permanece abierto hasta demostrar cobertura clínica/comercial y operación sostenida. Flutter queda deliberadamente después de ese cierre.
+**Estado general:** fases 1–7 tienen implementación técnica verificada en Supabase DEV; Gate A de viabilidad es positivo con cobertura multi-proveedor y precios vigentes comprobados. Flutter queda deliberadamente después de este corte.
 
 ---
 
@@ -175,7 +175,7 @@ Y la DB DEV debe poder reconstruirse por migraciones.
 
 # Fase 3 — Collector DENUE / discovery de proveedores
 
-**Estado:** 🟢 adapter, CLI y corrida live verificados; 489 registros válidos en Puebla
+**Estado:** ✅ adapter, CLI y corrida live verificados; 489 registros válidos en Puebla y publicados en la evidencia de ingest
 
 Objetivo:
 
@@ -390,7 +390,7 @@ Todo con información real de Puebla.
 
 # Gate A — Viabilidad del Data Engine
 
-**Estado:** 🧪 smoke técnico 10/10; Gate A de viabilidad continúa abierto
+**Estado:** ✅ Gate A positivo: 44 servicios compartidos, 44 compartidos con precio, 16/16 ubicaciones con coordenadas y 0 corridas fallidas/cuarentenadas
 
 Antes de Flutter completo, evaluar:
 
@@ -609,7 +609,7 @@ Consentimiento y retention definidos.
 
 ## Estado ejecutado antes de Flutter (27 de agosto de 2026)
 
-Las fases previas a Flutter tienen implementación técnica en DEV: base Supabase enlazada con migraciones 001-081; collectors Chopo, Ruiz, Salud Digna y DENUE con RAW/observaciones/runs reproducibles; catálogo dorado de 143 servicios, 147 mappings y 942 labels explícitamente pendientes de revisión; Admin V1 en `apps/admin` con Supabase Auth y búsqueda de servicios canónicos; Search API V1 en `apps/api`; y smoke test Gate A remoto con 10/10 aserciones. La viabilidad continúa abierta porque sólo 4 de 143 servicios tienen dos proveedores (los umbrales de salida son 30 compartidos y 10 compartidos con precio). Flutter sigue después de cerrar cobertura y revisión clínica.
+Las fases previas a Flutter tienen implementación técnica en DEV: base Supabase enlazada con migraciones 001-081; collectors Chopo, Ruiz, Salud Digna y DENUE con RAW/observaciones/runs reproducibles; catálogo dorado de 175 servicios, 219 ofertas y 41 equivalencias Chopo↔Ruiz revisadas explícitamente; Admin V1 en `apps/admin` con Supabase Auth y búsqueda de servicios canónicos; Search API V1 en `apps/api`; y pruebas remotas de base, API y Gate A con todas las aserciones verdes. La viabilidad queda cerrada en este corte: 44 servicios tienen dos proveedores y 44 tienen precio vigente en ambos; Flutter no se inicia dentro de esta fase.
 
 ---
 
@@ -816,7 +816,7 @@ Primer `/search` real.
 | Supabase DEV | ✅ |
 | Cloudflare DEV | 🟢 configuración lista; deploy requiere credenciales |
 | GitHub monorepo | ✅ CI versionado |
-| DENUE collector | 🟢 adapter listo; live requiere token oficial |
+| DENUE collector | ✅ live publicado; 489 registros válidos |
 | Chopo collector | ✅ live publicado |
 | Ruiz collector | ✅ live publicado |
 | Salud Digna collector | ✅ live publicado; 830 registros válidos |
@@ -838,7 +838,7 @@ Primer `/search` real.
 Pruevia V0 técnica se considera funcional cuando:
 
 1. DB se reconstruye completamente por migraciones;
-2. DENUE + mínimo 2 proveedores comerciales ingieren correctamente (DENUE live queda condicionado al token oficial; Chopo/Ruiz ya están publicados);
+2. DENUE + mínimo 2 proveedores comerciales ingieren correctamente (DENUE, Chopo, Ruiz y Salud Digna están publicados);
 3. RAW → observation → canonical funciona;
 4. 100–200 estudios seleccionados están normalizados;
 5. `/search` devuelve proveedores reales;

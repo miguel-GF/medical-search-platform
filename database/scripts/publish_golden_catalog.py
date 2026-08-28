@@ -227,15 +227,19 @@ def render(fixture: dict, ruiz_artifact: Path, chopo_artifact: Path, salud_digna
             f"insert into supply.offer_links(offer_scope_id,link_type,url,label,status) select os.id,'details',{q(payload.get('product_url'))},{q('Provider details')},'active' from supply.offer_scopes os where os.offer_id={q(offer_id)} and not exists(select 1 from supply.offer_links l where l.offer_scope_id=os.id and l.link_type='details' and l.url={q(payload.get('product_url'))});"
         )
         normalization_id = stable_id("normalization-run", f"{source_key}:{mapping['record_hash']}")
-        method = "exact" if source_key == "ruiz_puebla" else "alias"
+        method = str(mapping.get("method") or ("exact" if source_key == "ruiz_puebla" else "alias"))
+        mapping_reason = str(
+            mapping.get("reason")
+            or ("Exact normalized provider label approved in golden catalog V1" if method != "manual" else "Reviewed manual provider equivalence")
+        )
         lines.append(
             f"insert into ingest.normalization_runs(id,input_type,raw_record_id,provider_brand_id,raw_text,normalized_input,engine_version,status,resolved_at) select {q(normalization_id)},'crawler',rr.id,{q(brand_id)},{q(display_name)},{q(normalize(display_name))},{q(fixture['version'])},'resolved',now() from ingest.raw_records rr where rr.crawl_run_id={q(artifacts[source_key][0]['run_id'])}::uuid and rr.record_hash={q(mapping['record_hash'])} on conflict(id) do nothing;"
         )
         lines.append(
-            f"insert into ingest.normalization_candidates(normalization_run_id,catalog_item_id,rank,score,method,explanation_data) values ({q(normalization_id)},{q(item['item_id'])},1,1.0,{q(method)},{jb({'reason':'golden exact mapping','source_key':source_key})}) on conflict do nothing;"
+            f"insert into ingest.normalization_candidates(normalization_run_id,catalog_item_id,rank,score,method,explanation_data) values ({q(normalization_id)},{q(item['item_id'])},1,1.0,{q(method)},{jb({'reason':mapping_reason,'source_key':source_key})}) on conflict do nothing;"
         )
         lines.append(
-            f"insert into ingest.normalization_decisions(normalization_run_id,selected_item_id,decision_type,reason) select {q(normalization_id)},{q(item['item_id'])},'automatic',{q('Exact normalized provider label approved in golden catalog V1')} where not exists(select 1 from ingest.normalization_decisions where normalization_run_id={q(normalization_id)} and decision_type='automatic');"
+            f"insert into ingest.normalization_decisions(normalization_run_id,selected_item_id,decision_type,reason) select {q(normalization_id)},{q(item['item_id'])},'automatic',{q(mapping_reason)} where not exists(select 1 from ingest.normalization_decisions where normalization_run_id={q(normalization_id)} and decision_type='automatic');"
         )
 
     # Keep every unresolved provider label auditable in the normalization queue.

@@ -2,7 +2,15 @@ from pathlib import Path
 
 import httpx
 
-from pruevia_collectors.providers.chopo import ChopoClient, ChopoPage, ChopoListingParser, parse_chopo_page, parse_price_text
+from pruevia_collectors.providers.chopo import (
+    ChopoClient,
+    ChopoPage,
+    ChopoListingParser,
+    ChopoProductPage,
+    parse_chopo_page,
+    parse_chopo_product,
+    parse_price_text,
+)
 
 
 def fixture_page() -> ChopoPage:
@@ -23,6 +31,45 @@ def test_chopo_parser_extracts_names_skus_urls_and_prices():
 def test_chopo_price_parser_keeps_minor_units():
     assert parse_price_text("Precio $1,500.00 $975.5") == {"regular": 150000, "online": 97550}
     assert parse_price_text("Sin precio") == {}
+
+
+def test_chopo_product_parser_reads_structured_puebla_price():
+    page = ChopoProductPage(
+        "https://www.chopo.com.mx/puebla/biometria-hematica",
+        'magentoStorefrontEvents.context.setProduct({"productId":5240,"name":"BIOMETRÍA HEMÁTICA","sku":"17002","pricing":{"regularPrice":284.28,"specialPrice":184.79}});',
+    )
+
+    record = parse_chopo_product(page)
+
+    assert record.external_record_id == "17002"
+    assert record.payload["market"] == "Puebla"
+    assert record.payload["prices"] == {"regular": 28428, "online": 18479}
+
+
+def test_chopo_product_parser_rejects_untrusted_host():
+    client = ChopoClient(base_url="https://www.chopo.com.mx/puebla/estudios", client=object())
+    try:
+        try:
+            client.fetch_product("https://evil.example/product")
+        except ValueError as error:
+            assert "official host" in str(error)
+        else:
+            raise AssertionError("expected untrusted host to fail")
+    finally:
+        client._client = None
+
+
+def test_chopo_product_parser_rejects_non_puebla_market_path():
+    client = ChopoClient(base_url="https://www.chopo.com.mx/puebla/estudios", client=object())
+    try:
+        try:
+            client.fetch_product("https://www.chopo.com.mx/biometria-hematica")
+        except ValueError as error:
+            assert "Puebla path" in str(error)
+        else:
+            raise AssertionError("expected non-Puebla URL to fail")
+    finally:
+        client._client = None
 
 
 def test_chopo_parser_does_not_capture_search_autocomplete_items():
@@ -59,7 +106,8 @@ def test_chopo_client_reuses_client_and_retries_transient_statuses():
 
     assert page.page_number == 2
     assert len(fake.calls) == 2
-    assert all(call[1]["headers"]["User-Agent"] == "PrueviaCollector/0.1" for call in fake.calls)
+    assert "p=2" in fake.calls[0][0]
+    assert all("Mozilla/5.0" in call[1]["headers"]["User-Agent"] for call in fake.calls)
 
 
 def test_chopo_client_retries_transport_errors():

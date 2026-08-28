@@ -6,7 +6,8 @@ from dataclasses import dataclass
 from decimal import Decimal, ROUND_HALF_UP
 from html.parser import HTMLParser
 from typing import Any, Iterable, Mapping, Sequence
-from urllib.parse import urljoin
+from json import JSONDecoder
+from urllib.parse import urljoin, urlparse
 
 import httpx
 
@@ -23,7 +24,19 @@ class ChopoPage:
     html: str
 
 
+@dataclass(frozen=True)
+class ChopoProductPage:
+    url: str
+    html: str
+
+
 class ChopoClient:
+    _headers = {
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "es-MX,es;q=0.9,en;q=0.8",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124 Safari/537.36",
+    }
+
     def __init__(
         self,
         *,
@@ -46,16 +59,30 @@ class ChopoClient:
         if self._owns_client:
             self._client.close()
 
+    def reset_session(self) -> None:
+        """Refresh the HTTP session after edge throttling during long runs."""
+
+        if not self._owns_client:
+            return
+        self._client.close()
+        self._client = httpx.Client(timeout=self.timeout_seconds, follow_redirects=True)
+
     def fetch_page(self, page_number: int) -> ChopoPage:
         if page_number < 1:
             raise ValueError("Chopo page number must be positive")
-        url = self.base_url if page_number == 1 else f"{self.base_url}?p={page_number}"
+        if page_number == 1:
+            url = self.base_url
+        else:
+            url = f"{self.base_url}?p={page_number}"
         for attempt in range(1, self.max_attempts + 1):
             try:
-                response = self._client.get(url, headers={"Accept": "text/html", "User-Agent": "PrueviaCollector/0.1"})
+                response = self._client.get(url, headers=self._headers)
                 response.raise_for_status()
+                resolved_url = str(response.url)
+                if not self._is_official_puebla_url(resolved_url):
+                    raise ValueError("Chopo response redirected outside the official Puebla path")
                 response.encoding = "utf-8"
-                return ChopoPage(page_number=page_number, url=str(response.url), html=response.text)
+                return ChopoPage(page_number=page_number, url=resolved_url, html=response.text)
             except (httpx.HTTPStatusError, httpx.RequestError) as error:
                 if (
                     isinstance(error, httpx.HTTPStatusError)
@@ -63,6 +90,40 @@ class ChopoClient:
                 ) or attempt == self.max_attempts:
                     raise
                 time.sleep(self.retry_backoff_seconds * attempt)
+
+    def fetch_product(self, url: str) -> ChopoProductPage:
+        """Fetch one official Chopo product page for the active market."""
+
+        if not self._is_official_puebla_url(url):
+            raise ValueError("Chopo product URL must use the configured official host and Puebla path")
+        for attempt in range(1, self.max_attempts + 1):
+            try:
+                response = self._client.get(
+                    url,
+                    headers=self._headers,
+                )
+                response.raise_for_status()
+                resolved_url = str(response.url)
+                if not self._is_official_puebla_url(resolved_url):
+                    raise ValueError("Chopo response redirected outside the official Puebla path")
+                response.encoding = "utf-8"
+                return ChopoProductPage(url=resolved_url, html=response.text)
+            except (httpx.HTTPStatusError, httpx.RequestError) as error:
+                if (
+                    isinstance(error, httpx.HTTPStatusError)
+                    and error.response.status_code not in {429, 500, 502, 503, 504}
+                ) or attempt == self.max_attempts:
+                    raise
+                time.sleep(self.retry_backoff_seconds * attempt)
+        raise RuntimeError("unreachable")
+
+    def _is_official_puebla_url(self, value: str) -> bool:
+        parsed = urlparse(value)
+        return (
+            parsed.scheme in {"http", "https"}
+            and parsed.hostname == urlparse(self.base_url).hostname
+            and parsed.path.startswith("/puebla/")
+        )
 
 
 class ChopoListingParser(HTMLParser):
@@ -164,10 +225,108 @@ class ChopoAdapter:
                 yield record
 
 
+class ChopoProductAdapter:
+    """Collect a reviewed set of Chopo product pages for a Puebla run.
+
+    This mode complements paginated discovery when a provider edge temporarily
+    rejects a listing page. URLs are explicit and auditable; no search result
+    or fuzzy clinical equivalence is inferred by the collector.
+    """
+
+    source = ChopoAdapter.source
+
+    def __init__(
+        self,
+        client: ChopoClient,
+        product_urls: Sequence[str],
+        *,
+        page_delay_seconds: float = 1.0,
+        session_batch_size: int = 4,
+    ) -> None:
+        urls = tuple(dict.fromkeys(url.strip() for url in product_urls if url.strip()))
+        if not urls:
+            raise ValueError("at least one Chopo product URL is required")
+        if page_delay_seconds < 0:
+            raise ValueError("page_delay_seconds cannot be negative")
+        if session_batch_size < 1:
+            raise ValueError("session batch size must be positive")
+        self.client = client
+        self.product_urls = urls
+        self.page_delay_seconds = page_delay_seconds
+        self.session_batch_size = session_batch_size
+
+    def collect(self) -> Iterable[SourceRecord]:
+        for index, url in enumerate(self.product_urls):
+            if index and index % self.session_batch_size == 0:
+                self.client.reset_session()
+            if index and self.page_delay_seconds:
+                time.sleep(self.page_delay_seconds)
+            yield parse_chopo_product(self.client.fetch_product(url))
+
+
 def parse_chopo_page(page: ChopoPage) -> list[SourceRecord]:
     parser = ChopoListingParser(page_url=page.url)
     parser.feed(page.html)
     return [chopo_item_to_record(item, page=page) for item in parser.finish()]
+
+
+def parse_chopo_product(page: ChopoProductPage) -> SourceRecord:
+    marker = "magentoStorefrontEvents.context.setProduct("
+    start = page.html.find(marker)
+    if start < 0:
+        raise ValueError(f"Chopo product page has no structured product payload: {page.url}")
+    try:
+        product, _ = JSONDecoder().raw_decode(page.html[start + len(marker) :])
+    except ValueError as error:
+        raise ValueError(f"Chopo product payload is not valid JSON: {page.url}") from error
+    if not isinstance(product, Mapping):
+        raise ValueError(f"Chopo product payload is not an object: {page.url}")
+
+    name = str(product.get("name") or "").strip()
+    sku = str(product.get("sku") or "").strip() or None
+    product_id = product.get("productId")
+    if not name or product_id in (None, ""):
+        raise ValueError(f"Chopo product requires name and productId: {page.url}")
+    pricing = product.get("pricing")
+    if not isinstance(pricing, Mapping):
+        raise ValueError(f"Chopo product has no pricing payload: {page.url}")
+
+    regular = _price_minor(pricing.get("regularPrice"))
+    special = _price_minor(pricing.get("specialPrice"))
+    prices: dict[str, int] = {}
+    if regular is not None and regular > 0:
+        prices["regular"] = regular
+    if special is not None and special > 0 and (regular is None or special != regular):
+        prices["online"] = special
+    if not prices:
+        raise ValueError(f"Chopo product has no positive price: {name}")
+
+    payload = {
+        "provider_brand": "Laboratorio Médico del Chopo",
+        "market": "Puebla",
+        "provider_display_name": name,
+        "provider_sku": sku,
+        "provider_product_id": str(product_id),
+        "product_url": page.url,
+        "canonical_product_url": product.get("canonicalUrl"),
+        "specialty": None,
+        "prices": prices,
+    }
+    observations = [
+        Observation(entity_type="offer", attribute_name="provider_display_name", observed_value=name),
+        Observation(entity_type="offer", attribute_name="provider_sku", observed_value=sku),
+        Observation(entity_type="offer", attribute_name="provider_product_id", observed_value=str(product_id)),
+        Observation(entity_type="offer", attribute_name="product_url", observed_value=page.url),
+        Observation(entity_type="price", attribute_name="prices", observed_value=prices),
+    ]
+    return SourceRecord(
+        source_key="chopo_puebla",
+        record_type="provider_offer_price",
+        external_record_id=sku or str(product_id),
+        source_url=page.url,
+        payload=payload,
+        observations=tuple(observations),
+    )
 
 
 def chopo_item_to_record(item: Mapping[str, Any], *, page: ChopoPage) -> SourceRecord:
@@ -221,4 +380,14 @@ def parse_price_text(value: str) -> dict[str, int]:
 
 def _to_minor_units(value: str) -> int:
     amount = Decimal(value.replace(",", "")).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+    return int(amount * 100)
+
+
+def _price_minor(value: Any) -> int | None:
+    if value in (None, ""):
+        return None
+    try:
+        amount = Decimal(str(value)).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+    except Exception:
+        return None
     return int(amount * 100)

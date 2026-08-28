@@ -25,6 +25,9 @@ python -m pruevia_collectors.cli_chopo --max-pages 4
 python -m pruevia_collectors.cli_ruiz --max-records 200 --per-department 20
 python -m pruevia_collectors.cli_salud_digna --location-slug puebla-municipio-libre
 python -m pruevia_collectors.cli --condition laboratorio --latitude 19.0433 --longitude -98.2011 --radius-meters 5000
+# Si la paginación de Chopo está limitada por el edge, usar el set revisado:
+python -m pruevia_collectors.cli_chopo --product-url-file config/chopo_gate_a_urls.txt `
+  --page-delay-seconds 1 --session-batch-size 5 --artifact-root artifacts/chopo-gate-a
 ```
 
 El comando de DENUE carga `DENUE_API_TOKEN` desde `collectors/.env` (o desde una
@@ -42,7 +45,7 @@ Desde la raíz del repositorio:
 
 ```powershell
 python database/scripts/render_ingest_artifact.py collectors/artifacts/<source>/<run-id> `
-  --chunk-dir $env:TEMP/pruevia-ingest-chunks --max-bytes 400000
+  --chunk-dir $env:TEMP/pruevia-ingest-chunks --max-bytes 100000
 Push-Location database/supabase
 Get-ChildItem $env:TEMP/pruevia-ingest-chunks/*.sql | Sort-Object Name | ForEach-Object {
   npx.cmd supabase@latest db query --linked --file $_.FullName
@@ -50,16 +53,16 @@ Get-ChildItem $env:TEMP/pruevia-ingest-chunks/*.sql | Sort-Object Name | ForEach
 Pop-Location
 
 python database/scripts/build_golden_catalog.py `
-  --ruiz collectors/artifacts/ruiz-puebla/<run-id>/raw_records.jsonl `
+  --ruiz collectors/artifacts/ruiz-full/ruiz-puebla/<run-id>/raw_records.jsonl `
   --chopo collectors/artifacts/chopo-puebla/<run-id>/raw_records.jsonl `
-  --salud-digna $env:TEMP/pruevia-salud-digna/<source>/<run-id>/raw_records.jsonl `
-  --output $env:TEMP/catalog_golden_v1.json
+  --approved-mappings database/fixtures/gate_a_chopo_mappings.json `
+  --baseline-fixture database/fixtures/catalog_golden_v1.json `
+  --output database/fixtures/catalog_golden_gate_a.json
 python database/scripts/publish_golden_catalog.py `
-  --fixture $env:TEMP/catalog_golden_v1.json `
-  --ruiz-artifact collectors/artifacts/ruiz-puebla/<run-id> `
+  --fixture database/fixtures/catalog_golden_gate_a.json `
+  --ruiz-artifact collectors/artifacts/ruiz-full/ruiz-puebla/<run-id> `
   --chopo-artifact collectors/artifacts/chopo-puebla/<run-id> `
-  --salud-digna-artifact $env:TEMP/pruevia-salud-digna/<source>/<run-id> `
-  --chunk-dir $env:TEMP/pruevia-catalog-chunks --max-bytes 400000
+  --chunk-dir $env:TEMP/pruevia-catalog-chunks --max-bytes 100000
 Push-Location database/supabase
 Get-ChildItem $env:TEMP/pruevia-catalog-chunks/*.sql | Sort-Object Name | ForEach-Object {
   npx.cmd supabase@latest db query --linked --file $_.FullName
