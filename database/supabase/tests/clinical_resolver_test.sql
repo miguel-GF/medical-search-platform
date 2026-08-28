@@ -2,7 +2,7 @@
 
 begin;
 create extension if not exists pgtap with schema extensions;
-select extensions.plan(14);
+select extensions.plan(16);
 
 select extensions.has_table('catalog', 'item_descriptions', 'clinical descriptions table exists');
 select extensions.has_table('health', 'lab_service_definitions', 'lab attributes table exists');
@@ -52,6 +52,21 @@ select extensions.is(
   (select public.api_resolve_search('amilasa en suero')->>'status'),
   'resolved',
   'amilasa en suero is not confused with aluminio'
+);
+select extensions.is(
+  (select count(*)::bigint
+   from jsonb_array_elements(public.api_resolve_search('BH')->'candidates'->0->'offers') offer
+   where offer->>'amount_minor' is null
+     and offer->>'provider_location_id' is null),
+  0::bigint,
+  'resolver removes price-less duplicate brand-scope offers'
+);
+select extensions.is(
+  (select count(*)::bigint
+   from jsonb_array_elements(public.api_resolve_search('hemograma api')->'candidates') candidate
+   where candidate->>'display_name' = 'Biometría hemática'),
+  0::bigint,
+  'alias does not ignore unmatched query tokens'
 );
 
 select * from extensions.finish();
