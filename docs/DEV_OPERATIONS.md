@@ -97,6 +97,20 @@ en la cola de normalización para revisión humana. El artefacto DENUE sigue una
 ruta separada y sirve como evidencia de identidad/ubicación para un reclamo,
 no como prueba de que el proveedor ofrece un estudio o precio.
 
+Para convertir una corrida DENUE amplia en candidatos revisables, clasifica y
+deduplica por razon social + coordenadas:
+
+```powershell
+python database/scripts/classify_denue_candidates.py `
+  collectors/artifacts/live/denue/<run-id> `
+  --output database/fixtures/denue_candidates_puebla_v1.json
+```
+
+El resultado separa `candidates`, `review_queue` y exclusiones. Las
+coincidencias de marca son unicamente una senal de identidad; los alias
+abreviados (por ejemplo `L.R.`) requieren revision y no crean proveedores
+canonicos automaticamente.
+
 ## Gate A coverage report
 
 El reporte es de solo lectura y resume cobertura comparable, precios vigentes,

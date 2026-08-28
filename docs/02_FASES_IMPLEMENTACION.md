@@ -636,6 +636,26 @@ ubicación.
 
 ---
 
+### Clasificacion del lote DENUE
+
+El clasificador reproducible `database/scripts/classify_denue_candidates.py`
+se ejecuto contra el run `49e31077-8cbc-438a-9d08-eccad850f30e` y genero
+`database/fixtures/denue_candidates_puebla_v1.json`:
+
+- 489 registros de entrada;
+- 214 registros con actividad de laboratorio medico y diagnostico;
+- 213 candidatos fisicos despues de deduplicar identidad legal + coordenadas;
+- 27 registros clinicos relacionados en cola de revision;
+- 248 registros excluidos por actividad no diagnostica;
+- 10 coincidencias explicitas Chopo, 5 Salud Digna y 1 Ruiz;
+- 4 posibles Ruiz por abreviatura `L.R.` quedan con `review_required`.
+
+El fixture es una lista de candidatos y evidencia, no una publicacion en
+`core.provider_locations`: antes de crear una sede canonica se debe confirmar
+la identidad y la oferta con una fuente del proveedor.
+
+---
+
 # Fase 15 — Reservas
 
 **Estado:** ⏳
