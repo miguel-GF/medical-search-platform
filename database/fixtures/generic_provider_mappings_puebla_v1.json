@@ -1,0 +1,84 @@
+{
+  "version": "generic-provider-mappings-puebla-v1",
+  "policy": "Only exact normalized labels observed on a public provider website are approved. Panels, modality-only labels and broad marketing copy remain in the review queue.",
+  "providers": [
+    {
+      "source_key": "generic_familylabs_com_mx",
+      "provider_key": "familylabs",
+      "brand_name": "Family Labs",
+      "slug": "family-labs",
+      "website_url": "https://familylabs.com.mx/",
+      "denue_record_ids": ["11767714", "6378831"],
+      "identity_note": "DENUE identifies two Family Labs Puebla locations under LABORATEK and the domain matches the public website evidence; provider verification remains pending."
+    },
+    {
+      "source_key": "generic_laboratorioasesores_com",
+      "provider_key": "asesores_diagnostico_clinico",
+      "brand_name": "Asesores Diagnóstico Clínico",
+      "slug": "asesores-diagnostico-clinico",
+      "website_url": "https://laboratorioasesores.com/",
+      "denue_record_ids": ["6377353", "6378112", "6379372"],
+      "identity_note": "DENUE identifies three Asesores Diagnóstico Clínico Puebla locations under ASESORES ESPECIALIZADOS EN LABORATORIOS and the domain matches the public website evidence; provider verification remains pending."
+    },
+    {
+      "source_key": "generic_labxonaca_com",
+      "provider_key": "laboratorios_xonaca",
+      "brand_name": "Laboratorios Xonaca",
+      "slug": "laboratorios-xonaca",
+      "website_url": "https://labxonaca.com/",
+      "denue_record_ids": ["10598243"],
+      "identity_note": "DENUE identifies a Laboratorios Xonaca Xpress Puebla location and the .com domain matches the public website evidence; a separate .com.mx row remains unlinked pending confirmation."
+    },
+    {
+      "source_key": "generic_semindigital_com",
+      "provider_key": "laboratorios_semin",
+      "brand_name": "Laboratorios Semin",
+      "slug": "laboratorios-semin",
+      "website_url": "https://semindigital.com/",
+      "denue_record_ids": ["6377846"],
+      "identity_note": "DENUE identifies LABORATORIOS SEMIN SIGLO XXI under SEMIN SIGLO XXI and the domain matches the public website evidence; provider verification remains pending."
+    }
+  ],
+  "mappings": [
+    {
+      "source_key": "generic_familylabs_com_mx",
+      "provider_key": "familylabs",
+      "external_record_id": "1ab0ee049a650eb245e2dd531b14e808",
+      "catalog_item_id": "a1f81444-4b20-5d82-bdf6-b48c27245fa0",
+      "provider_alias": "Ultrasonido Abdomen Completo",
+      "observed_label": "Ultrasonido Abdomen Completo",
+      "method": "manual",
+      "reason": "Coincidencia exacta normalizada con el nombre canónico; la página pública de Family Labs expone el estudio sin alterar su alcance clínico."
+    },
+    {
+      "source_key": "generic_familylabs_com_mx",
+      "provider_key": "familylabs",
+      "external_record_id": "b08eb5506d59016160ca93d7759c8f28",
+      "catalog_item_id": "82d84811-2542-5f8d-8c2c-01186700c4cb",
+      "provider_alias": "Ultrasonido Obstétrico",
+      "observed_label": "Ultrasonido Obstétrico",
+      "method": "manual",
+      "reason": "Coincidencia exacta normalizada con el nombre canónico; la página pública de Family Labs expone el estudio sin inferir una variante obstétrica adicional."
+    },
+    {
+      "source_key": "generic_laboratorioasesores_com",
+      "provider_key": "asesores_diagnostico_clinico",
+      "external_record_id": "b9ecd1d9dfce4f94d6eb4b2dcf6c1080",
+      "catalog_item_id": "00000000-0000-0000-0000-000000001104",
+      "provider_alias": "Examen General de Orina",
+      "observed_label": "Examen General de Orina",
+      "method": "manual",
+      "reason": "Coincidencia exacta normalizada con el nombre canónico de Examen general de orina en la página pública de Asesores Diagnóstico Clínico."
+    },
+    {
+      "source_key": "generic_semindigital_com",
+      "provider_key": "laboratorios_semin",
+      "external_record_id": "9d8a903129e012697acce4fef3b8d7ad",
+      "catalog_item_id": "b4994aa8-b7c4-52f3-8f46-c74356d62d4a",
+      "provider_alias": "Mastografía",
+      "observed_label": "Mastografía",
+      "method": "manual",
+      "reason": "Coincidencia exacta normalizada con el nombre canónico de Mastografía en la página pública de Laboratorios Semin."
+    }
+  ]
+}

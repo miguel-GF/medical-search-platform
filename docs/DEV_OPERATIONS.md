@@ -163,6 +163,36 @@ Un sitio accesible sin evidencia extraíble aparece como `empty`; un fallo de
 DNS, HTTP, redirección o robots aparece como `failed`/`quarantined`. Ninguno
 de esos estados debe convertirse en un precio o una equivalencia manual.
 
+### Retry controlado y publicación de coincidencias genéricas
+
+El retry de Puebla consume el manifiesto anterior y sólo reintenta páginas
+vacías o errores transitorios (`timeout`, conexión y HTTP 408/425/429/5xx):
+
+```powershell
+python -m pruevia_collectors.puebla_retry `
+  --manifest collectors/artifacts/puebla-generic-depth1-hardened/puebla_generic_discovery_manifest.json `
+  --artifact-root collectors/artifacts/puebla-generic-retry `
+  --max-pages 2 --max-depth 1
+```
+
+Robots, DNS no resoluble y HTTP permanente no se reintentan automáticamente.
+La salida es un manifiesto separado para conservar la auditoría temporal.
+
+Las etiquetas genéricas no se publican por similitud. El fixture revisado
+`database/fixtures/generic_provider_mappings_puebla_v1.json` contiene sólo
+cuatro coincidencias exactas. El renderer asociado enlaza cada sitio con sus
+filas DENUE, crea sedes con procedencia y ofertas `requires_quote` sin precio.
+
+Para separar cobertura descubierta de cobertura realmente publicada:
+
+```powershell
+python database/scripts/report_generic_coverage.py `
+  --manifest collectors/artifacts/puebla-generic-depth1-hardened/puebla_generic_discovery_manifest.json `
+  --mapping-fixture database/fixtures/generic_provider_mappings_puebla_v1.json `
+  --retry-manifest collectors/artifacts/puebla-generic-retry/puebla_generic_retry_manifest.json `
+  --denue-source-records 489
+```
+
 ## Gate A coverage report
 
 El reporte es de solo lectura y resume cobertura comparable, precios vigentes,

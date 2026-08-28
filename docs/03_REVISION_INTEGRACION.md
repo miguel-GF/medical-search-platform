@@ -8,7 +8,7 @@
 
 ### Corte ejecutado: 28 de agosto de 2026
 
-El flujo previo a Flutter está operativo técnicamente en DEV. Supabase contiene 175 servicios activos, 219 ofertas, 16 sucursales, 437 precios vigentes y 1,166 registros de normalización (220 resueltos y 946 en revisión). La cobertura multi-proveedor es 44 de 175 servicios; los 44 tienen precio vigente en al menos dos proveedores. Los precios cero usados por Ruiz como sentinela de descuento no disponible fueron eliminados y ahora existe una restricción positiva en `supply.price_versions`. Las migraciones 075-081 agregan lookup administrativo, hardening de integridad y búsqueda con diversidad de proveedores.
+El flujo previo a Flutter está operativo técnicamente en DEV. Supabase contiene 175 servicios activos, 226 ofertas, 23 sucursales, 7 proveedores y 437 precios vigentes. La cobertura multi-proveedor comercial existente sigue siendo 44 de 175 servicios con precio vigente en al menos dos proveedores; los cuatro proveedores genéricos nuevos no aportan precio hasta que publiquen uno explícito. Los precios cero usados por Ruiz como sentinela de descuento no disponible fueron eliminados y ahora existe una restricción positiva en `supply.price_versions`. Las migraciones 075-081 agregan lookup administrativo, hardening de integridad y búsqueda con diversidad de proveedores.
 
 El smoke test Gate A confirma 10/10 aserciones y el Gate A de viabilidad es positivo: supera 30 servicios compartidos, 10 compartidos con precio y 90% de coordenadas. Con el límite normal de 20, `public.api_search` prioriza ambos proveedores cuando existe oferta compartida. El Worker REST y el Admin V1 tienen typecheck, tests y build verdes.
 
@@ -26,7 +26,12 @@ DENUE (47 tras colapsar variantes `www`/raíz). En la corrida endurecida hubo
 ubicaciones) y 27 hosts fallidos por DNS, HTTP, redirección o `robots.txt`.
 Los 107 registros de la corrida exploratoria anterior se conservaron como RAW
 histórico pero quedaron `quarantined`; sólo la corrida endurecida se cargó como
-evidencia vigente. Nada de esto crea ofertas canónicas ni equivalencias clínicas.
+evidencia vigente. En la iteración posterior se revisaron cuatro etiquetas
+exactas y se publicaron cuatro ofertas `requires_quote`, siete sedes con
+procedencia DENUE y cuatro marcas `verification_pending`. Los 44 servicios
+restantes siguen en revisión; ningún precio genérico fue inventado.
+El retry controlado de 11 hosts (20 páginas) no produjo nueva evidencia y dejó
+los estados `empty` separados de los bloqueos permanentes.
 
 El motor de collectors ya tiene artefactos RAW reproducibles, cuarentena por caídas parciales o descensos anómalos, adaptadores DENUE, Chopo Puebla, Ruiz Puebla y Salud Digna Puebla, y normalización determinista. Chopo produjo 45 registros válidos en la corrida revisada; Salud Digna produjo 830 registros válidos y 4,150 observaciones; la cola conserva 946 labels para revisión clínica. La publicación remota se hizo mediante lotes idempotentes de la API enlazada de Supabase porque no había un DSN de servidor en el entorno.
 

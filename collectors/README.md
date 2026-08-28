@@ -108,6 +108,26 @@ una corrida vacía exitosa.
 Para una clínica reclamada se puede añadir después un adapter dedicado, pero
 el flujo genérico sigue siendo la puerta de entrada global.
 
+Para una segunda oportunidad sólo se reintentan corridas `empty` o fallos de
+transporte transitorios; los bloqueos de robots, DNS no resoluble y HTTP
+permanente se dejan fuera:
+
+```powershell
+$env:PYTHONPATH = "src"
+python -m pruevia_collectors.puebla_retry `
+  --manifest artifacts/puebla-generic-depth1-hardened/puebla_generic_discovery_manifest.json `
+  --artifact-root artifacts/puebla-generic-retry `
+  --max-pages 2 --max-depth 1
+```
+
+El retry crea otro manifiesto y otro conjunto de RAW; nunca sobrescribe la
+corrida original.
+
+Las coincidencias exactas revisadas se publican con el renderer de mapeos
+genéricos. La transacción crea marcas/sedes con `verification_pending`, enlaces
+DENUE y ofertas `requires_quote`; no inventa precios. El fixture sólo aprueba
+cuatro etiquetas exactas; el resto permanece en RAW para revisión clínica.
+
 ### Configuración local
 
 Para desarrollo, copia `.env.example` como `.env` y completa `DENUE_API_TOKEN`.

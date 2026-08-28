@@ -22,6 +22,7 @@ pruevia-ruiz = "pruevia_collectors.cli_ruiz:main"
 pruevia-salud-digna = "pruevia_collectors.cli_salud_digna:main"
 pruevia-generic = "pruevia_collectors.cli_generic:main"
 pruevia-puebla-discovery = "pruevia_collectors.puebla_discovery:main"
+pruevia-puebla-retry = "pruevia_collectors.puebla_retry:main"
 pruevia-publish = "pruevia_collectors.cli_publish:main"
 
 [project.optional-dependencies]

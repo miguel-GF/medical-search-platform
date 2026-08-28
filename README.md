@@ -6,7 +6,7 @@ El piloto inicial está enfocado en Puebla, México. El nombre **Pruevia** es pr
 
 ## Estado ejecutado al 27 de agosto de 2026
 
-El Data Engine previo a Flutter funciona en Supabase DEV y Gate A de viabilidad es positivo: hay 175 servicios activos, 219 ofertas, 3 proveedores, 44 servicios compartidos con precio vigente, 16 sucursales con coordenadas y 437 precios vigentes. La búsqueda devuelve opciones de ambos proveedores para los servicios revisados. DENUE ya tiene una corrida live reproducible con 489 registros válidos. Flutter queda deliberadamente fuera de este corte.
+El Data Engine previo a Flutter funciona en Supabase DEV y Gate A de viabilidad es positivo: hay 175 servicios activos, 226 ofertas, 7 proveedores, 44 servicios compartidos con precio vigente, 23 sucursales con coordenadas y 437 precios vigentes. La búsqueda devuelve opciones comerciales y nuevas alternativas pequeñas con `requires_quote` cuando no existe precio publicado. DENUE ya tiene una corrida live reproducible con 489 registros válidos. Flutter queda deliberadamente fuera de este corte.
 
 Consulta el detalle y los comandos reproducibles en [docs/03_REVISION_INTEGRACION.md](docs/03_REVISION_INTEGRACION.md) y [docs/02_FASES_IMPLEMENTACION.md](docs/02_FASES_IMPLEMENTACION.md).
 
@@ -18,6 +18,7 @@ Consulta el detalle y los comandos reproducibles en [docs/03_REVISION_INTEGRACIO
 - Collectors Chopo/Ruiz/Salud Digna/DENUE (fixtures, pruebas y corridas live reproducibles), Search API V1 y Admin V1: implementados y probados. Chopo, Ruiz, Salud Digna y DENUE están publicados en Supabase DEV. El gate remoto, los invariantes de base, la API pública y la cuarentena de colectores pasan; no se inicia Flutter hasta un nuevo corte de producto.
 - Collector genérico de proveedores: discovery acotado por dominio, respeto de robots.txt, JSON-LD/patrones de precio-servicio y evidencia candidata para laboratorios pequeños.
 - Fan-out de discovery Puebla: agrupa los sitios web declarados por DENUE y conserva el vínculo de cada host con sus candidatos para medir cobertura sin captura manual.
+- Publicación genérica revisada: cuatro coincidencias exactas enlazadas a siete sedes DENUE; el resto permanece en revisión y los reintentos sólo cubren fallos transitorios.
 
 ## Repositorio
 

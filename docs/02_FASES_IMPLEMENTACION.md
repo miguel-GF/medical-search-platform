@@ -665,8 +665,8 @@ aportÃ³ una sede que no coincide geogrÃ¡ficamente con las cinco filas DENUE.
 
 # Fase 14.1 — Discovery genérico de proveedores pequeños
 
-**Estado:** En implementación técnica; no bloquea el resolver, sí es requisito
-para demostrar cobertura amplia antes de Flutter.
+**Estado:** ✅ implementación técnica y primer lote de publicación revisado;
+la ampliación de cobertura continúa antes de Flutter.
 
 El collector genérico opera por dominio, no por marca: respeta `robots.txt`,
 sigue enlaces internos con presupuesto acotado, extrae JSON-LD y patrones de precio/servicio, y
@@ -682,6 +682,21 @@ obtuvieron 54 evidencias candidatas (48 servicios sin precio y 6 ubicaciones).
 Los fallos se separan por DNS, HTTP, redirección, robots o contenido vacío.
 La primera corrida ruidosa (107 registros) permanece en RAW histórico y fue
 marcada `quarantined`; solo la corrida endurecida se cargó a `ingest`.
+
+En la iteración siguiente se aprobaron sólo cuatro coincidencias exactas:
+`Examen general de orina`, `Mastografía`, `Ultrasonido abdomen completo` y
+`Ultrasonido obstétrico`. Se crearon cuatro marcas con estado
+`verification_pending`, siete sedes sustentadas por DENUE y cuatro ofertas
+activas con `requires_quote=true`; al no existir precios explícitos confiables,
+la API devuelve precio nulo y conserva el enlace público del proveedor. Los
+44 registros de servicio restantes siguen como candidatos para revisión; no se
+aprobó ningún panel, modalidad amplia ni similitud fuzzy.
+
+El retry posterior cubrió los 11 hosts vacíos o transitorios (20 páginas, 0
+nuevas evidencias). Los 26 hosts restantes no se reintentaron porque el
+manifiesto los clasificó como robots, DNS no resoluble, redirección o HTTP
+permanente; así se evita convertir una política de acceso o un dominio muerto
+en ruido operacional.
 
 ---
 
