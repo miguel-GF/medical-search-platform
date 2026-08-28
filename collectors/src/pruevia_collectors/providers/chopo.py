@@ -372,9 +372,12 @@ def parse_price_text(value: str) -> dict[str, int]:
     amounts = re.findall(r"\$\s*([0-9][0-9,]*(?:\.[0-9]{1,2})?)", value)
     if not amounts:
         return {}
-    prices = {"regular": _to_minor_units(amounts[0])}
-    if len(amounts) > 1:
-        prices["online"] = _to_minor_units(amounts[1])
+    parsed = [_to_minor_units(amount) for amount in amounts]
+    if parsed[0] <= 0:
+        return {}
+    prices = {"regular": parsed[0]}
+    if len(parsed) > 1 and parsed[1] > 0:
+        prices["online"] = parsed[1]
     return prices
 
 

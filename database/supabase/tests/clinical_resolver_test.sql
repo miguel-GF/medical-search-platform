@@ -2,7 +2,7 @@
 
 begin;
 create extension if not exists pgtap with schema extensions;
-select extensions.plan(16);
+select extensions.plan(18);
 
 select extensions.has_table('catalog', 'item_descriptions', 'clinical descriptions table exists');
 select extensions.has_table('health', 'lab_service_definitions', 'lab attributes table exists');
@@ -15,6 +15,11 @@ select extensions.is(
   (select item_id from catalog.resolve_items_v4('BH', 'health_diagnostics', null, 10) limit 1),
   '00000000-0000-0000-0000-000000001103'::uuid,
   'BH resolves to biometria hematica'
+);
+select extensions.is(
+  (select item_id from catalog.resolve_items_v4('B H', 'health_diagnostics', null, 10) limit 1),
+  '00000000-0000-0000-0000-000000001103'::uuid,
+  'OCR-spaced B H resolves to biometria hematica'
 );
 select extensions.is(
   (select item_id from catalog.resolve_items_v4('EGO', 'health_diagnostics', null, 10) limit 1),
@@ -30,6 +35,11 @@ select extensions.is(
   (select jsonb_array_length(public.api_resolve_search('QS completa')->'candidates')),
   2,
   'QS completa returns both panel variants'
+);
+select extensions.is(
+  (select public.api_resolve_search('Q S completa')->>'status'),
+  'ambiguous',
+  'OCR-spaced Q S completa remains explicitly ambiguous'
 );
 select extensions.is(
   (select public.api_resolve_search('perfil toroideo')->>'status'),

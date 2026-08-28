@@ -147,6 +147,15 @@ class CollectorRunner:
                 collector_failure = True
                 errors.append(f"collector failure: {error}")
 
+            # Adapters that intentionally continue after a per-page failure
+            # expose those failures without aborting the rest of the batch.
+            # Treat the run as partial/quarantined evidence rather than
+            # silently calling an incomplete crawl successful.
+            adapter_errors = getattr(collector, "errors", ())
+            if adapter_errors:
+                collector_failure = True
+                errors.extend(f"adapter: {error}" for error in adapter_errors)
+
         deviation = None
         if previous_success_count and previous_success_count > 0:
             deviation = round((records_received - previous_success_count) / previous_success_count * 100, 4)

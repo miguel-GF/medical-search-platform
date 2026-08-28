@@ -357,10 +357,10 @@ def _hours(value: Any) -> dict[str, str] | None:
 def _prices(row: Mapping[str, Any]) -> dict[str, int]:
     result: dict[str, int] = {}
     regular = _money(_first_value(row, "Precio", "precio", "PrecioRegular", "precioRegular", "price"))
-    if regular is not None:
+    if regular is not None and regular > 0:
         result["regular"] = regular
     promotion = _money(_first_value(row, "PrecioPromocion", "precioPromocion", "PrecioOferta", "precioOferta"))
-    if promotion is not None and promotion != regular:
+    if promotion is not None and promotion > 0 and promotion != regular:
         result["promotion"] = promotion
     discount = _number(_first_value(row, "Descuento", "descuento", "Discount", "discount"))
     if promotion is None and regular is not None and discount is not None and 0 < discount < 100:
@@ -375,7 +375,7 @@ def _money(value: Any) -> int | None:
         amount = Decimal(str(value).replace("$", "").replace(",", "").strip()).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
     except (InvalidOperation, ValueError):
         return None
-    if amount < 0 or amount > Decimal(10000000):
+    if amount <= 0 or amount > Decimal(10000000):
         return None
     return int(amount * 100)
 

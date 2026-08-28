@@ -31,6 +31,8 @@ def test_chopo_parser_extracts_names_skus_urls_and_prices():
 def test_chopo_price_parser_keeps_minor_units():
     assert parse_price_text("Precio $1,500.00 $975.5") == {"regular": 150000, "online": 97550}
     assert parse_price_text("Sin precio") == {}
+    assert parse_price_text("Precio $0.00") == {}
+    assert parse_price_text("Precio $0.00 $975.00") == {}
 
 
 def test_chopo_product_parser_reads_structured_puebla_price():

@@ -73,6 +73,19 @@ def test_render_ingest_artifact_is_idempotent_and_evidence_only(tmp_path):
     assert sql.endswith("commit;\n")
 
 
+def test_render_ingest_artifact_maps_legacy_generic_source_type(tmp_path):
+    artifact = _write_artifact(tmp_path)
+    manifest_path = artifact / "run_manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["source_type"] = "provider_discovered"
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+
+    sql = render(artifact)
+
+    assert "'public_website',80," in sql
+    assert "'provider_discovered',80," not in sql
+
+
 def test_render_ingest_artifact_rejects_duplicate_hashes(tmp_path):
     with pytest.raises(ValueError, match="duplicate record hashes"):
         render(_write_artifact(tmp_path, duplicate=True))

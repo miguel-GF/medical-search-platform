@@ -15,6 +15,7 @@ import json
 import re
 import socket
 import time
+import unicodedata
 from collections import deque
 from dataclasses import dataclass
 from html.parser import HTMLParser
@@ -29,6 +30,13 @@ from ..models import Observation, SourceRecord, SourceSpec
 
 
 MAX_DEFAULT_RESPONSE_BYTES = 2_000_000
+MAX_HARD_RESPONSE_BYTES = 10_000_000
+MAX_HARD_PAGES = 500
+MAX_HARD_DEPTH = 5
+MAX_HARD_DELAY_SECONDS = 60.0
+MAX_HARD_ATTEMPTS = 5
+MAX_HARD_REDIRECTS = 10
+MAX_DEFAULT_REDIRECTS = 5
 DEFAULT_USER_AGENT = "PrueviaGenericCollector/0.1 (+https://pruevia.local/collector)"
 GENERIC_PARSER_VERSION = "0.1.0"
 PRICE_RE = re.compile(
@@ -84,28 +92,33 @@ class GenericCrawlConfig:
     def __post_init__(self) -> None:
         if not self.seed_urls:
             raise ValueError("at least one seed URL is required")
-        if self.max_pages < 1 or self.max_depth < 0:
-            raise ValueError("max_pages must be positive and max_depth cannot be negative")
-        if self.delay_seconds < 0:
-            raise ValueError("delay_seconds cannot be negative")
-        if self.max_response_bytes < 16_384:
-            raise ValueError("max_response_bytes must be at least 16384")
+        if not 1 <= self.max_pages <= MAX_HARD_PAGES or not 0 <= self.max_depth <= MAX_HARD_DEPTH:
+            raise ValueError("max_pages must be between 1 and 500; max_depth must be between 0 and 5")
+        if not 0 <= self.delay_seconds <= MAX_HARD_DELAY_SECONDS:
+            raise ValueError("delay_seconds must be between 0 and 60")
+        if not 16_384 <= self.max_response_bytes <= MAX_HARD_RESPONSE_BYTES:
+            raise ValueError("max_response_bytes must be between 16384 and 10000000")
 
 
 def normalize(value: object | None) -> str:
-    text = re.sub(r"\s+", " ", repair_text(value)).strip().casefold()
-    return re.sub(r"[^a-z0-9áéíóúüñ]+", " ", text).strip()
+    text = unicodedata.normalize("NFKD", repair_text(value).casefold())
+    plain = "".join(char for char in text if not unicodedata.combining(char))
+    return re.sub(r"[^a-z0-9]+", " ", plain).strip()
 
 
 def repair_text(value: object | None) -> str:
     text = str(value or "").strip()
-    if any(marker in text for marker in ("Ã", "Â", "â")):
+    for _ in range(2):
+        if not any(marker in text for marker in ("Ã", "Â", "â", "ð")):
+            break
         try:
             repaired = text.encode("latin-1").decode("utf-8")
-            if "�" not in repaired:
-                return repaired
+            if repaired != text and "�" not in repaired and repaired.count("Ã") < text.count("Ã"):
+                text = repaired
+                continue
         except (UnicodeEncodeError, UnicodeDecodeError):
             pass
+        break
     return text
 
 
@@ -150,13 +163,38 @@ def _host(value: str) -> str:
     return (parsed.hostname or "").casefold().rstrip(".")
 
 
+def _site_host(value: str) -> str:
+    """Collapse only the conventional apex/www spelling of one site."""
+
+    host = _host(value)
+    return host[4:] if host.startswith("www.") else host
+
+
 def _canonical_url(value: str, *, base_url: str | None = None) -> str:
     resolved = urljoin(base_url or "", value.strip())
     resolved, _ = urldefrag(resolved)
     parsed = urlparse(resolved)
     if parsed.scheme not in {"http", "https"} or not parsed.hostname or parsed.username or parsed.password:
         raise ValueError("generic crawler accepts only http(s) URLs without credentials")
+    try:
+        port = parsed.port
+    except ValueError as error:
+        raise ValueError("generic crawler URL has an invalid port") from error
+    if port not in (None, 80, 443):
+        raise ValueError("generic crawler accepts only standard HTTP(S) ports")
     return resolved
+
+
+def _safe_link(value: object | None, *, fallback: str) -> str:
+    """Keep candidate links navigable without emitting script/data URLs."""
+
+    raw = str(value or "").strip()
+    if not raw:
+        return fallback
+    try:
+        return _canonical_url(raw, base_url=fallback)
+    except ValueError:
+        return fallback
 
 
 def _public_host(host: str) -> bool:
@@ -185,6 +223,7 @@ class GenericWebClient:
         *,
         timeout_seconds: float = 20.0,
         max_attempts: int = 2,
+        max_redirects: int = MAX_DEFAULT_REDIRECTS,
         max_response_bytes: int = MAX_DEFAULT_RESPONSE_BYTES,
         allow_private_hosts: bool = False,
         respect_robots: bool = True,
@@ -193,14 +232,20 @@ class GenericWebClient:
         seeds = tuple(_canonical_url(url) for url in seed_urls if url.strip())
         if not seeds:
             raise ValueError("at least one valid seed URL is required")
-        if timeout_seconds <= 0 or max_attempts < 1:
-            raise ValueError("timeout_seconds must be positive and max_attempts must be positive")
-        if max_response_bytes < 16_384:
-            raise ValueError("max_response_bytes must be at least 16384")
+        if not 0 < timeout_seconds <= 120 or not 1 <= max_attempts <= MAX_HARD_ATTEMPTS or not 0 <= max_redirects <= MAX_HARD_REDIRECTS:
+            raise ValueError("timeout_seconds must be between 0 and 120; attempts 1-5; redirects 0-10")
+        if not 16_384 <= max_response_bytes <= MAX_HARD_RESPONSE_BYTES:
+            raise ValueError("max_response_bytes must be between 16384 and 10000000")
         self.seed_urls = seeds
         self.allowed_hosts = {_host(url) for url in seeds}
+        # Small sites commonly redirect between ``example.mx`` and
+        # ``www.example.mx``.  Treat only that exact www/apex pair as the
+        # same site; unrelated subdomains remain outside the allowlist.
+        for host in tuple(self.allowed_hosts):
+            self.allowed_hosts.add(host[4:] if host.startswith("www.") else f"www.{host}")
         self.timeout_seconds = timeout_seconds
         self.max_attempts = max_attempts
+        self.max_redirects = max_redirects
         self.max_response_bytes = max_response_bytes
         self.allow_private_hosts = allow_private_hosts
         self.respect_robots = respect_robots
@@ -221,22 +266,42 @@ class GenericWebClient:
         last_error: Exception | None = None
         for attempt in range(1, self.max_attempts + 1):
             try:
-                response = self._client.get(
-                    canonical,
-                    headers={"Accept": "text/html,application/xhtml+xml", "User-Agent": DEFAULT_USER_AGENT},
-                )
-                response.raise_for_status()
-                resolved = _canonical_url(str(response.url))
-                self._validate_host(resolved)
-                content_type = response.headers.get("content-type", "text/html").casefold()
-                if "html" not in content_type and "text/" not in content_type:
-                    raise ValueError(f"unsupported generic page content type: {content_type}")
-                raw = response.content
-                if len(raw) > self.max_response_bytes:
-                    raise ValueError("generic page exceeds max_response_bytes")
-                return GenericPage(url=resolved, html=decode_html(raw, response.encoding), content_type=content_type)
+                current = canonical
+                for redirect_count in range(self.max_redirects + 1):
+                    # Validate each hop before issuing the next request.  Using
+                    # httpx's automatic redirects would contact an external or
+                    # private target before the final URL could be checked.
+                    response = self._client.get(
+                        current,
+                        headers={"Accept": "text/html,application/xhtml+xml", "User-Agent": DEFAULT_USER_AGENT},
+                        follow_redirects=False,
+                    )
+                    if 300 <= response.status_code < 400:
+                        if redirect_count >= self.max_redirects:
+                            raise ValueError("generic crawler exceeded max_redirects")
+                        location = response.headers.get("location", "").strip()
+                        if not location:
+                            raise ValueError("generic redirect has no Location header")
+                        current = _canonical_url(location, base_url=current)
+                        self._validate_host(current)
+                        continue
+                    response.raise_for_status()
+                    resolved = _canonical_url(str(response.url))
+                    self._validate_host(resolved)
+                    content_type = response.headers.get("content-type", "text/html").casefold()
+                    if "html" not in content_type and "text/" not in content_type:
+                        raise ValueError(f"unsupported generic page content type: {content_type}")
+                    raw = response.content
+                    if len(raw) > self.max_response_bytes:
+                        raise ValueError("generic page exceeds max_response_bytes")
+                    return GenericPage(url=resolved, html=decode_html(raw, response.encoding), content_type=content_type)
+                raise ValueError("generic crawler exceeded max_redirects")
             except (httpx.HTTPStatusError, httpx.RequestError, ValueError) as error:
                 last_error = error
+                # Validation/content-limit failures are deterministic; retrying
+                # them only adds latency and can repeat an unsafe redirect.
+                if isinstance(error, ValueError):
+                    break
                 if isinstance(error, httpx.HTTPStatusError) and error.response.status_code not in {408, 425, 429, 500, 502, 503, 504}:
                     break
                 if attempt < self.max_attempts:
@@ -246,12 +311,9 @@ class GenericWebClient:
     def _allowed_by_robots(self, url: str) -> bool:
         if not self._robots_loaded:
             parsed = urlparse(self.seed_urls[0])
-            robots_url = f"{parsed.scheme}://{parsed.netloc}/robots.txt"
             try:
-                response = self._client.get(
-                    robots_url,
-                    headers={"Accept": "text/plain", "User-Agent": DEFAULT_USER_AGENT},
-                )
+                robots_url = f"{parsed.scheme}://{parsed.netloc}/robots.txt"
+                response = self._fetch_robots(robots_url)
                 if response.status_code in {404, 410}:
                     self._robots = None
                 elif response.status_code >= 400:
@@ -265,6 +327,28 @@ class GenericWebClient:
                 self._robots.parse(["User-agent: *", "Disallow: /"])
             self._robots_loaded = True
         return self._robots is None or self._robots.can_fetch(DEFAULT_USER_AGENT, url)
+
+    def _fetch_robots(self, robots_url: str) -> httpx.Response:
+        """Fetch robots.txt without allowing an unchecked redirect hop."""
+
+        current = _canonical_url(robots_url)
+        self._validate_host(current)
+        for redirect_count in range(self.max_redirects + 1):
+            response = self._client.get(
+                current,
+                headers={"Accept": "text/plain", "User-Agent": DEFAULT_USER_AGENT},
+                follow_redirects=False,
+            )
+            if not 300 <= response.status_code < 400:
+                return response
+            if redirect_count >= self.max_redirects:
+                raise ValueError("generic robots.txt exceeded max_redirects")
+            location = response.headers.get("location", "").strip()
+            if not location:
+                raise ValueError("generic robots.txt redirect has no Location header")
+            current = _canonical_url(location, base_url=current)
+            self._validate_host(current)
+        raise ValueError("generic robots.txt exceeded max_redirects")
 
     def _validate_host(self, url: str) -> None:
         host = _host(url)
@@ -405,7 +489,7 @@ def _geo(node: Mapping[str, Any]) -> dict[str, float] | None:
 def _node_price(node: Mapping[str, Any]) -> int | None:
     for key in ("price", "lowPrice", "priceValue", "amount"):
         price = parse_price_minor(node.get(key))
-        if price is not None:
+        if price is not None and price > 0:
             return price
     return None
 
@@ -414,6 +498,20 @@ def _valid_title(value: str) -> bool:
     cleaned = _clean_text(value)
     normalized = normalize(cleaned)
     return bool(cleaned and len(cleaned) >= 3 and normalized not in GENERIC_TITLE_WORDS and len(cleaned) <= 180)
+
+
+def _evidence_confidence(method: object | None) -> float:
+    """Rate extraction strength without turning it into a clinical claim."""
+
+    return {
+        "jsonld_local_business": 0.95,
+        "jsonld_offer": 0.90,
+        "jsonld_price": 0.88,
+        "embedded_script_pattern": 0.78,
+        "price_pattern": 0.68,
+        "jsonld_service": 0.65,
+        "heading_pattern": 0.50,
+    }.get(str(method or ""), 0.50)
 
 
 class GenericPageParser:
@@ -457,26 +555,45 @@ class GenericPageParser:
                         continue
                     price = _node_price(offer)
                     if price is not None:
+                        offer_name = name or _first_text(offer.get("name"))
+                        # Generic Product/Offer JSON-LD is common for
+                        # unrelated merchandise.  Keep only clinically
+                        # plausible labels unless the schema itself is a
+                        # medical test/service.
+                        if types & {"product", "offer"} and not SERVICE_HINT_RE.search(offer_name):
+                            continue
                         found_nested = True
                         offers.append(
                             {
-                                "name": name or _first_text(offer.get("name")),
+                                "name": offer_name,
                                 "price_minor": price,
-                                "url": urljoin(page.url, _first_text(node.get("url"), offer.get("url"), page.url)),
+                                "url": _safe_link(
+                                    _first_text(node.get("url"), offer.get("url"), page.url),
+                                    fallback=page.url,
+                                ),
                                 "method": "jsonld_offer",
                             }
                         )
                 if not found_nested and name and _node_price(node) is not None:
+                    if types & {"product", "offer"} and not SERVICE_HINT_RE.search(name):
+                        continue
                     offers.append(
                         {
                             "name": name,
                             "price_minor": _node_price(node),
-                            "url": urljoin(page.url, _first_text(node.get("url"), page.url)),
+                            "url": _safe_link(_first_text(node.get("url"), page.url), fallback=page.url),
                             "method": "jsonld_price",
                         }
                     )
                 elif name and (types & {"service", "medicaltest"}) and not found_nested:
-                    offers.append({"name": name, "price_minor": None, "url": urljoin(page.url, _first_text(node.get("url"), page.url)), "method": "jsonld_service"})
+                    offers.append(
+                        {
+                            "name": name,
+                            "price_minor": None,
+                            "url": _safe_link(_first_text(node.get("url"), page.url), fallback=page.url),
+                            "method": "jsonld_service",
+                        }
+                    )
         offers.extend(self._embedded_script_offers(page.url, page.html))
         host_parts = [part for part in _host(page.url).split(".") if part and part != "www"]
         provider_name = provider_name or parser.meta.get("og:site_name", "") or (host_parts[0].title() if host_parts else "Provider")
@@ -517,6 +634,8 @@ class GenericPageParser:
                 continue
             raw_price = match.group(3) or match.group(4) or ""
             price = parse_price_minor(raw_price)
+            if price is None or price <= 0:
+                continue
             results.append(
                 {
                     "name": title,
@@ -529,34 +648,45 @@ class GenericPageParser:
 
     @staticmethod
     def _pattern_offers(page_url: str, headings: Sequence[str], text: str) -> list[dict[str, Any]]:
-        matches = list(PRICE_RE.finditer(text))
-        if not matches:
-            # Service-only pages are useful, but only take headings with a
-            # clinical hint to avoid emitting navigation and marketing copy.
-            return [
-                {"name": heading, "price_minor": None, "url": page_url, "method": "heading_pattern"}
-                for heading in headings
-                if SERVICE_HINT_RE.search(heading) and _valid_title(heading)
-            ][:50]
+        # Associate a price with the nearest clinical heading instead of
+        # pairing the Nth page-wide number with the Nth heading.  This avoids
+        # turning navigation counters, phone numbers and marketing copy into
+        # medical prices.
         results: list[dict[str, Any]] = []
-        for index, price_match in enumerate(matches[:100]):
-            raw_price = price_match.group(0)
-            context = text[max(0, price_match.start() - 80) : min(len(text), price_match.end() + 80)].casefold()
-            explicit_currency = "$" in raw_price or "mxn" in raw_price.casefold()
-            price_word = any(word in context for word in ("precio", "costo", "tarifa", "oferta", "promocion", "desde"))
-            decimal_number = "." in raw_price or "," in raw_price
-            if not explicit_currency and not price_word and not decimal_number:
+        cursor = 0
+        folded_text = text.casefold()
+        for heading in headings[:100]:
+            cleaned_heading = _clean_text(heading)
+            if not _valid_title(cleaned_heading) or not SERVICE_HINT_RE.search(cleaned_heading):
                 continue
-            price = parse_price_minor(price_match.group(0))
-            if price is None:
-                continue
-            title = headings[index] if index < len(headings) else (headings[0] if headings else "")
-            if not _valid_title(title):
-                title = next((heading for heading in reversed(headings[: index + 1]) if _valid_title(heading)), "")
-            if title:
-                results.append({"name": title, "price_minor": price, "url": page_url, "method": "price_pattern"})
+            start = folded_text.find(cleaned_heading.casefold(), cursor)
+            if start < 0:
+                start = cursor
+            next_positions = []
+            for candidate in headings:
+                candidate_text = _clean_text(candidate)
+                if not _valid_title(candidate_text):
+                    continue
+                position = folded_text.find(candidate_text.casefold(), start + len(cleaned_heading))
+                if position >= 0:
+                    next_positions.append(position)
+            end = min(next_positions) if next_positions else min(len(text), start + 700)
+            segment = text[start:end]
+            cursor = max(cursor, start + len(cleaned_heading))
+            for price_match in list(PRICE_RE.finditer(segment))[:5]:
+                raw_price = price_match.group(0)
+                context = segment[max(0, price_match.start() - 100) : min(len(segment), price_match.end() + 100)].casefold()
+                explicit_currency = "$" in raw_price or "mxn" in raw_price.casefold()
+                price_word = any(word in context for word in ("precio", "costo", "tarifa", "oferta", "promocion", "desde"))
+                if not explicit_currency and not price_word:
+                    continue
+                price = parse_price_minor(raw_price)
+                if price is not None and price > 0:
+                    results.append({"name": cleaned_heading, "price_minor": price, "url": page_url, "method": "price_pattern"})
         if results:
             return results
+        # Service-only pages are useful, but only take headings with a
+        # clinical hint to avoid emitting navigation and marketing copy.
         return [
             {"name": heading, "price_minor": None, "url": page_url, "method": "heading_pattern"}
             for heading in headings
@@ -568,6 +698,16 @@ def _stable_id(kind: str, url: str, name: str) -> str:
     return hashlib.sha256(f"{kind}|{url}|{normalize(name)}".encode("utf-8")).hexdigest()[:32]
 
 
+def _source_key_for_host(host: str) -> str:
+    clean = re.sub(r"[^a-z0-9_]", "", host.replace("-", "_").replace(".", "_")) or "provider"
+    prefix = "generic_"
+    if len(prefix) + len(clean) <= 80:
+        return prefix + clean
+    # Preserve uniqueness when a long host is truncated for the source key.
+    suffix = hashlib.sha256(host.encode("utf-8")).hexdigest()[:12]
+    return f"{prefix}{clean[:80 - len(prefix) - len(suffix) - 1]}_{suffix}"
+
+
 def _location_record(source_key: str, page: GenericPage, provider_name: str, location: Mapping[str, Any]) -> SourceRecord:
     name = _first_text(location.get("name"), provider_name)
     external_id = _stable_id("location", page.url, name)
@@ -575,7 +715,7 @@ def _location_record(source_key: str, page: GenericPage, provider_name: str, loc
         "provider_display_name": name,
         "provider_legal_name": _first_text(location.get("legal_name")),
         "provider_external_id": external_id,
-        "location_url": _first_text(location.get("url"), page.url),
+        "location_url": _safe_link(_first_text(location.get("url"), page.url), fallback=page.url),
         "address": dict(location.get("address") or {}),
         "coordinates": location.get("coordinates"),
         "phone": _first_text(location.get("phone")),
@@ -583,12 +723,29 @@ def _location_record(source_key: str, page: GenericPage, provider_name: str, loc
         "evidence_page_url": page.url,
     }
     observations = [
-        Observation(entity_type="provider_location", attribute_name="provider_display_name", observed_value=name),
-        Observation(entity_type="provider_location", attribute_name="source_url", observed_value=page.url),
+        Observation(
+            entity_type="provider_location",
+            attribute_name="provider_display_name",
+            observed_value=name,
+            confidence=_evidence_confidence(payload["evidence_method"]),
+        ),
+        Observation(
+            entity_type="provider_location",
+            attribute_name="source_url",
+            observed_value=page.url,
+            confidence=_evidence_confidence(payload["evidence_method"]),
+        ),
     ]
     for field in ("address", "coordinates", "phone"):
         if payload[field]:
-            observations.append(Observation(entity_type="provider_location", attribute_name=field, observed_value=payload[field]))
+            observations.append(
+                Observation(
+                    entity_type="provider_location",
+                    attribute_name=field,
+                    observed_value=payload[field],
+                    confidence=_evidence_confidence(payload["evidence_method"]),
+                )
+            )
     return SourceRecord(
         source_key=source_key,
         record_type="provider_location_discovered",
@@ -608,20 +765,47 @@ def _offer_record(source_key: str, page: GenericPage, provider_name: str, offer:
         "provider_brand_hint": provider_name,
         "provider_external_id": external_id,
         "provider_sku": None,
-        "product_url": _first_text(offer.get("url"), page.url),
+        "product_url": _safe_link(_first_text(offer.get("url"), page.url), fallback=page.url),
         "prices": {"regular": price} if isinstance(price, int) else {},
         "evidence_method": offer.get("method", "pattern"),
         "evidence_page_url": page.url,
         "claim_status": "candidate",
     }
     observations = [
-        Observation(entity_type="offer", attribute_name="provider_display_name", observed_value=title),
-        Observation(entity_type="offer", attribute_name="product_url", observed_value=payload["product_url"]),
-        Observation(entity_type="offer", attribute_name="provider_brand_hint", observed_value=provider_name),
-        Observation(entity_type="offer", attribute_name="evidence_method", observed_value=payload["evidence_method"]),
+        Observation(
+            entity_type="offer",
+            attribute_name="provider_display_name",
+            observed_value=title,
+            confidence=_evidence_confidence(payload["evidence_method"]),
+        ),
+        Observation(
+            entity_type="offer",
+            attribute_name="product_url",
+            observed_value=payload["product_url"],
+            confidence=_evidence_confidence(payload["evidence_method"]),
+        ),
+        Observation(
+            entity_type="offer",
+            attribute_name="provider_brand_hint",
+            observed_value=provider_name,
+            confidence=_evidence_confidence(payload["evidence_method"]),
+        ),
+        Observation(
+            entity_type="offer",
+            attribute_name="evidence_method",
+            observed_value=payload["evidence_method"],
+            confidence=_evidence_confidence(payload["evidence_method"]),
+        ),
     ]
     if payload["prices"]:
-        observations.append(Observation(entity_type="price", attribute_name="prices", observed_value=payload["prices"]))
+        observations.append(
+            Observation(
+                entity_type="price",
+                attribute_name="prices",
+                observed_value=payload["prices"],
+                confidence=_evidence_confidence(payload["evidence_method"]),
+            )
+        )
     return SourceRecord(
         source_key=source_key,
         record_type="provider_offer_price" if payload["prices"] else "provider_offer_discovered",
@@ -643,28 +827,33 @@ class GenericProviderAdapter:
         source_key: str | None = None,
     ) -> None:
         self.config = config
-        if len({_host(url) for url in config.seed_urls}) != 1:
+        if len({_site_host(url) for url in config.seed_urls}) != 1:
             raise ValueError("all generic seed URLs must belong to the same host")
         self.client = client or GenericWebClient(config.seed_urls, max_response_bytes=config.max_response_bytes)
         self._owns_client = client is None
-        host_label = _host(config.seed_urls[0]).replace("-", "_").replace(".", "_")
-        clean_key = re.sub(r"[^a-z0-9_]", "", host_label) or "provider"
+        site_label = _site_host(config.seed_urls[0])
         self.source = SourceSpec(
-            source_key=source_key or f"generic_{clean_key}"[:80],
-            name=f"Generic provider discovery — {_host(config.seed_urls[0])}",
-            source_type="provider_discovered",
+            source_key=source_key or _source_key_for_host(site_label),
+            name=f"Generic provider discovery — {site_label}",
+            source_type="public_website",
             usage_policy_status="review_required",
             endpoint_type="html",
             endpoint_url=config.seed_urls[0],
             parser_version=GENERIC_PARSER_VERSION,
         )
         self.parser = GenericPageParser()
+        self.errors: list[str] = []
+        self.pages_fetched = 0
+        self.pages_failed = 0
 
     def close(self) -> None:
         if self._owns_client:
             self.client.close()
 
     def collect(self) -> Iterable[SourceRecord]:
+        self.errors.clear()
+        self.pages_fetched = 0
+        self.pages_failed = 0
         queue: deque[tuple[str, int]] = deque((_canonical_url(url), 0) for url in self.config.seed_urls)
         seen_urls: set[str] = set()
         seen_records: set[tuple[str, str, int | None]] = set()
@@ -678,9 +867,12 @@ class GenericProviderAdapter:
                 time.sleep(self.config.delay_seconds)
             try:
                 page = self.client.fetch(url)
-            except (RuntimeError, ValueError):
+            except (RuntimeError, ValueError) as error:
+                self.pages_failed += 1
+                self.errors.append(f"{url}: {error}")
                 continue
             pages += 1
+            self.pages_fetched += 1
             parsed = self.parser.parse(page)
             provider_name = parsed["provider_name"]
             for location in parsed["locations"]:

@@ -16,6 +16,11 @@ from pathlib import Path
 from uuid import NAMESPACE_URL, UUID, uuid5
 
 
+# ``provider_discovered`` was used by the first generic collector prototype;
+# the database contract names this evidence source ``public_website``.
+SOURCE_TYPE_ALIASES = {"provider_discovered": "public_website"}
+
+
 def stable_id(kind: str, key: str) -> str:
     return str(uuid5(NAMESPACE_URL, f"https://pruevia.local/{kind}/{key}"))
 
@@ -81,6 +86,7 @@ def render(artifact: Path) -> str:
     manifest, raw, observations = read_artifact(artifact)
     parsed = validate(manifest, raw, observations)
     source_key = manifest["source_key"]
+    source_type = SOURCE_TYPE_ALIASES.get(manifest.get("source_type"), manifest.get("source_type"))
     source_id = stable_id("ingest-source", source_key)
     endpoint_id = stable_id("ingest-endpoint", source_key)
     run_id = str(manifest["run_id"])
@@ -88,7 +94,7 @@ def render(artifact: Path) -> str:
     endpoint_name = f"{source_name} collector endpoint"
     lines = ["begin;", "-- Generated from a succeeded collector artifact; evidence only."]
     lines.append(
-        f"insert into ingest.sources(id,name,source_type,trust_rank,usage_policy_status,status) values ({q(source_id)},{q(source_name)},{q(manifest['source_type'])},80,{q(manifest.get('usage_policy_status','review_required'))},'active') on conflict(id) do update set name=excluded.name,source_type=excluded.source_type,usage_policy_status=excluded.usage_policy_status,status='active';"
+        f"insert into ingest.sources(id,name,source_type,trust_rank,usage_policy_status,status) values ({q(source_id)},{q(source_name)},{q(source_type)},80,{q(manifest.get('usage_policy_status','review_required'))},'active') on conflict(id) do update set name=excluded.name,source_type=excluded.source_type,usage_policy_status=excluded.usage_policy_status,status='active';"
     )
     lines.append(
         f"insert into ingest.source_endpoints(id,source_id,name,endpoint_type,parser_name,parser_version,url,expected_min_records,expected_max_records,max_negative_deviation_pct,status) values ({q(endpoint_id)},{q(source_id)},{q(endpoint_name)},{q(manifest.get('endpoint_type','other'))},'pruevia_collectors',{q(manifest.get('parser_version','0.1.0'))},{q(manifest.get('endpoint_url'))},NULL,NULL,50.00,'active') on conflict(id) do update set source_id=excluded.source_id,name=excluded.name,endpoint_type=excluded.endpoint_type,parser_version=excluded.parser_version,url=excluded.url,status='active';"

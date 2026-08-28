@@ -44,6 +44,15 @@ def test_salud_digna_study_maps_promotion_from_discount():
     assert any(observation.entity_type == "price" for observation in record.observations)
 
 
+def test_salud_digna_price_parser_drops_zero_sentinels():
+    record = salud_digna_study_to_record(
+        {"Id": 17, "Descripcion": "Glucosa", "Precio": 0},
+        location=location_record(),
+        client=SaludDignaClient(origin="https://example.test", services_base_url="https://services.test"),
+    )
+    assert record.payload["prices"] == {}
+
+
 def test_salud_digna_parser_rejects_missing_next_data():
     with pytest.raises(ValueError, match="__NEXT_DATA__"):
         parse_salud_digna_location(SaludDignaLocationPage("bad", "https://example.test/bad", "<html />"))

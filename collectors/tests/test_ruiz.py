@@ -26,6 +26,14 @@ def test_ruiz_row_maps_prices_and_provenance():
     assert any(observation.attribute_name == "prices" for observation in record.observations)
 
 
+def test_ruiz_price_parser_drops_zero_sentinels():
+    record = ruiz_row_to_record(
+        {"id": 99, "title": "EGO", "url": "ego", "price_list": "0", "blue_card": "N/A"},
+        department=RuizDepartment(1, "ANÃLISIS CLÃNICOS", "analisis-clinicos"),
+    )
+    assert record.payload["prices"] == {}
+
+
 def test_ruiz_adapter_filters_inactive_and_limits_each_department():
     data = fixture_data()
 

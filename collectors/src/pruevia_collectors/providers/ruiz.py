@@ -262,7 +262,7 @@ def _prices(row: Mapping[str, Any]) -> dict[str, int]:
     for price_type, key in names:
         value = row.get(key)
         minor = _to_minor_units(value)
-        if minor is not None:
+        if minor is not None and minor > 0:
             result[price_type] = minor
     return result
 

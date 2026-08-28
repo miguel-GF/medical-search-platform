@@ -13,6 +13,7 @@ from pruevia_collectors.providers.generic import (
     decode_html,
     parse_price_minor,
 )
+from pruevia_collectors.pipeline import CollectorRunner
 
 
 HTML = """
@@ -75,6 +76,54 @@ def test_generic_parser_extracts_common_cms_script_studies():
     ]
 
 
+def test_generic_parser_does_not_turn_navigation_numbers_into_prices():
+    page = GenericPage(
+        "https://lab.example/",
+        "<html><body><h2>Categorías</h2><p>15.6 Inch Touch Screen Teller</p>"
+        "<h2>Tomografía</h2><p>Conoce nuestros servicios. Tel. 222 123 4567</p>"
+        "<p>Más de 1,200 estudios</p></body></html>",
+        "text/html",
+    )
+    assert GenericPageParser().parse(page)["offers"] == [
+        {"name": "Tomografía", "price_minor": None, "url": "https://lab.example/", "method": "heading_pattern"}
+    ]
+
+
+def test_generic_parser_requires_explicit_price_context_for_visible_prices():
+    page = GenericPage(
+        "https://lab.example/",
+        "<html><body><h2>Glucosa</h2><p>89.00</p></body></html>",
+        "text/html",
+    )
+    assert GenericPageParser().parse(page)["offers"] == [
+        {"name": "Glucosa", "price_minor": None, "url": "https://lab.example/", "method": "heading_pattern"}
+    ]
+
+
+def test_generic_parser_never_emits_script_links():
+    page = GenericPage(
+        "https://lab.example/estudios",
+        """
+        <script type="application/ld+json">
+        {"@type":"Service","name":"EGO","url":"javascript:alert(1)"}
+        </script>
+        """,
+        "text/html",
+    )
+    offers = GenericPageParser().parse(page)["offers"]
+    assert offers[0]["url"] == "https://lab.example/estudios"
+
+
+def test_generic_parser_drops_nonclinical_product_jsonld():
+    page = GenericPage(
+        "https://lab.example/",
+        '<script type="application/ld+json">{"@type":"Product","name":"Crema hidratante","offers":{"@type":"Offer","price":"250"}}</script>',
+        "text/html",
+    )
+
+    assert GenericPageParser().parse(page)["offers"] == []
+
+
 def test_generic_adapter_is_bounded_to_seed_host_and_emits_evidence(tmp_path: Path):
     calls: list[str] = []
 
@@ -101,9 +150,12 @@ def test_generic_adapter_is_bounded_to_seed_host_and_emits_evidence(tmp_path: Pa
     finally:
         transport_client.close()
 
+    assert adapter.source.source_type == "public_website"
     assert any(record.record_type == "provider_location_discovered" for record in records)
     assert any(record.record_type == "provider_offer_price" and record.payload["prices"] == {"regular": 25000} for record in records)
     assert any(record.payload.get("prices") == {"regular": 7500} for record in records)
+    price_record = next(record for record in records if record.record_type == "provider_offer_price")
+    assert all(observation.confidence == 0.90 for observation in price_record.observations)
     assert all("other.example" not in url for url in calls)
     assert len(calls) == 2
 
@@ -118,6 +170,56 @@ def test_generic_client_rejects_credentials_and_private_hosts():
             client.fetch("http://127.0.0.1/")
     finally:
         client.close()
+
+    with pytest.raises(ValueError, match="standard HTTP"):
+        GenericWebClient(["https://example.com:8443/"])
+
+    with pytest.raises(ValueError, match="between 16384 and 10000000"):
+        GenericWebClient(["https://example.com/"], max_response_bytes=100_000_001)
+
+
+def test_generic_client_allows_only_apex_www_redirect_pair():
+    def handler(request: httpx.Request):
+        if request.url.host == "testserver":
+            return httpx.Response(302, headers={"location": "https://www.testserver/"}, request=request)
+        return httpx.Response(200, text="<h1>Laboratorio</h1>", headers={"content-type": "text/html"}, request=request)
+
+    http_client = httpx.Client(transport=httpx.MockTransport(handler), follow_redirects=True)
+    client = GenericWebClient(
+        ["https://testserver/"],
+        allow_private_hosts=True,
+        respect_robots=False,
+        client=http_client,
+    )
+    try:
+        assert client.fetch("https://testserver/").url == "https://www.testserver/"
+        assert "evil.testserver" not in client.allowed_hosts
+    finally:
+        http_client.close()
+
+
+def test_generic_client_rejects_external_redirect_before_requesting_target():
+    calls: list[str] = []
+
+    def handler(request: httpx.Request):
+        calls.append(str(request.url))
+        if request.url.host == "testserver":
+            return httpx.Response(302, headers={"location": "https://evil.example/"}, request=request)
+        return httpx.Response(200, text="<h1>unexpected</h1>", headers={"content-type": "text/html"}, request=request)
+
+    http_client = httpx.Client(transport=httpx.MockTransport(handler), follow_redirects=True)
+    client = GenericWebClient(
+        ["https://testserver/"],
+        allow_private_hosts=True,
+        respect_robots=False,
+        client=http_client,
+    )
+    try:
+        with pytest.raises(RuntimeError, match="outside the seed host"):
+            client.fetch("https://testserver/")
+    finally:
+        http_client.close()
+    assert calls == ["https://testserver/"]
 
 
 def test_generic_client_honors_robots_txt():
@@ -136,6 +238,51 @@ def test_generic_client_honors_robots_txt():
         http_client.close()
 
 
+def test_generic_transport_failure_is_not_reported_as_success(tmp_path: Path):
+    def handler(request: httpx.Request):
+        return httpx.Response(503, request=request)
+
+    http_client = httpx.Client(transport=httpx.MockTransport(handler), follow_redirects=True)
+    web_client = GenericWebClient(
+        ["http://testserver/"],
+        allow_private_hosts=True,
+        respect_robots=False,
+        max_attempts=1,
+        client=http_client,
+    )
+    adapter = GenericProviderAdapter(
+        GenericCrawlConfig(("http://testserver/",), max_pages=1, max_depth=0, delay_seconds=0),
+        client=web_client,
+    )
+    try:
+        summary = CollectorRunner(tmp_path).run(adapter)
+    finally:
+        http_client.close()
+    assert summary.status == "failed"
+    assert summary.records_valid == 0
+    assert summary.errors
+
+
 def test_generic_config_rejects_multiple_hosts():
     with pytest.raises(ValueError, match="same host"):
         GenericProviderAdapter(GenericCrawlConfig(("https://a.example/", "https://b.example/")))
+
+    with pytest.raises(ValueError, match="between 1 and 500"):
+        GenericCrawlConfig(("https://example/",), max_pages=501)
+    with pytest.raises(ValueError, match="between 0 and 5"):
+        GenericCrawlConfig(("https://example/",), max_depth=6)
+
+
+def test_generic_config_treats_apex_and_www_as_one_site():
+    client = GenericWebClient(
+        ("https://example/", "https://www.example/"),
+        allow_private_hosts=True,
+        respect_robots=False,
+    )
+    adapter = GenericProviderAdapter(
+        GenericCrawlConfig(("https://example/", "https://www.example/")),
+        client=client,
+    )
+    client.close()
+
+    assert adapter.source.source_key == "generic_example"

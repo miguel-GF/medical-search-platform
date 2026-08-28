@@ -55,6 +55,27 @@ proveedor publique oficialmente otro endpoint.
 
 El collector de DENUE requiere `DENUE_API_TOKEN` y recibe coordenadas/radio explícitos.
 
+Para recorrer automáticamente los sitios web declarados por los candidatos
+DENUE de Puebla, usa el fan-out reproducible (agrupa por host y no repite una
+misma marca/sitio):
+
+```powershell
+$env:PYTHONPATH = "src"
+python -m pruevia_collectors.puebla_discovery `
+  --fixture ../database/fixtures/denue_candidates_puebla_v1.json `
+  --artifact-root artifacts/puebla-generic `
+  --max-providers 100 --max-pages 3 --max-depth 1
+```
+
+El comando escribe `puebla_generic_discovery_manifest.json` con la población
+DENUE original (por ejemplo, 489 registros), las filas clasificadas que se
+consideraron (por ejemplo, 213 candidatos directos), sitios sin URL, hosts
+seleccionados, candidatos DENUE por host y conteos de ubicaciones/servicios/precios.
+Por defecto sólo procesa
+los candidatos clínicos directos; `--include-review` añade la cola de posibles
+proveedores relacionados. Un bloqueo por `robots.txt`, DNS o HTTP queda como
+salto auditable y no cancela los demás hosts.
+
 ### Collector genérico de proveedores
 
 `pruevia-generic` permite descubrir un proveedor pequeño sin escribir un
@@ -80,6 +101,10 @@ credenciales, redirecciones externas y hosts privados, limita el tamaño de
 respuesta y conserva un ritmo entre páginas. Los registros salen como `provider_location_discovered`,
 `provider_offer_discovered` o `provider_offer_price`, todos con estado
 `candidate`; no crean ítems, proveedores ni precios canónicos automáticamente.
+Los precios visibles sólo se aceptan cuando hay encabezado clínico y contexto
+explícito de moneda/precio; cifras de navegación, teléfonos o marketing quedan
+fuera. Los fallos por página se reflejan como `failed`/`quarantined`, nunca como
+una corrida vacía exitosa.
 Para una clínica reclamada se puede añadir después un adapter dedicado, pero
 el flujo genérico sigue siendo la puerta de entrada global.
 

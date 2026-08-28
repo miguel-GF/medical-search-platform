@@ -615,7 +615,7 @@ Consentimiento y retention definidos.
 
 ## Estado ejecutado antes de Flutter (27 de agosto de 2026)
 
-Las fases previas a Flutter tienen implementación técnica en DEV: base Supabase enlazada con migraciones 001-093; collectors Chopo, Ruiz, Salud Digna y DENUE con RAW/observaciones/runs reproducibles; catálogo dorado de 175 servicios, 219 ofertas y 41 equivalencias Chopo↔Ruiz revisadas explícitamente; Admin V1 en `apps/admin` con Supabase Auth y búsqueda de servicios canónicos; Search API V1 en `apps/api`; y pruebas remotas de base, API y Gate A con todas las aserciones verdes. La viabilidad queda cerrada en este corte: 44 servicios tienen dos proveedores y 44 tienen precio vigente en ambos; Flutter no se inicia dentro de esta fase.
+Las fases previas a Flutter tienen implementación técnica en DEV: base Supabase enlazada con migraciones 001-094; collectors Chopo, Ruiz, Salud Digna y DENUE con RAW/observaciones/runs reproducibles; catálogo dorado de 175 servicios, 219 ofertas y 41 equivalencias Chopo↔Ruiz revisadas explícitamente; Admin V1 en `apps/admin` con Supabase Auth y búsqueda de servicios canónicos; Search API V1 en `apps/api`; y pruebas remotas de base, API y Gate A con todas las aserciones verdes. La viabilidad queda cerrada en este corte: 44 servicios tienen dos proveedores y 44 tienen precio vigente en ambos; Flutter no se inicia dentro de esta fase.
 
 ## Corte Gate B y lote comercial (28 de agosto de 2026)
 
@@ -675,6 +675,13 @@ como candidatos; la normalización clínica sigue siendo determinista y separada
 Un proveedor que reclame su perfil podrá aportar mejores URLs o contratar un
 adapter dedicado en una iteración posterior, sin convertirlo en requisito de
 entrada.
+
+**Corte de cobertura Puebla (28 de agosto de 2026):** 48 hosts directos de
+DENUE quedaron agrupados en 47 sitios apex/www; 63 páginas respondieron y se
+obtuvieron 54 evidencias candidatas (48 servicios sin precio y 6 ubicaciones).
+Los fallos se separan por DNS, HTTP, redirección, robots o contenido vacío.
+La primera corrida ruidosa (107 registros) permanece en RAW histórico y fue
+marcada `quarantined`; solo la corrida endurecida se cargó a `ingest`.
 
 ---
 

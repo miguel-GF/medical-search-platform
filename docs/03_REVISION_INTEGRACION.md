@@ -1,12 +1,12 @@
 # Pruevia — Revisión de integración
 
-**Fecha:** 27 de agosto de 2026
-**Alcance:** documentación canónica, migraciones SQL 001-081, seed, collectors y pruebas pgTAP de Database V1.
+**Fecha:** 28 de agosto de 2026
+**Alcance:** documentación canónica, migraciones SQL 001-094, seed, collectors y pruebas pgTAP de Database V1.
 **Veredicto:** propuesta coherente y con una base técnica fuerte; la incertidumbre principal está en validar operación de datos y demanda, no en la idea central.
 
 ## Estado operativo actualizado
 
-### Corte ejecutado: 27 de agosto de 2026
+### Corte ejecutado: 28 de agosto de 2026
 
 El flujo previo a Flutter está operativo técnicamente en DEV. Supabase contiene 175 servicios activos, 219 ofertas, 16 sucursales, 437 precios vigentes y 1,166 registros de normalización (220 resueltos y 946 en revisión). La cobertura multi-proveedor es 44 de 175 servicios; los 44 tienen precio vigente en al menos dos proveedores. Los precios cero usados por Ruiz como sentinela de descuento no disponible fueron eliminados y ahora existe una restricción positiva en `supply.price_versions`. Las migraciones 075-081 agregan lookup administrativo, hardening de integridad y búsqueda con diversidad de proveedores.
 
@@ -16,9 +16,17 @@ Admin V1 ahora expone dashboard, providers, locations, offers, prices, crawl run
 
 Limitaciones explicitas: la corrida live de DENUE ya fue verificada localmente y publicada (489 registros válidos en Puebla); el token se mantiene sólo en `collectors/.env`, ignorado por Git. La cobertura multi-proveedor combina coincidencias exactas y 41 equivalencias manuales revisadas en `database/fixtures/gate_a_chopo_mappings.json`; no se aprueban equivalencias fuzzy implícitas. La cola `no_match` se mantiene visible para revisión humana.
 
-La base ya no está solo en revisión estática. El proyecto Supabase enlazado (`pruevia-dev`, región `us-east-1`) recibió las migraciones 001-093 y el seed mediante `db push --include-seed`. La validación remota confirmó 13 schemas, 45 tablas, las extensiones `postgis`, `pg_trgm`, `unaccent` y `pgcrypto`, un dominio de salud, 9 tipos de muestra y 4 feature flags.
+La base ya no está solo en revisión estática. El proyecto Supabase enlazado (`pruevia-dev`, región `us-east-1`) recibió las migraciones 001-094 y el seed mediante `db push --include-seed`. La validación remota confirmó 13 schemas, 45 tablas, las extensiones `postgis`, `pg_trgm`, `unaccent` y `pgcrypto`, un dominio de salud, 9 tipos de muestra y 4 feature flags.
 
 Las pruebas estructurales, invariantes, API y Gate A se ejecutaron contra la base enlazada con `db query`; el runner pgTAP integrado sigue requiriendo Docker local, que no está disponible en este entorno.
+
+El fan-out genérico de Puebla procesó los 48 hosts directos declarados por
+DENUE (47 tras colapsar variantes `www`/raíz). En la corrida endurecida hubo
+63 páginas accesibles, 54 evidencias candidatas (48 servicios sin precio y 6
+ubicaciones) y 27 hosts fallidos por DNS, HTTP, redirección o `robots.txt`.
+Los 107 registros de la corrida exploratoria anterior se conservaron como RAW
+histórico pero quedaron `quarantined`; sólo la corrida endurecida se cargó como
+evidencia vigente. Nada de esto crea ofertas canónicas ni equivalencias clínicas.
 
 El motor de collectors ya tiene artefactos RAW reproducibles, cuarentena por caídas parciales o descensos anómalos, adaptadores DENUE, Chopo Puebla, Ruiz Puebla y Salud Digna Puebla, y normalización determinista. Chopo produjo 45 registros válidos en la corrida revisada; Salud Digna produjo 830 registros válidos y 4,150 observaciones; la cola conserva 946 labels para revisión clínica. La publicación remota se hizo mediante lotes idempotentes de la API enlazada de Supabase porque no había un DSN de servidor en el entorno.
 

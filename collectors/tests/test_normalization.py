@@ -54,5 +54,14 @@ def test_distinct_service_with_extra_clinical_detail_is_not_collapsed_to_emg():
     assert decision.selected_item_id is None
 
 
+def test_fuzzy_match_requires_a_meaningful_token_overlap():
+    terms = [CatalogTerm("item-emg", "Electromiografia", aliases=("EMG",))]
+
+    decision = CatalogResolver().resolve("codigo postal", terms)
+
+    assert decision.status == "no_match"
+    assert decision.candidates == ()
+
+
 def test_empty_input_has_no_match():
     assert CatalogResolver().resolve("   ", [CatalogTerm("item", "Biometría hemática")]).status == "no_match"

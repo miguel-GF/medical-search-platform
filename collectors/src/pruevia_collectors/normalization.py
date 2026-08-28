@@ -17,6 +17,11 @@ from typing import Iterable
 NORMALIZER_VERSION = "normalizer-v1"
 _NON_ASCII_ALNUM = re.compile(r"[^a-z0-9]+")
 _WHITESPACE = re.compile(r"\s+")
+_STOPWORDS = {
+    "a", "al", "como", "con", "de", "del", "desde", "el", "en", "entre",
+    "esta", "este", "estos", "la", "las", "los", "para", "por", "que", "sin",
+    "sobre", "sus", "un", "una", "uno", "y",
+}
 
 
 def normalize_text(value: str | None) -> str:
@@ -120,6 +125,13 @@ class CatalogResolver:
         if normalized_term == normalized_input:
             candidate = NormalizationCandidate(term.item_id, term.display_name, 1.0, exact_method, matched_term)
         else:
+            # Trigram similarity alone can be inflated by a shared short
+            # fragment.  Require at least one meaningful query token to be
+            # represented in the candidate term before exposing fuzzy output.
+            # Exact/approved aliases remain governed by the whole-string rule
+            # above, so extra query words cannot be silently discarded.
+            if exact_method in {"exact", "alias", "provider_alias"} and not _has_meaningful_token_overlap(normalized_input, normalized_term):
+                return
             score = trigram_similarity(normalized_input, normalized_term)
             candidate = NormalizationCandidate(term.item_id, term.display_name, round(score, 6), "trigram", matched_term)
         current = candidates.get(term.item_id)
@@ -150,3 +162,17 @@ def _trigrams(value: str) -> set[str]:
     if len(value) < 3:
         return {value}
     return {value[index : index + 3] for index in range(len(value) - 2)}
+
+
+def _has_meaningful_token_overlap(left: str, right: str) -> bool:
+    left_tokens = {token for token in left.split() if len(token) >= 3 and token not in _STOPWORDS}
+    right_tokens = {token for token in right.split() if len(token) >= 3 and token not in _STOPWORDS}
+    if not left_tokens or not right_tokens:
+        return True
+    return any(
+        left_token == right_token
+        or left_token.startswith(right_token)
+        or right_token.startswith(left_token)
+        for left_token in left_tokens
+        for right_token in right_tokens
+    )

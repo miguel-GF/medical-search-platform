@@ -141,6 +141,28 @@ produce evidencia `candidate`. JSON-LD tiene prioridad sobre patrones visibles; 
 precio extraído por patrón nunca se publica como equivalencia clínica sin
 revisión.
 
+Para aplicar esa misma regla a toda la cartera DENUE de Puebla, usa el
+orquestador por host:
+
+```powershell
+$env:PYTHONPATH = "collectors/src"
+python -m pruevia_collectors.puebla_discovery `
+  --fixture database/fixtures/denue_candidates_puebla_v1.json `
+  --artifact-root collectors/artifacts/puebla-generic `
+  --max-providers 100 --max-pages 3 --max-depth 1
+```
+
+El orquestador conserva la población DENUE original en el manifiesto y
+deduplica por host las filas clasificadas seleccionadas (por ejemplo, 213
+candidatos directos derivados de 489 registros RAW). También conserva los IDs
+DENUE para reconciliación posterior y deja un manifiesto de cobertura. La
+salida sigue siendo RAW/candidate; para publicar un servicio se requiere
+evidencia, normalización clínica y revisión.
+
+Un sitio accesible sin evidencia extraíble aparece como `empty`; un fallo de
+DNS, HTTP, redirección o robots aparece como `failed`/`quarantined`. Ninguno
+de esos estados debe convertirse en un precio o una equivalencia manual.
+
 ## Gate A coverage report
 
 El reporte es de solo lectura y resume cobertura comparable, precios vigentes,
