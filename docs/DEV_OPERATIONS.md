@@ -126,6 +126,21 @@ El matcher exige marca explÃ­cita, cercanÃ­a geogrÃ¡fica y coincidencia de
 sucursal/cÃ³digo postal para un enlace automÃ¡tico. Si falta la fuente de
 sucursales o el nombre es ambiguo, el resultado queda en `review_queue`.
 
+Para descubrir proveedores pequeños desde sus páginas públicas sin un adapter
+por marca:
+
+```powershell
+$env:PYTHONPATH = "collectors/src"
+python -m pruevia_collectors.cli_generic `
+  --seed-url https://dominio-del-laboratorio.example/servicios `
+  --max-pages 25 --max-depth 1 --artifact-root collectors/artifacts/generic
+```
+
+El collector genérico sólo sigue el host semilla, respeta `robots.txt` y
+produce evidencia `candidate`. JSON-LD tiene prioridad sobre patrones visibles; un nombre o
+precio extraído por patrón nunca se publica como equivalencia clínica sin
+revisión.
+
 ## Gate A coverage report
 
 El reporte es de solo lectura y resume cobertura comparable, precios vigentes,

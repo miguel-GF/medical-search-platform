@@ -2,7 +2,7 @@
 
 begin;
 create extension if not exists pgtap with schema extensions;
-select extensions.plan(19);
+select extensions.plan(21);
 
 select extensions.has_function(
   'public',
@@ -73,6 +73,14 @@ select extensions.is(
 select extensions.ok(
   (select distance_meters is not null from public.api_search('hemograma api', 'health_diagnostics', 19.04, -98.20, null, 1) limit 1),
   'api_search calculates distance when coordinates are provided'
+);
+select extensions.ok(
+  (select abs(latitude - 19.0401) < 0.0001 from public.api_search('hemograma api', 'health_diagnostics', 19.04, -98.20, null, 1) limit 1),
+  'api_search returns latitude in latitude field'
+);
+select extensions.ok(
+  (select abs(longitude - (-98.2001)) < 0.0001 from public.api_search('hemograma api', 'health_diagnostics', 19.04, -98.20, null, 1) limit 1),
+  'api_search returns longitude in longitude field'
 );
 select extensions.is(
   (select count(*)::bigint from public.api_search('---', 'health_diagnostics', null, null, null, 20)),

@@ -55,6 +55,34 @@ proveedor publique oficialmente otro endpoint.
 
 El collector de DENUE requiere `DENUE_API_TOKEN` y recibe coordenadas/radio explícitos.
 
+### Collector genérico de proveedores
+
+`pruevia-generic` permite descubrir un proveedor pequeño sin escribir un
+adapter dedicado. Recibe una o más páginas semilla del mismo host, sigue un
+presupuesto acotado de enlaces internos y extrae, en este orden:
+
+1. JSON-LD de schema.org (`MedicalClinic`, `DiagnosticLab`, `Product`,
+   `Service`, `Offer`);
+2. headings y precios con patrones deterministas (`$`, `MXN`, precio/costo);
+3. domicilio, teléfono, código postal y coordenadas cuando están publicados.
+
+Ejemplo:
+
+```powershell
+$env:PYTHONPATH = "src"
+python -m pruevia_collectors.cli_generic `
+  --seed-url https://laboratorio-pequeno.example/servicios `
+  --max-pages 25 --max-depth 1 --artifact-root artifacts/generic
+```
+
+El crawler está limitado al host semilla, respeta `robots.txt`, rechaza
+credenciales, redirecciones externas y hosts privados, limita el tamaño de
+respuesta y conserva un ritmo entre páginas. Los registros salen como `provider_location_discovered`,
+`provider_offer_discovered` o `provider_offer_price`, todos con estado
+`candidate`; no crean ítems, proveedores ni precios canónicos automáticamente.
+Para una clínica reclamada se puede añadir después un adapter dedicado, pero
+el flujo genérico sigue siendo la puerta de entrada global.
+
 ### Configuración local
 
 Para desarrollo, copia `.env.example` como `.env` y completa `DENUE_API_TOKEN`.

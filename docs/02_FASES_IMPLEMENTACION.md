@@ -615,7 +615,7 @@ Consentimiento y retention definidos.
 
 ## Estado ejecutado antes de Flutter (27 de agosto de 2026)
 
-Las fases previas a Flutter tienen implementación técnica en DEV: base Supabase enlazada con migraciones 001-092; collectors Chopo, Ruiz, Salud Digna y DENUE con RAW/observaciones/runs reproducibles; catálogo dorado de 175 servicios, 219 ofertas y 41 equivalencias Chopo↔Ruiz revisadas explícitamente; Admin V1 en `apps/admin` con Supabase Auth y búsqueda de servicios canónicos; Search API V1 en `apps/api`; y pruebas remotas de base, API y Gate A con todas las aserciones verdes. La viabilidad queda cerrada en este corte: 44 servicios tienen dos proveedores y 44 tienen precio vigente en ambos; Flutter no se inicia dentro de esta fase.
+Las fases previas a Flutter tienen implementación técnica en DEV: base Supabase enlazada con migraciones 001-093; collectors Chopo, Ruiz, Salud Digna y DENUE con RAW/observaciones/runs reproducibles; catálogo dorado de 175 servicios, 219 ofertas y 41 equivalencias Chopo↔Ruiz revisadas explícitamente; Admin V1 en `apps/admin` con Supabase Auth y búsqueda de servicios canónicos; Search API V1 en `apps/api`; y pruebas remotas de base, API y Gate A con todas las aserciones verdes. La viabilidad queda cerrada en este corte: 44 servicios tienen dos proveedores y 44 tienen precio vigente en ambos; Flutter no se inicia dentro de esta fase.
 
 ## Corte Gate B y lote comercial (28 de agosto de 2026)
 
@@ -660,6 +660,21 @@ marca conocida. Las cuatro sedes `L.R.` de Ruiz tienen proximidad y nombre de
 sucursal compatibles, pero la abreviatura no es suficiente para publicarlas;
 Chopo no aportÃ³ un artefacto de sucursales en esa corrida y Salud Digna sÃ³lo
 aportÃ³ una sede que no coincide geogrÃ¡ficamente con las cinco filas DENUE.
+
+---
+
+# Fase 14.1 — Discovery genérico de proveedores pequeños
+
+**Estado:** En implementación técnica; no bloquea el resolver, sí es requisito
+para demostrar cobertura amplia antes de Flutter.
+
+El collector genérico opera por dominio, no por marca: respeta `robots.txt`,
+sigue enlaces internos con presupuesto acotado, extrae JSON-LD y patrones de precio/servicio, y
+publica únicamente evidencia RAW en `ingest`. Los nombres y precios quedan
+como candidatos; la normalización clínica sigue siendo determinista y separada.
+Un proveedor que reclame su perfil podrá aportar mejores URLs o contratar un
+adapter dedicado en una iteración posterior, sin convertirlo en requisito de
+entrada.
 
 ---
 

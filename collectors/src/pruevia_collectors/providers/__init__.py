@@ -9,3 +9,20 @@ __all__ = ["RuizAdapter", "RuizClient", "RuizDepartment"]
 from .salud_digna import SaludDignaAdapter, SaludDignaClient, SaludDignaLocationPage
 
 __all__ += ["SaludDignaAdapter", "SaludDignaClient", "SaludDignaLocationPage"]
+from .generic import (
+    GenericCrawlConfig,
+    GenericPage,
+    GenericPageParser,
+    GenericProviderAdapter,
+    GenericWebClient,
+    parse_price_minor,
+)
+
+__all__ += [
+    "GenericCrawlConfig",
+    "GenericPage",
+    "GenericPageParser",
+    "GenericProviderAdapter",
+    "GenericWebClient",
+    "parse_price_minor",
+]

@@ -16,7 +16,7 @@ Admin V1 ahora expone dashboard, providers, locations, offers, prices, crawl run
 
 Limitaciones explicitas: la corrida live de DENUE ya fue verificada localmente y publicada (489 registros válidos en Puebla); el token se mantiene sólo en `collectors/.env`, ignorado por Git. La cobertura multi-proveedor combina coincidencias exactas y 41 equivalencias manuales revisadas en `database/fixtures/gate_a_chopo_mappings.json`; no se aprueban equivalencias fuzzy implícitas. La cola `no_match` se mantiene visible para revisión humana.
 
-La base ya no está solo en revisión estática. El proyecto Supabase enlazado (`pruevia-dev`, región `us-east-1`) recibió las migraciones 001-081 y el seed mediante `db push --include-seed`. La validación remota confirmó 13 schemas, 45 tablas, las extensiones `postgis`, `pg_trgm`, `unaccent` y `pgcrypto`, un dominio de salud, 9 tipos de muestra y 4 feature flags.
+La base ya no está solo en revisión estática. El proyecto Supabase enlazado (`pruevia-dev`, región `us-east-1`) recibió las migraciones 001-093 y el seed mediante `db push --include-seed`. La validación remota confirmó 13 schemas, 45 tablas, las extensiones `postgis`, `pg_trgm`, `unaccent` y `pgcrypto`, un dominio de salud, 9 tipos de muestra y 4 feature flags.
 
 Las pruebas estructurales, invariantes, API y Gate A se ejecutaron contra la base enlazada con `db query`; el runner pgTAP integrado sigue requiriendo Docker local, que no está disponible en este entorno.
 
