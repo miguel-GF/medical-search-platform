@@ -58,6 +58,35 @@ describe('Pruevia API', () => {
     expect(payload.results[0].offers[0].prices).toHaveLength(2);
   });
 
+  it('exposes deterministic resolution status and candidates', async () => {
+    const resolution = {
+      query: 'perfil tiroideo',
+      normalized_query: 'perfil tiroideo',
+      engine_version: 'clinical-resolver-v1',
+      status: 'ambiguous',
+      candidates: [
+        { service_id: row.service_id, display_name: 'Perfil tiroideo básico', matched_term: 'perfil tiroideo', term_source: 'disambiguation', confidence: 0.92, resolution_status: 'ambiguous', match_method: 'disambiguation', explanation: {}, offers: [] },
+      ],
+    };
+    const rpc = rpcWith(resolution);
+    const response = await createHandler({ rpc })(new Request('https://api.test/api/v1/resolve', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ text: 'perfil tiroideo' }),
+    }), env);
+    expect(response.status).toBe(200);
+    expect(await response.json()).toEqual(resolution);
+    expect(rpc.call).toHaveBeenCalledWith('api_resolve_search', expect.objectContaining({ p_query: 'perfil tiroideo' }));
+  });
+
+  it('rejects malformed resolution payloads', async () => {
+    const handler = createHandler({ rpc: rpcWith({}) });
+    expect((await handler(new Request('https://api.test/api/v1/resolve', { method: 'POST', body: '{' }), env)).status).toBe(400);
+    expect((await handler(new Request('https://api.test/api/v1/resolve', { method: 'POST', body: JSON.stringify({ text: '---' }) }), env)).status).toBe(400);
+    expect((await handler(new Request('https://api.test/api/v1/resolve', { method: 'POST', body: JSON.stringify({ text: 'BH', latitude: 19 }) }), env)).status).toBe(400);
+    expect((await handler(new Request('https://api.test/api/v1/resolve', { method: 'POST', body: JSON.stringify({ text: 'BH', location_id: 'not-a-uuid' }) }), env)).status).toBe(400);
+  });
+
   it('rejects incomplete coordinates and empty queries', async () => {
     const handler = createHandler({ rpc: rpcWith([]) });
     expect((await handler(new Request('https://api.test/api/v1/search?lat=19'), env)).status).toBe(400);

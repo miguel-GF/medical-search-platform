@@ -38,6 +38,27 @@ export interface SearchRow {
   price_last_seen_at: string | null;
 }
 
+export interface ResolutionCandidate {
+  service_id: string;
+  display_name: string;
+  matched_term: string;
+  term_source: string;
+  provider_brand_id: string | null;
+  confidence: number;
+  resolution_status: 'resolved' | 'ambiguous';
+  match_method: string;
+  explanation: Record<string, unknown>;
+  offers: Array<Record<string, unknown>>;
+}
+
+export interface ResolutionResponse {
+  query: string;
+  normalized_query: string;
+  engine_version: string;
+  status: 'resolved' | 'ambiguous' | 'no_match';
+  candidates: ResolutionCandidate[];
+}
+
 export interface AdminCatalogItem {
   item_id: string;
   display_name: string;

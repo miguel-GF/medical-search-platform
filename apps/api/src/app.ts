@@ -1,5 +1,5 @@
 import { SupabaseRpcClient } from './supabase.js';
-import type { AdminAlert, AdminCatalogItem, AdminQualityIssue, AdminUser, Env, RpcClient, SearchRow } from './types.js';
+import type { AdminAlert, AdminCatalogItem, AdminQualityIssue, AdminUser, Env, ResolutionResponse, RpcClient, SearchRow } from './types.js';
 
 interface Dependencies {
   rpc: RpcClient;
@@ -21,6 +21,9 @@ export function createHandler(dependencies: Dependencies) {
       }
       if (url.pathname === '/api/v1/search' && request.method === 'GET') {
         return await searchResponse(url, dependencies.rpc, origin);
+      }
+      if (url.pathname === '/api/v1/resolve' && request.method === 'POST') {
+        return await resolveResponse(request, dependencies.rpc, origin);
       }
       if (url.pathname === '/api/v1/services' && request.method === 'GET') {
         return json({ error: { code: 'route_requires_id', message: 'Use /api/v1/services/{id}' } }, 400, origin);
@@ -82,6 +85,52 @@ async function searchResponse(url: URL, rpc: RpcClient, origin: string): Promise
     p_limit: limit,
   });
   return json({ query, results: groupSearchRows(rows ?? []) }, 200, origin);
+}
+
+async function resolveResponse(request: Request, rpc: RpcClient, origin: string): Promise<Response> {
+  const contentLength = Number(request.headers.get('content-length') ?? 0);
+  if (Number.isFinite(contentLength) && contentLength > 16_384) {
+    return json({ error: { code: 'payload_too_large', message: 'The request body is too large' } }, 413, origin);
+  }
+  let body: unknown;
+  try {
+    body = await request.json();
+  } catch {
+    return json({ error: { code: 'invalid_json', message: 'Request body must be valid JSON' } }, 400, origin);
+  }
+  if (!body || typeof body !== 'object' || Array.isArray(body)) {
+    return json({ error: { code: 'invalid_body', message: 'Request body must be an object' } }, 400, origin);
+  }
+  const input = body as Record<string, unknown>;
+  const query = typeof input.text === 'string' ? input.text.trim() : '';
+  if (!query || query.length > 200 || !/[\p{L}\p{N}]/u.test(query)) {
+    return json({ error: { code: 'invalid_query', message: 'text is required and must be at most 200 characters' } }, 400, origin);
+  }
+  const domain = typeof input.domain === 'string' && input.domain !== '' ? input.domain : 'health_diagnostics';
+  if (!/^[a-z][a-z0-9_]{1,63}$/.test(domain)) {
+    return json({ error: { code: 'invalid_domain', message: 'domain is invalid' } }, 400, origin);
+  }
+  const limit = typeof input.limit === 'number' && Number.isInteger(input.limit)
+    ? Math.max(1, Math.min(input.limit, 50))
+    : 20;
+  const latitude = parseInputCoordinate(input.latitude, -90, 90);
+  const longitude = parseInputCoordinate(input.longitude, -180, 180);
+  if ((latitude === null) !== (longitude === null) || Number.isNaN(latitude) || Number.isNaN(longitude)) {
+    return json({ error: { code: 'invalid_coordinates', message: 'latitude and longitude must be provided together' } }, 400, origin);
+  }
+  const locationId = input.location_id === undefined || input.location_id === null ? null : input.location_id;
+  if (locationId !== null && (typeof locationId !== 'string' || !isUuid(locationId))) {
+    return json({ error: { code: 'invalid_location_id', message: 'location_id must be a UUID' } }, 400, origin);
+  }
+  const payload = await rpc.call<ResolutionResponse>('api_resolve_search', {
+    p_query: query,
+    p_domain_code: domain,
+    p_latitude: latitude,
+    p_longitude: longitude,
+    p_location_id: locationId,
+    p_limit: limit,
+  });
+  return json(payload, 200, origin);
 }
 
 async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClient, origin: string, authenticateAdmin: (request: Request, env: Env) => Promise<AdminUser | null>): Promise<Response> {
@@ -259,6 +308,12 @@ function parseCoordinate(value: string | null, min: number, max: number): number
   if (value === null || value.trim() === '') return null;
   const parsed = Number(value);
   return Number.isFinite(parsed) && parsed >= min && parsed <= max ? parsed : Number.NaN;
+}
+
+function parseInputCoordinate(value: unknown, min: number, max: number): number | null {
+  if (value === undefined || value === null || value === '') return null;
+  if (typeof value !== 'number') return Number.NaN;
+  return Number.isFinite(value) && value >= min && value <= max ? value : Number.NaN;
 }
 
 function isUuid(value: string): boolean {
