@@ -92,6 +92,11 @@ def test_invalid_catalog_item_id_is_rejected():
         render(_fixture(item_id="not-a-uuid"))
 
 
+def test_invalid_release_version_is_rejected():
+    with pytest.raises(ValueError, match="Invalid LOINC release version"):
+        render({"loinc_version": "2.83/../../secrets", "mappings": []})
+
+
 def test_active_mapping_cannot_use_deprecated_release_row(tmp_path: Path):
     index = tmp_path / "loinc.jsonl"
     index.write_text(

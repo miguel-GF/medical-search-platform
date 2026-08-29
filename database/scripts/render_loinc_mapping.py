@@ -13,6 +13,7 @@ from uuid import UUID
 
 LOINC_SYSTEM = "http://loinc.org"
 LOINC_CODE_RE = re.compile(r"^[A-Za-z0-9]{1,12}-[0-9]$")
+LOINC_VERSION_RE = re.compile(r"^[0-9]+(?:\.[0-9]+){1,3}(?:[-+][A-Za-z0-9.-]+)?$")
 MAPPING_TYPES = {"exact", "narrower", "broader", "related", "local"}
 STATUSES = {"active", "deprecated", "rejected"}
 ATTRIBUTE_FIELDS = (
@@ -45,13 +46,19 @@ def _sql(value: object) -> str:
     return f"'{escaped}'"
 
 
+def _validate_version(value: object) -> str:
+    version = str(value or "").strip()
+    if not LOINC_VERSION_RE.fullmatch(version):
+        raise ValueError(f"Invalid LOINC release version: {version!r}")
+    return version
+
+
 def load_fixture(path: Path) -> dict:
     payload = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(payload, dict):
         raise ValueError("LOINC fixture root must be an object")
-    version = str(payload.get("loinc_version") or "").strip()
-    if not version:
-        raise ValueError("LOINC fixture requires loinc_version")
+    version = _validate_version(payload.get("loinc_version"))
+    payload["loinc_version"] = version
     mappings = payload.get("mappings")
     if not isinstance(mappings, list):
         raise ValueError("LOINC fixture requires a mappings array")
@@ -142,6 +149,7 @@ def validate_fixture(
     index_path: Path | None = None,
     require_index_manifest: bool = False,
 ) -> None:
+    _validate_version(payload.get("loinc_version"))
     seen: set[tuple[str, str]] = set()
     index_rows = _load_index(index_path) if index_path else None
     if index_path:
@@ -199,7 +207,7 @@ def render(
         index_path=index_path,
         require_index_manifest=require_index_manifest,
     )
-    version = str(payload["loinc_version"])
+    version = _validate_version(payload["loinc_version"])
     lines = [
         "-- Generated from a reviewed LOINC mapping fixture.",
         "-- Do not edit manually; regenerate after reviewer approval.",
