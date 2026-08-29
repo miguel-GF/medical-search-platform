@@ -15,6 +15,7 @@ def _fixture(**overrides):
         "loinc_code": "57021-8",
         "mapping_type": "exact",
         "verified": True,
+        "approved": True,
         "source_note": "RELMA reviewed; note 'safe'",
         "attributes": {
             "component": "Complete blood count",
@@ -52,7 +53,10 @@ def test_exact_mapping_requires_review_approval():
 
 def test_active_non_exact_mapping_requires_explicit_approval():
     with pytest.raises(ValueError, match="approved=true"):
-        render(_fixture(mapping_type="related"))
+        render(_fixture(approved=False))
+
+    with pytest.raises(ValueError, match="approved=true"):
+        render(_fixture(mapping_type="related", approved=False))
 
     sql = render(_fixture(mapping_type="related", approved=True))
     assert "'related'" in sql
