@@ -2,7 +2,7 @@
 
 begin;
 create extension if not exists pgtap with schema extensions;
-select extensions.plan(22);
+select extensions.plan(23);
 
 select extensions.has_function(
   'catalog',
@@ -55,6 +55,16 @@ values (
   'active',
   'transactional resolver test'
 );
+insert into catalog.item_identifiers(item_id, system, code, version, mapping_type, status, source_note)
+values (
+  '00000000-0000-0000-0000-000000001103',
+  'http://loinc.org',
+  '99998-1',
+  'old',
+  'exact',
+  'active',
+  'transactional older-version test'
+);
 select extensions.is(
   (select item_id from catalog.resolve_items_v6('99998-1', 'health_diagnostics', null, 10) limit 1),
   '00000000-0000-0000-0000-000000001103'::uuid,
@@ -64,6 +74,11 @@ select extensions.is(
   (select public.api_resolve_search('99998-1')->'candidates'->0->>'match_method'),
   'loinc_exact',
   'public resolution preserves the LOINC exact match method'
+);
+select extensions.is(
+  (select count(*)::bigint from catalog.resolve_items_v6('99998-1', 'health_diagnostics', null, 10)),
+  1::bigint,
+  'multiple reviewed releases for one item do not create duplicate candidates'
 );
 select extensions.is(
   (select item_id from catalog.search_items('99998-1', 'health_diagnostics', null, 10) limit 1),
