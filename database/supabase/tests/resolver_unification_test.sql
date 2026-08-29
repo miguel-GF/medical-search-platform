@@ -2,7 +2,7 @@
 
 begin;
 create extension if not exists pgtap with schema extensions;
-select extensions.plan(23);
+select extensions.plan(24);
 
 select extensions.has_function(
   'catalog',
@@ -104,6 +104,10 @@ select extensions.is(
   (select count(*)::bigint from catalog.resolve_items_v6('99997-0', 'health_diagnostics', null, 10)),
   0::bigint,
   'non-exact LOINC mappings never resolve as identifiers'
+);
+select extensions.ok(
+  to_regclass('catalog.catalog_item_identifiers_loinc_exact_active_idx') is not null,
+  'exact active LOINC identifiers have a focused lookup index'
 );
 
 select extensions.is(
