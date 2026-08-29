@@ -2,7 +2,7 @@
 
 begin;
 create extension if not exists pgtap with schema extensions;
-select extensions.plan(17);
+select extensions.plan(22);
 
 select extensions.has_function(
   'catalog',
@@ -44,6 +44,51 @@ select extensions.ok(
     and not has_function_privilege('anon', 'public.api_resolve_search_v3(text,text,double precision,double precision,uuid,integer)', 'execute')
     and not has_function_privilege('authenticated', 'public.api_resolve_search_v3(text,text,double precision,double precision,uuid,integer)', 'execute'),
   'legacy resolver versions are not public entry points'
+);
+insert into catalog.item_identifiers(item_id, system, code, version, mapping_type, status, source_note)
+values (
+  '00000000-0000-0000-0000-000000001103',
+  'http://loinc.org',
+  '99998-1',
+  'test',
+  'exact',
+  'active',
+  'transactional resolver test'
+);
+select extensions.is(
+  (select item_id from catalog.resolve_items_v6('99998-1', 'health_diagnostics', null, 10) limit 1),
+  '00000000-0000-0000-0000-000000001103'::uuid,
+  'active exact LOINC identifiers resolve to their canonical item'
+);
+select extensions.is(
+  (select public.api_resolve_search('99998-1')->'candidates'->0->>'match_method'),
+  'loinc_exact',
+  'public resolution preserves the LOINC exact match method'
+);
+select extensions.is(
+  (select item_id from catalog.search_items('99998-1', 'health_diagnostics', null, 10) limit 1),
+  '00000000-0000-0000-0000-000000001103'::uuid,
+  'tabular catalog search resolves an active exact LOINC identifier'
+);
+select extensions.is(
+  (select service_id from public.api_search('99998-1', 'health_diagnostics', null, null, null, 10) limit 1),
+  '00000000-0000-0000-0000-000000001103'::uuid,
+  'public search exposes offers for an exact LOINC identifier'
+);
+insert into catalog.item_identifiers(item_id, system, code, version, mapping_type, status, source_note)
+values (
+  '00000000-0000-0000-0000-000000001104',
+  'http://loinc.org',
+  '99997-0',
+  'test',
+  'related',
+  'active',
+  'transactional non-equivalence test'
+);
+select extensions.is(
+  (select count(*)::bigint from catalog.resolve_items_v6('99997-0', 'health_diagnostics', null, 10)),
+  0::bigint,
+  'non-exact LOINC mappings never resolve as identifiers'
 );
 
 select extensions.is(
