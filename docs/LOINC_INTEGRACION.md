@@ -108,6 +108,7 @@ migración revisable:
 ```powershell
 python database/scripts/render_loinc_mapping.py `
   --fixture database/fixtures/loinc_mappings_v1.json `
+  --index database/artifacts/loinc/<VERSION>/loinc_lab_active.jsonl `
   --output database/supabase/migrations/20260828xxxxxx_loinc_mappings_v1.sql
 ```
 
@@ -117,6 +118,10 @@ sin aprobación explícita.
 El renderer rechaza códigos inválidos, mappings duplicados y mappings activos
 sin `approved=true`. Además, un mapping `exact` requiere `verified=true`; una
 sugerencia no aprobada debe permanecer fuera de la migración.
+
+El argumento `--index` es obligatorio en la CLI: cada cÃ³digo debe existir en
+la release descargada, estar `ACTIVE`/`TRIAL` y coincidir en los atributos
+declarados antes de generar SQL.
 
 ## Mapeo seguro
 

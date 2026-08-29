@@ -51,6 +51,61 @@ def test_exact_mapping_requires_review_approval():
         render(_fixture(verified=False))
 
 
+def test_mapping_must_exist_and_match_attributes_in_release_index(tmp_path: Path):
+    index = tmp_path / "loinc.jsonl"
+    index.write_text(
+        json.dumps(
+            {
+                "LOINC_NUM": "57021-8",
+                "STATUS": "ACTIVE",
+                "COMPONENT": "Complete blood count",
+                "PROPERTY": "Number concentration",
+                "TIME_ASPCT": "Point in time",
+                "SYSTEM": "Blood",
+                "SCALE_TYP": "Quantitative",
+                "METHOD_TYP": "",
+                "ORDER_OBS": "Both",
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    assert "57021-8" in render(_fixture(), index_path=index)
+
+    with pytest.raises(ValueError, match="not present"):
+        render(_fixture(loinc_code="99999-9"), index_path=index)
+    with pytest.raises(ValueError, match="does not match"):
+        render(
+            _fixture(attributes={"component": "Wrong component"}),
+            index_path=index,
+        )
+
+
+def test_active_mapping_cannot_use_deprecated_release_row(tmp_path: Path):
+    index = tmp_path / "loinc.jsonl"
+    index.write_text(
+        json.dumps(
+            {
+                "LOINC_NUM": "57021-8",
+                "STATUS": "DEPRECATED",
+                "COMPONENT": "Complete blood count",
+                "PROPERTY": "Number concentration",
+                "TIME_ASPCT": "Point in time",
+                "SYSTEM": "Blood",
+                "SCALE_TYP": "Quantitative",
+                "METHOD_TYP": "",
+                "ORDER_OBS": "Both",
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ValueError, match="active mapping is not allowed"):
+        render(_fixture(), index_path=index)
+
+
 def test_active_non_exact_mapping_requires_explicit_approval():
     with pytest.raises(ValueError, match="approved=true"):
         render(_fixture(approved=False))

@@ -23,6 +23,15 @@ ATTRIBUTE_FIELDS = (
     "order_observation",
 )
 ORDER_OBSERVATION = {"order", "observation", "both", "unknown"}
+INDEX_ATTRIBUTE_FIELDS = {
+    "component": "COMPONENT",
+    "property": "PROPERTY",
+    "time_aspect": "TIME_ASPCT",
+    "system": "SYSTEM",
+    "scale_type": "SCALE_TYP",
+    "method": "METHOD_TYP",
+    "order_observation": "ORDER_OBS",
+}
 
 
 def _sql(value: object) -> str:
@@ -47,8 +56,54 @@ def load_fixture(path: Path) -> dict:
     return payload
 
 
-def validate_fixture(payload: dict) -> None:
+def _load_index(index_path: Path) -> dict[str, dict[str, str]]:
+    rows: dict[str, dict[str, str]] = {}
+    with index_path.open("r", encoding="utf-8") as source:
+        for line_number, line in enumerate(source, start=1):
+            if not line.strip():
+                continue
+            try:
+                row = json.loads(line)
+            except json.JSONDecodeError as error:
+                raise ValueError(f"Invalid LOINC index JSON at {index_path}:{line_number}") from error
+            if not isinstance(row, dict):
+                raise ValueError(f"LOINC index row {line_number} must be an object")
+            code = str(row.get("LOINC_NUM") or "").strip()
+            if not LOINC_CODE_RE.fullmatch(code):
+                raise ValueError(f"LOINC index row {line_number} has invalid LOINC_NUM: {code!r}")
+            if code in rows:
+                raise ValueError(f"LOINC index contains duplicate code: {code}")
+            rows[code] = {str(key): str(value or "").strip() for key, value in row.items()}
+    return rows
+
+
+def _normalized_attribute(value: object) -> str:
+    return " ".join(str(value or "").casefold().split())
+
+
+def _validate_index_mapping(mapping: dict, index_row: dict[str, str], index_code: str) -> None:
+    index_status = _normalized_attribute(index_row.get("STATUS"))
+    mapping_status = _normalized_attribute(mapping.get("status") or "active")
+    if mapping_status == "active" and index_status not in {"active", "trial"}:
+        raise ValueError(
+            f"LOINC {index_code} is {index_row.get('STATUS')!r} in the supplied index; "
+            "an active mapping is not allowed"
+        )
+    attributes = mapping.get("attributes") or {}
+    for fixture_field, index_field in INDEX_ATTRIBUTE_FIELDS.items():
+        expected = _normalized_attribute(attributes.get(fixture_field))
+        if not expected:
+            continue
+        actual = _normalized_attribute(index_row.get(index_field))
+        if expected != actual:
+            raise ValueError(
+                f"LOINC {index_code} attribute {fixture_field} does not match the supplied index"
+            )
+
+
+def validate_fixture(payload: dict, *, index_path: Path | None = None) -> None:
     seen: set[tuple[str, str]] = set()
+    index_rows = _load_index(index_path) if index_path else None
     for index, mapping in enumerate(payload["mappings"]):
         if not isinstance(mapping, dict):
             raise ValueError(f"mapping {index} must be an object")
@@ -80,10 +135,15 @@ def validate_fixture(payload: dict) -> None:
         order_observation = attrs.get("order_observation")
         if order_observation is not None and order_observation not in ORDER_OBSERVATION:
             raise ValueError(f"mapping {index} has invalid order_observation: {order_observation}")
+        if index_rows is not None:
+            index_row = index_rows.get(code)
+            if index_row is None:
+                raise ValueError(f"LOINC code {code} is not present in the supplied index")
+            _validate_index_mapping(mapping, index_row, code)
 
 
-def render(payload: dict) -> str:
-    validate_fixture(payload)
+def render(payload: dict, *, index_path: Path | None = None) -> str:
+    validate_fixture(payload, index_path=index_path)
     version = str(payload["loinc_version"])
     lines = [
         "-- Generated from a reviewed LOINC mapping fixture.",
@@ -139,10 +199,16 @@ def render(payload: dict) -> str:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--fixture", type=Path, required=True)
+    parser.add_argument(
+        "--index",
+        type=Path,
+        required=True,
+        help="active LOINC JSONL index generated from the reviewed release",
+    )
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args(argv)
     payload = load_fixture(args.fixture)
-    sql = render(payload)
+    sql = render(payload, index_path=args.index)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(sql, encoding="utf-8", newline="\n")
     print(json.dumps({"mappings": len(payload["mappings"]), "output": str(args.output)}, ensure_ascii=False))
