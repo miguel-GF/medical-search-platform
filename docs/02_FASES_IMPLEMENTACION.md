@@ -939,6 +939,26 @@ Solo entonces se acelera la construcción del producto paciente.
 
 ---
 
+# Fase 14.2 - Integracion LOINC y resolver unificado
+
+Antes de Flutter, el motor debe usar una sola ruta de resolucion para
+`/search` y `/resolve`. La migracion `095_unified_clinical_resolver.sql`
+introduce `clinical-resolver-v6` y conserva los contratos publicos existentes.
+
+La integracion LOINC se ejecuta por etapas:
+
+1. descargar y verificar una release oficial fuera de Git;
+2. construir un indice local compacto para candidatos;
+3. mapear manualmente los servicios canonicos de mayor uso;
+4. guardar codigo, version, atributos y evidencia;
+5. publicar solo mappings revisados;
+6. medir paridad, precision y abstencion antes de ampliar cobertura.
+
+El catalogo LOINC completo no se sube a Supabase en esta fase. Los detalles
+operativos estan en `docs/LOINC_INTEGRACION.md`.
+
+---
+
 # Referencias
 
 - `00_CONVERSACION_CANONICA.md`

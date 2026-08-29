@@ -14,6 +14,8 @@ Este directorio reúne la documentación canónica importada el 25 de agosto de 
 
 La implementación ejecutable está en [`database/`](../database/README.md).
 
+8. [Integración LOINC](LOINC_INTEGRACION.md) - descarga versionada, mapeo seguro y criterios de publicación.
+
 ## Precedencia documental
 
 Cuando haya una diferencia, se aplica este orden:
