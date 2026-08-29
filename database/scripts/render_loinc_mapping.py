@@ -8,6 +8,7 @@ import json
 import re
 import sys
 from pathlib import Path
+from uuid import UUID
 
 
 LOINC_SYSTEM = "http://loinc.org"
@@ -151,6 +152,10 @@ def validate_fixture(
         item_id = str(mapping.get("item_id") or "").strip()
         if not item_id:
             raise ValueError(f"mapping {index} requires item_id")
+        try:
+            UUID(item_id)
+        except ValueError as error:
+            raise ValueError(f"mapping {index} has invalid item_id") from error
         code = str(mapping.get("loinc_code") or "").strip()
         if not LOINC_CODE_RE.fullmatch(code):
             raise ValueError(f"mapping {index} has invalid LOINC code: {code!r}")
@@ -206,6 +211,24 @@ def render(
         mapping_type = str(mapping.get("mapping_type") or "exact")
         status = str(mapping.get("status") or "active")
         note = str(mapping.get("source_note") or f"Reviewed LOINC {version}")
+        lines.extend(
+            [
+                "do $$",
+                "begin",
+                "  if not exists (",
+                "    select 1",
+                "    from catalog.items i",
+                "    join health.services s on s.catalog_item_id = i.id",
+                f"    where i.id = {_sql(item_id)}::uuid",
+                "      and i.status = 'active'",
+                "      and s.service_type in ('lab_test', 'lab_panel')",
+                "  ) then",
+                f"    raise exception 'LOINC mapping target is not an active laboratory service: %', {_sql(item_id)};",
+                "  end if;",
+                "end;",
+                "$$;",
+            ]
+        )
         lines.append(
             "insert into catalog.item_identifiers "
             "(item_id, system, code, version, mapping_type, status, source_note, verified, approved_at) values ("

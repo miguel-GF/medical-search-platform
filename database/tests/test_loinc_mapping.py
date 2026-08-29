@@ -39,6 +39,8 @@ def test_render_escapes_review_notes_and_preserves_mapping_identity():
     assert "loinc_version = excluded.loinc_version" in sql
     assert "verified, approved_at" in sql
     assert "approved_at = excluded.approved_at" in sql
+    assert "s.service_type in ('lab_test', 'lab_panel')" in sql
+    assert "LOINC mapping target" in sql
 
 
 def test_render_defaults_required_order_observation_when_attributes_are_partial():
@@ -83,6 +85,11 @@ def test_mapping_must_exist_and_match_attributes_in_release_index(tmp_path: Path
             _fixture(attributes={"component": "Wrong component"}),
             index_path=index,
         )
+
+
+def test_invalid_catalog_item_id_is_rejected():
+    with pytest.raises(ValueError, match="invalid item_id"):
+        render(_fixture(item_id="not-a-uuid"))
 
 
 def test_active_mapping_cannot_use_deprecated_release_row(tmp_path: Path):

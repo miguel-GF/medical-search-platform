@@ -145,6 +145,10 @@ El argumento `--index` es obligatorio en la CLI: cada cÃ³digo debe existir en
 la release descargada, estar `ACTIVE`/`TRIAL` y coincidir en los atributos
 declarados antes de generar SQL.
 
+El SQL generado tambiÃ©n comprueba que cada `item_id` sea un servicio de
+laboratorio activo (`lab_test` o `lab_panel`); si no, la migraciÃ³n falla y no
+publica la equivalencia.
+
 ## Mapeo seguro
 
 La descarga no publica nada automáticamente. Cada mapping debe pasar por esta
