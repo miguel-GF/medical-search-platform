@@ -965,6 +965,28 @@ operativos estan en `docs/LOINC_INTEGRACION.md`.
 
 ---
 
+## Corte benchmark y endurecimiento del resolver (29 de agosto de 2026)
+
+Se construyó `resolver-benchmark-v1` con 200 consultas derivadas de las
+recetas/OCR de aceptación, pruebas Gate B, catálogos oficiales de Puebla,
+discovery genérico y mappings LOINC. El corpus contiene 147 variantes seguras
+y 53 casos que deben abstenerse (paneles, entradas incompletas, irrelevantes o
+adversariales).
+
+La migración `20260829110000_101_resolver_benchmark_hardening.sql` añade
+aliases conservadores y dominancia exacta; `102` bloquea contradicciones como
+`T3 libre` y `103` publica atributos de modalidad/contraste para imagenología.
+La prueba remota `tests/resolver_benchmark_test.sql` pasa las 10 aserciones:
+200/200 casos conformes, 147/147 variantes seguras con su item canónico y
+0 falsos positivos en los 15 negativos. Los paneles y consultas sin alcance
+clínico no se fuerzan a una respuesta.
+
+El siguiente gate es medir este corpus con consultas reales de usuarios y
+ampliarlo únicamente cuando exista evidencia de cobertura; no se introduce
+una base vectorial ni una interpretación automática por IA en esta etapa.
+
+---
+
 # Referencias
 
 - `00_CONVERSACION_CANONICA.md`

@@ -16,6 +16,8 @@ La implementación ejecutable está en [`database/`](../database/README.md).
 
 8. [Integración LOINC](LOINC_INTEGRACION.md) - descarga versionada, mapeo seguro y criterios de publicación.
 
+9. [Benchmark del resolver V1](RESOLVER_BENCHMARK_V1.md) - 200 variantes revisadas, métricas y gate reproducible.
+
 ## Precedencia documental
 
 Cuando haya una diferencia, se aplica este orden:

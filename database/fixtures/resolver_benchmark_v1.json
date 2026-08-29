@@ -1,0 +1,2347 @@
+{
+  "version": "resolver-benchmark-v1",
+  "locale": "es-MX",
+  "case_count": 200,
+  "policy": "Resolved cases require one reviewed canonical item; panels, underspecified terms and unrelated input must abstain.",
+  "sources": [
+    "User-provided recipe examples: B H, Q S completa, EGO, perfil toroideo.",
+    "Resolver Gate B OCR/alias migrations and clinical resolver tests.",
+    "Official provider catalog artifacts for Puebla: Ruiz, Chopo, Salud Digna and generic discovery.",
+    "LOINC 2.83 reviewed mappings for BH/EGO/glucose/creatinine/TSH/T4/T3."
+  ],
+  "cases": [
+    {
+      "id": "bh_01",
+      "query": "Biometría hemática",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001103",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Case/diacritic/punctuation variants and reviewed CBC synonyms."
+    },
+    {
+      "id": "bh_02",
+      "query": "BIOMETRIA HEMATICA",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001103",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Case/diacritic/punctuation variants and reviewed CBC synonyms."
+    },
+    {
+      "id": "bh_03",
+      "query": "biometria-hematica",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001103",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Case/diacritic/punctuation variants and reviewed CBC synonyms."
+    },
+    {
+      "id": "bh_04",
+      "query": "biometría_hemática",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001103",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Case/diacritic/punctuation variants and reviewed CBC synonyms."
+    },
+    {
+      "id": "bh_05",
+      "query": " B H ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001103",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Case/diacritic/punctuation variants and reviewed CBC synonyms."
+    },
+    {
+      "id": "bh_06",
+      "query": "BH",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001103",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Case/diacritic/punctuation variants and reviewed CBC synonyms."
+    },
+    {
+      "id": "bh_07",
+      "query": "Hemograma",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001103",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Case/diacritic/punctuation variants and reviewed CBC synonyms."
+    },
+    {
+      "id": "bh_08",
+      "query": "biometria hematica completa",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001103",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Case/diacritic/punctuation variants and reviewed CBC synonyms."
+    },
+    {
+      "id": "bh_09",
+      "query": "hemograma completo",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001103",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Case/diacritic/punctuation variants and reviewed CBC synonyms."
+    },
+    {
+      "id": "bh_10",
+      "query": "CBC",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001103",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Case/diacritic/punctuation variants and reviewed CBC synonyms."
+    },
+    {
+      "id": "bh_11",
+      "query": "Complete blood count",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001103",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Case/diacritic/punctuation variants and reviewed CBC synonyms."
+    },
+    {
+      "id": "bh_12",
+      "query": "conteo sanguineo completo",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001103",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Case/diacritic/punctuation variants and reviewed CBC synonyms."
+    },
+    {
+      "id": "bh_13",
+      "query": "biometria hematica automatizada",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001103",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Case/diacritic/punctuation variants and reviewed CBC synonyms."
+    },
+    {
+      "id": "ego_01",
+      "query": "Examen general de orina",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001104",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Case/diacritic variants and reviewed complete-urinalysis synonyms."
+    },
+    {
+      "id": "ego_02",
+      "query": "EXAMEN GENERAL DE ORINA",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001104",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Case/diacritic variants and reviewed complete-urinalysis synonyms."
+    },
+    {
+      "id": "ego_03",
+      "query": "examen-general-de-orina",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001104",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Case/diacritic variants and reviewed complete-urinalysis synonyms."
+    },
+    {
+      "id": "ego_04",
+      "query": "examen general de orina ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001104",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Case/diacritic variants and reviewed complete-urinalysis synonyms."
+    },
+    {
+      "id": "ego_05",
+      "query": "EGO",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001104",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Case/diacritic variants and reviewed complete-urinalysis synonyms."
+    },
+    {
+      "id": "ego_06",
+      "query": "EGO completo",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001104",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Case/diacritic variants and reviewed complete-urinalysis synonyms."
+    },
+    {
+      "id": "ego_07",
+      "query": "Uroanálisis",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001104",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Case/diacritic variants and reviewed complete-urinalysis synonyms."
+    },
+    {
+      "id": "ego_08",
+      "query": "Uroanalisis",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001104",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Case/diacritic variants and reviewed complete-urinalysis synonyms."
+    },
+    {
+      "id": "ego_09",
+      "query": "Urianálisis",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001104",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Case/diacritic variants and reviewed complete-urinalysis synonyms."
+    },
+    {
+      "id": "ego_10",
+      "query": "Análisis general de orina",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001104",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Case/diacritic variants and reviewed complete-urinalysis synonyms."
+    },
+    {
+      "id": "ego_11",
+      "query": "Análisis completo de orina",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001104",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Case/diacritic variants and reviewed complete-urinalysis synonyms."
+    },
+    {
+      "id": "ego_12",
+      "query": "Examen de orina",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001104",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Case/diacritic variants and reviewed complete-urinalysis synonyms."
+    },
+    {
+      "id": "ego_13",
+      "query": "Examen de orina completo",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001104",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Case/diacritic variants and reviewed complete-urinalysis synonyms."
+    },
+    {
+      "id": "ego_14",
+      "query": "Urinalysis",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001104",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Case/diacritic variants and reviewed complete-urinalysis synonyms."
+    },
+    {
+      "id": "ego_15",
+      "query": "Orina general",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001104",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Case/diacritic variants and reviewed complete-urinalysis synonyms."
+    },
+    {
+      "id": "glucose_01",
+      "query": "Glucosa",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001109",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed glucose concept; specimen-specific synonyms stay within serum/plasma scope."
+    },
+    {
+      "id": "glucose_02",
+      "query": "GLUCOSA",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001109",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed glucose concept; specimen-specific synonyms stay within serum/plasma scope."
+    },
+    {
+      "id": "glucose_03",
+      "query": "glucósa",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001109",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed glucose concept; specimen-specific synonyms stay within serum/plasma scope."
+    },
+    {
+      "id": "glucose_04",
+      "query": "glucosa sérica",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001109",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed glucose concept; specimen-specific synonyms stay within serum/plasma scope."
+    },
+    {
+      "id": "glucose_05",
+      "query": "glucosa en suero",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001109",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed glucose concept; specimen-specific synonyms stay within serum/plasma scope."
+    },
+    {
+      "id": "glucose_06",
+      "query": "glucosa plasmática",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001109",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed glucose concept; specimen-specific synonyms stay within serum/plasma scope."
+    },
+    {
+      "id": "glucose_07",
+      "query": "glucosa en plasma",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001109",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed glucose concept; specimen-specific synonyms stay within serum/plasma scope."
+    },
+    {
+      "id": "glucose_08",
+      "query": "Glucose",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001109",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed glucose concept; specimen-specific synonyms stay within serum/plasma scope."
+    },
+    {
+      "id": "glucose_09",
+      "query": " glucosa ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001109",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed glucose concept; specimen-specific synonyms stay within serum/plasma scope."
+    },
+    {
+      "id": "glucose_10",
+      "query": "glucosa-serica",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001109",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed glucose concept; specimen-specific synonyms stay within serum/plasma scope."
+    },
+    {
+      "id": "creatinine_01",
+      "query": "Creatinina",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001110",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed creatinine concept; specimen-specific synonyms stay within serum/plasma scope."
+    },
+    {
+      "id": "creatinine_02",
+      "query": "CREATININA",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001110",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed creatinine concept; specimen-specific synonyms stay within serum/plasma scope."
+    },
+    {
+      "id": "creatinine_03",
+      "query": "creatinína",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001110",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed creatinine concept; specimen-specific synonyms stay within serum/plasma scope."
+    },
+    {
+      "id": "creatinine_04",
+      "query": "creatinina sérica",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001110",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed creatinine concept; specimen-specific synonyms stay within serum/plasma scope."
+    },
+    {
+      "id": "creatinine_05",
+      "query": "creatinina en suero",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001110",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed creatinine concept; specimen-specific synonyms stay within serum/plasma scope."
+    },
+    {
+      "id": "creatinine_06",
+      "query": "creatinina plasmática",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001110",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed creatinine concept; specimen-specific synonyms stay within serum/plasma scope."
+    },
+    {
+      "id": "creatinine_07",
+      "query": "creatinina en plasma",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001110",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed creatinine concept; specimen-specific synonyms stay within serum/plasma scope."
+    },
+    {
+      "id": "creatinine_08",
+      "query": "Creatinine",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001110",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed creatinine concept; specimen-specific synonyms stay within serum/plasma scope."
+    },
+    {
+      "id": "creatinine_09",
+      "query": " creatinina ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001110",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed creatinine concept; specimen-specific synonyms stay within serum/plasma scope."
+    },
+    {
+      "id": "creatinine_10",
+      "query": "creatinina-serica",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001110",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed creatinine concept; specimen-specific synonyms stay within serum/plasma scope."
+    },
+    {
+      "id": "tsh_01",
+      "query": "TSH",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001111",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed thyrotropin concept and standard Spanish/English synonyms."
+    },
+    {
+      "id": "tsh_02",
+      "query": "tsh",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001111",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed thyrotropin concept and standard Spanish/English synonyms."
+    },
+    {
+      "id": "tsh_03",
+      "query": "T.S.H.",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001111",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed thyrotropin concept and standard Spanish/English synonyms."
+    },
+    {
+      "id": "tsh_04",
+      "query": "Hormona estimulante de tiroides",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001111",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed thyrotropin concept and standard Spanish/English synonyms."
+    },
+    {
+      "id": "tsh_05",
+      "query": "hormona estimulante de tiroides",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001111",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed thyrotropin concept and standard Spanish/English synonyms."
+    },
+    {
+      "id": "tsh_06",
+      "query": "Tirotropina",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001111",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed thyrotropin concept and standard Spanish/English synonyms."
+    },
+    {
+      "id": "tsh_07",
+      "query": "Thyrotropin",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001111",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed thyrotropin concept and standard Spanish/English synonyms."
+    },
+    {
+      "id": "tsh_08",
+      "query": "Thyroid stimulating hormone",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001111",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed thyrotropin concept and standard Spanish/English synonyms."
+    },
+    {
+      "id": "tsh_09",
+      "query": "TSH sérica",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001111",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed thyrotropin concept and standard Spanish/English synonyms."
+    },
+    {
+      "id": "tsh_10",
+      "query": " tsh ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001111",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed thyrotropin concept and standard Spanish/English synonyms."
+    },
+    {
+      "id": "t4_01",
+      "query": "T4 libre",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001112",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed free-thyroxine concept; free qualifier is required."
+    },
+    {
+      "id": "t4_02",
+      "query": "T4 LIBRE",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001112",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed free-thyroxine concept; free qualifier is required."
+    },
+    {
+      "id": "t4_03",
+      "query": "t4-libre",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001112",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed free-thyroxine concept; free qualifier is required."
+    },
+    {
+      "id": "t4_04",
+      "query": "Tiroxina libre",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001112",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed free-thyroxine concept; free qualifier is required."
+    },
+    {
+      "id": "t4_05",
+      "query": "T4L",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001112",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed free-thyroxine concept; free qualifier is required."
+    },
+    {
+      "id": "t4_06",
+      "query": "FT4",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001112",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed free-thyroxine concept; free qualifier is required."
+    },
+    {
+      "id": "t4_07",
+      "query": "Thyroxine free",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001112",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed free-thyroxine concept; free qualifier is required."
+    },
+    {
+      "id": "t4_08",
+      "query": "T4 libre sérica",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001112",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed free-thyroxine concept; free qualifier is required."
+    },
+    {
+      "id": "t4_09",
+      "query": "T4 libre en suero",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001112",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed free-thyroxine concept; free qualifier is required."
+    },
+    {
+      "id": "t4_10",
+      "query": " t4 libre ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001112",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed free-thyroxine concept; free qualifier is required."
+    },
+    {
+      "id": "t3_01",
+      "query": "T3",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001113",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed total-like T3 concept; free T3 is intentionally not included."
+    },
+    {
+      "id": "t3_02",
+      "query": "t3",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001113",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed total-like T3 concept; free T3 is intentionally not included."
+    },
+    {
+      "id": "t3_03",
+      "query": "T.3.",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001113",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed total-like T3 concept; free T3 is intentionally not included."
+    },
+    {
+      "id": "t3_04",
+      "query": "Triyodotironina",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001113",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed total-like T3 concept; free T3 is intentionally not included."
+    },
+    {
+      "id": "t3_05",
+      "query": "Triiodotironina",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001113",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed total-like T3 concept; free T3 is intentionally not included."
+    },
+    {
+      "id": "t3_06",
+      "query": "T3 total",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001113",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed total-like T3 concept; free T3 is intentionally not included."
+    },
+    {
+      "id": "t3_07",
+      "query": "Triyodotironina total",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001113",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed total-like T3 concept; free T3 is intentionally not included."
+    },
+    {
+      "id": "t3_08",
+      "query": "Triiodothyronine",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001113",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed total-like T3 concept; free T3 is intentionally not included."
+    },
+    {
+      "id": "t3_09",
+      "query": "T3 sérica",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001113",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed total-like T3 concept; free T3 is intentionally not included."
+    },
+    {
+      "id": "t3_10",
+      "query": " t3 ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001113",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed total-like T3 concept; free T3 is intentionally not included."
+    },
+    {
+      "id": "emg_lower_01",
+      "query": "Electromiografía de extremidades inferiores",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001101",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "EMG variants retain lower-extremity anatomy; generic EMG is excluded."
+    },
+    {
+      "id": "emg_lower_02",
+      "query": "electromiografia de extremidades inferiores",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001101",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "EMG variants retain lower-extremity anatomy; generic EMG is excluded."
+    },
+    {
+      "id": "emg_lower_03",
+      "query": "EMG de miembros inferiores",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001101",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "EMG variants retain lower-extremity anatomy; generic EMG is excluded."
+    },
+    {
+      "id": "emg_lower_04",
+      "query": "EMG miembros inferiores",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001101",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "EMG variants retain lower-extremity anatomy; generic EMG is excluded."
+    },
+    {
+      "id": "emg_lower_05",
+      "query": "Electromiografía de piernas",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001101",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "EMG variants retain lower-extremity anatomy; generic EMG is excluded."
+    },
+    {
+      "id": "emg_lower_06",
+      "query": "EMG de piernas",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001101",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "EMG variants retain lower-extremity anatomy; generic EMG is excluded."
+    },
+    {
+      "id": "emg_lower_07",
+      "query": "electromiografia-de-extremidades-inferiores",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001101",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "EMG variants retain lower-extremity anatomy; generic EMG is excluded."
+    },
+    {
+      "id": "emg_lower_08",
+      "query": " EMG de miembros inferiores ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001101",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "EMG variants retain lower-extremity anatomy; generic EMG is excluded."
+    },
+    {
+      "id": "emg_upper_01",
+      "query": "Electromiografía de extremidades superiores",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001102",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "EMG variants retain upper-extremity anatomy; generic EMG is excluded."
+    },
+    {
+      "id": "emg_upper_02",
+      "query": "electromiografia de extremidades superiores",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001102",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "EMG variants retain upper-extremity anatomy; generic EMG is excluded."
+    },
+    {
+      "id": "emg_upper_03",
+      "query": "EMG de miembros superiores",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001102",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "EMG variants retain upper-extremity anatomy; generic EMG is excluded."
+    },
+    {
+      "id": "emg_upper_04",
+      "query": "EMG miembros superiores",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001102",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "EMG variants retain upper-extremity anatomy; generic EMG is excluded."
+    },
+    {
+      "id": "emg_upper_05",
+      "query": "Electromiografía de brazos",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001102",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "EMG variants retain upper-extremity anatomy; generic EMG is excluded."
+    },
+    {
+      "id": "emg_upper_06",
+      "query": "EMG de brazos",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001102",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "EMG variants retain upper-extremity anatomy; generic EMG is excluded."
+    },
+    {
+      "id": "emg_upper_07",
+      "query": "electromiografia-de-extremidades-superiores",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001102",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "EMG variants retain upper-extremity anatomy; generic EMG is excluded."
+    },
+    {
+      "id": "emg_upper_08",
+      "query": " EMG de miembros superiores ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "00000000-0000-0000-0000-000000001102",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "EMG variants retain upper-extremity anatomy; generic EMG is excluded."
+    },
+    {
+      "id": "ultrasound_abdomen_01",
+      "query": "Ultrasonido abdomen completo",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "a1f81444-4b20-5d82-bdf6-b48c27245fa0",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed provider concept; modality and complete-abdomen scope are preserved."
+    },
+    {
+      "id": "ultrasound_abdomen_02",
+      "query": "ULTRASONIDO ABDOMEN COMPLETO",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "a1f81444-4b20-5d82-bdf6-b48c27245fa0",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed provider concept; modality and complete-abdomen scope are preserved."
+    },
+    {
+      "id": "ultrasound_abdomen_03",
+      "query": "ultrasonido-abdomen-completo",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "a1f81444-4b20-5d82-bdf6-b48c27245fa0",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed provider concept; modality and complete-abdomen scope are preserved."
+    },
+    {
+      "id": "ultrasound_abdomen_04",
+      "query": "Ultrasonido abdomen completo ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "a1f81444-4b20-5d82-bdf6-b48c27245fa0",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed provider concept; modality and complete-abdomen scope are preserved."
+    },
+    {
+      "id": "ultrasound_abdomen_05",
+      "query": "Ecografía abdomen completo",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "a1f81444-4b20-5d82-bdf6-b48c27245fa0",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed provider concept; modality and complete-abdomen scope are preserved."
+    },
+    {
+      "id": "ultrasound_abdomen_06",
+      "query": "Ecografía abdominal completa",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "a1f81444-4b20-5d82-bdf6-b48c27245fa0",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed provider concept; modality and complete-abdomen scope are preserved."
+    },
+    {
+      "id": "ultrasound_abdomen_07",
+      "query": "ultrasonido abdominal completo",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "a1f81444-4b20-5d82-bdf6-b48c27245fa0",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed provider concept; modality and complete-abdomen scope are preserved."
+    },
+    {
+      "id": "ultrasound_abdomen_08",
+      "query": "ecografia abdomen completo",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "a1f81444-4b20-5d82-bdf6-b48c27245fa0",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed provider concept; modality and complete-abdomen scope are preserved."
+    },
+    {
+      "id": "ultrasound_obstetric_01",
+      "query": "Ultrasonido obstétrico",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "82d84811-2542-5f8d-8c2c-01186700c4cb",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed provider concept; obstetric scope is preserved."
+    },
+    {
+      "id": "ultrasound_obstetric_02",
+      "query": "ULTRASONIDO OBSTETRICO",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "82d84811-2542-5f8d-8c2c-01186700c4cb",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed provider concept; obstetric scope is preserved."
+    },
+    {
+      "id": "ultrasound_obstetric_03",
+      "query": "ultrasonido-obstetrico",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "82d84811-2542-5f8d-8c2c-01186700c4cb",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed provider concept; obstetric scope is preserved."
+    },
+    {
+      "id": "ultrasound_obstetric_04",
+      "query": "Ecografía obstétrica",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "82d84811-2542-5f8d-8c2c-01186700c4cb",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed provider concept; obstetric scope is preserved."
+    },
+    {
+      "id": "ultrasound_obstetric_05",
+      "query": "ecografia obstetrica",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "82d84811-2542-5f8d-8c2c-01186700c4cb",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed provider concept; obstetric scope is preserved."
+    },
+    {
+      "id": "ultrasound_obstetric_06",
+      "query": "ultrasonografía obstétrica",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "82d84811-2542-5f8d-8c2c-01186700c4cb",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Reviewed provider concept; obstetric scope is preserved."
+    },
+    {
+      "id": "mammography_base_01",
+      "query": "Mastografía",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "b4994aa8-b7c4-52f3-8f46-c74356d62d4a",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Generic mammography is distinct from the explicit bilateral/unilateral variants."
+    },
+    {
+      "id": "mammography_base_02",
+      "query": "MASTOGRAFIA",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "b4994aa8-b7c4-52f3-8f46-c74356d62d4a",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Generic mammography is distinct from the explicit bilateral/unilateral variants."
+    },
+    {
+      "id": "mammography_base_03",
+      "query": "mastografia",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "b4994aa8-b7c4-52f3-8f46-c74356d62d4a",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Generic mammography is distinct from the explicit bilateral/unilateral variants."
+    },
+    {
+      "id": "mammography_base_04",
+      "query": "mastografía ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "b4994aa8-b7c4-52f3-8f46-c74356d62d4a",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Generic mammography is distinct from the explicit bilateral/unilateral variants."
+    },
+    {
+      "id": "mammography_base_05",
+      "query": "mastografia general",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "b4994aa8-b7c4-52f3-8f46-c74356d62d4a",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Generic mammography is distinct from the explicit bilateral/unilateral variants."
+    },
+    {
+      "id": "mammography_bilateral_01",
+      "query": "Mastografía bilateral",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "5e21aef5-5328-5ffc-af37-aef84fb1d6a7",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Laterality is retained; bilateral cannot collapse into generic mammography."
+    },
+    {
+      "id": "mammography_bilateral_02",
+      "query": "MASTOGRAFIA BILATERAL",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "5e21aef5-5328-5ffc-af37-aef84fb1d6a7",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Laterality is retained; bilateral cannot collapse into generic mammography."
+    },
+    {
+      "id": "mammography_bilateral_03",
+      "query": "mamografía bilateral",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "5e21aef5-5328-5ffc-af37-aef84fb1d6a7",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Laterality is retained; bilateral cannot collapse into generic mammography."
+    },
+    {
+      "id": "mammography_bilateral_04",
+      "query": "Mamografía de ambas mamas",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "5e21aef5-5328-5ffc-af37-aef84fb1d6a7",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Laterality is retained; bilateral cannot collapse into generic mammography."
+    },
+    {
+      "id": "mammography_bilateral_05",
+      "query": "mastografia de ambas mamas",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "5e21aef5-5328-5ffc-af37-aef84fb1d6a7",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Laterality is retained; bilateral cannot collapse into generic mammography."
+    },
+    {
+      "id": "mammography_bilateral_06",
+      "query": "mastografia-bilateral",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "5e21aef5-5328-5ffc-af37-aef84fb1d6a7",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Laterality is retained; bilateral cannot collapse into generic mammography."
+    },
+    {
+      "id": "mammography_unilateral_01",
+      "query": "Mastografía unilateral",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "81aa9f9f-737b-537d-9c18-2b023e3e1139",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Laterality is retained; unilateral cannot collapse into generic mammography."
+    },
+    {
+      "id": "mammography_unilateral_02",
+      "query": "MASTOGRAFIA UNILATERAL",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "81aa9f9f-737b-537d-9c18-2b023e3e1139",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Laterality is retained; unilateral cannot collapse into generic mammography."
+    },
+    {
+      "id": "mammography_unilateral_03",
+      "query": "mamografía unilateral",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "81aa9f9f-737b-537d-9c18-2b023e3e1139",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Laterality is retained; unilateral cannot collapse into generic mammography."
+    },
+    {
+      "id": "mammography_unilateral_04",
+      "query": "Mamografía de una mama",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "81aa9f9f-737b-537d-9c18-2b023e3e1139",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Laterality is retained; unilateral cannot collapse into generic mammography."
+    },
+    {
+      "id": "mammography_unilateral_05",
+      "query": "mastografía de una mama",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "81aa9f9f-737b-537d-9c18-2b023e3e1139",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Laterality is retained; unilateral cannot collapse into generic mammography."
+    },
+    {
+      "id": "mammography_unilateral_06",
+      "query": "mastografia-unilateral",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "81aa9f9f-737b-537d-9c18-2b023e3e1139",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Laterality is retained; unilateral cannot collapse into generic mammography."
+    },
+    {
+      "id": "ecg_rest_01",
+      "query": "Electrocardiograma en reposo",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "c9d9a832-8146-5831-94f5-ec653dea2126",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Resting ECG variants retain the modality context."
+    },
+    {
+      "id": "ecg_rest_02",
+      "query": "ELECTROCARDIOGRAMA EN REPOSO",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "c9d9a832-8146-5831-94f5-ec653dea2126",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Resting ECG variants retain the modality context."
+    },
+    {
+      "id": "ecg_rest_03",
+      "query": "Electrocardiograma de reposo",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "c9d9a832-8146-5831-94f5-ec653dea2126",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Resting ECG variants retain the modality context."
+    },
+    {
+      "id": "ecg_rest_04",
+      "query": "ECG en reposo",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "c9d9a832-8146-5831-94f5-ec653dea2126",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Resting ECG variants retain the modality context."
+    },
+    {
+      "id": "ecg_rest_05",
+      "query": "EKG en reposo",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "c9d9a832-8146-5831-94f5-ec653dea2126",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Resting ECG variants retain the modality context."
+    },
+    {
+      "id": "ecg_exercise_01",
+      "query": "Electrocardiograma en esfuerzo",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "b6f15c15-29b4-5dd4-b2a2-944e9d0e1b20",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Exercise ECG is distinct from resting and pediatric ECG."
+    },
+    {
+      "id": "ecg_exercise_02",
+      "query": "ELECTROCARDIOGRAMA EN ESFUERZO",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "b6f15c15-29b4-5dd4-b2a2-944e9d0e1b20",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Exercise ECG is distinct from resting and pediatric ECG."
+    },
+    {
+      "id": "ecg_exercise_03",
+      "query": "electrocardiograma de esfuerzo",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "b6f15c15-29b4-5dd4-b2a2-944e9d0e1b20",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Exercise ECG is distinct from resting and pediatric ECG."
+    },
+    {
+      "id": "ct_abdomen_simple_01",
+      "query": "Tomografía abdomen completo simple",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "2ae7ac0c-4e14-5aec-96bb-af81d5099e8a",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple CT and complete-abdomen scope are retained."
+    },
+    {
+      "id": "ct_abdomen_simple_02",
+      "query": "TOMOGRAFIA ABDOMEN COMPLETO SIMPLE",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "2ae7ac0c-4e14-5aec-96bb-af81d5099e8a",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple CT and complete-abdomen scope are retained."
+    },
+    {
+      "id": "ct_abdomen_simple_03",
+      "query": "tomografía de abdomen completo simple",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "2ae7ac0c-4e14-5aec-96bb-af81d5099e8a",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple CT and complete-abdomen scope are retained."
+    },
+    {
+      "id": "ct_abdomen_simple_04",
+      "query": "TAC abdomen completo simple",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "2ae7ac0c-4e14-5aec-96bb-af81d5099e8a",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple CT and complete-abdomen scope are retained."
+    },
+    {
+      "id": "ct_abdomen_contrast_01",
+      "query": "Tomografía abdomen completo contraste",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "ed7e83db-f394-5171-ae4d-ca347b648028",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Contrast-enhanced CT and complete-abdomen scope are retained."
+    },
+    {
+      "id": "ct_abdomen_contrast_02",
+      "query": "TOMOGRAFIA ABDOMEN COMPLETO CONTRASTE",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "ed7e83db-f394-5171-ae4d-ca347b648028",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Contrast-enhanced CT and complete-abdomen scope are retained."
+    },
+    {
+      "id": "ct_abdomen_contrast_03",
+      "query": "tomografía de abdomen completo con contraste",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "ed7e83db-f394-5171-ae4d-ca347b648028",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Contrast-enhanced CT and complete-abdomen scope are retained."
+    },
+    {
+      "id": "ct_abdomen_contrast_04",
+      "query": "TAC abdomen completo con contraste",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "ed7e83db-f394-5171-ae4d-ca347b648028",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Contrast-enhanced CT and complete-abdomen scope are retained."
+    },
+    {
+      "id": "mri_abdomen_01",
+      "query": "Resonancia magnética abdomen completo",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "ceff2afb-eada-5095-9e74-ab7ebbfa21e6",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "MRI body region is retained; contrast variant is not collapsed."
+    },
+    {
+      "id": "mri_abdomen_02",
+      "query": "RESONANCIA MAGNETICA ABDOMEN COMPLETO",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "ceff2afb-eada-5095-9e74-ab7ebbfa21e6",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "MRI body region is retained; contrast variant is not collapsed."
+    },
+    {
+      "id": "mri_abdomen_03",
+      "query": "resonancia de abdomen completo",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "ceff2afb-eada-5095-9e74-ab7ebbfa21e6",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "MRI body region is retained; contrast variant is not collapsed."
+    },
+    {
+      "id": "mri_abdomen_contrast_01",
+      "query": "Resonancia magnética abdomen completo con contraste gadolinio",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "de354e6e-412d-565f-a5f7-8e6fe27a7680",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "MRI contrast and body region are retained."
+    },
+    {
+      "id": "mri_abdomen_contrast_02",
+      "query": "RESONANCIA MAGNETICA ABDOMEN COMPLETO CON CONTRASTE GADOLINIO",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "de354e6e-412d-565f-a5f7-8e6fe27a7680",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "MRI contrast and body region are retained."
+    },
+    {
+      "id": "mri_incomplete_scope_01",
+      "query": "resonancia de abdomen con contraste gadolinio",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Contrast is known but the body scope is incomplete; do not choose a complete/superior/inferior variant."
+    },
+    {
+      "id": "xray_abdomen_01",
+      "query": "Rayos X abdomen una posición",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "b79cede5-4e29-5b58-816e-b1a0a074b433",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Radiography body region and one-position scope are retained."
+    },
+    {
+      "id": "panels_01",
+      "query": "QS",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Panel composition or scope is provider-specific; the resolver must ask/abstain."
+    },
+    {
+      "id": "panels_02",
+      "query": "Q S",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Panel composition or scope is provider-specific; the resolver must ask/abstain."
+    },
+    {
+      "id": "panels_03",
+      "query": "QS completa",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Panel composition or scope is provider-specific; the resolver must ask/abstain."
+    },
+    {
+      "id": "panels_04",
+      "query": "Q S completa",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Panel composition or scope is provider-specific; the resolver must ask/abstain."
+    },
+    {
+      "id": "panels_05",
+      "query": "Q.S. completa",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Panel composition or scope is provider-specific; the resolver must ask/abstain."
+    },
+    {
+      "id": "panels_06",
+      "query": "química sanguínea",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Panel composition or scope is provider-specific; the resolver must ask/abstain."
+    },
+    {
+      "id": "panels_07",
+      "query": "quimica sanguinea completa",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Panel composition or scope is provider-specific; the resolver must ask/abstain."
+    },
+    {
+      "id": "panels_08",
+      "query": "panel de química sanguínea",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Panel composition or scope is provider-specific; the resolver must ask/abstain."
+    },
+    {
+      "id": "panels_09",
+      "query": "perfil tiroideo",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Panel composition or scope is provider-specific; the resolver must ask/abstain."
+    },
+    {
+      "id": "panels_10",
+      "query": "perfil toroideo",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Panel composition or scope is provider-specific; the resolver must ask/abstain."
+    },
+    {
+      "id": "panels_11",
+      "query": "perfil tiroides",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Panel composition or scope is provider-specific; the resolver must ask/abstain."
+    },
+    {
+      "id": "panels_12",
+      "query": "perfil de tiroides",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Panel composition or scope is provider-specific; the resolver must ask/abstain."
+    },
+    {
+      "id": "panels_13",
+      "query": "perfil tiroideo completo",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Panel composition or scope is provider-specific; the resolver must ask/abstain."
+    },
+    {
+      "id": "panels_14",
+      "query": "perfil tiroideo en suero",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Panel composition or scope is provider-specific; the resolver must ask/abstain."
+    },
+    {
+      "id": "panels_15",
+      "query": "panel tiroideo",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Panel composition or scope is provider-specific; the resolver must ask/abstain."
+    },
+    {
+      "id": "panels_16",
+      "query": "pruebas de tiroides",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Panel composition or scope is provider-specific; the resolver must ask/abstain."
+    },
+    {
+      "id": "panels_17",
+      "query": "estudios tiroideos",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Panel composition or scope is provider-specific; the resolver must ask/abstain."
+    },
+    {
+      "id": "panels_18",
+      "query": "T3 T4 TSH perfil",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Panel composition or scope is provider-specific; the resolver must ask/abstain."
+    },
+    {
+      "id": "underspecified_01",
+      "query": "electromiografía",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Missing anatomy, specimen, laterality, modality or contrast must not be guessed."
+    },
+    {
+      "id": "underspecified_02",
+      "query": "EMG",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Missing anatomy, specimen, laterality, modality or contrast must not be guessed."
+    },
+    {
+      "id": "underspecified_03",
+      "query": "electrodiagnóstico",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Missing anatomy, specimen, laterality, modality or contrast must not be guessed."
+    },
+    {
+      "id": "underspecified_04",
+      "query": "glucemia",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Missing anatomy, specimen, laterality, modality or contrast must not be guessed."
+    },
+    {
+      "id": "underspecified_05",
+      "query": "glucosa en sangre",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Missing anatomy, specimen, laterality, modality or contrast must not be guessed."
+    },
+    {
+      "id": "underspecified_06",
+      "query": "glucosa capilar",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Missing anatomy, specimen, laterality, modality or contrast must not be guessed."
+    },
+    {
+      "id": "underspecified_07",
+      "query": "creatinina en sangre",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Missing anatomy, specimen, laterality, modality or contrast must not be guessed."
+    },
+    {
+      "id": "underspecified_08",
+      "query": "T4",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Missing anatomy, specimen, laterality, modality or contrast must not be guessed."
+    },
+    {
+      "id": "underspecified_09",
+      "query": "T3 libre",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Missing anatomy, specimen, laterality, modality or contrast must not be guessed."
+    },
+    {
+      "id": "underspecified_10",
+      "query": "TSH ultrasensible",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Missing anatomy, specimen, laterality, modality or contrast must not be guessed."
+    },
+    {
+      "id": "underspecified_11",
+      "query": "ecografía",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Missing anatomy, specimen, laterality, modality or contrast must not be guessed."
+    },
+    {
+      "id": "underspecified_12",
+      "query": "ultrasonido abdomen",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Missing anatomy, specimen, laterality, modality or contrast must not be guessed."
+    },
+    {
+      "id": "underspecified_13",
+      "query": "resonancia magnética",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Missing anatomy, specimen, laterality, modality or contrast must not be guessed."
+    },
+    {
+      "id": "underspecified_14",
+      "query": "RM",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Missing anatomy, specimen, laterality, modality or contrast must not be guessed."
+    },
+    {
+      "id": "underspecified_15",
+      "query": "MRI",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Missing anatomy, specimen, laterality, modality or contrast must not be guessed."
+    },
+    {
+      "id": "underspecified_16",
+      "query": "tomografía",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Missing anatomy, specimen, laterality, modality or contrast must not be guessed."
+    },
+    {
+      "id": "underspecified_17",
+      "query": "TAC",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Missing anatomy, specimen, laterality, modality or contrast must not be guessed."
+    },
+    {
+      "id": "underspecified_18",
+      "query": "rayos X",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Missing anatomy, specimen, laterality, modality or contrast must not be guessed."
+    },
+    {
+      "id": "underspecified_19",
+      "query": "radiografía",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Missing anatomy, specimen, laterality, modality or contrast must not be guessed."
+    },
+    {
+      "id": "underspecified_20",
+      "query": "mamografía",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Missing anatomy, specimen, laterality, modality or contrast must not be guessed."
+    },
+    {
+      "id": "negative_01",
+      "query": "hola",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "no_match"
+      ],
+      "rationale": "Unrelated, malformed or adversarial input must never resolve to a service."
+    },
+    {
+      "id": "negative_02",
+      "query": "buenos días necesito un estudio",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "no_match"
+      ],
+      "rationale": "Unrelated, malformed or adversarial input must never resolve to a service."
+    },
+    {
+      "id": "negative_03",
+      "query": "precio de zapatos",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "no_match"
+      ],
+      "rationale": "Unrelated, malformed or adversarial input must never resolve to a service."
+    },
+    {
+      "id": "negative_04",
+      "query": "código postal 72000",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "no_match"
+      ],
+      "rationale": "Unrelated, malformed or adversarial input must never resolve to a service."
+    },
+    {
+      "id": "negative_05",
+      "query": "pizza",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "no_match"
+      ],
+      "rationale": "Unrelated, malformed or adversarial input must never resolve to a service."
+    },
+    {
+      "id": "negative_06",
+      "query": "consulta dermatológica",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "no_match"
+      ],
+      "rationale": "Unrelated, malformed or adversarial input must never resolve to a service."
+    },
+    {
+      "id": "negative_07",
+      "query": "medicina general",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "no_match"
+      ],
+      "rationale": "Unrelated, malformed or adversarial input must never resolve to a service."
+    },
+    {
+      "id": "negative_08",
+      "query": "electromiografía de gatos",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "no_match"
+      ],
+      "rationale": "Unrelated, malformed or adversarial input must never resolve to a service."
+    },
+    {
+      "id": "negative_09",
+      "query": "glucosa de unicornio",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "no_match"
+      ],
+      "rationale": "Unrelated, malformed or adversarial input must never resolve to a service."
+    },
+    {
+      "id": "negative_10",
+      "query": "DROP TABLE catalog.items",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "no_match"
+      ],
+      "rationale": "Unrelated, malformed or adversarial input must never resolve to a service."
+    },
+    {
+      "id": "negative_11",
+      "query": "<script>alert('xss')</script>",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "no_match"
+      ],
+      "rationale": "Unrelated, malformed or adversarial input must never resolve to a service."
+    },
+    {
+      "id": "negative_12",
+      "query": "'; select pg_sleep(10); --",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "no_match"
+      ],
+      "rationale": "Unrelated, malformed or adversarial input must never resolve to a service."
+    },
+    {
+      "id": "negative_13",
+      "query": "../../etc/passwd",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "no_match"
+      ],
+      "rationale": "Unrelated, malformed or adversarial input must never resolve to a service."
+    },
+    {
+      "id": "negative_14",
+      "query": "",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "no_match"
+      ],
+      "rationale": "Unrelated, malformed or adversarial input must never resolve to a service."
+    }
+  ]
+}
