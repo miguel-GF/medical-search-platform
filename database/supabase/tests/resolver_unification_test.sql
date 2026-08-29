@@ -34,7 +34,11 @@ select extensions.ok(
     and not has_function_privilege('anon', 'catalog.resolve_items_v3(text,text,uuid,integer)', 'execute')
     and not has_function_privilege('authenticated', 'catalog.resolve_items_v3(text,text,uuid,integer)', 'execute')
     and not has_function_privilege('anon', 'catalog.resolve_items_v5(text,text,uuid,integer)', 'execute')
-    and not has_function_privilege('authenticated', 'catalog.resolve_items_v5(text,text,uuid,integer)', 'execute'),
+    and not has_function_privilege('authenticated', 'catalog.resolve_items_v5(text,text,uuid,integer)', 'execute')
+    and not has_function_privilege('anon', 'public.api_resolve_search_v2(text,text,double precision,double precision,uuid,integer)', 'execute')
+    and not has_function_privilege('authenticated', 'public.api_resolve_search_v2(text,text,double precision,double precision,uuid,integer)', 'execute')
+    and not has_function_privilege('anon', 'public.api_resolve_search_v3(text,text,double precision,double precision,uuid,integer)', 'execute')
+    and not has_function_privilege('authenticated', 'public.api_resolve_search_v3(text,text,double precision,double precision,uuid,integer)', 'execute'),
   'legacy resolver versions are not public entry points'
 );
 
