@@ -63,6 +63,23 @@ def test_download_release_verifies_md5_and_removes_bad_archive(tmp_path: Path):
     assert archive_metadata["download_sha256"] == hashlib.sha256(payload).hexdigest()
 
 
+def test_download_release_removes_partial_archive_on_network_error(tmp_path: Path):
+    metadata = {
+        "version": "2.83",
+        "downloadUrl": "https://example.test/loinc.zip",
+        "downloadMD5Hash": "0" * 32,
+    }
+
+    def failing_opener(_request):
+        raise OSError("connection reset")
+
+    with pytest.raises(OSError, match="connection reset"):
+        download_release(metadata, "user", "secret", tmp_path, opener=failing_opener)
+
+    assert not (tmp_path / "Loinc_2.83.zip").exists()
+    assert not (tmp_path / "Loinc_2.83.metadata.json").exists()
+
+
 def test_extract_loinc_table_from_nested_archive(tmp_path: Path):
     archive_path = tmp_path / "Loinc_2.83.zip"
     with zipfile.ZipFile(archive_path, "w") as archive:

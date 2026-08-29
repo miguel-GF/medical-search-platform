@@ -130,16 +130,20 @@ def download_release(
     version = str(metadata["version"])
     output_dir.mkdir(parents=True, exist_ok=True)
     output_path = output_dir / f"Loinc_{version}.zip"
-    with _request(
-        str(metadata["downloadUrl"]),
-        username=username,
-        password=password,
-        opener=opener,
-    ) as response, output_path.open("wb") as destination:
-        shutil.copyfileobj(response, destination)
-
-    expected = str(metadata["downloadMD5Hash"]).lower()
     metadata_path = output_path.with_suffix(".metadata.json")
+    try:
+        with _request(
+            str(metadata["downloadUrl"]),
+            username=username,
+            password=password,
+            opener=opener,
+        ) as response, output_path.open("wb") as destination:
+            shutil.copyfileobj(response, destination)
+    except Exception:
+        output_path.unlink(missing_ok=True)
+        metadata_path.unlink(missing_ok=True)
+        raise
+    expected = str(metadata["downloadMD5Hash"]).lower()
     digest = hashlib.md5()
     with output_path.open("rb") as source:
         for chunk in iter(lambda: source.read(1024 * 1024), b""):
