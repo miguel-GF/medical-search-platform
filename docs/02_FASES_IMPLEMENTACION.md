@@ -941,6 +941,10 @@ Solo entonces se acelera la construcción del producto paciente.
 
 # Fase 14.2 - Integracion LOINC y resolver unificado
 
+**Estado:** 🟢 resolver unificado desplegado y tooling LOINC listo; descarga y
+mapping clínico revisado pendientes de credenciales locales y revisión de la
+release oficial.
+
 Antes de Flutter, el motor debe usar una sola ruta de resolucion para
 `/search` y `/resolve`. La migracion `095_unified_clinical_resolver.sql`
 introduce `clinical-resolver-v6` y conserva los contratos publicos existentes.

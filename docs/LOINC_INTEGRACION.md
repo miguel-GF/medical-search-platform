@@ -35,8 +35,9 @@ archivo completo y los índices derivados se mantienen fuera del repositorio en
 Ejecutar desde la raíz del repositorio:
 
 ```powershell
-$env:LOINC_USERNAME = Read-Host "LOINC username"
-$env:LOINC_PASSWORD = Read-Host "LOINC password"
+$loincCredential = Get-Credential -Message "Credenciales gratuitas de la API LOINC"
+$env:LOINC_USERNAME = $loincCredential.UserName
+$env:LOINC_PASSWORD = $loincCredential.GetNetworkCredential().Password
 
 python database/scripts/loinc_release.py metadata
 python database/scripts/loinc_release.py download --output-dir database/artifacts/loinc
