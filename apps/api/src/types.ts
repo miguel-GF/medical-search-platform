@@ -6,6 +6,13 @@ export interface Env {
   ADMIN_USER_IDS?: string;
   API_VERSION?: string;
   ALLOWED_ORIGIN?: string;
+  AI?: OcrAiBinding;
+  OCR_AI_MODEL?: string;
+}
+
+/** Narrow interface used so the Worker remains testable without an AI binding. */
+export interface OcrAiBinding {
+  run(model: string, inputs: Record<string, unknown>, options?: Record<string, unknown>): Promise<unknown>;
 }
 
 export interface RpcClient {

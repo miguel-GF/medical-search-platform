@@ -700,6 +700,13 @@ Preferencia:
 on-device OCR
 ```
 
+El primer contrato de servidor para la orden es `POST /api/v1/resolve-image`.
+El Worker acepta una imagen temporal, usa el binding opcional de OCR visual
+solo para transcribir texto literal y encadena el resultado a
+`POST /api/v1/resolve-batch`. El modelo no interpreta equivalencias, no
+selecciona paneles y no persiste la imagen; si el binding no esta disponible,
+la ruta responde `503`.
+
 Cuando la imagen necesite procesamiento servidor:
 
 ```text
@@ -754,6 +761,7 @@ Primeros endpoints:
 GET /api/v1/search
 POST /api/v1/resolve
 POST /api/v1/resolve-batch
+POST /api/v1/resolve-image
 GET /api/v1/services/{id}
 GET /api/v1/services/{id}/providers
 GET /api/v1/providers/{id}

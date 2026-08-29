@@ -13,12 +13,18 @@ Consulta el detalle y los comandos reproducibles en [docs/03_REVISION_INTEGRACIO
 ## Estado actual
 
 - Arquitectura de producto y software: definida.
-- Base de datos V1: migraciones 001-107 aplicadas y verificadas.
+- Base de datos V1: migraciones 001-108 aplicadas y verificadas.
 - Despliegue y validación física en Supabase DEV: completado para el Data Engine previo a Flutter.
 - Collectors Chopo/Ruiz/Salud Digna/DENUE (fixtures, pruebas y corridas live reproducibles), Search API V1 y Admin V1: implementados y probados. Chopo, Ruiz, Salud Digna y DENUE están publicados en Supabase DEV. El gate remoto, los invariantes de base, la API pública y la cuarentena de colectores pasan; no se inicia Flutter hasta un nuevo corte de producto.
 - Collector genérico de proveedores: discovery acotado por dominio, respeto de robots.txt, JSON-LD/patrones de precio-servicio y evidencia candidata para laboratorios pequeños.
 - Fan-out de discovery Puebla: agrupa los sitios web declarados por DENUE y conserva el vínculo de cada host con sus candidatos para medir cobertura sin captura manual.
 - Publicación genérica revisada: cuatro coincidencias exactas enlazadas a siete sedes DENUE; 44 ofertas restantes tienen una cola de revisión auditable y no publicable. Los reintentos sólo cubren fallos transitorios.
+
+## Corte Fase 9-10: OCR y resolucion por paquete
+
+`POST /api/v1/resolve-image` transcribe una orden de forma literal mediante
+un binding opcional de Workers AI y encadena el texto al resolver; sin binding
+responde `503` de forma segura.
 
 ## Corte Fase 10: resolucion por paquete
 

@@ -451,7 +451,7 @@ Una persona externa debe resolver una búsqueda sin ayuda del equipo.
 
 # Fase 9 — OCR / orden médica
 
-**Estado:** ⏳
+**Estado:** ✅ extractor integrado en API; falta conectar la pantalla Flutter.
 
 Después de estabilizar texto.
 
@@ -465,7 +465,11 @@ camera/file
 → detected items
 ```
 
-Fallback visual/IA solo cuando sea necesario.
+Fallback visual/IA solo cuando sea necesario. La ruta
+`POST /api/v1/resolve-image` usa el binding opcional de Workers AI como
+extractor literal; si no existe, falla cerrado con `503`. El texto extraído
+siempre pasa por `resolve-batch`, por lo que el modelo no publica alias ni
+selecciona estudios.
 
 ## Criterio de salida 🧪
 
@@ -915,7 +919,7 @@ Primer `/search` real.
 | Admin | ✅ V1 operativo; diez vistas y Supabase Auth |
 | API Search | ✅ V1 probado |
 | Flutter Web | ⏳ |
-| OCR | ⏳ |
+| OCR | ✅ extractor API; Flutter pendiente |
 | Nuxt SEO | ⏳ |
 | Provider portal | ⏳ |
 | Analytics B2B | ⏳ |

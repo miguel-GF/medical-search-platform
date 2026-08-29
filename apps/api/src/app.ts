@@ -1,7 +1,13 @@
 import { SupabaseRpcClient } from './supabase.js';
-import type { AdminAlert, AdminCatalogItem, AdminQualityIssue, AdminUser, Env, ResolutionResponse, RpcClient, SearchRow } from './types.js';
+import type { AdminAlert, AdminCatalogItem, AdminQualityIssue, AdminUser, Env, PackageResolutionResponse, ResolutionResponse, RpcClient, SearchRow } from './types.js';
 import { buildPackageResolution, normalizeBatchRpcPayload, parseBatchRequest } from './batch.js';
-import type { PackageObjective } from './types.js';
+import {
+  OcrInputError,
+  OcrRecognitionError,
+  OcrUnavailableError,
+  parseOcrImageInput,
+  recognizeOrderImage,
+} from './ocr.js';
 
 interface Dependencies {
   rpc: RpcClient;
@@ -29,6 +35,9 @@ export function createHandler(dependencies: Dependencies) {
       }
       if (url.pathname === '/api/v1/resolve-batch' && request.method === 'POST') {
         return await resolveBatchResponse(request, dependencies.rpc, origin);
+      }
+      if (url.pathname === '/api/v1/resolve-image' && request.method === 'POST') {
+        return await resolveImageResponse(request, dependencies.rpc, env, origin);
       }
       if (url.pathname === '/api/v1/services' && request.method === 'GET') {
         return json({ error: { code: 'route_requires_id', message: 'Use /api/v1/services/{id}' } }, 400, origin);
@@ -155,6 +164,102 @@ async function resolveBatchResponse(request: Request, rpc: RpcClient, origin: st
   const parsed = parseBatchRequest(body as Record<string, unknown>);
   if (!parsed.ok) return json({ error: parsed.error }, 400, origin);
   const input = body as Record<string, unknown>;
+  const context = parsePackageContext(input, origin);
+  if (context instanceof Response) return context;
+  return json(await resolvePackagePayload(parsed.value, context, rpc), 200, origin);
+}
+
+async function resolveImageResponse(request: Request, rpc: RpcClient, env: Env, origin: string): Promise<Response> {
+  const contentLength = Number(request.headers.get('content-length') ?? 0);
+  if (Number.isFinite(contentLength) && contentLength > 8_000_000) {
+    return json({ error: { code: 'payload_too_large', message: 'The image request is too large' } }, 413, origin);
+  }
+  let body: unknown;
+  try {
+    body = JSON.parse(await readRequestText(request, 8_000_000));
+  } catch (error) {
+    if (error instanceof RequestBodyTooLargeError) {
+      return json({ error: { code: 'payload_too_large', message: 'The image request is too large' } }, 413, origin);
+    }
+    return json({ error: { code: 'invalid_json', message: 'Request body must be valid JSON' } }, 400, origin);
+  }
+  if (!body || typeof body !== 'object' || Array.isArray(body)) {
+    return json({ error: { code: 'invalid_body', message: 'Request body must be an object' } }, 400, origin);
+  }
+  const input = body as Record<string, unknown>;
+  const context = parsePackageContext(input, origin);
+  if (context instanceof Response) return context;
+  let image;
+  try {
+    image = parseOcrImageInput(input);
+  } catch (error) {
+    if (error instanceof OcrInputError) return json({ error: { code: error.code, message: error.message } }, 400, origin);
+    throw error;
+  }
+  let ocr;
+  try {
+    ocr = await recognizeOrderImage(env.AI, image, env.OCR_AI_MODEL);
+  } catch (error) {
+    if (error instanceof OcrUnavailableError) return json({ error: { code: error.code, message: 'OCR is not configured for this environment' } }, 503, origin);
+    if (error instanceof OcrRecognitionError) return json({ error: { code: error.code, message: 'The image could not be transcribed safely' } }, 502, origin);
+    throw error;
+  }
+  const parsed = parseBatchRequest({
+    text: ocr.text,
+    objective: input.objective,
+    max_solutions: input.max_solutions,
+  });
+  if (!parsed.ok) {
+    return json({
+      error: { code: 'ocr_unusable', message: 'OCR text could not be converted into study entries' },
+      ocr: { engine: 'workers_ai', model: ocr.model, text: ocr.text },
+    }, 422, origin);
+  }
+  const packageResult = await resolvePackagePayload(parsed.value, context, rpc);
+  return json({
+    ocr: { engine: 'workers_ai', model: ocr.model, input_bytes: ocr.input_bytes, text: ocr.text },
+    ...packageResult,
+  }, 200, origin);
+}
+
+class RequestBodyTooLargeError extends Error {}
+
+async function readRequestText(request: Request, maxBytes: number): Promise<string> {
+  if (!request.body) return '';
+  const reader = request.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let totalBytes = 0;
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      totalBytes += value.byteLength;
+      if (totalBytes > maxBytes) {
+        await reader.cancel();
+        throw new RequestBodyTooLargeError();
+      }
+      chunks.push(value);
+    }
+  } finally {
+    reader.releaseLock();
+  }
+  const bodyBytes = new Uint8Array(totalBytes);
+  let offset = 0;
+  for (const chunk of chunks) {
+    bodyBytes.set(chunk, offset);
+    offset += chunk.byteLength;
+  }
+  return new TextDecoder().decode(bodyBytes);
+}
+
+interface PackageContext {
+  domain: string;
+  latitude: number | null;
+  longitude: number | null;
+  location_id: string | null;
+}
+
+function parsePackageContext(input: Record<string, unknown>, origin: string): PackageContext | Response {
   const domain = typeof input.domain === 'string' && input.domain !== '' ? input.domain : 'health_diagnostics';
   if (!/^[a-z][a-z0-9_]{1,63}$/.test(domain)) {
     return json({ error: { code: 'invalid_domain', message: 'domain is invalid' } }, 400, origin);
@@ -168,23 +273,27 @@ async function resolveBatchResponse(request: Request, rpc: RpcClient, origin: st
   if (locationId !== null && (typeof locationId !== 'string' || !isUuid(locationId))) {
     return json({ error: { code: 'invalid_location_id', message: 'location_id must be a UUID' } }, 400, origin);
   }
+  return { domain, latitude, longitude, location_id: locationId as string | null };
+}
+
+async function resolvePackagePayload(
+  parsed: { items: string[]; original_text: string; objective: PackageResolutionResponse['objective']; max_solutions: number },
+  context: PackageContext,
+  rpc: RpcClient,
+): Promise<PackageResolutionResponse> {
   const raw = await rpc.call<unknown>('api_resolve_package', {
-    p_items: parsed.value.items,
-    p_domain_code: domain,
-    p_latitude: latitude,
-    p_longitude: longitude,
-    p_location_id: locationId,
+    p_items: parsed.items,
+    p_domain_code: context.domain,
+    p_latitude: context.latitude,
+    p_longitude: context.longitude,
+    p_location_id: context.location_id,
     p_limit: 10,
   });
-  return json(
-    buildPackageResolution(
-      normalizeBatchRpcPayload(raw),
-      parsed.value.original_text,
-      parsed.value.objective as PackageObjective,
-      parsed.value.max_solutions,
-    ),
-    200,
-    origin,
+  return buildPackageResolution(
+    normalizeBatchRpcPayload(raw),
+    parsed.original_text,
+    parsed.objective,
+    parsed.max_solutions,
   );
 }
 

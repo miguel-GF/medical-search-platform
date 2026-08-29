@@ -284,6 +284,36 @@ La prueba remota del RPC se ejecuta desde `database/`:
 npx.cmd supabase@latest db query --linked --file supabase/tests/resolver_package_test.sql
 ```
 
+### OCR de ordenes
+
+`POST /api/v1/resolve-image` recibe una imagen JPEG, PNG o WebP como data URL
+(o base64 con `mime_type`). El Worker la transcribe literalmente mediante el
+binding opcional `AI` y envia el texto resultante a `resolve-batch`; no guarda
+la imagen ni permite que el modelo elija equivalencias clinicas. Si el binding
+no esta configurado, responde `503` en lugar de fingir que hizo OCR.
+
+```powershell
+$img = [Convert]::ToBase64String([IO.File]::ReadAllBytes("C:\ruta\orden.jpg"))
+curl.exe -X POST https://<worker>.workers.dev/api/v1/resolve-image `
+  -H "content-type: application/json" `
+  -d "{\"image\":\"data:image/jpeg;base64,$img\"}"
+```
+
+El modelo predeterminado es `@cf/moondream/moondream3.1-9B-A2B` y puede
+cambiarse con `OCR_AI_MODEL`. Moondream se usa con la tarea `query`, salida
+literal y `reasoning=false`; LLaVA sigue disponible como alternativa compatible
+si se configura `@cf/llava-hf/llava-1.5-7b-hf`. Para desarrollo sin binding se
+puede probar el contrato con los mocks de `apps/api/tests`; una respuesta `503`
+es el comportamiento seguro esperado.
+
+Workers AI incluye 10,000 Neurons diarios sin costo. En el plan Paid, el uso
+que exceda esa asignación cuesta $0.011 por 1,000 Neurons; el consumo se debe
+medir en el dashboard porque el número de tokens de imagen varía por foto.
+Moondream publica como referencia $0.30 por millón de tokens de entrada y
+$1.00 por millón de salida. El límite de salida de Pruevia es 384 tokens y la
+respuesta normal suele ser mucho menor. Antes de producción pública se debe
+añadir rate limiting de Cloudflare para evitar que terceros gasten la cuota.
+
 ## Admin V1
 
 El Admin autentica operadores con Supabase Auth. El Worker valida el JWT contra Supabase y comprueba el UUID en `ADMIN_USER_IDS`; nunca se compila un token administrativo en el frontend.
