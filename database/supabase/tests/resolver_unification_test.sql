@@ -2,7 +2,7 @@
 
 begin;
 create extension if not exists pgtap with schema extensions;
-select extensions.plan(16);
+select extensions.plan(17);
 
 select extensions.has_function(
   'catalog',
@@ -27,6 +27,10 @@ select extensions.ok(
 select extensions.ok(
   pg_get_functiondef('public.api_resolve_search(text,text,double precision,double precision,uuid,integer)'::regprocedure) like '%api_resolve_search_v4%',
   'public resolver wrapper delegates to the unified API'
+);
+select extensions.ok(
+  pg_get_functiondef('public.api_search_scoped_v1(text,text,double precision,double precision,uuid,integer)'::regprocedure) like '%catalog.search_items%',
+  'scoped tabular API delegates to the catalog search contract'
 );
 select extensions.ok(
   not has_function_privilege('anon', 'catalog.resolve_items_v2(text,text,uuid,integer)', 'execute')
