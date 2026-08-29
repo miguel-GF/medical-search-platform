@@ -8,6 +8,9 @@ export interface Env {
   ALLOWED_ORIGIN?: string;
   AI?: OcrAiBinding;
   OCR_AI_MODEL?: string;
+  OCR_SERVICE_URL?: string;
+  OCR_SERVICE_TOKEN?: string;
+  OCR_SERVICE_TIMEOUT_MS?: string;
 }
 
 /** Narrow interface used so the Worker remains testable without an AI binding. */

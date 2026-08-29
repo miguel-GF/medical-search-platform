@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pruevia-ocr-service"
+version = "0.1.0"
+description = "Private, non-persistent OCR service for Pruevia medical orders"
+requires-python = ">=3.10"
+dependencies = [
+  "fastapi>=0.115,<1",
+  "uvicorn[standard]>=0.30,<1",
+  "pillow>=10,<13",
+  "rapidocr>=3.9,<4",
+  "onnxruntime>=1.18,<2",
+]
+
+[project.optional-dependencies]
+dev = [
+  "httpx>=0.27,<1",
+  "pytest>=8,<9",
+]
+
+[project.scripts]
+pruevia-ocr = "pruevia_ocr_service.cli:main"
+pruevia-ocr-scan = "pruevia_ocr_service.scan:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-q"
+
+[tool.setuptools.packages.find]
+where = ["src"]

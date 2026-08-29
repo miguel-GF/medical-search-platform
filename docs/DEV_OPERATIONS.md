@@ -287,10 +287,11 @@ npx.cmd supabase@latest db query --linked --file supabase/tests/resolver_package
 ### OCR de ordenes
 
 `POST /api/v1/resolve-image` recibe una imagen JPEG, PNG o WebP como data URL
-(o base64 con `mime_type`). El Worker la transcribe literalmente mediante el
-binding opcional `AI` y envia el texto resultante a `resolve-batch`; no guarda
-la imagen ni permite que el modelo elija equivalencias clinicas. Si el binding
-no esta configurado, responde `503` en lugar de fingir que hizo OCR.
+(o base64 con `mime_type`). El Worker usa el servicio Python privado cuando
+`OCR_SERVICE_URL` existe y, en su defecto, el binding opcional `AI`; ambos
+transcriben literalmente y envian el texto a `resolve-batch`. No guarda la
+imagen ni permite que el modelo elija equivalencias clinicas. Si no existe
+ningun extractor, responde `503` en lugar de fingir que hizo OCR.
 
 ```powershell
 $img = [Convert]::ToBase64String([IO.File]::ReadAllBytes("C:\ruta\orden.jpg"))
@@ -305,6 +306,24 @@ literal y `reasoning=false`; LLaVA sigue disponible como alternativa compatible
 si se configura `@cf/llava-hf/llava-1.5-7b-hf`. Para desarrollo sin binding se
 puede probar el contrato con los mocks de `apps/api/tests`; una respuesta `503`
 es el comportamiento seguro esperado.
+
+La alternativa local está en `apps/ocr-service/`. Es un servicio FastAPI
+privado que usa RapidOCR + ONNX Runtime en CPU, rota la imagen en cuatro
+orientaciones, conserva confianza por línea y elimina metadatos obvios del
+formato. No persiste imágenes. Para usarlo desde el Worker, configura
+`OCR_SERVICE_URL` y `OCR_SERVICE_TOKEN`; el servicio Python tendrá prioridad
+sobre Workers AI. No se necesita comprar un dominio: una URL HTTPS privada del
+proveedor es suficiente, y en desarrollo se usa `http://127.0.0.1:8000`.
+
+Desde `apps/ocr-service/`:
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -e ".[dev]"
+$env:OCR_SERVICE_TOKEN = "dev-secret"
+python -m uvicorn pruevia_ocr_service.app:app --host 127.0.0.1 --port 8000
+```
 
 Workers AI incluye 10,000 Neurons diarios sin costo. En el plan Paid, el uso
 que exceda esa asignación cuesta $0.011 por 1,000 Neurons; el consumo se debe

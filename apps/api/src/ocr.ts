@@ -24,8 +24,10 @@ export interface OcrImageInput {
 
 export interface OcrResult {
   text: string;
+  engine: string;
   model: string;
   input_bytes: number;
+  confidence?: number | null;
 }
 
 export class OcrInputError extends Error {
@@ -89,7 +91,63 @@ export async function recognizeOrderImage(
   }
   const text = cleanOcrText(output);
   if (!text) throw new OcrRecognitionError('OCR model returned no readable text');
-  return { text, model, input_bytes: input.bytes.length };
+  return { text, engine: 'workers_ai', model, input_bytes: input.bytes.length };
+}
+
+export async function recognizeOrderImageViaService(
+  serviceUrl: string | undefined,
+  serviceToken: string | undefined,
+  input: OcrImageInput,
+  timeoutMs = 20_000,
+): Promise<OcrResult> {
+  if (!serviceUrl?.trim()) throw new OcrUnavailableError('OCR service URL is not configured');
+  let endpoint: string;
+  try {
+    const base = new URL(serviceUrl);
+    if (base.protocol !== 'http:' && base.protocol !== 'https:') throw new Error('unsupported OCR service URL protocol');
+    endpoint = new URL('/v1/ocr/order', base).toString();
+  } catch (error) {
+    throw new OcrUnavailableError(error instanceof Error ? error.message : 'OCR service URL is invalid');
+  }
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), Math.max(1_000, timeoutMs));
+  try {
+    const headers: Record<string, string> = { 'content-type': 'application/json' };
+    if (serviceToken?.trim()) headers.authorization = `Bearer ${serviceToken.trim()}`;
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ image: `data:${input.mime_type};base64,${bytesToBase64(input.bytes)}` }),
+      signal: controller.signal,
+    });
+    let payload: unknown = null;
+    try {
+      payload = await response.json();
+    } catch {
+      payload = null;
+    }
+    if (!response.ok) {
+      if (response.status === 401 || response.status === 503) {
+        throw new OcrUnavailableError('OCR service is unavailable or unauthorized');
+      }
+      throw new OcrRecognitionError('OCR service rejected the image');
+    }
+    const value = payload && typeof payload === 'object' ? payload as Record<string, unknown> : {};
+    const text = cleanOcrText(value.text);
+    if (!text) throw new OcrRecognitionError('OCR service returned no readable text');
+    return {
+      text,
+      engine: typeof value.engine === 'string' ? value.engine : 'python_ocr',
+      model: typeof value.model === 'string' ? value.model : 'rapidocr',
+      input_bytes: input.bytes.length,
+      confidence: typeof value.confidence === 'number' ? value.confidence : null,
+    };
+  } catch (error) {
+    if (error instanceof OcrUnavailableError || error instanceof OcrRecognitionError) throw error;
+    throw new OcrUnavailableError(error instanceof Error ? error.message : 'OCR service request failed');
+  } finally {
+    clearTimeout(timeout);
+  }
 }
 
 function cleanOcrText(output: unknown): string {

@@ -74,4 +74,36 @@ describe('POST /api/v1/resolve-image', () => {
     expect(response.status).toBe(413);
     expect(ai.run).not.toHaveBeenCalled();
   });
+
+  it('uses the private Python OCR service when configured', async () => {
+    const ai: OcrAiBinding = { run: vi.fn(async () => ({ answer: 'SHOULD NOT RUN' })) };
+    const rpc = rpcWith({ engine_version: 'clinical-resolver-v6', items: [item], offers: [] });
+    const serviceFetch = vi.fn(async (_input: RequestInfo | URL, init?: RequestInit) => {
+      expect(init?.headers).toEqual(expect.objectContaining({ authorization: 'Bearer python-secret' }));
+      return new Response(JSON.stringify({
+        text: 'BH', engine: 'python_ocr', model: 'PP-OCRv6_rec_small', confidence: 0.91,
+      }), { status: 200, headers: { 'content-type': 'application/json' } });
+    });
+    vi.stubGlobal('fetch', serviceFetch);
+    try {
+      const response = await createHandler({ rpc })(new Request('https://api.test/api/v1/resolve-image', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ image: 'data:image/jpeg;base64,/9j/4AA=' }),
+      }), {
+        ...env,
+        AI: ai,
+        OCR_SERVICE_URL: 'https://ocr.internal.example',
+        OCR_SERVICE_TOKEN: 'python-secret',
+      });
+      expect(response.status).toBe(200);
+      expect((await response.json()) as Record<string, unknown>).toEqual(expect.objectContaining({
+        ocr: expect.objectContaining({ engine: 'python_ocr', model: 'PP-OCRv6_rec_small', confidence: 0.91 }),
+      }));
+      expect(ai.run).not.toHaveBeenCalled();
+      expect(serviceFetch).toHaveBeenCalledWith('https://ocr.internal.example/v1/ocr/order', expect.anything());
+    } finally {
+      vi.unstubAllGlobals();
+    }
+  });
 });

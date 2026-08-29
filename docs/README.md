@@ -12,7 +12,8 @@ Este directorio reúne la documentación canónica importada el 25 de agosto de 
 6. [ERD](ERD.mmd) — diagrama Mermaid de relaciones principales.
 7. [Revisión de integración](03_REVISION_INTEGRACION.md) — evaluación, riesgos y recomendaciones actuales.
 
-La implementación ejecutable está en [`database/`](../database/README.md).
+La implementación ejecutable está en [`database/`](../database/README.md),
+[`apps/api/`](../apps/api/) y el extractor local [`apps/ocr-service/`](../apps/ocr-service/README.md).
 
 8. [Integración LOINC](LOINC_INTEGRACION.md) - descarga versionada, mapeo seguro y criterios de publicación.
 

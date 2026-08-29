@@ -466,10 +466,12 @@ camera/file
 ```
 
 Fallback visual/IA solo cuando sea necesario. La ruta
-`POST /api/v1/resolve-image` usa el binding opcional de Workers AI como
-extractor literal; si no existe, falla cerrado con `503`. El texto extraído
-siempre pasa por `resolve-batch`, por lo que el modelo no publica alias ni
-selecciona estudios.
+`POST /api/v1/resolve-image` usa primero el extractor local FastAPI de
+`apps/ocr-service/` si `OCR_SERVICE_URL` existe y, en su defecto, el binding
+opcional de Workers AI; si no existe ningún extractor, falla cerrado con
+`503`. El texto extraído siempre pasa por `resolve-batch`, por lo que el
+modelo no publica alias ni selecciona estudios. Ningún extractor persiste
+imágenes ni decide equivalencias.
 
 ## Criterio de salida 🧪
 

@@ -233,8 +233,9 @@ Ambiguous local terms such as `QS completa` or `perfil tiroideo` return all
 reviewed variants separately; no variant is silently selected. The public
 contracts are `POST /api/v1/resolve` for one study,
 `POST /api/v1/resolve-batch` for an arbitrary list of up to 30 studies, and
-`POST /api/v1/resolve-image` for literal OCR before the batch flow. The
-batch contract resolves every entry independently, then computes concrete
+`POST /api/v1/resolve-image` for literal OCR before the batch flow. The image
+route may use the private Python extractor or an optional Workers AI binding;
+both remain outside the clinical decision boundary. The batch contract resolves every entry independently, then computes concrete
 branch coverage (one branch first, combinations of up to three when needed)
 without changing the existing `GET /api/v1/search` contract.
 

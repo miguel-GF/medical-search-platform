@@ -701,11 +701,12 @@ on-device OCR
 ```
 
 El primer contrato de servidor para la orden es `POST /api/v1/resolve-image`.
-El Worker acepta una imagen temporal, usa el binding opcional de OCR visual
-solo para transcribir texto literal y encadena el resultado a
+El Worker acepta una imagen temporal, usa primero el servicio privado FastAPI
+si `OCR_SERVICE_URL` esta configurado y, en su defecto, el binding opcional de
+OCR visual. Ambos solo transcriben texto literal y encadenan el resultado a
 `POST /api/v1/resolve-batch`. El modelo no interpreta equivalencias, no
-selecciona paneles y no persiste la imagen; si el binding no esta disponible,
-la ruta responde `503`.
+selecciona paneles y no persiste la imagen; si no existe ningun extractor, la
+ruta responde `503`.
 
 Cuando la imagen necesite procesamiento servidor:
 

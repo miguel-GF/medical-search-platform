@@ -23,8 +23,8 @@ Consulta el detalle y los comandos reproducibles en [docs/03_REVISION_INTEGRACIO
 ## Corte Fase 9-10: OCR y resolucion por paquete
 
 `POST /api/v1/resolve-image` transcribe una orden de forma literal mediante
-un binding opcional de Workers AI y encadena el texto al resolver; sin binding
-responde `503` de forma segura.
+el extractor Python privado o un binding opcional de Workers AI y encadena el
+texto al resolver; sin extractor responde `503` de forma segura.
 
 ## Corte Fase 10: resolucion por paquete
 

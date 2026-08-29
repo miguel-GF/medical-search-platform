@@ -7,6 +7,7 @@ import {
   OcrUnavailableError,
   parseOcrImageInput,
   recognizeOrderImage,
+  recognizeOrderImageViaService,
 } from './ocr.js';
 
 interface Dependencies {
@@ -198,7 +199,14 @@ async function resolveImageResponse(request: Request, rpc: RpcClient, env: Env, 
   }
   let ocr;
   try {
-    ocr = await recognizeOrderImage(env.AI, image, env.OCR_AI_MODEL);
+    ocr = env.OCR_SERVICE_URL
+      ? await recognizeOrderImageViaService(
+        env.OCR_SERVICE_URL,
+        env.OCR_SERVICE_TOKEN,
+        image,
+        parsePositiveInt(env.OCR_SERVICE_TIMEOUT_MS, 20_000, 1_000, 60_000),
+      )
+      : await recognizeOrderImage(env.AI, image, env.OCR_AI_MODEL);
   } catch (error) {
     if (error instanceof OcrUnavailableError) return json({ error: { code: error.code, message: 'OCR is not configured for this environment' } }, 503, origin);
     if (error instanceof OcrRecognitionError) return json({ error: { code: error.code, message: 'The image could not be transcribed safely' } }, 502, origin);
@@ -212,12 +220,12 @@ async function resolveImageResponse(request: Request, rpc: RpcClient, env: Env, 
   if (!parsed.ok) {
     return json({
       error: { code: 'ocr_unusable', message: 'OCR text could not be converted into study entries' },
-      ocr: { engine: 'workers_ai', model: ocr.model, text: ocr.text },
+      ocr: { engine: ocr.engine, model: ocr.model, text: ocr.text },
     }, 422, origin);
   }
   const packageResult = await resolvePackagePayload(parsed.value, context, rpc);
   return json({
-    ocr: { engine: 'workers_ai', model: ocr.model, input_bytes: ocr.input_bytes, text: ocr.text },
+    ocr: { engine: ocr.engine, model: ocr.model, input_bytes: ocr.input_bytes, text: ocr.text, confidence: ocr.confidence ?? null },
     ...packageResult,
   }, 200, origin);
 }
@@ -465,6 +473,11 @@ function groupSearchRows(rows: SearchRow[]) {
 
 function parseBoundedInt(value: string | null, fallback: number, min: number, max: number): number {
   const parsed = value === null ? Number.NaN : Number(value);
+  return Number.isInteger(parsed) ? Math.max(min, Math.min(max, parsed)) : fallback;
+}
+
+function parsePositiveInt(value: string | undefined, fallback: number, min: number, max: number): number {
+  const parsed = value === undefined ? Number.NaN : Number(value);
   return Number.isInteger(parsed) ? Math.max(min, Math.min(max, parsed)) : fallback;
 }
 
