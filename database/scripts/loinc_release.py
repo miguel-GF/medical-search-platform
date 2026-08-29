@@ -139,6 +139,7 @@ def download_release(
         shutil.copyfileobj(response, destination)
 
     expected = str(metadata["downloadMD5Hash"]).lower()
+    metadata_path = output_path.with_suffix(".metadata.json")
     digest = hashlib.md5()
     with output_path.open("rb") as source:
         for chunk in iter(lambda: source.read(1024 * 1024), b""):
@@ -146,9 +147,22 @@ def download_release(
     actual = digest.hexdigest().lower()
     if actual != expected:
         output_path.unlink(missing_ok=True)
+        metadata_path.unlink(missing_ok=True)
         raise ValueError(
             f"LOINC checksum mismatch for {version}: expected {expected}, got {actual}"
         )
+    metadata_record = {
+        "version": version,
+        "download_url": str(metadata["downloadUrl"]),
+        "published_md5": expected,
+        "verified_md5": actual,
+        "download_sha256": _sha256_file(output_path),
+        "archive": output_path.name,
+    }
+    metadata_path.write_text(
+        json.dumps(metadata_record, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
     return output_path
 
 

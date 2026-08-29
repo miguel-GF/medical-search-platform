@@ -44,10 +44,23 @@ def test_download_release_verifies_md5_and_removes_bad_archive(tmp_path: Path):
         "downloadUrl": "https://example.test/loinc.zip",
         "downloadMD5Hash": hashlib.md5(payload).hexdigest(),
     }
+    stale_metadata = tmp_path / "Loinc_2.83.metadata.json"
+    stale_metadata.write_text("stale", encoding="utf-8")
+    metadata["downloadMD5Hash"] = "0" * 32
 
+    with pytest.raises(ValueError, match="checksum mismatch"):
+        download_release(metadata, "user", "secret", tmp_path, opener=lambda request: _Response(payload))
+
+    assert not (tmp_path / "Loinc_2.83.zip").exists()
+    assert not stale_metadata.exists()
+
+    metadata["downloadMD5Hash"] = hashlib.md5(payload).hexdigest()
     path = download_release(metadata, "user", "secret", tmp_path, opener=lambda request: _Response(payload))
-
     assert path.read_bytes() == payload
+    archive_metadata = json.loads(path.with_suffix(".metadata.json").read_text(encoding="utf-8"))
+    assert archive_metadata["version"] == "2.83"
+    assert archive_metadata["published_md5"] == archive_metadata["verified_md5"]
+    assert archive_metadata["download_sha256"] == hashlib.sha256(payload).hexdigest()
 
 
 def test_extract_loinc_table_from_nested_archive(tmp_path: Path):

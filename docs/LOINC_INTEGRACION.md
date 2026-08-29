@@ -54,6 +54,8 @@ python database/scripts/loinc_release.py index `
 ```
 
 `download` valida el MD5 publicado por LOINC y elimina el ZIP si no coincide.
+También escribe un manifiesto seguro junto al ZIP con la URL, versión, MD5
+verificado y SHA-256 local; nunca incluye las credenciales.
 `index` conserva sólo los campos necesarios para búsqueda y revisión; por
 defecto excluye términos deprecated/discouraged.
 
