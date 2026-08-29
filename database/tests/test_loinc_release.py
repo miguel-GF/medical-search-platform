@@ -13,6 +13,7 @@ from database.scripts.loinc_release import (
     INDEX_FIELDS,
     _credentials,
     _validate_download_url,
+    _validate_sha256,
     _validate_version,
     build_index,
     download_release,
@@ -94,6 +95,9 @@ def test_release_metadata_rejects_path_traversal_and_untrusted_download_hosts():
     with pytest.raises(ValueError, match="HTTPS on loinc.regenstrief.org"):
         _validate_download_url("http://loinc.regenstrief.org/api/v1/Loinc/Download")
 
+    with pytest.raises(ValueError, match="64-character hexadecimal"):
+        _validate_sha256("not-a-digest")
+
 
 def test_credentials_load_from_local_env_without_overriding_process_values(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
@@ -127,6 +131,47 @@ def test_extract_loinc_table_from_nested_archive(tmp_path: Path):
     output = extract_loinc_table(archive_path, tmp_path / "extracted")
 
     assert output.read_text(encoding="utf-8") == "LOINC_NUM,STATUS\n123-4,ACTIVE\n"
+
+
+def test_extract_loinc_table_prefers_canonical_table_when_accessory_has_same_name(tmp_path: Path):
+    archive_path = tmp_path / "Loinc_2.83.zip"
+    with zipfile.ZipFile(archive_path, "w") as archive:
+        archive.writestr("AccessoryFiles/PanelsAndForms/Loinc.csv", b"accessory")
+        archive.writestr("LoincTable/Loinc.csv", b"canonical")
+
+    output = extract_loinc_table(archive_path, tmp_path / "extracted")
+
+    assert output.read_bytes() == b"canonical"
+
+
+def test_download_release_enforces_optional_sha256(tmp_path: Path):
+    payload = b"release-bytes"
+    metadata = {
+        "version": "2.83",
+        "downloadUrl": "https://loinc.regenstrief.org/api/v1/Loinc/Download?version=2.83",
+        "downloadMD5Hash": hashlib.md5(payload).hexdigest(),
+    }
+
+    with pytest.raises(ValueError, match="SHA-256 mismatch"):
+        download_release(
+            metadata,
+            "user",
+            "secret",
+            tmp_path,
+            expected_sha256="0" * 64,
+            opener=lambda request: _Response(payload),
+        )
+
+    path = download_release(
+        metadata,
+        "user",
+        "secret",
+        tmp_path,
+        expected_sha256=hashlib.sha256(payload).hexdigest(),
+        opener=lambda request: _Response(payload),
+    )
+    archive_metadata = json.loads(path.with_suffix(".metadata.json").read_text(encoding="utf-8"))
+    assert archive_metadata["published_sha256"] == archive_metadata["download_sha256"]
 
 
 def test_build_index_filters_class_and_deprecated_rows(tmp_path: Path):
@@ -171,6 +216,25 @@ def test_build_index_can_include_deprecated_rows(tmp_path: Path):
     assert stats["manifest"] == str(manifest_path)
     assert manifest["loinc_version"] == "2.83"
     assert manifest["rows_written"] == 1
+
+
+def test_build_index_can_filter_laboratory_class_type(tmp_path: Path):
+    csv_path = tmp_path / "Loinc.csv"
+    with csv_path.open("w", encoding="utf-8", newline="") as source:
+        writer = csv.DictWriter(source, fieldnames=list(INDEX_FIELDS))
+        writer.writeheader()
+        laboratory = {field: "" for field in INDEX_FIELDS}
+        laboratory.update({"LOINC_NUM": "123-4", "CLASS": "CHEM", "CLASSTYPE": "1", "STATUS": "ACTIVE"})
+        clinical = {field: "" for field in INDEX_FIELDS}
+        clinical.update({"LOINC_NUM": "234-5", "CLASS": "RAD", "CLASSTYPE": "2", "STATUS": "ACTIVE"})
+        writer.writerows([laboratory, clinical])
+
+    output = tmp_path / "lab-index.jsonl"
+    stats = build_index(csv_path, output, class_types={"1"}, version="2.83")
+
+    assert stats["rows_seen"] == 2
+    assert stats["rows_written"] == 1
+    assert json.loads(output.read_text(encoding="utf-8"))["CLASSTYPE"] == "1"
 
 
 def test_rank_candidates_is_deterministic_and_review_only(tmp_path: Path):
@@ -230,6 +294,36 @@ def test_rank_candidates_is_deterministic_and_review_only(tmp_path: Path):
     assert candidates[0]["review_status"] == "candidate"
     assert candidates[0]["requires_manual_review"] is True
     assert candidates[0]["matched_tokens"] == ["glucose", "serum"]
+
+
+def test_rank_candidates_prefers_ranked_common_term_over_unranked_variant(tmp_path: Path):
+    index_path = tmp_path / "loinc_lab_active.jsonl"
+    rows = [
+        {
+            "LOINC_NUM": "100000-9",
+            "LONG_COMMON_NAME": "Glucose [Mass/volume] in Serum or Plasma after challenge",
+            "SHORTNAME": "Glucose challenge SerPl",
+            "COMPONENT": "Glucose",
+            "SYSTEM": "Ser/Plas",
+            "COMMON_TEST_RANK": "0",
+            "STATUS": "ACTIVE",
+        },
+        {
+            "LOINC_NUM": "2345-7",
+            "LONG_COMMON_NAME": "Glucose [Mass/volume] in Serum or Plasma",
+            "SHORTNAME": "Glucose SerPl-mCnc",
+            "COMPONENT": "Glucose",
+            "SYSTEM": "Ser/Plas",
+            "COMMON_TEST_RANK": "6",
+            "STATUS": "ACTIVE",
+        },
+    ]
+    index_path.write_text("\n".join(json.dumps(row) for row in rows) + "\n", encoding="utf-8")
+
+    candidates = rank_candidates(index_path, "glucose serum plasma", limit=2)
+
+    assert [candidate["loinc_code"] for candidate in candidates] == ["2345-7", "100000-9"]
+    assert candidates[0]["common_test_rank"] == "6"
 
 
 def test_rank_candidates_rejects_empty_query_and_bad_limit(tmp_path: Path):

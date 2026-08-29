@@ -124,6 +124,8 @@ def _normalized_attribute(value: object) -> str:
 
 
 def _validate_index_mapping(mapping: dict, index_row: dict[str, str], index_code: str) -> None:
+    if _normalized_attribute(index_row.get("CLASSTYPE")) != "1":
+        raise ValueError(f"LOINC {index_code} is not a laboratory term (CLASSTYPE=1 required)")
     index_status = _normalized_attribute(index_row.get("STATUS"))
     mapping_status = _normalized_attribute(mapping.get("status") or "active")
     if mapping_status == "active" and index_status not in {"active", "trial"}:

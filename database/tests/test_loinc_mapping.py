@@ -63,6 +63,7 @@ def test_mapping_must_exist_and_match_attributes_in_release_index(tmp_path: Path
             {
                 "LOINC_NUM": "57021-8",
                 "STATUS": "ACTIVE",
+                "CLASSTYPE": "1",
                 "COMPONENT": "Complete blood count",
                 "PROPERTY": "Number concentration",
                 "TIME_ASPCT": "Point in time",
@@ -86,6 +87,12 @@ def test_mapping_must_exist_and_match_attributes_in_release_index(tmp_path: Path
             index_path=index,
         )
 
+    non_lab_row = json.loads(index.read_text(encoding="utf-8"))
+    non_lab_row["CLASSTYPE"] = "2"
+    index.write_text(json.dumps(non_lab_row) + "\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="CLASSTYPE=1 required"):
+        render(_fixture(), index_path=index)
+
 
 def test_invalid_catalog_item_id_is_rejected():
     with pytest.raises(ValueError, match="invalid item_id"):
@@ -104,6 +111,7 @@ def test_active_mapping_cannot_use_deprecated_release_row(tmp_path: Path):
             {
                 "LOINC_NUM": "57021-8",
                 "STATUS": "DEPRECATED",
+                "CLASSTYPE": "1",
                 "COMPONENT": "Complete blood count",
                 "PROPERTY": "Number concentration",
                 "TIME_ASPCT": "Point in time",
@@ -128,6 +136,7 @@ def test_cli_mode_requires_matching_index_manifest(tmp_path: Path):
             {
                 "LOINC_NUM": "57021-8",
                 "STATUS": "ACTIVE",
+                "CLASSTYPE": "1",
                 "COMPONENT": "Complete blood count",
                 "PROPERTY": "Number concentration",
                 "TIME_ASPCT": "Point in time",

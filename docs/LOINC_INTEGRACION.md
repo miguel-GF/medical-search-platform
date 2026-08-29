@@ -53,16 +53,21 @@ python database/scripts/loinc_release.py extract `
 
 python database/scripts/loinc_release.py index `
   --csv database/artifacts/loinc/<VERSION>/Loinc.csv `
-  --class LAB `
+  --class-type 1 `
   --version <VERSION> `
   --output database/artifacts/loinc/<VERSION>/loinc_lab_active.jsonl
 ```
 
 `download` valida el MD5 publicado por LOINC y elimina el ZIP si no coincide.
-También escribe un manifiesto seguro junto al ZIP con la URL, versión, MD5
-verificado y SHA-256 local; nunca incluye las credenciales.
-`index` conserva sólo los campos necesarios para búsqueda y revisión; por
-defecto excluye términos deprecated/discouraged.
+Además calcula siempre un SHA-256 local y lo guarda en el manifiesto. Si se
+dispone de un SHA-256 esperado por una fuente confiable, puede pasarse con
+`--sha256`; en ese caso ambos checks deben coincidir. El API de LOINC sigue
+siendo la autoridad del MD5 publicado, por lo que no se sustituye silenciosamente
+por un hash no publicado. El manifiesto nunca incluye credenciales.
+`CLASSTYPE=1` identifica el dominio laboratorio; `CLASS` se conserva como
+subclase (por ejemplo `CHEM`, `MICRO`, `HEM/BC` o `UA`). `index` conserva sólo
+los campos necesarios para búsqueda y revisión; por defecto excluye términos
+deprecated/discouraged.
 
 El comando `index` recibe `--version` y escribe un manifiesto con la versiÃ³n y
 el SHA-256 del Ã­ndice. El renderer exige ese manifiesto en modo CLI para evitar

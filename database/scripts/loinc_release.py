@@ -30,6 +30,7 @@ LOINC_DOWNLOAD_HOST = "loinc.regenstrief.org"
 DEFAULT_ARTIFACT_DIR = Path("database/artifacts/loinc")
 INDEX_MANIFEST_SUFFIX = ".manifest.json"
 LOINC_VERSION_RE = re.compile(r"^[0-9]+(?:\.[0-9]+){1,3}(?:[-+][A-Za-z0-9.-]+)?$")
+SHA256_RE = re.compile(r"^[0-9a-fA-F]{64}$")
 INDEX_FIELDS = (
     "LOINC_NUM",
     "COMPONENT",
@@ -39,11 +40,15 @@ INDEX_FIELDS = (
     "SCALE_TYP",
     "METHOD_TYP",
     "CLASS",
+    "CLASSTYPE",
     "STATUS",
     "LONG_COMMON_NAME",
     "SHORTNAME",
     "CONSUMER_NAME",
     "ORDER_OBS",
+    "COMMON_TEST_RANK",
+    "COMMON_ORDER_RANK",
+    "PanelType",
     "EXTERNAL_COPYRIGHT_NOTICE",
 )
 REQUIRED_INDEX_FIELDS = (
@@ -55,6 +60,7 @@ REQUIRED_INDEX_FIELDS = (
     "SCALE_TYP",
     "METHOD_TYP",
     "CLASS",
+    "CLASSTYPE",
     "STATUS",
     "LONG_COMMON_NAME",
     "SHORTNAME",
@@ -103,6 +109,13 @@ def _validate_download_url(value: object) -> str:
             "LOINC download URL must use HTTPS on loinc.regenstrief.org without credentials"
         )
     return url
+
+
+def _validate_sha256(value: object) -> str:
+    digest = str(value or "").strip().lower()
+    if not SHA256_RE.fullmatch(digest):
+        raise ValueError("Expected SHA-256 must be a 64-character hexadecimal digest")
+    return digest
 
 
 def _load_env_file(path: Path | None) -> None:
@@ -181,12 +194,19 @@ def download_release(
     password: str,
     output_dir: Path,
     *,
+    expected_sha256: str | None = None,
     opener: UrlOpener = urllib.request.urlopen,
 ) -> Path:
-    """Download a release and verify the MD5 published by LOINC."""
+    """Download a release and verify the official MD5 plus optional SHA-256."""
 
     version = _validate_version(metadata.get("version"))
     download_url = _validate_download_url(metadata.get("downloadUrl"))
+    metadata_sha256 = (
+        metadata.get("downloadSHA256Hash")
+        or metadata.get("downloadSha256Hash")
+        or metadata.get("download_sha256")
+    )
+    expected_sha256 = _validate_sha256(expected_sha256 or metadata_sha256) if (expected_sha256 or metadata_sha256) else None
     output_dir.mkdir(parents=True, exist_ok=True)
     output_path = output_dir / f"Loinc_{version}.zip"
     metadata_path = output_path.with_suffix(".metadata.json")
@@ -203,25 +223,36 @@ def download_release(
         metadata_path.unlink(missing_ok=True)
         raise
     expected = str(metadata["downloadMD5Hash"]).lower()
-    digest = hashlib.md5()
+    md5_digest = hashlib.md5()
+    sha256_digest = hashlib.sha256()
     with output_path.open("rb") as source:
         for chunk in iter(lambda: source.read(1024 * 1024), b""):
-            digest.update(chunk)
-    actual = digest.hexdigest().lower()
+            md5_digest.update(chunk)
+            sha256_digest.update(chunk)
+    actual = md5_digest.hexdigest().lower()
+    actual_sha256 = sha256_digest.hexdigest().lower()
     if actual != expected:
         output_path.unlink(missing_ok=True)
         metadata_path.unlink(missing_ok=True)
         raise ValueError(
             f"LOINC checksum mismatch for {version}: expected {expected}, got {actual}"
         )
+    if expected_sha256 and actual_sha256 != expected_sha256:
+        output_path.unlink(missing_ok=True)
+        metadata_path.unlink(missing_ok=True)
+        raise ValueError(
+            f"LOINC SHA-256 mismatch for {version}: expected {expected_sha256}, got {actual_sha256}"
+        )
     metadata_record = {
         "version": version,
         "download_url": str(metadata["downloadUrl"]),
         "published_md5": expected,
         "verified_md5": actual,
-        "download_sha256": _sha256_file(output_path),
+        "download_sha256": actual_sha256,
         "archive": output_path.name,
     }
+    if expected_sha256:
+        metadata_record["published_sha256"] = expected_sha256
     metadata_path.write_text(
         json.dumps(metadata_record, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
@@ -230,6 +261,16 @@ def download_release(
 
 
 def _find_member(archive: zipfile.ZipFile, filename: str) -> str:
+    normalized_target = Path(filename).as_posix().casefold()
+    preferred = [
+        name
+        for name in archive.namelist()
+        if name.replace("\\", "/").lstrip("./").casefold() == f"loinctable/{normalized_target}"
+    ]
+    if len(preferred) == 1:
+        return preferred[0]
+    if len(preferred) > 1:
+        raise ValueError(f"LOINC archive contains multiple canonical {filename} files: {preferred}")
     matches = [
         name
         for name in archive.namelist()
@@ -288,6 +329,16 @@ def _search_tokens(value: str) -> list[str]:
     ]
 
 
+def _rank_value(row: dict[str, str], field: str) -> int:
+    """Return a deterministic rank where LOINC's zero means unranked."""
+
+    try:
+        value = int(row.get(field, ""))
+    except (TypeError, ValueError):
+        return 1_000_000_000
+    return value if value > 0 else 1_000_000_000
+
+
 def _iter_index_rows(index_path: Path) -> Iterable[dict[str, str]]:
     with index_path.open("r", encoding="utf-8") as source:
         for line_number, line in enumerate(source, start=1):
@@ -318,7 +369,8 @@ def rank_candidates(
     if not query_tokens:
         raise ValueError("candidate query must contain at least one searchable token")
     query_weight = float(len(query_tokens))
-    ranked: list[tuple[float, float, str, dict[str, object]]] = []
+    rank_field = "COMMON_ORDER_RANK" if "panel" in query_tokens or "order" in query_tokens else "COMMON_TEST_RANK"
+    ranked: list[tuple[float, float, int, str, dict[str, object]]] = []
     for row in _iter_index_rows(index_path):
         status = row.get("STATUS", "").upper()
         if active_only and status not in {"ACTIVE", "TRIAL"}:
@@ -362,17 +414,29 @@ def rank_candidates(
             "scale_type": row.get("SCALE_TYP", ""),
             "method": row.get("METHOD_TYP", ""),
             "class": row.get("CLASS", ""),
+            "class_type": row.get("CLASSTYPE", ""),
             "status": row.get("STATUS", ""),
             "order_observation": row.get("ORDER_OBS", ""),
+            "common_test_rank": row.get("COMMON_TEST_RANK", ""),
+            "common_order_rank": row.get("COMMON_ORDER_RANK", ""),
+            "panel_type": row.get("PanelType", ""),
             "score": round(score, 6),
             "matched_tokens": matched_tokens,
             "evidence_fields": sorted(evidence_fields),
             "review_status": "candidate",
             "requires_manual_review": True,
         }
-        ranked.append((score, coverage, str(row.get("LOINC_NUM", "")), candidate))
-    ranked.sort(key=lambda value: (-value[0], -value[1], value[2]))
-    return [candidate for _score, _coverage, _code, candidate in ranked[:limit]]
+        ranked.append(
+            (
+                score,
+                coverage,
+                _rank_value(row, rank_field),
+                str(row.get("LOINC_NUM", "")),
+                candidate,
+            )
+        )
+    ranked.sort(key=lambda value: (-value[0], -value[1], value[2], value[3]))
+    return [candidate for _score, _coverage, _rank, _code, candidate in ranked[:limit]]
 
 
 def build_index(
@@ -380,6 +444,7 @@ def build_index(
     output_path: Path,
     *,
     classes: set[str] | None = None,
+    class_types: set[str] | None = None,
     active_only: bool = True,
     version: str | None = None,
 ) -> dict[str, object]:
@@ -395,6 +460,8 @@ def build_index(
             rows_seen += 1
             if classes and row["CLASS"].upper() not in {value.upper() for value in classes}:
                 continue
+            if class_types and row["CLASSTYPE"].upper() not in {value.upper() for value in class_types}:
+                continue
             if active_only and row["STATUS"].upper() not in {"ACTIVE", "TRIAL"}:
                 continue
             target.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
@@ -406,6 +473,7 @@ def build_index(
         "rows_written": rows_written,
         "active_only": active_only,
         "classes": sorted(classes) if classes else [],
+        "class_types": sorted(class_types) if class_types else [],
     }
     if version:
         manifest_path = output_path.with_suffix(output_path.suffix + INDEX_MANIFEST_SUFFIX)
@@ -417,6 +485,7 @@ def build_index(
             "rows_written": rows_written,
             "active_only": active_only,
             "classes": sorted(classes) if classes else [],
+            "class_types": sorted(class_types) if class_types else [],
         }
         manifest_path.write_text(
             json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
@@ -459,6 +528,11 @@ def _parser() -> argparse.ArgumentParser:
     download = subparsers.add_parser("download", parents=[common])
     download.add_argument("--version")
     download.add_argument("--output-dir", type=Path, default=DEFAULT_ARTIFACT_DIR)
+    download.add_argument(
+        "--sha256",
+        dest="expected_sha256",
+        help="optional trusted SHA-256 digest for an additional integrity check",
+    )
 
     extract = subparsers.add_parser("extract")
     extract.add_argument("--zip", dest="zip_path", type=Path, required=True)
@@ -468,6 +542,7 @@ def _parser() -> argparse.ArgumentParser:
     index.add_argument("--csv", dest="csv_path", type=Path, required=True)
     index.add_argument("--output", dest="output_path", type=Path, required=True)
     index.add_argument("--class", dest="classes", action="append")
+    index.add_argument("--class-type", dest="class_types", action="append")
     index.add_argument("--include-deprecated", action="store_true")
     index.add_argument("--version", required=True)
 
@@ -489,7 +564,13 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "download":
         username, password = _credentials(args)
         metadata = fetch_metadata(username, password, args.version)
-        path = download_release(metadata, username, password, args.output_dir)
+        path = download_release(
+            metadata,
+            username,
+            password,
+            args.output_dir,
+            expected_sha256=args.expected_sha256,
+        )
         print(json.dumps({"version": metadata["version"], "path": str(path)}, ensure_ascii=False))
         return 0
     if args.command == "extract":
@@ -501,6 +582,7 @@ def main(argv: list[str] | None = None) -> int:
             args.csv_path,
             args.output_path,
             classes=set(args.classes or []),
+            class_types=set(args.class_types or []),
             active_only=not args.include_deprecated,
             version=args.version,
         )
