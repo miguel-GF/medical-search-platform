@@ -69,6 +69,7 @@ Los reviewers deben crear un fixture pequeño (por ejemplo,
       "loinc_code": "57021-8",
       "mapping_type": "exact",
       "verified": true,
+      "approved": true,
       "source_note": "RELMA reviewed",
       "attributes": {
         "component": "Complete blood count",
@@ -96,6 +97,11 @@ python database/scripts/render_loinc_mapping.py `
 
 El renderer rechaza códigos inválidos, mappings duplicados y mappings `exact`
 sin aprobación explícita.
+
+El renderer rechaza códigos inválidos, mappings duplicados y mappings `exact`
+sin verificación. Un mapping no exacto (`narrower`, `broader`, `related` o
+`local`) sólo se publica si está activo y tiene `approved=true`; una sugerencia
+no aprobada debe permanecer fuera de la migración.
 
 ## Mapeo seguro
 

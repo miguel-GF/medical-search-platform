@@ -70,6 +70,10 @@ def validate_fixture(payload: dict) -> None:
             raise ValueError(f"mapping {index} has invalid status: {status}")
         if mapping_type == "exact" and not mapping.get("verified", False):
             raise ValueError(f"exact mapping {index} must set verified=true")
+        if mapping_type != "exact" and status == "active" and not mapping.get("approved", False):
+            raise ValueError(
+                f"active non-exact mapping {index} must set approved=true"
+            )
         attrs = mapping.get("attributes") or {}
         if not isinstance(attrs, dict):
             raise ValueError(f"mapping {index} attributes must be an object")

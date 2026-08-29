@@ -50,6 +50,14 @@ def test_exact_mapping_requires_review_approval():
         render(_fixture(verified=False))
 
 
+def test_active_non_exact_mapping_requires_explicit_approval():
+    with pytest.raises(ValueError, match="approved=true"):
+        render(_fixture(mapping_type="related"))
+
+    sql = render(_fixture(mapping_type="related", approved=True))
+    assert "'related'" in sql
+
+
 def test_invalid_code_and_duplicate_mapping_are_rejected():
     with pytest.raises(ValueError, match="invalid LOINC code"):
         render(_fixture(loinc_code="not-a-loinc-code"))
