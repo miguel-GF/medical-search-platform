@@ -1,0 +1,41 @@
+{
+  "queue_version": "loinc-review-queue-v1",
+  "policy": "Candidate generation only. Every code and panel composition requires clinical review before publication.",
+  "items": [
+    {
+      "item_id": "00000000-0000-0000-0000-000000001103",
+      "canonical_name": "Biometría hemática",
+      "queries": ["complete blood count", "cbc", "blood count"]
+    },
+    {
+      "item_id": "00000000-0000-0000-0000-000000001104",
+      "canonical_name": "Examen general de orina",
+      "queries": ["urinalysis", "complete urinalysis", "urine analysis"]
+    },
+    {
+      "item_id": "00000000-0000-0000-0000-000000001109",
+      "canonical_name": "Glucosa",
+      "queries": ["glucose serum plasma", "glucose"]
+    },
+    {
+      "item_id": "00000000-0000-0000-0000-000000001110",
+      "canonical_name": "Creatinina",
+      "queries": ["creatinine serum plasma", "creatinine"]
+    },
+    {
+      "item_id": "00000000-0000-0000-0000-000000001111",
+      "canonical_name": "TSH",
+      "queries": ["thyrotropin serum plasma", "thyroid stimulating hormone"]
+    },
+    {
+      "item_id": "00000000-0000-0000-0000-000000001112",
+      "canonical_name": "T4 libre",
+      "queries": ["free thyroxine serum plasma", "free t4"]
+    },
+    {
+      "item_id": "00000000-0000-0000-0000-000000001113",
+      "canonical_name": "T3",
+      "queries": ["triiodothyronine serum plasma", "free t3"]
+    }
+  ]
+}

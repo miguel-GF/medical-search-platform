@@ -76,6 +76,21 @@ La salida siempre marca cada resultado como `review_status=candidate` y
 cola; no convierte una coincidencia textual, traducción o sugerencia de IA en
 un mapping clínico publicable.
 
+Para generar la cola inicial de los servicios canónicos y un reporte ligado a
+una release concreta:
+
+```powershell
+python database/scripts/loinc_review.py `
+  --queue database/fixtures/loinc_review_queue_v1.json `
+  --index database/artifacts/loinc/<VERSION>/loinc_lab_active.jsonl `
+  --output database/artifacts/loinc/<VERSION>/review_report_v1.json `
+  --limit 10
+```
+
+El reporte conserva `publication_allowed=false` y `review_status=pending`.
+Aunque un candidato tenga score alto, no se convierte en mapping sin revisar
+atributos, estado, tipo de panel y equivalencia clínica.
+
 ## Fixture de mappings
 
 Los reviewers deben crear un fixture pequeño (por ejemplo,
