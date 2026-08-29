@@ -12,11 +12,11 @@ import argparse
 import base64
 import csv
 import hashlib
-import io
 import json
 import os
 import shutil
 import sys
+import unicodedata
 import urllib.parse
 import urllib.request
 import zipfile
@@ -42,6 +42,30 @@ INDEX_FIELDS = (
     "ORDER_OBS",
     "EXTERNAL_COPYRIGHT_NOTICE",
 )
+REQUIRED_INDEX_FIELDS = (
+    "LOINC_NUM",
+    "COMPONENT",
+    "PROPERTY",
+    "TIME_ASPCT",
+    "SYSTEM",
+    "SCALE_TYP",
+    "METHOD_TYP",
+    "CLASS",
+    "STATUS",
+    "LONG_COMMON_NAME",
+    "SHORTNAME",
+    "ORDER_OBS",
+)
+SEARCH_FIELDS = (
+    ("LONG_COMMON_NAME", 1.00),
+    ("SHORTNAME", 0.90),
+    ("CONSUMER_NAME", 0.80),
+    ("COMPONENT", 0.70),
+    ("PROPERTY", 0.55),
+    ("SYSTEM", 0.45),
+    ("METHOD_TYP", 0.40),
+)
+SEARCH_STOPWORDS = {"a", "and", "con", "de", "del", "el", "en", "in", "la", "of", "on", "para", "por", "the", "y"}
 
 
 UrlOpener = Callable[..., BinaryIO]
@@ -114,7 +138,11 @@ def download_release(
         shutil.copyfileobj(response, destination)
 
     expected = str(metadata["downloadMD5Hash"]).lower()
-    actual = hashlib.md5(output_path.read_bytes()).hexdigest().lower()
+    digest = hashlib.md5()
+    with output_path.open("rb") as source:
+        for chunk in iter(lambda: source.read(1024 * 1024), b""):
+            digest.update(chunk)
+    actual = digest.hexdigest().lower()
     if actual != expected:
         output_path.unlink(missing_ok=True)
         raise ValueError(
@@ -153,11 +181,112 @@ def _iter_rows(csv_path: Path) -> Iterable[dict[str, str]]:
         reader = csv.DictReader(source)
         if not reader.fieldnames:
             raise ValueError(f"LOINC CSV has no header: {csv_path}")
-        missing = [field for field in INDEX_FIELDS if field not in reader.fieldnames]
+        missing = [field for field in REQUIRED_INDEX_FIELDS if field not in reader.fieldnames]
         if missing:
             raise ValueError(f"LOINC CSV is missing fields: {', '.join(missing)}")
         for row in reader:
             yield {field: (row.get(field) or "").strip() for field in INDEX_FIELDS}
+
+
+def _normalize_search_text(value: str) -> str:
+    decomposed = unicodedata.normalize("NFKD", value.casefold())
+    without_marks = "".join(char for char in decomposed if not unicodedata.combining(char))
+    return " ".join("".join(char if char.isalnum() else " " for char in without_marks).split())
+
+
+def _search_tokens(value: str) -> list[str]:
+    return [
+        token
+        for token in _normalize_search_text(value).split()
+        if token not in SEARCH_STOPWORDS and len(token) > 1
+    ]
+
+
+def _iter_index_rows(index_path: Path) -> Iterable[dict[str, str]]:
+    with index_path.open("r", encoding="utf-8") as source:
+        for line_number, line in enumerate(source, start=1):
+            if not line.strip():
+                continue
+            try:
+                row = json.loads(line)
+            except json.JSONDecodeError as error:
+                raise ValueError(f"Invalid JSONL at {index_path}:{line_number}") from error
+            if not isinstance(row, dict) or not row.get("LOINC_NUM"):
+                raise ValueError(f"LOINC index row {line_number} must contain LOINC_NUM")
+            yield {str(key): str(value or "") for key, value in row.items()}
+
+
+def rank_candidates(
+    index_path: Path,
+    query: str,
+    *,
+    limit: int = 20,
+    active_only: bool = True,
+) -> list[dict[str, object]]:
+    """Rank local LOINC rows for review; this function never writes mappings."""
+
+    if limit < 1 or limit > 100:
+        raise ValueError("candidate limit must be between 1 and 100")
+    normalized_query = _normalize_search_text(query)
+    query_tokens = _search_tokens(query)
+    if not query_tokens:
+        raise ValueError("candidate query must contain at least one searchable token")
+    query_weight = float(len(query_tokens))
+    ranked: list[tuple[float, float, str, dict[str, object]]] = []
+    for row in _iter_index_rows(index_path):
+        status = row.get("STATUS", "").upper()
+        if active_only and status not in {"ACTIVE", "TRIAL"}:
+            continue
+        normalized_fields = {
+            field: _normalize_search_text(row.get(field, ""))
+            for field, _weight in SEARCH_FIELDS
+        }
+        matched_tokens: list[str] = []
+        evidence_fields: set[str] = set()
+        weighted_hits = 0.0
+        for token in query_tokens:
+            matching = [
+                (field, weight)
+                for field, weight in SEARCH_FIELDS
+                if token in normalized_fields[field].split()
+            ]
+            if matching:
+                field, weight = max(matching, key=lambda candidate: candidate[1])
+                matched_tokens.append(token)
+                evidence_fields.add(field)
+                weighted_hits += weight
+        coverage = len(matched_tokens) / query_weight
+        if coverage == 0:
+            continue
+        phrase_match = any(
+            normalized_query and normalized_query in normalized_fields[field]
+            for field, _weight in SEARCH_FIELDS[:3]
+        )
+        weighted_coverage = weighted_hits / query_weight
+        score = min(1.0, (coverage * 0.65) + (weighted_coverage * 0.20) + (0.15 if phrase_match else 0.0))
+        candidate = {
+            "loinc_code": row.get("LOINC_NUM", ""),
+            "long_common_name": row.get("LONG_COMMON_NAME", ""),
+            "short_name": row.get("SHORTNAME", ""),
+            "consumer_name": row.get("CONSUMER_NAME", ""),
+            "component": row.get("COMPONENT", ""),
+            "property": row.get("PROPERTY", ""),
+            "time_aspect": row.get("TIME_ASPCT", ""),
+            "system": row.get("SYSTEM", ""),
+            "scale_type": row.get("SCALE_TYP", ""),
+            "method": row.get("METHOD_TYP", ""),
+            "class": row.get("CLASS", ""),
+            "status": row.get("STATUS", ""),
+            "order_observation": row.get("ORDER_OBS", ""),
+            "score": round(score, 6),
+            "matched_tokens": matched_tokens,
+            "evidence_fields": sorted(evidence_fields),
+            "review_status": "candidate",
+            "requires_manual_review": True,
+        }
+        ranked.append((score, coverage, str(row.get("LOINC_NUM", "")), candidate))
+    ranked.sort(key=lambda value: (-value[0], -value[1], value[2]))
+    return [candidate for _score, _coverage, _code, candidate in ranked[:limit]]
 
 
 def build_index(
@@ -227,6 +356,12 @@ def _parser() -> argparse.ArgumentParser:
     index.add_argument("--class", dest="classes", action="append")
     index.add_argument("--include-deprecated", action="store_true")
 
+    candidates = subparsers.add_parser("candidates")
+    candidates.add_argument("--index", type=Path, required=True)
+    candidates.add_argument("--query", action="append", required=True)
+    candidates.add_argument("--limit", type=int, default=20)
+    candidates.add_argument("--include-deprecated", action="store_true")
+
     return parser
 
 
@@ -254,6 +389,20 @@ def main(argv: list[str] | None = None) -> int:
             active_only=not args.include_deprecated,
         )
         print(json.dumps(stats, ensure_ascii=False, indent=2))
+        return 0
+    if args.command == "candidates":
+        if args.limit < 1 or args.limit > 100:
+            raise SystemExit("--limit must be between 1 and 100")
+        results = {
+            query: rank_candidates(
+                args.index,
+                query,
+                limit=args.limit,
+                active_only=not args.include_deprecated,
+            )
+            for query in args.query
+        }
+        print(json.dumps({"index": str(args.index), "results": results}, ensure_ascii=False, indent=2))
         return 0
     raise AssertionError(f"Unhandled command: {args.command}")
 

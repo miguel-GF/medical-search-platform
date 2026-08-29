@@ -56,6 +56,21 @@ python database/scripts/loinc_release.py index `
 `index` conserva sólo los campos necesarios para búsqueda y revisión; por
 defecto excluye términos deprecated/discouraged.
 
+Para obtener candidatos locales sin tocar Supabase:
+
+```powershell
+python database/scripts/loinc_release.py candidates `
+  --index database/artifacts/loinc/<VERSION>/loinc_lab_active.jsonl `
+  --query "glucose serum" `
+  --query "complete blood count" `
+  --limit 10
+```
+
+La salida siempre marca cada resultado como `review_status=candidate` y
+`requires_manual_review=true`. El ranking por tokens sirve para reducir la
+cola; no convierte una coincidencia textual, traducción o sugerencia de IA en
+un mapping clínico publicable.
+
 ## Fixture de mappings
 
 Los reviewers deben crear un fixture pequeño (por ejemplo,

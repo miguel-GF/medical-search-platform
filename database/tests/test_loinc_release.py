@@ -6,12 +6,15 @@ import json
 import zipfile
 from pathlib import Path
 
+import pytest
+
 from database.scripts.loinc_release import (
     INDEX_FIELDS,
     build_index,
     download_release,
     extract_loinc_table,
     fetch_metadata,
+    rank_candidates,
 )
 
 
@@ -94,3 +97,72 @@ def test_build_index_can_include_deprecated_rows(tmp_path: Path):
     stats = build_index(csv_path, output, classes={"LAB"}, active_only=False)
 
     assert stats["rows_written"] == 1
+
+
+def test_rank_candidates_is_deterministic_and_review_only(tmp_path: Path):
+    index_path = tmp_path / "loinc_lab_active.jsonl"
+    rows = [
+        {
+            "LOINC_NUM": "123-4",
+            "LONG_COMMON_NAME": "Glucose [Mass/volume] in Serum or Plasma",
+            "SHORTNAME": "Glucose M mass/vol Ser/Plas",
+            "CONSUMER_NAME": "Glucose",
+            "COMPONENT": "Glucose",
+            "PROPERTY": "Mass concentration",
+            "TIME_ASPCT": "Point in time",
+            "SYSTEM": "Ser/Plas",
+            "SCALE_TYP": "Quantitative",
+            "METHOD_TYP": "",
+            "CLASS": "LAB",
+            "STATUS": "ACTIVE",
+            "ORDER_OBS": "Both",
+        },
+        {
+            "LOINC_NUM": "234-5",
+            "LONG_COMMON_NAME": "Glucose-6-phosphate dehydrogenase",
+            "SHORTNAME": "G6PD",
+            "CONSUMER_NAME": "",
+            "COMPONENT": "Glucose-6-phosphate dehydrogenase",
+            "PROPERTY": "Catalytic activity",
+            "TIME_ASPCT": "Point in time",
+            "SYSTEM": "Blood",
+            "SCALE_TYP": "Quantitative",
+            "METHOD_TYP": "",
+            "CLASS": "LAB",
+            "STATUS": "ACTIVE",
+            "ORDER_OBS": "Both",
+        },
+        {
+            "LOINC_NUM": "345-6",
+            "LONG_COMMON_NAME": "Glucose old method",
+            "SHORTNAME": "Old glucose",
+            "CONSUMER_NAME": "",
+            "COMPONENT": "Glucose",
+            "PROPERTY": "Mass concentration",
+            "TIME_ASPCT": "Point in time",
+            "SYSTEM": "Ser/Plas",
+            "SCALE_TYP": "Quantitative",
+            "METHOD_TYP": "",
+            "CLASS": "LAB",
+            "STATUS": "DEPRECATED",
+            "ORDER_OBS": "Both",
+        },
+    ]
+    index_path.write_text("\n".join(json.dumps(row) for row in rows) + "\n", encoding="utf-8")
+
+    candidates = rank_candidates(index_path, "glucose serum", limit=1)
+
+    assert [candidate["loinc_code"] for candidate in candidates] == ["123-4"]
+    assert candidates[0]["review_status"] == "candidate"
+    assert candidates[0]["requires_manual_review"] is True
+    assert candidates[0]["matched_tokens"] == ["glucose", "serum"]
+
+
+def test_rank_candidates_rejects_empty_query_and_bad_limit(tmp_path: Path):
+    index_path = tmp_path / "empty.jsonl"
+    index_path.write_text("", encoding="utf-8")
+
+    with pytest.raises(ValueError, match="searchable token"):
+        rank_candidates(index_path, "de en")
+    with pytest.raises(ValueError, match="between 1 and 100"):
+        rank_candidates(index_path, "glucose", limit=101)
