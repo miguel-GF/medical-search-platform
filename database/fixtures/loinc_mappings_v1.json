@@ -1,0 +1,118 @@
+{
+  "loinc_version": "2.83",
+  "mappings": [
+    {
+      "item_id": "00000000-0000-0000-0000-000000001103",
+      "loinc_code": "58410-2",
+      "mapping_type": "exact",
+      "verified": true,
+      "approved": true,
+      "source_note": "LOINC 2.83 exact mapping; CBC panel by automated count reviewed against canonical Biometria hematica.",
+      "attributes": {
+        "component": "Complete blood count panel",
+        "property": "-",
+        "time_aspect": "Pt",
+        "system": "Bld",
+        "scale_type": "-",
+        "method": "Automated count",
+        "order_observation": "order"
+      }
+    },
+    {
+      "item_id": "00000000-0000-0000-0000-000000001104",
+      "loinc_code": "24356-8",
+      "mapping_type": "exact",
+      "verified": true,
+      "approved": true,
+      "source_note": "LOINC 2.83 exact mapping; complete urinalysis panel reviewed against canonical Examen general de orina.",
+      "attributes": {
+        "component": "Urinalysis complete panel",
+        "property": "-",
+        "time_aspect": "Pt",
+        "system": "Urine",
+        "scale_type": "-",
+        "order_observation": "order"
+      }
+    },
+    {
+      "item_id": "00000000-0000-0000-0000-000000001109",
+      "loinc_code": "2345-7",
+      "mapping_type": "exact",
+      "verified": true,
+      "approved": true,
+      "source_note": "LOINC 2.83 exact mapping; glucose mass concentration in serum/plasma.",
+      "attributes": {
+        "component": "Glucose",
+        "property": "MCnc",
+        "time_aspect": "Pt",
+        "system": "Ser/Plas",
+        "scale_type": "Qn",
+        "order_observation": "both"
+      }
+    },
+    {
+      "item_id": "00000000-0000-0000-0000-000000001110",
+      "loinc_code": "2160-0",
+      "mapping_type": "exact",
+      "verified": true,
+      "approved": true,
+      "source_note": "LOINC 2.83 exact mapping; creatinine mass concentration in serum/plasma.",
+      "attributes": {
+        "component": "Creatinine",
+        "property": "MCnc",
+        "time_aspect": "Pt",
+        "system": "Ser/Plas",
+        "scale_type": "Qn",
+        "order_observation": "both"
+      }
+    },
+    {
+      "item_id": "00000000-0000-0000-0000-000000001111",
+      "loinc_code": "3016-3",
+      "mapping_type": "exact",
+      "verified": true,
+      "approved": true,
+      "source_note": "LOINC 2.83 exact mapping; thyrotropin units per volume in serum/plasma.",
+      "attributes": {
+        "component": "Thyrotropin",
+        "property": "ACnc",
+        "time_aspect": "Pt",
+        "system": "Ser/Plas",
+        "scale_type": "Qn",
+        "order_observation": "both"
+      }
+    },
+    {
+      "item_id": "00000000-0000-0000-0000-000000001112",
+      "loinc_code": "3024-7",
+      "mapping_type": "exact",
+      "verified": true,
+      "approved": true,
+      "source_note": "LOINC 2.83 exact mapping; free thyroxine mass concentration in serum/plasma.",
+      "attributes": {
+        "component": "Thyroxine.free",
+        "property": "MCnc",
+        "time_aspect": "Pt",
+        "system": "Ser/Plas",
+        "scale_type": "Qn",
+        "order_observation": "both"
+      }
+    },
+    {
+      "item_id": "00000000-0000-0000-0000-000000001113",
+      "loinc_code": "3053-6",
+      "mapping_type": "exact",
+      "verified": true,
+      "approved": true,
+      "source_note": "LOINC 2.83 exact mapping; total triiodothyronine mass concentration in serum/plasma.",
+      "attributes": {
+        "component": "Triiodothyronine",
+        "property": "MCnc",
+        "time_aspect": "Pt",
+        "system": "Ser/Plas",
+        "scale_type": "Qn",
+        "order_observation": "both"
+      }
+    }
+  ]
+}
