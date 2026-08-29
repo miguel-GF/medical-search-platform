@@ -159,6 +159,13 @@ El SQL generado tambiÃ©n comprueba que cada `item_id` sea un servicio de
 laboratorio activo (`lab_test` o `lab_panel`); si no, la migraciÃ³n falla y no
 publica la equivalencia.
 
+La primera tanda aplicada en DEV está versionada en
+`database/fixtures/loinc_mappings_v1.json` y en la migración
+`20260829010000_100_loinc_mappings_v1.sql`. Contiene siete equivalencias exactas
+de LOINC 2.83 para biometría hemática, examen general de orina, glucosa,
+creatinina, TSH, T4 libre y T3. El reporte de candidatos sigue siendo
+`publication_allowed=false`; solo el fixture aprobado entra a la base.
+
 ## Mapeo seguro
 
 La descarga no publica nada automáticamente. Cada mapping debe pasar por esta

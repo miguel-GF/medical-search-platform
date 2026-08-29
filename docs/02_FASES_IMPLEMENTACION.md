@@ -941,9 +941,11 @@ Solo entonces se acelera la construcción del producto paciente.
 
 # Fase 14.2 - Integracion LOINC y resolver unificado
 
-**Estado:** 🟢 resolver unificado desplegado y tooling LOINC listo; descarga y
-mapping clínico revisado pendientes de credenciales locales y revisión de la
-release oficial.
+**Estado:** ✅ resolver unificado desplegado; release oficial LOINC 2.83
+descargada/verificada y siete mappings exactos publicados en DEV. El índice
+local conserva 64,776 términos de laboratorio y la publicación exige
+`verified=true` y `approved_at`; la prueba de integración remota cubre 16
+aserciones.
 
 Antes de Flutter, el motor debe usar una sola ruta de resolucion para
 `/search` y `/resolve`. La migracion `095_unified_clinical_resolver.sql`
