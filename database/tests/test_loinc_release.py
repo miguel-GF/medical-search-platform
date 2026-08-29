@@ -10,6 +10,8 @@ import pytest
 
 from database.scripts.loinc_release import (
     INDEX_FIELDS,
+    _validate_download_url,
+    _validate_version,
     build_index,
     download_release,
     extract_loinc_table,
@@ -28,7 +30,7 @@ def test_fetch_metadata_uses_basic_auth_and_version():
     def opener(request):
         seen["url"] = request.full_url
         seen["auth"] = request.headers["Authorization"]
-        return _Response(json.dumps({"version": "2.83", "downloadUrl": "https://example.test/loinc.zip", "downloadMD5Hash": "abc"}).encode())
+        return _Response(json.dumps({"version": "2.83", "downloadUrl": "https://loinc.regenstrief.org/api/v1/Loinc/Download?version=2.83", "downloadMD5Hash": "abc"}).encode())
 
     metadata = fetch_metadata("user", "secret", "2.83", opener=opener)
 
@@ -41,7 +43,7 @@ def test_download_release_verifies_md5_and_removes_bad_archive(tmp_path: Path):
     payload = b"release-bytes"
     metadata = {
         "version": "2.83",
-        "downloadUrl": "https://example.test/loinc.zip",
+        "downloadUrl": "https://loinc.regenstrief.org/api/v1/Loinc/Download?version=2.83",
         "downloadMD5Hash": hashlib.md5(payload).hexdigest(),
     }
     stale_metadata = tmp_path / "Loinc_2.83.metadata.json"
@@ -66,7 +68,7 @@ def test_download_release_verifies_md5_and_removes_bad_archive(tmp_path: Path):
 def test_download_release_removes_partial_archive_on_network_error(tmp_path: Path):
     metadata = {
         "version": "2.83",
-        "downloadUrl": "https://example.test/loinc.zip",
+        "downloadUrl": "https://loinc.regenstrief.org/api/v1/Loinc/Download?version=2.83",
         "downloadMD5Hash": "0" * 32,
     }
 
@@ -78,6 +80,17 @@ def test_download_release_removes_partial_archive_on_network_error(tmp_path: Pat
 
     assert not (tmp_path / "Loinc_2.83.zip").exists()
     assert not (tmp_path / "Loinc_2.83.metadata.json").exists()
+
+
+def test_release_metadata_rejects_path_traversal_and_untrusted_download_hosts():
+    with pytest.raises(ValueError, match="Invalid LOINC release version"):
+        _validate_version("2.83/../../secrets")
+
+    with pytest.raises(ValueError, match="HTTPS on loinc.regenstrief.org"):
+        _validate_download_url("https://evil.example/loinc.zip")
+
+    with pytest.raises(ValueError, match="HTTPS on loinc.regenstrief.org"):
+        _validate_download_url("http://loinc.regenstrief.org/api/v1/Loinc/Download")
 
 
 def test_extract_loinc_table_from_nested_archive(tmp_path: Path):

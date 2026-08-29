@@ -14,6 +14,7 @@ import csv
 import hashlib
 import json
 import os
+import re
 import shutil
 import sys
 import unicodedata
@@ -25,8 +26,10 @@ from typing import BinaryIO, Callable, Iterable
 
 
 LOINC_API_BASE = "https://loinc.regenstrief.org/api/v1"
+LOINC_DOWNLOAD_HOST = "loinc.regenstrief.org"
 DEFAULT_ARTIFACT_DIR = Path("database/artifacts/loinc")
 INDEX_MANIFEST_SUFFIX = ".manifest.json"
+LOINC_VERSION_RE = re.compile(r"^[0-9]+(?:\.[0-9]+){1,3}(?:[-+][A-Za-z0-9.-]+)?$")
 INDEX_FIELDS = (
     "LOINC_NUM",
     "COMPONENT",
@@ -72,6 +75,35 @@ SEARCH_STOPWORDS = {"a", "and", "con", "de", "del", "el", "en", "in", "la", "of"
 UrlOpener = Callable[..., BinaryIO]
 
 
+def _validate_version(value: object) -> str:
+    version = str(value or "").strip()
+    if not LOINC_VERSION_RE.fullmatch(version):
+        raise ValueError(f"Invalid LOINC release version: {version!r}")
+    return version
+
+
+def _validate_download_url(value: object) -> str:
+    url = str(value or "").strip()
+    try:
+        parsed = urllib.parse.urlparse(url)
+        port = parsed.port
+    except ValueError as error:
+        raise ValueError("LOINC download URL is invalid") from error
+    if (
+        parsed.scheme.casefold() != "https"
+        or parsed.hostname is None
+        or parsed.hostname.casefold() != LOINC_DOWNLOAD_HOST
+        or port not in (None, 443)
+        or parsed.username is not None
+        or parsed.password is not None
+        or parsed.fragment
+    ):
+        raise ValueError(
+            "LOINC download URL must use HTTPS on loinc.regenstrief.org without credentials"
+        )
+    return url
+
+
 def _auth_header(username: str, password: str) -> str:
     token = base64.b64encode(f"{username}:{password}".encode("utf-8")).decode("ascii")
     return f"Basic {token}"
@@ -110,10 +142,14 @@ def fetch_metadata(
     url = f"{LOINC_API_BASE}/Loinc{query}"
     with _request(url, username=username, password=password, opener=opener) as response:
         payload = json.load(response)
+    if not isinstance(payload, dict):
+        raise ValueError("LOINC metadata response must be an object")
     required = ("version", "downloadUrl", "downloadMD5Hash")
     missing = [field for field in required if not payload.get(field)]
     if missing:
         raise ValueError(f"LOINC metadata is missing required fields: {', '.join(missing)}")
+    payload["version"] = _validate_version(payload["version"])
+    payload["downloadUrl"] = _validate_download_url(payload["downloadUrl"])
     return payload
 
 
@@ -127,13 +163,14 @@ def download_release(
 ) -> Path:
     """Download a release and verify the MD5 published by LOINC."""
 
-    version = str(metadata["version"])
+    version = _validate_version(metadata.get("version"))
+    download_url = _validate_download_url(metadata.get("downloadUrl"))
     output_dir.mkdir(parents=True, exist_ok=True)
     output_path = output_dir / f"Loinc_{version}.zip"
     metadata_path = output_path.with_suffix(".metadata.json")
     try:
         with _request(
-            str(metadata["downloadUrl"]),
+            download_url,
             username=username,
             password=password,
             opener=opener,
