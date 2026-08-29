@@ -56,6 +56,7 @@ describe('Pruevia API', () => {
     }));
     expect(payload.results[0].offers).toHaveLength(1);
     expect(payload.results[0].offers[0].prices).toHaveLength(2);
+    expect(rpc.call).toHaveBeenCalledWith('api_search', expect.objectContaining({ p_query: 'biometria' }));
   });
 
   it('exposes deterministic resolution status and candidates', async () => {
