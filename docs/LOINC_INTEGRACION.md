@@ -30,6 +30,11 @@ La descarga oficial y el uso comercial están sujetos a la licencia LOINC. El
 archivo completo y los índices derivados se mantienen fuera del repositorio en
 `database/artifacts/loinc/`, que está ignorado por Git.
 
+El descargador lee opcionalmente `collectors/.env` (también ignorado por Git)
+para `LOINC_USERNAME` y `LOINC_PASSWORD`; las variables ya exportadas en el
+proceso tienen prioridad. Nunca guardes esas credenciales en un fixture ni las
+envíes al repositorio.
+
 ## Flujo reproducible
 
 Ejecutar desde la raíz del repositorio:

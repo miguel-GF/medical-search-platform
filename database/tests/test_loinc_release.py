@@ -4,12 +4,14 @@ import hashlib
 import io
 import json
 import zipfile
+from argparse import Namespace
 from pathlib import Path
 
 import pytest
 
 from database.scripts.loinc_release import (
     INDEX_FIELDS,
+    _credentials,
     _validate_download_url,
     _validate_version,
     build_index,
@@ -91,6 +93,30 @@ def test_release_metadata_rejects_path_traversal_and_untrusted_download_hosts():
 
     with pytest.raises(ValueError, match="HTTPS on loinc.regenstrief.org"):
         _validate_download_url("http://loinc.regenstrief.org/api/v1/Loinc/Download")
+
+
+def test_credentials_load_from_local_env_without_overriding_process_values(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+):
+    env_file = tmp_path / ".env"
+    env_file.write_text(
+        "# local only\nLOINC_USERNAME=from-file\nLOINC_PASSWORD='from-file-secret'\n",
+        encoding="utf-8",
+    )
+    monkeypatch.delenv("LOINC_USERNAME", raising=False)
+    monkeypatch.delenv("LOINC_PASSWORD", raising=False)
+
+    assert _credentials(Namespace(username=None, password=None, env_file=env_file)) == (
+        "from-file",
+        "from-file-secret",
+    )
+
+    monkeypatch.setenv("LOINC_USERNAME", "from-process")
+    monkeypatch.setenv("LOINC_PASSWORD", "process-secret")
+    assert _credentials(Namespace(username=None, password=None, env_file=env_file)) == (
+        "from-process",
+        "process-secret",
+    )
 
 
 def test_extract_loinc_table_from_nested_archive(tmp_path: Path):

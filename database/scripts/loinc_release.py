@@ -73,6 +73,7 @@ SEARCH_STOPWORDS = {"a", "and", "con", "de", "del", "el", "en", "in", "la", "of"
 
 
 UrlOpener = Callable[..., BinaryIO]
+ENV_NAME_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 
 
 def _validate_version(value: object) -> str:
@@ -102,6 +103,27 @@ def _validate_download_url(value: object) -> str:
             "LOINC download URL must use HTTPS on loinc.regenstrief.org without credentials"
         )
     return url
+
+
+def _load_env_file(path: Path | None) -> None:
+    """Load simple KEY=VALUE entries without overriding the process environment."""
+
+    if path is None or not path.exists():
+        return
+    for raw_line in path.read_text(encoding="utf-8").splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#"):
+            continue
+        if line.startswith("export "):
+            line = line[7:].lstrip()
+        name, separator, value = line.partition("=")
+        name = name.strip()
+        if not separator or not ENV_NAME_RE.fullmatch(name):
+            continue
+        value = value.strip()
+        if len(value) >= 2 and value[0] == value[-1] and value[0] in {"'", '"'}:
+            value = value[1:-1]
+        os.environ.setdefault(name, value)
 
 
 def _auth_header(username: str, password: str) -> str:
@@ -406,6 +428,7 @@ def build_index(
 
 
 def _credentials(args: argparse.Namespace) -> tuple[str, str]:
+    _load_env_file(getattr(args, "env_file", None))
     username = args.username or os.getenv("LOINC_USERNAME")
     password = args.password or os.getenv("LOINC_PASSWORD")
     if not username or not password:
@@ -423,6 +446,12 @@ def _parser() -> argparse.ArgumentParser:
     common = argparse.ArgumentParser(add_help=False)
     common.add_argument("--username")
     common.add_argument("--password")
+    common.add_argument(
+        "--env-file",
+        type=Path,
+        default=Path("collectors/.env"),
+        help="optional local env file; process variables take precedence",
+    )
 
     metadata = subparsers.add_parser("metadata", parents=[common])
     metadata.add_argument("--version")
