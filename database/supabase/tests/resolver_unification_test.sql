@@ -2,7 +2,7 @@
 
 begin;
 create extension if not exists pgtap with schema extensions;
-select extensions.plan(13);
+select extensions.plan(16);
 
 select extensions.has_function(
   'catalog',
@@ -15,6 +15,27 @@ select extensions.has_function(
   'api_resolve_search_v4',
   array['text','text','double precision','double precision','uuid','integer'],
   'unified resolution API exists'
+);
+select extensions.ok(
+  pg_get_functiondef('catalog.search_items(text,text,uuid,integer)'::regprocedure) like '%resolve_items_v6%'
+    and pg_get_functiondef('catalog.search_items(text,text,uuid,integer)'::regprocedure) not like '%resolve_items_v5%'
+    and pg_get_functiondef('catalog.search_items(text,text,uuid,integer)'::regprocedure) not like '%resolve_items_v4%'
+    and pg_get_functiondef('catalog.search_items(text,text,uuid,integer)'::regprocedure) not like '%resolve_items_v3%'
+    and pg_get_functiondef('catalog.search_items(text,text,uuid,integer)'::regprocedure) not like '%resolve_items_v2%',
+  'tabular search delegates only to the unified resolver'
+);
+select extensions.ok(
+  pg_get_functiondef('public.api_resolve_search(text,text,double precision,double precision,uuid,integer)'::regprocedure) like '%api_resolve_search_v4%',
+  'public resolver wrapper delegates to the unified API'
+);
+select extensions.ok(
+  not has_function_privilege('anon', 'catalog.resolve_items_v2(text,text,uuid,integer)', 'execute')
+    and not has_function_privilege('authenticated', 'catalog.resolve_items_v2(text,text,uuid,integer)', 'execute')
+    and not has_function_privilege('anon', 'catalog.resolve_items_v3(text,text,uuid,integer)', 'execute')
+    and not has_function_privilege('authenticated', 'catalog.resolve_items_v3(text,text,uuid,integer)', 'execute')
+    and not has_function_privilege('anon', 'catalog.resolve_items_v5(text,text,uuid,integer)', 'execute')
+    and not has_function_privilege('authenticated', 'catalog.resolve_items_v5(text,text,uuid,integer)', 'execute'),
+  'legacy resolver versions are not public entry points'
 );
 
 select extensions.is(
