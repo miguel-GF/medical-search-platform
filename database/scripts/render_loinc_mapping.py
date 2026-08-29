@@ -208,12 +208,15 @@ def render(
         note = str(mapping.get("source_note") or f"Reviewed LOINC {version}")
         lines.append(
             "insert into catalog.item_identifiers "
-            "(item_id, system, code, version, mapping_type, status, source_note) values ("
+            "(item_id, system, code, version, mapping_type, status, source_note, verified, approved_at) values ("
             f"{_sql(item_id)}, {_sql(LOINC_SYSTEM)}, {_sql(code)}, {_sql(version)}, "
-            f"{_sql(mapping_type)}, {_sql(status)}, {_sql(note)}) "
+            f"{_sql(mapping_type)}, {_sql(status)}, {_sql(note)}, "
+            f"{_sql(bool(mapping.get('verified', False)))}, "
+            f"{'now()' if mapping.get('approved', False) else 'null'}) "
             "on conflict (item_id, system, code, version) do update set "
             "mapping_type = excluded.mapping_type, status = excluded.status, "
-            "source_note = excluded.source_note;"
+            "source_note = excluded.source_note, verified = excluded.verified, "
+            "approved_at = excluded.approved_at;"
         )
 
         attributes = mapping.get("attributes") or {}

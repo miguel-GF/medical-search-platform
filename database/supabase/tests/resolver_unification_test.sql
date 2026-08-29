@@ -2,7 +2,7 @@
 
 begin;
 create extension if not exists pgtap with schema extensions;
-select extensions.plan(24);
+select extensions.plan(25);
 
 select extensions.has_function(
   'catalog',
@@ -45,7 +45,7 @@ select extensions.ok(
     and not has_function_privilege('authenticated', 'public.api_resolve_search_v3(text,text,double precision,double precision,uuid,integer)', 'execute'),
   'legacy resolver versions are not public entry points'
 );
-insert into catalog.item_identifiers(item_id, system, code, version, mapping_type, status, source_note)
+insert into catalog.item_identifiers(item_id, system, code, version, mapping_type, status, source_note, verified, approved_at)
 values (
   '00000000-0000-0000-0000-000000001103',
   'http://loinc.org',
@@ -53,9 +53,11 @@ values (
   'test',
   'exact',
   'active',
-  'transactional resolver test'
+  'transactional resolver test',
+  true,
+  now()
 );
-insert into catalog.item_identifiers(item_id, system, code, version, mapping_type, status, source_note)
+insert into catalog.item_identifiers(item_id, system, code, version, mapping_type, status, source_note, verified, approved_at)
 values (
   '00000000-0000-0000-0000-000000001103',
   'http://loinc.org',
@@ -63,7 +65,9 @@ values (
   'old',
   'exact',
   'active',
-  'transactional older-version test'
+  'transactional older-version test',
+  true,
+  now()
 );
 select extensions.is(
   (select item_id from catalog.resolve_items_v6('99998-1', 'health_diagnostics', null, 10) limit 1),
@@ -105,8 +109,23 @@ select extensions.is(
   0::bigint,
   'non-exact LOINC mappings never resolve as identifiers'
 );
+insert into catalog.item_identifiers(item_id, system, code, version, mapping_type, status, source_note)
+values (
+  '00000000-0000-0000-0000-000000001104',
+  'http://loinc.org',
+  '99996-9',
+  'test',
+  'exact',
+  'active',
+  'transactional unverified test'
+);
+select extensions.is(
+  (select count(*)::bigint from catalog.resolve_items_v6('99996-9', 'health_diagnostics', null, 10)),
+  0::bigint,
+  'unverified exact LOINC mappings never resolve'
+);
 select extensions.ok(
-  to_regclass('catalog.catalog_item_identifiers_loinc_exact_active_idx') is not null,
+  to_regclass('catalog.catalog_item_identifiers_loinc_verified_active_idx') is not null,
   'exact active LOINC identifiers have a focused lookup index'
 );
 

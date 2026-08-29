@@ -37,6 +37,8 @@ def test_render_escapes_review_notes_and_preserves_mapping_identity():
     assert "note ''safe''" in sql
     assert "on conflict (item_id, system, code, version)" in sql
     assert "loinc_version = excluded.loinc_version" in sql
+    assert "verified, approved_at" in sql
+    assert "approved_at = excluded.approved_at" in sql
 
 
 def test_render_defaults_required_order_observation_when_attributes_are_partial():
