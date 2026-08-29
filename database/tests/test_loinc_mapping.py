@@ -1,3 +1,4 @@
+import hashlib
 import json
 from pathlib import Path
 
@@ -104,6 +105,51 @@ def test_active_mapping_cannot_use_deprecated_release_row(tmp_path: Path):
 
     with pytest.raises(ValueError, match="active mapping is not allowed"):
         render(_fixture(), index_path=index)
+
+
+def test_cli_mode_requires_matching_index_manifest(tmp_path: Path):
+    index = tmp_path / "loinc.jsonl"
+    index.write_text(
+        json.dumps(
+            {
+                "LOINC_NUM": "57021-8",
+                "STATUS": "ACTIVE",
+                "COMPONENT": "Complete blood count",
+                "PROPERTY": "Number concentration",
+                "TIME_ASPCT": "Point in time",
+                "SYSTEM": "Blood",
+                "SCALE_TYP": "Quantitative",
+                "METHOD_TYP": "",
+                "ORDER_OBS": "Both",
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    manifest = index.with_suffix(index.suffix + ".manifest.json")
+    manifest.write_text(
+        json.dumps(
+            {
+                "loinc_version": "2.83",
+                "index_sha256": hashlib.sha256(index.read_bytes()).hexdigest(),
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    assert "57021-8" in render(_fixture(), index_path=index, require_index_manifest=True)
+
+    manifest.write_text(
+        json.dumps(
+            {
+                "loinc_version": "2.82",
+                "index_sha256": hashlib.sha256(index.read_bytes()).hexdigest(),
+            }
+        ),
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="version does not match"):
+        render(_fixture(), index_path=index, require_index_manifest=True)
 
 
 def test_active_non_exact_mapping_requires_explicit_approval():

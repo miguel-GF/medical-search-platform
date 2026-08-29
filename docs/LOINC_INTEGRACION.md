@@ -49,12 +49,17 @@ python database/scripts/loinc_release.py extract `
 python database/scripts/loinc_release.py index `
   --csv database/artifacts/loinc/<VERSION>/Loinc.csv `
   --class LAB `
+  --version <VERSION> `
   --output database/artifacts/loinc/<VERSION>/loinc_lab_active.jsonl
 ```
 
 `download` valida el MD5 publicado por LOINC y elimina el ZIP si no coincide.
 `index` conserva sólo los campos necesarios para búsqueda y revisión; por
 defecto excluye términos deprecated/discouraged.
+
+El comando `index` recibe `--version` y escribe un manifiesto con la versiÃ³n y
+el SHA-256 del Ã­ndice. El renderer exige ese manifiesto en modo CLI para evitar
+mezclar un fixture con otra release.
 
 Para obtener candidatos locales sin tocar Supabase:
 

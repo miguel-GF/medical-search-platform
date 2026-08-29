@@ -94,9 +94,14 @@ def test_build_index_can_include_deprecated_rows(tmp_path: Path):
         writer.writerow(row)
 
     output = tmp_path / "index.jsonl"
-    stats = build_index(csv_path, output, classes={"LAB"}, active_only=False)
+    stats = build_index(csv_path, output, classes={"LAB"}, active_only=False, version="2.83")
 
     assert stats["rows_written"] == 1
+    manifest_path = output.with_suffix(output.suffix + ".manifest.json")
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    assert stats["manifest"] == str(manifest_path)
+    assert manifest["loinc_version"] == "2.83"
+    assert manifest["rows_written"] == 1
 
 
 def test_rank_candidates_is_deterministic_and_review_only(tmp_path: Path):

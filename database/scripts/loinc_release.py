@@ -26,6 +26,7 @@ from typing import BinaryIO, Callable, Iterable
 
 LOINC_API_BASE = "https://loinc.regenstrief.org/api/v1"
 DEFAULT_ARTIFACT_DIR = Path("database/artifacts/loinc")
+INDEX_MANIFEST_SUFFIX = ".manifest.json"
 INDEX_FIELDS = (
     "LOINC_NUM",
     "COMPONENT",
@@ -188,6 +189,14 @@ def _iter_rows(csv_path: Path) -> Iterable[dict[str, str]]:
             yield {field: (row.get(field) or "").strip() for field in INDEX_FIELDS}
 
 
+def _sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as source:
+        for chunk in iter(lambda: source.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
 def _normalize_search_text(value: str) -> str:
     decomposed = unicodedata.normalize("NFKD", value.casefold())
     without_marks = "".join(char for char in decomposed if not unicodedata.combining(char))
@@ -295,9 +304,12 @@ def build_index(
     *,
     classes: set[str] | None = None,
     active_only: bool = True,
-) -> dict[str, int | str]:
+    version: str | None = None,
+) -> dict[str, object]:
     """Write a compact JSONL candidate index and return deterministic stats."""
 
+    if version is not None and not str(version).strip():
+        raise ValueError("LOINC index version cannot be empty")
     output_path.parent.mkdir(parents=True, exist_ok=True)
     rows_seen = 0
     rows_written = 0
@@ -310,7 +322,7 @@ def build_index(
                 continue
             target.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
             rows_written += 1
-    return {
+    stats: dict[str, object] = {
         "input": str(csv_path),
         "output": str(output_path),
         "rows_seen": rows_seen,
@@ -318,6 +330,24 @@ def build_index(
         "active_only": active_only,
         "classes": sorted(classes) if classes else [],
     }
+    if version:
+        manifest_path = output_path.with_suffix(output_path.suffix + INDEX_MANIFEST_SUFFIX)
+        manifest = {
+            "loinc_version": version,
+            "index": str(output_path),
+            "index_sha256": _sha256_file(output_path),
+            "rows_seen": rows_seen,
+            "rows_written": rows_written,
+            "active_only": active_only,
+            "classes": sorted(classes) if classes else [],
+        }
+        manifest_path.write_text(
+            json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        stats["version"] = version
+        stats["manifest"] = str(manifest_path)
+    return stats
 
 
 def _credentials(args: argparse.Namespace) -> tuple[str, str]:
@@ -355,6 +385,7 @@ def _parser() -> argparse.ArgumentParser:
     index.add_argument("--output", dest="output_path", type=Path, required=True)
     index.add_argument("--class", dest="classes", action="append")
     index.add_argument("--include-deprecated", action="store_true")
+    index.add_argument("--version", required=True)
 
     candidates = subparsers.add_parser("candidates")
     candidates.add_argument("--index", type=Path, required=True)
@@ -387,6 +418,7 @@ def main(argv: list[str] | None = None) -> int:
             args.output_path,
             classes=set(args.classes or []),
             active_only=not args.include_deprecated,
+            version=args.version,
         )
         print(json.dumps(stats, ensure_ascii=False, indent=2))
         return 0

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 import sys
@@ -77,6 +78,39 @@ def _load_index(index_path: Path) -> dict[str, dict[str, str]]:
     return rows
 
 
+def _sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as source:
+        for chunk in iter(lambda: source.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _validate_index_manifest(
+    payload: dict,
+    index_path: Path,
+    *,
+    required: bool,
+) -> None:
+    manifest_path = index_path.with_suffix(index_path.suffix + ".manifest.json")
+    if not manifest_path.exists():
+        if required:
+            raise ValueError(f"LOINC index manifest is required: {manifest_path}")
+        return
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as error:
+        raise ValueError(f"Invalid LOINC index manifest: {manifest_path}") from error
+    if not isinstance(manifest, dict):
+        raise ValueError("LOINC index manifest must be an object")
+    expected_version = str(payload.get("loinc_version") or "").strip()
+    if str(manifest.get("loinc_version") or "").strip() != expected_version:
+        raise ValueError("LOINC fixture version does not match the supplied index manifest")
+    expected_hash = str(manifest.get("index_sha256") or "").strip().lower()
+    if not expected_hash or expected_hash != _sha256_file(index_path).lower():
+        raise ValueError("LOINC index SHA-256 does not match its manifest")
+
+
 def _normalized_attribute(value: object) -> str:
     return " ".join(str(value or "").casefold().split())
 
@@ -101,9 +135,16 @@ def _validate_index_mapping(mapping: dict, index_row: dict[str, str], index_code
             )
 
 
-def validate_fixture(payload: dict, *, index_path: Path | None = None) -> None:
+def validate_fixture(
+    payload: dict,
+    *,
+    index_path: Path | None = None,
+    require_index_manifest: bool = False,
+) -> None:
     seen: set[tuple[str, str]] = set()
     index_rows = _load_index(index_path) if index_path else None
+    if index_path:
+        _validate_index_manifest(payload, index_path, required=require_index_manifest)
     for index, mapping in enumerate(payload["mappings"]):
         if not isinstance(mapping, dict):
             raise ValueError(f"mapping {index} must be an object")
@@ -142,8 +183,17 @@ def validate_fixture(payload: dict, *, index_path: Path | None = None) -> None:
             _validate_index_mapping(mapping, index_row, code)
 
 
-def render(payload: dict, *, index_path: Path | None = None) -> str:
-    validate_fixture(payload, index_path=index_path)
+def render(
+    payload: dict,
+    *,
+    index_path: Path | None = None,
+    require_index_manifest: bool = False,
+) -> str:
+    validate_fixture(
+        payload,
+        index_path=index_path,
+        require_index_manifest=require_index_manifest,
+    )
     version = str(payload["loinc_version"])
     lines = [
         "-- Generated from a reviewed LOINC mapping fixture.",
@@ -208,7 +258,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args(argv)
     payload = load_fixture(args.fixture)
-    sql = render(payload, index_path=args.index)
+    sql = render(payload, index_path=args.index, require_index_manifest=True)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(sql, encoding="utf-8", newline="\n")
     print(json.dumps({"mappings": len(payload["mappings"]), "output": str(args.output)}, ensure_ascii=False))
