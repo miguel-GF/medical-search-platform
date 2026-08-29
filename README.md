@@ -13,7 +13,7 @@ Consulta el detalle y los comandos reproducibles en [docs/03_REVISION_INTEGRACIO
 ## Estado actual
 
 - Arquitectura de producto y software: definida.
-- Base de datos V1: migraciones 001-094 aplicadas y verificadas.
+- Base de datos V1: migraciones 001-106 aplicadas y verificadas.
 - Despliegue y validación física en Supabase DEV: completado para el Data Engine previo a Flutter.
 - Collectors Chopo/Ruiz/Salud Digna/DENUE (fixtures, pruebas y corridas live reproducibles), Search API V1 y Admin V1: implementados y probados. Chopo, Ruiz, Salud Digna y DENUE están publicados en Supabase DEV. El gate remoto, los invariantes de base, la API pública y la cuarentena de colectores pasan; no se inicia Flutter hasta un nuevo corte de producto.
 - Collector genérico de proveedores: discovery acotado por dominio, respeto de robots.txt, JSON-LD/patrones de precio-servicio y evidencia candidata para laboratorios pequeños.
@@ -21,6 +21,12 @@ Consulta el detalle y los comandos reproducibles en [docs/03_REVISION_INTEGRACIO
 - Publicación genérica revisada: cuatro coincidencias exactas enlazadas a siete sedes DENUE; 44 ofertas restantes tienen una cola de revisión auditable y no publicable. Los reintentos sólo cubren fallos transitorios.
 
 ## Repositorio
+
+El resolver clínico v6 ya cuenta con benchmarks v1 y v2 reproducibles (400
+consultas; 331 variantes seguras y 69 abstenciones). El benchmark v2 cubre
+estudios de imagen, funcionales, cardiología, COVID y ginecología que no se
+habían probado antes. La investigación pública y el corpus de campo están en
+[docs/REAL_QUERY_RESEARCH_V1.md](docs/REAL_QUERY_RESEARCH_V1.md).
 
 ```text
 docs/       Decisiones canónicas, arquitectura, roadmap y revisión

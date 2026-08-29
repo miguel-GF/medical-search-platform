@@ -13,6 +13,7 @@ npx.cmd supabase@latest db query --linked --file supabase/tests/database_v1_test
 npx.cmd supabase@latest db query --linked --file supabase/tests/database_v1_invariants.sql
 npx.cmd supabase@latest db query --linked --file supabase/tests/public_api_test.sql
 npx.cmd supabase@latest db query --linked --file supabase/tests/gate_a_test.sql
+npx.cmd supabase@latest db query --linked --file supabase/tests/resolver_benchmark_v2_test.sql
 ```
 
 ## Collectors

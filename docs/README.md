@@ -18,6 +18,8 @@ La implementación ejecutable está en [`database/`](../database/README.md).
 
 9. [Benchmark del resolver V1](RESOLVER_BENCHMARK_V1.md) - 200 variantes revisadas, métricas y gate reproducible.
 
+10. [Investigación de consultas públicas y benchmark de campo](REAL_QUERY_RESEARCH_V1.md) - 64 frases anonimizadas y corpus v2 de 200 casos nuevos.
+
 ## Precedencia documental
 
 Cuando haya una diferencia, se aplica este orden:

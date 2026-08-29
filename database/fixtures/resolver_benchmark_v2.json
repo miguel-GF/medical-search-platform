@@ -1,0 +1,2398 @@
+{
+  "version": "resolver-benchmark-v2",
+  "locale": "es-MX",
+  "case_count": 200,
+  "policy": "Field variants resolve only when normalization preserves the complete reviewed catalog label; broad intents and incomplete scopes abstain.",
+  "sources": [
+    "Public, anonymized discovery phrases from Reddit threads listed in docs/REAL_QUERY_RESEARCH_V1.md.",
+    "Observed provider catalog labels in collectors/artifacts/live/catalog_golden_live.json and the linked Supabase catalog.",
+    "Resolver v6 exact-dominance, token guard and structured imaging constraints."
+  ],
+  "privacy": "No usernames, post bodies, diagnoses, ages, addresses or other personal data are stored; only short service/intent phrases are retained.",
+  "cases": [
+    {
+      "id": "field_dens_forearm_dual_01",
+      "query": "densitometría antebrazo dual",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "acae8edf-0d1b-5883-8e47-697834d9b3f1",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Dual forearm bone-density scope is preserved."
+    },
+    {
+      "id": "field_dens_forearm_dual_02",
+      "query": "DENSITOMETRÍA ANTEBRAZO DUAL",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "acae8edf-0d1b-5883-8e47-697834d9b3f1",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Dual forearm bone-density scope is preserved."
+    },
+    {
+      "id": "field_dens_forearm_dual_03",
+      "query": "  densitometría antebrazo dual  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "acae8edf-0d1b-5883-8e47-697834d9b3f1",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Dual forearm bone-density scope is preserved."
+    },
+    {
+      "id": "field_dens_forearm_dual_04",
+      "query": "densitometría dual del antebrazo",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "acae8edf-0d1b-5883-8e47-697834d9b3f1",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Dual forearm bone-density scope is preserved."
+    },
+    {
+      "id": "field_dens_hip_dual_01",
+      "query": "densitometría cadera dual",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "b829b973-64ca-5424-b05a-83d93cdea5dd",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Dual hip scope is preserved."
+    },
+    {
+      "id": "field_dens_hip_dual_02",
+      "query": "DENSITOMETRÍA CADERA DUAL",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "b829b973-64ca-5424-b05a-83d93cdea5dd",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Dual hip scope is preserved."
+    },
+    {
+      "id": "field_dens_hip_dual_03",
+      "query": "  densitometría cadera dual  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "b829b973-64ca-5424-b05a-83d93cdea5dd",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Dual hip scope is preserved."
+    },
+    {
+      "id": "field_dens_hip_dual_04",
+      "query": "densitometría dual de cadera",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "b829b973-64ca-5424-b05a-83d93cdea5dd",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Dual hip scope is preserved."
+    },
+    {
+      "id": "field_dens_lumbar_01",
+      "query": "densitometría columna lumbar",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "580717cd-4d8f-52bd-ba36-42112546cdca",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Lumbar spine scope is preserved."
+    },
+    {
+      "id": "field_dens_lumbar_02",
+      "query": "DENSITOMETRÍA COLUMNA LUMBAR",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "580717cd-4d8f-52bd-ba36-42112546cdca",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Lumbar spine scope is preserved."
+    },
+    {
+      "id": "field_dens_lumbar_03",
+      "query": "  densitometría columna lumbar  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "580717cd-4d8f-52bd-ba36-42112546cdca",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Lumbar spine scope is preserved."
+    },
+    {
+      "id": "field_dens_lumbar_04",
+      "query": "densitometría de columna lumbar",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "580717cd-4d8f-52bd-ba36-42112546cdca",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Lumbar spine scope is preserved."
+    },
+    {
+      "id": "field_dens_hip_forearm_01",
+      "query": "densitometría ósea cadera y antebrazo (1)",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "b6e39b46-ebf0-5095-9e82-dacd11250c54",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Hip and forearm multi-site scope is preserved."
+    },
+    {
+      "id": "field_dens_hip_forearm_02",
+      "query": "DENSITOMETRÍA ÓSEA CADERA Y ANTEBRAZO (1)",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "b6e39b46-ebf0-5095-9e82-dacd11250c54",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Hip and forearm multi-site scope is preserved."
+    },
+    {
+      "id": "field_dens_hip_forearm_03",
+      "query": "  densitometría ósea cadera y antebrazo (1)  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "b6e39b46-ebf0-5095-9e82-dacd11250c54",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Hip and forearm multi-site scope is preserved."
+    },
+    {
+      "id": "field_dens_hip_forearm_04",
+      "query": "densitometría ósea de cadera y antebrazo",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "b6e39b46-ebf0-5095-9e82-dacd11250c54",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Hip and forearm multi-site scope is preserved."
+    },
+    {
+      "id": "field_dens_spine_hip_01",
+      "query": "densitometría ósea columna y cadera (1)",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "5bd35412-4e3c-5a2a-a809-ab0b10fe3ce6",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Spine and hip multi-site scope is preserved."
+    },
+    {
+      "id": "field_dens_spine_hip_02",
+      "query": "DENSITOMETRÍA ÓSEA COLUMNA Y CADERA (1)",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "5bd35412-4e3c-5a2a-a809-ab0b10fe3ce6",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Spine and hip multi-site scope is preserved."
+    },
+    {
+      "id": "field_dens_spine_hip_03",
+      "query": "  densitometría ósea columna y cadera (1)  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "5bd35412-4e3c-5a2a-a809-ab0b10fe3ce6",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Spine and hip multi-site scope is preserved."
+    },
+    {
+      "id": "field_dens_spine_hip_04",
+      "query": "densitometría ósea de columna y cadera",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "5bd35412-4e3c-5a2a-a809-ab0b10fe3ce6",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Spine and hip multi-site scope is preserved."
+    },
+    {
+      "id": "field_dens_full_body_01",
+      "query": "densitometría ósea cuerpo completo (1)",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "d9aa15c4-0d92-5e01-8607-d9d6d60dae7b",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Whole-body density scope is preserved."
+    },
+    {
+      "id": "field_dens_full_body_02",
+      "query": "DENSITOMETRÍA ÓSEA CUERPO COMPLETO (1)",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "d9aa15c4-0d92-5e01-8607-d9d6d60dae7b",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Whole-body density scope is preserved."
+    },
+    {
+      "id": "field_dens_full_body_03",
+      "query": "  densitometría ósea cuerpo completo (1)  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "d9aa15c4-0d92-5e01-8607-d9d6d60dae7b",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Whole-body density scope is preserved."
+    },
+    {
+      "id": "field_dens_full_body_04",
+      "query": "densitometría ósea de cuerpo completo",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "d9aa15c4-0d92-5e01-8607-d9d6d60dae7b",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Whole-body density scope is preserved."
+    },
+    {
+      "id": "field_audiometry_01",
+      "query": "audiometria (1)",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "d07dc841-962c-59d1-a2ed-9301dde450de",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Functional hearing study label is tested without inferring a hearing diagnosis."
+    },
+    {
+      "id": "field_audiometry_02",
+      "query": "AUDIOMETRIA (1)",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "d07dc841-962c-59d1-a2ed-9301dde450de",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Functional hearing study label is tested without inferring a hearing diagnosis."
+    },
+    {
+      "id": "field_audiometry_03",
+      "query": "  audiometria (1)  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "d07dc841-962c-59d1-a2ed-9301dde450de",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Functional hearing study label is tested without inferring a hearing diagnosis."
+    },
+    {
+      "id": "field_audiometry_04",
+      "query": "AUDIOMETRIA-[1]",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "d07dc841-962c-59d1-a2ed-9301dde450de",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Functional hearing study label is tested without inferring a hearing diagnosis."
+    },
+    {
+      "id": "field_spirometry_check_01",
+      "query": "espirometria chequeo",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "5627c136-27fe-57c1-85d0-22ccfd6d5d7f",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Check-up spirometry remains distinct from diagnostic variants."
+    },
+    {
+      "id": "field_spirometry_check_02",
+      "query": "ESPIROMETRIA CHEQUEO",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "5627c136-27fe-57c1-85d0-22ccfd6d5d7f",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Check-up spirometry remains distinct from diagnostic variants."
+    },
+    {
+      "id": "field_spirometry_check_03",
+      "query": "  espirometria chequeo  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "5627c136-27fe-57c1-85d0-22ccfd6d5d7f",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Check-up spirometry remains distinct from diagnostic variants."
+    },
+    {
+      "id": "field_spirometry_check_04",
+      "query": "espirometría para chequeo",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "5627c136-27fe-57c1-85d0-22ccfd6d5d7f",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Check-up spirometry remains distinct from diagnostic variants."
+    },
+    {
+      "id": "field_spirometry_bronchodilator_01",
+      "query": "espirometria con broncodilatador (1)",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "dfa3afca-fb22-5c20-8e3c-34168fe1961f",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Bronchodilator protocol is preserved."
+    },
+    {
+      "id": "field_spirometry_bronchodilator_02",
+      "query": "ESPIROMETRIA CON BRONCODILATADOR (1)",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "dfa3afca-fb22-5c20-8e3c-34168fe1961f",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Bronchodilator protocol is preserved."
+    },
+    {
+      "id": "field_spirometry_bronchodilator_03",
+      "query": "  espirometria con broncodilatador (1)  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "dfa3afca-fb22-5c20-8e3c-34168fe1961f",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Bronchodilator protocol is preserved."
+    },
+    {
+      "id": "field_spirometry_bronchodilator_04",
+      "query": "espirometría con prueba broncodilatadora",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "dfa3afca-fb22-5c20-8e3c-34168fe1961f",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Bronchodilator protocol is preserved."
+    },
+    {
+      "id": "field_spirometry_simple_01",
+      "query": "espirometria simple (1)",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "971b189f-eafb-5ac9-bb90-9374dbed5f6e",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple spirometry remains distinct from bronchodilator testing."
+    },
+    {
+      "id": "field_spirometry_simple_02",
+      "query": "ESPIROMETRIA SIMPLE (1)",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "971b189f-eafb-5ac9-bb90-9374dbed5f6e",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple spirometry remains distinct from bronchodilator testing."
+    },
+    {
+      "id": "field_spirometry_simple_03",
+      "query": "  espirometria simple (1)  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "971b189f-eafb-5ac9-bb90-9374dbed5f6e",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple spirometry remains distinct from bronchodilator testing."
+    },
+    {
+      "id": "field_spirometry_simple_04",
+      "query": "prueba de espirometría simple",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "971b189f-eafb-5ac9-bb90-9374dbed5f6e",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple spirometry remains distinct from bronchodilator testing."
+    },
+    {
+      "id": "field_echo_01",
+      "query": "ecocardiograma transtoracico",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "c2c10805-c1e4-5f65-a9a5-b62f20675945",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Transthoracic echocardiogram scope is preserved."
+    },
+    {
+      "id": "field_echo_02",
+      "query": "ECOCARDIOGRAMA TRANSTORACICO",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "c2c10805-c1e4-5f65-a9a5-b62f20675945",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Transthoracic echocardiogram scope is preserved."
+    },
+    {
+      "id": "field_echo_03",
+      "query": "  ecocardiograma transtoracico  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "c2c10805-c1e4-5f65-a9a5-b62f20675945",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Transthoracic echocardiogram scope is preserved."
+    },
+    {
+      "id": "field_echo_04",
+      "query": "eco cardiaco transtorácico",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "c2c10805-c1e4-5f65-a9a5-b62f20675945",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Transthoracic echocardiogram scope is preserved."
+    },
+    {
+      "id": "field_holter_01",
+      "query": "holter cardiaco",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "fba52c7e-ecff-5c72-b827-783f33ae69f7",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Cardiac Holter is distinct from ambulatory blood-pressure monitoring."
+    },
+    {
+      "id": "field_holter_02",
+      "query": "HOLTER CARDIACO",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "fba52c7e-ecff-5c72-b827-783f33ae69f7",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Cardiac Holter is distinct from ambulatory blood-pressure monitoring."
+    },
+    {
+      "id": "field_holter_03",
+      "query": "  holter cardiaco  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "fba52c7e-ecff-5c72-b827-783f33ae69f7",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Cardiac Holter is distinct from ambulatory blood-pressure monitoring."
+    },
+    {
+      "id": "field_holter_04",
+      "query": "monitoreo holter cardíaco",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "fba52c7e-ecff-5c72-b827-783f33ae69f7",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Cardiac Holter is distinct from ambulatory blood-pressure monitoring."
+    },
+    {
+      "id": "field_holter_map_01",
+      "query": "holter mapa ta",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "2d17283e-3fe2-5e9e-8df8-7c305121af54",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "MAPA blood-pressure scope is preserved."
+    },
+    {
+      "id": "field_holter_map_02",
+      "query": "HOLTER MAPA TA",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "2d17283e-3fe2-5e9e-8df8-7c305121af54",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "MAPA blood-pressure scope is preserved."
+    },
+    {
+      "id": "field_holter_map_03",
+      "query": "  holter mapa ta  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "2d17283e-3fe2-5e9e-8df8-7c305121af54",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "MAPA blood-pressure scope is preserved."
+    },
+    {
+      "id": "field_holter_map_04",
+      "query": "monitoreo ambulatorio de presión arterial (MAPA)",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "2d17283e-3fe2-5e9e-8df8-7c305121af54",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "MAPA blood-pressure scope is preserved."
+    },
+    {
+      "id": "field_gasometry_01",
+      "query": "gasometria venosa",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "71c7e789-31c8-5da0-8dd5-ef0a7088222c",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Venous specimen is preserved."
+    },
+    {
+      "id": "field_gasometry_02",
+      "query": "GASOMETRIA VENOSA",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "71c7e789-31c8-5da0-8dd5-ef0a7088222c",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Venous specimen is preserved."
+    },
+    {
+      "id": "field_gasometry_03",
+      "query": "  gasometria venosa  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "71c7e789-31c8-5da0-8dd5-ef0a7088222c",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Venous specimen is preserved."
+    },
+    {
+      "id": "field_gasometry_04",
+      "query": "gasometría de sangre venosa",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "71c7e789-31c8-5da0-8dd5-ef0a7088222c",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Venous specimen is preserved."
+    },
+    {
+      "id": "field_ecg_pediatric_01",
+      "query": "electrocardiograma pediatrico",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "ff01230e-0c64-5774-a4c2-1740e9a0580b",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Pediatric ECG is distinct from resting and exercise ECG."
+    },
+    {
+      "id": "field_ecg_pediatric_02",
+      "query": "ELECTROCARDIOGRAMA PEDIATRICO",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "ff01230e-0c64-5774-a4c2-1740e9a0580b",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Pediatric ECG is distinct from resting and exercise ECG."
+    },
+    {
+      "id": "field_ecg_pediatric_03",
+      "query": "  electrocardiograma pediatrico  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "ff01230e-0c64-5774-a4c2-1740e9a0580b",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Pediatric ECG is distinct from resting and exercise ECG."
+    },
+    {
+      "id": "field_ecg_pediatric_04",
+      "query": "electrocardiograma para niños",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "ff01230e-0c64-5774-a4c2-1740e9a0580b",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Pediatric ECG is distinct from resting and exercise ECG."
+    },
+    {
+      "id": "field_covid_pcr_01",
+      "query": "prueba covid-19 por pcr",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "dd018aa7-8f27-5485-8332-e590ed544249",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "PCR method is preserved."
+    },
+    {
+      "id": "field_covid_pcr_02",
+      "query": "PRUEBA COVID-19 POR PCR",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "dd018aa7-8f27-5485-8332-e590ed544249",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "PCR method is preserved."
+    },
+    {
+      "id": "field_covid_pcr_03",
+      "query": "  prueba covid-19 por pcr  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "dd018aa7-8f27-5485-8332-e590ed544249",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "PCR method is preserved."
+    },
+    {
+      "id": "field_covid_pcr_04",
+      "query": "PCR para SARS-CoV-2",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "dd018aa7-8f27-5485-8332-e590ed544249",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "PCR method is preserved."
+    },
+    {
+      "id": "field_covid_nasal_01",
+      "query": "prueba rápida antígeno nasal sars-cov-2 (covid)",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "69e729be-be23-5e55-8e25-b971e16ea5d2",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Nasal rapid-antigen scope is preserved."
+    },
+    {
+      "id": "field_covid_nasal_02",
+      "query": "PRUEBA RÁPIDA ANTÍGENO NASAL SARS-COV-2 (COVID)",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "69e729be-be23-5e55-8e25-b971e16ea5d2",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Nasal rapid-antigen scope is preserved."
+    },
+    {
+      "id": "field_covid_nasal_03",
+      "query": "  prueba rápida antígeno nasal sars-cov-2 (covid)  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "69e729be-be23-5e55-8e25-b971e16ea5d2",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Nasal rapid-antigen scope is preserved."
+    },
+    {
+      "id": "field_covid_nasal_04",
+      "query": "antígeno nasal de SARS-CoV-2",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "69e729be-be23-5e55-8e25-b971e16ea5d2",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Nasal rapid-antigen scope is preserved."
+    },
+    {
+      "id": "field_covid_antigen_01",
+      "query": "prueba rápida antígeno sars-cov-2 (covid-19)",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "d2969c40-c066-570c-8907-d8e32541c2e6",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Rapid-antigen method is preserved."
+    },
+    {
+      "id": "field_covid_antigen_02",
+      "query": "PRUEBA RÁPIDA ANTÍGENO SARS-COV-2 (COVID-19)",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "d2969c40-c066-570c-8907-d8e32541c2e6",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Rapid-antigen method is preserved."
+    },
+    {
+      "id": "field_covid_antigen_03",
+      "query": "  prueba rápida antígeno sars-cov-2 (covid-19)  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "d2969c40-c066-570c-8907-d8e32541c2e6",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Rapid-antigen method is preserved."
+    },
+    {
+      "id": "field_covid_antigen_04",
+      "query": "prueba de antígeno para COVID-19",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "d2969c40-c066-570c-8907-d8e32541c2e6",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Rapid-antigen method is preserved."
+    },
+    {
+      "id": "field_covid_igg_01",
+      "query": "sars-cov-2 (covid-19) anticuerpos igg",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "9128e055-04f4-5e4c-9ff4-c274d1f3bc84",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "IgG antibody target is preserved."
+    },
+    {
+      "id": "field_covid_igg_02",
+      "query": "SARS-COV-2 (COVID-19) ANTICUERPOS IGG",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "9128e055-04f4-5e4c-9ff4-c274d1f3bc84",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "IgG antibody target is preserved."
+    },
+    {
+      "id": "field_covid_igg_03",
+      "query": "  sars-cov-2 (covid-19) anticuerpos igg  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "9128e055-04f4-5e4c-9ff4-c274d1f3bc84",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "IgG antibody target is preserved."
+    },
+    {
+      "id": "field_covid_igg_04",
+      "query": "anticuerpos IgG contra SARS-CoV-2",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "9128e055-04f4-5e4c-9ff4-c274d1f3bc84",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "IgG antibody target is preserved."
+    },
+    {
+      "id": "field_covid_profile_01",
+      "query": "perfil anticuerpos covid (igg igm s)",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "d66b304c-afeb-53c9-9cae-1cdd529db5ad",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "The antibody panel is not collapsed into a single antibody test."
+    },
+    {
+      "id": "field_covid_profile_02",
+      "query": "PERFIL ANTICUERPOS COVID (IGG IGM S)",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "d66b304c-afeb-53c9-9cae-1cdd529db5ad",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "The antibody panel is not collapsed into a single antibody test."
+    },
+    {
+      "id": "field_covid_profile_03",
+      "query": "  perfil anticuerpos covid (igg igm s)  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "d66b304c-afeb-53c9-9cae-1cdd529db5ad",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "The antibody panel is not collapsed into a single antibody test."
+    },
+    {
+      "id": "field_covid_profile_04",
+      "query": "perfil de anticuerpos COVID IgG IgM",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "d66b304c-afeb-53c9-9cae-1cdd529db5ad",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "The antibody panel is not collapsed into a single antibody test."
+    },
+    {
+      "id": "field_us_4d_01",
+      "query": "ultrasonido 4a dimension",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "1afa8fa6-94c8-5f16-a78d-6ced19216a08",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Four-dimensional ultrasound label is tested."
+    },
+    {
+      "id": "field_us_4d_02",
+      "query": "ULTRASONIDO 4A DIMENSION",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "1afa8fa6-94c8-5f16-a78d-6ced19216a08",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Four-dimensional ultrasound label is tested."
+    },
+    {
+      "id": "field_us_4d_03",
+      "query": "  ultrasonido 4a dimension  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "1afa8fa6-94c8-5f16-a78d-6ced19216a08",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Four-dimensional ultrasound label is tested."
+    },
+    {
+      "id": "field_us_4d_04",
+      "query": "ultrasonido 4D",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "1afa8fa6-94c8-5f16-a78d-6ced19216a08",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Four-dimensional ultrasound label is tested."
+    },
+    {
+      "id": "field_us_4d_twins_01",
+      "query": "ultrasonido 4a dimension gemelar",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "7f317fce-9c66-5542-aea0-92e5759f19dc",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Twin-pregnancy scope is preserved."
+    },
+    {
+      "id": "field_us_4d_twins_02",
+      "query": "ULTRASONIDO 4A DIMENSION GEMELAR",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "7f317fce-9c66-5542-aea0-92e5759f19dc",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Twin-pregnancy scope is preserved."
+    },
+    {
+      "id": "field_us_4d_twins_03",
+      "query": "  ultrasonido 4a dimension gemelar  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "7f317fce-9c66-5542-aea0-92e5759f19dc",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Twin-pregnancy scope is preserved."
+    },
+    {
+      "id": "field_us_4d_twins_04",
+      "query": "ultrasonido 4D para gemelos",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "7f317fce-9c66-5542-aea0-92e5759f19dc",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Twin-pregnancy scope is preserved."
+    },
+    {
+      "id": "field_us_upper_abdomen_01",
+      "query": "ultrasonido abdominal superior",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "b3ec7d1e-9e20-55ec-9bfc-d72c0836c7dd",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Upper-abdomen scope is preserved."
+    },
+    {
+      "id": "field_us_upper_abdomen_02",
+      "query": "ULTRASONIDO ABDOMINAL SUPERIOR",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "b3ec7d1e-9e20-55ec-9bfc-d72c0836c7dd",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Upper-abdomen scope is preserved."
+    },
+    {
+      "id": "field_us_upper_abdomen_03",
+      "query": "  ultrasonido abdominal superior  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "b3ec7d1e-9e20-55ec-9bfc-d72c0836c7dd",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Upper-abdomen scope is preserved."
+    },
+    {
+      "id": "field_us_upper_abdomen_04",
+      "query": "ultrasonido de abdomen superior",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "b3ec7d1e-9e20-55ec-9bfc-d72c0836c7dd",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Upper-abdomen scope is preserved."
+    },
+    {
+      "id": "field_us_neck_01",
+      "query": "ultrasonido cuello (1)",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "856b3bf3-9c10-5a98-81b7-e2ad118c5d3b",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Neck ultrasound scope is preserved."
+    },
+    {
+      "id": "field_us_neck_02",
+      "query": "ULTRASONIDO CUELLO (1)",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "856b3bf3-9c10-5a98-81b7-e2ad118c5d3b",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Neck ultrasound scope is preserved."
+    },
+    {
+      "id": "field_us_neck_03",
+      "query": "  ultrasonido cuello (1)  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "856b3bf3-9c10-5a98-81b7-e2ad118c5d3b",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Neck ultrasound scope is preserved."
+    },
+    {
+      "id": "field_us_neck_04",
+      "query": "ultrasonido de cuello",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "856b3bf3-9c10-5a98-81b7-e2ad118c5d3b",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Neck ultrasound scope is preserved."
+    },
+    {
+      "id": "field_us_boyden_01",
+      "query": "ultrasonido de abdomen con prueba de boyden",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "2b90785a-8f47-5eb1-9daf-341b9868b42c",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "The Boyden maneuver is not discarded."
+    },
+    {
+      "id": "field_us_boyden_02",
+      "query": "ULTRASONIDO DE ABDOMEN CON PRUEBA DE BOYDEN",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "2b90785a-8f47-5eb1-9daf-341b9868b42c",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "The Boyden maneuver is not discarded."
+    },
+    {
+      "id": "field_us_boyden_03",
+      "query": "  ultrasonido de abdomen con prueba de boyden  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "2b90785a-8f47-5eb1-9daf-341b9868b42c",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "The Boyden maneuver is not discarded."
+    },
+    {
+      "id": "field_us_boyden_04",
+      "query": "ultrasonido abdominal con prueba de Boyden",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "2b90785a-8f47-5eb1-9daf-341b9868b42c",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "The Boyden maneuver is not discarded."
+    },
+    {
+      "id": "field_us_renal_01",
+      "query": "ultrasonido renal",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "6381074e-a19b-5c59-9027-c6fc6bd9150b",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Renal anatomy is preserved."
+    },
+    {
+      "id": "field_us_renal_02",
+      "query": "ULTRASONIDO RENAL",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "6381074e-a19b-5c59-9027-c6fc6bd9150b",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Renal anatomy is preserved."
+    },
+    {
+      "id": "field_us_renal_03",
+      "query": "  ultrasonido renal  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "6381074e-a19b-5c59-9027-c6fc6bd9150b",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Renal anatomy is preserved."
+    },
+    {
+      "id": "field_us_renal_04",
+      "query": "ecografía renal",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "6381074e-a19b-5c59-9027-c6fc6bd9150b",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Renal anatomy is preserved."
+    },
+    {
+      "id": "field_us_testicular_01",
+      "query": "ultrasonido testicular",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "a40351fd-f38e-5bdd-b827-c794874389b5",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Testicular anatomy is preserved."
+    },
+    {
+      "id": "field_us_testicular_02",
+      "query": "ULTRASONIDO TESTICULAR",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "a40351fd-f38e-5bdd-b827-c794874389b5",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Testicular anatomy is preserved."
+    },
+    {
+      "id": "field_us_testicular_03",
+      "query": "  ultrasonido testicular  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "a40351fd-f38e-5bdd-b827-c794874389b5",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Testicular anatomy is preserved."
+    },
+    {
+      "id": "field_us_testicular_04",
+      "query": "ecografía testicular",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "a40351fd-f38e-5bdd-b827-c794874389b5",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Testicular anatomy is preserved."
+    },
+    {
+      "id": "field_us_urinary_01",
+      "query": "ultrasonido vias urinarias",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "9522aab2-ecf2-5be2-85c0-cde147faabf9",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Urinary-tract scope is preserved."
+    },
+    {
+      "id": "field_us_urinary_02",
+      "query": "ULTRASONIDO VIAS URINARIAS",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "9522aab2-ecf2-5be2-85c0-cde147faabf9",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Urinary-tract scope is preserved."
+    },
+    {
+      "id": "field_us_urinary_03",
+      "query": "  ultrasonido vias urinarias  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "9522aab2-ecf2-5be2-85c0-cde147faabf9",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Urinary-tract scope is preserved."
+    },
+    {
+      "id": "field_us_urinary_04",
+      "query": "ultrasonido de vías urinarias",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "9522aab2-ecf2-5be2-85c0-cde147faabf9",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Urinary-tract scope is preserved."
+    },
+    {
+      "id": "field_mri_cervical_01",
+      "query": "resonancia magnética columna cervical",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "2320fe5b-df22-53ac-af3f-664c5ef4e950",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "MRI modality and cervical spine scope are preserved."
+    },
+    {
+      "id": "field_mri_cervical_02",
+      "query": "RESONANCIA MAGNÉTICA COLUMNA CERVICAL",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "2320fe5b-df22-53ac-af3f-664c5ef4e950",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "MRI modality and cervical spine scope are preserved."
+    },
+    {
+      "id": "field_mri_cervical_03",
+      "query": "  resonancia magnética columna cervical  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "2320fe5b-df22-53ac-af3f-664c5ef4e950",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "MRI modality and cervical spine scope are preserved."
+    },
+    {
+      "id": "field_mri_cervical_04",
+      "query": "RM de columna cervical",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "2320fe5b-df22-53ac-af3f-664c5ef4e950",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "MRI modality and cervical spine scope are preserved."
+    },
+    {
+      "id": "field_mri_lumbar_01",
+      "query": "resonancia magnética columna lumbar o lumbosacra",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "c99af777-ed67-57a5-af35-1dcadc817b5a",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "MRI lumbar/lumbosacral scope is preserved."
+    },
+    {
+      "id": "field_mri_lumbar_02",
+      "query": "RESONANCIA MAGNÉTICA COLUMNA LUMBAR O LUMBOSACRA",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "c99af777-ed67-57a5-af35-1dcadc817b5a",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "MRI lumbar/lumbosacral scope is preserved."
+    },
+    {
+      "id": "field_mri_lumbar_03",
+      "query": "  resonancia magnética columna lumbar o lumbosacra  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "c99af777-ed67-57a5-af35-1dcadc817b5a",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "MRI lumbar/lumbosacral scope is preserved."
+    },
+    {
+      "id": "field_mri_lumbar_04",
+      "query": "resonancia de columna lumbar o lumbosacra",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "c99af777-ed67-57a5-af35-1dcadc817b5a",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "MRI lumbar/lumbosacral scope is preserved."
+    },
+    {
+      "id": "field_mri_cranium_01",
+      "query": "resonancia magnética craneo",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "df10e6cc-e7bc-58df-be1c-2e2215c654be",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "MRI cranial scope is preserved."
+    },
+    {
+      "id": "field_mri_cranium_02",
+      "query": "RESONANCIA MAGNÉTICA CRANEO",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "df10e6cc-e7bc-58df-be1c-2e2215c654be",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "MRI cranial scope is preserved."
+    },
+    {
+      "id": "field_mri_cranium_03",
+      "query": "  resonancia magnética craneo  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "df10e6cc-e7bc-58df-be1c-2e2215c654be",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "MRI cranial scope is preserved."
+    },
+    {
+      "id": "field_mri_cranium_04",
+      "query": "RM de cráneo",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "df10e6cc-e7bc-58df-be1c-2e2215c654be",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "MRI cranial scope is preserved."
+    },
+    {
+      "id": "field_mri_neck_01",
+      "query": "resonancia magnética cuello",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "66313107-633f-52b0-ba8e-fa37b89d996c",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "MRI neck scope is preserved."
+    },
+    {
+      "id": "field_mri_neck_02",
+      "query": "RESONANCIA MAGNÉTICA CUELLO",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "66313107-633f-52b0-ba8e-fa37b89d996c",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "MRI neck scope is preserved."
+    },
+    {
+      "id": "field_mri_neck_03",
+      "query": "  resonancia magnética cuello  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "66313107-633f-52b0-ba8e-fa37b89d996c",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "MRI neck scope is preserved."
+    },
+    {
+      "id": "field_mri_neck_04",
+      "query": "RM de cuello",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "66313107-633f-52b0-ba8e-fa37b89d996c",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "MRI neck scope is preserved."
+    },
+    {
+      "id": "field_mri_breast_01",
+      "query": "resonancia magnética mama simple",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "14afdb4a-9681-5b9a-8d4e-04a7b0d95b4e",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple breast MRI is distinct from contrast imaging."
+    },
+    {
+      "id": "field_mri_breast_02",
+      "query": "RESONANCIA MAGNÉTICA MAMA SIMPLE",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "14afdb4a-9681-5b9a-8d4e-04a7b0d95b4e",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple breast MRI is distinct from contrast imaging."
+    },
+    {
+      "id": "field_mri_breast_03",
+      "query": "  resonancia magnética mama simple  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "14afdb4a-9681-5b9a-8d4e-04a7b0d95b4e",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple breast MRI is distinct from contrast imaging."
+    },
+    {
+      "id": "field_mri_breast_04",
+      "query": "resonancia mamaria simple",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "14afdb4a-9681-5b9a-8d4e-04a7b0d95b4e",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple breast MRI is distinct from contrast imaging."
+    },
+    {
+      "id": "field_ct_cervical_01",
+      "query": "tomografía columna cervical simple",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "7bca5f0e-f879-5c55-82c6-bdd03543227e",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple cervical CT scope is preserved."
+    },
+    {
+      "id": "field_ct_cervical_02",
+      "query": "TOMOGRAFÍA COLUMNA CERVICAL SIMPLE",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "7bca5f0e-f879-5c55-82c6-bdd03543227e",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple cervical CT scope is preserved."
+    },
+    {
+      "id": "field_ct_cervical_03",
+      "query": "  tomografía columna cervical simple  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "7bca5f0e-f879-5c55-82c6-bdd03543227e",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple cervical CT scope is preserved."
+    },
+    {
+      "id": "field_ct_cervical_04",
+      "query": "TAC de columna cervical simple",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "7bca5f0e-f879-5c55-82c6-bdd03543227e",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple cervical CT scope is preserved."
+    },
+    {
+      "id": "field_ct_lumbar_01",
+      "query": "tomografía columna lumbar simple",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "6cf56af2-aa88-5ff9-b627-4507f1476048",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple lumbar CT scope is preserved."
+    },
+    {
+      "id": "field_ct_lumbar_02",
+      "query": "TOMOGRAFÍA COLUMNA LUMBAR SIMPLE",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "6cf56af2-aa88-5ff9-b627-4507f1476048",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple lumbar CT scope is preserved."
+    },
+    {
+      "id": "field_ct_lumbar_03",
+      "query": "  tomografía columna lumbar simple  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "6cf56af2-aa88-5ff9-b627-4507f1476048",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple lumbar CT scope is preserved."
+    },
+    {
+      "id": "field_ct_lumbar_04",
+      "query": "TAC de columna lumbar simple",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "6cf56af2-aa88-5ff9-b627-4507f1476048",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple lumbar CT scope is preserved."
+    },
+    {
+      "id": "field_ct_cranium_01",
+      "query": "tomografía craneo simple",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "6d4175a9-e365-5241-8859-c2f97a70c0d7",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple cranial CT scope is preserved."
+    },
+    {
+      "id": "field_ct_cranium_02",
+      "query": "TOMOGRAFÍA CRANEO SIMPLE",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "6d4175a9-e365-5241-8859-c2f97a70c0d7",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple cranial CT scope is preserved."
+    },
+    {
+      "id": "field_ct_cranium_03",
+      "query": "  tomografía craneo simple  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "6d4175a9-e365-5241-8859-c2f97a70c0d7",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple cranial CT scope is preserved."
+    },
+    {
+      "id": "field_ct_cranium_04",
+      "query": "TAC de cráneo simple",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "6d4175a9-e365-5241-8859-c2f97a70c0d7",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple cranial CT scope is preserved."
+    },
+    {
+      "id": "field_ct_orbits_01",
+      "query": "tomografía orbitas simple",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "fef75fa2-4ca9-558b-b52e-f38a31c7685f",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple orbit CT scope is preserved."
+    },
+    {
+      "id": "field_ct_orbits_02",
+      "query": "TOMOGRAFÍA ORBITAS SIMPLE",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "fef75fa2-4ca9-558b-b52e-f38a31c7685f",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple orbit CT scope is preserved."
+    },
+    {
+      "id": "field_ct_orbits_03",
+      "query": "  tomografía orbitas simple  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "fef75fa2-4ca9-558b-b52e-f38a31c7685f",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple orbit CT scope is preserved."
+    },
+    {
+      "id": "field_ct_orbits_04",
+      "query": "TAC de órbitas simple",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "fef75fa2-4ca9-558b-b52e-f38a31c7685f",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple orbit CT scope is preserved."
+    },
+    {
+      "id": "field_ct_sinuses_01",
+      "query": "tomografía senos paranasales simple",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "d585766d-3502-5745-b5d6-7f2e2b1d8a65",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple paranasal-sinus CT scope is preserved."
+    },
+    {
+      "id": "field_ct_sinuses_02",
+      "query": "TOMOGRAFÍA SENOS PARANASALES SIMPLE",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "d585766d-3502-5745-b5d6-7f2e2b1d8a65",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple paranasal-sinus CT scope is preserved."
+    },
+    {
+      "id": "field_ct_sinuses_03",
+      "query": "  tomografía senos paranasales simple  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "d585766d-3502-5745-b5d6-7f2e2b1d8a65",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple paranasal-sinus CT scope is preserved."
+    },
+    {
+      "id": "field_ct_sinuses_04",
+      "query": "TAC de senos paranasales simple",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "d585766d-3502-5745-b5d6-7f2e2b1d8a65",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple paranasal-sinus CT scope is preserved."
+    },
+    {
+      "id": "field_ct_upper_simple_01",
+      "query": "tomografía abdomen superior simple",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "3b8beb63-d709-541e-941f-83a739dba3ea",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple upper-abdomen CT is distinct from contrast CT."
+    },
+    {
+      "id": "field_ct_upper_simple_02",
+      "query": "TOMOGRAFÍA ABDOMEN SUPERIOR SIMPLE",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "3b8beb63-d709-541e-941f-83a739dba3ea",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple upper-abdomen CT is distinct from contrast CT."
+    },
+    {
+      "id": "field_ct_upper_simple_03",
+      "query": "  tomografía abdomen superior simple  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "3b8beb63-d709-541e-941f-83a739dba3ea",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple upper-abdomen CT is distinct from contrast CT."
+    },
+    {
+      "id": "field_ct_upper_simple_04",
+      "query": "TAC de abdomen superior simple",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "3b8beb63-d709-541e-941f-83a739dba3ea",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple upper-abdomen CT is distinct from contrast CT."
+    },
+    {
+      "id": "field_ct_upper_contrast_01",
+      "query": "tomografía abdomen superior con contraste",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "bbc0edbc-d4b7-5987-8aa3-5057fc5a864f",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Contrast upper-abdomen CT is preserved."
+    },
+    {
+      "id": "field_ct_upper_contrast_02",
+      "query": "TOMOGRAFÍA ABDOMEN SUPERIOR CON CONTRASTE",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "bbc0edbc-d4b7-5987-8aa3-5057fc5a864f",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Contrast upper-abdomen CT is preserved."
+    },
+    {
+      "id": "field_ct_upper_contrast_03",
+      "query": "  tomografía abdomen superior con contraste  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "bbc0edbc-d4b7-5987-8aa3-5057fc5a864f",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Contrast upper-abdomen CT is preserved."
+    },
+    {
+      "id": "field_ct_upper_contrast_04",
+      "query": "TAC de abdomen superior con contraste",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "bbc0edbc-d4b7-5987-8aa3-5057fc5a864f",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Contrast upper-abdomen CT is preserved."
+    },
+    {
+      "id": "field_ct_lower_simple_01",
+      "query": "tomografía abdomen inferior simple",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "a43d2047-89f1-50c5-99e1-c0d006fe13f4",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple lower-abdomen CT is preserved."
+    },
+    {
+      "id": "field_ct_lower_simple_02",
+      "query": "TOMOGRAFÍA ABDOMEN INFERIOR SIMPLE",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "a43d2047-89f1-50c5-99e1-c0d006fe13f4",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple lower-abdomen CT is preserved."
+    },
+    {
+      "id": "field_ct_lower_simple_03",
+      "query": "  tomografía abdomen inferior simple  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "a43d2047-89f1-50c5-99e1-c0d006fe13f4",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple lower-abdomen CT is preserved."
+    },
+    {
+      "id": "field_ct_lower_simple_04",
+      "query": "TAC de abdomen inferior simple",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "a43d2047-89f1-50c5-99e1-c0d006fe13f4",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Simple lower-abdomen CT is preserved."
+    },
+    {
+      "id": "field_ct_lower_contrast_01",
+      "query": "tomografía abdomen inferior con contraste",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "5418efe4-d4d0-5cdb-bedf-689a04a518c8",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Contrast lower-abdomen CT is preserved."
+    },
+    {
+      "id": "field_ct_lower_contrast_02",
+      "query": "TOMOGRAFÍA ABDOMEN INFERIOR CON CONTRASTE",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "5418efe4-d4d0-5cdb-bedf-689a04a518c8",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Contrast lower-abdomen CT is preserved."
+    },
+    {
+      "id": "field_ct_lower_contrast_03",
+      "query": "  tomografía abdomen inferior con contraste  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "5418efe4-d4d0-5cdb-bedf-689a04a518c8",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Contrast lower-abdomen CT is preserved."
+    },
+    {
+      "id": "field_ct_lower_contrast_04",
+      "query": "TAC de abdomen inferior con contraste",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "5418efe4-d4d0-5cdb-bedf-689a04a518c8",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Contrast lower-abdomen CT is preserved."
+    },
+    {
+      "id": "field_xray_abdomen_ap_01",
+      "query": "rayos x abdomen ap de pie-1",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "b53fc6f3-4d51-5a8a-b919-cec0ddbbc66a",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Standing AP radiography scope is preserved."
+    },
+    {
+      "id": "field_xray_abdomen_ap_02",
+      "query": "RAYOS X ABDOMEN AP DE PIE-1",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "b53fc6f3-4d51-5a8a-b919-cec0ddbbc66a",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Standing AP radiography scope is preserved."
+    },
+    {
+      "id": "field_xray_abdomen_ap_03",
+      "query": "  rayos x abdomen ap de pie-1  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "b53fc6f3-4d51-5a8a-b919-cec0ddbbc66a",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Standing AP radiography scope is preserved."
+    },
+    {
+      "id": "field_xray_abdomen_ap_04",
+      "query": "radiografía abdomen AP de pie",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "b53fc6f3-4d51-5a8a-b919-cec0ddbbc66a",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Standing AP radiography scope is preserved."
+    },
+    {
+      "id": "field_xray_abdomen_decubitus_01",
+      "query": "rayos x abdomen de pie y decubito-2",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "22258a25-fb19-549a-a729-ddf198e8d266",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Standing/decubitus positions are preserved."
+    },
+    {
+      "id": "field_xray_abdomen_decubitus_02",
+      "query": "RAYOS X ABDOMEN DE PIE Y DECUBITO-2",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "22258a25-fb19-549a-a729-ddf198e8d266",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Standing/decubitus positions are preserved."
+    },
+    {
+      "id": "field_xray_abdomen_decubitus_03",
+      "query": "  rayos x abdomen de pie y decubito-2  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "22258a25-fb19-549a-a729-ddf198e8d266",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Standing/decubitus positions are preserved."
+    },
+    {
+      "id": "field_xray_abdomen_decubitus_04",
+      "query": "radiografía de abdomen de pie y decúbito",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "22258a25-fb19-549a-a729-ddf198e8d266",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Standing/decubitus positions are preserved."
+    },
+    {
+      "id": "field_xray_abdomen_two_01",
+      "query": "rayos x abdomen dos proyecciones ap y lat",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "e8028e0a-a6b0-5100-b70c-b90a667a1847",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Two-view AP/lateral scope is preserved."
+    },
+    {
+      "id": "field_xray_abdomen_two_02",
+      "query": "RAYOS X ABDOMEN DOS PROYECCIONES AP Y LAT",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "e8028e0a-a6b0-5100-b70c-b90a667a1847",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Two-view AP/lateral scope is preserved."
+    },
+    {
+      "id": "field_xray_abdomen_two_03",
+      "query": "  rayos x abdomen dos proyecciones ap y lat  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "e8028e0a-a6b0-5100-b70c-b90a667a1847",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Two-view AP/lateral scope is preserved."
+    },
+    {
+      "id": "field_xray_abdomen_two_04",
+      "query": "radiografía abdomen dos proyecciones AP y lateral",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "e8028e0a-a6b0-5100-b70c-b90a667a1847",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Two-view AP/lateral scope is preserved."
+    },
+    {
+      "id": "field_colposcopy_01",
+      "query": "colposcopia",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "c8389561-8169-5e30-bf4d-e91d05371f17",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Colposcopy is tested as a procedure label, without interpreting results."
+    },
+    {
+      "id": "field_colposcopy_02",
+      "query": "COLPOSCOPIA",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "c8389561-8169-5e30-bf4d-e91d05371f17",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Colposcopy is tested as a procedure label, without interpreting results."
+    },
+    {
+      "id": "field_colposcopy_03",
+      "query": "  colposcopia  ",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "c8389561-8169-5e30-bf4d-e91d05371f17",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Colposcopy is tested as a procedure label, without interpreting results."
+    },
+    {
+      "id": "field_colposcopy_04",
+      "query": "estudio de colposcopia",
+      "class": "safe_variant",
+      "expected_status": "resolved",
+      "expected_item_id": "c8389561-8169-5e30-bf4d-e91d05371f17",
+      "allowed_match_methods": [
+        "exact",
+        "alias"
+      ],
+      "rationale": "Colposcopy is tested as a procedure label, without interpreting results."
+    },
+    {
+      "id": "underspecified_01",
+      "query": "densitometría",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "The input omits a catalog scope or asks for interpretation; the resolver must not guess a service variant."
+    },
+    {
+      "id": "underspecified_02",
+      "query": "densitometría ósea",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "The input omits a catalog scope or asks for interpretation; the resolver must not guess a service variant."
+    },
+    {
+      "id": "underspecified_03",
+      "query": "audiometría para saber si oigo bien",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "The input omits a catalog scope or asks for interpretation; the resolver must not guess a service variant."
+    },
+    {
+      "id": "underspecified_04",
+      "query": "espirometría",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "The input omits a catalog scope or asks for interpretation; the resolver must not guess a service variant."
+    },
+    {
+      "id": "underspecified_05",
+      "query": "prueba pulmonar",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "The input omits a catalog scope or asks for interpretation; the resolver must not guess a service variant."
+    },
+    {
+      "id": "underspecified_06",
+      "query": "holter",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "The input omits a catalog scope or asks for interpretation; the resolver must not guess a service variant."
+    },
+    {
+      "id": "underspecified_07",
+      "query": "electro del corazón de mi hijo",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "The input omits a catalog scope or asks for interpretation; the resolver must not guess a service variant."
+    },
+    {
+      "id": "underspecified_08",
+      "query": "resonancia de columna",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "The input omits a catalog scope or asks for interpretation; the resolver must not guess a service variant."
+    },
+    {
+      "id": "panels_01",
+      "query": "pruebas de covid",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Broad families or panels have multiple catalog variants and must remain ambiguous."
+    },
+    {
+      "id": "panels_02",
+      "query": "anticuerpos covid",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Broad families or panels have multiple catalog variants and must remain ambiguous."
+    },
+    {
+      "id": "panels_03",
+      "query": "estudios de osteoporosis",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Broad families or panels have multiple catalog variants and must remain ambiguous."
+    },
+    {
+      "id": "panels_04",
+      "query": "tomografía con contraste",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "ambiguous",
+        "no_match"
+      ],
+      "rationale": "Broad families or panels have multiple catalog variants and must remain ambiguous."
+    },
+    {
+      "id": "negative_01",
+      "query": "dónde hacen estudios cerca de mí",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "no_match",
+        "ambiguous"
+      ],
+      "rationale": "Location, price and result-interpretation intents are not canonical services."
+    },
+    {
+      "id": "negative_02",
+      "query": "precio de audiometría",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "no_match",
+        "ambiguous"
+      ],
+      "rationale": "Location, price and result-interpretation intents are not canonical services."
+    },
+    {
+      "id": "negative_03",
+      "query": "interpretar mi electrocardiograma",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "no_match",
+        "ambiguous"
+      ],
+      "rationale": "Location, price and result-interpretation intents are not canonical services."
+    },
+    {
+      "id": "negative_04",
+      "query": "resultado positivo de covid qué significa",
+      "class": "must_abstain",
+      "expected_status": "abstain",
+      "allowed_statuses": [
+        "no_match",
+        "ambiguous"
+      ],
+      "rationale": "Location, price and result-interpretation intents are not canonical services."
+    }
+  ]
+}

@@ -987,6 +987,30 @@ una base vectorial ni una interpretación automática por IA en esta etapa.
 
 ---
 
+# Corte de campo: consultas públicas y benchmark v2 (29 de agosto de 2026)
+
+Se revisaron hilos públicos de Reddit como fuente de descubrimiento de
+lenguaje, sin conservar PII ni contexto clínico. El inventario anonimizado
+(`database/fixtures/public_query_research_v1.json`) contiene 64 frases con
+intenciones de estudio, panel, precio, ubicación, preparación y cobertura.
+Los foros no son autoridad clínica y no publican alias automáticamente.
+
+El corpus `resolver-benchmark-v2` añade 200 consultas nuevas frente a v1:
+184 variantes seguras de estudios no cubiertos (densitometría, audiometría,
+espirometría, cardiología, COVID, ultrasonido, resonancia, tomografía,
+radiografía y colposcopia) y 16 casos que deben abstenerse. La prueba remota
+`tests/resolver_benchmark_v2_test.sql` pasa 10/10 aserciones, incluyendo
+184/184 resoluciones al `item_id` esperado y 16/16 abstenciones.
+
+Las migraciones `104_field_benchmark_constraints.sql`,
+`105_field_benchmark_guard_scope.sql` y `106_field_benchmark_aliases.sql`
+completan contraste estructurado de las tomografías, corrigen la frontera
+entre familias amplias y paneles explícitos, y publican sólo aliases semánticos
+conservadores.
+El siguiente paso pre-Flutter es habilitar una página de prueba del endpoint
+con consentimiento y telemetría mínima; la tabla de analytics y su retención
+se implementarán antes de registrar consultas de usuarios reales.
+
 # Referencias
 
 - `00_CONVERSACION_CANONICA.md`

@@ -1,0 +1,101 @@
+{
+  "version": "public-query-research-v1",
+  "locale": "es-MX",
+  "privacy": {
+    "policy": "Only short service/intent phrases are retained; no usernames, health histories, ages, locations of persons or full post text are stored.",
+    "source_type": "public_forum_observation",
+    "clinical_authority": false
+  },
+  "sources": [
+    {
+      "id": "askmexico_studies_2025",
+      "url": "https://www.reddit.com/r/AskMexico/comments/1ocowbs/donde_puedo_hacerme_estos_estudios/",
+      "note": "Public question listing studies, locations, distance and whether one provider can perform all of them."
+    },
+    {
+      "id": "mexico_diabetes_cost_2022",
+      "url": "https://www.reddit.com/r/mexico/comments/xc2o76/cuanto_cuesta_el_examen_de_diabetes/",
+      "note": "Public discussion containing names of glucose-related tests, preparation and price intent."
+    },
+    {
+      "id": "askmexico_thyroid_2026",
+      "url": "https://www.reddit.com/r/AskMexico/comments/1sckr45/ayuda_me_diagnosticaron_sop/",
+      "note": "Public question using perfil tiroideo in a patient context; the story itself is excluded."
+    },
+    {
+      "id": "mexicofinanciero_checkup_2021",
+      "url": "https://www.reddit.com/r/MexicoFinanciero/comments/qpkj0v/inversion_en_salud_fisica_y_mental/",
+      "note": "Public checkup discussion listing common preventive studies, provider and price concerns."
+    }
+  ],
+  "records": [
+    {"id":"pqr_001","source_id":"askmexico_studies_2025","query":"biometria hematica completa","expected_action":"resolve","expected_item_id":"00000000-0000-0000-0000-000000001103","signals":["service"]},
+    {"id":"pqr_002","source_id":"askmexico_studies_2025","query":"perfil bioquimico 12 elementos","expected_action":"panel_review","signals":["service","panel"]},
+    {"id":"pqr_003","source_id":"askmexico_studies_2025","query":"tiempos de coagulacion","expected_action":"panel_or_bundle_review","signals":["service","panel"]},
+    {"id":"pqr_004","source_id":"askmexico_studies_2025","query":"TP","expected_action":"catalog_gap","signals":["service","abbreviation"]},
+    {"id":"pqr_005","source_id":"askmexico_studies_2025","query":"TTP","expected_action":"catalog_gap","signals":["service","abbreviation"]},
+    {"id":"pqr_006","source_id":"askmexico_studies_2025","query":"INR","expected_action":"catalog_gap","signals":["service","abbreviation"]},
+    {"id":"pqr_007","source_id":"askmexico_studies_2025","query":"teleradiografia de torax","expected_action":"catalog_gap","signals":["service","imaging"]},
+    {"id":"pqr_008","source_id":"askmexico_studies_2025","query":"electrocardiograma en reposo","expected_action":"resolve","expected_item_id":"c9d9a832-8146-5831-94f5-ec653dea2126","signals":["service"]},
+    {"id":"pqr_009","source_id":"askmexico_studies_2025","query":"donde puedo hacerme estos estudios","expected_action":"extract_intent","signals":["location","multi_item"]},
+    {"id":"pqr_010","source_id":"askmexico_studies_2025","query":"laboratorio que haga todos","expected_action":"multi_item_coverage","signals":["location","multi_item"]},
+    {"id":"pqr_011","source_id":"askmexico_studies_2025","query":"Salud Digna","expected_action":"provider_filter","signals":["provider"]},
+    {"id":"pqr_012","source_id":"askmexico_studies_2025","query":"Chopo","expected_action":"provider_filter","signals":["provider"]},
+    {"id":"pqr_013","source_id":"askmexico_studies_2025","query":"en otra ciudad","expected_action":"location_constraint","signals":["location"]},
+    {"id":"pqr_014","source_id":"askmexico_studies_2025","query":"todos o todos menos uno","expected_action":"multi_item_coverage","signals":["multi_item"]},
+    {"id":"pqr_015","source_id":"askmexico_studies_2025","query":"a 5 km de distancia","expected_action":"location_constraint","signals":["location","radius"]},
+
+    {"id":"pqr_016","source_id":"mexico_diabetes_cost_2022","query":"examen de diabetes","expected_action":"extract_intent","signals":["diagnostic_intent"]},
+    {"id":"pqr_017","source_id":"mexico_diabetes_cost_2022","query":"cuanto cuesta el examen de diabetes","expected_action":"extract_intent","signals":["price","diagnostic_intent"]},
+    {"id":"pqr_018","source_id":"mexico_diabetes_cost_2022","query":"quimica sanguinea glucosa en ayuno","expected_action":"panel_review","signals":["service","panel","preparation"]},
+    {"id":"pqr_019","source_id":"mexico_diabetes_cost_2022","query":"hemoglobina glicosilada","expected_action":"catalog_gap","signals":["service"]},
+    {"id":"pqr_020","source_id":"mexico_diabetes_cost_2022","query":"hemoglobina glucosilada A1c","expected_action":"catalog_gap","signals":["service","abbreviation"]},
+    {"id":"pqr_021","source_id":"mexico_diabetes_cost_2022","query":"A1c","expected_action":"catalog_gap","signals":["service","abbreviation"]},
+    {"id":"pqr_022","source_id":"mexico_diabetes_cost_2022","query":"curva de tolerancia a la glucosa","expected_action":"catalog_gap","signals":["service"]},
+    {"id":"pqr_023","source_id":"mexico_diabetes_cost_2022","query":"curva de tolerancia a carbohidratos","expected_action":"catalog_gap","signals":["service","synonym_candidate"]},
+    {"id":"pqr_024","source_id":"mexico_diabetes_cost_2022","query":"glucometro","expected_action":"catalog_gap","signals":["point_of_care"]},
+    {"id":"pqr_025","source_id":"mexico_diabetes_cost_2022","query":"glucosa capilar","expected_action":"catalog_gap","signals":["specimen","point_of_care"]},
+    {"id":"pqr_026","source_id":"mexico_diabetes_cost_2022","query":"glucosa serica","expected_action":"resolve","expected_item_id":"00000000-0000-0000-0000-000000001109","signals":["service","specimen"]},
+    {"id":"pqr_027","source_id":"mexico_diabetes_cost_2022","query":"biometria hematica en ayuno","expected_action":"resolve_plus_preparation","expected_item_id":"00000000-0000-0000-0000-000000001103","signals":["service","preparation"]},
+    {"id":"pqr_028","source_id":"mexico_diabetes_cost_2022","query":"examen general de orina","expected_action":"resolve","expected_item_id":"00000000-0000-0000-0000-000000001104","signals":["service"]},
+    {"id":"pqr_029","source_id":"mexico_diabetes_cost_2022","query":"EGO","expected_action":"resolve","expected_item_id":"00000000-0000-0000-0000-000000001104","signals":["service","abbreviation"]},
+    {"id":"pqr_030","source_id":"mexico_diabetes_cost_2022","query":"resistencia a la insulina","expected_action":"catalog_gap","signals":["service"]},
+    {"id":"pqr_031","source_id":"mexico_diabetes_cost_2022","query":"precio en Salud Digna","expected_action":"provider_price_intent","signals":["provider","price"]},
+
+    {"id":"pqr_032","source_id":"askmexico_thyroid_2026","query":"perfil tiroideo","expected_action":"abstain_ambiguous","signals":["service","panel"]},
+    {"id":"pqr_033","source_id":"askmexico_thyroid_2026","query":"perfil toroideo","expected_action":"abstain_ambiguous","signals":["service","panel","ocr"]},
+    {"id":"pqr_034","source_id":"askmexico_thyroid_2026","query":"analisis de perfil tiroideo","expected_action":"abstain_ambiguous","signals":["service","panel"]},
+    {"id":"pqr_035","source_id":"askmexico_thyroid_2026","query":"resultados perfil tiroideo","expected_action":"out_of_scope_interpretation","signals":["result_interpretation"]},
+    {"id":"pqr_036","source_id":"askmexico_thyroid_2026","query":"estudios de tiroides","expected_action":"abstain_ambiguous","signals":["service","panel"]},
+    {"id":"pqr_037","source_id":"askmexico_thyroid_2026","query":"TSH","expected_action":"resolve","expected_item_id":"00000000-0000-0000-0000-000000001111","signals":["service","abbreviation"]},
+    {"id":"pqr_038","source_id":"askmexico_thyroid_2026","query":"T4 libre","expected_action":"resolve","expected_item_id":"00000000-0000-0000-0000-000000001112","signals":["service"]},
+    {"id":"pqr_039","source_id":"askmexico_thyroid_2026","query":"colesterol o insulina","expected_action":"multi_item_or_catalog_gap","signals":["multi_item"]},
+    {"id":"pqr_040","source_id":"askmexico_thyroid_2026","query":"me mandaron a hacer estudios","expected_action":"extract_intent","signals":["multi_item"]},
+
+    {"id":"pqr_041","source_id":"mexicofinanciero_checkup_2021","query":"checkup general","expected_action":"panel_review","signals":["panel"]},
+    {"id":"pqr_042","source_id":"mexicofinanciero_checkup_2021","query":"trigliceridos","expected_action":"catalog_gap","signals":["service"]},
+    {"id":"pqr_043","source_id":"mexicofinanciero_checkup_2021","query":"colesterol","expected_action":"catalog_gap","signals":["service"]},
+    {"id":"pqr_044","source_id":"mexicofinanciero_checkup_2021","query":"insulina basal","expected_action":"catalog_gap","signals":["service"]},
+    {"id":"pqr_045","source_id":"mexicofinanciero_checkup_2021","query":"hemoglobina glucosilada","expected_action":"catalog_gap","signals":["service"]},
+    {"id":"pqr_046","source_id":"mexicofinanciero_checkup_2021","query":"perfil lipidico","expected_action":"catalog_gap","signals":["service","panel"]},
+    {"id":"pqr_047","source_id":"mexicofinanciero_checkup_2021","query":"pruebas de funcion hepatica","expected_action":"catalog_gap","signals":["service","panel"]},
+    {"id":"pqr_048","source_id":"mexicofinanciero_checkup_2021","query":"analisis de sangre","expected_action":"abstain_ambiguous","signals":["service"]},
+    {"id":"pqr_049","source_id":"mexicofinanciero_checkup_2021","query":"laboratorio Chopo","expected_action":"provider_filter","signals":["provider"]},
+    {"id":"pqr_050","source_id":"mexicofinanciero_checkup_2021","query":"descuento de cliente frecuente","expected_action":"commercial_intent","signals":["price","provider"]},
+    {"id":"pqr_051","source_id":"mexicofinanciero_checkup_2021","query":"sin seguro","expected_action":"coverage_constraint","signals":["coverage"]},
+    {"id":"pqr_052","source_id":"mexicofinanciero_checkup_2021","query":"estudios preventivos","expected_action":"panel_review","signals":["panel"]},
+    {"id":"pqr_053","source_id":"mexicofinanciero_checkup_2021","query":"examen de sangre","expected_action":"abstain_ambiguous","signals":["service"]},
+    {"id":"pqr_054","source_id":"mexicofinanciero_checkup_2021","query":"ayuno de 12 horas","expected_action":"preparation_constraint","signals":["preparation"]},
+
+    {"id":"pqr_055","source_id":"askmexico_studies_2025","query":"ultrasonido abdominal","expected_action":"abstain_ambiguous","signals":["service","imaging"]},
+    {"id":"pqr_056","source_id":"askmexico_studies_2025","query":"tomografia abdominal con contraste","expected_action":"abstain_ambiguous","signals":["service","imaging","contrast"]},
+    {"id":"pqr_057","source_id":"askmexico_studies_2025","query":"tomografia de pulmones y corazon","expected_action":"catalog_gap","signals":["service","imaging","multi_item"]},
+    {"id":"pqr_058","source_id":"askmexico_studies_2025","query":"ultrasonido pelvico abdominal","expected_action":"catalog_gap","signals":["service","imaging"]},
+    {"id":"pqr_059","source_id":"askmexico_studies_2025","query":"estudios de sangre y orina","expected_action":"multi_item_extraction","signals":["multi_item"]},
+    {"id":"pqr_060","source_id":"askmexico_studies_2025","query":"donde hacerme un ultrasonido abdominal","expected_action":"extract_intent","signals":["service","location"]},
+    {"id":"pqr_061","source_id":"askmexico_studies_2025","query":"laboratorio para rayos X","expected_action":"provider_capability_search","signals":["service","provider"]},
+    {"id":"pqr_062","source_id":"askmexico_studies_2025","query":"el electro","expected_action":"abstain_ambiguous","signals":["service","colloquial"]},
+    {"id":"pqr_063","source_id":"askmexico_studies_2025","query":"electrocardiograma","expected_action":"abstain_ambiguous","signals":["service"]},
+    {"id":"pqr_064","source_id":"mexico_diabetes_cost_2022","query":"glucosa en ayunas","expected_action":"resolve_plus_preparation","expected_item_id":"00000000-0000-0000-0000-000000001109","signals":["service","preparation"]}
+  ]
+}

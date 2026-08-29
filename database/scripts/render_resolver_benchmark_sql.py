@@ -78,7 +78,8 @@ select extensions.is((select count(*)::integer from resolver_benchmark_results w
 select extensions.is((select count(*)::integer from resolver_benchmark_results where case_id like 'negative_%' and actual_status = 'no_match'), {expected_negative}, 'adversarial and unrelated input returns no_match');
 select * from extensions.finish();
 """
-    return f"""-- Generated from resolver-benchmark-v1; do not hand-edit.
+    version = str(fixture.get("version") or "resolver-benchmark")
+    return f"""-- Generated from {version}; do not hand-edit.
 begin;
 create extension if not exists pgtap with schema extensions;
 
