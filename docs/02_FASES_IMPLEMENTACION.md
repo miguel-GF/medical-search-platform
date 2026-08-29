@@ -477,7 +477,7 @@ Fallback visual/IA solo cuando sea necesario.
 
 # Fase 10 — Optimización multi-estudio
 
-**Estado:** ⏳
+**Estado:** ✅ implementada en el Data Engine; Flutter queda pendiente.
 
 Resolver una orden completa.
 
@@ -489,7 +489,12 @@ Opciones:
 - todo en uno;
 - balance costo/distancia.
 
-Esto requerirá algoritmo de combinación y reglas sobre compatibilidad de ofertas.
+El endpoint `POST /api/v1/resolve-batch` resuelve cada entrada de forma
+independiente y el solver determinista calcula cobertura por sucursal. Intenta
+una ubicación única primero y combinaciones de hasta tres cuando es necesario;
+las ambigüedades y los estudios faltantes se mantienen explícitos. El detalle
+operativo y las pruebas están en el corte de implementación al final de este
+documento.
 
 ---
 
@@ -1010,6 +1015,37 @@ conservadores.
 El siguiente paso pre-Flutter es habilitar una página de prueba del endpoint
 con consentimiento y telemetría mínima; la tabla de analytics y su retención
 se implementarán antes de registrar consultas de usuarios reales.
+
+## Corte de implementacion Fase 10 - Resolucion de multiples estudios (29 de agosto de 2026)
+
+**Estado:** implementada en el Data Engine; pendiente la integracion visual en
+Flutter.
+
+La ruta `POST /api/v1/resolve-batch` acepta una receta como texto (renglones,
+numeracion o separadores seguros) o una lista explicita de hasta 30 estudios.
+Cada entrada se resuelve de forma independiente con `clinical-resolver-v6`:
+`resolved`, `ambiguous` y `no_match` son estados explicitos. Un panel amplio o
+una variante incompleta no se convierte en una equivalencia por similitud.
+
+Cuando todas las entradas estan resueltas, el motor cruza sus ofertas con
+sucursales concretas y devuelve soluciones ordenadas. `all_in_one` es el
+objetivo por defecto: primero intenta una sola sucursal, despues combinaciones
+de dos o tres, y siempre lista los estudios faltantes. Tambien soporta
+`lowest_cost`, `nearest` y `balanced`; los precios desconocidos quedan como
+`requires_quote` y no se suman como si fueran cero.
+
+Las migraciones `20260829150000_107_package_resolution.sql` y
+`20260829151000_108_package_rpc_guard.sql` agregan el RPC publico
+`api_resolve_package` y su limite de 30 entradas incluso en llamadas directas.
+SQL se limita a resolver conceptos y expandir alcances
+de proveedor (marca/mercado/sucursal); la seleccion de cobertura es un solver
+determinista en `apps/api/src/batch.ts`. No se almacena la receta permanente ni
+se usa una IA para inventar equivalencias.
+
+La prueba `database/supabase/tests/resolver_package_test.sql` verifica listas
+arbitrarias, cobertura de una sucursal, precios ausentes y la receta de cuatro
+entradas (`B H`, `Q S completa`, `EGO`, `perfil toroideo`): dos se resuelven y
+dos solicitan aclaracion, sin producir un paquete falso.
 
 # Referencias
 

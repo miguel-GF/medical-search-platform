@@ -59,6 +59,90 @@ export interface ResolutionResponse {
   candidates: ResolutionCandidate[];
 }
 
+export type PackageObjective = 'all_in_one' | 'lowest_cost' | 'nearest' | 'balanced';
+export type PackageItemStatus = 'resolved' | 'ambiguous' | 'no_match';
+
+export interface PackageCandidate {
+  service_id: string;
+  display_name: string;
+  matched_term: string;
+  term_source: string;
+  confidence: number;
+  resolution_status: 'resolved' | 'ambiguous';
+  match_method: string;
+  explanation: Record<string, unknown>;
+}
+
+export interface PackageItem {
+  index: number;
+  input: string;
+  normalized_query: string;
+  status: PackageItemStatus;
+  candidates: PackageCandidate[];
+  reason_code?: string;
+}
+
+export interface PackageOffer {
+  item_index: number;
+  item_id: string;
+  offer_id: string;
+  provider_brand_id: string;
+  provider_name: string;
+  provider_location_id: string;
+  provider_location_name: string;
+  latitude: number | null;
+  longitude: number | null;
+  distance_meters: number | null;
+  source_url: string | null;
+  price_type: string | null;
+  price_key: string | null;
+  amount_minor: number | null;
+  currency: string | null;
+  price_last_seen_at: string | null;
+  requires_quote: boolean;
+}
+
+export interface PackageRpcResponse {
+  engine_version: string;
+  items: PackageItem[];
+  offers: PackageOffer[];
+}
+
+export interface PackageLocation {
+  id: string;
+  name: string;
+  provider_brand_id: string;
+  provider_name: string;
+  latitude: number | null;
+  longitude: number | null;
+  distance_meters: number | null;
+}
+
+export interface PackageSolution {
+  coverage_count: number;
+  requested_count: number;
+  coverage_percent: number;
+  missing_item_indexes: number[];
+  location_count: number;
+  locations: PackageLocation[];
+  total_amount_minor: number | null;
+  currency: string | null;
+  requires_quote: boolean;
+  distance_meters: number | null;
+  selected_offers: Array<Record<string, unknown>>;
+}
+
+export interface PackageResolutionResponse {
+  query: string;
+  engine_version: string;
+  objective: PackageObjective;
+  package_status: 'ready' | 'needs_clarification' | 'partial' | 'no_match';
+  coverage_status: 'complete' | 'partial' | 'none';
+  items: PackageItem[];
+  clarifications: Array<{ index: number; input: string; reason_code: string; candidates: PackageCandidate[] }>;
+  solutions: PackageSolution[];
+}
+
 export interface AdminCatalogItem {
   item_id: string;
   display_name: string;

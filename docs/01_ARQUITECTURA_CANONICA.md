@@ -753,6 +753,7 @@ Primeros endpoints:
 ```text
 GET /api/v1/search
 POST /api/v1/resolve
+POST /api/v1/resolve-batch
 GET /api/v1/services/{id}
 GET /api/v1/services/{id}/providers
 GET /api/v1/providers/{id}

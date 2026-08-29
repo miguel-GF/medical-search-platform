@@ -258,6 +258,32 @@ npx.cmd wrangler deploy
 
 El deploy real requiere autenticación Cloudflare; el dry-run ya está verificado.
 
+## Resolucion de paquetes (Fase 10)
+
+El endpoint acepta texto de receta o entradas explicitas. La respuesta separa
+la resolucion clinica de la cobertura comercial y nunca asume que un panel
+ambiguo es un estudio concreto:
+
+```powershell
+curl.exe -X POST https://<worker>.workers.dev/api/v1/resolve-batch `
+  -H "content-type: application/json" `
+  -d '{"text":"1: B H\n2: Q S completa\n3: EGO\n4: Perfil toroideo"}'
+
+curl.exe -X POST https://<worker>.workers.dev/api/v1/resolve-batch `
+  -H "content-type: application/json" `
+  -d '{"items":["BH","audiometria","ultrasonido renal"],"objective":"all_in_one"}'
+```
+
+Los objetivos disponibles son `all_in_one` (predeterminado), `lowest_cost`,
+`nearest` y `balanced`. Las soluciones parciales incluyen
+`missing_item_indexes`; un precio ausente se marca `requires_quote`.
+
+La prueba remota del RPC se ejecuta desde `database/`:
+
+```powershell
+npx.cmd supabase@latest db query --linked --file supabase/tests/resolver_package_test.sql
+```
+
 ## Admin V1
 
 El Admin autentica operadores con Supabase Auth. El Worker valida el JWT contra Supabase y comprueba el UUID en `ADMIN_USER_IDS`; nunca se compila un token administrativo en el frontend.

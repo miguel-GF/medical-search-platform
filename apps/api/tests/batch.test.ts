@@ -1,0 +1,119 @@
+import { describe, expect, it } from 'vitest';
+import {
+  buildPackageResolution,
+  parseBatchRequest,
+  splitBatchText,
+} from '../src/batch.js';
+import type { PackageItem, PackageOffer, PackageRpcResponse } from '../src/types.js';
+
+const candidate = (serviceId: string, displayName: string) => ({
+  service_id: serviceId,
+  display_name: displayName,
+  matched_term: displayName,
+  term_source: 'alias',
+  confidence: 1,
+  resolution_status: 'resolved' as const,
+  match_method: 'exact',
+  explanation: {},
+});
+
+function item(index: number, input: string, serviceId: string, status: PackageItem['status'] = 'resolved'): PackageItem {
+  return {
+    index,
+    input,
+    normalized_query: input.toLowerCase(),
+    status,
+    candidates: status === 'no_match' ? [] : [candidate(serviceId, input)],
+    reason_code: status === 'resolved' ? undefined : status === 'ambiguous' ? 'ambiguous_service' : 'service_not_found',
+  };
+}
+
+function offer(itemIndex: number, itemId: string, locationId = 'location-ruiz'): PackageOffer {
+  return {
+    item_index: itemIndex,
+    item_id: itemId,
+    offer_id: `offer-${itemIndex}`,
+    provider_brand_id: 'brand-ruiz',
+    provider_name: 'Laboratorio Ruiz',
+    provider_location_id: locationId,
+    provider_location_name: locationId === 'location-ruiz' ? 'Ruiz Puebla Centro' : 'Ruiz Cholula',
+    latitude: 19.04,
+    longitude: -98.2,
+    distance_meters: locationId === 'location-ruiz' ? 1200 : 8500,
+    source_url: 'https://example.test/estudio',
+    price_type: 'regular',
+    price_key: 'default',
+    amount_minor: 10000 + itemIndex,
+    currency: 'MXN',
+    price_last_seen_at: null,
+    requires_quote: false,
+  };
+}
+
+describe('batch request parser', () => {
+  it('parses numbered prescription text into independent studies', () => {
+    const result = parseBatchRequest({ text: '1: B H\n2: Q S completa\n3: EGO\n4: Perfil toroideo' });
+    expect(result).toEqual(expect.objectContaining({ ok: true }));
+    if (result.ok) expect(result.value.items).toEqual(['B H', 'Q S completa', 'EGO', 'Perfil toroideo']);
+  });
+
+  it('supports inline numbering, safe comma lists and explicit items', () => {
+    expect(splitBatchText('1: BH, 2: EGO, 3: perfil tiroideo')).toEqual(['BH', 'EGO', 'perfil tiroideo']);
+    expect(splitBatchText('Biometría hemática, EGO, perfil tiroideo')).toEqual(['Biometría hemática', 'EGO', 'perfil tiroideo']);
+    expect(splitBatchText('B H, Q S completa, EGO, Perfil toroideo')).toEqual(['B H', 'Q S completa', 'EGO', 'Perfil toroideo']);
+    expect(splitBatchText('ultrasonido renal con Doppler, indicación: dolor')).toEqual(['ultrasonido renal con Doppler, indicación: dolor']);
+    const result = parseBatchRequest({ items: [{ text: 'BH' }, 'audiometría'], objective: 'nearest', max_solutions: 3 });
+    expect(result).toEqual(expect.objectContaining({ ok: true }));
+    if (result.ok) expect(result.value).toMatchObject({ items: ['BH', 'audiometría'], objective: 'nearest', max_solutions: 3 });
+  });
+
+  it('rejects ambiguous input shapes and unsafe bounds', () => {
+    expect(parseBatchRequest({ text: 'BH', items: ['EGO'] })).toMatchObject({ ok: false, error: { code: 'invalid_body' } });
+    expect(parseBatchRequest({ items: [] })).toMatchObject({ ok: false, error: { code: 'invalid_items' } });
+    expect(parseBatchRequest({ text: 'BH', objective: 'guess' })).toMatchObject({ ok: false, error: { code: 'invalid_objective' } });
+    expect(parseBatchRequest({ items: Array.from({ length: 31 }, () => 'BH') })).toMatchObject({ ok: false, error: { code: 'invalid_items' } });
+  });
+});
+
+describe('deterministic package solver', () => {
+  it('does not invent a package when a prescription has unresolved studies', () => {
+    const payload: PackageRpcResponse = {
+      engine_version: 'clinical-resolver-v6',
+      items: [item(1, 'B H', 'bh'), item(2, 'Q S completa', 'qs', 'ambiguous'), item(3, 'EGO', 'ego'), item(4, 'Perfil toroideo', 'tiroideo', 'ambiguous')],
+      offers: [offer(1, 'bh'), offer(3, 'ego')],
+    };
+    const result = buildPackageResolution(payload, '1: B H\n2: Q S completa\n3: EGO\n4: Perfil toroideo', 'all_in_one', 10);
+    expect(result.package_status).toBe('needs_clarification');
+    expect(result.coverage_status).toBe('none');
+    expect(result.clarifications.map((entry) => entry.index)).toEqual([2, 4]);
+    expect(result.solutions).toEqual([]);
+  });
+
+  it('covers arbitrary unrelated studies at one provider branch', () => {
+    const payload: PackageRpcResponse = {
+      engine_version: 'clinical-resolver-v6',
+      items: [item(1, 'BH', 'bh'), item(2, 'Audiometría', 'audio'), item(3, 'Ultrasonido renal', 'renal')],
+      offers: [offer(1, 'bh'), offer(2, 'audio'), offer(3, 'renal')],
+    };
+    const result = buildPackageResolution(payload, 'BH, Audiometría, Ultrasonido renal', 'all_in_one', 10);
+    expect(result.package_status).toBe('ready');
+    expect(result.coverage_status).toBe('complete');
+    expect(result.solutions[0]).toMatchObject({ coverage_count: 3, requested_count: 3, location_count: 1, missing_item_indexes: [] });
+  });
+
+  it('finds a complete solution across two branches and reports partial coverage', () => {
+    const payload: PackageRpcResponse = {
+      engine_version: 'clinical-resolver-v6',
+      items: [item(1, 'BH', 'bh'), item(2, 'EGO', 'ego'), item(3, 'Glucosa', 'glucose')],
+      offers: [offer(1, 'bh', 'location-ruiz'), offer(2, 'ego', 'location-ruiz'), offer(3, 'glucose', 'location-other')],
+    };
+    const result = buildPackageResolution(payload, 'BH, EGO, glucosa', 'all_in_one', 10);
+    expect(result.coverage_status).toBe('complete');
+    expect(result.solutions[0]).toMatchObject({ coverage_count: 3, location_count: 2 });
+
+    const partial = buildPackageResolution({ ...payload, offers: [offer(1, 'bh', 'location-ruiz')] }, 'BH, EGO, glucosa', 'all_in_one', 10);
+    expect(partial.coverage_status).toBe('partial');
+    expect(partial.solutions[0].missing_item_indexes).toEqual([2, 3]);
+    expect(partial.solutions[0].requires_quote).toBe(true);
+  });
+});

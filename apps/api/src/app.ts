@@ -1,5 +1,7 @@
 import { SupabaseRpcClient } from './supabase.js';
 import type { AdminAlert, AdminCatalogItem, AdminQualityIssue, AdminUser, Env, ResolutionResponse, RpcClient, SearchRow } from './types.js';
+import { buildPackageResolution, normalizeBatchRpcPayload, parseBatchRequest } from './batch.js';
+import type { PackageObjective } from './types.js';
 
 interface Dependencies {
   rpc: RpcClient;
@@ -24,6 +26,9 @@ export function createHandler(dependencies: Dependencies) {
       }
       if (url.pathname === '/api/v1/resolve' && request.method === 'POST') {
         return await resolveResponse(request, dependencies.rpc, origin);
+      }
+      if (url.pathname === '/api/v1/resolve-batch' && request.method === 'POST') {
+        return await resolveBatchResponse(request, dependencies.rpc, origin);
       }
       if (url.pathname === '/api/v1/services' && request.method === 'GET') {
         return json({ error: { code: 'route_requires_id', message: 'Use /api/v1/services/{id}' } }, 400, origin);
@@ -131,6 +136,56 @@ async function resolveResponse(request: Request, rpc: RpcClient, origin: string)
     p_limit: limit,
   });
   return json(payload, 200, origin);
+}
+
+async function resolveBatchResponse(request: Request, rpc: RpcClient, origin: string): Promise<Response> {
+  const contentLength = Number(request.headers.get('content-length') ?? 0);
+  if (Number.isFinite(contentLength) && contentLength > 16_384) {
+    return json({ error: { code: 'payload_too_large', message: 'The request body is too large' } }, 413, origin);
+  }
+  let body: unknown;
+  try {
+    body = await request.json();
+  } catch {
+    return json({ error: { code: 'invalid_json', message: 'Request body must be valid JSON' } }, 400, origin);
+  }
+  if (!body || typeof body !== 'object' || Array.isArray(body)) {
+    return json({ error: { code: 'invalid_body', message: 'Request body must be an object' } }, 400, origin);
+  }
+  const parsed = parseBatchRequest(body as Record<string, unknown>);
+  if (!parsed.ok) return json({ error: parsed.error }, 400, origin);
+  const input = body as Record<string, unknown>;
+  const domain = typeof input.domain === 'string' && input.domain !== '' ? input.domain : 'health_diagnostics';
+  if (!/^[a-z][a-z0-9_]{1,63}$/.test(domain)) {
+    return json({ error: { code: 'invalid_domain', message: 'domain is invalid' } }, 400, origin);
+  }
+  const latitude = parseInputCoordinate(input.latitude, -90, 90);
+  const longitude = parseInputCoordinate(input.longitude, -180, 180);
+  if ((latitude === null) !== (longitude === null) || Number.isNaN(latitude) || Number.isNaN(longitude)) {
+    return json({ error: { code: 'invalid_coordinates', message: 'latitude and longitude must be provided together' } }, 400, origin);
+  }
+  const locationId = input.location_id === undefined || input.location_id === null ? null : input.location_id;
+  if (locationId !== null && (typeof locationId !== 'string' || !isUuid(locationId))) {
+    return json({ error: { code: 'invalid_location_id', message: 'location_id must be a UUID' } }, 400, origin);
+  }
+  const raw = await rpc.call<unknown>('api_resolve_package', {
+    p_items: parsed.value.items,
+    p_domain_code: domain,
+    p_latitude: latitude,
+    p_longitude: longitude,
+    p_location_id: locationId,
+    p_limit: 10,
+  });
+  return json(
+    buildPackageResolution(
+      normalizeBatchRpcPayload(raw),
+      parsed.value.original_text,
+      parsed.value.objective as PackageObjective,
+      parsed.value.max_solutions,
+    ),
+    200,
+    origin,
+  );
 }
 
 async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClient, origin: string, authenticateAdmin: (request: Request, env: Env) => Promise<AdminUser | null>): Promise<Response> {

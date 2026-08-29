@@ -230,9 +230,12 @@ contrast, specimen and panel components) and rejects hard contradictions. A
 short abbreviation is accepted only when it is an approved, unambiguous alias.
 
 Ambiguous local terms such as `QS completa` or `perfil tiroideo` return all
-reviewed variants separately; no variant is silently selected. The first public
-contract is `POST /api/v1/resolve`, while the existing `GET /api/v1/search`
-contract remains compatible.
+reviewed variants separately; no variant is silently selected. The public
+contracts are `POST /api/v1/resolve` for one study and
+`POST /api/v1/resolve-batch` for an arbitrary list of up to 30 studies. The
+batch contract resolves every entry independently, then computes concrete
+branch coverage (one branch first, combinations of up to three when needed)
+without changing the existing `GET /api/v1/search` contract.
 
 The resolver currently uses PostgreSQL only. Vector retrieval and LLM-assisted
 curation remain optional future candidate generators and cannot make the final
