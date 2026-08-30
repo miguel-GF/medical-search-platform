@@ -89,6 +89,34 @@ describe('deterministic package solver', () => {
     expect(result.solutions).toEqual([]);
   });
 
+  it('keeps OCR corrections auditable while using the resolver result', () => {
+    const payload: PackageRpcResponse = {
+      engine_version: 'clinical-resolver-v6',
+      items: [{
+        ...item(1, 'OBH', 'bh'),
+        ocr_correction: {
+          suggested_text: 'BH',
+          correction_type: 'character_confusion',
+          confidence: 0.98,
+          source_note: 'curated OCR rule',
+        },
+      }],
+      offers: [],
+      ocr_corrections: [{
+        index: 1,
+        input: 'OBH',
+        suggested_text: 'BH',
+        correction_type: 'character_confusion',
+        confidence: 0.98,
+        source_note: 'curated OCR rule',
+      }],
+    };
+    const result = buildPackageResolution(payload, 'OBH', 'all_in_one', 10);
+    expect(result.items[0].input).toBe('OBH');
+    expect(result.items[0].ocr_correction?.suggested_text).toBe('BH');
+    expect(result.ocr_corrections?.[0]).toMatchObject({ input: 'OBH', suggested_text: 'BH' });
+  });
+
   it('covers arbitrary unrelated studies at one provider branch', () => {
     const payload: PackageRpcResponse = {
       engine_version: 'clinical-resolver-v6',
@@ -99,6 +127,31 @@ describe('deterministic package solver', () => {
     expect(result.package_status).toBe('ready');
     expect(result.coverage_status).toBe('complete');
     expect(result.solutions[0]).toMatchObject({ coverage_count: 3, requested_count: 3, location_count: 1, missing_item_indexes: [] });
+  });
+
+  it('does not count offers for a low-confidence no-match candidate', () => {
+    const payload: PackageRpcResponse = {
+      engine_version: 'clinical-resolver-v6',
+      items: [
+        item(1, 'Glucosa', 'glucose'),
+        {
+          ...item(2, 'Insulina', 'anti-insulina', 'no_match'),
+          candidates: [{
+            ...candidate('anti-insulina', 'AC ANTI INSULINA (M)'),
+            confidence: 0.5,
+            resolution_status: 'ambiguous',
+            match_method: 'word_fuzzy',
+            explanation: { requires_confirmation: true },
+          }],
+          reason_code: 'low_confidence_match',
+        },
+      ],
+      offers: [offer(1, 'glucose'), offer(2, 'anti-insulina')],
+    };
+    const result = buildPackageResolution(payload, 'Glucosa, Insulina', 'all_in_one', 10);
+    expect(result.package_status).toBe('partial');
+    expect(result.solutions[0].coverage_count).toBe(1);
+    expect(result.solutions[0].missing_item_indexes).toEqual([2]);
   });
 
   it('finds a complete solution across two branches and reports partial coverage', () => {

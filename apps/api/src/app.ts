@@ -223,9 +223,21 @@ async function resolveImageResponse(request: Request, rpc: RpcClient, env: Env, 
       ocr: { engine: ocr.engine, model: ocr.model, text: ocr.text },
     }, 422, origin);
   }
-  const packageResult = await resolvePackagePayload(parsed.value, context, rpc);
+  const packageResult = await resolvePackagePayload(parsed.value, context, rpc, true);
+  const lowConfidenceLines = (ocr.lines ?? [])
+    .filter((line) => line.confidence !== null && line.confidence < 0.9)
+    .map((line) => line.text);
   return json({
-    ocr: { engine: ocr.engine, model: ocr.model, input_bytes: ocr.input_bytes, text: ocr.text, confidence: ocr.confidence ?? null },
+    ocr: {
+      engine: ocr.engine,
+      model: ocr.model,
+      input_bytes: ocr.input_bytes,
+      text: ocr.text,
+      confidence: ocr.confidence ?? null,
+      lines: ocr.lines ?? null,
+      review_required: lowConfidenceLines.length > 0,
+      low_confidence_lines: lowConfidenceLines,
+    },
     ...packageResult,
   }, 200, origin);
 }
@@ -288,8 +300,9 @@ async function resolvePackagePayload(
   parsed: { items: string[]; original_text: string; objective: PackageResolutionResponse['objective']; max_solutions: number },
   context: PackageContext,
   rpc: RpcClient,
+  fromOcr = false,
 ): Promise<PackageResolutionResponse> {
-  const raw = await rpc.call<unknown>('api_resolve_package', {
+  const raw = await rpc.call<unknown>(fromOcr ? 'api_resolve_ocr_package' : 'api_resolve_package', {
     p_items: parsed.items,
     p_domain_code: context.domain,
     p_latitude: context.latitude,

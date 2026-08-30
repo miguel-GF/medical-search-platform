@@ -289,9 +289,15 @@ npx.cmd supabase@latest db query --linked --file supabase/tests/resolver_package
 `POST /api/v1/resolve-image` recibe una imagen JPEG, PNG o WebP como data URL
 (o base64 con `mime_type`). El Worker usa el servicio Python privado cuando
 `OCR_SERVICE_URL` existe y, en su defecto, el binding opcional `AI`; ambos
-transcriben literalmente y envian el texto a `resolve-batch`. No guarda la
-imagen ni permite que el modelo elija equivalencias clinicas. Si no existe
+transcriben literalmente y envian el texto al resolver de paquete. El flujo
+de imagen aplica despues las reglas aprobadas de `api_resolve_ocr_package` y
+conserva cada correccion junto al texto original. No guarda la imagen ni
+permite que el modelo elija equivalencias clinicas: un perfil o panel sigue
+marcandose como ambiguo. Si no existe
 ningun extractor, responde `503` en lugar de fingir que hizo OCR.
+Cuando el extractor Python devuelve confianza por linea, la respuesta incluye
+`ocr.lines`, `ocr.review_required` y `ocr.low_confidence_lines` para que la UI
+pida confirmacion de escritura dudosa antes de buscar.
 
 ```powershell
 $img = [Convert]::ToBase64String([IO.File]::ReadAllBytes("C:\ruta\orden.jpg"))
@@ -324,6 +330,19 @@ python -m pip install -e ".[dev]"
 $env:OCR_SERVICE_TOKEN = "dev-secret"
 python -m uvicorn pruevia_ocr_service.app:app --host 127.0.0.1 --port 8000
 ```
+
+Para verificar la correccion OCR contra la base enlazada:
+
+```powershell
+cd database
+npx.cmd supabase@latest db query --linked --file supabase/tests/ocr_correction_test.sql
+npx.cmd supabase@latest db query --linked --file supabase/tests/resolution_confidence_guard_test.sql
+```
+
+La tabla `catalog.ocr_correction_rules` es pequena y revisada. Las variantes
+observadas no se publican automaticamente: una nueva regla queda como
+candidata hasta que un operador la aprueba. La respuesta siempre expone el
+texto original y la sugerencia aplicada.
 
 Workers AI incluye 10,000 Neurons diarios sin costo. En el plan Paid, el uso
 que exceda esa asignación cuesta $0.011 por 1,000 Neurons; el consumo se debe

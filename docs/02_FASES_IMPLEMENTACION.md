@@ -470,7 +470,10 @@ Fallback visual/IA solo cuando sea necesario. La ruta
 `apps/ocr-service/` si `OCR_SERVICE_URL` existe y, en su defecto, el binding
 opcional de Workers AI; si no existe ningún extractor, falla cerrado con
 `503`. El texto extraído siempre pasa por `resolve-batch`, por lo que el
-modelo no publica alias ni selecciona estudios. Ningún extractor persiste
+modelo no publica alias ni selecciona estudios. En imagen se consulta ademas
+`api_resolve_ocr_package`: sus reglas aprobadas conservan el texto original,
+proponen correcciones observadas (por ejemplo `OBH -> BH`) y dejan los paneles
+ambiguos para confirmacion. Ningun extractor persiste
 imágenes ni decide equivalencias.
 
 ## Criterio de salida 🧪
@@ -626,7 +629,7 @@ Consentimiento y retention definidos.
 
 ## Estado ejecutado antes de Flutter (27 de agosto de 2026)
 
-Las fases previas a Flutter tienen implementación técnica en DEV: base Supabase enlazada con migraciones 001-094; collectors Chopo, Ruiz, Salud Digna y DENUE con RAW/observaciones/runs reproducibles; catálogo dorado de 175 servicios, 219 ofertas y 41 equivalencias Chopo↔Ruiz revisadas explícitamente; Admin V1 en `apps/admin` con Supabase Auth y búsqueda de servicios canónicos; Search API V1 en `apps/api`; y pruebas remotas de base, API y Gate A con todas las aserciones verdes. La viabilidad queda cerrada en este corte: 44 servicios tienen dos proveedores y 44 tienen precio vigente en ambos; Flutter no se inicia dentro de esta fase.
+Las fases previas a Flutter tienen implementación técnica en DEV: base Supabase enlazada con migraciones 001-113; collectors Chopo, Ruiz, Salud Digna y DENUE con RAW/observaciones/runs reproducibles; catálogo dorado de 175 servicios, 219 ofertas y 41 equivalencias Chopo↔Ruiz revisadas explícitamente; Admin V1 en `apps/admin` con Supabase Auth y búsqueda de servicios canónicos; Search API V1 en `apps/api`; y pruebas remotas de base, API y Gate A con todas las aserciones verdes. La viabilidad queda cerrada en este corte: 44 servicios tienen dos proveedores y 44 tienen precio vigente en ambos; Flutter no se inicia dentro de esta fase.
 
 ## Corte Gate B y lote comercial (28 de agosto de 2026)
 
@@ -921,7 +924,7 @@ Primer `/search` real.
 | Admin | ✅ V1 operativo; diez vistas y Supabase Auth |
 | API Search | ✅ V1 probado |
 | Flutter Web | ⏳ |
-| OCR | ✅ extractor API; Flutter pendiente |
+| OCR | ✅ extractor API + correcciones OCR auditables; Flutter pendiente |
 | Nuxt SEO | ⏳ |
 | Provider portal | ⏳ |
 | Analytics B2B | ⏳ |
@@ -1043,6 +1046,19 @@ de dos o tres, y siempre lista los estudios faltantes. Tambien soporta
 Las migraciones `20260829150000_107_package_resolution.sql` y
 `20260829151000_108_package_rpc_guard.sql` agregan el RPC publico
 `api_resolve_package` y su limite de 30 entradas incluso en llamadas directas.
+Las migraciones `20260829160000_109_ocr_correction_rules.sql`,
+`20260829161000_110_ocr_correction_domain_guard.sql` y
+`20260829162000_111_ocr_correction_response_shape.sql` agregan el RPC
+`api_resolve_ocr_package`. Este aplica solo reglas OCR aprobadas dentro de
+`health_diagnostics`, conserva el texto crudo y nunca resuelve paneles
+ambiguos por su cuenta.
+Las migraciones `20260829170000_112_resolution_confidence_guard.sql` y
+`20260829171000_113_package_guard_offer_filter.sql` cierran el caso de fuzzy
+debil: una similitud menor a `0.75` queda como sugerencia con confirmacion y
+no puede aportar ofertas a una solucion.
+La migracion `20260829172000_114_resolution_guard_ambiguity_preservation.sql`
+conserva el estado ambiguo cuando existe una alternativa debil; nunca lo
+degrada a resuelto por descartar esa alternativa.
 SQL se limita a resolver conceptos y expandir alcances
 de proveedor (marca/mercado/sucursal); la seleccion de cobertura es un solver
 determinista en `apps/api/src/batch.ts`. No se almacena la receta permanente ni

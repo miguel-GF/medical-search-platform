@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
+from difflib import SequenceMatcher
 from typing import Any, Protocol
 
 from PIL import Image, ImageEnhance, ImageFilter, ImageOps
@@ -95,10 +96,55 @@ def format_order_lines(lines: list[RecognizedLine]) -> list[RecognizedLine]:
         r"firma|(?:salud|selud)\s+d\w*|de\s+lunes|de\s+\d|a\s+\d)\b",
         re.IGNORECASE,
     )
+    metadata_extra = re.compile(
+        r"^(?:paciente|privada|cel(?:ular)?|puebla|dr\.?|bi[oÃ³]logo|ginecolog\w*|"
+        r"obstetric\w*|hospi\w*|peso|de\s+\d|a\s+\d|\d+\s*kg|t\s*=)",
+        re.IGNORECASE,
+    )
     marker = re.compile(r"^(?:rx|receta|estudios?|solicitud)\b", re.IGNORECASE)
     marker_index = next((index for index, line in enumerate(lines) if marker.search(line.text.strip())), None)
     selected = lines[marker_index + 1:] if marker_index is not None else lines
-    return [line for line in _merge_lines(selected) if line.text.strip() and not metadata.search(line.text.strip())]
+    output: list[RecognizedLine] = []
+    for line in _merge_lines(selected):
+        if not line.text.strip():
+            continue
+        fragment = _extract_study_fragment(line)
+        if fragment is not None:
+            output.append(fragment)
+        elif not metadata.search(line.text.strip()) and not metadata_extra.search(line.text.strip()):
+            output.append(line)
+    return output
+
+
+def _extract_study_fragment(line: RecognizedLine) -> RecognizedLine | None:
+    """Keep the study portion when OCR fuses a laboratory label and metadata."""
+    text = line.text.strip()
+    delimiter = re.search(r"[:=]", text)
+    if not delimiter or not _looks_like_laboratory_label(text[:delimiter.start()]):
+        return None
+    fragment = text[delimiter.end():].strip()
+    fragment = re.sub(r"^[^A-Za-z0-9À-ÿ]+", "", fragment)
+    fragment = re.split(
+        r"(?:ginecolog\w*|obstetric\w*|hospital\w*|puebla\w*|fecha\w*|paciente\w*|dr\.?|ced\.?)",
+        fragment,
+        maxsplit=1,
+        flags=re.IGNORECASE,
+    )[0].strip(" -=")
+    if not re.search(r"[A-Za-z0-9À-ÿ]", fragment):
+        return None
+    return RecognizedLine(text=fragment, confidence=line.confidence, box=line.box)
+
+
+def _looks_like_laboratory_label(value: str) -> bool:
+    compact = re.sub(r"[^a-z0-9]", "", value.casefold())
+    target = "laboratorio"
+    if target in compact:
+        return True
+    window = len(target)
+    return any(
+        SequenceMatcher(None, compact[index:index + window], target).ratio() >= 0.72
+        for index in range(max(1, len(compact) - window + 1))
+    )
 
 
 def _merge_lines(lines: list[RecognizedLine]) -> list[RecognizedLine]:
@@ -122,6 +168,11 @@ def _merge_lines(lines: list[RecognizedLine]) -> list[RecognizedLine]:
 
 
 def _same_row(left: RecognizedLine, right: RecognizedLine) -> bool:
+    # A detector occasionally returns a whole form row as one tall box.  Do
+    # not merge long metadata rows with a nearby study; that would erase the
+    # study when metadata filtering runs afterward.
+    if len(left.text) > 80 or len(right.text) > 80 or ":" in left.text or ":" in right.text:
+        return False
     if not left.box or not right.box:
         return False
     left_top, left_bottom = _box_y(left.box)

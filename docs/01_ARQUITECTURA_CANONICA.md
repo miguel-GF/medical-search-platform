@@ -704,9 +704,15 @@ El primer contrato de servidor para la orden es `POST /api/v1/resolve-image`.
 El Worker acepta una imagen temporal, usa primero el servicio privado FastAPI
 si `OCR_SERVICE_URL` esta configurado y, en su defecto, el binding opcional de
 OCR visual. Ambos solo transcriben texto literal y encadenan el resultado a
-`POST /api/v1/resolve-batch`. El modelo no interpreta equivalencias, no
-selecciona paneles y no persiste la imagen; si no existe ningun extractor, la
-ruta responde `503`.
+`POST /api/v1/resolve-batch`. En la ruta de imagen, el Worker usa el RPC
+`api_resolve_ocr_package`, que consulta reglas OCR aprobadas y entrega la
+sugerencia junto al texto original. Por ejemplo, puede proponer `OBH -> BH`,
+`OQS completa -> Q S completa` o `Pertil firondle -> Perfil tiroideo`; la
+resolucion clinica sigue siendo la autoridad y no selecciona un panel
+ambiguo. El modelo no interpreta equivalencias ni persiste la imagen; si no
+existe ningun extractor, la ruta responde `503`. El extractor Python puede
+devolver confianza por linea; el contrato expone `ocr.lines` y marca
+`ocr.review_required` cuando alguna lectura requiere confirmacion humana.
 
 Cuando la imagen necesite procesamiento servidor:
 

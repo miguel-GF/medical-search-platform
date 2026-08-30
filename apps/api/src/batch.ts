@@ -173,8 +173,10 @@ export function buildPackageResolution(
     }));
 
   const canSearchCoverage = !hasAmbiguous && resolvedItems.length > 0;
+  const resolvedIndexes = new Set(resolvedItems.map((item) => item.index));
+  const resolvedOffers = (payload.offers ?? []).filter((offer) => resolvedIndexes.has(offer.item_index));
   const solutions = canSearchCoverage
-    ? findPackageSolutions(items, payload.offers ?? [], objective, maxSolutions)
+    ? findPackageSolutions(items, resolvedOffers, objective, maxSolutions)
     : [];
   const requestedCount = items.length;
   const bestCoverage = solutions.reduce((max, solution) => Math.max(max, solution.coverage_count), 0);
@@ -191,6 +193,9 @@ export function buildPackageResolution(
     package_status: packageStatus,
     coverage_status: coverageStatus,
     items,
+    ...(payload.ocr_corrections && payload.ocr_corrections.length > 0
+      ? { ocr_corrections: payload.ocr_corrections }
+      : {}),
     clarifications,
     solutions,
   };
@@ -351,6 +356,7 @@ export function normalizeBatchRpcPayload(value: unknown): PackageRpcResponse {
     engine_version: typeof input.engine_version === 'string' ? input.engine_version : 'clinical-resolver-v6',
     items: Array.isArray(input.items) ? input.items as PackageItem[] : [],
     offers: Array.isArray(input.offers) ? input.offers as PackageOffer[] : [],
+    ocr_corrections: Array.isArray(input.ocr_corrections) ? input.ocr_corrections as PackageRpcResponse['ocr_corrections'] : undefined,
   };
 }
 

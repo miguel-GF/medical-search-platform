@@ -47,7 +47,7 @@ describe('POST /api/v1/resolve-image', () => {
       coverage_status: 'none',
     }));
     expect(ai.run).toHaveBeenCalledWith(env.OCR_AI_MODEL, expect.objectContaining({ temperature: 0 }));
-    expect(rpc.call).toHaveBeenCalledWith('api_resolve_package', expect.objectContaining({ p_items: ['BH'] }));
+    expect(rpc.call).toHaveBeenCalledWith('api_resolve_ocr_package', expect.objectContaining({ p_items: ['BH'] }));
   });
 
   it('returns a configuration error without an AI binding and validates image MIME', async () => {
@@ -82,6 +82,7 @@ describe('POST /api/v1/resolve-image', () => {
       expect(init?.headers).toEqual(expect.objectContaining({ authorization: 'Bearer python-secret' }));
       return new Response(JSON.stringify({
         text: 'BH', engine: 'python_ocr', model: 'PP-OCRv6_rec_small', confidence: 0.91,
+        lines: [{ text: 'BH', confidence: 0.88 }, { text: 'EGO', confidence: 0.99 }],
       }), { status: 200, headers: { 'content-type': 'application/json' } });
     });
     vi.stubGlobal('fetch', serviceFetch);
@@ -98,7 +99,14 @@ describe('POST /api/v1/resolve-image', () => {
       });
       expect(response.status).toBe(200);
       expect((await response.json()) as Record<string, unknown>).toEqual(expect.objectContaining({
-        ocr: expect.objectContaining({ engine: 'python_ocr', model: 'PP-OCRv6_rec_small', confidence: 0.91 }),
+        ocr: expect.objectContaining({
+          engine: 'python_ocr',
+          model: 'PP-OCRv6_rec_small',
+          confidence: 0.91,
+          review_required: true,
+          low_confidence_lines: ['BH'],
+          lines: [{ text: 'BH', confidence: 0.88 }, { text: 'EGO', confidence: 0.99 }],
+        }),
       }));
       expect(ai.run).not.toHaveBeenCalled();
       expect(serviceFetch).toHaveBeenCalledWith('https://ocr.internal.example/v1/ocr/order', expect.anything());

@@ -13,7 +13,7 @@ Consulta el detalle y los comandos reproducibles en [docs/03_REVISION_INTEGRACIO
 ## Estado actual
 
 - Arquitectura de producto y software: definida.
-- Base de datos V1: migraciones 001-108 aplicadas y verificadas.
+- Base de datos V1: migraciones 001-114 aplicadas y verificadas.
 - Despliegue y validación física en Supabase DEV: completado para el Data Engine previo a Flutter.
 - Collectors Chopo/Ruiz/Salud Digna/DENUE (fixtures, pruebas y corridas live reproducibles), Search API V1 y Admin V1: implementados y probados. Chopo, Ruiz, Salud Digna y DENUE están publicados en Supabase DEV. El gate remoto, los invariantes de base, la API pública y la cuarentena de colectores pasan; no se inicia Flutter hasta un nuevo corte de producto.
 - Collector genérico de proveedores: discovery acotado por dominio, respeto de robots.txt, JSON-LD/patrones de precio-servicio y evidencia candidata para laboratorios pequeños.
@@ -24,7 +24,14 @@ Consulta el detalle y los comandos reproducibles en [docs/03_REVISION_INTEGRACIO
 
 `POST /api/v1/resolve-image` transcribe una orden de forma literal mediante
 el extractor Python privado o un binding opcional de Workers AI y encadena el
-texto al resolver; sin extractor responde `503` de forma segura.
+texto al resolver. El flujo de imagen usa reglas OCR revisadas en la base
+(`OBH -> BH`, `OQS completa -> Q S completa` y `Pertil firondle -> Perfil
+tiroideo`); conserva el original y nunca elige automáticamente entre paneles
+ambiguos. Sin extractor responde `503` de forma segura.
+
+El resolver tampoco publica coincidencias fuzzy debiles: por debajo de 0.75
+se conserva una sugerencia con `requires_confirmation` y no se exponen sus
+ofertas como cobertura.
 
 ## Corte Fase 10: resolucion por paquete
 
@@ -32,7 +39,7 @@ texto al resolver; sin extractor responde `503` de forma segura.
 ambiguedades y calcula cobertura por sucursal o combinaciones de hasta tres
 ubicaciones. La migracion `107` y la prueba remota del RPC estan documentadas
 en `docs/02_FASES_IMPLEMENTACION.md` y `docs/DEV_OPERATIONS.md` (migraciones
-107-108).
+107-114).
 
 ## Repositorio
 

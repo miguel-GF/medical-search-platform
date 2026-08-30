@@ -18,6 +18,11 @@ export interface OcrAiBinding {
   run(model: string, inputs: Record<string, unknown>, options?: Record<string, unknown>): Promise<unknown>;
 }
 
+export interface OcrLine {
+  text: string;
+  confidence: number | null;
+}
+
 export interface RpcClient {
   call<T>(name: string, body: Record<string, unknown>, options?: { admin?: boolean }): Promise<T>;
 }
@@ -90,6 +95,14 @@ export interface PackageItem {
   status: PackageItemStatus;
   candidates: PackageCandidate[];
   reason_code?: string;
+  ocr_correction?: OcrCorrection;
+}
+
+export interface OcrCorrection {
+  suggested_text: string;
+  correction_type: 'character_confusion' | 'spacing' | 'lexical_review';
+  confidence: number;
+  source_note?: string | null;
 }
 
 export interface PackageOffer {
@@ -116,6 +129,14 @@ export interface PackageRpcResponse {
   engine_version: string;
   items: PackageItem[];
   offers: PackageOffer[];
+  ocr_corrections?: Array<{
+    index: number;
+    input: string;
+    suggested_text: string;
+    correction_type: OcrCorrection['correction_type'];
+    confidence: number;
+    source_note?: string | null;
+  }>;
 }
 
 export interface PackageLocation {
@@ -149,6 +170,7 @@ export interface PackageResolutionResponse {
   package_status: 'ready' | 'needs_clarification' | 'partial' | 'no_match';
   coverage_status: 'complete' | 'partial' | 'none';
   items: PackageItem[];
+  ocr_corrections?: PackageRpcResponse['ocr_corrections'];
   clarifications: Array<{ index: number; input: string; reason_code: string; candidates: PackageCandidate[] }>;
   solutions: PackageSolution[];
 }

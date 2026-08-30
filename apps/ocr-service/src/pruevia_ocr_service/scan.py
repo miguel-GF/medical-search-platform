@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import base64
 import json
+import sys
 from pathlib import Path
 
 from .config import settings
@@ -11,6 +12,11 @@ from .image import ImageInputError, decode_image_input
 
 
 def main() -> None:
+    # Windows PowerShell may expose a cp1252 stdout while OCR returns symbols
+    # such as circled list markers.  Keep the diagnostic CLI from crashing on
+    # valid Unicode; the API contract remains UTF-8 JSON.
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     parser = argparse.ArgumentParser(description="Run Pruevia local OCR against one image")
     parser.add_argument("--image", required=True, type=Path)
     parser.add_argument("--json", action="store_true", dest="as_json")

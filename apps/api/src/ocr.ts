@@ -1,5 +1,5 @@
 import { PACKAGE_MAX_TEXT_LENGTH } from './batch.js';
-import type { OcrAiBinding } from './types.js';
+import type { OcrAiBinding, OcrLine } from './types.js';
 
 export const OCR_MAX_BYTES = 5 * 1024 * 1024;
 export const OCR_MAX_BASE64_LENGTH = Math.ceil(OCR_MAX_BYTES / 3) * 4 + 64;
@@ -28,6 +28,7 @@ export interface OcrResult {
   model: string;
   input_bytes: number;
   confidence?: number | null;
+  lines?: OcrLine[];
 }
 
 export class OcrInputError extends Error {
@@ -141,6 +142,7 @@ export async function recognizeOrderImageViaService(
       model: typeof value.model === 'string' ? value.model : 'rapidocr',
       input_bytes: input.bytes.length,
       confidence: typeof value.confidence === 'number' ? value.confidence : null,
+      lines: parseOcrLines(value.lines),
     };
   } catch (error) {
     if (error instanceof OcrUnavailableError || error instanceof OcrRecognitionError) throw error;
@@ -148,6 +150,26 @@ export async function recognizeOrderImageViaService(
   } finally {
     clearTimeout(timeout);
   }
+}
+
+function parseOcrLines(value: unknown): OcrLine[] | undefined {
+  if (!Array.isArray(value)) return undefined;
+  const lines = value
+    .slice(0, 30)
+    .map((entry): OcrLine | null => {
+      if (!entry || typeof entry !== 'object') return null;
+      const text = typeof (entry as { text?: unknown }).text === 'string'
+        ? (entry as { text: string }).text.trim().slice(0, 200)
+        : '';
+      if (!text) return null;
+      const rawConfidence = (entry as { confidence?: unknown }).confidence;
+      const confidence = typeof rawConfidence === 'number' && Number.isFinite(rawConfidence)
+        ? Math.max(0, Math.min(rawConfidence, 1))
+        : null;
+      return { text, confidence };
+    })
+    .filter((line): line is OcrLine => line !== null);
+  return lines.length > 0 ? lines : undefined;
 }
 
 function cleanOcrText(output: unknown): string {
