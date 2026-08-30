@@ -962,7 +962,7 @@ Solo entonces se acelera la construcción del producto paciente.
 # Fase 14.2 - Integracion LOINC y resolver unificado
 
 **Estado:** ✅ resolver unificado desplegado; release oficial LOINC 2.83
-descargada/verificada y siete mappings exactos publicados en DEV. El índice
+descargada/verificada y ocho mappings exactos publicados en DEV. El índice
 local conserva 64,776 términos de laboratorio y la publicación exige
 `verified=true` y `approved_at`; la prueba de integración remota cubre 16
 aserciones.
@@ -1073,14 +1073,14 @@ conserva el estado ambiguo cuando existe una alternativa debil; nunca lo
 degrada a resuelto por descartar esa alternativa.
 La migracion `20260830100000_115_ocr_confirmed_glucose_insulin.sql` agrega la
 transcripcion humana revisada `GlurOsO e INUliUA -> Glucosa e Insulina`. Se
-conserva como sugerencia auditable y no se fuerza una equivalencia para
-`Insulina`: el ensayo generico sigue siendo un hueco de catalogo que requiere
-definir muestra, condicion (por ejemplo basal) y mapeo clinico antes de
-publicar ofertas.
+conserva como sugerencia auditable y se resuelve por tokens independientes.
+La migracion 117 cierra el hueco de catalogo de `Insulina` con el concepto
+serico/plasmatico LOINC 20448-7; no infiere condicion basal, desafio,
+anticuerpos ni cobertura de proveedor.
 La migracion `20260830101000_116_ocr_confirmed_glucose_insulin_tokens.sql`
 publica las variantes OCR de cada token despues de separar la conjuncion:
-`GlurOsO -> Glucosa` e `INUliUA -> Insulina`. La primera puede resolver; la
-segunda se mantiene en `no_match` hasta completar el catalogo.
+`GlurOsO -> Glucosa` e `INUliUA -> Insulina`. Ambas resuelven clinicamente de
+forma independiente; la cobertura comercial de Insulina puede seguir vacia.
 SQL se limita a resolver conceptos y expandir alcances
 de proveedor (marca/mercado/sucursal); la seleccion de cobertura es un solver
 determinista en `apps/api/src/batch.ts`. No se almacena la receta permanente ni

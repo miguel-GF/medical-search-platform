@@ -18,7 +18,7 @@ regresiones del motor.
 
 Las fuentes son los ejemplos de recetas/OCR aportados para Pruevia, las
 pruebas Gate B existentes, los catálogos observados de Ruiz/Chopo/Salud Digna,
-el discovery genérico de Puebla y los siete mappings LOINC 2.83 aprobados.
+el discovery genérico de Puebla y los ocho mappings LOINC 2.83 aprobados.
 
 ## Política de resolución
 

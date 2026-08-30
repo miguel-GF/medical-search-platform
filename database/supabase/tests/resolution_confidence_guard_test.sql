@@ -3,7 +3,7 @@
 
 begin;
 create extension if not exists pgtap with schema extensions;
-select extensions.plan(9);
+select extensions.plan(12);
 
 select extensions.has_function(
   'public',
@@ -21,19 +21,37 @@ select extensions.has_function(
 
 select extensions.is(
   (select public.api_resolve_search('Insulina')->>'status'),
-  'no_match',
-  'weak fuzzy Insulina match is not auto-resolved'
+  'resolved',
+  'exact generic Insulina resolves to its reviewed LOINC-backed concept'
 );
 
 select extensions.ok(
-  (select public.api_resolve_search('Insulina')->'candidates'->0->'explanation'->>'requires_confirmation')::boolean,
-  'weak fuzzy candidate explicitly requires confirmation'
+  not coalesce((select public.api_resolve_search('Insulina')->'candidates'->0->'explanation'->>'requires_confirmation')::boolean, false),
+  'exact generic Insulina does not require fuzzy confirmation'
 );
 
 select extensions.is(
-  (select public.api_resolve_package(jsonb_build_array('Insulina'))->'items'->0->>'reason_code'),
-  'low_confidence_match',
-  'package marks weak fuzzy candidate with a precise reason'
+  (select public.api_resolve_package(jsonb_build_array('Insulina'))->'items'->0->>'status'),
+  'resolved',
+  'package preserves exact generic Insulina resolution'
+);
+
+select extensions.is(
+  (select public.api_resolve_search('Insulina')->'candidates'->0->>'service_id'),
+  '00000000-0000-0000-0000-000000001114',
+  'generic Insulina resolves to its own canonical service'
+);
+
+select extensions.isnt(
+  (select public.api_resolve_search('AC ANTI INSULINA')->'candidates'->0->>'service_id'),
+  '00000000-0000-0000-0000-000000001114',
+  'anti-insulin antibody remains a distinct service'
+);
+
+select extensions.is(
+  (select public.api_resolve_search('Insulina basal')->>'status'),
+  'no_match',
+  'baseline insulin is not inferred from the generic assay'
 );
 
 select extensions.is(

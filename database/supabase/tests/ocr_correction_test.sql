@@ -69,7 +69,7 @@ select extensions.is(
 select extensions.is(
   (select public.api_resolve_ocr_package(jsonb_build_array('GlurOsO e INUliUA'))->'items'->0->>'status'),
   'no_match',
-  'compound line does not invent a generic Insulina catalog equivalence'
+  'compound line remains a single auditable correction until the batch layer splits it'
 );
 
 select extensions.is(
@@ -98,8 +98,8 @@ select extensions.is(
 
 select extensions.is(
   (select public.api_resolve_ocr_package(jsonb_build_array('INUliUA'))->'items'->0->>'status'),
-  'no_match',
-  'generic Insulina remains unresolved rather than mapping to anti-insulin'
+  'resolved',
+  'generic Insulina resolves to its exact LOINC-backed concept, not anti-insulin'
 );
 
 select extensions.is(

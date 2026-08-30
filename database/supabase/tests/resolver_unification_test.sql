@@ -25,8 +25,9 @@ select extensions.ok(
   'tabular search delegates only to the unified resolver'
 );
 select extensions.ok(
-  pg_get_functiondef('public.api_resolve_search(text,text,double precision,double precision,uuid,integer)'::regprocedure) like '%api_resolve_search_v4%',
-  'public resolver wrapper delegates to the unified API'
+  pg_get_functiondef('public.api_resolve_search(text,text,double precision,double precision,uuid,integer)'::regprocedure) like '%api_resolve_search_unfiltered%'
+    and pg_get_functiondef('public.api_resolve_search(text,text,double precision,double precision,uuid,integer)'::regprocedure) like '%apply_resolution_confidence_guard%',
+  'public resolver wrapper delegates to the unified guarded API'
 );
 select extensions.ok(
   pg_get_functiondef('public.api_search_scoped_v1(text,text,double precision,double precision,uuid,integer)'::regprocedure) like '%catalog.search_items%',

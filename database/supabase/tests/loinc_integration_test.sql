@@ -13,8 +13,8 @@ select extensions.is(
      and status = 'active'
      and verified
      and approved_at is not null),
-  7,
-  'seven reviewed LOINC 2.83 mappings are published'
+  8,
+  'eight reviewed LOINC 2.83 mappings are published'
 );
 
 select extensions.ok(
@@ -34,7 +34,7 @@ select extensions.is(
   (select count(*)::integer
    from health.lab_service_definitions
    where loinc_version = '2.83' and verified),
-  7,
+  8,
   'all published LOINC mappings have verified laboratory definitions'
 );
 
@@ -48,8 +48,8 @@ select extensions.is(
    from catalog.item_identifiers
    where lower(trim(system)) = 'http://loinc.org'
      and version = '2.83'
-     and code in ('58410-2','24356-8','2345-7','2160-0','3016-3','3024-7','3053-6')),
-  7,
+     and code in ('58410-2','24356-8','2345-7','2160-0','3016-3','3024-7','3053-6','20448-7')),
+  8,
   'the reviewed code set is complete and unique by code'
 );
 
@@ -80,12 +80,12 @@ select extensions.is(
    from catalog.item_identifiers ii
    where lower(trim(ii.system)) = 'http://loinc.org'
      and ii.version = '2.83'
-     and ii.code in ('2345-7','2160-0','3016-3','3024-7','3053-6')
+     and ii.code in ('2345-7','2160-0','3016-3','3024-7','3053-6','20448-7')
      and ii.mapping_type = 'exact'
      and ii.verified
      and ii.approved_at is not null),
-  5,
-  'five individual chemistry and thyroid mappings are exact and approved'
+  6,
+  'six individual chemistry and thyroid mappings are exact and approved'
 );
 
 select extensions.ok(
@@ -101,32 +101,32 @@ select extensions.ok(
 
 select extensions.is(
   (select count(*)::integer
-   from unnest(array['58410-2','24356-8','2345-7','2160-0','3016-3','3024-7','3053-6']) as q(code)
+   from unnest(array['58410-2','24356-8','2345-7','2160-0','3016-3','3024-7','3053-6','20448-7']) as q(code)
    cross join lateral catalog.resolve_items_v6(q.code, 'health_diagnostics', null, 10) r
    where r.match_method = 'loinc_exact'
      and r.resolution_status = 'resolved'),
-  7,
+  8,
   'every reviewed code resolves exactly in the canonical resolver'
 );
 
 select extensions.is(
   (select count(*)::integer
-   from unnest(array['58410-2','24356-8','2345-7','2160-0','3016-3','3024-7','3053-6']) as q(code)
+   from unnest(array['58410-2','24356-8','2345-7','2160-0','3016-3','3024-7','3053-6','20448-7']) as q(code)
    cross join lateral public.api_resolve_search(q.code) payload
    where payload->>'engine_version' = 'clinical-resolver-v6'
      and payload->>'status' = 'resolved'
      and payload->'candidates'->0->>'match_method' = 'loinc_exact'),
-  7,
+  8,
   'public resolution exposes the same exact LOINC evidence'
 );
 
 select extensions.is(
   (select count(*)::integer
-   from unnest(array['58410-2','24356-8','2345-7','2160-0','3016-3','3024-7','3053-6']) as q(code)
+   from unnest(array['58410-2','24356-8','2345-7','2160-0','3016-3','3024-7','3053-6','20448-7']) as q(code)
    cross join lateral catalog.search_items(q.code, 'health_diagnostics', null, 10) s
    where s.term_source = 'loinc'),
-  7,
-  'tabular search exposes the same seven LOINC candidates'
+  8,
+  'tabular search exposes the same eight LOINC candidates'
 );
 
 select extensions.ok(
@@ -153,7 +153,7 @@ select extensions.is(
    from catalog.item_identifiers
    where lower(trim(system)) = 'http://loinc.org'
      and version = '2.83'
-     and code in ('58410-2','24356-8','2345-7','2160-0','3016-3','3024-7','3053-6')
+     and code in ('58410-2','24356-8','2345-7','2160-0','3016-3','3024-7','3053-6','20448-7')
      and mapping_type <> 'exact'),
   0,
   'no non-exact LOINC relationship is publicly active in this release'

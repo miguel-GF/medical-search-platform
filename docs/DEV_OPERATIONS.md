@@ -345,9 +345,11 @@ candidata hasta que un operador la aprueba. La respuesta siempre expone el
 texto original y la sugerencia aplicada.
 
 La variante humana `GlurOsO e INUliUA` se conserva como `Glucosa e Insulina`,
-pero permanece en confirmacion: la linea contiene dos estudios y el catalogo
-todavia no define el ensayo generico de Insulina. No debe mapearse a
-`AC ANTI INSULINA (M)`.
+pero permanece auditable: la linea contiene dos estudios independientes. La
+migracion 117 publica el ensayo generico serico/plasmatico con LOINC 20448-7;
+no se confunde con `AC ANTI INSULINA (M)`, ni con insulina basal o de desafio.
+La ausencia de una oferta comercial sigue siendo valida hasta verificar una
+etiqueta real del proveedor.
 
 El extractor tambien separa conjunciones explicitas (`e`/`y`) cuando forman
 estudios independientes. La separación no decide equivalencias: conserva cada
