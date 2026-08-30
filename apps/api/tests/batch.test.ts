@@ -75,6 +75,14 @@ describe('batch request parser', () => {
   });
 });
 
+describe('compound study parsing', () => {
+  it('splits safe study conjunctions without splitting ordinary phrases', () => {
+    expect(splitBatchText('Glucosa e Insulina')).toEqual(['Glucosa', 'Insulina']);
+    expect(splitBatchText('BH y EGO')).toEqual(['BH', 'EGO']);
+    expect(splitBatchText('prueba e insulina')).toEqual(['prueba e insulina']);
+  });
+});
+
 describe('deterministic package solver', () => {
   it('does not invent a package when a prescription has unresolved studies', () => {
     const payload: PackageRpcResponse = {

@@ -21,6 +21,9 @@ La implementación ejecutable está en [`database/`](../database/README.md),
 
 10. [Investigación de consultas públicas y benchmark de campo](REAL_QUERY_RESEARCH_V1.md) - 64 frases anonimizadas y corpus v2 de 200 casos nuevos.
 
+11. [Corpus público para OCR](OCR_PUBLIC_CORPUS.md) - fuentes sintéticas,
+    licencias, checksum y prueba local sin persistencia.
+
 ## Precedencia documental
 
 Cuando haya una diferencia, se aplica este orden:

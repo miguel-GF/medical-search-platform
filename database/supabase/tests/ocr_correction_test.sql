@@ -3,7 +3,7 @@
 
 begin;
 create extension if not exists pgtap with schema extensions;
-select extensions.plan(15);
+select extensions.plan(21);
 
 select extensions.has_function(
   'public',
@@ -76,6 +76,42 @@ select extensions.is(
   (select jsonb_array_length(public.api_resolve_ocr_package(jsonb_build_array('GlurOsO e INUliUA'))->'ocr_corrections')),
   1,
   'compound OCR correction is returned for user confirmation'
+);
+
+select extensions.is(
+  (select public.api_resolve_ocr_package(jsonb_build_array('GlurOsO'))->'items'->0->'ocr_correction'->>'suggested_text'),
+  'Glucosa',
+  'split OCR glucose token receives its reviewed correction'
+);
+
+select extensions.is(
+  (select public.api_resolve_ocr_package(jsonb_build_array('GlurOsO'))->'items'->0->>'status'),
+  'resolved',
+  'split OCR glucose token resolves canonically'
+);
+
+select extensions.is(
+  (select public.api_resolve_ocr_package(jsonb_build_array('INUliUA'))->'items'->0->'ocr_correction'->>'suggested_text'),
+  'Insulina',
+  'split OCR insulin token receives a text correction'
+);
+
+select extensions.is(
+  (select public.api_resolve_ocr_package(jsonb_build_array('INUliUA'))->'items'->0->>'status'),
+  'no_match',
+  'generic Insulina remains unresolved rather than mapping to anti-insulin'
+);
+
+select extensions.is(
+  (select jsonb_array_length(public.api_resolve_ocr_package(jsonb_build_array('GlurOsO', 'INUliUA'))->'items')),
+  2,
+  'split compound OCR tokens remain independent package items'
+);
+
+select extensions.is(
+  (select jsonb_array_length(public.api_resolve_ocr_package(jsonb_build_array('GlurOsO', 'INUliUA'))->'ocr_corrections')),
+  2,
+  'both split OCR tokens expose auditable corrections'
 );
 
 select extensions.is(

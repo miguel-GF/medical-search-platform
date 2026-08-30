@@ -476,6 +476,12 @@ proponen correcciones observadas (por ejemplo `OBH -> BH`) y dejan los paneles
 ambiguos para confirmacion. Ningun extractor persiste
 imágenes ni decide equivalencias.
 
+El formateador OCR descarta metadatos frecuentes en español e inglés (nombre,
+identificadores, teléfonos, domicilio, hospital y narrativa de informes) y
+recorta sufijos de institución fusionados a una línea de estudio. Los casos
+externos de estrés se documentan en `docs/OCR_PUBLIC_CORPUS.md`; no se copian
+imágenes al repositorio.
+
 ## Criterio de salida 🧪
 
 - detectar varios estudios;
@@ -1043,6 +1049,12 @@ de dos o tres, y siempre lista los estudios faltantes. Tambien soporta
 `lowest_cost`, `nearest` y `balanced`; los precios desconocidos quedan como
 `requires_quote` y no se suman como si fueran cero.
 
+Las entradas de texto y las líneas OCR separan conjunciones explícitas (`e` y
+`y`) únicamente cuando ambos fragmentos parecen estudios conocidos. La
+separación conserva los tokens originales para que cada uno pase por el mismo
+resolver y pueda quedar en `resolved`, `ambiguous` o `no_match` de forma
+independiente.
+
 Las migraciones `20260829150000_107_package_resolution.sql` y
 `20260829151000_108_package_rpc_guard.sql` agregan el RPC publico
 `api_resolve_package` y su limite de 30 entradas incluso en llamadas directas.
@@ -1065,6 +1077,10 @@ conserva como sugerencia auditable y no se fuerza una equivalencia para
 `Insulina`: el ensayo generico sigue siendo un hueco de catalogo que requiere
 definir muestra, condicion (por ejemplo basal) y mapeo clinico antes de
 publicar ofertas.
+La migracion `20260830101000_116_ocr_confirmed_glucose_insulin_tokens.sql`
+publica las variantes OCR de cada token despues de separar la conjuncion:
+`GlurOsO -> Glucosa` e `INUliUA -> Insulina`. La primera puede resolver; la
+segunda se mantiene en `no_match` hasta completar el catalogo.
 SQL se limita a resolver conceptos y expandir alcances
 de proveedor (marca/mercado/sucursal); la seleccion de cobertura es un solver
 determinista en `apps/api/src/batch.ts`. No se almacena la receta permanente ni

@@ -13,11 +13,47 @@ def test_format_order_lines_extracts_study_after_fuzzy_laboratory_label():
 
     result = format_order_lines(lines)
 
-    assert [line.text for line in result] == ["GlurOsO e INUliUA"]
+    assert [line.text for line in result] == ["GlurOsO", "INUliUA"]
     assert result[0].confidence == 0.62
+    assert result[1].confidence == 0.62
 
 
 def test_format_order_lines_keeps_raw_uncertain_study_text():
     result = format_order_lines([RecognizedLine("Pertil firondle", 0.84)])
 
     assert result[0].text == "Pertil firondle"
+
+
+def test_format_order_lines_splits_explicit_study_conjunction():
+    result = format_order_lines([RecognizedLine("Glucosa e Insulina", 0.80)])
+
+    assert [line.text for line in result] == ["Glucosa", "Insulina"]
+
+
+def test_format_order_lines_drops_english_report_metadata():
+    result = format_order_lines([
+        RecognizedLine("Patient Name: Doe, Jane Patient ID: JG05141985", 0.99),
+        RecognizedLine("Imaging", 0.99),
+        RecognizedLine("MRI Brain without contrast", 0.99),
+        RecognizedLine("Findings: no acute abnormality", 0.99),
+        RecognizedLine("Phone: (217) 555-1212", 0.99),
+        RecognizedLine("weeks. Exam ID: IMG9876543", 0.99),
+        RecognizedLine("hemorrhage, mass effect or midline shift", 0.99),
+        RecognizedLine("City Health Clinic", 0.99),
+        RecognizedLine("45 Oak Ave.", 0.99),
+        RecognizedLine("Prescriked by: Dr. C. Rosse", 0.99),
+        RecognizedLine("Parient: Aisha Khan, Agc: 73", 0.99),
+        RecognizedLine("Signature:", 0.99),
+        RecognizedLine("Way, Springfield, IL, 62704", 0.99),
+    ])
+
+    assert [line.text for line in result] == ["MRI Brain without contrast"]
+
+
+def test_format_order_lines_trims_metadata_fused_after_imaging_study():
+    result = format_order_lines([
+        RecognizedLine("MRI Brain without contrast Springfield General Hospital Imaging Department 123 Health", 0.99),
+        RecognizedLine("Way, Springfield, IL, 62704", 0.99),
+    ])
+
+    assert [line.text for line in result] == ["MRI Brain without contrast"]

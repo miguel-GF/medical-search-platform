@@ -109,7 +109,7 @@ export function splitBatchText(input: string): string[] {
         const cleaned = stripListMarker(candidate);
         if (!cleaned) continue;
         const commaParts = splitSafeStudyCommas(cleaned);
-        items.push(...commaParts);
+        items.push(...commaParts.flatMap(splitSafeStudyConjunction));
       }
     }
   }
@@ -137,8 +137,16 @@ function splitSafeStudyCommas(value: string): string[] {
   return parts;
 }
 
+function splitSafeStudyConjunction(value: string): string[] {
+  if (!/\s+(?:e|y)\s+/i.test(value) || /[()]/.test(value)) return [value];
+  const parts = value.split(/\s+(?:e|y)\s+/i).map((part) => part.trim()).filter(Boolean);
+  if (parts.length < 2 || parts.some((part) => !looksLikeStudyPhrase(part))) return [value];
+  return parts;
+}
+
 function looksLikeStudyPhrase(value: string): boolean {
   if (/(?:\bb\s*h\b|\bbh\b|\bq\s*s\b|\bqs\b)/i.test(value)) return true;
+  if (/\binsulin\w*/i.test(value)) return true;
   return /(?:biometr|hemograma|\bego\b|orina|qu[ií]m|perfil|audiometr|espirom|ultrason|ecograf|resonancia|\brm\b|tomograf|\btac\b|rayos|radiograf|mastograf|electro|holter|gasometr|covid|colposcop|densitometr|glucosa|creatinin|\binr\b|\btp\b|\bttp\b)/i.test(value);
 }
 

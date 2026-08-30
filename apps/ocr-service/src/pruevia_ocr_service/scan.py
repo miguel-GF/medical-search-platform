@@ -46,3 +46,7 @@ def main() -> None:
         "lines": [{"text": line.text, "confidence": line.confidence} for line in lines],
     }
     print(json.dumps(payload, ensure_ascii=False) if args.as_json else payload["text"])
+
+
+if __name__ == "__main__":
+    main()

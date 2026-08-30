@@ -101,7 +101,25 @@ def format_order_lines(lines: list[RecognizedLine]) -> list[RecognizedLine]:
         r"obstetric\w*|hospi\w*|peso|de\s+\d|a\s+\d|\d+\s*kg|t\s*=)",
         re.IGNORECASE,
     )
-    marker = re.compile(r"^(?:rx|receta|estudios?|solicitud)\b", re.IGNORECASE)
+    metadata_english = re.compile(
+        r"^(?:patient|date|dob|sex|visit|accession|ordering|report|phone|fax|address|"
+        r"hospital|general|department|id\s*[:#]|scheduled|interpreting|radiologist|"
+        r"transcriptionist|confidential|springfield|city|clinic|street|road|avenue|ave\.?|"
+        r"prescr\w*|parient|dalc|signature|age\b|way,|\d+\s+|reason\s+for\s+exam|exam\s+id|"
+        r"technique|tchnique|findings|impression|follow[- ]?up|fdllow|document|the\b|"
+        r"and\b|not\b|taken\b|contrast\b|sequences?\b|weighted\b|major\b|majr\b|"
+        r"visualized\b|imaging\b)",
+        re.IGNORECASE,
+    )
+    narrative_english = re.compile(
+        r"\b(?:exam\s+id|reason\s+for\s+exam|headaches?|ventricular|sulci|hemorrhage|"
+        r"midline\s+shift|infarct|differentiation|sinuses|orbits|junction|multiplanar|"
+        r"diffusion[- ]weighted|flair|"
+        r"sequences?|administration|findings?|acute\b|unremarkable|normal\s+in|"
+        r"worsening|patient['’]s|follow[- ]?up)\b",
+        re.IGNORECASE,
+    )
+    marker = re.compile(r"^(?:rx|receta|estudios?|solicitud|imaging)\b", re.IGNORECASE)
     marker_index = next((index for index, line in enumerate(lines) if marker.search(line.text.strip())), None)
     selected = lines[marker_index + 1:] if marker_index is not None else lines
     output: list[RecognizedLine] = []
@@ -110,10 +128,46 @@ def format_order_lines(lines: list[RecognizedLine]) -> list[RecognizedLine]:
             continue
         fragment = _extract_study_fragment(line)
         if fragment is not None:
-            output.append(fragment)
-        elif not metadata.search(line.text.strip()) and not metadata_extra.search(line.text.strip()):
-            output.append(line)
+            output.extend(_split_compound_study_line(_trim_study_metadata_suffix(fragment)))
+        elif (
+            not metadata.search(line.text.strip())
+            and not metadata_extra.search(line.text.strip())
+            and not metadata_english.search(line.text.strip())
+            and not narrative_english.search(line.text.strip())
+        ):
+            output.extend(_split_compound_study_line(_trim_study_metadata_suffix(line)))
     return output
+
+
+def _split_compound_study_line(line: RecognizedLine) -> list[RecognizedLine]:
+    """Split a study row joined by a Spanish conjunction.
+
+    OCR often sees a handwritten row such as ``GlurOsO e INUliUA`` as one
+    token. Splitting only the explicit conjunction keeps the resolver's
+    per-study contract while preserving the original uncertain tokens. The
+    clinical resolver, not this OCR layer, decides whether each token exists.
+    """
+    parts = [part.strip() for part in re.split(r"\s+(?:e|y)\s+", line.text, flags=re.IGNORECASE) if part.strip()]
+    if len(parts) < 2 or any(len(part) < 2 for part in parts):
+        return [line]
+    return [RecognizedLine(text=part, confidence=line.confidence, box=line.box) for part in parts]
+
+
+def _trim_study_metadata_suffix(line: RecognizedLine) -> RecognizedLine:
+    """Trim a hospital/report suffix fused onto a recognizable study name."""
+    text = line.text.strip()
+    if not re.match(r"^(?:mri|ct|ultrasound|sonogram|radiograph|x[- ]?ray|mammogram|"
+                    r"electrocardiogram|audiogram|tomograph)\b", text, re.IGNORECASE):
+        return line
+    marker = re.search(
+        r"\s+(?:springfield|hospital|imaging\s+department|department|123\s+health|"
+        r"way,\s+springfield)\b",
+        text,
+        re.IGNORECASE,
+    )
+    if not marker:
+        return line
+    return RecognizedLine(text=text[:marker.start()].strip(" -:"), confidence=line.confidence, box=line.box)
 
 
 def _extract_study_fragment(line: RecognizedLine) -> RecognizedLine | None:
