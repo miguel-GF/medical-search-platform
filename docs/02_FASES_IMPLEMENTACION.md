@@ -1059,6 +1059,12 @@ no puede aportar ofertas a una solucion.
 La migracion `20260829172000_114_resolution_guard_ambiguity_preservation.sql`
 conserva el estado ambiguo cuando existe una alternativa debil; nunca lo
 degrada a resuelto por descartar esa alternativa.
+La migracion `20260830100000_115_ocr_confirmed_glucose_insulin.sql` agrega la
+transcripcion humana revisada `GlurOsO e INUliUA -> Glucosa e Insulina`. Se
+conserva como sugerencia auditable y no se fuerza una equivalencia para
+`Insulina`: el ensayo generico sigue siendo un hueco de catalogo que requiere
+definir muestra, condicion (por ejemplo basal) y mapeo clinico antes de
+publicar ofertas.
 SQL se limita a resolver conceptos y expandir alcances
 de proveedor (marca/mercado/sucursal); la seleccion de cobertura es un solver
 determinista en `apps/api/src/batch.ts`. No se almacena la receta permanente ni

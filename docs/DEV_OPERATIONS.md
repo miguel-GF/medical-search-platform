@@ -344,6 +344,11 @@ observadas no se publican automaticamente: una nueva regla queda como
 candidata hasta que un operador la aprueba. La respuesta siempre expone el
 texto original y la sugerencia aplicada.
 
+La variante humana `GlurOsO e INUliUA` se conserva como `Glucosa e Insulina`,
+pero permanece en confirmacion: la linea contiene dos estudios y el catalogo
+todavia no define el ensayo generico de Insulina. No debe mapearse a
+`AC ANTI INSULINA (M)`.
+
 Workers AI incluye 10,000 Neurons diarios sin costo. En el plan Paid, el uso
 que exceda esa asignación cuesta $0.011 por 1,000 Neurons; el consumo se debe
 medir en el dashboard porque el número de tokens de imagen varía por foto.

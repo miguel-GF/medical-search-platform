@@ -3,7 +3,7 @@
 
 begin;
 create extension if not exists pgtap with schema extensions;
-select extensions.plan(12);
+select extensions.plan(15);
 
 select extensions.has_function(
   'public',
@@ -58,6 +58,24 @@ select extensions.is(
   (select public.api_resolve_ocr_package(jsonb_build_array('Pertil firondle'))->'items'->0->'ocr_correction'->>'suggested_text'),
   'Perfil tiroideo',
   'profile OCR variant maps to a reviewed disambiguation term'
+);
+
+select extensions.is(
+  (select public.api_resolve_ocr_package(jsonb_build_array('GlurOsO e INUliUA'))->'items'->0->'ocr_correction'->>'suggested_text'),
+  'Glucosa e Insulina',
+  'human-confirmed compound OCR transcription is auditable'
+);
+
+select extensions.is(
+  (select public.api_resolve_ocr_package(jsonb_build_array('GlurOsO e INUliUA'))->'items'->0->>'status'),
+  'no_match',
+  'compound line does not invent a generic Insulina catalog equivalence'
+);
+
+select extensions.is(
+  (select jsonb_array_length(public.api_resolve_ocr_package(jsonb_build_array('GlurOsO e INUliUA'))->'ocr_corrections')),
+  1,
+  'compound OCR correction is returned for user confirmation'
 );
 
 select extensions.is(
