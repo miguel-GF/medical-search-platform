@@ -24,6 +24,9 @@ La implementación ejecutable está en [`database/`](../database/README.md),
 11. [Corpus público para OCR](OCR_PUBLIC_CORPUS.md) - fuentes sintéticas,
     licencias, checksum y prueba local sin persistencia.
 
+12. [Corte de cobertura comercial real](COBERTURA_REAL_20260831.md) - corridas
+    oficiales, mappings exactos y reglas para no publicar precios sin vigencia.
+
 ## Precedencia documental
 
 Cuando haya una diferencia, se aplica este orden:

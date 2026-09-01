@@ -23,6 +23,26 @@
       "reason": "Exact official Chopo label for the reviewed Examen general de orina concept."
     },
     {
+      "source_key": "chopo_puebla",
+      "provider_key": "chopo",
+      "external_record_id": "22033",
+      "catalog_item_id": "00000000-0000-0000-0000-000000001114",
+      "provider_alias": "INSULINA EN SUERO",
+      "observed_label": "INSULINA EN SUERO",
+      "method": "manual",
+      "reason": "Exact official Chopo label for the LOINC-backed generic serum/plasma Insulina concept; fasting, baseline, challenge and antibody contexts are not inferred."
+    },
+    {
+      "source_key": "chopo_puebla",
+      "provider_key": "chopo",
+      "external_record_id": "16101",
+      "catalog_item_id": "00000000-0000-0000-0000-000000001109",
+      "provider_alias": "GLUCOSA EN SUERO",
+      "observed_label": "GLUCOSA EN SUERO",
+      "method": "manual",
+      "reason": "Exact official Chopo label for the LOINC-backed Glucosa serum/plasma concept; no fasting condition is inferred from the label."
+    },
+    {
       "source_key": "salud_digna_puebla",
       "provider_key": "salud_digna",
       "external_record_id": "332:888346",

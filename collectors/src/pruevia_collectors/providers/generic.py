@@ -49,6 +49,7 @@ SERVICE_HINT_RE = re.compile(
     r"\b(?:biometr[ií]a|hemograma|orina|ego|glucosa|creatinina|tiroid\w*|tsh|qu[ií]mica|laboratorio|ultrasonido|radiolog[ií]a|tomograf[ií]a|resonancia|mastograf[ií]a|electrocardiograma|electromiograf[ií]a|an[aá]lisis cl[ií]nico|perfil|albumina|ant[ií]geno|covid|vdrl|reacciones|electrolitos|deshidrogenasa|lipidos|hep[aá]tico|rx|columna|torax|prueba)\b",
     re.IGNORECASE,
 )
+INSULIN_HINT_RE = re.compile(r"\binsulina\b", re.IGNORECASE)
 GENERIC_TITLE_WORDS = {
     "inicio",
     "home",
@@ -72,6 +73,19 @@ LOCATION_TYPES = {
     "physician",
 }
 OFFER_TYPES = {"product", "service", "medicaltest", "offer"}
+
+
+def _is_service_hint(value: object) -> bool:
+    text = str(value or "")
+    return bool(SERVICE_HINT_RE.search(text) or INSULIN_HINT_RE.search(text))
+
+
+def _is_price_heading(value: object) -> bool:
+    text = _clean_text(value)
+    if not text:
+        return False
+    match = PRICE_RE.fullmatch(text)
+    return bool(match and parse_price_minor(match.group(0)))
 
 
 @dataclass(frozen=True)
@@ -560,7 +574,7 @@ class GenericPageParser:
                         # unrelated merchandise.  Keep only clinically
                         # plausible labels unless the schema itself is a
                         # medical test/service.
-                        if types & {"product", "offer"} and not SERVICE_HINT_RE.search(offer_name):
+                        if types & {"product", "offer"} and not _is_service_hint(offer_name):
                             continue
                         found_nested = True
                         offers.append(
@@ -575,7 +589,7 @@ class GenericPageParser:
                             }
                         )
                 if not found_nested and name and _node_price(node) is not None:
-                    if types & {"product", "offer"} and not SERVICE_HINT_RE.search(name):
+                    if types & {"product", "offer"} and not _is_service_hint(name):
                         continue
                     offers.append(
                         {
@@ -598,8 +612,24 @@ class GenericPageParser:
         host_parts = [part for part in _host(page.url).split(".") if part and part != "www"]
         provider_name = provider_name or parser.meta.get("og:site_name", "") or (host_parts[0].title() if host_parts else "Provider")
         text = _clean_text(" ".join(parser.text_parts))
+        pattern_offers = self._pattern_offers(page.url, parser.headings, text)
         if not offers:
-            offers.extend(self._pattern_offers(page.url, parser.headings, text))
+            offers.extend(pattern_offers)
+        else:
+            # Some CMS pages expose a service in JSON-LD but render its
+            # price in an adjacent visible block (for example Elementor).
+            # Keep a visible price only when the same service has no
+            # structured price; never duplicate or override a stronger
+            # JSON-LD price with a page-wide number.
+            for pattern_offer in pattern_offers:
+                if pattern_offer.get("price_minor") is None:
+                    continue
+                pattern_name = normalize(pattern_offer.get("name"))
+                same_name = [offer for offer in offers if normalize(offer.get("name")) == pattern_name]
+                if any(offer.get("price_minor") is not None for offer in same_name):
+                    continue
+                offers[:] = [offer for offer in offers if normalize(offer.get("name")) != pattern_name]
+                offers.append(pattern_offer)
         # A page can contain several JSON-LD blocks and visible fallback text;
         # preserve the first price for an identical service URL/title pair.
         unique_offers: dict[tuple[str, int | None, str], dict[str, Any]] = {}
@@ -630,7 +660,7 @@ class GenericPageParser:
         results: list[dict[str, Any]] = []
         for match in pattern.finditer(source):
             title = _clean_text(match.group(1))
-            if not _valid_title(title) or not SERVICE_HINT_RE.search(title):
+            if not _valid_title(title) or not _is_service_hint(title):
                 continue
             raw_price = match.group(3) or match.group(4) or ""
             price = parse_price_minor(raw_price)
@@ -657,7 +687,7 @@ class GenericPageParser:
         folded_text = text.casefold()
         for heading in headings[:100]:
             cleaned_heading = _clean_text(heading)
-            if not _valid_title(cleaned_heading) or not SERVICE_HINT_RE.search(cleaned_heading):
+            if not _valid_title(cleaned_heading) or not _is_service_hint(cleaned_heading):
                 continue
             start = folded_text.find(cleaned_heading.casefold(), cursor)
             if start < 0:
@@ -665,7 +695,7 @@ class GenericPageParser:
             next_positions = []
             for candidate in headings:
                 candidate_text = _clean_text(candidate)
-                if not _valid_title(candidate_text):
+                if not _valid_title(candidate_text) or _is_price_heading(candidate_text):
                     continue
                 position = folded_text.find(candidate_text.casefold(), start + len(cleaned_heading))
                 if position >= 0:
@@ -690,7 +720,7 @@ class GenericPageParser:
         return [
             {"name": heading, "price_minor": None, "url": page_url, "method": "heading_pattern"}
             for heading in headings
-            if SERVICE_HINT_RE.search(heading) and _valid_title(heading)
+            if _is_service_hint(heading) and _valid_title(heading)
         ][:50]
 
 

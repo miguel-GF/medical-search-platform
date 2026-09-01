@@ -20,6 +20,13 @@ Consulta el detalle y los comandos reproducibles en [docs/03_REVISION_INTEGRACIO
 - Fan-out de discovery Puebla: agrupa los sitios web declarados por DENUE y conserva el vínculo de cada host con sus candidatos para medir cobertura sin captura manual.
 - Publicación genérica revisada: cuatro coincidencias exactas enlazadas a siete sedes DENUE; 44 ofertas restantes tienen una cola de revisión auditable y no publicable. Los reintentos sólo cubren fallos transitorios.
 
+## Corte de cobertura real 31-ago-2026
+
+Chopo incorporo Insulina, Glucosa, BH y EGO con precios oficiales observados;
+Asesores incorporo Insulina y EGO como ofertas con cotizacion obligatoria. Los
+detalles, corridas y exclusiones estan en
+[docs/COBERTURA_REAL_20260831.md](docs/COBERTURA_REAL_20260831.md).
+
 ## Corte Fase 9-10: OCR y resolucion por paquete
 
 `POST /api/v1/resolve-image` transcribe una orden de forma literal mediante

@@ -1091,6 +1091,15 @@ arbitrarias, cobertura de una sucursal, precios ausentes y la receta de cuatro
 entradas (`B H`, `Q S completa`, `EGO`, `perfil toroideo`): dos se resuelven y
 dos solicitan aclaracion, sin producir un paquete falso.
 
+# Corte de cobertura real — 31 de agosto de 2026
+
+Se agregaron mappings exactos y evidencia oficial para Insulina, Glucosa,
+Biometria hematica y EGO en Chopo, además de Insulina y EGO en Asesores. Las
+ofertas de Asesores conservan `requires_quote=true` porque el sitio no garantiza
+vigencia de sus precios especiales. Perfil tiroideo, HbA1c y QS45 de Chopo
+permanecen en revisión por falta de composición/concepto canónico aprobado.
+La corrida y las URLs están en `docs/COBERTURA_REAL_20260831.md`.
+
 # Referencias
 
 - `00_CONVERSACION_CANONICA.md`

@@ -1,0 +1,9 @@
+# Official Puebla product pages selected from the public Chopo catalog on 2026-08-31.
+# Prices are captured from each page by the dedicated collector; no price is inferred.
+https://www.chopo.com.mx/puebla/insulina-en-suero
+https://www.chopo.com.mx/puebla/glucosa-en-suero
+https://www.chopo.com.mx/puebla/biometria-hematica
+https://www.chopo.com.mx/puebla/examen-general-de-orina
+https://www.chopo.com.mx/puebla/perfil-tiroideo-en-suero
+https://www.chopo.com.mx/puebla/hemoglobina-glicosilada-a1c
+https://www.chopo.com.mx/puebla/quimica-integral-de-45-elementos

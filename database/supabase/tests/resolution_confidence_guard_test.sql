@@ -54,10 +54,21 @@ select extensions.is(
   'baseline insulin is not inferred from the generic assay'
 );
 
-select extensions.is(
-  (select jsonb_array_length(public.api_resolve_package(jsonb_build_array('Insulina'))->'offers')),
-  0,
-  'weak fuzzy package emits no offers'
+select extensions.ok(
+  coalesce((select jsonb_array_length(public.api_resolve_package(jsonb_build_array('Insulina'))->'offers')), 0) >= 1
+  and exists (
+    select 1
+    from jsonb_array_elements(coalesce(public.api_resolve_package(jsonb_build_array('Insulina'))->'offers', '[]'::jsonb)) offer
+    where offer->>'provider_name' = 'Asesores Diagnóstico Clínico'
+  )
+  and not exists (
+    select 1
+    from jsonb_array_elements(coalesce(public.api_resolve_package(jsonb_build_array('Insulina'))->'offers', '[]'::jsonb)) offer
+    where offer->>'provider_name' = 'Asesores Diagnóstico Clínico'
+      and (coalesce((offer->>'requires_quote')::boolean, false) is not true
+       or offer->>'amount_minor' is not null)
+  ),
+  'new Insulina coverage is visible only as verified quote-required offers without fabricated prices'
 );
 
 select extensions.is(

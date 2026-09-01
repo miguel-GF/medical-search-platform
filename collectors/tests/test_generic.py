@@ -100,6 +100,37 @@ def test_generic_parser_requires_explicit_price_context_for_visible_prices():
     ]
 
 
+def test_generic_parser_recovers_adjacent_elementor_prices_for_structured_services():
+    page = GenericPage(
+        "https://laboratorioasesores.com/servicio/",
+        """
+        <html><body>
+          <script type="application/ld+json">
+            {"@type":"MedicalClinic","name":"Asesores"}
+          </script>
+          <h2>Examen General de Orina</h2><h2>$129.00</h2>
+          <h2>Insulina</h2><h2>$399.00</h2>
+        </body></html>
+        """,
+        "text/html",
+    )
+
+    assert GenericPageParser().parse(page)["offers"] == [
+        {
+            "name": "Examen General de Orina",
+            "price_minor": 12900,
+            "url": "https://laboratorioasesores.com/servicio/",
+            "method": "price_pattern",
+        },
+        {
+            "name": "Insulina",
+            "price_minor": 39900,
+            "url": "https://laboratorioasesores.com/servicio/",
+            "method": "price_pattern",
+        },
+    ]
+
+
 def test_generic_parser_never_emits_script_links():
     page = GenericPage(
         "https://lab.example/estudios",

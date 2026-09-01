@@ -14,11 +14,11 @@
     {
       "source_key": "generic_laboratorioasesores_com",
       "provider_key": "asesores_diagnostico_clinico",
-      "brand_name": "Asesores Diagnóstico Clínico",
+      "brand_name": "Asesores Diagn\u00f3stico Cl\u00ednico",
       "slug": "asesores-diagnostico-clinico",
       "website_url": "https://laboratorioasesores.com/",
       "denue_record_ids": ["6377353", "6378112", "6379372"],
-      "identity_note": "DENUE identifies three Asesores Diagnóstico Clínico Puebla locations under ASESORES ESPECIALIZADOS EN LABORATORIOS and the domain matches the public website evidence; provider verification remains pending."
+      "identity_note": "DENUE identifies three Asesores Diagn\u00f3stico Cl\u00ednico Puebla locations under ASESORES ESPECIALIZADOS EN LABORATORIOS and the domain matches the public website evidence; provider verification remains pending."
     },
     {
       "source_key": "generic_labxonaca_com",
@@ -48,17 +48,17 @@
       "provider_alias": "Ultrasonido Abdomen Completo",
       "observed_label": "Ultrasonido Abdomen Completo",
       "method": "manual",
-      "reason": "Coincidencia exacta normalizada con el nombre canónico; la página pública de Family Labs expone el estudio sin alterar su alcance clínico."
+      "reason": "Coincidencia exacta normalizada con el nombre can\u00f3nico; la p\u00e1gina p\u00fablica de Family Labs expone el estudio sin alterar su alcance cl\u00ednico."
     },
     {
       "source_key": "generic_familylabs_com_mx",
       "provider_key": "familylabs",
       "external_record_id": "b08eb5506d59016160ca93d7759c8f28",
       "catalog_item_id": "82d84811-2542-5f8d-8c2c-01186700c4cb",
-      "provider_alias": "Ultrasonido Obstétrico",
-      "observed_label": "Ultrasonido Obstétrico",
+      "provider_alias": "Ultrasonido Obst\u00e9trico",
+      "observed_label": "Ultrasonido Obst\u00e9trico",
       "method": "manual",
-      "reason": "Coincidencia exacta normalizada con el nombre canónico; la página pública de Family Labs expone el estudio sin inferir una variante obstétrica adicional."
+      "reason": "Coincidencia exacta normalizada con el nombre can\u00f3nico; la p\u00e1gina p\u00fablica de Family Labs expone el estudio sin inferir una variante obst\u00e9trica adicional."
     },
     {
       "source_key": "generic_laboratorioasesores_com",
@@ -68,17 +68,27 @@
       "provider_alias": "Examen General de Orina",
       "observed_label": "Examen General de Orina",
       "method": "manual",
-      "reason": "Coincidencia exacta normalizada con el nombre canónico de Examen general de orina en la página pública de Asesores Diagnóstico Clínico."
+      "reason": "Coincidencia exacta normalizada con el nombre can\u00f3nico de Examen general de orina en la p\u00e1gina p\u00fablica de Asesores Diagn\u00f3stico Cl\u00ednico."
+    },
+    {
+      "source_key": "generic_laboratorioasesores_com",
+      "provider_key": "asesores_diagnostico_clinico",
+      "external_record_id": "f97cc2ab91afb49f5732b9f577138234",
+      "catalog_item_id": "00000000-0000-0000-0000-000000001114",
+      "provider_alias": "Insulina",
+      "observed_label": "Insulina",
+      "method": "manual",
+      "reason": "Coincidencia exacta con el servicio Insulina visible en la p\u00e1gina p\u00fablica de Asesores Diagn\u00f3stico Cl\u00ednico; el importe capturado se conserva como evidencia y la oferta exige cotizaci\u00f3n porque la p\u00e1gina no garantiza vigencia de la tarifa especial."
     },
     {
       "source_key": "generic_semindigital_com",
       "provider_key": "laboratorios_semin",
       "external_record_id": "9d8a903129e012697acce4fef3b8d7ad",
       "catalog_item_id": "b4994aa8-b7c4-52f3-8f46-c74356d62d4a",
-      "provider_alias": "Mastografía",
-      "observed_label": "Mastografía",
+      "provider_alias": "Mastograf\u00eda",
+      "observed_label": "Mastograf\u00eda",
       "method": "manual",
-      "reason": "Coincidencia exacta normalizada con el nombre canónico de Mastografía en la página pública de Laboratorios Semin."
+      "reason": "Coincidencia exacta normalizada con el nombre can\u00f3nico de Mastograf\u00eda en la p\u00e1gina p\u00fablica de Laboratorios Semin."
     }
   ]
 }
