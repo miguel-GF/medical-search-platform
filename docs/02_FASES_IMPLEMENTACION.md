@@ -547,7 +547,7 @@ No crear SEO programático vacío.
 
 # Fase 12 — Provider Claim / Verification
 
-**Estado:** ✅ base de identidad y reclamación implementada (migraciones 118–124)
+**Estado:** ✅ base de identidad y reclamación implementada (migraciones 118–126)
 
 La identidad del proveedor queda separada en organización legal, marca,
 sucursal y usuario. La reclamación admite dos alcances:
@@ -572,6 +572,10 @@ Implementado:
   Admin;
 - auditoría de creación, documentos, revisión e invitaciones.
 - ACL explícitas para todos los RPC administrativos históricos: sólo `service_role`.
+- ACL explícitas para funciones internas y de extensión: sin ejecución por roles
+  del Data API, incluso si en el futuro se habilita `USAGE` del esquema.
+- El esquema `extensions` no es utilizable directamente por roles del Data API;
+  los RPC públicos llaman extensiones sólo bajo `SECURITY DEFINER`.
 
 Los perfiles no reclamados continúan visibles con estado de verificación. La
 aprobación crea relaciones y permisos, pero no permite sobrescribir evidencia

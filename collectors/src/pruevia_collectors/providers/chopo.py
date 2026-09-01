@@ -12,6 +12,7 @@ from urllib.parse import urljoin, urlparse
 import httpx
 
 from ..models import Observation, SourceRecord, SourceSpec
+from .http import request_with_same_host_redirects
 
 
 CHOPO_PUEBLA_URL = "https://www.chopo.com.mx/puebla/estudios"
@@ -53,7 +54,7 @@ class ChopoClient:
         self.max_attempts = max_attempts
         self.retry_backoff_seconds = retry_backoff_seconds
         self._owns_client = client is None
-        self._client = client or httpx.Client(timeout=self.timeout_seconds, follow_redirects=True)
+        self._client = client or httpx.Client(timeout=self.timeout_seconds, follow_redirects=False)
 
     def close(self) -> None:
         if self._owns_client:
@@ -65,7 +66,7 @@ class ChopoClient:
         if not self._owns_client:
             return
         self._client.close()
-        self._client = httpx.Client(timeout=self.timeout_seconds, follow_redirects=True)
+        self._client = httpx.Client(timeout=self.timeout_seconds, follow_redirects=False)
 
     def fetch_page(self, page_number: int) -> ChopoPage:
         if page_number < 1:
@@ -76,7 +77,13 @@ class ChopoClient:
             url = f"{self.base_url}?p={page_number}"
         for attempt in range(1, self.max_attempts + 1):
             try:
-                response = self._client.get(url, headers=self._headers)
+                response = request_with_same_host_redirects(
+                    self._client.get,
+                    url,
+                    allowed_url=self.base_url,
+                    max_redirects=5,
+                    headers=self._headers,
+                )
                 response.raise_for_status()
                 resolved_url = str(response.url)
                 if not self._is_official_puebla_url(resolved_url):
@@ -98,8 +105,11 @@ class ChopoClient:
             raise ValueError("Chopo product URL must use the configured official host and Puebla path")
         for attempt in range(1, self.max_attempts + 1):
             try:
-                response = self._client.get(
+                response = request_with_same_host_redirects(
+                    self._client.get,
                     url,
+                    allowed_url=self.base_url,
+                    max_redirects=5,
                     headers=self._headers,
                 )
                 response.raise_for_status()

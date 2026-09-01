@@ -107,20 +107,8 @@ async function searchResponse(url: URL, rpc: RpcClient, origin: string): Promise
 }
 
 async function resolveResponse(request: Request, rpc: RpcClient, origin: string): Promise<Response> {
-  const contentLength = Number(request.headers.get('content-length') ?? 0);
-  if (Number.isFinite(contentLength) && contentLength > 16_384) {
-    return json({ error: { code: 'payload_too_large', message: 'The request body is too large' } }, 413, origin);
-  }
-  let body: unknown;
-  try {
-    body = await request.json();
-  } catch {
-    return json({ error: { code: 'invalid_json', message: 'Request body must be valid JSON' } }, 400, origin);
-  }
-  if (!body || typeof body !== 'object' || Array.isArray(body)) {
-    return json({ error: { code: 'invalid_body', message: 'Request body must be an object' } }, 400, origin);
-  }
-  const input = body as Record<string, unknown>;
+  const input = await readJsonObject(request, 16_384, origin);
+  if (input instanceof Response) return input;
   const query = typeof input.text === 'string' ? input.text.trim() : '';
   if (!query || query.length > 200 || !/[\p{L}\p{N}]/u.test(query)) {
     return json({ error: { code: 'invalid_query', message: 'text is required and must be at most 200 characters' } }, 400, origin);
@@ -153,22 +141,10 @@ async function resolveResponse(request: Request, rpc: RpcClient, origin: string)
 }
 
 async function resolveBatchResponse(request: Request, rpc: RpcClient, origin: string): Promise<Response> {
-  const contentLength = Number(request.headers.get('content-length') ?? 0);
-  if (Number.isFinite(contentLength) && contentLength > 16_384) {
-    return json({ error: { code: 'payload_too_large', message: 'The request body is too large' } }, 413, origin);
-  }
-  let body: unknown;
-  try {
-    body = await request.json();
-  } catch {
-    return json({ error: { code: 'invalid_json', message: 'Request body must be valid JSON' } }, 400, origin);
-  }
-  if (!body || typeof body !== 'object' || Array.isArray(body)) {
-    return json({ error: { code: 'invalid_body', message: 'Request body must be an object' } }, 400, origin);
-  }
-  const parsed = parseBatchRequest(body as Record<string, unknown>);
+  const input = await readJsonObject(request, 16_384, origin);
+  if (input instanceof Response) return input;
+  const parsed = parseBatchRequest(input);
   if (!parsed.ok) return json({ error: parsed.error }, 400, origin);
-  const input = body as Record<string, unknown>;
   const context = parsePackageContext(input, origin);
   if (context instanceof Response) return context;
   return json(await resolvePackagePayload(parsed.value, context, rpc), 200, origin);
@@ -382,8 +358,9 @@ async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClien
   const providerClaimReviewMatch = url.pathname.match(/^\/api\/v1\/admin\/provider-claims\/([^/]+)\/review$/i);
   if (providerClaimReviewMatch && request.method === 'POST') {
     if (!isUuid(providerClaimReviewMatch[1])) return json({ error: { code: 'invalid_id', message: 'claim id must be a UUID' } }, 400, origin);
-    const body = await request.json().catch(() => null) as Record<string, unknown> | null;
-    if (!body || (body.decision !== 'approved' && body.decision !== 'rejected')) {
+    const body = await readJsonObject(request, 16_384, origin);
+    if (body instanceof Response) return body;
+    if (body.decision !== 'approved' && body.decision !== 'rejected') {
       return json({ error: { code: 'invalid_body', message: 'decision must be approved or rejected' } }, 400, origin);
     }
     if (body.reason !== undefined && body.reason !== null && (typeof body.reason !== 'string' || body.reason.length > 2000)) {
@@ -399,8 +376,9 @@ async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClien
   const providerClaimRevokeMatch = url.pathname.match(/^\/api\/v1\/admin\/provider-claims\/([^/]+)\/revoke$/i);
   if (providerClaimRevokeMatch && request.method === 'POST') {
     if (!isUuid(providerClaimRevokeMatch[1])) return json({ error: { code: 'invalid_id', message: 'claim id must be a UUID' } }, 400, origin);
-    const body = await request.json().catch(() => null) as Record<string, unknown> | null;
-    if (!body || typeof body.reason !== 'string' || body.reason.trim().length === 0 || body.reason.length > 2000) {
+    const body = await readJsonObject(request, 16_384, origin);
+    if (body instanceof Response) return body;
+    if (typeof body.reason !== 'string' || body.reason.trim().length === 0 || body.reason.length > 2000) {
       return json({ error: { code: 'invalid_body', message: 'a revocation reason of at most 2000 characters is required' } }, 400, origin);
     }
     return json(await rpc.call('api_admin_revoke_provider_claim', {
@@ -412,8 +390,9 @@ async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClien
   const providerChangeReviewMatch = url.pathname.match(/^\/api\/v1\/admin\/provider-change-requests\/([^/]+)\/review$/i);
   if (providerChangeReviewMatch && request.method === 'POST') {
     if (!isUuid(providerChangeReviewMatch[1])) return json({ error: { code: 'invalid_id', message: 'change request id must be a UUID' } }, 400, origin);
-    const body = await request.json().catch(() => null) as Record<string, unknown> | null;
-    if (!body || (body.decision !== 'approved' && body.decision !== 'rejected')) {
+    const body = await readJsonObject(request, 16_384, origin);
+    if (body instanceof Response) return body;
+    if (body.decision !== 'approved' && body.decision !== 'rejected') {
       return json({ error: { code: 'invalid_body', message: 'decision must be approved or rejected' } }, 400, origin);
     }
     if (body.reason !== undefined && body.reason !== null && (typeof body.reason !== 'string' || body.reason.length > 2000)) {
@@ -429,8 +408,9 @@ async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClien
   const resolveMatch = url.pathname.match(/^\/api\/v1\/admin\/normalization\/([^/]+)\/resolve$/i);
   if (resolveMatch && request.method === 'POST') {
     if (!isUuid(resolveMatch[1])) return json({ error: { code: 'invalid_id', message: 'normalization run id must be a UUID' } }, 400, origin);
-    const body = await request.json().catch(() => null) as Record<string, unknown> | null;
-    if (!body || typeof body.selected_item_id !== 'string' || !isUuid(body.selected_item_id) || typeof body.alias !== 'string' || body.alias.trim().length === 0 || body.alias.length > 200) {
+    const body = await readJsonObject(request, 16_384, origin);
+    if (body instanceof Response) return body;
+    if (typeof body.selected_item_id !== 'string' || !isUuid(body.selected_item_id) || typeof body.alias !== 'string' || body.alias.trim().length === 0 || body.alias.length > 200) {
       return json({ error: { code: 'invalid_body', message: 'selected_item_id and alias are required' } }, 400, origin);
     }
     if (typeof body.provider_brand_id === 'string' && !isUuid(body.provider_brand_id)) {

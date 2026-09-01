@@ -36,6 +36,17 @@ function rpcWith(value: unknown): RpcClient {
   return { call: call as RpcClient['call'] };
 }
 
+function streamedJsonRequest(url: string, body: string): Request {
+  const bytes = new TextEncoder().encode(body);
+  const stream = new ReadableStream<Uint8Array>({
+    start(controller) {
+      controller.enqueue(bytes);
+      controller.close();
+    },
+  });
+  return new Request(url, { method: 'POST', body: stream, duplex: 'half' } as RequestInit);
+}
+
 describe('POST /api/v1/resolve-batch', () => {
   it('forwards arbitrary study lists to the package RPC and returns the package contract', async () => {
     const rpc = rpcWith(rpcPayload);
@@ -67,6 +78,17 @@ describe('POST /api/v1/resolve-batch', () => {
     expect((await handler(new Request('https://api.test/api/v1/resolve-batch', {
       method: 'POST', body: JSON.stringify({ text: 'BH', latitude: 19 }),
     }), env)).status).toBe(400);
+    expect(rpc.call).not.toHaveBeenCalled();
+  });
+
+  it('bounds streamed bodies even when content-length is absent', async () => {
+    const rpc = rpcWith(rpcPayload);
+    const handler = createHandler({ rpc });
+    const oversized = JSON.stringify({ items: ['B'.repeat(20_000)] });
+    const batchResponse = await handler(streamedJsonRequest('https://api.test/api/v1/resolve-batch', oversized), env);
+    expect(batchResponse.status).toBe(413);
+    const resolveResponse = await handler(streamedJsonRequest('https://api.test/api/v1/resolve', oversized), env);
+    expect(resolveResponse.status).toBe(413);
     expect(rpc.call).not.toHaveBeenCalled();
   });
 });

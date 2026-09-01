@@ -88,6 +88,26 @@ def test_salud_digna_client_requests_page_and_studies():
     assert calls[0][2]["user-agent"] == "PrueviaCollector/0.1"
 
 
+def test_salud_digna_client_rejects_external_redirect_before_requesting_target():
+    calls = []
+
+    def handler(request: httpx.Request):
+        calls.append(str(request.url))
+        return httpx.Response(302, headers={"Location": "https://evil.example/puebla-municipio-libre"}, request=request)
+
+    client = SaludDignaClient(
+        origin="https://example.test",
+        services_base_url="https://services.test",
+        client=httpx.Client(transport=httpx.MockTransport(handler)),
+    )
+    try:
+        with pytest.raises(ValueError, match="left the configured host"):
+            client.fetch_location("puebla-municipio-libre")
+    finally:
+        client._client.close()
+    assert calls == ["https://example.test/puebla-municipio-libre"]
+
+
 def test_salud_digna_adapter_emits_location_and_catalog_records():
     class FakeClient:
         def fetch_location(self, slug):

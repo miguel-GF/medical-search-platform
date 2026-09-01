@@ -14,7 +14,7 @@ La auditoria de seguridad mas reciente y sus pruebas estan en [docs/SECURITY_AUD
 ## Estado actual
 
 - Arquitectura de producto y software: definida.
-- Base de datos V1: migraciones 001-124 aplicadas y verificadas.
+- Base de datos V1: migraciones 001-126 aplicadas y verificadas.
 - Despliegue y validación física en Supabase DEV: completado para el Data Engine previo a Flutter.
 - Collectors Chopo/Ruiz/Salud Digna/DENUE (fixtures, pruebas y corridas live reproducibles), Search API V1 y Admin V1: implementados y probados. Chopo, Ruiz, Salud Digna y DENUE están publicados en Supabase DEV. El gate remoto, los invariantes de base, la API pública y la cuarentena de colectores pasan; no se inicia Flutter hasta un nuevo corte de producto.
 - Collector genérico de proveedores: discovery acotado por dominio, respeto de robots.txt, JSON-LD/patrones de precio-servicio y evidencia candidata para laboratorios pequeños.

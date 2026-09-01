@@ -7,7 +7,7 @@ de revisión administrativa y evidencia documental referenciada.
 
 Este documento conserva el corte del 31 de agosto. La corrección posterior de
 ACL de RPC administrativos y su regresión de seguridad están documentadas en
-`docs/SECURITY_AUDIT_20260901.md` y en la migración 124.
+`docs/SECURITY_AUDIT_20260901.md` y en las migraciones 124–126.
 
 ## Cambios aplicados
 
@@ -60,7 +60,7 @@ Resultados observados:
 - `resolver_package_test.sql`: **10/10**;
 - `resolver_unification_test.sql`: **25/25**;
 - API TypeScript: `tsc --noEmit` sin errores;
-- API Vitest: **35/35**.
+- API Vitest: **37/37**.
 
 Las pruebas SQL se ejecutan dentro de `BEGIN … ROLLBACK`; el estado operativo
 posterior queda limpio (`claim_rows = 0`, `membership_rows = 0`,

@@ -4,7 +4,7 @@
 
 begin;
 create extension if not exists pgtap with schema extensions;
-select extensions.plan(8);
+select extensions.plan(12);
 
 select extensions.is(
   (select count(*)::integer
@@ -64,6 +64,40 @@ select extensions.is(
   has_table_privilege('authenticated', 'ingest.raw_records', 'select'),
   false,
   'authenticated users cannot read raw ingest records directly'
+);
+
+select extensions.is(
+  (select count(*)::integer
+   from pg_proc p
+   join pg_namespace n on n.oid = p.pronamespace
+   where n.nspname in ('geo','core','catalog','health','supply','ingest','identity','audit',
+                       'ops','analytics','marketplace','sensitive','billing')
+     and p.prokind = 'f'
+     and has_function_privilege('anon', p.oid, 'execute')),
+  0,
+  'anonymous users cannot execute internal helper functions'
+);
+select extensions.is(
+  (select count(*)::integer
+   from pg_proc p
+   join pg_namespace n on n.oid = p.pronamespace
+   where n.nspname in ('geo','core','catalog','health','supply','ingest','identity','audit',
+                       'ops','analytics','marketplace','sensitive','billing')
+     and p.prokind = 'f'
+     and has_function_privilege('authenticated', p.oid, 'execute')),
+  0,
+  'authenticated users cannot execute internal helper functions'
+);
+
+select extensions.is(
+  has_schema_privilege('anon', 'extensions', 'usage'),
+  false,
+  'anonymous users cannot use the extension schema directly'
+);
+select extensions.is(
+  has_schema_privilege('authenticated', 'extensions', 'usage'),
+  false,
+  'authenticated users cannot use the extension schema directly'
 );
 
 select * from extensions.finish();

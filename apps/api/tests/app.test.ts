@@ -15,6 +15,22 @@ function rpcWith<T>(value: T): RpcClient {
   return { call: call as RpcClient['call'] };
 }
 
+function streamedJsonRequest(url: string, body: string, authorization = 'Bearer user-token'): Request {
+  const bytes = new TextEncoder().encode(body);
+  const stream = new ReadableStream<Uint8Array>({
+    start(controller) {
+      controller.enqueue(bytes);
+      controller.close();
+    },
+  });
+  return new Request(url, {
+    method: 'POST',
+    headers: { authorization, 'content-type': 'application/json' },
+    body: stream,
+    duplex: 'half',
+  } as RequestInit);
+}
+
 const row: SearchRow = {
   service_id: '00000000-0000-0000-0000-000000000001',
   display_name: 'Biometría hemática',
@@ -262,5 +278,16 @@ describe('Pruevia API', () => {
       p_decision: 'approved',
       p_reviewer_user_id: '00000000-0000-0000-0000-000000000099',
     }), { admin: true });
+  });
+
+  it('bounds streamed admin bodies before invoking privileged RPCs', async () => {
+    const rpc = rpcWith({});
+    const handler = createHandler({ rpc, authenticateAdmin });
+    const response = await handler(streamedJsonRequest(
+      'https://api.test/api/v1/admin/provider-claims/00000000-0000-0000-0000-000000000010/review',
+      JSON.stringify({ decision: 'approved', reason: 'R'.repeat(20_000) }),
+    ), env);
+    expect(response.status).toBe(413);
+    expect(rpc.call).not.toHaveBeenCalled();
   });
 });

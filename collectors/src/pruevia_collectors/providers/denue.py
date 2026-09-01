@@ -9,6 +9,7 @@ from urllib.parse import quote
 import httpx
 
 from ..models import Observation, SourceRecord, SourceSpec
+from .http import request_with_same_host_redirects
 
 
 DENUE_BASE_URL = "https://www.inegi.org.mx/app/api/denue/v1/consulta"
@@ -53,11 +54,22 @@ class DenueClient:
     def search(self, query: DenueQuery) -> list[Mapping[str, Any]]:
         url = self.build_search_url(query)
         owns_client = self._client is None
-        client = self._client or httpx.Client(timeout=self.timeout_seconds, follow_redirects=True)
+        client = self._client or httpx.Client(timeout=self.timeout_seconds, follow_redirects=False)
         try:
-            response = client.get(url, headers={"Accept": "application/json", "User-Agent": "PrueviaCollector/0.1"})
-            response.raise_for_status()
-            return _decode_rows(response.json())
+            try:
+                response = request_with_same_host_redirects(
+                    client.get,
+                    url,
+                    allowed_url=self.base_url,
+                    max_redirects=5,
+                    headers={"Accept": "application/json", "User-Agent": "PrueviaCollector/0.1"},
+                )
+                response.raise_for_status()
+                return _decode_rows(response.json())
+            except (httpx.HTTPStatusError, httpx.RequestError) as error:
+                # DENUE requires the token in the URL path. Never propagate
+                # that URL into the run manifest or CLI error output.
+                raise RuntimeError(f"DENUE request failed: {_redact_token(str(error), self.token)}") from error
         finally:
             if owns_client:
                 client.close()
@@ -66,6 +78,15 @@ class DenueClient:
         condition = quote(query.condition, safe="")
         point = f"{query.latitude:.8f},{query.longitude:.8f}"
         return f"{self.base_url}/Buscar/{condition}/{point}/{query.radius_meters}/{quote(self.token, safe='')}"
+
+
+def _redact_token(value: str, token: str | None) -> str:
+    message = value
+    if token:
+        for candidate in {token, quote(token, safe="")}:
+            if candidate:
+                message = message.replace(candidate, "[REDACTED]")
+    return message
 
 
 class DenueAdapter:

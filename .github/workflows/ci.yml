@@ -111,27 +111,14 @@ jobs:
         if: steps.secrets.outputs.configured == 'true'
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
-      - run: supabase db query --linked --file supabase/tests/public_api_test.sql
+      - name: Run all SQL contracts
+        shell: bash
         if: steps.secrets.outputs.configured == 'true'
-        env:
-          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
-      - run: supabase db query --linked --file supabase/tests/database_v1_test.sql
-        if: steps.secrets.outputs.configured == 'true'
-        env:
-          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
-      - run: supabase db query --linked --file supabase/tests/database_v1_invariants.sql
-        if: steps.secrets.outputs.configured == 'true'
-        env:
-          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
-      - run: supabase db query --linked --file supabase/tests/gate_a_test.sql
-        if: steps.secrets.outputs.configured == 'true'
-        env:
-          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
-      - run: supabase db query --linked --file supabase/tests/provider_claims_test.sql
-        if: steps.secrets.outputs.configured == 'true'
-        env:
-          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
-      - run: supabase db query --linked --file supabase/tests/security_privileges_test.sql
-        if: steps.secrets.outputs.configured == 'true'
+        run: |
+          set -euo pipefail
+          while IFS= read -r file; do
+            echo "Running ${file}"
+            supabase db query --linked --file "$file"
+          done < <(find supabase/tests -maxdepth 1 -type f -name '*.sql' | sort)
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}

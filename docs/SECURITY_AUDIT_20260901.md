@@ -25,6 +25,27 @@ El servicio OCR privado aceptaba solicitudes sin autenticacion si
 `503 ocr_not_configured` hasta que exista el secreto; `/health` continua
 publico para health checks. Se agrego una prueba de regresion.
 
+### ACL por defecto en funciones internas
+
+Aunque los esquemas internos ya negaban `USAGE`, varias funciones auxiliares
+conservaban el `EXECUTE` heredado de `PUBLIC`. La migracion
+`20260901100000_125_internal_function_privileges.sql` revoca esos permisos y
+ajusta los privilegios por defecto para nuevos helpers. La prueba de seguridad
+comprueba ambos roles del Data API. Las funciones propiedad del proveedor en
+`gis`/`extensions` conservan ACL del sistema, pero `extensions` ya no tiene
+`USAGE` para esos roles mediante la migracion 126. SHA-256: migracion 125
+`A5094AE56BD419DAA154E1182B88E3F2D3CF2B0A5D288C9B91A795A3B7C3D425`; migracion
+126 `B53D6B0C004A428D51204132A37A6D4D7E307E57A5CF39B0D5E020792EE361AF`.
+
+### Redirecciones no confiables en colectores oficiales
+
+Chopo, Ruiz, Salud Digna y DENUE usaban redirecciones automaticas. Eso podia
+contactar un host externo antes de validar la respuesta y, en DENUE, exponer el
+token incluido en la ruta. Ahora cada colector sigue como maximo cinco saltos
+manualmente y valida esquema, host, puerto y ausencia de credenciales antes de
+emitir la siguiente peticion. Se agregaron regresiones que prueban que un salto
+externo se rechaza sin solicitar el destino.
+
 ## Controles revisados
 
 - `anon` y `authenticated` no tienen `SELECT` directo sobre tablas internas de
@@ -38,19 +59,21 @@ publico para health checks. Se agrego una prueba de regresion.
   persiste imagenes ni interpreta equivalencias clinicas.
 - Los endpoints API mantienen validacion de UUID, dominios, coordenadas,
   tamano de payload y uso de JWT de Supabase.
+- Los colectores oficiales validan cada salto de redireccion y DENUE redacta el
+  token en errores de transporte.
 - Las pruebas de claims conservan alcance marca/sucursal, evidencia, auditoria,
   revocacion reversible e idempotencia.
 
 ## Verificacion ejecutada
 
 - OCR Python: **13/13**.
-- Collectors Python: **69/69**.
-- API TypeScript/Vitest: **35/35** y `tsc --noEmit`.
+- Collectors Python: **74/74**.
+- API TypeScript/Vitest: **37/37** y `tsc --noEmit`.
 - Admin TypeScript/Vitest/build: **3/3**, tipado y build correctos.
 - Worker Cloudflare: bundle dry-run correcto con `wrangler deploy --dry-run
   --temporary`, sin requerir una credencial de despliegue en CI.
 - Supabase dry-run: remoto actualizado, sin migraciones pendientes.
-- Contratos SQL remotos: **14 suites aprobadas**, incluyendo seguridad **8/8**
+- Contratos SQL remotos: **14 suites aprobadas**, incluyendo seguridad **12/12**
   y claims **53/53**. Todas usan `BEGIN ... ROLLBACK`.
 
 ## Riesgos aun fuera de este corte

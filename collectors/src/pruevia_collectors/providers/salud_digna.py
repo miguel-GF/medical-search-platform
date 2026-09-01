@@ -20,6 +20,7 @@ except ImportError:  # pragma: no cover - dependency is installed in supported e
     truststore = None  # type: ignore[assignment]
 
 from ..models import Observation, SourceRecord, SourceSpec
+from .http import request_with_same_host_redirects
 
 SALUD_DIGNA_ORIGIN = "https://www.salud-digna.org"
 SALUD_DIGNA_SERVICES_URL = "https://api.emarketingsd.org"
@@ -60,7 +61,7 @@ class SaludDignaClient:
         self._owns_client = client is None
         self._client = client or httpx.Client(
             timeout=timeout_seconds,
-            follow_redirects=True,
+            follow_redirects=False,
             verify=_ssl_context(),
         )
 
@@ -106,9 +107,17 @@ class SaludDignaClient:
         return studies
 
     def _request(self, method: str, url: str, **kwargs: Any) -> httpx.Response:
+        headers = {"User-Agent": "PrueviaCollector/0.1", **kwargs.pop("headers", {})}
         for attempt in range(1, self.max_attempts + 1):
             try:
-                response = self._client.request(method, url, headers={"User-Agent": "PrueviaCollector/0.1", **kwargs.pop("headers", {})}, **kwargs)
+                response = request_with_same_host_redirects(
+                    lambda target, **request_kwargs: self._client.request(method, target, **request_kwargs),
+                    url,
+                    allowed_url=url,
+                    max_redirects=5,
+                    headers=headers,
+                    **kwargs,
+                )
                 response.raise_for_status()
                 return response
             except httpx.HTTPStatusError as error:

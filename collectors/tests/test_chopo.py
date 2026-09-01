@@ -128,3 +128,30 @@ def test_chopo_client_retries_transport_errors():
 
     assert client.fetch_page(1).html == "<html>ok</html>"
     assert fake.calls == 2
+
+
+def test_chopo_client_rejects_external_redirect_before_requesting_target():
+    class FakeClient:
+        def __init__(self):
+            self.calls = []
+
+        def get(self, url, **kwargs):
+            self.calls.append(url)
+            return httpx.Response(
+                302,
+                headers={"Location": "https://evil.example/puebla/estudios"},
+                request=httpx.Request("GET", url),
+            )
+
+    fake = FakeClient()
+    client = ChopoClient(base_url="https://www.chopo.com.mx/puebla/estudios", client=fake)
+    try:
+        try:
+            client.fetch_page(1)
+        except ValueError as error:
+            assert "left the configured host" in str(error)
+        else:
+            raise AssertionError("expected external redirect to fail")
+    finally:
+        client._client = None
+    assert fake.calls == ["https://www.chopo.com.mx/puebla/estudios"]

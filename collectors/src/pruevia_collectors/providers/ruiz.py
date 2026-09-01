@@ -9,6 +9,7 @@ from urllib.parse import quote
 import httpx
 
 from ..models import Observation, SourceRecord, SourceSpec
+from .http import request_with_same_host_redirects
 
 
 RUIZ_BASE_URL = "https://laboratoriosruiz.com"
@@ -39,7 +40,7 @@ class RuizClient:
         self.max_attempts = max_attempts
         self.retry_backoff_seconds = retry_backoff_seconds
         self._owns_client = client is None
-        self._client = client or httpx.Client(timeout=timeout_seconds, follow_redirects=True)
+        self._client = client or httpx.Client(timeout=timeout_seconds, follow_redirects=False)
 
     def close(self) -> None:
         if self._owns_client:
@@ -59,8 +60,11 @@ class RuizClient:
         url = f"{self.base_url}{path}"
         for attempt in range(1, self.max_attempts + 1):
             try:
-                response = self._client.get(
+                response = request_with_same_host_redirects(
+                    self._client.get,
                     url,
+                    allowed_url=self.base_url,
+                    max_redirects=5,
                     headers={"Accept": "application/json", "User-Agent": "PrueviaCollector/0.1"},
                 )
                 response.raise_for_status()

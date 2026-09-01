@@ -113,3 +113,23 @@ def test_ruiz_client_retries_transient_http_errors():
         client._client.close()
 
     assert calls == 2
+
+
+def test_ruiz_client_rejects_external_redirect_before_requesting_target():
+    calls = []
+
+    def handler(request: httpx.Request):
+        calls.append(str(request.url))
+        return httpx.Response(302, headers={"Location": "https://evil.example/general-home"}, request=request)
+
+    client = RuizClient(base_url="https://example.test", client=httpx.Client(transport=httpx.MockTransport(handler)))
+    try:
+        try:
+            client.fetch_home()
+        except ValueError as error:
+            assert "left the configured host" in str(error)
+        else:
+            raise AssertionError("expected external redirect to fail")
+    finally:
+        client._client.close()
+    assert calls == ["https://example.test/general-home"]

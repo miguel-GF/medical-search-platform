@@ -3,6 +3,7 @@ import sys
 from pathlib import Path
 
 import httpx
+import pytest
 
 from pruevia_collectors.providers.denue import DenueQuery, denue_row_to_record
 
@@ -47,6 +48,51 @@ def test_denue_client_rejects_invalid_radius():
         assert "5000" in str(error)
     else:
         raise AssertionError("expected invalid radius to fail")
+
+
+def test_denue_client_redacts_token_from_transport_errors():
+    from pruevia_collectors.providers.denue import DenueClient
+
+    token = "secret-token-123"
+
+    class FailingClient:
+        def get(self, url, **kwargs):
+            request = httpx.Request("GET", url)
+            response = httpx.Response(500, request=request)
+            response.raise_for_status()
+
+    client = DenueClient(token=token, client=FailingClient())
+    try:
+        try:
+            client.search(DenueQuery("laboratorio", 19.04, -98.20))
+        except RuntimeError as error:
+            assert token not in str(error)
+            assert "[REDACTED]" in str(error)
+        else:
+            raise AssertionError("expected DENUE request failure")
+    finally:
+        client._client = None
+
+
+def test_denue_client_rejects_external_redirect_before_requesting_target():
+    from pruevia_collectors.providers.denue import DenueClient
+
+    calls = []
+
+    def handler(request: httpx.Request):
+        calls.append(str(request.url))
+        return httpx.Response(302, headers={"Location": "https://evil.example/steal"}, request=request)
+
+    client = DenueClient(
+        token="secret-token-123",
+        client=httpx.Client(transport=httpx.MockTransport(handler)),
+    )
+    try:
+        with pytest.raises(ValueError, match="left the configured host"):
+            client.search(DenueQuery("laboratorio", 19.04, -98.20))
+    finally:
+        client._client.close()
+    assert len(calls) == 1
 
 
 def test_denue_cli_reports_missing_token_without_traceback(monkeypatch, capsys, tmp_path):
