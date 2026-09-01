@@ -792,11 +792,14 @@ Futuros:
 ```text
 GET  /api/v1/provider/claims
 POST /api/v1/provider/claims
+GET  /api/v1/provider/memberships
+POST /api/v1/provider/memberships/{id}/accept
 POST /api/v1/provider/claims/{id}/documents
 POST /api/v1/provider/claims/{id}/members
 PATCH /api/v1/provider/locations/{id}/profile
 GET  /api/v1/admin/provider-claims
 POST /api/v1/admin/provider-claims/{id}/review
+POST /api/v1/admin/provider-claims/{id}/revoke
 GET  /api/v1/admin/provider-change-requests
 POST /api/v1/admin/provider-change-requests/{id}/review
 POST /leads

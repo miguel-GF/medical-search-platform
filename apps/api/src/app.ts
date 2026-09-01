@@ -396,6 +396,19 @@ async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClien
       p_reason: typeof body.reason === 'string' ? body.reason : null,
     }, { admin: true }), 200, origin);
   }
+  const providerClaimRevokeMatch = url.pathname.match(/^\/api\/v1\/admin\/provider-claims\/([^/]+)\/revoke$/i);
+  if (providerClaimRevokeMatch && request.method === 'POST') {
+    if (!isUuid(providerClaimRevokeMatch[1])) return json({ error: { code: 'invalid_id', message: 'claim id must be a UUID' } }, 400, origin);
+    const body = await request.json().catch(() => null) as Record<string, unknown> | null;
+    if (!body || typeof body.reason !== 'string' || body.reason.trim().length === 0 || body.reason.length > 2000) {
+      return json({ error: { code: 'invalid_body', message: 'a revocation reason of at most 2000 characters is required' } }, 400, origin);
+    }
+    return json(await rpc.call('api_admin_revoke_provider_claim', {
+      p_claim_id: providerClaimRevokeMatch[1],
+      p_reviewer_user_id: user.id,
+      p_reason: body.reason,
+    }, { admin: true }), 200, origin);
+  }
   const providerChangeReviewMatch = url.pathname.match(/^\/api\/v1\/admin\/provider-change-requests\/([^/]+)\/review$/i);
   if (providerChangeReviewMatch && request.method === 'POST') {
     if (!isUuid(providerChangeReviewMatch[1])) return json({ error: { code: 'invalid_id', message: 'change request id must be a UUID' } }, 400, origin);
@@ -458,6 +471,12 @@ async function providerResponse(
     return json(await rpc.call('api_provider_my_claims', {
       p_status: url.searchParams.get('status'),
       p_limit: parseBoundedInt(url.searchParams.get('limit'), 50, 1, 100),
+    }, rpcOptions), 200, origin);
+  }
+  if (url.pathname === '/api/v1/provider/memberships' && request.method === 'GET') {
+    return json(await rpc.call('api_provider_my_memberships', {
+      p_status: url.searchParams.get('status'),
+      p_limit: parseBoundedInt(url.searchParams.get('limit'), 100, 1, 200),
     }, rpcOptions), 200, origin);
   }
 
@@ -543,6 +562,11 @@ async function providerResponse(
       p_provider_location_id: profileMatch[1],
       p_changes: body.changes,
     }, rpcOptions), 202, origin);
+  }
+  const membershipAcceptMatch = url.pathname.match(/^\/api\/v1\/provider\/memberships\/([^/]+)\/accept$/i);
+  if (membershipAcceptMatch && request.method === 'POST') {
+    if (!isUuid(membershipAcceptMatch[1])) return json({ error: { code: 'invalid_id', message: 'membership id must be a UUID' } }, 400, origin);
+    return json(await rpc.call('api_provider_accept_membership', { p_membership_id: membershipAcceptMatch[1] }, rpcOptions), 200, origin);
   }
 
   return json({ error: { code: 'not_found', message: 'Provider route not found' } }, 404, origin);

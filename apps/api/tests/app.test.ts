@@ -204,6 +204,39 @@ describe('Pruevia API', () => {
     }, { accessToken: 'provider-token' });
   });
 
+  it('lists and accepts memberships, while requiring a reason to revoke claims', async () => {
+    const rpc = rpcWith({ membership_id: '00000000-0000-0000-0000-000000000016', status: 'active' });
+    const handler = createHandler({ rpc, authenticateUser, authenticateAdmin });
+    const memberships = await handler(new Request('https://api.test/api/v1/provider/memberships?status=invited', {
+      headers: { authorization: 'Bearer provider-token' },
+    }), env);
+    expect(memberships.status).toBe(200);
+    expect(rpc.call).toHaveBeenCalledWith('api_provider_my_memberships', { p_status: 'invited', p_limit: 100 }, { accessToken: 'provider-token' });
+    const accepted = await handler(new Request('https://api.test/api/v1/provider/memberships/00000000-0000-0000-0000-000000000016/accept', {
+      method: 'POST',
+      headers: { authorization: 'Bearer provider-token' },
+    }), env);
+    expect(accepted.status).toBe(200);
+    expect(rpc.call).toHaveBeenCalledWith('api_provider_accept_membership', { p_membership_id: '00000000-0000-0000-0000-000000000016' }, { accessToken: 'provider-token' });
+    const invalidRevoke = await handler(new Request('https://api.test/api/v1/admin/provider-claims/00000000-0000-0000-0000-000000000010/revoke', {
+      method: 'POST',
+      headers: { authorization: 'Bearer user-token', 'content-type': 'application/json' },
+      body: JSON.stringify({ reason: '' }),
+    }), env);
+    expect(invalidRevoke.status).toBe(400);
+    const revoked = await handler(new Request('https://api.test/api/v1/admin/provider-claims/00000000-0000-0000-0000-000000000010/revoke', {
+      method: 'POST',
+      headers: { authorization: 'Bearer user-token', 'content-type': 'application/json' },
+      body: JSON.stringify({ reason: 'Relationship ended' }),
+    }), env);
+    expect(revoked.status).toBe(200);
+    expect(rpc.call).toHaveBeenCalledWith('api_admin_revoke_provider_claim', expect.objectContaining({
+      p_claim_id: '00000000-0000-0000-0000-000000000010',
+      p_reviewer_user_id: '00000000-0000-0000-0000-000000000099',
+      p_reason: 'Relationship ended',
+    }), { admin: true });
+  });
+
   it('exposes admin claim review without exposing provider routes publicly', async () => {
     const rpc = rpcWith({ claim_id: '00000000-0000-0000-0000-000000000010', status: 'approved' });
     const handler = createHandler({ rpc, authenticateAdmin });

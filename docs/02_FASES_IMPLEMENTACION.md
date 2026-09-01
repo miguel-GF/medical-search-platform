@@ -547,7 +547,7 @@ No crear SEO programático vacío.
 
 # Fase 12 — Provider Claim / Verification
 
-**Estado:** ✅ base de identidad y reclamación implementada (migraciones 118–121)
+**Estado:** ✅ base de identidad y reclamación implementada (migraciones 118–123)
 
 La identidad del proveedor queda separada en organización legal, marca,
 sucursal y usuario. La reclamación admite dos alcances:
@@ -562,11 +562,14 @@ Implementado:
 - `identity.provider_claims` y estados pending/under_review/approved/rejected/revoked;
 - `identity.provider_verifications` y referencias privadas con SHA-256;
 - `identity.provider_memberships` con roles organization/brand/location;
+- aprobación condicionada a evidencia documental, aceptación de invitaciones y
+  revocación reversible de claims/membresías;
 - `identity.provider_change_requests` para proponer correcciones de sucursal
   sin escritura directa;
 - RPC protegidas por JWT y RLS indirecta mediante esquemas internos no expuestos;
 - endpoints API para crear/listar reclamos, aportar documentos, invitar miembros,
-  proponer correcciones de sucursal y revisar por Admin;
+  proponer correcciones de sucursal, aceptar invitaciones y revisar/revocar por
+  Admin;
 - auditoría de creación, documentos, revisión e invitaciones.
 
 Los perfiles no reclamados continúan visibles con estado de verificación. La

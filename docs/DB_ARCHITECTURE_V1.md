@@ -330,6 +330,11 @@ Planned tables:
 - `identity.verification_documents` (implemented in migration 118)
 - `identity.provider_change_requests` (implemented in migration 121)
 
+El ciclo de vida de claims se endurece en las migraciones 122–123: la aprobación
+requiere evidencia documental, las invitaciones deben aceptarse, la revocación
+cierra relaciones/membresías sin borrar historia y los RPC quedan limitados por
+rol (`authenticated` para autoservicio y `service_role` para administración).
+
 ### Marketplace
 
 - `marketplace.leads`

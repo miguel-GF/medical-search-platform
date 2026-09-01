@@ -22,11 +22,14 @@ La Fase 12 usa estas rutas protegidas por el JWT del proveedor:
 ```text
 GET  /api/v1/provider/claims
 POST /api/v1/provider/claims
+GET  /api/v1/provider/memberships
+POST /api/v1/provider/memberships/{membership_id}/accept
 POST /api/v1/provider/claims/{claim_id}/documents
 POST /api/v1/provider/claims/{claim_id}/members
 PATCH /api/v1/provider/locations/{location_id}/profile
 GET  /api/v1/admin/provider-claims
 POST /api/v1/admin/provider-claims/{claim_id}/review
+POST /api/v1/admin/provider-claims/{claim_id}/revoke
 GET  /api/v1/admin/provider-change-requests
 POST /api/v1/admin/provider-change-requests/{request_id}/review
 ```
