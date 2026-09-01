@@ -547,7 +547,7 @@ No crear SEO programático vacío.
 
 # Fase 12 — Provider Claim / Verification
 
-**Estado:** ✅ base de identidad y reclamación implementada (migraciones 118–123)
+**Estado:** ✅ base de identidad y reclamación implementada (migraciones 118–124)
 
 La identidad del proveedor queda separada en organización legal, marca,
 sucursal y usuario. La reclamación admite dos alcances:
@@ -571,6 +571,7 @@ Implementado:
   proponer correcciones de sucursal, aceptar invitaciones y revisar/revocar por
   Admin;
 - auditoría de creación, documentos, revisión e invitaciones.
+- ACL explícitas para todos los RPC administrativos históricos: sólo `service_role`.
 
 Los perfiles no reclamados continúan visibles con estado de verificación. La
 aprobación crea relaciones y permisos, pero no permite sobrescribir evidencia

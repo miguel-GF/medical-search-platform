@@ -5,6 +5,10 @@ sucursal y representantes. La fuente canónica sigue siendo el catálogo de
 proveedores; un claim sólo puede crear una relación jurídica/membresía después
 de revisión administrativa y evidencia documental referenciada.
 
+Este documento conserva el corte del 31 de agosto. La corrección posterior de
+ACL de RPC administrativos y su regresión de seguridad están documentadas en
+`docs/SECURITY_AUDIT_20260901.md` y en la migración 124.
+
 ## Cambios aplicados
 
 - `118_provider_claims`: claims, verificaciones, documentos referenciados,

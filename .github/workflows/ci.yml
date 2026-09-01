@@ -34,6 +34,16 @@ jobs:
       - run: python -m pip install -e '.[dev]'
       - run: python -m pytest -q
 
+  database-scripts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --upgrade pip pytest
+      - run: python -m pytest -q database/tests
+
   api:
     runs-on: ubuntu-latest
     defaults:
@@ -49,7 +59,7 @@ jobs:
       - run: npm ci
       - run: npm run typecheck
       - run: npm test
-      - run: npx wrangler deploy --dry-run
+      - run: npx wrangler deploy --dry-run --temporary
 
   admin:
     runs-on: ubuntu-latest
@@ -118,6 +128,10 @@ jobs:
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
       - run: supabase db query --linked --file supabase/tests/provider_claims_test.sql
+        if: steps.secrets.outputs.configured == 'true'
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      - run: supabase db query --linked --file supabase/tests/security_privileges_test.sql
         if: steps.secrets.outputs.configured == 'true'
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}

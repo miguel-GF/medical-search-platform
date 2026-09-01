@@ -57,6 +57,16 @@ def test_order_requires_token_when_configured():
     assert response.status_code == 401
 
 
+def test_order_fails_closed_when_token_is_not_configured():
+    app = create_app(app_settings=replace(settings, service_token=""), engine_factory=fake_engine_factory)
+    response = TestClient(app).post(
+        "/v1/ocr/order",
+        json={"image": f"data:image/png;base64,{PNG_1X1}"},
+    )
+    assert response.status_code == 503
+    assert response.json()["detail"]["code"] == "ocr_not_configured"
+
+
 def test_order_lines_merge_same_row_and_drop_footer():
     from pruevia_ocr_service.engine import format_order_lines
 

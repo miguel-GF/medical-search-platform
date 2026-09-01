@@ -35,7 +35,13 @@ def create_app(
 
     async def require_token(request: Request) -> None:
         if not app_settings.service_token:
-            return
+            # This service is private by design. A missing secret must never
+            # silently downgrade the endpoint to a public, unauthenticated
+            # OCR oracle (which could be abused for compute and data leakage).
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                detail={"code": "ocr_not_configured", "message": "OCR service token is not configured"},
+            )
         header = request.headers.get("authorization", "")
         scheme, _, value = header.partition(" ")
         if scheme.lower() != "bearer" or not secrets.compare_digest(value, app_settings.service_token):

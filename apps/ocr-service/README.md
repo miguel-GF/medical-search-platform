@@ -51,8 +51,10 @@ accepts JPEG, PNG and WebP, limits images to 5 MiB by default and rejects
 content whose bytes do not match the declared MIME type.
 
 Set `OCR_SERVICE_TOKEN` for every non-local deployment. The Cloudflare Worker
-will send it as a Bearer token when `OCR_SERVICE_URL` is configured. Keep this
-service behind HTTPS and add provider-level rate limiting before public use.
+will send it as a Bearer token when `OCR_SERVICE_URL` is configured. If the
+secret is missing, `/v1/ocr/order` fails closed with `503 ocr_not_configured`;
+only `/health` remains public. Keep this service behind HTTPS and add
+provider-level rate limiting before public use.
 
 ## Testing
 
