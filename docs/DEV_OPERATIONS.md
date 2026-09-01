@@ -14,7 +14,27 @@ npx.cmd supabase@latest db query --linked --file supabase/tests/database_v1_inva
 npx.cmd supabase@latest db query --linked --file supabase/tests/public_api_test.sql
 npx.cmd supabase@latest db query --linked --file supabase/tests/gate_a_test.sql
 npx.cmd supabase@latest db query --linked --file supabase/tests/resolver_benchmark_v2_test.sql
+npx.cmd supabase@latest db query --linked --file supabase/tests/provider_claims_test.sql
 ```
+
+La Fase 12 usa estas rutas protegidas por el JWT del proveedor:
+
+```text
+GET  /api/v1/provider/claims
+POST /api/v1/provider/claims
+POST /api/v1/provider/claims/{claim_id}/documents
+POST /api/v1/provider/claims/{claim_id}/members
+PATCH /api/v1/provider/locations/{location_id}/profile
+GET  /api/v1/admin/provider-claims
+POST /api/v1/admin/provider-claims/{claim_id}/review
+GET  /api/v1/admin/provider-change-requests
+POST /api/v1/admin/provider-change-requests/{request_id}/review
+```
+
+Los documentos se cargan en almacenamiento privado por el servicio de subida;
+la API sólo recibe la referencia interna y su SHA-256. Las tablas `identity`
+no están expuestas directamente por PostgREST. La aprobación de un reclamo
+crea la relación legal y la membresía únicamente en el alcance solicitado.
 
 ## Collectors
 

@@ -6,9 +6,10 @@ export class SupabaseRpcClient implements RpcClient {
     private readonly fetcher: typeof fetch = fetch,
   ) {}
 
-  async call<T>(name: string, body: Record<string, unknown>, options: { admin?: boolean } = {}): Promise<T> {
+  async call<T>(name: string, body: Record<string, unknown>, options: { admin?: boolean; accessToken?: string } = {}): Promise<T> {
     const key = options.admin ? this.env.SUPABASE_SERVICE_ROLE_KEY : this.env.SUPABASE_ANON_KEY;
     if (!key) throw new Error('Supabase credential is not configured');
+    const authorization = options.accessToken ?? key;
     const timeoutMs = parseTimeout(this.env.SUPABASE_TIMEOUT_MS);
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort('supabase_timeout'), timeoutMs);
@@ -17,7 +18,7 @@ export class SupabaseRpcClient implements RpcClient {
         method: 'POST',
         headers: {
           apikey: key,
-          Authorization: `Bearer ${key}`,
+          Authorization: `Bearer ${authorization}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(body),

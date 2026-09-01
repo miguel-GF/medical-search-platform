@@ -40,6 +40,22 @@ Organization / legal operator
 
 `core.provider_brand_organizations` supports owner/operator/franchise relationships so an acquisition or franchise does not force us to merge public brands.
 
+La relación legal de una sucursal se mantiene por separado en
+`core.provider_location_organizations`, porque el operador, franquiciatario o
+entidad de facturación puede cambiar entre ubicaciones. Una reclamación no
+reemplaza la evidencia descubierta: agrega una relación verificada, un usuario
+con permisos acotados y eventos de auditoría.
+
+La Fase 12 usa dos alcances de reclamación:
+
+- `brand`: la empresa solicita administrar una marca y después selecciona sus
+  sucursales;
+- `location`: un operador o encargado solicita administrar únicamente una
+  sucursal.
+
+Los servicios, precios, horarios y contactos continúan siendo datos de la
+sucursal. Una reclamación de marca no copia esos datos a todas las ubicaciones.
+
 `core.provider_markets` represents commercial pricing regions that do not necessarily equal official cities. A market can contain many physical locations. A DB trigger prevents a market from accidentally containing a location from a different provider brand.
 
 ## 4. Catalog identity model
@@ -308,10 +324,11 @@ Planned tables:
 
 ### Provider identity
 
-- `identity.provider_memberships`
-- `identity.provider_claims`
-- `identity.provider_verifications`
-- `identity.verification_documents`
+- `identity.provider_memberships` (implemented in migration 118)
+- `identity.provider_claims` (implemented in migration 118)
+- `identity.provider_verifications` (implemented in migration 118)
+- `identity.verification_documents` (implemented in migration 118)
+- `identity.provider_change_requests` (implemented in migration 121)
 
 ### Marketplace
 

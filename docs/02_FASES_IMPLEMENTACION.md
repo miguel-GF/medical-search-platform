@@ -547,28 +547,40 @@ No crear SEO programático vacío.
 
 # Fase 12 — Provider Claim / Verification
 
-**Estado:** ⏳
+**Estado:** ✅ base de identidad y reclamación implementada (migraciones 118–121)
 
-Construir:
+La identidad del proveedor queda separada en organización legal, marca,
+sucursal y usuario. La reclamación admite dos alcances:
 
-- memberships;
-- claims;
-- verification workflow;
-- provider documents;
-- roles brand/region/location.
+- `brand`: administración agrupada de una marca y sus sucursales seleccionadas;
+- `location`: administración exclusiva de una sucursal.
 
-Perfil gratuito puede:
+Implementado:
 
-- corregir información;
-- publicar catálogo;
-- precios;
-- horarios;
-- contacto;
-- availability básica.
+- `core.provider_location_organizations` para owner/operator/franchisee/billing
+  por sucursal;
+- `identity.provider_claims` y estados pending/under_review/approved/rejected/revoked;
+- `identity.provider_verifications` y referencias privadas con SHA-256;
+- `identity.provider_memberships` con roles organization/brand/location;
+- `identity.provider_change_requests` para proponer correcciones de sucursal
+  sin escritura directa;
+- RPC protegidas por JWT y RLS indirecta mediante esquemas internos no expuestos;
+- endpoints API para crear/listar reclamos, aportar documentos, invitar miembros,
+  proponer correcciones de sucursal y revisar por Admin;
+- auditoría de creación, documentos, revisión e invitaciones.
+
+Los perfiles no reclamados continúan visibles con estado de verificación. La
+aprobación crea relaciones y permisos, pero no permite sobrescribir evidencia
+histórica ni copiar precios o servicios entre sucursales.
 
 ## Criterio de salida 🧪
 
-Primer proveedor externo reclama su perfil y actualiza datos sin intervención SQL.
+Un proveedor autenticado puede crear una reclamación de sucursal o marca,
+adjuntar referencias documentales, invitar encargados y proponer cambios de
+perfil; un administrador puede aprobarlos y el sistema activa únicamente el
+alcance autorizado. La prueba
+`database/supabase/tests/provider_claims_test.sql` cubre el ciclo completo y
+las invariantes de marca/sucursal.
 
 ---
 

@@ -41,6 +41,9 @@ describe('Pruevia API', () => {
   const authenticateAdmin = async (request: Request) => request.headers.get('authorization') === 'Bearer user-token'
     ? { id: '00000000-0000-0000-0000-000000000099' }
     : null;
+  const authenticateUser = async (request: Request) => request.headers.get('authorization') === 'Bearer provider-token'
+    ? { id: '00000000-0000-0000-0000-000000000098', accessToken: 'provider-token' }
+    : null;
 
   it('returns a grouped search response', async () => {
     const rpc = rpcWith([row, { ...row, price_type: 'member', price_key: 'blue_card', amount_minor: 22000 }]);
@@ -133,5 +136,98 @@ describe('Pruevia API', () => {
     } finally {
       vi.unstubAllGlobals();
     }
+  });
+
+  it('protects provider routes and forwards a branch claim with the user token', async () => {
+    const rpc = rpcWith({ claim_id: '00000000-0000-0000-0000-000000000010', status: 'pending' });
+    const handler = createHandler({ rpc, authenticateUser });
+    expect((await handler(new Request('https://api.test/api/v1/provider/claims'), env)).status).toBe(401);
+    const response = await handler(new Request('https://api.test/api/v1/provider/claims', {
+      method: 'POST',
+      headers: { authorization: 'Bearer provider-token', 'content-type': 'application/json' },
+      body: JSON.stringify({
+        scope_type: 'location',
+        provider_brand_id: row.provider_brand_id,
+        provider_location_id: '00000000-0000-0000-0000-000000000011',
+        organization_id: '00000000-0000-0000-0000-000000000012',
+        requested_role: 'location_manager',
+        relationship_type: 'operator',
+        reason: 'I manage this branch',
+      }),
+    }), env);
+    expect(response.status).toBe(201);
+    expect(rpc.call).toHaveBeenCalledWith('api_provider_create_claim', expect.objectContaining({
+      p_scope_type: 'location',
+      p_provider_location_id: '00000000-0000-0000-0000-000000000011',
+      p_requested_role: 'location_manager',
+    }), { accessToken: 'provider-token' });
+  });
+
+  it('validates provider documents and forwards memberships to the scoped RPCs', async () => {
+    const rpc = rpcWith({ document_id: '00000000-0000-0000-0000-000000000013' });
+    const handler = createHandler({ rpc, authenticateUser });
+    const invalid = await handler(new Request('https://api.test/api/v1/provider/claims/not-a-uuid/documents', {
+      method: 'POST',
+      headers: { authorization: 'Bearer provider-token', 'content-type': 'application/json' },
+      body: '{}',
+    }), env);
+    expect(invalid.status).toBe(400);
+    const document = await handler(new Request('https://api.test/api/v1/provider/claims/00000000-0000-0000-0000-000000000010/documents', {
+      method: 'POST',
+      headers: { authorization: 'Bearer provider-token', 'content-type': 'application/json' },
+      body: JSON.stringify({ document_type: 'rfc', object_key: 'claims/10/rfc.pdf', sha256: 'a'.repeat(64) }),
+    }), env);
+    expect(document.status).toBe(201);
+    expect(rpc.call).toHaveBeenCalledWith('api_provider_add_claim_document', expect.objectContaining({ p_sha256: 'a'.repeat(64) }), { accessToken: 'provider-token' });
+    const member = await handler(new Request('https://api.test/api/v1/provider/claims/00000000-0000-0000-0000-000000000010/members', {
+      method: 'POST',
+      headers: { authorization: 'Bearer provider-token', 'content-type': 'application/json' },
+      body: JSON.stringify({ user_id: '00000000-0000-0000-0000-000000000014', role: 'location_manager' }),
+    }), env);
+    expect(member.status).toBe(201);
+    expect(rpc.call).toHaveBeenCalledWith('api_provider_invite_member', expect.objectContaining({ p_role: 'location_manager' }), { accessToken: 'provider-token' });
+  });
+
+  it('submits only scoped provider profile proposals', async () => {
+    const rpc = rpcWith({ request_id: '00000000-0000-0000-0000-000000000015', status: 'pending' });
+    const handler = createHandler({ rpc, authenticateUser });
+    const response = await handler(new Request('https://api.test/api/v1/provider/locations/00000000-0000-0000-0000-000000000011/profile', {
+      method: 'PATCH',
+      headers: { authorization: 'Bearer provider-token', 'content-type': 'application/json' },
+      body: JSON.stringify({ claim_id: '00000000-0000-0000-0000-000000000010', changes: { phone: '2220000000' } }),
+    }), env);
+    expect(response.status).toBe(202);
+    expect(rpc.call).toHaveBeenCalledWith('api_provider_submit_location_change', {
+      p_claim_id: '00000000-0000-0000-0000-000000000010',
+      p_provider_location_id: '00000000-0000-0000-0000-000000000011',
+      p_changes: { phone: '2220000000' },
+    }, { accessToken: 'provider-token' });
+  });
+
+  it('exposes admin claim review without exposing provider routes publicly', async () => {
+    const rpc = rpcWith({ claim_id: '00000000-0000-0000-0000-000000000010', status: 'approved' });
+    const handler = createHandler({ rpc, authenticateAdmin });
+    const response = await handler(new Request('https://api.test/api/v1/admin/provider-claims/00000000-0000-0000-0000-000000000010/review', {
+      method: 'POST',
+      headers: { authorization: 'Bearer user-token', 'content-type': 'application/json' },
+      body: JSON.stringify({ decision: 'approved', reason: 'Evidence accepted' }),
+    }), env);
+    expect(response.status).toBe(200);
+    expect(rpc.call).toHaveBeenCalledWith('api_admin_review_provider_claim', expect.objectContaining({
+      p_claim_id: '00000000-0000-0000-0000-000000000010',
+      p_decision: 'approved',
+      p_reviewer_user_id: '00000000-0000-0000-0000-000000000099',
+    }), { admin: true });
+    const changeResponse = await handler(new Request('https://api.test/api/v1/admin/provider-change-requests/00000000-0000-0000-0000-000000000015/review', {
+      method: 'POST',
+      headers: { authorization: 'Bearer user-token', 'content-type': 'application/json' },
+      body: JSON.stringify({ decision: 'approved' }),
+    }), env);
+    expect(changeResponse.status).toBe(200);
+    expect(rpc.call).toHaveBeenCalledWith('api_admin_review_provider_change', expect.objectContaining({
+      p_request_id: '00000000-0000-0000-0000-000000000015',
+      p_decision: 'approved',
+      p_reviewer_user_id: '00000000-0000-0000-0000-000000000099',
+    }), { admin: true });
   });
 });

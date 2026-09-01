@@ -428,6 +428,18 @@ Puebla/Querétaro/CDMX son ubicaciones/mercados, no marcas duplicadas.
 - operator;
 - franchise.
 
+Las relaciones legales de una ubicación se mantienen en
+`core.provider_location_organizations`. Así una sucursal puede tener una
+organización operadora distinta de la propietaria o de la entidad de cobro sin
+duplicar la marca. Las personas son usuarios con membresías, no organizaciones
+adicionales.
+
+El reclamo de proveedor admite dos alcances: `brand` para administrar una red
+y `location` para administrar una sola sucursal. El reclamo empresarial no
+otorga acceso automático a todas las ubicaciones; cada alcance queda registrado
+en `identity.provider_memberships` y todos los documentos son referencias
+privadas con hash en `identity.verification_documents`.
+
 ---
 
 # 10. Mercados comerciales
@@ -778,7 +790,15 @@ GET /api/v1/providers/{id}/services
 Futuros:
 
 ```text
-POST /provider/claims
+GET  /api/v1/provider/claims
+POST /api/v1/provider/claims
+POST /api/v1/provider/claims/{id}/documents
+POST /api/v1/provider/claims/{id}/members
+PATCH /api/v1/provider/locations/{id}/profile
+GET  /api/v1/admin/provider-claims
+POST /api/v1/admin/provider-claims/{id}/review
+GET  /api/v1/admin/provider-change-requests
+POST /api/v1/admin/provider-change-requests/{id}/review
 POST /leads
 POST /appointments
 GET /provider/dashboard

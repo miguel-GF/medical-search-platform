@@ -28,4 +28,12 @@ describe('Supabase RPC transport', () => {
     });
     await new SupabaseRpcClient(env, fetcher).call('api_admin_dashboard', {}, { admin: true });
   });
+
+  it('preserves a provider JWT while using the anon key as the API key', async () => {
+    const fetcher = vi.fn(async (_input: RequestInfo | URL, init?: RequestInit) => {
+      expect(init?.headers).toEqual(expect.objectContaining({ apikey: 'anon-key', Authorization: 'Bearer provider-jwt' }));
+      return new Response('{}', { status: 200 });
+    });
+    await new SupabaseRpcClient(env, fetcher).call('api_provider_my_claims', {}, { accessToken: 'provider-jwt' });
+  });
 });

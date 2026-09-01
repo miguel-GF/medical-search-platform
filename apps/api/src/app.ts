@@ -13,6 +13,7 @@ import {
 interface Dependencies {
   rpc: RpcClient;
   authenticateAdmin?: (request: Request, env: Env) => Promise<AdminUser | null>;
+  authenticateUser?: (request: Request, env: Env) => Promise<AuthenticatedUser | null>;
 }
 
 const JSON_HEADERS = { 'content-type': 'application/json; charset=utf-8' };
@@ -59,6 +60,9 @@ export function createHandler(dependencies: Dependencies) {
       }
       if (url.pathname.startsWith('/api/v1/admin/')) {
         return await adminResponse(request, url, env, dependencies.rpc, origin, dependencies.authenticateAdmin ?? verifyAdmin);
+      }
+      if (url.pathname.startsWith('/api/v1/provider/')) {
+        return await providerResponse(request, url, env, dependencies.rpc, origin, dependencies.authenticateUser ?? verifyUser);
       }
       return json({ error: { code: 'not_found', message: 'Route not found' } }, 404, origin);
     } catch (error) {
@@ -369,6 +373,46 @@ async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClien
   if (request.method === 'GET' && url.pathname === '/api/v1/admin/alerts') {
     return json(await rpc.call<AdminAlert[]>('api_admin_alerts', { p_status: url.searchParams.get('status'), p_limit: parseBoundedInt(url.searchParams.get('limit'), 100, 1, 200) }, { admin: true }), 200, origin);
   }
+  if (request.method === 'GET' && url.pathname === '/api/v1/admin/provider-claims') {
+    return json(await rpc.call('api_admin_provider_claims', { p_status: url.searchParams.get('status'), p_limit: parseBoundedInt(url.searchParams.get('limit'), 100, 1, 200) }, { admin: true }), 200, origin);
+  }
+  if (request.method === 'GET' && url.pathname === '/api/v1/admin/provider-change-requests') {
+    return json(await rpc.call('api_admin_provider_change_requests', { p_status: url.searchParams.get('status'), p_limit: parseBoundedInt(url.searchParams.get('limit'), 100, 1, 200) }, { admin: true }), 200, origin);
+  }
+  const providerClaimReviewMatch = url.pathname.match(/^\/api\/v1\/admin\/provider-claims\/([^/]+)\/review$/i);
+  if (providerClaimReviewMatch && request.method === 'POST') {
+    if (!isUuid(providerClaimReviewMatch[1])) return json({ error: { code: 'invalid_id', message: 'claim id must be a UUID' } }, 400, origin);
+    const body = await request.json().catch(() => null) as Record<string, unknown> | null;
+    if (!body || (body.decision !== 'approved' && body.decision !== 'rejected')) {
+      return json({ error: { code: 'invalid_body', message: 'decision must be approved or rejected' } }, 400, origin);
+    }
+    if (body.reason !== undefined && body.reason !== null && (typeof body.reason !== 'string' || body.reason.length > 2000)) {
+      return json({ error: { code: 'invalid_body', message: 'reason must be at most 2000 characters' } }, 400, origin);
+    }
+    return json(await rpc.call('api_admin_review_provider_claim', {
+      p_claim_id: providerClaimReviewMatch[1],
+      p_decision: body.decision,
+      p_reviewer_user_id: user.id,
+      p_reason: typeof body.reason === 'string' ? body.reason : null,
+    }, { admin: true }), 200, origin);
+  }
+  const providerChangeReviewMatch = url.pathname.match(/^\/api\/v1\/admin\/provider-change-requests\/([^/]+)\/review$/i);
+  if (providerChangeReviewMatch && request.method === 'POST') {
+    if (!isUuid(providerChangeReviewMatch[1])) return json({ error: { code: 'invalid_id', message: 'change request id must be a UUID' } }, 400, origin);
+    const body = await request.json().catch(() => null) as Record<string, unknown> | null;
+    if (!body || (body.decision !== 'approved' && body.decision !== 'rejected')) {
+      return json({ error: { code: 'invalid_body', message: 'decision must be approved or rejected' } }, 400, origin);
+    }
+    if (body.reason !== undefined && body.reason !== null && (typeof body.reason !== 'string' || body.reason.length > 2000)) {
+      return json({ error: { code: 'invalid_body', message: 'reason must be at most 2000 characters' } }, 400, origin);
+    }
+    return json(await rpc.call('api_admin_review_provider_change', {
+      p_request_id: providerChangeReviewMatch[1],
+      p_decision: body.decision,
+      p_reviewer_user_id: user.id,
+      p_reason: typeof body.reason === 'string' ? body.reason : null,
+    }, { admin: true }), 200, origin);
+  }
   const resolveMatch = url.pathname.match(/^\/api\/v1\/admin\/normalization\/([^/]+)\/resolve$/i);
   if (resolveMatch && request.method === 'POST') {
     if (!isUuid(resolveMatch[1])) return json({ error: { code: 'invalid_id', message: 'normalization run id must be a UUID' } }, 400, origin);
@@ -394,12 +438,128 @@ async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClien
   return json({ error: { code: 'not_found', message: 'Admin route not found' } }, 404, origin);
 }
 
+interface AuthenticatedUser extends AdminUser {
+  accessToken: string;
+}
+
+async function providerResponse(
+  request: Request,
+  url: URL,
+  env: Env,
+  rpc: RpcClient,
+  origin: string,
+  authenticateUser: (request: Request, env: Env) => Promise<AuthenticatedUser | null>,
+): Promise<Response> {
+  const user = await authenticateUser(request, env);
+  if (!user) return json({ error: { code: 'unauthorized', message: 'Provider authorization required' } }, 401, origin);
+  const rpcOptions = { accessToken: user.accessToken };
+
+  if (url.pathname === '/api/v1/provider/claims' && request.method === 'GET') {
+    return json(await rpc.call('api_provider_my_claims', {
+      p_status: url.searchParams.get('status'),
+      p_limit: parseBoundedInt(url.searchParams.get('limit'), 50, 1, 100),
+    }, rpcOptions), 200, origin);
+  }
+
+  if (url.pathname === '/api/v1/provider/claims' && request.method === 'POST') {
+    const body = await readJsonObject(request, 16_384, origin);
+    if (body instanceof Response) return body;
+    if (typeof body.scope_type !== 'string' || !['brand', 'location'].includes(body.scope_type)) {
+      return json({ error: { code: 'invalid_body', message: 'scope_type must be brand or location' } }, 400, origin);
+    }
+    if (!isUuidValue(body.provider_brand_id) || !isUuidValue(body.organization_id)) {
+      return json({ error: { code: 'invalid_body', message: 'provider_brand_id and organization_id are required UUIDs' } }, 400, origin);
+    }
+    if (body.provider_location_id !== undefined && body.provider_location_id !== null && !isUuidValue(body.provider_location_id)) {
+      return json({ error: { code: 'invalid_body', message: 'provider_location_id must be a UUID' } }, 400, origin);
+    }
+    if (typeof body.requested_role !== 'string' || !['brand_admin', 'location_manager', 'editor', 'read_only'].includes(body.requested_role)) {
+      return json({ error: { code: 'invalid_body', message: 'requested_role is invalid' } }, 400, origin);
+    }
+    if (typeof body.relationship_type !== 'string' || !['owner', 'operator', 'franchisee', 'billing_entity', 'tenant', 'other'].includes(body.relationship_type)) {
+      return json({ error: { code: 'invalid_body', message: 'relationship_type is invalid' } }, 400, origin);
+    }
+    if (body.reason !== undefined && body.reason !== null && (typeof body.reason !== 'string' || body.reason.length > 2000)) {
+      return json({ error: { code: 'invalid_body', message: 'reason must be at most 2000 characters' } }, 400, origin);
+    }
+    return json(await rpc.call('api_provider_create_claim', {
+      p_scope_type: body.scope_type,
+      p_provider_brand_id: body.provider_brand_id,
+      p_provider_location_id: body.provider_location_id ?? null,
+      p_organization_id: body.organization_id,
+      p_requested_role: body.requested_role,
+      p_relationship_type: body.relationship_type,
+      p_reason: typeof body.reason === 'string' ? body.reason : null,
+      p_evidence_metadata: isRecord(body.evidence_metadata) ? body.evidence_metadata : {},
+    }, rpcOptions), 201, origin);
+  }
+
+  const documentMatch = url.pathname.match(/^\/api\/v1\/provider\/claims\/([^/]+)\/documents$/i);
+  if (documentMatch && request.method === 'POST') {
+    if (!isUuid(documentMatch[1])) return json({ error: { code: 'invalid_id', message: 'claim id must be a UUID' } }, 400, origin);
+    const body = await readJsonObject(request, 16_384, origin);
+    if (body instanceof Response) return body;
+    if (typeof body.document_type !== 'string' || typeof body.object_key !== 'string' || typeof body.sha256 !== 'string') {
+      return json({ error: { code: 'invalid_body', message: 'document_type, object_key and sha256 are required' } }, 400, origin);
+    }
+    return json(await rpc.call('api_provider_add_claim_document', {
+      p_claim_id: documentMatch[1],
+      p_document_type: body.document_type,
+      p_object_key: body.object_key,
+      p_sha256: body.sha256,
+      p_metadata: isRecord(body.metadata) ? body.metadata : {},
+    }, rpcOptions), 201, origin);
+  }
+
+  const memberMatch = url.pathname.match(/^\/api\/v1\/provider\/claims\/([^/]+)\/members$/i);
+  if (memberMatch && request.method === 'POST') {
+    if (!isUuid(memberMatch[1])) return json({ error: { code: 'invalid_id', message: 'claim id must be a UUID' } }, 400, origin);
+    const body = await readJsonObject(request, 16_384, origin);
+    if (body instanceof Response) return body;
+    if (!isUuidValue(body.user_id) || typeof body.role !== 'string' || !['brand_admin', 'location_manager', 'editor', 'read_only'].includes(body.role)) {
+      return json({ error: { code: 'invalid_body', message: 'user_id and a valid role are required' } }, 400, origin);
+    }
+    if (body.provider_location_id !== undefined && body.provider_location_id !== null && !isUuidValue(body.provider_location_id)) {
+      return json({ error: { code: 'invalid_body', message: 'provider_location_id must be a UUID' } }, 400, origin);
+    }
+    return json(await rpc.call('api_provider_invite_member', {
+      p_claim_id: memberMatch[1],
+      p_user_id: body.user_id,
+      p_role: body.role,
+      p_provider_location_id: body.provider_location_id ?? null,
+    }, rpcOptions), 201, origin);
+  }
+
+  const profileMatch = url.pathname.match(/^\/api\/v1\/provider\/locations\/([^/]+)\/profile$/i);
+  if (profileMatch && request.method === 'PATCH') {
+    if (!isUuid(profileMatch[1])) return json({ error: { code: 'invalid_id', message: 'location id must be a UUID' } }, 400, origin);
+    const body = await readJsonObject(request, 16_384, origin);
+    if (body instanceof Response) return body;
+    if (!isUuidValue(body.claim_id) || !isRecord(body.changes)) {
+      return json({ error: { code: 'invalid_body', message: 'claim_id and changes object are required' } }, 400, origin);
+    }
+    return json(await rpc.call('api_provider_submit_location_change', {
+      p_claim_id: body.claim_id,
+      p_provider_location_id: profileMatch[1],
+      p_changes: body.changes,
+    }, rpcOptions), 202, origin);
+  }
+
+  return json({ error: { code: 'not_found', message: 'Provider route not found' } }, 404, origin);
+}
+
 async function verifyAdmin(request: Request, env: Env): Promise<AdminUser | null> {
+  const user = await verifyUser(request, env);
+  if (!user) return null;
+  const allowedIds = new Set((env.ADMIN_USER_IDS ?? '').split(',').map((value) => value.trim().toLowerCase()).filter(isUuid));
+  if (allowedIds.size === 0) return null;
+  return allowedIds.has(user.id.toLowerCase()) ? { id: user.id } : null;
+}
+
+async function verifyUser(request: Request, env: Env): Promise<AuthenticatedUser | null> {
   const authorization = request.headers.get('authorization') ?? '';
   const match = authorization.match(/^Bearer\s+([^\s]+)$/i);
   if (!match || !env.SUPABASE_URL || !env.SUPABASE_ANON_KEY) return null;
-  const allowedIds = new Set((env.ADMIN_USER_IDS ?? '').split(',').map((value) => value.trim().toLowerCase()).filter(isUuid));
-  if (allowedIds.size === 0) return null;
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 5000);
   try {
@@ -409,8 +569,8 @@ async function verifyAdmin(request: Request, env: Env): Promise<AdminUser | null
     });
     if (!response.ok) return null;
     const user = await response.json() as { id?: unknown };
-    if (typeof user.id !== 'string' || !isUuid(user.id) || !allowedIds.has(user.id.toLowerCase())) return null;
-    return { id: user.id };
+    if (typeof user.id !== 'string' || !isUuid(user.id)) return null;
+    return { id: user.id, accessToken: match[1] };
   } catch {
     return null;
   } finally {
@@ -506,6 +666,29 @@ function parseInputCoordinate(value: unknown, min: number, max: number): number 
   return Number.isFinite(value) && value >= min && value <= max ? value : Number.NaN;
 }
 
+async function readJsonObject(request: Request, maxBytes: number, origin: string): Promise<Record<string, unknown> | Response> {
+  const contentLength = Number(request.headers.get('content-length') ?? 0);
+  if (Number.isFinite(contentLength) && contentLength > maxBytes) {
+    return json({ error: { code: 'payload_too_large', message: 'The request body is too large' } }, 413, origin);
+  }
+  try {
+    const parsed: unknown = JSON.parse(await readRequestText(request, maxBytes));
+    if (!isRecord(parsed)) return json({ error: { code: 'invalid_body', message: 'Request body must be an object' } }, 400, origin);
+    return parsed;
+  } catch (error) {
+    if (error instanceof RequestBodyTooLargeError) return json({ error: { code: 'payload_too_large', message: 'The request body is too large' } }, 413, origin);
+    return json({ error: { code: 'invalid_json', message: 'Request body must be valid JSON' } }, 400, origin);
+  }
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+function isUuidValue(value: unknown): value is string {
+  return typeof value === 'string' && isUuid(value);
+}
+
 function isUuid(value: string): boolean {
   return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value);
 }
@@ -515,5 +698,5 @@ function json(value: unknown, status: number, origin: string): Response {
 }
 
 function corsHeaders(origin: string): Record<string, string> {
-  return { 'access-control-allow-origin': origin, 'access-control-allow-headers': 'authorization,content-type', 'access-control-allow-methods': 'GET,POST,OPTIONS' };
+  return { 'access-control-allow-origin': origin, 'access-control-allow-headers': 'authorization,content-type', 'access-control-allow-methods': 'GET,POST,PATCH,OPTIONS' };
 }

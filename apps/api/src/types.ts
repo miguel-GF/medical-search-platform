@@ -24,7 +24,7 @@ export interface OcrLine {
 }
 
 export interface RpcClient {
-  call<T>(name: string, body: Record<string, unknown>, options?: { admin?: boolean }): Promise<T>;
+  call<T>(name: string, body: Record<string, unknown>, options?: { admin?: boolean; accessToken?: string }): Promise<T>;
 }
 
 export interface AdminUser {

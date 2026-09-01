@@ -1,17 +1,18 @@
 # Pruevia V1 Table Catalog
 
-The executable foundation currently creates **45 tables**. That is larger than the early ~30-table estimate because the physical review kept provenance, data quality, scope inheritance, geographic integrity and audit concerns separate instead of hiding them in JSON.
+The executable foundation currently creates **51 tables**. That is larger than the early ~30-table estimate because the physical review kept provenance, data quality, scope inheritance, geographic integrity, provider identity and audit concerns separate instead of hiding them in JSON.
 
 ## `geo` (1)
 
 - `areas` — hierarchical official/commercial geography with PostGIS support.
 
-## `core` (10)
+## `core` (11)
 
 - `organizations` — legal/operator entities.
 - `provider_brands` — public-facing provider brands.
 - `provider_brand_organizations` — ownership/operator/franchise relationships.
 - `provider_locations` — physical sites.
+- `provider_location_organizations` — legal owner/operator/franchise relationships at a specific site.
 - `provider_location_hours` — regular opening windows.
 - `provider_location_closures` — exceptional closures.
 - `provider_markets` — provider commercial/pricing regions.
@@ -61,9 +62,14 @@ The executable foundation currently creates **45 tables**. That is larger than t
 - `normalization_decisions`
 - `data_quality_issues`
 
-## `identity` (1)
+## `identity` (6)
 
 - `user_profiles`
+- `provider_claims` — company/brand or individual-location claim requests.
+- `provider_verifications` — auditable verification attempts and outcomes.
+- `verification_documents` — private object references and hashes, never raw documents in core.
+- `provider_memberships` — scoped organization/brand/location roles.
+- `provider_change_requests` — reviewed provider proposals for location profile fields.
 
 ## `audit` (1)
 
