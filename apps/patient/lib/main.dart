@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -79,6 +81,9 @@ class _PatientAppState extends State<PatientApp> {
   Widget build(BuildContext context) => MaterialApp(
     title: 'Pruevia',
     debugShowCheckedModeBanner: false,
+    scrollBehavior: const MaterialScrollBehavior().copyWith(
+      dragDevices: {PointerDeviceKind.touch, PointerDeviceKind.mouse},
+    ),
     theme: buildPrueviaTheme(Brightness.light),
     darkTheme: buildPrueviaTheme(Brightness.dark),
     themeMode: _themeMode,
@@ -1114,7 +1119,14 @@ class _OfferRow extends StatelessWidget {
           if (constraints.maxWidth < 520) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [identity, const SizedBox(height: 12), pricing],
+              children: [
+                identity,
+                const SizedBox(height: 12),
+                SizedBox(
+                  width: double.infinity,
+                  child: Align(alignment: Alignment.centerRight, child: pricing),
+                ),
+              ],
             );
           }
           return Row(
@@ -1122,7 +1134,9 @@ class _OfferRow extends StatelessWidget {
             children: [
               Expanded(child: identity),
               const SizedBox(width: 16),
-              Flexible(child: pricing),
+              Expanded(
+                child: Align(alignment: Alignment.topRight, child: pricing),
+              ),
             ],
           );
         },
@@ -1168,6 +1182,11 @@ class _OfferPricing extends StatelessWidget {
         ),
         if (offer.amountMinor != null && priceLabel != null)
           Text(priceLabel, style: Theme.of(context).textTheme.bodySmall),
+        if (offer.amountMinor != null && offer.locationName == null)
+          Text(
+            'Precio no asociado a una sucursal',
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
         if (offer.prices.length > 1)
           ...offer.prices
               .where(
@@ -1294,17 +1313,67 @@ class SettingsScreen extends StatelessWidget {
   );
 }
 
-class _PageFrame extends StatelessWidget {
+class _PageFrame extends StatefulWidget {
   const _PageFrame({required this.child});
   final Widget child;
   @override
+  State<_PageFrame> createState() => _PageFrameState();
+}
+
+class _PageFrameState extends State<_PageFrame> {
+  final _scrollController = ScrollController();
+  final _focusNode = FocusNode();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  void _scrollBy(double factor) {
+    if (!_scrollController.hasClients) return;
+    final position = _scrollController.position;
+    final target = (position.pixels + position.viewportDimension * factor)
+        .clamp(0.0, position.maxScrollExtent);
+    _scrollController.animateTo(
+      target,
+      duration: const Duration(milliseconds: 160),
+      curve: Curves.easeOut,
+    );
+  }
+
+  @override
   Widget build(BuildContext context) => SafeArea(
-    child: SingleChildScrollView(
-      padding: const EdgeInsets.fromLTRB(20, 12, 20, 48),
-      child: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 1080),
-          child: child,
+    child: CallbackShortcuts(
+      bindings: <ShortcutActivator, VoidCallback>{
+        const SingleActivator(LogicalKeyboardKey.pageDown):
+            () => _scrollBy(.9),
+        const SingleActivator(LogicalKeyboardKey.pageUp):
+            () => _scrollBy(-.9),
+        const SingleActivator(LogicalKeyboardKey.arrowDown):
+            () => _scrollBy(.15),
+        const SingleActivator(LogicalKeyboardKey.arrowUp):
+            () => _scrollBy(-.15),
+      },
+      child: Focus(
+        autofocus: true,
+        focusNode: _focusNode,
+        child: Scrollbar(
+          controller: _scrollController,
+          thumbVisibility: kIsWeb,
+          interactive: kIsWeb,
+          child: SingleChildScrollView(
+            controller: _scrollController,
+            primary: false,
+            padding: const EdgeInsets.fromLTRB(20, 12, 20, 48),
+            child: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 1080),
+                child: widget.child,
+              ),
+            ),
+          ),
         ),
       ),
     ),
