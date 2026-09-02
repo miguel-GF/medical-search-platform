@@ -6,12 +6,15 @@ Flutter Web/PWA, Android e iOS desde un solo codebase.
 
 ```text
 flutter pub get
-flutter run -d chrome --dart-define=API_BASE_URL=http://localhost:8787
+flutter run -d web-server --web-port 8080 --dart-define=API_BASE_URL=http://localhost:8787
 ```
 
 `API_BASE_URL` debe apuntar al Worker/API desplegado. La búsqueda pública no
 requiere autenticación. El botón **Acceso para proveedores** es secundario y
 no convierte la pantalla inicial en un registro.
+
+Flutter no carga archivos `.env` automáticamente: `.env.example` documenta la
+variable, pero el valor se inyecta en compilación con `--dart-define`.
 
 ## Principios del MVP
 

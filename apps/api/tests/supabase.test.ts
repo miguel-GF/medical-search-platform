@@ -36,4 +36,18 @@ describe('Supabase RPC transport', () => {
     });
     await new SupabaseRpcClient(env, fetcher).call('api_provider_my_claims', {}, { accessToken: 'provider-jwt' });
   });
+
+  it('binds the runtime fetch when no fetcher is injected', async () => {
+    const fetcher = vi.fn(function (this: unknown, _input: RequestInfo | URL, _init?: RequestInit) {
+      expect(this).toBe(globalThis);
+      return Promise.resolve(new Response('{}', { status: 200 }));
+    });
+    vi.stubGlobal('fetch', fetcher);
+    try {
+      await new SupabaseRpcClient(env).call('api_search', { p_query: 'mastografia' });
+      expect(fetcher).toHaveBeenCalledOnce();
+    } finally {
+      vi.unstubAllGlobals();
+    }
+  });
 });

@@ -1,10 +1,14 @@
 import type { Env, RpcClient } from './types.js';
 
 export class SupabaseRpcClient implements RpcClient {
-  constructor(
-    private readonly env: Env,
-    private readonly fetcher: typeof fetch = fetch,
-  ) {}
+  private readonly fetcher: typeof fetch;
+
+  constructor(private readonly env: Env, fetcher?: typeof fetch) {
+    // Cloudflare's fetch implementation is method-bound. Keeping the injected
+    // fetcher makes tests deterministic, while binding the global implementation
+    // prevents `Illegal invocation` in Workers/local Wrangler runtimes.
+    this.fetcher = fetcher ?? globalThis.fetch.bind(globalThis);
+  }
 
   async call<T>(name: string, body: Record<string, unknown>, options: { admin?: boolean; accessToken?: string } = {}): Promise<T> {
     const key = options.admin ? this.env.SUPABASE_SERVICE_ROLE_KEY : this.env.SUPABASE_ANON_KEY;
