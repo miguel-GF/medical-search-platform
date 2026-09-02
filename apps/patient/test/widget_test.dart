@@ -70,6 +70,6 @@ void main() {
     expect(find.text('Proveedores encontrados'), findsOneWidget);
     expect(find.text('Laboratorio pequeño'), findsWidgets);
     expect(find.textContaining('2 sucursales'), findsWidgets);
-    expect(find.text('Selecciona una sucursal para ver sus estudios y precios'), findsOneWidget);
+    expect(find.text('Compara las sucursales: sus estudios y precios aparecen debajo'), findsOneWidget);
   });
 }

@@ -1335,37 +1335,41 @@ class _ProviderDetails extends StatelessWidget {
         const SizedBox(height: 10),
         Text(
           branches.length > 1
-              ? 'Selecciona una sucursal para ver sus estudios y precios'
+              ? 'Compara las sucursales: sus estudios y precios aparecen debajo'
               : branches.first.isUnscoped
                   ? 'Alcance publicado · sucursal por confirmar'
                   : 'Información por sucursal',
           style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800),
         ),
         const SizedBox(height: 8),
-        ...branches.asMap().entries.map(
-          (entry) => _BranchExpansion(branch: entry.value, initiallyExpanded: branches.length == 1 || entry.key == 0),
-        ),
+        ...branches.map((branch) => _BranchCard(branch: branch)),
       ],
     );
   }
 }
 
-class _BranchExpansion extends StatelessWidget {
-  const _BranchExpansion({required this.branch, required this.initiallyExpanded});
+class _BranchCard extends StatelessWidget {
+  const _BranchCard({required this.branch});
 
   final _BranchGroup branch;
-  final bool initiallyExpanded;
 
   @override
   Widget build(BuildContext context) => Card(
     margin: const EdgeInsets.only(bottom: 8),
-    child: ExpansionTile(
-      initiallyExpanded: initiallyExpanded,
-      leading: const Icon(Icons.location_on_outlined),
-      title: Text(branch.name),
-      subtitle: Text('${branch.offers.length} coincidencia${branch.offers.length == 1 ? '' : 's'}'),
-      childrenPadding: const EdgeInsets.fromLTRB(14, 0, 14, 12),
-      children: branch.offers.map((entry) => _ProviderServiceTile(entry: entry)).toList(growable: false),
+    child: Padding(
+      padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.location_on_outlined),
+            title: Text(branch.name),
+            subtitle: Text('${branch.offers.length} coincidencia${branch.offers.length == 1 ? '' : 's'}'),
+          ),
+          ...branch.offers.map((entry) => _ProviderServiceTile(entry: entry)),
+        ],
+      ),
     ),
   );
 }
