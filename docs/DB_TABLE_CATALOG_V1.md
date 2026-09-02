@@ -1,6 +1,6 @@
 # Pruevia V1 Table Catalog
 
-The executable foundation currently creates **51 tables**. That is larger than the early ~30-table estimate because the physical review kept provenance, data quality, scope inheritance, geographic integrity, provider identity and audit concerns separate instead of hiding them in JSON.
+The executable foundation currently creates **59 tables**. That is larger than the early ~30-table estimate because the physical review kept provenance, data quality, scope inheritance, geographic integrity, provider identity, audit and consent-gated analytics concerns separate instead of hiding them in JSON.
 
 ## `geo` (1)
 
@@ -20,7 +20,7 @@ The executable foundation currently creates **51 tables**. That is larger than t
 - `provider_external_ids` — DENUE/other brand identifiers.
 - `location_external_ids` — DENUE/other location identifiers.
 
-## `catalog` (8)
+## `catalog` (12)
 
 - `domains`
 - `items`
@@ -30,8 +30,12 @@ The executable foundation currently creates **51 tables**. That is larger than t
 - `item_categories`
 - `item_identifiers`
 - `item_relations`
+- `disambiguation_terms`
+- `disambiguation_candidates`
+- `item_descriptions`
+- `ocr_correction_rules`
 
-## `health` (7)
+## `health` (10)
 
 - `anatomical_sites`
 - `services`
@@ -40,6 +44,9 @@ The executable foundation currently creates **51 tables**. That is larger than t
 - `service_specimens`
 - `service_components`
 - `service_preparations`
+- `lab_service_definitions`
+- `service_methods`
+- `query_lexicon`
 
 ## `supply` (5)
 
@@ -80,4 +87,11 @@ The executable foundation currently creates **51 tables**. That is larger than t
 - `system_alerts`
 - `feature_flags`
 
-The `analytics`, `marketplace`, `sensitive`, and `billing` schemas are reserved but intentionally empty until those phases begin.
+## `analytics` (1)
+
+- `anonymous_events` — consent-gated, non-clinical event envelopes. Direct
+  table access is revoked for Data API roles; inserts go through a constrained
+  RPC.
+
+The `marketplace`, `sensitive`, and `billing` schemas remain reserved until
+those product phases begin.

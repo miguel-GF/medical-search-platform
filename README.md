@@ -4,9 +4,9 @@ Pruevia busca convertir el texto o la fotografía de una orden médica en una li
 
 El piloto inicial está enfocado en Puebla, México. El nombre **Pruevia** es provisional.
 
-## Estado ejecutado al 27 de agosto de 2026
+## Estado ejecutado al 1 de septiembre de 2026
 
-El Data Engine previo a Flutter funciona en Supabase DEV y Gate A de viabilidad es positivo: hay 175 servicios activos, 226 ofertas, 7 proveedores, 44 servicios compartidos con precio vigente, 23 sucursales con coordenadas y 437 precios vigentes. La búsqueda devuelve opciones comerciales y nuevas alternativas pequeñas con `requires_quote` cuando no existe precio publicado. DENUE ya tiene una corrida live reproducible con 489 registros válidos. Flutter queda deliberadamente fuera de este corte.
+El Data Engine funciona en Supabase DEV y Gate A de viabilidad es positivo: hay 175 servicios activos, 226 ofertas, 7 proveedores, 44 servicios compartidos con precio vigente, 23 sucursales con coordenadas y 437 precios vigentes. La búsqueda devuelve opciones comerciales y nuevas alternativas pequeñas con `requires_quote` cuando no existe precio publicado. DENUE ya tiene una corrida live reproducible con 489 registros válidos. El vertical slice paciente de Flutter Web/PWA está integrado y preparado para Android/iOS.
 
 Consulta el detalle y los comandos reproducibles en [docs/03_REVISION_INTEGRACION.md](docs/03_REVISION_INTEGRACION.md), [docs/02_FASES_IMPLEMENTACION.md](docs/02_FASES_IMPLEMENTACION.md) y la evidencia del flujo de proveedor en [docs/PROVIDER_CLAIMS_EVIDENCE_20260831.md](docs/PROVIDER_CLAIMS_EVIDENCE_20260831.md).
 La auditoria de seguridad mas reciente y sus pruebas estan en [docs/SECURITY_AUDIT_20260901.md](docs/SECURITY_AUDIT_20260901.md).
@@ -14,9 +14,10 @@ La auditoria de seguridad mas reciente y sus pruebas estan en [docs/SECURITY_AUD
 ## Estado actual
 
 - Arquitectura de producto y software: definida.
-- Base de datos V1: migraciones 001-126 aplicadas y verificadas.
-- Despliegue y validación física en Supabase DEV: completado para el Data Engine previo a Flutter.
-- Collectors Chopo/Ruiz/Salud Digna/DENUE (fixtures, pruebas y corridas live reproducibles), Search API V1 y Admin V1: implementados y probados. Chopo, Ruiz, Salud Digna y DENUE están publicados en Supabase DEV. El gate remoto, los invariantes de base, la API pública y la cuarentena de colectores pasan; no se inicia Flutter hasta un nuevo corte de producto.
+- Base de datos V1: migraciones 001-127 aplicadas y verificadas.
+- Despliegue y validación física en Supabase DEV: completado para el Data Engine y el contrato API consumido por Flutter.
+- Collectors Chopo/Ruiz/Salud Digna/DENUE (fixtures, pruebas y corridas live reproducibles), Search API V1 y Admin V1: implementados y probados. Chopo, Ruiz, Salud Digna y DENUE están publicados en Supabase DEV. El gate remoto, los invariantes de base, la API pública y la cuarentena de colectores pasan.
+- Flutter Patient MVP: búsqueda, receta multi-estudio, OCR con revisión, comparación por sucursal, PWA responsive, Android/iOS preparados, consentimiento y telemetría anónima limitada. `Acceso para proveedores` es una entrada secundaria; las mutaciones de proveedor exigen MFA `aal2` en el backend.
 - Collector genérico de proveedores: discovery acotado por dominio, respeto de robots.txt, JSON-LD/patrones de precio-servicio y evidencia candidata para laboratorios pequeños.
 - Fan-out de discovery Puebla: agrupa los sitios web declarados por DENUE y conserva el vínculo de cada host con sus candidatos para medir cobertura sin captura manual.
 - Publicación genérica revisada: cuatro coincidencias exactas enlazadas a siete sedes DENUE; 44 ofertas restantes tienen una cola de revisión auditable y no publicable. Los reintentos sólo cubren fallos transitorios.
@@ -62,4 +63,4 @@ docs/       Decisiones canónicas, arquitectura, roadmap y revisión
 database/   Migraciones, seed y pruebas ejecutables de PostgreSQL/Supabase
 ```
 
-Comienza por el [índice de documentación](docs/README.md). El Data Engine queda detenido en Gate A positivo; el siguiente trabajo de producto será planificar Flutter después de aceptar formalmente este corte.
+Comienza por el [índice de documentación](docs/README.md). El Data Engine permanece en Gate A positivo y el siguiente corte de producto será conectar el flujo de autenticación/MFA del proveedor y validar la PWA con usuarios externos.

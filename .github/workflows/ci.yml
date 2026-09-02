@@ -78,6 +78,23 @@ jobs:
       - run: npm test
       - run: npm run build
 
+  patient-flutter:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/patient
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.44.8'
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - run: flutter analyze
+      - run: flutter test
+      - run: flutter build web --release --dart-define=API_BASE_URL=https://api.example
+
   database-contracts:
     runs-on: ubuntu-latest
     defaults:

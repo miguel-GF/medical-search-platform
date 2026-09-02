@@ -16,7 +16,25 @@ interface Dependencies {
   authenticateUser?: (request: Request, env: Env) => Promise<AuthenticatedUser | null>;
 }
 
-const JSON_HEADERS = { 'content-type': 'application/json; charset=utf-8' };
+// Search terms, OCR text and provider responses must not be retained by an
+// intermediary/browser cache as a side channel for health-related queries.
+const JSON_HEADERS = {
+  'content-type': 'application/json; charset=utf-8',
+  'cache-control': 'no-store',
+  'x-content-type-options': 'nosniff',
+  'referrer-policy': 'no-referrer',
+};
+const ANALYTICS_EVENTS = new Set([
+  'consent_granted',
+  'search_completed',
+  'package_resolved',
+  'package_resolved_from_image',
+  'provider_contact_clicked',
+  'pwa_installed',
+]);
+const ANALYTICS_METADATA_KEYS = new Set(['result_count', 'item_count', 'status', 'review_required', 'surface']);
+const ANALYTICS_STATUSES = new Set(['ready', 'partial', 'needs_clarification', 'no_match']);
+const ANALYTICS_SURFACES = new Set(['web', 'pwa', 'android', 'ios']);
 
 export function createHandler(dependencies: Dependencies) {
   return async function handle(request: Request, env: Env): Promise<Response> {
@@ -40,6 +58,9 @@ export function createHandler(dependencies: Dependencies) {
       }
       if (url.pathname === '/api/v1/resolve-image' && request.method === 'POST') {
         return await resolveImageResponse(request, dependencies.rpc, env, origin);
+      }
+      if (url.pathname === '/api/v1/events' && request.method === 'POST') {
+        return await analyticsEventResponse(request, dependencies.rpc, origin);
       }
       if (url.pathname === '/api/v1/services' && request.method === 'GET') {
         return json({ error: { code: 'route_requires_id', message: 'Use /api/v1/services/{id}' } }, 400, origin);
@@ -220,6 +241,49 @@ async function resolveImageResponse(request: Request, rpc: RpcClient, env: Env, 
     },
     ...packageResult,
   }, 200, origin);
+}
+
+async function analyticsEventResponse(request: Request, rpc: RpcClient, origin: string): Promise<Response> {
+  const body = await readJsonObject(request, 4_096, origin);
+  if (body instanceof Response) return body;
+  if (typeof body.event_name !== 'string' || !ANALYTICS_EVENTS.has(body.event_name)) {
+    return json({ error: { code: 'invalid_event', message: 'event_name is not supported' } }, 400, origin);
+  }
+  if (typeof body.anonymous_id !== 'string' || !isUuid(body.anonymous_id)) {
+    return json({ error: { code: 'invalid_anonymous_id', message: 'anonymous_id must be a UUID' } }, 400, origin);
+  }
+  const metadata = parseAnalyticsMetadata(body.metadata);
+  if (metadata === null) {
+    return json({ error: { code: 'invalid_metadata', message: 'metadata contains unsupported or oversized values' } }, 400, origin);
+  }
+  return json(await rpc.call('api_record_analytics_event', {
+    p_event_name: body.event_name,
+    p_anonymous_id: body.anonymous_id,
+    p_metadata: metadata,
+  }), 202, origin);
+}
+
+function parseAnalyticsMetadata(value: unknown): Record<string, unknown> | null {
+  if (value === undefined) return {};
+  if (!isRecord(value)) return null;
+  const metadata: Record<string, unknown> = {};
+  for (const [key, entry] of Object.entries(value)) {
+    if (!ANALYTICS_METADATA_KEYS.has(key)) return null;
+    if (key === 'result_count' || key === 'item_count') {
+      if (typeof entry !== 'number' || !Number.isInteger(entry) || entry < 0 || entry > 1000) return null;
+      metadata[key] = entry;
+    } else if (key === 'review_required') {
+      if (typeof entry !== 'boolean') return null;
+      metadata[key] = entry;
+    } else if (key === 'status') {
+      if (typeof entry !== 'string' || !ANALYTICS_STATUSES.has(entry)) return null;
+      metadata[key] = entry;
+    } else if (key === 'surface') {
+      if (typeof entry !== 'string' || !ANALYTICS_SURFACES.has(entry)) return null;
+      metadata[key] = entry;
+    }
+  }
+  return metadata;
 }
 
 class RequestBodyTooLargeError extends Error {}
@@ -433,6 +497,8 @@ async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClien
 
 interface AuthenticatedUser extends AdminUser {
   accessToken: string;
+  /** Supabase's validated JWT assurance level; missing claims are aal1. */
+  aal: 'aal1' | 'aal2';
 }
 
 async function providerResponse(
@@ -445,6 +511,16 @@ async function providerResponse(
 ): Promise<Response> {
   const user = await authenticateUser(request, env);
   if (!user) return json({ error: { code: 'unauthorized', message: 'Provider authorization required' } }, 401, origin);
+  // Reading one's own claims is allowed at AAL1 so the client can display the
+  // enrollment step. Any provider mutation requires a verified second factor.
+  if (request.method !== 'GET' && user.aal !== 'aal2') {
+    return json({
+      error: {
+        code: 'mfa_required',
+        message: 'A second factor is required for provider changes',
+      },
+    }, 403, origin);
+  }
   const rpcOptions = { accessToken: user.accessToken };
 
   if (url.pathname === '/api/v1/provider/claims' && request.method === 'GET') {
@@ -574,11 +650,29 @@ async function verifyUser(request: Request, env: Env): Promise<AuthenticatedUser
     if (!response.ok) return null;
     const user = await response.json() as { id?: unknown };
     if (typeof user.id !== 'string' || !isUuid(user.id)) return null;
-    return { id: user.id, accessToken: match[1] };
+    return { id: user.id, accessToken: match[1], aal: readJwtAal(match[1]) };
   } catch {
     return null;
   } finally {
     clearTimeout(timer);
+  }
+}
+
+/**
+ * `/auth/v1/user` validates the bearer token. We only inspect the validated
+ * token's `aal` claim here to enforce the provider step-up policy; no client
+ * supplied role is trusted. An absent/malformed claim is deliberately aal1.
+ */
+function readJwtAal(token: string): 'aal1' | 'aal2' {
+  const parts = token.split('.');
+  if (parts.length !== 3) return 'aal1';
+  try {
+    const encoded = parts[1].replace(/-/g, '+').replace(/_/g, '/');
+    const padded = encoded.padEnd(Math.ceil(encoded.length / 4) * 4, '=');
+    const payload = JSON.parse(atob(padded)) as { aal?: unknown };
+    return payload.aal === 'aal2' ? 'aal2' : 'aal1';
+  } catch {
+    return 'aal1';
   }
 }
 

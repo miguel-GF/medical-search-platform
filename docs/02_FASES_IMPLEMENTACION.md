@@ -2,7 +2,10 @@
 
 **Versión:** 1.0  
 **Fecha:** 22 de agosto de 2026  
-**Estado general:** fases 1–7 tienen implementación técnica verificada en Supabase DEV; Gate A de viabilidad es positivo con cobertura multi-proveedor y precios vigentes comprobados. Flutter queda deliberadamente después de este corte.
+**Estado general:** las fases de Data Engine, seguridad y el vertical slice de
+Flutter paciente están implementadas y verificadas en Supabase DEV/local. Gate
+A de viabilidad es positivo; quedan fuera de este corte la publicación pública
+sostenida, el portal completo de proveedor y el SEO Nuxt.
 
 ---
 
@@ -420,7 +423,7 @@ La cobertura depende demasiado de trabajo manual o los mappings son clínicament
 
 # Fase 8 — Patient MVP: Flutter Web
 
-**Estado:** ⏳
+**Estado:** ✅ integración vertical implementada en `apps/patient`
 
 Primero web para validar sin esperar tiendas.
 
@@ -451,7 +454,7 @@ Una persona externa debe resolver una búsqueda sin ayuda del equipo.
 
 # Fase 9 — OCR / orden médica
 
-**Estado:** ✅ extractor integrado en API; falta conectar la pantalla Flutter.
+**Estado:** ✅ extractor integrado en API y flujo de revisión conectado en Flutter.
 
 Después de estabilizar texto.
 
@@ -492,7 +495,7 @@ imágenes al repositorio.
 
 # Fase 10 — Optimización multi-estudio
 
-**Estado:** ✅ implementada en el Data Engine; Flutter queda pendiente.
+**Estado:** ✅ implementada en Data Engine y flujo de receta Flutter.
 
 Resolver una orden completa.
 
@@ -950,7 +953,7 @@ Primer `/search` real.
 | Admin | ✅ V1 operativo; diez vistas y Supabase Auth |
 | API Search | ✅ V1 probado |
 | Flutter Web | ⏳ |
-| OCR | ✅ extractor API + correcciones OCR auditables; Flutter pendiente |
+| OCR | ✅ extractor API + correcciones OCR auditables + revisión Flutter |
 | Nuxt SEO | ⏳ |
 | Provider portal | ⏳ |
 | Analytics B2B | ⏳ |
@@ -1047,13 +1050,32 @@ Las migraciones `104_field_benchmark_constraints.sql`,
 completan contraste estructurado de las tomografías, corrigen la frontera
 entre familias amplias y paneles explícitos, y publican sólo aliases semánticos
 conservadores.
-El siguiente paso pre-Flutter es habilitar una página de prueba del endpoint
-con consentimiento y telemetría mínima; la tabla de analytics y su retención
-se implementarán antes de registrar consultas de usuarios reales.
+Ese criterio quedó cubierto por el endpoint de eventos consentidos y la tabla
+`analytics.anonymous_events` de la migración 127. El contrato no registra
+consultas, recetas ni imágenes crudas; la retención operativa se mantiene como
+configuración de infraestructura antes de abrir tráfico público sostenido.
+
+## Corte de implementación Flutter Web/PWA — 1 de septiembre de 2026
+
+`apps/patient` usa un solo codebase Flutter para Web/PWA, Android e iOS. La
+experiencia pública inicia siempre como paciente/visitante y no exige cuenta
+para buscar o resolver una receta. El CTA secundario `Acceso para proveedores`
+abre la explicación del acceso protegido; el panel administrativo continúa
+separado.
+
+El primer vertical slice conecta búsqueda, resolución por paquete, carga de
+imagen, revisión editable del OCR, soluciones por sucursal y preferencias de
+apariencia. La app no persiste recetas, imágenes ni resultados clínicos en
+SharedPreferences. La telemetría es opcional, anónima, limitada a eventos
+permitidos y sólo se envía después del consentimiento.
+
+El backend aplica `aal2` (MFA verificado) a las mutaciones de proveedor; las
+lecturas de reclamos/membresías pueden mostrar el paso de inscripción en
+`aal1`. Ningún rol enviado por Flutter se considera autoridad.
 
 ## Corte de implementacion Fase 10 - Resolucion de multiples estudios (29 de agosto de 2026)
 
-**Estado:** implementada en el Data Engine; pendiente la integracion visual en
+**Estado:** implementada en el Data Engine e integrada visualmente en
 Flutter.
 
 La ruta `POST /api/v1/resolve-batch` acepta una receta como texto (renglones,

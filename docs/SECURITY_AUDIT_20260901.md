@@ -52,9 +52,9 @@ externo se rechaza sin solicitar el destino.
   identidad o de ingesta.
 - Los esquemas internos no conceden `USAGE` ni `CREATE` a los roles de Data
   API; el acceso se realiza mediante RPC controlados.
-- Los RPC publicos son unicamente los de busqueda, detalle y resolucion que el
-  producto necesita; los RPC de servicio, confianza, ingesta y administracion
-  permanecen internos.
+- Los RPC públicos son únicamente los de búsqueda, detalle, resolución y el
+  registro anónimo de eventos consentidos que el producto necesita; los RPC de
+  servicio, confianza, ingesta y administración permanecen internos.
 - El OCR valida token Bearer, MIME real, firma de imagen, tamano y pixeles; no
   persiste imagenes ni interpreta equivalencias clinicas.
 - Los endpoints API mantienen validacion de UUID, dominios, coordenadas,
@@ -68,13 +68,16 @@ externo se rechaza sin solicitar el destino.
 
 - OCR Python: **13/13**.
 - Collectors Python: **74/74**.
-- API TypeScript/Vitest: **37/37** y `tsc --noEmit`.
+- API TypeScript/Vitest: **40/40** y `tsc --noEmit`.
 - Admin TypeScript/Vitest/build: **3/3**, tipado y build correctos.
 - Worker Cloudflare: bundle dry-run correcto con `wrangler deploy --dry-run
   --temporary`, sin requerir una credencial de despliegue en CI.
-- Supabase dry-run: remoto actualizado, sin migraciones pendientes.
-- Contratos SQL remotos: **14 suites aprobadas**, incluyendo seguridad **12/12**
+- Supabase push y dry-run: migración 127 aplicada al proyecto enlazado y sin
+  migraciones pendientes.
+- Contratos SQL remotos: **14 suites aprobadas**, incluyendo seguridad **15/15**
   y claims **53/53**. Todas usan `BEGIN ... ROLLBACK`.
+- Flutter Patient: `flutter analyze`, `flutter test` (4/4) y `flutter build web
+  --release` aprobados.
 
 ## Riesgos aun fuera de este corte
 
@@ -86,3 +89,17 @@ externo se rechaza sin solicitar el destino.
   notificaciones hasta definir ese flujo.
 - No se afirma una garantia de precision clinica del OCR o del resolver: los
   casos ambiguos deben seguir mostrando incertidumbre y pedir confirmacion.
+
+## Controles agregados en el corte Flutter/proveedor
+
+Las mutaciones de proveedor derivan el nivel de aseguramiento (`aal`) del JWT
+que Supabase ya validó. Las lecturas de reclamos y membresías pueden operar en
+`aal1` para mostrar el enrolamiento; toda mutación `POST` o `PATCH` exige
+`aal2`, es decir, un segundo factor verificado. El cliente nunca puede elevar
+su rol enviando un campo propio.
+
+La migración `20260901120000_127_anonymous_analytics_events.sql` crea una tabla
+sin permisos directos para `anon`/`authenticated` y un RPC con lista cerrada de
+eventos, metadatos no clínicos y límites de tamaño. La app sólo intenta enviar
+eventos después del consentimiento y usa un UUID anónimo; recetas, imágenes y
+consultas crudas quedan fuera del contrato.

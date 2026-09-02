@@ -58,13 +58,14 @@ describe('Pruevia API', () => {
     ? { id: '00000000-0000-0000-0000-000000000099' }
     : null;
   const authenticateUser = async (request: Request) => request.headers.get('authorization') === 'Bearer provider-token'
-    ? { id: '00000000-0000-0000-0000-000000000098', accessToken: 'provider-token' }
+    ? { id: '00000000-0000-0000-0000-000000000098', accessToken: 'provider-token', aal: 'aal2' as const }
     : null;
 
   it('returns a grouped search response', async () => {
     const rpc = rpcWith([row, { ...row, price_type: 'member', price_key: 'blue_card', amount_minor: 22000 }]);
     const response = await createHandler({ rpc })(new Request('https://api.test/api/v1/search?q=biometria'), env);
     expect(response.status).toBe(200);
+    expect(response.headers.get('cache-control')).toBe('no-store');
     const payload = await response.json() as { results: Array<{ offers: Array<{ prices: unknown[] }> }> };
     expect(payload).toEqual(expect.objectContaining({
       query: 'biometria',
@@ -154,6 +155,30 @@ describe('Pruevia API', () => {
     }
   });
 
+  it('derives provider step-up assurance from the validated JWT claim', async () => {
+    const fetcher = vi.fn(async () => new Response(JSON.stringify({ id: '00000000-0000-0000-0000-000000000098' }), { status: 200 }));
+    vi.stubGlobal('fetch', fetcher);
+    try {
+      const rpc = rpcWith({ claim_id: '00000000-0000-0000-0000-000000000010', status: 'pending' });
+      const token = 'eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJhYWwiOiJhYWwyIn0.sig';
+      const response = await createHandler({ rpc })(new Request('https://api.test/api/v1/provider/claims', {
+        method: 'POST',
+        headers: { authorization: `Bearer ${token}`, 'content-type': 'application/json' },
+        body: JSON.stringify({
+          scope_type: 'location',
+          provider_brand_id: row.provider_brand_id,
+          organization_id: '00000000-0000-0000-0000-000000000012',
+          requested_role: 'location_manager',
+          relationship_type: 'operator',
+        }),
+      }), env);
+      expect(response.status).toBe(201);
+      expect(rpc.call).toHaveBeenCalledWith('api_provider_create_claim', expect.anything(), { accessToken: token });
+    } finally {
+      vi.unstubAllGlobals();
+    }
+  });
+
   it('protects provider routes and forwards a branch claim with the user token', async () => {
     const rpc = rpcWith({ claim_id: '00000000-0000-0000-0000-000000000010', status: 'pending' });
     const handler = createHandler({ rpc, authenticateUser });
@@ -177,6 +202,28 @@ describe('Pruevia API', () => {
       p_provider_location_id: '00000000-0000-0000-0000-000000000011',
       p_requested_role: 'location_manager',
     }), { accessToken: 'provider-token' });
+  });
+
+  it('requires AAL2 before any provider mutation', async () => {
+    const rpc = rpcWith({});
+    const authenticateAal1 = async (request: Request) => request.headers.get('authorization') === 'Bearer provider-token'
+      ? { id: '00000000-0000-0000-0000-000000000098', accessToken: 'provider-token', aal: 'aal1' as const }
+      : null;
+    const handler = createHandler({ rpc, authenticateUser: authenticateAal1 });
+    const response = await handler(new Request('https://api.test/api/v1/provider/claims', {
+      method: 'POST',
+      headers: { authorization: 'Bearer provider-token', 'content-type': 'application/json' },
+      body: JSON.stringify({
+        scope_type: 'location',
+        provider_brand_id: row.provider_brand_id,
+        organization_id: '00000000-0000-0000-0000-000000000012',
+        requested_role: 'location_manager',
+        relationship_type: 'operator',
+      }),
+    }), env);
+    expect(response.status).toBe(403);
+    expect(await response.json()).toEqual({ error: { code: 'mfa_required', message: 'A second factor is required for provider changes' } });
+    expect(rpc.call).not.toHaveBeenCalled();
   });
 
   it('validates provider documents and forwards memberships to the scoped RPCs', async () => {
@@ -289,5 +336,33 @@ describe('Pruevia API', () => {
     ), env);
     expect(response.status).toBe(413);
     expect(rpc.call).not.toHaveBeenCalled();
+  });
+
+  it('accepts only consent-gated, non-clinical analytics metadata', async () => {
+    const rpc = rpcWith({ accepted: true });
+    const handler = createHandler({ rpc });
+    const accepted = await handler(new Request('https://api.test/api/v1/events', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        event_name: 'search_completed',
+        anonymous_id: '00000000-0000-0000-0000-000000000099',
+        metadata: { result_count: 4, surface: 'pwa' },
+      }),
+    }), env);
+    expect(accepted.status).toBe(202);
+    expect(rpc.call).toHaveBeenCalledWith('api_record_analytics_event', {
+      p_event_name: 'search_completed',
+      p_anonymous_id: '00000000-0000-0000-0000-000000000099',
+      p_metadata: { result_count: 4, surface: 'pwa' },
+    });
+
+    const rejected = await handler(new Request('https://api.test/api/v1/events', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ event_name: 'search_completed', anonymous_id: '00000000-0000-0000-0000-000000000099', metadata: { query: 'glucosa' } }),
+    }), env);
+    expect(rejected.status).toBe(400);
+    expect(rpc.call).toHaveBeenCalledTimes(1);
   });
 });

@@ -72,6 +72,10 @@ Vue 3 + Element Plus
         └──── misma API Worker
 ```
 
+Ese portal web es una evolución opcional para operaciones de alto volumen. En
+el MVP, el proveedor entra desde el mismo Flutter Web/PWA/Android/iOS mediante
+`Acceso para proveedores`; no se publican dos aplicaciones móviles.
+
 ---
 
 # 3. Stack definitivo actual
@@ -201,6 +205,11 @@ Uso:
 
 Compartirá componentes/tipos/cliente de API con admin cuando tenga sentido.
 
+La primera superficie de proveedor es el modo protegido de la app Flutter
+compartida. `provider.marca.com` queda reservado para cuando la operación
+requiera un escritorio especializado; no es un requisito de seguridad ni del
+primer lanzamiento.
+
 Debe servir a:
 
 - dueño de marca;
@@ -221,6 +230,13 @@ Android
 ```
 
 Flutter Web se utilizará para experiencia app-like, no como web SEO.
+
+La aplicación pública carga primero el modo paciente/visitante. El acceso para
+proveedores es un CTA secundario dentro de la misma app, no una selección de
+rol obligatoria ni un registro inicial. El modo proveedor usa la misma
+identidad autenticada sólo cuando existe una membresía aprobada y cada
+operación se valida en API/RPC por alcance de empresa y sucursal. El panel de
+administración permanece en una aplicación web separada.
 
 ---
 
@@ -357,12 +373,12 @@ La base se separa por schemas:
 | `identity` | identidad y permisos |
 | `audit` | auditoría |
 | `ops` | alertas/flags |
-| `analytics` | reservado para eventos/agregados |
+| `analytics` | eventos anónimos consentidos y agregados futuros |
 | `marketplace` | reservado para leads/reservas |
 | `sensitive` | reservado para datos sensibles |
 | `billing` | reservado para PRO |
 
-V1 ejecutable actual: **45 tablas**.
+V1 ejecutable actual: **59 tablas**.
 
 ---
 
@@ -959,7 +975,7 @@ No construir inicialmente:
 
 **Ya construido documentalmente/SQL:**
 
-- DB V1 de 45 tablas;
+- DB V1 de 59 tablas;
 - migraciones;
 - seed;
 - tests;

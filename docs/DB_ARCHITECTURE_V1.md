@@ -19,7 +19,7 @@ The design avoids a universal EAV model. Stable domain concepts are represented 
 | `identity` | Application profiles; provider membership is Phase 2 |
 | `audit` | Append-oriented security/business audit |
 | `ops` | Alerts and feature flags |
-| `analytics` | Reserved for event/aggregate model |
+| `analytics` | Consent-gated anonymous events and future aggregates |
 | `marketplace` | Reserved for leads/appointments/attribution |
 | `sensitive` | Reserved for separately controlled personal/health data |
 | `billing` | Reserved for PRO/enterprise billing |
@@ -289,7 +289,10 @@ camera -> on-device OCR when possible -> normalized request
 
 If server-side image processing is required, R2 stores the object transiently with a lifecycle deletion policy. Persisted health documents, if ever offered as an opt-in product, belong in the isolated `sensitive` model with separate authorization and encryption controls.
 
-Search analytics should prefer aggregate/coarse geography. There is no need to permanently associate a diagnostic search with a named patient's profile for the B2B demand product.
+Search analytics should prefer aggregate/coarse geography. The current
+`analytics.anonymous_events` table accepts only allowlisted, non-clinical
+metadata through a constrained RPC; there is no need to permanently associate
+a diagnostic search with a named patient's profile for the B2B demand product.
 
 ## 15. Big-data readiness
 

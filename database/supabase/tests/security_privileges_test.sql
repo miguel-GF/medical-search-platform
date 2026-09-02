@@ -4,7 +4,7 @@
 
 begin;
 create extension if not exists pgtap with schema extensions;
-select extensions.plan(12);
+select extensions.plan(15);
 
 select extensions.is(
   (select count(*)::integer
@@ -98,6 +98,26 @@ select extensions.is(
   has_schema_privilege('authenticated', 'extensions', 'usage'),
   false,
   'authenticated users cannot use the extension schema directly'
+);
+
+select extensions.is(
+  has_function_privilege('anon', 'public.api_record_analytics_event(text,uuid,jsonb)', 'execute'),
+  true,
+  'anonymous users may submit only the constrained analytics RPC'
+);
+select extensions.is(
+  has_function_privilege('authenticated', 'public.api_record_analytics_event(text,uuid,jsonb)', 'execute'),
+  true,
+  'authenticated users may submit only the constrained analytics RPC'
+);
+select extensions.is(
+  (select count(*)::integer
+   from information_schema.role_table_grants
+   where table_schema = 'analytics'
+     and table_name = 'anonymous_events'
+     and grantee in ('anon', 'authenticated')),
+  0,
+  'analytics events are not directly readable or writable by Data API roles'
 );
 
 select * from extensions.finish();

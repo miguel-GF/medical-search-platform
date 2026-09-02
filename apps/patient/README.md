@@ -1,0 +1,30 @@
+# Pruevia Patient
+
+Flutter Web/PWA, Android e iOS desde un solo codebase.
+
+## Ejecutar
+
+```text
+flutter pub get
+flutter run -d chrome --dart-define=API_BASE_URL=http://localhost:8787
+```
+
+`API_BASE_URL` debe apuntar al Worker/API desplegado. La búsqueda pública no
+requiere autenticación. El botón **Acceso para proveedores** es secundario y
+no convierte la pantalla inicial en un registro.
+
+## Principios del MVP
+
+- Búsqueda y receta funcionan como visitante.
+- El texto OCR se muestra para revisión antes de resolver.
+- No se persisten recetas, imágenes ni resultados clínicos.
+- La telemetría sólo se envía con consentimiento y usa un UUID anónimo.
+- El backend, no el cliente, decide permisos de proveedor.
+
+## Verificación
+
+```text
+flutter analyze
+flutter test
+flutter build web --release --dart-define=API_BASE_URL=https://api.example
+```

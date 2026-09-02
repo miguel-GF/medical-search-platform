@@ -8,12 +8,14 @@ Este directorio reúne la documentación canónica importada el 25 de agosto de 
 2. [Arquitectura canónica](01_ARQUITECTURA_CANONICA.md) — arquitectura objetivo de producto, software, infraestructura y datos.
 3. [Fases de implementación](02_FASES_IMPLEMENTACION.md) — roadmap, gates y Definition of Done.
 4. [Arquitectura de base de datos V1](DB_ARCHITECTURE_V1.md) — decisiones físicas y evolución del modelo.
-5. [Catálogo de tablas V1](DB_TABLE_CATALOG_V1.md) — inventario de las 45 tablas.
+5. [Catálogo de tablas V1](DB_TABLE_CATALOG_V1.md) — inventario de las 59 tablas actuales.
 6. [ERD](ERD.mmd) — diagrama Mermaid de relaciones principales.
 7. [Revisión de integración](03_REVISION_INTEGRACION.md) — evaluación, riesgos y recomendaciones actuales.
 
 La implementación ejecutable está en [`database/`](../database/README.md),
-[`apps/api/`](../apps/api/) y el extractor local [`apps/ocr-service/`](../apps/ocr-service/README.md).
+[`apps/api/`](../apps/api/), la app paciente multiplataforma
+[`apps/patient/`](../apps/patient/), y el extractor local
+[`apps/ocr-service/`](../apps/ocr-service/README.md).
 
 8. [Integración LOINC](LOINC_INTEGRACION.md) - descarga versionada, mapeo seguro y criterios de publicación.
 
@@ -26,6 +28,9 @@ La implementación ejecutable está en [`database/`](../database/README.md),
 
 12. [Corte de cobertura comercial real](COBERTURA_REAL_20260831.md) - corridas
     oficiales, mappings exactos y reglas para no publicar precios sin vigencia.
+
+13. [Auditoría de seguridad](SECURITY_AUDIT_20260901.md) - ACL, OCR, claims,
+    MFA de proveedor y telemetría anónima.
 
 ## Precedencia documental
 
