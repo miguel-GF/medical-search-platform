@@ -79,6 +79,27 @@ describe('Pruevia API', () => {
     expect(rpc.call).toHaveBeenCalledWith('api_search', expect.objectContaining({ p_query: 'biometria' }));
   });
 
+  it('does not render an empty brand fallback beside a concrete branch offer', async () => {
+    const branch = {
+      ...row,
+      provider_location_id: '00000000-0000-0000-0000-000000000011',
+      provider_location_name: 'Puebla Municipio Libre',
+      amount_minor: 12000,
+    };
+    const brandFallback = {
+      ...row,
+      amount_minor: null,
+      price_type: null,
+      price_key: null,
+    };
+    const response = await createHandler({ rpc: rpcWith([branch, brandFallback]) })(
+      new Request('https://api.test/api/v1/search?q=biometria'),
+      env,
+    );
+    const payload = await response.json() as { results: Array<{ offers: unknown[] }> };
+    expect(payload.results[0].offers).toHaveLength(1);
+  });
+
   it('exposes deterministic resolution status and candidates', async () => {
     const resolution = {
       query: 'perfil tiroideo',

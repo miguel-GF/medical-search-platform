@@ -686,8 +686,23 @@ function groupSearchRows(rows: SearchRow[]) {
     prices: Map<string, Record<string, unknown>>;
     source: Record<string, unknown> | null;
   };
+  const concreteOfferKeys = new Set(
+    rows
+      .filter((row) => row.provider_location_id !== null)
+      .map((row) => `${row.service_id}:${row.offer_id}`),
+  );
   const services = new Map<string, { service: Record<string, unknown>; offers: Map<string, GroupedOffer> }>();
   for (const row of rows) {
+    // A brand-level fallback with no price is not useful when the same offer
+    // already has a concrete branch row. It otherwise renders as a duplicate
+    // card pointing to the same source URL.
+    if (
+      row.provider_location_id === null &&
+      row.amount_minor === null &&
+      concreteOfferKeys.has(`${row.service_id}:${row.offer_id}`)
+    ) {
+      continue;
+    }
     const existing = services.get(row.service_id) ?? {
       service: {
         id: row.service_id,

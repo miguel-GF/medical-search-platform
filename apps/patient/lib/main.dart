@@ -1016,34 +1016,38 @@ class ServiceCard extends StatelessWidget {
   const ServiceCard({super.key, required this.service});
   final SearchService service;
   @override
-  Widget build(BuildContext context) => Card(
-    child: Padding(
-      padding: const EdgeInsets.all(18),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Text(
-                  service.displayName,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
+  Widget build(BuildContext context) => SizedBox(
+    width: double.infinity,
+    child: Card(
+      child: Padding(
+        padding: const EdgeInsets.all(18),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Text(
+                    service.displayName,
+                    style: Theme.of(
+                      context,
+                    ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
+                  ),
                 ),
-              ),
-              _StatusChip(
-                status:
-                    '${(service.confidence * 100).toStringAsFixed(0)}% match',
-              ),
-            ],
-          ),
-          const SizedBox(height: 14),
-          if (service.offers.isEmpty)
-            const Text('No hay una oferta comercial vigente para mostrar.'),
-          ...service.offers.map((offer) => _OfferRow(offer: offer)),
-        ],
+                const SizedBox(width: 12),
+                _StatusChip(
+                  status:
+                      '${(service.confidence * 100).toStringAsFixed(0)}% match',
+                ),
+              ],
+            ),
+            const SizedBox(height: 14),
+            if (service.offers.isEmpty)
+              const Text('No hay una oferta comercial vigente para mostrar.'),
+            ...service.offers.map((offer) => _OfferRow(offer: offer)),
+          ],
+        ),
       ),
     ),
   );
@@ -1053,70 +1057,123 @@ class _OfferRow extends StatelessWidget {
   const _OfferRow({required this.offer});
   final SearchOffer offer;
   @override
-  Widget build(BuildContext context) => Container(
-    margin: const EdgeInsets.only(top: 8),
-    padding: const EdgeInsets.all(13),
-    decoration: BoxDecoration(
-      color: Theme.of(
-        context,
-      ).colorScheme.surfaceContainerHighest.withValues(alpha: .45),
-      borderRadius: BorderRadius.circular(13),
-    ),
-    child: Wrap(
-      alignment: WrapAlignment.spaceBetween,
-      runSpacing: 10,
-      spacing: 18,
-      children: [
-        ConstrainedBox(
-          constraints: const BoxConstraints(minWidth: 180),
-          child: Column(
+  Widget build(BuildContext context) => SizedBox(
+    width: double.infinity,
+    child: Container(
+      margin: const EdgeInsets.only(top: 8),
+      padding: const EdgeInsets.all(13),
+      decoration: BoxDecoration(
+        color: Theme.of(
+          context,
+        ).colorScheme.surfaceContainerHighest.withValues(alpha: .45),
+        borderRadius: BorderRadius.circular(13),
+      ),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final identity = _OfferIdentity(offer: offer);
+          final pricing = _OfferPricing(offer: offer);
+          if (constraints.maxWidth < 520) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [identity, const SizedBox(height: 12), pricing],
+            );
+          }
+          return Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                offer.providerName,
-                style: const TextStyle(fontWeight: FontWeight.w700),
-              ),
-              if (offer.locationName != null)
-                Text(
-                  offer.locationName!,
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-              if (offer.distanceMeters != null)
-                Text(
-                  _distance(offer.distanceMeters!),
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
+              Expanded(child: identity),
+              const SizedBox(width: 16),
+              Flexible(child: pricing),
             ],
-          ),
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Text(
-              offer.amountMinor == null
-                  ? 'Cotizar'
-                  : _money(offer.amountMinor!, offer.currency ?? 'MXN'),
-              style: Theme.of(
-                context,
-              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800),
-            ),
-            if (offer.lastSeenAt != null)
-              Text(
-                'Fuente actualizada ${_date(offer.lastSeenAt!)}',
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-            if (offer.sourceUrl != null)
-              TextButton.icon(
-                onPressed: () => _open(offer.sourceUrl!),
-                icon: const Icon(Icons.open_in_new, size: 16),
-                label: const Text('Ver fuente'),
-              ),
-          ],
-        ),
-      ],
+          );
+        },
+      ),
     ),
   );
 }
+
+class _OfferIdentity extends StatelessWidget {
+  const _OfferIdentity({required this.offer});
+  final SearchOffer offer;
+
+  @override
+  Widget build(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(offer.providerName, style: const TextStyle(fontWeight: FontWeight.w700)),
+      Text(
+        offer.locationName ?? 'Sin sucursal vinculada',
+        style: Theme.of(context).textTheme.bodySmall,
+      ),
+      if (offer.distanceMeters != null)
+        Text(_distance(offer.distanceMeters!), style: Theme.of(context).textTheme.bodySmall),
+    ],
+  );
+}
+
+class _OfferPricing extends StatelessWidget {
+  const _OfferPricing({required this.offer});
+  final SearchOffer offer;
+
+  @override
+  Widget build(BuildContext context) {
+    final priceLabel = _priceTypeLabel(offer.priceType);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Text(
+          offer.amountMinor == null
+              ? 'Cotizar'
+              : _money(offer.amountMinor!, offer.currency ?? 'MXN'),
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800),
+        ),
+        if (offer.amountMinor != null && priceLabel != null)
+          Text(priceLabel, style: Theme.of(context).textTheme.bodySmall),
+        if (offer.prices.length > 1)
+          ...offer.prices
+              .where(
+                (price) =>
+                    price.amountMinor != null &&
+                    (price.amountMinor != offer.amountMinor ||
+                        price.type != offer.priceType),
+              )
+              .map(
+                (price) => Text(
+                  '${_priceTypeLabel(price.type) ?? 'Precio'}: ${_money(price.amountMinor!, price.currency ?? offer.currency ?? 'MXN')}',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ),
+        if (offer.lastSeenAt != null)
+          Text(
+            'Fuente actualizada ${_date(offer.lastSeenAt!)}',
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+        if (offer.sourceUrl != null)
+          TextButton.icon(
+            onPressed: () => _open(offer.sourceUrl!),
+            icon: const Icon(Icons.open_in_new, size: 16),
+            label: Text(
+              offer.locationName == null
+                  ? 'Ver fuente del proveedor'
+                  : 'Ver fuente de sucursal',
+            ),
+          )
+        else
+          Text(
+            'Fuente no disponible',
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+      ],
+    );
+  }
+}
+
+String? _priceTypeLabel(String? value) => switch (value) {
+  'online' => 'Precio en línea',
+  'regular' => 'Precio regular',
+  null || '' => null,
+  _ => value,
+};
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({
@@ -1376,8 +1433,50 @@ class _StatusChip extends StatelessWidget {
   const _StatusChip({required this.status});
   final String status;
   @override
-  Widget build(BuildContext context) =>
-      Chip(label: Text(status), visualDensity: VisualDensity.compact);
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final tone = _statusTone(status, scheme);
+    return Chip(
+      label: Text(tone.label),
+      visualDensity: VisualDensity.compact,
+      backgroundColor: tone.color.withValues(alpha: .16),
+      side: BorderSide(color: tone.color.withValues(alpha: .55)),
+      labelStyle: TextStyle(
+        color: tone.color,
+        fontWeight: FontWeight.w700,
+        fontSize: 12,
+      ),
+    );
+  }
+}
+
+({String label, Color color}) _statusTone(String status, ColorScheme scheme) {
+  final confidence = RegExp(r'^(\d+)% match$').firstMatch(status);
+  if (confidence != null) {
+    return (
+      label: '${confidence.group(1)}% coincidencia',
+      color: scheme.primary,
+    );
+  }
+  final dark = scheme.brightness == Brightness.dark;
+  return switch (status) {
+    'resolved' => (
+      label: 'Encontrado',
+      color: dark ? const Color(0xFF86EFAC) : PrueviaColors.success,
+    ),
+    'ambiguous' => (
+      label: 'Revisión necesaria',
+      color: dark ? const Color(0xFFFCD34D) : PrueviaColors.warning,
+    ),
+    'no_match' => (
+      label: 'Sin coincidencia',
+      color: dark ? const Color(0xFFFCA5A5) : PrueviaColors.danger,
+    ),
+    'recomendado' => (label: 'Recomendado', color: scheme.primary),
+    'ready' => (label: 'Listo', color: PrueviaColors.success),
+    'partial' => (label: 'Parcial', color: PrueviaColors.warning),
+    _ => (label: status, color: scheme.outline),
+  };
 }
 
 String _money(int minor, String currency) =>

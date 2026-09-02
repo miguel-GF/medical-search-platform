@@ -15,6 +15,8 @@ class SearchOffer {
     this.distanceMeters,
     this.amountMinor,
     this.currency,
+    this.priceType,
+    this.prices = const [],
     this.sourceUrl,
     this.lastSeenAt,
   });
@@ -25,6 +27,8 @@ class SearchOffer {
   final double? distanceMeters;
   final int? amountMinor;
   final String? currency;
+  final String? priceType;
+  final List<SearchPrice> prices;
   final String? sourceUrl;
   final String? lastSeenAt;
 
@@ -32,6 +36,10 @@ class SearchOffer {
     final provider = (json['provider'] as JsonMap?) ?? <String, dynamic>{};
     final location = json['location'] as JsonMap?;
     final price = json['price'] as JsonMap?;
+    final prices = (json['prices'] as List<dynamic>? ?? const [])
+        .whereType<JsonMap>()
+        .map(SearchPrice.fromJson)
+        .toList(growable: false);
     final source = json['source'] as JsonMap?;
     return SearchOffer(
       id: _stringValue(json['id']) ?? 'offer',
@@ -40,10 +48,33 @@ class SearchOffer {
       distanceMeters: _doubleValue(json['distance_meters']),
       amountMinor: _intValue(price?['amount_minor']),
       currency: _stringValue(price?['currency']),
+      priceType: _stringValue(price?['type']),
+      prices: prices,
       sourceUrl: _stringValue(source?['url']),
       lastSeenAt: _stringValue(source?['last_seen_at']),
     );
   }
+}
+
+class SearchPrice {
+  const SearchPrice({
+    required this.type,
+    required this.amountMinor,
+    required this.currency,
+    this.lastSeenAt,
+  });
+
+  final String? type;
+  final int? amountMinor;
+  final String? currency;
+  final String? lastSeenAt;
+
+  factory SearchPrice.fromJson(JsonMap json) => SearchPrice(
+    type: _stringValue(json['type']),
+    amountMinor: _intValue(json['amount_minor']),
+    currency: _stringValue(json['currency']),
+    lastSeenAt: _stringValue(json['last_seen_at']),
+  );
 }
 
 class SearchService {
