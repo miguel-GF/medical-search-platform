@@ -36,10 +36,13 @@ class SearchOffer {
     final provider = (json['provider'] as JsonMap?) ?? <String, dynamic>{};
     final location = json['location'] as JsonMap?;
     final price = json['price'] as JsonMap?;
-    final prices = (json['prices'] as List<dynamic>? ?? const [])
-        .whereType<JsonMap>()
-        .map(SearchPrice.fromJson)
-        .toList(growable: false);
+    final rawPrices = json['prices'];
+    final prices = rawPrices is List
+        ? rawPrices
+              .whereType<JsonMap>()
+              .map(SearchPrice.fromJson)
+              .toList(growable: false)
+        : const <SearchPrice>[];
     final source = json['source'] as JsonMap?;
     return SearchOffer(
       id: _stringValue(json['id']) ?? 'offer',

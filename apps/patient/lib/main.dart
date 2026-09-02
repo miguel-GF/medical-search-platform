@@ -10,8 +10,47 @@ import 'src/theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // A malformed remote payload must never leave patients with Flutter's red
+  // debug error surface. Network/API errors are handled inline; this is the
+  // last-resort UI fallback for an unexpected rendering failure.
+  ErrorWidget.builder = (_) => const _AppErrorFallback();
   final preferences = await PatientPreferences.load();
   runApp(PatientApp(preferences: preferences));
+}
+
+class _AppErrorFallback extends StatelessWidget {
+  const _AppErrorFallback();
+
+  @override
+  Widget build(BuildContext context) => Material(
+    color: const Color(0xFF0B1220),
+    child: Center(
+      child: Card(
+        margin: const EdgeInsets.all(24),
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Icon(Icons.refresh, size: 28),
+              const SizedBox(height: 12),
+              Text(
+                'Algo no salió como esperábamos',
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                'Recarga esta pantalla para intentarlo de nuevo. Tu búsqueda no se envía ni se guarda por este error.',
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
 }
 
 class PatientApp extends StatefulWidget {
