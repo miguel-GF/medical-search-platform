@@ -60,6 +60,21 @@ export interface PriceRow { price_version_id: string; provider_name: string; ser
 export interface QualityIssueRow { issue_id: string; issue_code: string; severity: string; status: string; source_id: string | null; crawl_run_id: string | null; details: Record<string, unknown>; created_at: string; }
 export interface AlertRow { alert_id: string; alert_code: string; severity: string; status: string; source: string | null; title: string; detail: string | null; created_at: string; }
 
+export class AdminApiError extends Error {
+  constructor(
+    message: string,
+    readonly statusCode: number,
+    readonly code: string,
+    readonly errorTag: string,
+    readonly severity: string,
+    readonly retryable: boolean,
+    readonly requestId?: string,
+  ) {
+    super(message);
+    this.name = 'AdminApiError';
+  }
+}
+
 export interface AdminApi {
   dashboard(): Promise<Dashboard>;
   normalizationQueue(status?: string): Promise<NormalizationRow[]>;
@@ -78,15 +93,43 @@ export function createAdminApi(baseUrl: string, accessToken: () => Promise<strin
   const base = baseUrl.replace(/\/$/, '');
   async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
     const token = await accessToken();
-    if (!token) throw new Error('Admin session required');
-    const response = await fetcher(`${base}${path}`, {
-      ...init,
-      headers: { authorization: `Bearer ${token}`, 'content-type': 'application/json', ...(init.headers ?? {}) },
-    });
+    if (!token) throw new AdminApiError(
+      'Tu sesión administrativa es necesaria para continuar.',
+      401,
+      'unauthorized',
+      'CLIENT.AUTH',
+      'medium',
+      false,
+    );
+    let response: Response;
+    try {
+      response = await fetcher(`${base}${path}`, {
+        ...init,
+        headers: { authorization: `Bearer ${token}`, 'content-type': 'application/json', ...(init.headers ?? {}) },
+      });
+    } catch {
+      throw new AdminApiError(
+        'No pudimos conectar con el servicio. Revisa tu conexión e inténtalo de nuevo.',
+        503,
+        'client_connection_error',
+        'CLIENT.CONNECTION',
+        'medium',
+        true,
+      );
+    }
     const payload = await response.json().catch(() => null);
     if (!response.ok) {
-      const message = (payload as { error?: { message?: string } } | null)?.error?.message ?? `HTTP ${response.status}`;
-      throw new Error(message);
+      const error = (payload as { error?: { code?: string; message?: string; type?: string; error_tag?: string; severity?: string; retryable?: boolean; request_id?: string } } | null)?.error;
+      const code = error?.code ?? 'request_failed';
+      throw new AdminApiError(
+        localizeError(code, error?.message ?? `HTTP ${response.status}`),
+        response.status,
+        code,
+        error?.error_tag ?? 'API.REQUEST',
+        error?.severity ?? 'medium',
+        error?.retryable === true,
+        error?.request_id ?? response.headers.get('x-request-id') ?? undefined,
+      );
     }
     return payload as T;
   }
@@ -103,6 +146,20 @@ export function createAdminApi(baseUrl: string, accessToken: () => Promise<strin
     alerts: () => request<AlertRow[]>('/api/v1/admin/alerts?limit=200'),
     resolveNormalization: (id, input) => request(`/api/v1/admin/normalization/${id}/resolve`, { method: 'POST', body: JSON.stringify(input) }),
   };
+}
+
+function localizeError(code: string, fallback: string): string {
+  switch (code) {
+    case 'service_not_configured': return 'El servicio de datos no está configurado. Revisa la configuración del entorno.';
+    case 'upstream_timeout': return 'La fuente de datos tardó demasiado. Inténtalo de nuevo.';
+    case 'upstream_connection_error':
+    case 'client_connection_error': return 'No pudimos conectar con la fuente de datos. Revisa tu conexión.';
+    case 'unauthorized': return 'Tu sesión administrativa no es válida o ya expiró.';
+    case 'forbidden': return 'Tu cuenta no tiene permisos para esta acción.';
+    case 'invalid_body': return 'La solicitud administrativa no tiene un formato válido.';
+    case 'not_found': return 'No encontramos el recurso solicitado.';
+    default: return fallback;
+  }
 }
 
 export function formatDate(value: string | null): string {

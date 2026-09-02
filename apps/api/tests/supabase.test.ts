@@ -50,4 +50,17 @@ describe('Supabase RPC transport', () => {
       vi.unstubAllGlobals();
     }
   });
+
+  it('classifies an invalid upstream JSON response', async () => {
+    const fetcher = vi.fn(async () => new Response('not-json', { status: 200 }));
+    await expect(new SupabaseRpcClient(env, fetcher).call('api_search', { p_query: 'mastografia' }))
+      .rejects.toMatchObject({ code: 'upstream_invalid_response', tag: 'UPSTREAM_PROTOCOL', rpcName: 'api_search' });
+  });
+
+  it('fails closed when the Supabase URL is missing or invalid', async () => {
+    await expect(new SupabaseRpcClient({ ...env, SUPABASE_URL: '' }).call('api_search', { p_query: 'mastografia' }))
+      .rejects.toMatchObject({ code: 'service_not_configured', tag: 'CONFIGURATION' });
+    await expect(new SupabaseRpcClient({ ...env, SUPABASE_URL: 'file:///tmp/supabase' }).call('api_search', { p_query: 'mastografia' }))
+      .rejects.toMatchObject({ code: 'service_not_configured', tag: 'CONFIGURATION' });
+  });
 });

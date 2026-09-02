@@ -48,6 +48,55 @@ function streamedJsonRequest(url: string, body: string): Request {
 }
 
 describe('POST /api/v1/resolve-batch', () => {
+  it('uses exact catalog segmentation for an undelimited prescription line', async () => {
+    const call = vi.fn(async <T>(name: string, _body: Record<string, unknown>): Promise<T> => {
+      if (name === 'api_segment_package_text') {
+        return {
+          status: 'segmented',
+          segments: [
+            { text: 'BH', method: 'catalog_exact' },
+            { text: 'EGO', method: 'catalog_exact' },
+          ],
+        } as T;
+      }
+      return rpcPayload as T;
+    });
+    const rpc: RpcClient = { call: call as RpcClient['call'] };
+    const response = await createHandler({ rpc })(new Request('https://api.test/api/v1/resolve-batch', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ text: 'BH EGO', objective: 'all_in_one' }),
+    }), env);
+    expect(response.status).toBe(200);
+    expect(call).toHaveBeenCalledWith('api_segment_package_text', {
+      p_text: 'BH EGO',
+      p_domain_code: 'health_diagnostics',
+      p_max_items: 30,
+    });
+    expect(call).toHaveBeenCalledWith('api_resolve_package', expect.objectContaining({ p_items: ['BH', 'EGO'] }));
+  });
+
+  it('keeps the original item when the catalog cannot prove a unique partition', async () => {
+    const call = vi.fn(async <T>(name: string, _body: Record<string, unknown>): Promise<T> => {
+      if (name === 'api_segment_package_text') {
+        return {
+          status: 'ambiguous',
+          reason: 'multiple_exact_partitions',
+          segments: [],
+        } as T;
+      }
+      return rpcPayload as T;
+    });
+    const rpc: RpcClient = { call: call as RpcClient['call'] };
+    const response = await createHandler({ rpc })(new Request('https://api.test/api/v1/resolve-batch', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ text: 'BH EGO', objective: 'all_in_one' }),
+    }), env);
+    expect(response.status).toBe(200);
+    expect(call).toHaveBeenCalledWith('api_resolve_package', expect.objectContaining({ p_items: ['BH EGO'] }));
+  });
+
   it('forwards arbitrary study lists to the package RPC and returns the package contract', async () => {
     const rpc = rpcWith(rpcPayload);
     const response = await createHandler({ rpc })(new Request('https://api.test/api/v1/resolve-batch', {

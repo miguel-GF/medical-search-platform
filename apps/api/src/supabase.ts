@@ -1,5 +1,59 @@
 import type { Env, RpcClient } from './types.js';
 
+/**
+ * Errors crossing the Supabase boundary are deliberately typed.  The public
+ * API can expose a safe, localized explanation while the log keeps a stable
+ * machine-readable tag for operations.
+ */
+export class SupabaseConfigurationError extends Error {
+  readonly code = 'service_not_configured';
+  readonly tag = 'CONFIGURATION';
+  readonly retryable = false;
+
+  constructor(message = 'Supabase credentials are not configured') {
+    super(message);
+    this.name = 'SupabaseConfigurationError';
+  }
+}
+
+export class SupabaseTimeoutError extends Error {
+  readonly code = 'upstream_timeout';
+  readonly tag = 'UPSTREAM_TIMEOUT';
+  readonly retryable = true;
+  readonly timeoutMs: number;
+
+  constructor(readonly rpcName: string, timeoutMs: number) {
+    super(`Supabase RPC ${rpcName} timed out after ${timeoutMs}ms`);
+    this.name = 'SupabaseTimeoutError';
+    this.timeoutMs = timeoutMs;
+  }
+}
+
+export class SupabaseRpcError extends Error {
+  readonly code = 'upstream_rpc_error';
+  readonly tag = 'UPSTREAM_RPC';
+  readonly retryable: boolean;
+
+  constructor(readonly rpcName: string, readonly status: number, detail: string) {
+    // Keep details in the server-side error only.  It can contain database
+    // internals and must never be sent to a patient.
+    super(`Supabase RPC ${rpcName} failed (${status}): ${detail}`);
+    this.name = 'SupabaseRpcError';
+    this.retryable = status === 408 || status === 425 || status === 429 || status >= 500;
+  }
+}
+
+export class SupabaseResponseError extends Error {
+  readonly code = 'upstream_invalid_response';
+  readonly tag = 'UPSTREAM_PROTOCOL';
+  readonly retryable = true;
+
+  constructor(readonly rpcName: string) {
+    super(`Supabase RPC ${rpcName} returned invalid JSON`);
+    this.name = 'SupabaseResponseError';
+  }
+}
+
 export class SupabaseRpcClient implements RpcClient {
   private readonly fetcher: typeof fetch;
 
@@ -12,13 +66,20 @@ export class SupabaseRpcClient implements RpcClient {
 
   async call<T>(name: string, body: Record<string, unknown>, options: { admin?: boolean; accessToken?: string } = {}): Promise<T> {
     const key = options.admin ? this.env.SUPABASE_SERVICE_ROLE_KEY : this.env.SUPABASE_ANON_KEY;
-    if (!key) throw new Error('Supabase credential is not configured');
+    if (!key || !this.env.SUPABASE_URL) throw new SupabaseConfigurationError();
+    let baseUrl: URL;
+    try {
+      baseUrl = new URL(this.env.SUPABASE_URL);
+      if (baseUrl.protocol !== 'https:' && baseUrl.protocol !== 'http:') throw new Error('unsupported protocol');
+    } catch {
+      throw new SupabaseConfigurationError('Supabase URL is invalid');
+    }
     const authorization = options.accessToken ?? key;
     const timeoutMs = parseTimeout(this.env.SUPABASE_TIMEOUT_MS);
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort('supabase_timeout'), timeoutMs);
     try {
-      const response = await this.fetcher(`${this.env.SUPABASE_URL.replace(/\/$/, '')}/rest/v1/rpc/${name}`, {
+      const response = await this.fetcher(`${baseUrl.toString().replace(/\/$/, '')}/rest/v1/rpc/${name}`, {
         method: 'POST',
         headers: {
           apikey: key,
@@ -30,11 +91,15 @@ export class SupabaseRpcClient implements RpcClient {
       });
       if (!response.ok) {
         const detail = await response.text();
-        throw new Error(`Supabase RPC ${name} failed (${response.status}): ${detail.slice(0, 500)}`);
+        throw new SupabaseRpcError(name, response.status, detail.slice(0, 500));
       }
-      return (await response.json()) as T;
+      try {
+        return (await response.json()) as T;
+      } catch {
+        throw new SupabaseResponseError(name);
+      }
     } catch (error) {
-      if (controller.signal.aborted) throw new Error(`Supabase RPC ${name} timed out after ${timeoutMs}ms`);
+      if (controller.signal.aborted) throw new SupabaseTimeoutError(name, timeoutMs);
       throw error;
     } finally {
       clearTimeout(timer);

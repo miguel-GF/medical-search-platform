@@ -56,6 +56,13 @@ describe('POST /api/v1/resolve-image', () => {
       method: 'POST', body: JSON.stringify({ image: 'data:image/jpeg;base64,/9j/4AA=' }),
     }), env);
     expect(unavailable.status).toBe(503);
+    expect(await unavailable.json()).toEqual(expect.objectContaining({
+      error: expect.objectContaining({
+        code: 'ocr_unavailable',
+        error_tag: 'API.OCR.UNAVAILABLE',
+        retryable: true,
+      }),
+    }));
     const invalid = await handler(new Request('https://api.test/api/v1/resolve-image', {
       method: 'POST', body: JSON.stringify({ image: 'AAE=', mime_type: 'application/pdf' }),
     }), { ...env, AI: { run: async () => ({ answer: 'BH' }) } });

@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { createHandler } from '../src/app.js';
+import { SupabaseConfigurationError, SupabaseTimeoutError } from '../src/supabase.js';
 import type { Env, RpcClient, SearchRow } from '../src/types.js';
 
 const env: Env = {
@@ -171,6 +172,46 @@ describe('Pruevia API', () => {
     expect((await handler(new Request('https://api.test/api/v1/search?q='), env)).status).toBe(400);
     expect((await handler(new Request('https://api.test/api/v1/search?q=---'), env)).status).toBe(400);
     expect((await handler(new Request('https://api.test/api/v1/search?q=biometria&location_id=not-a-uuid'), env)).status).toBe(400);
+  });
+
+  it('returns a safe, tagged Spanish error when the upstream is not configured', async () => {
+    const rpc: RpcClient = { call: vi.fn(async () => { throw new SupabaseConfigurationError(); }) };
+    const response = await createHandler({ rpc })(
+      new Request('https://api.test/api/v1/search?q=mastografia'),
+      env,
+    );
+    expect(response.status).toBe(503);
+    const payload = await response.json() as { error: Record<string, unknown> };
+    expect(payload.error).toEqual(expect.objectContaining({
+      code: 'service_not_configured',
+      type: 'configuration',
+      error_tag: 'API.SERVER.CONFIGURATION',
+      severity: 'high',
+      retryable: false,
+      operation: 'individual_search',
+      message: 'El servicio de búsqueda no está configurado. Inténtalo más tarde.',
+    }));
+    expect(payload.error.request_id).toEqual(expect.any(String));
+    expect(response.headers.get('x-request-id')).toBe(payload.error.request_id);
+  });
+
+  it('classifies upstream timeouts without leaking database details', async () => {
+    const rpc: RpcClient = { call: vi.fn(async () => { throw new SupabaseTimeoutError('api_search', 5000); }) };
+    const response = await createHandler({ rpc })(
+      new Request('https://api.test/api/v1/search?q=mastografia'),
+      env,
+    );
+    expect(response.status).toBe(504);
+    const body = await response.text();
+    expect(JSON.parse(body)).toEqual(expect.objectContaining({
+      error: expect.objectContaining({
+        code: 'upstream_timeout',
+        type: 'timeout',
+        error_tag: 'API.SERVER.TIMEOUT',
+        retryable: true,
+      }),
+    }));
+    expect(body).not.toContain('api_search');
   });
 
   it('protects admin routes and forwards a manual resolution', async () => {

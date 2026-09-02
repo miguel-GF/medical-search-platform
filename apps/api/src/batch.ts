@@ -17,6 +17,8 @@ const OBJECTIVES: PackageObjective[] = ['all_in_one', 'lowest_cost', 'nearest', 
 export interface ParsedBatchRequest {
   items: string[];
   original_text: string;
+  /** Whether items came from free-form text and may need catalog segmentation. */
+  input_source: 'text' | 'items';
   objective: PackageObjective;
   max_solutions: number;
 }
@@ -92,10 +94,50 @@ export function parseBatchRequest(input: Record<string, unknown>): BatchParseRes
     value: {
       items,
       original_text: originalText,
+      input_source: hasItems ? 'items' : 'text',
       objective: objective as PackageObjective,
       max_solutions: maxSolutions,
     },
   };
+}
+
+/**
+ * Validate the response from the catalog-backed free-form text segmenter.
+ *
+ * The segmenter runs in SQL because only the database has the current set of
+ * approved names and aliases. Its response is still untrusted at the Worker
+ * boundary: callers must only use a segmented result when the fragments
+ * reconstruct the normalized original text exactly. This prevents a malformed
+ * or stale RPC response from silently dropping, adding, or rewriting a study.
+ */
+export function readCatalogSegments(value: unknown, originalText: string): string[] | null {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
+  const payload = value as { status?: unknown; segments?: unknown };
+  if (payload.status !== 'segmented' || !Array.isArray(payload.segments)) return null;
+  if (payload.segments.length < 2 || payload.segments.length > PACKAGE_MAX_ITEMS) return null;
+  const segments: string[] = [];
+  for (const segment of payload.segments) {
+    if (!segment || typeof segment !== 'object' || Array.isArray(segment)) return null;
+    const text = (segment as { text?: unknown }).text;
+    const method = (segment as { method?: unknown }).method;
+    if (typeof text !== 'string' || !isValidItemText(text.trim())) return null;
+    // Only the exact catalog evidence path can be used automatically. A
+    // future fuzzy/AI mode must remain a clarification, never a split.
+    if (method !== 'catalog_exact' && method !== 'catalog_exact_ambiguous') return null;
+    segments.push(text.trim());
+  }
+  return normalizeForSegmentation(segments.join(' ')) === normalizeForSegmentation(originalText)
+    ? segments
+    : null;
+}
+
+function normalizeForSegmentation(value: string): string {
+  return value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
 }
 
 export function splitBatchText(input: string): string[] {

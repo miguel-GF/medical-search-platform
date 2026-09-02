@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   buildPackageResolution,
   parseBatchRequest,
+  readCatalogSegments,
   splitBatchText,
 } from '../src/batch.js';
 import type { PackageItem, PackageOffer, PackageRpcResponse } from '../src/types.js';
@@ -65,6 +66,38 @@ describe('batch request parser', () => {
     const result = parseBatchRequest({ items: [{ text: 'BH' }, 'audiometría'], objective: 'nearest', max_solutions: 3 });
     expect(result).toEqual(expect.objectContaining({ ok: true }));
     if (result.ok) expect(result.value).toMatchObject({ items: ['BH', 'audiometría'], objective: 'nearest', max_solutions: 3 });
+  });
+
+  it('marks free-form text separately from an explicit item array', () => {
+    const text = parseBatchRequest({ text: 'BH EGO' });
+    expect(text).toMatchObject({ ok: true });
+    if (text.ok) expect(text.value.input_source).toBe('text');
+    const items = parseBatchRequest({ items: ['BH', 'EGO'] });
+    expect(items).toMatchObject({ ok: true });
+    if (items.ok) expect(items.value.input_source).toBe('items');
+  });
+
+  it('accepts only exact catalog segments that reconstruct the source', () => {
+    const response = {
+      status: 'segmented',
+      segments: [
+        { text: 'Biometria hematica', method: 'catalog_exact' },
+        { text: 'EGO', method: 'catalog_exact' },
+      ],
+    };
+    expect(readCatalogSegments(response, 'Biometria hematica EGO')).toEqual([
+      'Biometria hematica',
+      'EGO',
+    ]);
+    expect(readCatalogSegments({ ...response, segments: [{ text: 'BH', method: 'word_fuzzy' }, response.segments[1]] }, 'BH EGO')).toBeNull();
+    expect(readCatalogSegments({ ...response, segments: [{ text: 'BH', method: 'catalog_exact' }] }, 'BH EGO')).toBeNull();
+    expect(readCatalogSegments({
+      ...response,
+      segments: [
+        { text: 'BH', method: 'catalog_exact' },
+        { text: 'QS completa', method: 'catalog_exact_ambiguous' },
+      ],
+    }, 'BH QS completa')).toEqual(['BH', 'QS completa']);
   });
 
   it('rejects ambiguous input shapes and unsafe bounds', () => {

@@ -1,6 +1,12 @@
-import { SupabaseRpcClient } from './supabase.js';
+import { SupabaseConfigurationError, SupabaseResponseError, SupabaseRpcError, SupabaseRpcClient, SupabaseTimeoutError } from './supabase.js';
 import type { AdminAlert, AdminCatalogItem, AdminQualityIssue, AdminUser, Env, PackageResolutionResponse, ResolutionCandidate, ResolutionResponse, RpcClient, SearchRow } from './types.js';
-import { buildPackageResolution, normalizeBatchRpcPayload, parseBatchRequest } from './batch.js';
+import {
+  buildPackageResolution,
+  normalizeBatchRpcPayload,
+  parseBatchRequest,
+  readCatalogSegments,
+  type ParsedBatchRequest,
+} from './batch.js';
 import {
   OcrInputError,
   OcrRecognitionError,
@@ -39,6 +45,7 @@ const ANALYTICS_SURFACES = new Set(['web', 'pwa', 'android', 'ios']);
 export function createHandler(dependencies: Dependencies) {
   return async function handle(request: Request, env: Env): Promise<Response> {
     const origin = env.ALLOWED_ORIGIN ?? '*';
+    const requestId = requestIdFor(request);
     if (request.method === 'OPTIONS') {
       return new Response(null, { status: 204, headers: corsHeaders(origin) });
     }
@@ -57,7 +64,7 @@ export function createHandler(dependencies: Dependencies) {
         return await resolveBatchResponse(request, dependencies.rpc, origin);
       }
       if (url.pathname === '/api/v1/resolve-image' && request.method === 'POST') {
-        return await resolveImageResponse(request, dependencies.rpc, env, origin);
+        return await resolveImageResponse(request, dependencies.rpc, env, origin, requestId);
       }
       if (url.pathname === '/api/v1/events' && request.method === 'POST') {
         return await analyticsEventResponse(request, dependencies.rpc, origin);
@@ -87,8 +94,35 @@ export function createHandler(dependencies: Dependencies) {
       }
       return json({ error: { code: 'not_found', message: 'Route not found' } }, 404, origin);
     } catch (error) {
-      console.error('Pruevia API request failed', error);
-      return json({ error: { code: 'internal_error', message: 'The request could not be completed' } }, 500, origin);
+      const failure = classifyFailure(error, new URL(request.url).pathname);
+      // Do not log query text, request bodies, tokens or upstream response
+      // bodies.  The stable tag/request id is enough to correlate the event
+      // with an operator trace without retaining clinical data.
+      console.error(JSON.stringify({
+        event: 'api_error',
+        request_id: requestId,
+        method: request.method,
+        path: new URL(request.url).pathname,
+        operation: failure.operation,
+        error_tag: failure.errorTag,
+        code: failure.code,
+        severity: failure.severity,
+        retryable: failure.retryable,
+        status: failure.status,
+        detail: safeErrorDetail(error),
+      }));
+      return json({
+        error: {
+          code: failure.code,
+          type: failure.type,
+          error_tag: failure.errorTag,
+          severity: failure.severity,
+          retryable: failure.retryable,
+          operation: failure.operation,
+          message: failure.message,
+          request_id: requestId,
+        },
+      }, failure.status, origin, requestId);
     }
   };
 }
@@ -185,7 +219,7 @@ async function resolveBatchResponse(request: Request, rpc: RpcClient, origin: st
   return json(await resolvePackagePayload(parsed.value, context, rpc), 200, origin);
 }
 
-async function resolveImageResponse(request: Request, rpc: RpcClient, env: Env, origin: string): Promise<Response> {
+async function resolveImageResponse(request: Request, rpc: RpcClient, env: Env, origin: string, requestId?: string): Promise<Response> {
   const contentLength = Number(request.headers.get('content-length') ?? 0);
   if (Number.isFinite(contentLength) && contentLength > 8_000_000) {
     return json({ error: { code: 'payload_too_large', message: 'The image request is too large' } }, 413, origin);
@@ -223,8 +257,30 @@ async function resolveImageResponse(request: Request, rpc: RpcClient, env: Env, 
       )
       : await recognizeOrderImage(env.AI, image, env.OCR_AI_MODEL);
   } catch (error) {
-    if (error instanceof OcrUnavailableError) return json({ error: { code: error.code, message: 'OCR is not configured for this environment' } }, 503, origin);
-    if (error instanceof OcrRecognitionError) return json({ error: { code: error.code, message: 'The image could not be transcribed safely' } }, 502, origin);
+    if (error instanceof OcrUnavailableError) {
+      return errorJson(
+        error.code,
+        'La lectura de recetas no está disponible en este momento.',
+        503,
+        origin,
+        requestId,
+        'API.OCR.UNAVAILABLE',
+        'medium',
+        true,
+      );
+    }
+    if (error instanceof OcrRecognitionError) {
+      return errorJson(
+        error.code,
+        'No pudimos leer la receta con suficiente seguridad. Revisa el texto e inténtalo de nuevo.',
+        502,
+        origin,
+        requestId,
+        'API.OCR.RECOGNITION',
+        'medium',
+        true,
+      );
+    }
     throw error;
   }
   const parsed = parseBatchRequest({
@@ -355,13 +411,14 @@ function parsePackageContext(input: Record<string, unknown>, origin: string): Pa
 }
 
 async function resolvePackagePayload(
-  parsed: { items: string[]; original_text: string; objective: PackageResolutionResponse['objective']; max_solutions: number },
+  parsed: ParsedBatchRequest,
   context: PackageContext,
   rpc: RpcClient,
   fromOcr = false,
 ): Promise<PackageResolutionResponse> {
+  const effective = await segmentFreeFormPackageText(parsed, context.domain, rpc);
   const raw = await rpc.call<unknown>(fromOcr ? 'api_resolve_ocr_package' : 'api_resolve_package', {
-    p_items: parsed.items,
+    p_items: effective.items,
     p_domain_code: context.domain,
     p_latitude: context.latitude,
     p_longitude: context.longitude,
@@ -370,10 +427,56 @@ async function resolvePackagePayload(
   });
   return buildPackageResolution(
     normalizeBatchRpcPayload(raw),
-    parsed.original_text,
-    parsed.objective,
-    parsed.max_solutions,
+    effective.original_text,
+    effective.objective,
+    effective.max_solutions,
   );
+}
+
+/**
+ * A prescription may arrive as one OCR/text line without punctuation. Ask the
+ * database for a catalog-backed segmentation only for that narrow case. The
+ * RPC is deliberately advisory: malformed, ambiguous, or unavailable results
+ * leave the original single item untouched and therefore cannot fabricate a
+ * package. Explicit `items` requests and already-separated text never incur
+ * this extra lookup.
+ */
+async function segmentFreeFormPackageText(
+  parsed: ParsedBatchRequest,
+  domain: string,
+  rpc: RpcClient,
+): Promise<ParsedBatchRequest> {
+  if (
+    parsed.input_source !== 'text'
+    || parsed.items.length !== 1
+    || !/\s/.test(parsed.original_text)
+    || /[\n;,]/.test(parsed.original_text)
+  ) {
+    return parsed;
+  }
+
+  let response: unknown;
+  try {
+    response = await rpc.call<unknown>('api_segment_package_text', {
+      p_text: parsed.original_text,
+      p_domain_code: domain,
+      p_max_items: 30,
+    });
+  } catch {
+    // The segmentation migration can be rolled out independently. Falling
+    // back to the regular resolver keeps existing clients functional while it
+    // is unavailable; a database outage in the actual package RPC is still
+    // surfaced normally below.
+    console.warn(JSON.stringify({
+      event: 'api_degraded',
+      error_tag: 'API.PACKAGE.SEGMENTATION_FALLBACK',
+      operation: 'package_search',
+      reason: 'segmenter_unavailable',
+    }));
+    return parsed;
+  }
+  const segments = readCatalogSegments(response, parsed.original_text);
+  return segments === null ? parsed : { ...parsed, items: segments };
 }
 
 async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClient, origin: string, authenticateAdmin: (request: Request, env: Env) => Promise<AdminUser | null>): Promise<Response> {
@@ -870,8 +973,163 @@ function isUuid(value: string): boolean {
   return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value);
 }
 
-function json(value: unknown, status: number, origin: string): Response {
-  return new Response(JSON.stringify(value), { status, headers: { ...JSON_HEADERS, ...corsHeaders(origin) } });
+type FailureSeverity = 'low' | 'medium' | 'high';
+
+interface ClassifiedFailure {
+  status: number;
+  code: string;
+  type: string;
+  errorTag: string;
+  severity: FailureSeverity;
+  retryable: boolean;
+  operation: string;
+  message: string;
+}
+
+function classifyFailure(error: unknown, path: string): ClassifiedFailure {
+  const operation = operationForPath(path);
+  if (error instanceof SupabaseConfigurationError) {
+    return {
+      status: 503,
+      code: error.code,
+      type: 'configuration',
+      errorTag: 'API.SERVER.CONFIGURATION',
+      severity: 'high',
+      retryable: false,
+      operation,
+      message: 'El servicio de búsqueda no está configurado. Inténtalo más tarde.',
+    };
+  }
+  if (error instanceof SupabaseTimeoutError) {
+    return {
+      status: 504,
+      code: error.code,
+      type: 'timeout',
+      errorTag: 'API.SERVER.TIMEOUT',
+      severity: 'medium',
+      retryable: true,
+      operation,
+      message: 'El servicio tardó demasiado en responder. Inténtalo de nuevo en unos segundos.',
+    };
+  }
+  if (error instanceof SupabaseRpcError) {
+    const rateLimited = error.status === 429;
+    const status = rateLimited || error.status >= 500 ? 503 : 502;
+    return {
+      status,
+      code: rateLimited ? 'upstream_rate_limited' : 'upstream_rpc_error',
+      type: rateLimited ? 'rate_limit' : 'upstream',
+      errorTag: rateLimited ? 'API.SERVER.RATE_LIMIT' : 'API.SERVER.UPSTREAM',
+      severity: error.status >= 500 || rateLimited ? 'high' : 'medium',
+      retryable: error.retryable,
+      operation,
+      message: rateLimited
+        ? 'Hay muchas solicitudes en este momento. Inténtalo de nuevo en unos segundos.'
+        : 'No pudimos completar la consulta en este momento. Inténtalo de nuevo.',
+    };
+  }
+  if (error instanceof SupabaseResponseError) {
+    return {
+      status: 502,
+      code: error.code,
+      type: 'upstream_protocol',
+      errorTag: 'API.SERVER.UPSTREAM_PROTOCOL',
+      severity: 'high',
+      retryable: true,
+      operation,
+      message: 'La fuente de datos devolvió una respuesta inválida. Inténtalo de nuevo.',
+    };
+  }
+  if (isNetworkFailure(error)) {
+    return {
+      status: 503,
+      code: 'upstream_connection_error',
+      type: 'connection',
+      errorTag: 'API.SERVER.CONNECTION',
+      severity: 'medium',
+      retryable: true,
+      operation,
+      message: 'No pudimos conectar con el servicio. Revisa tu conexión e inténtalo de nuevo.',
+    };
+  }
+  return {
+    status: 500,
+    code: 'internal_error',
+    type: 'internal',
+    errorTag: 'API.SERVER.INTERNAL',
+    severity: 'high',
+    retryable: false,
+    operation,
+    message: 'Ocurrió un problema inesperado. Inténtalo de nuevo más tarde.',
+  };
+}
+
+function isNetworkFailure(error: unknown): boolean {
+  if (!error || typeof error !== 'object') return false;
+  const candidate = error as { name?: unknown; message?: unknown };
+  const name = typeof candidate.name === 'string' ? candidate.name : '';
+  const message = typeof candidate.message === 'string' ? candidate.message : '';
+  return name === 'AbortError' || /fetch|network|connect|socket|dns|timed out/i.test(`${name} ${message}`);
+}
+
+function operationForPath(path: string): string {
+  if (path === '/api/v1/search' || path === '/api/v1/resolve') return 'individual_search';
+  if (path === '/api/v1/resolve-batch') return 'package_search';
+  if (path === '/api/v1/resolve-image') return 'recipe_ocr';
+  if (path === '/api/v1/events') return 'analytics';
+  if (path.startsWith('/api/v1/admin/')) return 'admin';
+  if (path.startsWith('/api/v1/provider/')) return 'provider';
+  return 'api';
+}
+
+function safeErrorDetail(error: unknown): string {
+  if (error instanceof SupabaseRpcError) {
+    return `rpc=${error.rpcName}; upstream_status=${error.status}`;
+  }
+  if (error instanceof SupabaseTimeoutError) {
+    return `rpc=${error.rpcName}; timeout_ms=${error.timeoutMs}`;
+  }
+  if (error instanceof SupabaseConfigurationError) return 'supabase_configuration';
+  if (error instanceof SupabaseResponseError) return `rpc=${error.rpcName}; invalid_json=true`;
+  if (error instanceof Error) return error.message.slice(0, 300);
+  return String(error).slice(0, 300);
+}
+
+function requestIdFor(request: Request): string {
+  const supplied = request.headers.get('x-request-id')?.trim() ?? '';
+  // Correlation ids are accepted only in a conservative format so logs
+  // cannot be polluted with arbitrary control characters or huge values.
+  if (/^[A-Za-z0-9._:-]{8,96}$/.test(supplied)) return supplied;
+  return crypto.randomUUID();
+}
+
+function json(value: unknown, status: number, origin: string, requestId?: string): Response {
+  const headers: Record<string, string> = { ...JSON_HEADERS, ...corsHeaders(origin) };
+  if (requestId) headers['x-request-id'] = requestId;
+  return new Response(JSON.stringify(value), { status, headers });
+}
+
+function errorJson(
+  code: string,
+  message: string,
+  status: number,
+  origin: string,
+  requestId: string | undefined,
+  errorTag: string,
+  severity: FailureSeverity,
+  retryable: boolean,
+): Response {
+  return json({
+    error: {
+      code,
+      type: code.startsWith('ocr_') ? 'ocr' : 'request',
+      error_tag: errorTag,
+      severity,
+      retryable,
+      message,
+      ...(requestId ? { request_id: requestId } : {}),
+    },
+  }, status, origin, requestId);
 }
 
 function corsHeaders(origin: string): Record<string, string> {

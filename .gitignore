@@ -5,6 +5,13 @@ node_modules/
 .env
 .env.*
 !.env.example
+
+# Wrangler local development variables may contain Supabase service-role and
+# other server-only secrets. Keep the real file local while versioning the
+# explicitly named template.
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
 dist/
 coverage/
 
