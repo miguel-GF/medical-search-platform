@@ -1,5 +1,5 @@
 import { SupabaseRpcClient } from './supabase.js';
-import type { AdminAlert, AdminCatalogItem, AdminQualityIssue, AdminUser, Env, PackageResolutionResponse, ResolutionResponse, RpcClient, SearchRow } from './types.js';
+import type { AdminAlert, AdminCatalogItem, AdminQualityIssue, AdminUser, Env, PackageResolutionResponse, ResolutionCandidate, ResolutionResponse, RpcClient, SearchRow } from './types.js';
 import { buildPackageResolution, normalizeBatchRpcPayload, parseBatchRequest } from './batch.js';
 import {
   OcrInputError,
@@ -124,7 +124,21 @@ async function searchResponse(url: URL, rpc: RpcClient, origin: string): Promise
     p_location_id: locationId,
     p_limit: limit,
   });
-  return json({ query, results: groupSearchRows(rows ?? []) }, 200, origin);
+  const grouped = groupSearchRows(rows ?? []);
+  if (grouped.length > 0) return json({ query, results: grouped }, 200, origin);
+
+  // Keep the public search useful when the clinical catalog recognizes a
+  // service but no provider has a current offer. The search UI can then say
+  // "recognized, no active offer" instead of looking like a typo/no-match.
+  const resolution = await rpc.call<ResolutionResponse>('api_resolve_search', {
+    p_query: query,
+    p_domain_code: domain,
+    p_latitude: latitude,
+    p_longitude: longitude,
+    p_location_id: locationId,
+    p_limit: limit,
+  });
+  return json({ query, results: groupResolutionCandidates(resolution?.candidates ?? []) }, 200, origin);
 }
 
 async function resolveResponse(request: Request, rpc: RpcClient, origin: string): Promise<Response> {
@@ -755,6 +769,56 @@ function groupSearchRows(rows: SearchRow[]) {
       source: offer.source,
     })),
   }));
+}
+
+function groupResolutionCandidates(candidates: ResolutionCandidate[]) {
+  return candidates.map((candidate) => ({
+    service: {
+      id: candidate.service_id,
+      display_name: candidate.display_name,
+      matched_term: candidate.matched_term,
+      term_source: candidate.term_source,
+      confidence: candidate.confidence,
+      resolution_status: candidate.resolution_status,
+    },
+    offers: candidate.offers.map((offer) => ({
+      id: stringValue(offer.offer_id) ?? 'offer',
+      provider: {
+        id: stringValue(offer.provider_brand_id),
+        name: stringValue(offer.provider_name) ?? 'Proveedor',
+      },
+      location: stringValue(offer.provider_location_id)
+        ? {
+            id: stringValue(offer.provider_location_id),
+            name: stringValue(offer.provider_location_name),
+            latitude: numberValue(offer.latitude),
+            longitude: numberValue(offer.longitude),
+          }
+        : null,
+      distance_meters: numberValue(offer.distance_meters),
+      price: numberValue(offer.amount_minor) === null
+        ? null
+        : {
+            type: stringValue(offer.price_type),
+            key: stringValue(offer.price_key),
+            amount_minor: numberValue(offer.amount_minor),
+            currency: stringValue(offer.currency),
+            last_seen_at: stringValue(offer.price_last_seen_at),
+          },
+      prices: [],
+      source: stringValue(offer.source_url)
+        ? { url: stringValue(offer.source_url), last_seen_at: stringValue(offer.price_last_seen_at) }
+        : null,
+    })),
+  }));
+}
+
+function stringValue(value: unknown): string | null {
+  return typeof value === 'string' && value.trim() !== '' ? value : null;
+}
+
+function numberValue(value: unknown): number | null {
+  return typeof value === 'number' && Number.isFinite(value) ? value : null;
 }
 
 function parseBoundedInt(value: string | null, fallback: number, min: number, max: number): number {

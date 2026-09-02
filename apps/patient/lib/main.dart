@@ -1081,8 +1081,9 @@ class ServiceCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 12),
                 _StatusChip(
-                  status:
-                      '${(service.confidence * 100).toStringAsFixed(0)}% match',
+                  status: service.resolutionStatus == 'ambiguous'
+                      ? 'ambiguous'
+                      : '${(service.confidence * 100).toStringAsFixed(0)}% match',
                 ),
               ],
             ),
@@ -1325,7 +1326,17 @@ class _PageFrameState extends State<_PageFrame> {
   final _focusNode = FocusNode();
 
   @override
+  void initState() {
+    super.initState();
+    // Browser buttons and text fields can keep primary focus after a search.
+    // A hardware-key handler lets page navigation still reach this page's
+    // scroll controller without stealing arrow keys from an editable field.
+    HardwareKeyboard.instance.addHandler(_handleGlobalKey);
+  }
+
+  @override
   void dispose() {
+    HardwareKeyboard.instance.removeHandler(_handleGlobalKey);
     _scrollController.dispose();
     _focusNode.dispose();
     super.dispose();
@@ -1343,6 +1354,49 @@ class _PageFrameState extends State<_PageFrame> {
     );
   }
 
+  void _scrollTo(double value) {
+    if (!_scrollController.hasClients) return;
+    final position = _scrollController.position;
+    _scrollController.animateTo(
+      value.clamp(0.0, position.maxScrollExtent),
+      duration: const Duration(milliseconds: 160),
+      curve: Curves.easeOut,
+    );
+  }
+
+  bool _handleGlobalKey(KeyEvent event) {
+    if (!_focusNode.hasFocus || event is! KeyDownEvent) return false;
+    final primaryContext = FocusManager.instance.primaryFocus?.context;
+    if (primaryContext?.widget is EditableText ||
+        primaryContext?.findAncestorWidgetOfExactType<EditableText>() != null) {
+      return false;
+    }
+    switch (event.logicalKey) {
+      case LogicalKeyboardKey.pageDown:
+        _scrollBy(.9);
+        return true;
+      case LogicalKeyboardKey.pageUp:
+        _scrollBy(-.9);
+        return true;
+      case LogicalKeyboardKey.arrowDown:
+        _scrollBy(.15);
+        return true;
+      case LogicalKeyboardKey.arrowUp:
+        _scrollBy(-.15);
+        return true;
+      case LogicalKeyboardKey.home:
+        _scrollTo(0);
+        return true;
+      case LogicalKeyboardKey.end:
+        if (_scrollController.hasClients) {
+          _scrollTo(_scrollController.position.maxScrollExtent);
+        }
+        return true;
+      default:
+        return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) => SafeArea(
     child: CallbackShortcuts(
@@ -1355,6 +1409,9 @@ class _PageFrameState extends State<_PageFrame> {
             () => _scrollBy(.15),
         const SingleActivator(LogicalKeyboardKey.arrowUp):
             () => _scrollBy(-.15),
+        const SingleActivator(LogicalKeyboardKey.home): () => _scrollTo(0),
+        const SingleActivator(LogicalKeyboardKey.end):
+            () => _scrollTo(_scrollController.hasClients ? _scrollController.position.maxScrollExtent : 0),
       },
       child: Focus(
         autofocus: true,

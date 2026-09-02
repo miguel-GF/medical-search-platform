@@ -86,12 +86,14 @@ class SearchService {
     required this.displayName,
     required this.confidence,
     required this.offers,
+    this.resolutionStatus,
   });
 
   final String id;
   final String displayName;
   final double confidence;
   final List<SearchOffer> offers;
+  final String? resolutionStatus;
 
   factory SearchService.fromJson(JsonMap json) {
     final service = (json['service'] as JsonMap?) ?? <String, dynamic>{};
@@ -104,6 +106,7 @@ class SearchService {
       displayName: _stringValue(service['display_name']) ?? 'Servicio',
       confidence: _doubleValue(service['confidence']) ?? 0,
       offers: offers,
+      resolutionStatus: _stringValue(service['resolution_status']),
     );
   }
 }

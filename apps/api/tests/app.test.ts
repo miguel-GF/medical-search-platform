@@ -100,6 +100,41 @@ describe('Pruevia API', () => {
     expect(payload.results[0].offers).toHaveLength(1);
   });
 
+  it('shows recognized services without current offers in public search', async () => {
+    const resolution = {
+      query: 'perfil tiroideo',
+      normalized_query: 'perfil tiroideo',
+      engine_version: 'clinical-resolver-v6',
+      status: 'ambiguous',
+      candidates: [
+        {
+          service_id: row.service_id,
+          display_name: 'Perfil tiroideo bÃ¡sico',
+          matched_term: 'perfil tiroideo bÃ¡sico',
+          term_source: 'name',
+          provider_brand_id: null,
+          confidence: 1,
+          resolution_status: 'ambiguous',
+          match_method: 'disambiguation',
+          explanation: {},
+          offers: [],
+        },
+      ],
+    };
+    const call = vi.fn(async <T>(name: string): Promise<T> =>
+      (name === 'api_search' ? [] : resolution) as T,
+    );
+    const response = await createHandler({ rpc: { call: call as RpcClient['call'] } })(
+      new Request('https://api.test/api/v1/search?q=perfil%20tiroideo'),
+      env,
+    );
+    const payload = await response.json() as { results: Array<{ service: { display_name: string; resolution_status: string }; offers: unknown[] }> };
+    expect(payload.results).toEqual([
+      { service: expect.objectContaining({ display_name: 'Perfil tiroideo bÃ¡sico', resolution_status: 'ambiguous' }), offers: [] },
+    ]);
+    expect(call).toHaveBeenNthCalledWith(2, 'api_resolve_search', expect.objectContaining({ p_query: 'perfil tiroideo' }));
+  });
+
   it('exposes deterministic resolution status and candidates', async () => {
     const resolution = {
       query: 'perfil tiroideo',
