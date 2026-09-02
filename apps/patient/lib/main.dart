@@ -450,12 +450,7 @@ class _HomeScreenState extends State<HomeScreen> {
               text:
                   'Prueba con el nombre completo o revisa la sección de receta para confirmar cada renglón.',
             ),
-          ..._response!.services.map(
-            (service) => Padding(
-              padding: const EdgeInsets.only(bottom: 14),
-              child: ServiceCard(service: service),
-            ),
-          ),
+          SearchResultsExplorer(services: _response!.services),
         ],
         if (_response == null && !_loading)
           const Padding(
@@ -1056,6 +1051,395 @@ class SolutionCard extends StatelessWidget {
   }
 }
 
+/// Explores individual-search results by provider first. A long list of
+/// service cards hides which branches belong to the same business; this view
+/// keeps the evidence grouped and uses a two-column layout on wide screens,
+/// with collapsible providers/branches on phones.
+class SearchResultsExplorer extends StatefulWidget {
+  const SearchResultsExplorer({super.key, required this.services});
+  final List<SearchService> services;
+
+  @override
+  State<SearchResultsExplorer> createState() => _SearchResultsExplorerState();
+}
+
+class _SearchResultsExplorerState extends State<SearchResultsExplorer> {
+  String? _selectedProvider;
+
+  @override
+  Widget build(BuildContext context) {
+    final groups = _providerGroups(widget.services);
+    final selectedKey = groups.any((group) => group.key == _selectedProvider)
+        ? _selectedProvider!
+        : groups.firstOrNull?.key;
+    final selected = groups.where((group) => group.key == selectedKey).firstOrNull;
+    final unmatched = widget.services.where((service) => service.offers.isEmpty).toList(growable: false);
+    final ambiguous = widget.services.where((service) => service.resolutionStatus == 'ambiguous').length;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _SearchInterpretation(
+          serviceCount: widget.services.length,
+          providerCount: groups.length,
+          ambiguousCount: ambiguous,
+        ),
+        if (groups.isNotEmpty) ...[
+          const SizedBox(height: 14),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final wide = constraints.maxWidth >= 820;
+              if (!wide) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    _ProviderPicker(
+                      groups: groups,
+                      selectedKey: selectedKey,
+                      onSelected: _selectProvider,
+                    ),
+                    if (selected != null) ...[
+                      const SizedBox(height: 12),
+                      _ProviderDetails(group: selected),
+                    ],
+                  ],
+                );
+              }
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 270,
+                    child: _ProviderPicker(
+                      groups: groups,
+                      selectedKey: selectedKey,
+                      onSelected: _selectProvider,
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: selected == null
+                        ? const _EmptyState(
+                            title: 'Selecciona un proveedor',
+                            text: 'Elige una empresa para ver sus sucursales, precios y fuentes.',
+                          )
+                        : _ProviderDetails(group: selected),
+                  ),
+                ],
+              );
+            },
+          ),
+        ],
+        if (unmatched.isNotEmpty) ...[
+          const SizedBox(height: 16),
+          _UnmatchedServices(services: unmatched),
+        ],
+      ],
+    );
+  }
+
+  void _selectProvider(String key) => setState(() => _selectedProvider = key);
+}
+
+class _SearchInterpretation extends StatelessWidget {
+  const _SearchInterpretation({
+    required this.serviceCount,
+    required this.providerCount,
+    required this.ambiguousCount,
+  });
+
+  final int serviceCount;
+  final int providerCount;
+  final int ambiguousCount;
+
+  @override
+  Widget build(BuildContext context) {
+    final text = providerCount == 0
+        ? 'El catálogo reconoce $serviceCount servicio${serviceCount == 1 ? '' : 's'}, pero no hay una oferta comercial vigente para mostrar.'
+        : ambiguousCount == 0
+            ? 'Encontramos $serviceCount servicio${serviceCount == 1 ? '' : 's'} en $providerCount proveedor${providerCount == 1 ? '' : 'es'}. Selecciona una empresa para comparar sus sucursales.'
+            : 'Encontramos $serviceCount posible${serviceCount == 1 ? '' : 's'} coincidencia${serviceCount == 1 ? '' : 's'}. $ambiguousCount requiere${ambiguousCount == 1 ? '' : 'n'} confirmar la variante exacta.';
+    return Card(
+      color: Theme.of(context).colorScheme.primaryContainer,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(Icons.fact_check_outlined, color: Theme.of(context).colorScheme.onPrimaryContainer),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('Esto es lo que encontramos', style: TextStyle(fontWeight: FontWeight.w800)),
+                  const SizedBox(height: 4),
+                  Text(text),
+                  const SizedBox(height: 4),
+                  Text(
+                    'Cada precio conserva su fuente y fecha. “Revisión necesaria” no es una equivalencia confirmada.',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ProviderGroup {
+  _ProviderGroup(this.key, this.name);
+
+  final String key;
+  final String name;
+  final Map<String, _BranchGroup> branches = <String, _BranchGroup>{};
+
+  int get offerCount => branches.values.fold(0, (sum, branch) => sum + branch.offers.length);
+  int get serviceCount => branches.values
+      .expand((branch) => branch.offers)
+      .map((entry) => entry.service.id)
+      .toSet()
+      .length;
+  int get branchCount => branches.values.where((branch) => !branch.isUnscoped).length;
+  bool get hasUnscopedBranch => branches.values.any((branch) => branch.isUnscoped);
+
+  String get branchSummary {
+    final confirmed = branchCount;
+    if (hasUnscopedBranch && confirmed > 0) {
+      return '$confirmed sucursal${confirmed == 1 ? '' : 'es'} · alcance de red por confirmar';
+    }
+    if (hasUnscopedBranch) return 'Sucursal por confirmar';
+    return '$confirmed sucursal${confirmed == 1 ? '' : 'es'}';
+  }
+}
+
+class _BranchGroup {
+  _BranchGroup(this.key, this.name, {this.isUnscoped = false});
+
+  final String key;
+  final String name;
+  final bool isUnscoped;
+  final List<_ProviderServiceOffer> offers = <_ProviderServiceOffer>[];
+}
+
+class _ProviderServiceOffer {
+  _ProviderServiceOffer(this.service, this.offer);
+
+  final SearchService service;
+  final SearchOffer offer;
+}
+
+List<_ProviderGroup> _providerGroups(List<SearchService> services) {
+  final groups = <String, _ProviderGroup>{};
+  for (final service in services) {
+    for (final offer in service.offers) {
+      final providerKey = offer.providerId ?? offer.providerName.trim().toLowerCase();
+      final provider = groups.putIfAbsent(
+        providerKey,
+        () => _ProviderGroup(providerKey, offer.providerName),
+      );
+      final branchKey = offer.locationId ?? offer.locationName ?? 'unscoped';
+      final branch = provider.branches.putIfAbsent(
+        branchKey,
+        () => _BranchGroup(
+          branchKey,
+          offer.locationName ?? 'Red del proveedor · sucursal por confirmar',
+          isUnscoped: offer.locationId == null,
+        ),
+      );
+      branch.offers.add(_ProviderServiceOffer(service, offer));
+    }
+  }
+  return groups.values.toList(growable: false);
+}
+
+class _ProviderPicker extends StatelessWidget {
+  const _ProviderPicker({required this.groups, required this.selectedKey, required this.onSelected});
+
+  final List<_ProviderGroup> groups;
+  final String? selectedKey;
+  final ValueChanged<String> onSelected;
+
+  @override
+  Widget build(BuildContext context) => Card(
+    margin: EdgeInsets.zero,
+    child: Padding(
+      padding: const EdgeInsets.all(10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
+            child: Text(
+              'Proveedores encontrados',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800),
+            ),
+          ),
+          ...groups.map(
+            (group) => Padding(
+              padding: const EdgeInsets.only(bottom: 6),
+              child: ListTile(
+                selected: group.key == selectedKey,
+                selectedTileColor: Theme.of(context).colorScheme.primaryContainer.withValues(alpha: .55),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                onTap: () => onSelected(group.key),
+                leading: CircleAvatar(child: Text('${group.offerCount}')),
+                title: Text(group.name, maxLines: 2, overflow: TextOverflow.ellipsis),
+                subtitle: Text('${group.serviceCount} estudio${group.serviceCount == 1 ? '' : 's'} · ${group.branchSummary}'),
+                trailing: const Icon(Icons.chevron_right),
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+class _ProviderDetails extends StatelessWidget {
+  const _ProviderDetails({required this.group});
+
+  final _ProviderGroup group;
+
+  @override
+  Widget build(BuildContext context) {
+    final branches = group.branches.values.toList(growable: false);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Card(
+          margin: EdgeInsets.zero,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(18, 16, 18, 14),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(group.name, style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800)),
+                      const SizedBox(height: 4),
+                      Text('${group.offerCount} coincidencia${group.offerCount == 1 ? '' : 's'} · ${group.branchSummary}'),
+                    ],
+                  ),
+                ),
+                const _StatusChip(status: 'encontrado'),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 10),
+        Text(
+          branches.length > 1
+              ? 'Selecciona una sucursal para ver sus estudios y precios'
+              : branches.first.isUnscoped
+                  ? 'Alcance publicado · sucursal por confirmar'
+                  : 'Información por sucursal',
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800),
+        ),
+        const SizedBox(height: 8),
+        ...branches.asMap().entries.map(
+          (entry) => _BranchExpansion(branch: entry.value, initiallyExpanded: branches.length == 1 || entry.key == 0),
+        ),
+      ],
+    );
+  }
+}
+
+class _BranchExpansion extends StatelessWidget {
+  const _BranchExpansion({required this.branch, required this.initiallyExpanded});
+
+  final _BranchGroup branch;
+  final bool initiallyExpanded;
+
+  @override
+  Widget build(BuildContext context) => Card(
+    margin: const EdgeInsets.only(bottom: 8),
+    child: ExpansionTile(
+      initiallyExpanded: initiallyExpanded,
+      leading: const Icon(Icons.location_on_outlined),
+      title: Text(branch.name),
+      subtitle: Text('${branch.offers.length} coincidencia${branch.offers.length == 1 ? '' : 's'}'),
+      childrenPadding: const EdgeInsets.fromLTRB(14, 0, 14, 12),
+      children: branch.offers.map((entry) => _ProviderServiceTile(entry: entry)).toList(growable: false),
+    ),
+  );
+}
+
+class _ProviderServiceTile extends StatelessWidget {
+  const _ProviderServiceTile({required this.entry});
+
+  final _ProviderServiceOffer entry;
+
+  @override
+  Widget build(BuildContext context) => Container(
+    width: double.infinity,
+    margin: const EdgeInsets.only(top: 8),
+    padding: const EdgeInsets.all(12),
+    decoration: BoxDecoration(
+      color: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: .45),
+      borderRadius: BorderRadius.circular(12),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Text(entry.service.displayName, style: const TextStyle(fontWeight: FontWeight.w800)),
+            ),
+            const SizedBox(width: 8),
+            _StatusChip(status: _serviceMatchStatus(entry.service)),
+          ],
+        ),
+        const SizedBox(height: 8),
+        Align(alignment: Alignment.centerRight, child: _OfferPricing(offer: entry.offer)),
+      ],
+    ),
+  );
+}
+
+String _serviceMatchStatus(SearchService service) {
+  if (service.resolutionStatus == 'ambiguous') return 'ambiguous';
+  if (service.confidence >= .995) return 'exact';
+  return '${(service.confidence * 100).toStringAsFixed(0)}% match';
+}
+
+class _UnmatchedServices extends StatelessWidget {
+  const _UnmatchedServices({required this.services});
+  final List<SearchService> services;
+
+  @override
+  Widget build(BuildContext context) => Card(
+    color: Theme.of(context).colorScheme.tertiaryContainer,
+    child: Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text('Estudios reconocidos sin oferta vigente', style: TextStyle(fontWeight: FontWeight.w800)),
+          const SizedBox(height: 4),
+          const Text('Los identificamos en el catálogo, pero no hay un precio o proveedor publicado para mostrar.'),
+          const SizedBox(height: 10),
+          ...services.map(
+            (service) => ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: const Icon(Icons.info_outline),
+              title: Text(service.displayName),
+              subtitle: Text(_serviceMatchStatus(service)),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
 class ServiceCard extends StatelessWidget {
   const ServiceCard({super.key, required this.service});
   final SearchService service;
@@ -1640,6 +2024,11 @@ class _StatusChip extends StatelessWidget {
   }
   final dark = scheme.brightness == Brightness.dark;
   return switch (status) {
+    'exact' => (label: 'Coincidencia exacta', color: scheme.primary),
+    'encontrado' => (
+      label: 'Encontrado',
+      color: dark ? const Color(0xFF86EFAC) : PrueviaColors.success,
+    ),
     'resolved' => (
       label: 'Encontrado',
       color: dark ? const Color(0xFF86EFAC) : PrueviaColors.success,

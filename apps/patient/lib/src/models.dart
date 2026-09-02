@@ -11,6 +11,8 @@ class SearchOffer {
   const SearchOffer({
     required this.id,
     required this.providerName,
+    this.providerId,
+    this.locationId,
     this.locationName,
     this.distanceMeters,
     this.amountMinor,
@@ -23,6 +25,8 @@ class SearchOffer {
 
   final String id;
   final String providerName;
+  final String? providerId;
+  final String? locationId;
   final String? locationName;
   final double? distanceMeters;
   final int? amountMinor;
@@ -47,6 +51,8 @@ class SearchOffer {
     return SearchOffer(
       id: _stringValue(json['id']) ?? 'offer',
       providerName: _stringValue(provider['name']) ?? 'Proveedor',
+      providerId: _stringValue(provider['id']),
+      locationId: _stringValue(location?['id']),
       locationName: _stringValue(location?['name']),
       distanceMeters: _doubleValue(json['distance_meters']),
       amountMinor: _intValue(price?['amount_minor']),
