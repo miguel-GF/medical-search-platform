@@ -1365,7 +1365,10 @@ class _PageFrameState extends State<_PageFrame> {
   }
 
   bool _handleGlobalKey(KeyEvent event) {
-    if (!_focusNode.hasFocus || event is! KeyDownEvent) return false;
+    // On Flutter web the browser may leave focus on the canvas or on a button
+    // even though this page owns the scroll view. Handle navigation keys at
+    // the app level and only opt out while the user is editing text.
+    if (event is! KeyDownEvent) return false;
     final primaryContext = FocusManager.instance.primaryFocus?.context;
     if (primaryContext?.widget is EditableText ||
         primaryContext?.findAncestorWidgetOfExactType<EditableText>() != null) {
@@ -1397,6 +1400,12 @@ class _PageFrameState extends State<_PageFrame> {
     }
   }
 
+  void _requestScrollFocus() {
+    final focusedWidget = FocusManager.instance.primaryFocus?.context?.widget;
+    if (focusedWidget is EditableText) return;
+    _focusNode.requestFocus();
+  }
+
   @override
   Widget build(BuildContext context) => SafeArea(
     child: CallbackShortcuts(
@@ -1416,18 +1425,24 @@ class _PageFrameState extends State<_PageFrame> {
       child: Focus(
         autofocus: true,
         focusNode: _focusNode,
-        child: Scrollbar(
-          controller: _scrollController,
-          thumbVisibility: kIsWeb,
-          interactive: kIsWeb,
-          child: SingleChildScrollView(
+        child: Listener(
+          onPointerDown: (_) => _requestScrollFocus(),
+          onPointerSignal: (event) {
+            if (event is PointerScrollEvent) _requestScrollFocus();
+          },
+          child: Scrollbar(
             controller: _scrollController,
-            primary: false,
-            padding: const EdgeInsets.fromLTRB(20, 12, 20, 48),
-            child: Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 1080),
-                child: widget.child,
+            thumbVisibility: kIsWeb,
+            interactive: kIsWeb,
+            child: SingleChildScrollView(
+              controller: _scrollController,
+              primary: false,
+              padding: const EdgeInsets.fromLTRB(20, 12, 20, 48),
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 1080),
+                  child: widget.child,
+                ),
               ),
             ),
           ),
