@@ -45,6 +45,10 @@ el factor. La documentaciÃ³n de referencia es
 <https://supabase.com/docs/guides/auth/auth-mfa/totp> y
 <https://supabase.com/docs/guides/auth/auth-mfa>.
 
+La configuracion local exige reautenticacion reciente para cambiar contrasenas
+(`secure_password_change = true`); replica este ajuste en Auth remoto antes de
+usar el panel en produccion.
+
 El QR de inscripcion contiene el secreto compartido del factor. Muestralo una
 sola vez, escanealo unicamente en el autenticador del operador y no conserves
 capturas ni lo envies por chat. Si el QR o la clave se expone, elimina el
