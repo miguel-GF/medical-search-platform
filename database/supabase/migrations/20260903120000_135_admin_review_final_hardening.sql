@@ -51,6 +51,12 @@ begin
     raise exception 'Request id or reason is too long';
   end if;
 
+  if nullif(trim(p_request_id), '') is not null then
+    -- Serialize all retries using the same caller id, even when they target
+    -- different rows. This closes the race before the audit event exists.
+    perform pg_advisory_xact_lock(hashtextextended('admin_request:' || trim(p_request_id), 0));
+  end if;
+
   select * into v_run
   from ingest.normalization_runs
   where id = p_normalization_run_id

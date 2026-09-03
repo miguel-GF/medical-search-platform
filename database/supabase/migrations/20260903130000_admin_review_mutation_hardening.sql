@@ -36,6 +36,8 @@ begin
     raise exception 'Request id is invalid';
   end if;
 
+  perform pg_advisory_xact_lock(hashtextextended('admin_request:' || v_request_id, 0));
+
   select e.* into v_event
   from audit.events e
   where e.request_id = v_request_id
