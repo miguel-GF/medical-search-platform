@@ -1,5 +1,5 @@
 import { SupabaseConfigurationError, SupabaseResponseError, SupabaseRpcError, SupabaseRpcClient, SupabaseTimeoutError } from './supabase.js';
-import type { AdminAlert, AdminCatalogItem, AdminQualityIssue, AdminUser, Env, PackageResolutionResponse, ResolutionCandidate, ResolutionResponse, RpcClient, SearchRow } from './types.js';
+import type { AdminAlert, AdminCatalogItem, AdminNormalizationDetail, AdminNormalizationQueueRow, AdminQualityIssue, AdminUser, Env, PackageResolutionResponse, RateLimitBinding, ResolutionCandidate, ResolutionResponse, RpcClient, SearchRow } from './types.js';
 import {
   buildPackageResolution,
   normalizeBatchRpcPayload,
@@ -44,8 +44,12 @@ const ANALYTICS_SURFACES = new Set(['web', 'pwa', 'android', 'ios']);
 
 export function createHandler(dependencies: Dependencies) {
   return async function handle(request: Request, env: Env): Promise<Response> {
-    const origin = env.ALLOWED_ORIGIN ?? '*';
+    const origin = configuredCorsOrigin(env.ALLOWED_ORIGIN);
     const requestId = requestIdFor(request);
+    if (env.APP_ENV === 'production' && !isSecureConfiguredOrigin(env.ALLOWED_ORIGIN)) {
+      console.error(JSON.stringify({ event: 'api_configuration_error', request_id: requestId, reason: 'https_origin_required' }));
+      return errorJson('service_not_configured', 'The API is not securely configured.', 503, origin, requestId, 'API.SERVER.CONFIGURATION', 'high', false);
+    }
     if (request.method === 'OPTIONS') {
       return new Response(null, { status: 204, headers: corsHeaders(origin) });
     }
@@ -54,11 +58,13 @@ export function createHandler(dependencies: Dependencies) {
       if (url.pathname === '/health' && request.method === 'GET') {
         return json({ status: 'ok', service: 'pruevia-api', version: env.API_VERSION ?? 'v1' }, 200, origin);
       }
+      const rateLimitResponse = await enforceRateLimit(request, url, env, origin, requestId);
+      if (rateLimitResponse) return rateLimitResponse;
       if (url.pathname === '/api/v1/search' && request.method === 'GET') {
-        return await searchResponse(url, dependencies.rpc, origin);
+        return await searchResponse(url, dependencies.rpc, origin, requestId);
       }
       if (url.pathname === '/api/v1/resolve' && request.method === 'POST') {
-        return await resolveResponse(request, dependencies.rpc, origin);
+        return await resolveResponse(request, dependencies.rpc, origin, requestId);
       }
       if (url.pathname === '/api/v1/resolve-batch' && request.method === 'POST') {
         return await resolveBatchResponse(request, dependencies.rpc, origin);
@@ -77,17 +83,19 @@ export function createHandler(dependencies: Dependencies) {
         if (!isUuid(serviceMatch[1])) return json({ error: { code: 'invalid_id', message: 'service id must be a UUID' } }, 400, origin);
         const payload = await dependencies.rpc.call('api_service_detail', { p_service_id: serviceMatch[1] });
         if (!payload) return json(null, 404, origin);
-        return json(serviceMatch[2] ? { service_id: serviceMatch[1], providers: (payload as { offers?: unknown[] }).offers ?? [] } : payload, 200, origin);
+        const publicPayload = sanitizePublicPayload(payload);
+        return json(serviceMatch[2] ? { service_id: serviceMatch[1], providers: (publicPayload as { offers?: unknown[] }).offers ?? [] } : publicPayload, 200, origin);
       }
       const providerMatch = url.pathname.match(/^\/api\/v1\/providers\/([^/]+)(?:\/(services))?$/i);
       if (providerMatch && request.method === 'GET') {
         if (!isUuid(providerMatch[1])) return json({ error: { code: 'invalid_id', message: 'provider id must be a UUID' } }, 400, origin);
         const payload = await dependencies.rpc.call('api_provider_detail', { p_provider_brand_id: providerMatch[1] });
         if (!payload) return json(null, 404, origin);
-        return json(providerMatch[2] ? { provider_id: providerMatch[1], services: (payload as { services?: unknown[] }).services ?? [] } : payload, 200, origin);
+        const publicPayload = sanitizePublicPayload(payload);
+        return json(providerMatch[2] ? { provider_id: providerMatch[1], services: (publicPayload as { services?: unknown[] }).services ?? [] } : publicPayload, 200, origin);
       }
       if (url.pathname.startsWith('/api/v1/admin/')) {
-        return await adminResponse(request, url, env, dependencies.rpc, origin, dependencies.authenticateAdmin ?? verifyAdmin);
+        return await adminResponse(request, url, env, dependencies.rpc, origin, requestId, dependencies.authenticateAdmin ?? verifyAdmin);
       }
       if (url.pathname.startsWith('/api/v1/provider/')) {
         return await providerResponse(request, url, env, dependencies.rpc, origin, dependencies.authenticateUser ?? verifyUser);
@@ -131,7 +139,7 @@ export function createWorkerHandler(env: Env) {
   return createHandler({ rpc: new SupabaseRpcClient(env) });
 }
 
-async function searchResponse(url: URL, rpc: RpcClient, origin: string): Promise<Response> {
+async function searchResponse(url: URL, rpc: RpcClient, origin: string, requestId: string): Promise<Response> {
   const query = (url.searchParams.get('q') ?? '').trim();
   if (!query || query.length > 200 || !/[\p{L}\p{N}]/u.test(query)) {
     return json({ error: { code: 'invalid_query', message: 'q is required and must be at most 200 characters' } }, 400, origin);
@@ -159,11 +167,6 @@ async function searchResponse(url: URL, rpc: RpcClient, origin: string): Promise
     p_limit: limit,
   });
   const grouped = groupSearchRows(rows ?? []);
-  if (grouped.length > 0) return json({ query, results: grouped }, 200, origin);
-
-  // Keep the public search useful when the clinical catalog recognizes a
-  // service but no provider has a current offer. The search UI can then say
-  // "recognized, no active offer" instead of looking like a typo/no-match.
   const resolution = await rpc.call<ResolutionResponse>('api_resolve_search', {
     p_query: query,
     p_domain_code: domain,
@@ -172,10 +175,20 @@ async function searchResponse(url: URL, rpc: RpcClient, origin: string): Promise
     p_location_id: locationId,
     p_limit: limit,
   });
-  return json({ query, results: groupResolutionCandidates(resolution?.candidates ?? []) }, 200, origin);
+  await captureResolutionReview(resolution, rpc, domain, requestId);
+  const publicResolution = isResolutionResponse(resolution) ? sanitizePublicResolution(resolution) : null;
+  if (publicResolution && publicResolution.status !== 'resolved') {
+    return json({ query, results: groupResolutionCandidates(publicResolution.candidates ?? []) }, 200, origin);
+  }
+  if (grouped.length > 0) return json({ query, results: grouped }, 200, origin);
+
+  // Keep the public search useful when the clinical catalog recognizes a
+  // service but no provider has a current offer. The search UI can then say
+  // "recognized, no active offer" instead of looking like a typo/no-match.
+  return json({ query, results: groupResolutionCandidates(publicResolution?.candidates ?? []) }, 200, origin);
 }
 
-async function resolveResponse(request: Request, rpc: RpcClient, origin: string): Promise<Response> {
+async function resolveResponse(request: Request, rpc: RpcClient, origin: string, requestId: string): Promise<Response> {
   const input = await readJsonObject(request, 16_384, origin);
   if (input instanceof Response) return input;
   const query = typeof input.text === 'string' ? input.text.trim() : '';
@@ -206,7 +219,115 @@ async function resolveResponse(request: Request, rpc: RpcClient, origin: string)
     p_location_id: locationId,
     p_limit: limit,
   });
-  return json(payload, 200, origin);
+  await captureResolutionReview(payload, rpc, domain, requestId);
+  return json(sanitizePublicResolution(payload), 200, origin);
+}
+
+/**
+ * Review capture is deliberately best effort for the public request. A queue
+ * outage must not turn a valid patient-facing resolution into a 5xx, while
+ * the capture RPC itself remains service-role-only and deduplicated in SQL.
+ */
+async function captureResolutionReview(payload: ResolutionResponse, rpc: RpcClient, domain: string, requestId: string): Promise<void> {
+  if (payload?.status !== 'ambiguous' && payload?.status !== 'no_match') return;
+  try {
+    await rpc.call('api_record_resolution_review', {
+      p_payload: payload,
+      p_input_type: 'search',
+      p_scope_key: domain,
+    }, { admin: true });
+    } catch (error) {
+      console.error(JSON.stringify({
+        event: 'resolution_review_capture_failed',
+        request_id: requestId,
+        error_tag: error instanceof SupabaseRpcError ? error.tag : 'REVIEW_CAPTURE',
+      retryable: error instanceof SupabaseRpcError ? error.retryable : true,
+    }));
+  }
+}
+
+function isResolutionResponse(value: unknown): value is ResolutionResponse {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
+  const candidate = value as { status?: unknown; candidates?: unknown };
+  return (candidate.status === 'resolved' || candidate.status === 'ambiguous' || candidate.status === 'no_match')
+    && Array.isArray(candidate.candidates);
+}
+
+function sanitizePublicResolution(payload: ResolutionResponse): ResolutionResponse {
+  const status = payload?.status === 'resolved' || payload?.status === 'ambiguous' || payload?.status === 'no_match'
+    ? payload.status
+    : 'no_match';
+  const candidates = isResolutionResponse(payload)
+    ? payload.candidates
+      .filter((candidate) => isUuid(candidate.service_id))
+      .slice(0, 20)
+      .map((candidate) => ({
+        service_id: candidate.service_id,
+        display_name: safePublicText(candidate.display_name, 500),
+        matched_term: safePublicText(candidate.matched_term, 500),
+        term_source: safePublicText(candidate.term_source, 100),
+        provider_brand_id: stringValue(candidate.provider_brand_id),
+        confidence: Math.max(0, Math.min(1, numberValue(candidate.confidence) ?? 0)),
+        resolution_status: candidate.resolution_status === 'resolved' ? 'resolved' as const : 'ambiguous' as const,
+        match_method: safePublicText(candidate.match_method, 100),
+        // Explanations can contain resolver evidence and internal metadata.
+        // They are available only through the authenticated Admin detail API.
+        explanation: {},
+        offers: status === 'resolved' ? candidate.offers.slice(0, 100).map(sanitizePublicOffer) : [],
+      }))
+    : [];
+  return {
+    query: safePublicText(payload?.query, 200),
+    normalized_query: safePublicText(payload?.normalized_query, 200),
+    engine_version: safePublicText(payload?.engine_version, 100),
+    status,
+    candidates,
+  };
+}
+
+function sanitizePublicOffer(offer: Record<string, unknown>): Record<string, unknown> {
+  return {
+    offer_id: stringValue(offer.offer_id),
+    provider_brand_id: stringValue(offer.provider_brand_id),
+    provider_name: safePublicText(offer.provider_name, 300),
+    provider_location_id: stringValue(offer.provider_location_id),
+    provider_location_name: safePublicText(offer.provider_location_name, 300),
+    latitude: numberValue(offer.latitude),
+    longitude: numberValue(offer.longitude),
+    distance_meters: numberValue(offer.distance_meters),
+    source_url: safeHttpUrl(offer.source_url),
+    price_type: safePublicText(offer.price_type, 100),
+    price_key: safePublicText(offer.price_key, 100),
+    amount_minor: numberValue(offer.amount_minor),
+    currency: safePublicText(offer.currency, 3),
+    price_last_seen_at: safePublicText(offer.price_last_seen_at, 80),
+  };
+}
+
+function safePublicText(value: unknown, maxLength: number): string {
+  return (stringValue(value) ?? '').slice(0, maxLength);
+}
+
+function sanitizePackageResolution(payload: PackageResolutionResponse): PackageResolutionResponse {
+  return {
+    ...payload,
+    solutions: payload.solutions.map((solution) => ({
+      ...solution,
+      selected_offers: solution.selected_offers.map((offer) => ({
+        ...offer,
+        source_url: safeHttpUrl(offer.source_url),
+      })),
+    })),
+  };
+}
+
+function sanitizePublicPayload(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map((entry) => sanitizePublicPayload(entry));
+  if (!isRecord(value)) return value;
+  return Object.fromEntries(Object.entries(value).map(([key, entry]) => [
+    key,
+    key === 'source_url' || key === 'website_url' ? safeHttpUrl(entry) : sanitizePublicPayload(entry),
+  ]));
 }
 
 async function resolveBatchResponse(request: Request, rpc: RpcClient, origin: string): Promise<Response> {
@@ -425,12 +546,12 @@ async function resolvePackagePayload(
     p_location_id: context.location_id,
     p_limit: 10,
   });
-  return buildPackageResolution(
+  return sanitizePackageResolution(buildPackageResolution(
     normalizeBatchRpcPayload(raw),
     effective.original_text,
     effective.objective,
     effective.max_solutions,
-  );
+  ));
 }
 
 /**
@@ -479,27 +600,63 @@ async function segmentFreeFormPackageText(
   return segments === null ? parsed : { ...parsed, items: segments };
 }
 
-async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClient, origin: string, authenticateAdmin: (request: Request, env: Env) => Promise<AdminUser | null>): Promise<Response> {
+async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClient, origin: string, requestId: string, authenticateAdmin: (request: Request, env: Env) => Promise<AdminUser | null>): Promise<Response> {
   const user = await authenticateAdmin(request, env);
   if (!user) {
     return json({ error: { code: 'unauthorized', message: 'Admin authorization required' } }, 401, origin);
+  }
+  if (user.aal !== 'aal2') {
+    return json({
+      error: {
+        code: 'mfa_required',
+        message: 'A second factor is required for administrative access',
+      },
+    }, 403, origin);
   }
   if (request.method === 'GET' && url.pathname === '/api/v1/admin/dashboard') {
     return json(await rpc.call('api_admin_dashboard', {}, { admin: true }), 200, origin);
   }
   if (request.method === 'GET' && url.pathname === '/api/v1/admin/normalization-queue') {
+    const queueStatus = url.searchParams.get('status');
+    const queueInputType = url.searchParams.get('input_type');
+    const beforeCreatedAt = url.searchParams.get('before_created_at');
+    const beforeId = url.searchParams.get('before_id');
+    if (queueStatus && !['pending', 'resolved', 'ambiguous', 'no_match', 'failed'].includes(queueStatus)) {
+      return json({ error: { code: 'invalid_status', message: 'normalization queue status is invalid' } }, 400, origin);
+    }
+    if (queueInputType && !['crawler', 'search', 'ocr', 'manual', 'import'].includes(queueInputType)) {
+      return json({ error: { code: 'invalid_input_type', message: 'normalization input_type is invalid' } }, 400, origin);
+    }
+    if ((beforeCreatedAt && !beforeId) || (!beforeCreatedAt && beforeId) || (beforeId !== null && !isUuid(beforeId)) || (beforeCreatedAt !== null && Number.isNaN(Date.parse(beforeCreatedAt)))) {
+      return json({ error: { code: 'invalid_cursor', message: 'before_created_at and before_id must be a valid pair' } }, 400, origin);
+    }
     return json(
-      await rpc.call('api_admin_normalization_queue', {
-        p_status: url.searchParams.get('status'),
+      await rpc.call<AdminNormalizationQueueRow[]>('api_admin_normalization_queue_v2', {
+        p_status: queueStatus,
+        p_input_type: queueInputType,
         p_limit: parseBoundedInt(url.searchParams.get('limit'), 50, 1, 200),
+        p_before_created_at: beforeCreatedAt,
+        p_before_id: beforeId,
       }, { admin: true }),
+      200,
+      origin,
+    );
+  }
+  const normalizationDetailMatch = url.pathname.match(/^\/api\/v1\/admin\/normalization\/([^/]+)$/i);
+  if (normalizationDetailMatch && request.method === 'GET') {
+    if (!isUuid(normalizationDetailMatch[1])) return json({ error: { code: 'invalid_id', message: 'normalization run id must be a UUID' } }, 400, origin);
+    return json(
+      sanitizePublicPayload(await rpc.call<AdminNormalizationDetail | null>('api_admin_normalization_detail', {
+        p_normalization_run_id: normalizationDetailMatch[1],
+        p_include_raw_payload: url.searchParams.get('include_payload') === 'true',
+      }, { admin: true })),
       200,
       origin,
     );
   }
   if (request.method === 'GET' && url.pathname === '/api/v1/admin/raw-records') {
     return json(
-      await rpc.call('api_admin_raw_records', { p_limit: parseBoundedInt(url.searchParams.get('limit'), 50, 1, 200) }, { admin: true }),
+      sanitizePublicPayload(await rpc.call('api_admin_raw_records', { p_limit: parseBoundedInt(url.searchParams.get('limit'), 50, 1, 200) }, { admin: true })),
       200,
       origin,
     );
@@ -522,19 +679,57 @@ async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClien
   };
   const lookup = adminLookups[url.pathname];
   if (request.method === 'GET' && lookup) {
-    return json(await rpc.call(lookup.rpc, { p_limit: parseBoundedInt(url.searchParams.get('limit'), 100, 1, lookup.limit) }, { admin: true }), 200, origin);
+    return json(sanitizePublicPayload(await rpc.call(lookup.rpc, { p_limit: parseBoundedInt(url.searchParams.get('limit'), 100, 1, lookup.limit) }, { admin: true })), 200, origin);
   }
   if (request.method === 'GET' && url.pathname === '/api/v1/admin/quality-issues') {
-    return json(await rpc.call<AdminQualityIssue[]>('api_admin_quality_issues', { p_status: url.searchParams.get('status'), p_limit: parseBoundedInt(url.searchParams.get('limit'), 100, 1, 200) }, { admin: true }), 200, origin);
+    return json(sanitizePublicPayload(await rpc.call<AdminQualityIssue[]>('api_admin_quality_issues', { p_status: url.searchParams.get('status'), p_limit: parseBoundedInt(url.searchParams.get('limit'), 100, 1, 200) }, { admin: true })), 200, origin);
   }
   if (request.method === 'GET' && url.pathname === '/api/v1/admin/alerts') {
-    return json(await rpc.call<AdminAlert[]>('api_admin_alerts', { p_status: url.searchParams.get('status'), p_limit: parseBoundedInt(url.searchParams.get('limit'), 100, 1, 200) }, { admin: true }), 200, origin);
+    return json(sanitizePublicPayload(await rpc.call<AdminAlert[]>('api_admin_alerts', { p_status: url.searchParams.get('status'), p_limit: parseBoundedInt(url.searchParams.get('limit'), 100, 1, 200) }, { admin: true })), 200, origin);
+  }
+  const alertStatusMatch = url.pathname.match(/^\/api\/v1\/admin\/alerts\/([^/]+)\/status$/i);
+  if (alertStatusMatch && request.method === 'POST') {
+    if (!isUuid(alertStatusMatch[1])) return json({ error: { code: 'invalid_id', message: 'alert id must be a UUID' } }, 400, origin);
+    const body = await readJsonObject(request, 16_384, origin);
+    if (body instanceof Response) return body;
+    if (!['acknowledged', 'resolved', 'ignored'].includes(String(body.status))) {
+      return json({ error: { code: 'invalid_body', message: 'status must be acknowledged, resolved or ignored' } }, 400, origin);
+    }
+    if (body.reason !== undefined && body.reason !== null && (typeof body.reason !== 'string' || body.reason.length > 1000)) {
+      return json({ error: { code: 'invalid_body', message: 'reason must be at most 1000 characters' } }, 400, origin);
+    }
+    return json(await rpc.call('api_admin_update_alert_status', {
+      p_alert_id: alertStatusMatch[1],
+      p_status: body.status,
+      p_reason: typeof body.reason === 'string' ? body.reason : null,
+      p_reviewer_user_id: user.id,
+      p_request_id: requestId,
+    }, { admin: true }), 200, origin);
+  }
+  const qualityStatusMatch = url.pathname.match(/^\/api\/v1\/admin\/quality-issues\/([^/]+)\/status$/i);
+  if (qualityStatusMatch && request.method === 'POST') {
+    if (!isUuid(qualityStatusMatch[1])) return json({ error: { code: 'invalid_id', message: 'quality issue id must be a UUID' } }, 400, origin);
+    const body = await readJsonObject(request, 16_384, origin);
+    if (body instanceof Response) return body;
+    if (!['acknowledged', 'resolved', 'ignored'].includes(String(body.status))) {
+      return json({ error: { code: 'invalid_body', message: 'status must be acknowledged, resolved or ignored' } }, 400, origin);
+    }
+    if (body.reason !== undefined && body.reason !== null && (typeof body.reason !== 'string' || body.reason.length > 1000)) {
+      return json({ error: { code: 'invalid_body', message: 'reason must be at most 1000 characters' } }, 400, origin);
+    }
+    return json(await rpc.call('api_admin_update_quality_issue_status', {
+      p_issue_id: qualityStatusMatch[1],
+      p_status: body.status,
+      p_reason: typeof body.reason === 'string' ? body.reason : null,
+      p_reviewer_user_id: user.id,
+      p_request_id: requestId,
+    }, { admin: true }), 200, origin);
   }
   if (request.method === 'GET' && url.pathname === '/api/v1/admin/provider-claims') {
-    return json(await rpc.call('api_admin_provider_claims', { p_status: url.searchParams.get('status'), p_limit: parseBoundedInt(url.searchParams.get('limit'), 100, 1, 200) }, { admin: true }), 200, origin);
+    return json(sanitizePublicPayload(await rpc.call('api_admin_provider_claims', { p_status: url.searchParams.get('status'), p_limit: parseBoundedInt(url.searchParams.get('limit'), 100, 1, 200) }, { admin: true })), 200, origin);
   }
   if (request.method === 'GET' && url.pathname === '/api/v1/admin/provider-change-requests') {
-    return json(await rpc.call('api_admin_provider_change_requests', { p_status: url.searchParams.get('status'), p_limit: parseBoundedInt(url.searchParams.get('limit'), 100, 1, 200) }, { admin: true }), 200, origin);
+    return json(sanitizePublicPayload(await rpc.call('api_admin_provider_change_requests', { p_status: url.searchParams.get('status'), p_limit: parseBoundedInt(url.searchParams.get('limit'), 100, 1, 200) }, { admin: true })), 200, origin);
   }
   const providerClaimReviewMatch = url.pathname.match(/^\/api\/v1\/admin\/provider-claims\/([^/]+)\/review$/i);
   if (providerClaimReviewMatch && request.method === 'POST') {
@@ -607,6 +802,53 @@ async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClien
       p_provider_brand_id: typeof body.provider_brand_id === 'string' ? body.provider_brand_id : null,
       p_reason: typeof body.reason === 'string' ? body.reason : 'Manual admin review',
       p_reviewer_user_id: user.id,
+      p_request_id: requestId,
+    }, { admin: true }), 200, origin);
+  }
+  const manualCandidateMatch = url.pathname.match(/^\/api\/v1\/admin\/normalization\/([^/]+)\/candidates$/i);
+  if (manualCandidateMatch && request.method === 'POST') {
+    if (!isUuid(manualCandidateMatch[1])) return json({ error: { code: 'invalid_id', message: 'normalization run id must be a UUID' } }, 400, origin);
+    const body = await readJsonObject(request, 16_384, origin);
+    if (body instanceof Response) return body;
+    if (typeof body.catalog_item_id !== 'string' || !isUuid(body.catalog_item_id) || typeof body.reason !== 'string' || body.reason.trim().length === 0 || body.reason.length > 1000) {
+      return json({ error: { code: 'invalid_body', message: 'catalog_item_id and a reason of at most 1000 characters are required' } }, 400, origin);
+    }
+    return json(await rpc.call('api_admin_add_manual_candidate', {
+      p_normalization_run_id: manualCandidateMatch[1],
+      p_catalog_item_id: body.catalog_item_id,
+      p_reviewer_user_id: user.id,
+      p_reason: body.reason.trim(),
+      p_request_id: requestId,
+    }, { admin: true }), 200, origin);
+  }
+  const reviewMatch = url.pathname.match(/^\/api\/v1\/admin\/normalization\/([^/]+)\/review$/i);
+  if (reviewMatch && request.method === 'POST') {
+    if (!isUuid(reviewMatch[1])) return json({ error: { code: 'invalid_id', message: 'normalization run id must be a UUID' } }, 400, origin);
+    const body = await readJsonObject(request, 16_384, origin);
+    if (body instanceof Response) return body;
+    if (body.decision !== 'approve_candidate' && body.decision !== 'no_match') {
+      return json({ error: { code: 'invalid_body', message: 'decision must be approve_candidate or no_match' } }, 400, origin);
+    }
+    if (body.decision === 'approve_candidate' && (typeof body.selected_candidate_id !== 'string' || !isUuid(body.selected_candidate_id))) {
+      return json({ error: { code: 'invalid_body', message: 'selected_candidate_id is required for approval' } }, 400, origin);
+    }
+    if (body.decision === 'no_match' && (body.reason === undefined || typeof body.reason !== 'string' || body.reason.trim().length === 0)) {
+      return json({ error: { code: 'invalid_body', message: 'a reason is required for no_match' } }, 400, origin);
+    }
+    if (body.alias !== undefined && body.alias !== null && (typeof body.alias !== 'string' || body.alias.trim().length === 0 || body.alias.length > 200)) {
+      return json({ error: { code: 'invalid_body', message: 'alias must be at most 200 characters' } }, 400, origin);
+    }
+    if (body.reason !== undefined && body.reason !== null && (typeof body.reason !== 'string' || body.reason.length > 1000)) {
+      return json({ error: { code: 'invalid_body', message: 'reason must be at most 1000 characters' } }, 400, origin);
+    }
+    return json(await rpc.call('api_admin_review_normalization', {
+      p_normalization_run_id: reviewMatch[1],
+      p_decision: body.decision,
+      p_selected_candidate_id: typeof body.selected_candidate_id === 'string' ? body.selected_candidate_id : null,
+      p_alias: typeof body.alias === 'string' ? body.alias : null,
+      p_reason: typeof body.reason === 'string' ? body.reason : null,
+      p_reviewer_user_id: user.id,
+      p_request_id: requestId,
     }, { admin: true }), 200, origin);
   }
   return json({ error: { code: 'not_found', message: 'Admin route not found' } }, 404, origin);
@@ -750,18 +992,29 @@ async function verifyAdmin(request: Request, env: Env): Promise<AdminUser | null
   if (!user) return null;
   const allowedIds = new Set((env.ADMIN_USER_IDS ?? '').split(',').map((value) => value.trim().toLowerCase()).filter(isUuid));
   if (allowedIds.size === 0) return null;
-  return allowedIds.has(user.id.toLowerCase()) ? { id: user.id } : null;
+  return allowedIds.has(user.id.toLowerCase()) ? { id: user.id, aal: user.aal } : null;
 }
 
 async function verifyUser(request: Request, env: Env): Promise<AuthenticatedUser | null> {
   const authorization = request.headers.get('authorization') ?? '';
   const match = authorization.match(/^Bearer\s+([^\s]+)$/i);
-  if (!match || !env.SUPABASE_URL || !env.SUPABASE_ANON_KEY) return null;
+  const publishableKey = env.SUPABASE_PUBLISHABLE_KEY ?? env.SUPABASE_ANON_KEY;
+  if (!match || !env.SUPABASE_URL || !publishableKey) return null;
+  let supabaseBaseUrl: URL;
+  try {
+    supabaseBaseUrl = new URL(env.SUPABASE_URL);
+    const localDevelopment = supabaseBaseUrl.protocol === 'http:'
+      && (supabaseBaseUrl.hostname === 'localhost' || supabaseBaseUrl.hostname === '127.0.0.1' || supabaseBaseUrl.hostname === '::1')
+      && env.APP_ENV !== 'production';
+    if (supabaseBaseUrl.protocol !== 'https:' && !localDevelopment) return null;
+  } catch {
+    return null;
+  }
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 5000);
   try {
-    const response = await fetch(`${env.SUPABASE_URL.replace(/\/$/, '')}/auth/v1/user`, {
-      headers: { apikey: env.SUPABASE_ANON_KEY, Authorization: `Bearer ${match[1]}` },
+    const response = await fetch(new URL('/auth/v1/user', supabaseBaseUrl).toString(), {
+      headers: { apikey: publishableKey, Authorization: `Bearer ${match[1]}` },
       signal: controller.signal,
     });
     if (!response.ok) return null;
@@ -843,7 +1096,9 @@ function groupSearchRows(rows: SearchRow[]) {
       distance_meters: row.distance_meters,
       price: null,
       prices: new Map<string, Record<string, unknown>>(),
-      source: row.source_url ? { url: row.source_url, last_seen_at: row.price_last_seen_at } : null,
+      source: safeHttpUrl(row.source_url)
+        ? { url: safeHttpUrl(row.source_url), last_seen_at: row.price_last_seen_at }
+        : null,
     };
     if (row.amount_minor !== null) {
       const price = {
@@ -909,8 +1164,8 @@ function groupResolutionCandidates(candidates: ResolutionCandidate[]) {
             last_seen_at: stringValue(offer.price_last_seen_at),
           },
       prices: [],
-      source: stringValue(offer.source_url)
-        ? { url: stringValue(offer.source_url), last_seen_at: stringValue(offer.price_last_seen_at) }
+      source: safeHttpUrl(offer.source_url)
+        ? { url: safeHttpUrl(offer.source_url), last_seen_at: stringValue(offer.price_last_seen_at) }
         : null,
     })),
   }));
@@ -918,6 +1173,24 @@ function groupResolutionCandidates(candidates: ResolutionCandidate[]) {
 
 function stringValue(value: unknown): string | null {
   return typeof value === 'string' && value.trim() !== '' ? value : null;
+}
+
+function safeHttpUrl(value: unknown): string | null {
+  const raw = stringValue(value);
+  if (!raw) return null;
+  try {
+    const parsed = new URL(raw);
+    if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') return null;
+    if (parsed.username || parsed.password) return null;
+    // Query strings and fragments may contain signed URLs, access tokens or
+    // tracking identifiers. Public/admin screens only need the canonical
+    // source location, never retrieval credentials.
+    parsed.search = '';
+    parsed.hash = '';
+    return parsed.toString();
+  } catch {
+    return null;
+  }
 }
 
 function numberValue(value: unknown): number | null {
@@ -1091,12 +1364,96 @@ function safeErrorDetail(error: unknown): string {
   }
   if (error instanceof SupabaseConfigurationError) return 'supabase_configuration';
   if (error instanceof SupabaseResponseError) return `rpc=${error.rpcName}; invalid_json=true`;
-  if (error instanceof Error) return error.message.slice(0, 300);
-  return String(error).slice(0, 300);
+  return 'internal_error';
+}
+
+async function enforceRateLimit(request: Request, url: URL, env: Env, origin: string, requestId: string): Promise<Response | null> {
+  const scope = rateLimitScope(url.pathname, request.method);
+  if (!scope) return null;
+  const limiter = rateLimiterForScope(scope, env);
+  if (!limiter) return null;
+  try {
+    const result = await limiter.limit({ key: `${scope}:${rateLimitIdentity(request)}` });
+    if (result.success) return null;
+    const response = errorJson(
+      'rate_limited',
+      'Too many requests. Try again later.',
+      429,
+      origin,
+      requestId,
+      'API.SERVER.RATE_LIMIT',
+      'medium',
+      true,
+    );
+    response.headers.set('retry-after', '60');
+    return response;
+  } catch {
+    // In development a missing binding should not prevent local work. In
+    // production, fail closed so a deployment without its abuse-control
+    // binding cannot expose expensive or privileged routes without limits.
+    console.warn(JSON.stringify({ event: 'rate_limit_unavailable', request_id: requestId, scope }));
+    if (env.APP_ENV === 'production') {
+      return errorJson(
+        'rate_limit_unavailable',
+        'The service is temporarily unavailable.',
+        503,
+        origin,
+        requestId,
+        'API.SERVER.RATE_LIMIT_CONFIGURATION',
+        'high',
+        true,
+      );
+    }
+    return null;
+  }
+}
+
+function rateLimitScope(path: string, method: string): 'public' | 'ocr' | 'admin' | null {
+  if (path === '/api/v1/resolve-image' && method === 'POST') return 'ocr';
+  if (path === '/api/v1/search' && method === 'GET') return 'public';
+  if (method === 'GET' && /^\/api\/v1\/(?:services|providers)\/[^/]+(?:\/(?:providers|services))?$/i.test(path)) return 'public';
+  if ((path === '/api/v1/resolve' || path === '/api/v1/resolve-batch' || path === '/api/v1/events') && method === 'POST') return 'public';
+  if (path.startsWith('/api/v1/admin/')) return 'admin';
+  return null;
+}
+
+function rateLimiterForScope(scope: 'public' | 'ocr' | 'admin', env: Env): RateLimitBinding | undefined {
+  if (scope === 'ocr') return env.OCR_RATE_LIMITER;
+  if (scope === 'admin') return env.ADMIN_RATE_LIMITER;
+  return env.PUBLIC_RATE_LIMITER;
+}
+
+function rateLimitIdentity(request: Request): string {
+  const address = request.headers.get('cf-connecting-ip')?.trim() ?? '';
+  return /^[A-Fa-f0-9:.]{1,64}$/.test(address) ? address : 'unknown-client';
+}
+
+function isSecureConfiguredOrigin(value: string | undefined): boolean {
+  if (!value || value === '*') return false;
+  try {
+    const parsed = new URL(value);
+    return parsed.protocol === 'https:' && parsed.origin === value.replace(/\/$/, '');
+  } catch {
+    return false;
+  }
+}
+
+function configuredCorsOrigin(value: string | undefined): string {
+  const candidate = value?.trim() ?? '';
+  if (!candidate || candidate === '*') return '*';
+  try {
+    const parsed = new URL(candidate);
+    if (parsed.protocol === 'http:' || parsed.protocol === 'https:') return parsed.origin;
+  } catch {
+    // Fall through to the safe wildcard used only for development/misconfig.
+  }
+  return '*';
 }
 
 function requestIdFor(request: Request): string {
-  const supplied = request.headers.get('x-request-id')?.trim() ?? '';
+  const supplied = request.headers.get('idempotency-key')?.trim()
+    || request.headers.get('x-request-id')?.trim()
+    || '';
   // Correlation ids are accepted only in a conservative format so logs
   // cannot be polluted with arbitrary control characters or huge values.
   if (/^[A-Za-z0-9._:-]{8,96}$/.test(supplied)) return supplied;
@@ -1133,5 +1490,5 @@ function errorJson(
 }
 
 function corsHeaders(origin: string): Record<string, string> {
-  return { 'access-control-allow-origin': origin, 'access-control-allow-headers': 'authorization,content-type', 'access-control-allow-methods': 'GET,POST,PATCH,OPTIONS' };
+  return { 'access-control-allow-origin': origin, 'access-control-allow-headers': 'authorization,content-type,x-request-id,idempotency-key', 'access-control-allow-methods': 'GET,POST,PATCH,OPTIONS' };
 }

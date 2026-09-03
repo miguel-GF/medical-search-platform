@@ -17,6 +17,61 @@ npx.cmd supabase@latest db query --linked --file supabase/tests/resolver_benchma
 npx.cmd supabase@latest db query --linked --file supabase/tests/provider_claims_test.sql
 ```
 
+### Acceso administrativo y MFA
+
+Para desarrollo local, el Admin Vite usa `http://localhost:5173`. En la
+configuración Auth del proyecto Supabase enlazado, `Site URL` y una URL de
+redirección permitida deben apuntar exactamente a esa dirección. No uses
+`localhost:3000` ni `https://127.0.0.1:3000`: una invitación con otra URL puede
+terminar en un puerto sin servicio o expirar antes de llegar al panel.
+
+El panel administrativo usa Supabase Auth con correo/contraseÃ±a y TOTP MFA
+(Google Authenticator, Authy o 1Password). No se implementa un generador de
+cÃ³digos propio. El backend exige que el JWT tenga `aal2` en todas las rutas
+`/api/v1/admin/*`; ademÃ¡s, el usuario debe estar incluido en `ADMIN_USER_IDS`.
+
+Para habilitarlo en el proyecto enlazado:
+
+1. Crea o invita la cuenta administrativa en Supabase Auth.
+2. Configura `ADMIN_USER_IDS` con los UUID de las cuentas permitidas.
+3. Abre el enlace de invitaciÃ³n en el panel local; la primera pantalla permite
+   definir la contraseÃ±a. DespuÃ©s muestra el QR de TOTP y exige confirmar un
+   cÃ³digo de seis dÃ­gitos.
+4. En accesos posteriores, el panel solicita el cÃ³digo TOTP antes de cargar
+   datos o permitir decisiones.
+
+La API no recibe ni almacena secretos TOTP: Supabase genera, guarda y verifica
+el factor. La documentaciÃ³n de referencia es
+<https://supabase.com/docs/guides/auth/auth-mfa/totp> y
+<https://supabase.com/docs/guides/auth/auth-mfa>.
+
+El QR de inscripcion contiene el secreto compartido del factor. Muestralo una
+sola vez, escanealo unicamente en el autenticador del operador y no conserves
+capturas ni lo envies por chat. Si el QR o la clave se expone, elimina el
+factor y registralo de nuevo. Los retos y verificaciones MFA de Supabase
+tambien tienen limites de frecuencia documentados. La clave manual queda
+oculta por defecto en el panel para reducir exposiciones accidentales.
+
+La cola de revisiÃ³n sÃ³lo conserva resultados `ambiguous` o `no_match` del
+resolver, con candidatos y evidencia acotada. Aprobar exige seleccionar un
+candidato producido por esa corrida; si un `no_match` de scraper no trae
+candidatos, el panel permite buscar un servicio clÃ­nico activo y agregarlo como
+candidato `manual` antes de aprobar. `no_match` exige motivo. Ambas decisiones
+se ejecutan en una sola RPC transaccional y generan un evento en `audit.events`.
+Las aprobaciones sin proveedor asociado no crean aliases globales; los aliases
+se guardan únicamente cuando la revisión trae contexto de proveedor.
+
+Rutas administrativas nuevas:
+
+```text
+GET  /api/v1/admin/normalization-queue
+GET  /api/v1/admin/normalization/{run_id}
+POST /api/v1/admin/normalization/{run_id}/candidates
+POST /api/v1/admin/normalization/{run_id}/review
+POST /api/v1/admin/alerts/{alert_id}/status
+POST /api/v1/admin/quality-issues/{issue_id}/status
+```
+
 La Fase 12 usa estas rutas protegidas por el JWT del proveedor:
 
 ```text
@@ -273,8 +328,8 @@ npm.cmd test
 npx.cmd wrangler deploy --dry-run
 npx.cmd wrangler login
 npx.cmd wrangler secret put SUPABASE_URL
-npx.cmd wrangler secret put SUPABASE_ANON_KEY
-npx.cmd wrangler secret put SUPABASE_SERVICE_ROLE_KEY
+npx.cmd wrangler secret put SUPABASE_PUBLISHABLE_KEY
+npx.cmd wrangler secret put SUPABASE_SECRET_KEY
 npx.cmd wrangler secret put ADMIN_USER_IDS
 npx.cmd wrangler deploy
 ```
@@ -383,8 +438,25 @@ que exceda esa asignación cuesta $0.011 por 1,000 Neurons; el consumo se debe
 medir en el dashboard porque el número de tokens de imagen varía por foto.
 Moondream publica como referencia $0.30 por millón de tokens de entrada y
 $1.00 por millón de salida. El límite de salida de Pruevia es 384 tokens y la
-respuesta normal suele ser mucho menor. Antes de producción pública se debe
-añadir rate limiting de Cloudflare para evitar que terceros gasten la cuota.
+respuesta normal suele ser mucho menor. La API aplica límites nativos
+opcionales de Cloudflare por IP y ruta: el panel, OCR y búsqueda tienen
+bindings separados en `apps/api/wrangler.toml`. En producción se deben
+reservar namespaces únicos para esos bindings y revisar sus contadores en
+Cloudflare; el límite de red es una barrera de costo, no un sustituto de Auth,
+`ADMIN_USER_IDS` o `aal2`. La base también tiene un circuit-breaker de 10,000
+revisiones abiertas para que una falla temporal del limiter no haga crecer la
+cola sin límite.
+
+Para producción configura obligatoriamente:
+
+```powershell
+$env:APP_ENV = "production"
+$env:ALLOWED_ORIGIN = "https://admin.<tu-dominio>"
+```
+
+El Worker rechaza producción sin un origen HTTPS explícito. Las URLs de
+Supabase y OCR también deben ser HTTPS; HTTP sólo se permite para loopback en
+desarrollo.
 
 ## Admin V1
 
@@ -395,7 +467,7 @@ Desde `apps/admin/`:
 ```powershell
 $env:VITE_API_URL = "https://<worker>.workers.dev"
 $env:VITE_SUPABASE_URL = "https://<project-ref>.supabase.co"
-$env:VITE_SUPABASE_ANON_KEY = "<public-anon-key>"
+$env:VITE_SUPABASE_PUBLISHABLE_KEY = "<publishable-key>"
 npm.cmd ci
 npm.cmd run typecheck
 npm.cmd test

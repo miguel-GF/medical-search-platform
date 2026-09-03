@@ -117,6 +117,38 @@ describe('POST /api/v1/resolve-batch', () => {
     }));
   });
 
+  it('sanitizes source URLs in selected package offers', async () => {
+    const payload = {
+      ...rpcPayload,
+      offers: [{
+        item_index: 1,
+        item_id: '00000000-0000-0000-0000-000000001103',
+        offer_id: '00000000-0000-0000-0000-000000001104',
+        provider_brand_id: '00000000-0000-0000-0000-000000001105',
+        provider_name: 'Laboratorio',
+        provider_location_id: '00000000-0000-0000-0000-000000001106',
+        provider_location_name: 'Centro',
+        latitude: 19,
+        longitude: -98,
+        distance_meters: 1,
+        source_url: 'javascript:alert(1)',
+        price_type: 'regular',
+        price_key: 'default',
+        amount_minor: 100,
+        currency: 'MXN',
+        price_last_seen_at: null,
+        requires_quote: false,
+      }],
+    };
+    const response = await createHandler({ rpc: rpcWith(payload) })(new Request('https://api.test/api/v1/resolve-batch', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ items: ['BH'], objective: 'all_in_one' }),
+    }), env);
+    const result = await response.json() as { solutions: Array<{ selected_offers: Array<{ source_url: unknown }> }> };
+    expect(result.solutions[0].selected_offers[0].source_url).toBeNull();
+  });
+
   it('validates the batch body and coordinates before calling the database', async () => {
     const rpc = rpcWith(rpcPayload);
     const handler = createHandler({ rpc });

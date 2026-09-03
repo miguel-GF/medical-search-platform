@@ -1,16 +1,27 @@
 export interface Env {
   SUPABASE_URL: string;
-  SUPABASE_ANON_KEY: string;
+  SUPABASE_PUBLISHABLE_KEY?: string;
+  SUPABASE_SECRET_KEY?: string;
+  SUPABASE_ANON_KEY?: string;
   SUPABASE_SERVICE_ROLE_KEY?: string;
   SUPABASE_TIMEOUT_MS?: string;
+  APP_ENV?: 'development' | 'test' | 'production' | string;
   ADMIN_USER_IDS?: string;
   API_VERSION?: string;
   ALLOWED_ORIGIN?: string;
+  PUBLIC_RATE_LIMITER?: RateLimitBinding;
+  OCR_RATE_LIMITER?: RateLimitBinding;
+  ADMIN_RATE_LIMITER?: RateLimitBinding;
   AI?: OcrAiBinding;
   OCR_AI_MODEL?: string;
   OCR_SERVICE_URL?: string;
   OCR_SERVICE_TOKEN?: string;
   OCR_SERVICE_TIMEOUT_MS?: string;
+}
+
+/** Optional Cloudflare Workers Rate Limiting API binding. */
+export interface RateLimitBinding {
+  limit(options: { key: string }): Promise<{ success: boolean }>;
 }
 
 /** Narrow interface used so the Worker remains testable without an AI binding. */
@@ -29,6 +40,8 @@ export interface RpcClient {
 
 export interface AdminUser {
   id: string;
+  /** Supabase Authenticator Assurance Level. Admin routes require aal2. */
+  aal?: 'aal1' | 'aal2';
 }
 
 export interface SearchRow {
@@ -232,6 +245,69 @@ export interface AdminQualityIssue {
   crawl_run_id: string | null;
   details: Record<string, unknown>;
   created_at: string;
+}
+
+export interface AdminNormalizationQueueRow {
+  normalization_run_id: string;
+  input_type: 'crawler' | 'search' | 'ocr' | 'manual' | 'import';
+  raw_record_id: string | null;
+  raw_text: string | null;
+  normalized_input: string | null;
+  provider_brand_id: string | null;
+  provider_brand_name: string | null;
+  status: string;
+  engine_version: string | null;
+  created_at: string;
+  candidate_count: number;
+  decision_type: string | null;
+  decision_reason: string | null;
+  source_name: string | null;
+}
+
+export interface AdminNormalizationDetail {
+  run: {
+    normalization_run_id: string;
+    input_type: string;
+    raw_record_id: string | null;
+    raw_text: string | null;
+    normalized_input: string | null;
+    provider_brand_id: string | null;
+    provider_brand_name: string | null;
+    status: string;
+    engine_version: string | null;
+    created_at: string;
+    resolved_at: string | null;
+  };
+  raw_record: {
+    raw_record_id: string;
+    source_name: string | null;
+    record_type: string;
+    external_record_id: string | null;
+    parse_status: string;
+    observed_at: string;
+    crawl_run_id: string;
+    source_url: string | null;
+    payload_bytes: number;
+    payload: Record<string, unknown> | null;
+  } | null;
+  candidates: Array<{
+    candidate_id: string;
+    catalog_item_id: string;
+    display_name: string;
+    rank: number;
+    score: number;
+    method: string;
+    explanation: Record<string, unknown>;
+  }>;
+  decision: {
+    decision_id: string;
+    selected_item_id: string | null;
+    decision_type: string;
+    reviewer_user_id: string | null;
+    reason: string | null;
+    decided_at: string;
+    metadata: Record<string, unknown>;
+  } | null;
 }
 
 export interface AdminAlert {

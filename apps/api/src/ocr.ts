@@ -105,7 +105,9 @@ export async function recognizeOrderImageViaService(
   let endpoint: string;
   try {
     const base = new URL(serviceUrl);
-    if (base.protocol !== 'http:' && base.protocol !== 'https:') throw new Error('unsupported OCR service URL protocol');
+    const localDevelopment = base.protocol === 'http:'
+      && (base.hostname === 'localhost' || base.hostname === '127.0.0.1' || base.hostname === '::1');
+    if (base.protocol !== 'https:' && !localDevelopment) throw new Error('https is required for OCR service');
     endpoint = new URL('/v1/ocr/order', base).toString();
   } catch (error) {
     throw new OcrUnavailableError(error instanceof Error ? error.message : 'OCR service URL is invalid');

@@ -18,6 +18,7 @@ coverage/
 # Wrangler local runtime state and linked-project metadata.
 apps/api/.wrangler/
 apps/api/supabase/.temp/
+**/supabase/.temp/
 
 # Collector outputs are reproducible but can be large and machine-local.
 collectors/artifacts/

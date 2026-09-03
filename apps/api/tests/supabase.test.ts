@@ -29,6 +29,20 @@ describe('Supabase RPC transport', () => {
     await new SupabaseRpcClient(env, fetcher).call('api_admin_dashboard', {}, { admin: true });
   });
 
+  it('prefers publishable and secret keys when the project exposes new API keys', async () => {
+    const fetcher = vi.fn(async (_input: RequestInfo | URL, init?: RequestInit) => {
+      expect(init?.headers).toEqual(expect.objectContaining({ apikey: 'publishable-key', Authorization: 'Bearer publishable-key' }));
+      return new Response('{}', { status: 200 });
+    });
+    const newKeyEnv = { ...env, SUPABASE_PUBLISHABLE_KEY: 'publishable-key', SUPABASE_SECRET_KEY: 'secret-key' };
+    await new SupabaseRpcClient(newKeyEnv, fetcher).call('api_search', {});
+    const adminFetcher = vi.fn(async (_input: RequestInfo | URL, init?: RequestInit) => {
+      expect(init?.headers).toEqual(expect.objectContaining({ apikey: 'secret-key', Authorization: 'Bearer secret-key' }));
+      return new Response('{}', { status: 200 });
+    });
+    await new SupabaseRpcClient(newKeyEnv, adminFetcher).call('api_admin_dashboard', {}, { admin: true });
+  });
+
   it('preserves a provider JWT while using the anon key as the API key', async () => {
     const fetcher = vi.fn(async (_input: RequestInfo | URL, init?: RequestInit) => {
       expect(init?.headers).toEqual(expect.objectContaining({ apikey: 'anon-key', Authorization: 'Bearer provider-jwt' }));
@@ -61,6 +75,8 @@ describe('Supabase RPC transport', () => {
     await expect(new SupabaseRpcClient({ ...env, SUPABASE_URL: '' }).call('api_search', { p_query: 'mastografia' }))
       .rejects.toMatchObject({ code: 'service_not_configured', tag: 'CONFIGURATION' });
     await expect(new SupabaseRpcClient({ ...env, SUPABASE_URL: 'file:///tmp/supabase' }).call('api_search', { p_query: 'mastografia' }))
+      .rejects.toMatchObject({ code: 'service_not_configured', tag: 'CONFIGURATION' });
+    await expect(new SupabaseRpcClient({ ...env, SUPABASE_URL: 'http://remote.supabase.test' }).call('api_search', { p_query: 'mastografia' }))
       .rejects.toMatchObject({ code: 'service_not_configured', tag: 'CONFIGURATION' });
   });
 });

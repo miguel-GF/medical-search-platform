@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { createAdminApi, formatDate } from '../src/api';
+import { AdminApiError, createAdminApi, formatDate } from '../src/api';
 
 describe('admin API client', () => {
   it('adds admin auth and reads dashboard', async () => {
@@ -15,7 +15,23 @@ describe('admin API client', () => {
   });
   it('refuses requests without an authenticated session', async () => {
     const fetcher = vi.fn();
-    await expect(createAdminApi('https://api.test', async () => null, fetcher).dashboard()).rejects.toThrow('Admin session required');
+    await expect(createAdminApi('https://api.test', async () => null, fetcher).dashboard()).rejects.toMatchObject({
+      name: 'AdminApiError',
+      statusCode: 401,
+      code: 'unauthorized',
+    } satisfies Partial<AdminApiError>);
+    expect(fetcher).not.toHaveBeenCalled();
+  });
+
+  it('refuses an insecure remote API base before reading or sending the token', async () => {
+    const fetcher = vi.fn();
+    const token = vi.fn(async () => 'secret');
+    await expect(createAdminApi('http://remote.api.test', token, fetcher).dashboard()).rejects.toMatchObject({
+      name: 'AdminApiError',
+      code: 'client_configuration_error',
+      statusCode: 0,
+    } satisfies Partial<AdminApiError>);
+    expect(token).not.toHaveBeenCalled();
     expect(fetcher).not.toHaveBeenCalled();
   });
 });

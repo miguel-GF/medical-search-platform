@@ -56,7 +56,7 @@ const row: SearchRow = {
 
 describe('Pruevia API', () => {
   const authenticateAdmin = async (request: Request) => request.headers.get('authorization') === 'Bearer user-token'
-    ? { id: '00000000-0000-0000-0000-000000000099' }
+    ? { id: '00000000-0000-0000-0000-000000000099', aal: 'aal2' as const }
     : null;
   const authenticateUser = async (request: Request) => request.headers.get('authorization') === 'Bearer provider-token'
     ? { id: '00000000-0000-0000-0000-000000000098', accessToken: 'provider-token', aal: 'aal2' as const }
@@ -78,6 +78,81 @@ describe('Pruevia API', () => {
     expect(payload.results[0].offers).toHaveLength(1);
     expect(payload.results[0].offers[0].prices).toHaveLength(2);
     expect(rpc.call).toHaveBeenCalledWith('api_search', expect.objectContaining({ p_query: 'biometria' }));
+  });
+
+  it('drops non-http source URLs from public offers', async () => {
+    const response = await createHandler({ rpc: rpcWith([{ ...row, source_url: 'javascript:alert(1)' }]) })(
+      new Request('https://api.test/api/v1/search?q=biometria'),
+      env,
+    );
+    const payload = await response.json() as { results: Array<{ offers: Array<{ source: unknown }> }> };
+    expect(payload.results[0].offers[0].source).toBeNull();
+  });
+
+  it('removes query strings and fragments from public source URLs', async () => {
+    const response = await createHandler({ rpc: rpcWith([{ ...row, source_url: 'https://example.test/study?token=secret#private' }]) })(
+      new Request('https://api.test/api/v1/search?q=biometria'),
+      env,
+    );
+    const payload = await response.json() as { results: Array<{ offers: Array<{ source: { url: string } | null }> }> };
+    expect(payload.results[0].offers[0].source).toEqual({ url: 'https://example.test/study', last_seen_at: row.price_last_seen_at });
+  });
+
+  it('fails closed in production when the native rate limiter is unavailable', async () => {
+    const limiter = { limit: vi.fn(async () => { throw new Error('binding unavailable'); }) };
+    const rpc = rpcWith([]);
+    const response = await createHandler({ rpc })(
+      new Request('https://api.test/api/v1/search?q=biometria'),
+      { ...env, APP_ENV: 'production', ALLOWED_ORIGIN: 'https://admin.example.test', PUBLIC_RATE_LIMITER: limiter },
+    );
+    expect(response.status).toBe(503);
+    expect(rpc.call).not.toHaveBeenCalled();
+  });
+
+  it('sanitizes source and website URLs in public detail payloads', async () => {
+    const response = await createHandler({ rpc: rpcWith({ website_url: 'javascript:alert(1)', offers: [{ source_url: 'data:text/html,x' }] }) })(
+      new Request('https://api.test/api/v1/providers/00000000-0000-0000-0000-000000000001'),
+      env,
+    );
+    expect(await response.json()).toEqual({ website_url: null, offers: [{ source_url: null }] });
+  });
+
+  it('stops public traffic before an upstream call when the native limiter rejects it', async () => {
+    const rpc = rpcWith([]);
+    const limiter = { limit: vi.fn(async () => ({ success: false })) };
+    const response = await createHandler({ rpc })(
+      new Request('https://api.test/api/v1/search?q=biometria'),
+      { ...env, PUBLIC_RATE_LIMITER: limiter },
+    );
+    expect(response.status).toBe(429);
+    expect(response.headers.get('retry-after')).toBe('60');
+    expect(limiter.limit).toHaveBeenCalledOnce();
+    expect(rpc.call).not.toHaveBeenCalled();
+  });
+
+  it('fails closed in production when the allowed origin is not explicit HTTPS', async () => {
+    const rpc = rpcWith([]);
+    const response = await createHandler({ rpc })(
+      new Request('https://api.test/health'),
+      { ...env, APP_ENV: 'production', ALLOWED_ORIGIN: '*' },
+    );
+    expect(response.status).toBe(503);
+    expect(rpc.call).not.toHaveBeenCalled();
+  });
+
+  it('does not send a bearer token to an insecure Supabase auth endpoint', async () => {
+    const fetcher = vi.fn();
+    vi.stubGlobal('fetch', fetcher);
+    try {
+      const response = await createHandler({ rpc: rpcWith([]) })(
+        new Request('https://api.test/api/v1/admin/dashboard', { headers: { authorization: 'Bearer user-token' } }),
+        { ...env, SUPABASE_URL: 'http://remote.supabase.test' },
+      );
+      expect(response.status).toBe(401);
+      expect(fetcher).not.toHaveBeenCalled();
+    } finally {
+      vi.unstubAllGlobals();
+    }
   });
 
   it('does not render an empty brand fallback beside a concrete branch offer', async () => {
@@ -134,6 +209,85 @@ describe('Pruevia API', () => {
       { service: expect.objectContaining({ display_name: 'Perfil tiroideo bÃ¡sico', resolution_status: 'ambiguous' }), offers: [] },
     ]);
     expect(call).toHaveBeenNthCalledWith(2, 'api_resolve_search', expect.objectContaining({ p_query: 'perfil tiroideo' }));
+    expect(call).toHaveBeenNthCalledWith(3, 'api_record_resolution_review', expect.objectContaining({
+      p_input_type: 'search',
+      p_payload: resolution,
+    }), { admin: true });
+  });
+
+  it('does not expose offers for an unresolved public candidate', async () => {
+    const resolution = {
+      query: 'biometria',
+      normalized_query: 'biometria',
+      engine_version: 'clinical-resolver-v6',
+      status: 'ambiguous',
+      candidates: [{
+        service_id: row.service_id,
+        display_name: row.display_name,
+        matched_term: row.matched_term,
+        term_source: row.term_source,
+        provider_brand_id: row.provider_brand_id,
+        confidence: 0.52,
+        resolution_status: 'ambiguous',
+        match_method: 'word_fuzzy',
+        explanation: {},
+        offers: [row],
+      }],
+    };
+    const call = vi.fn(async <T>(name: string): Promise<T> =>
+      (name === 'api_search' ? [row] : resolution) as T,
+    );
+    const response = await createHandler({ rpc: { call: call as RpcClient['call'] } })(
+      new Request('https://api.test/api/v1/search?q=biometria'),
+      env,
+    );
+    const payload = await response.json() as { results: Array<{ offers: unknown[] }> };
+    expect(payload.results[0].offers).toEqual([]);
+  });
+
+  it('allowlists public resolution fields and strips resolver evidence', async () => {
+    const resolution = {
+      query: 'biometria',
+      normalized_query: 'biometria',
+      engine_version: 'clinical-resolver-v6',
+      status: 'ambiguous',
+      internal_trace: 'should-not-leave-the-api',
+      candidates: [{
+        ...row,
+        service_id: row.service_id,
+        display_name: row.display_name,
+        matched_term: row.matched_term,
+        term_source: row.term_source,
+        provider_brand_id: row.provider_brand_id,
+        confidence: 0.52,
+        resolution_status: 'ambiguous',
+        match_method: 'word_fuzzy',
+        explanation: { raw_payload: 'sensitive resolver evidence' },
+        offers: [row],
+        raw_record: { patient_name: 'should-not-leave-the-api' },
+      }],
+    };
+    const response = await createHandler({ rpc: rpcWith(resolution) })(new Request('https://api.test/api/v1/resolve', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ text: 'biometria' }),
+    }), env);
+    const payload = await response.json() as Record<string, unknown>;
+    expect(payload).not.toHaveProperty('internal_trace');
+    expect(payload).toEqual(expect.objectContaining({ status: 'ambiguous', candidates: [{
+      service_id: row.service_id,
+      display_name: row.display_name,
+      matched_term: row.matched_term,
+      term_source: row.term_source,
+      provider_brand_id: row.provider_brand_id,
+      confidence: 0.52,
+      resolution_status: 'ambiguous',
+      match_method: 'word_fuzzy',
+      explanation: {},
+      offers: [],
+    }] }));
+    expect(JSON.stringify(payload)).not.toContain('sensitive resolver evidence');
+    expect(JSON.stringify(payload)).not.toContain('patient_name');
   });
 
   it('exposes deterministic resolution status and candidates', async () => {
@@ -143,7 +297,7 @@ describe('Pruevia API', () => {
       engine_version: 'clinical-resolver-v1',
       status: 'ambiguous',
       candidates: [
-        { service_id: row.service_id, display_name: 'Perfil tiroideo básico', matched_term: 'perfil tiroideo', term_source: 'disambiguation', confidence: 0.92, resolution_status: 'ambiguous', match_method: 'disambiguation', explanation: {}, offers: [] },
+        { service_id: row.service_id, display_name: 'Perfil tiroideo básico', matched_term: 'perfil tiroideo', term_source: 'disambiguation', provider_brand_id: null, confidence: 0.92, resolution_status: 'ambiguous', match_method: 'disambiguation', explanation: {}, offers: [] },
       ],
     };
     const rpc = rpcWith(resolution);
@@ -236,20 +390,98 @@ describe('Pruevia API', () => {
   });
 
   it('authenticates Admin JWTs through Supabase and enforces the user allowlist', async () => {
+    const aal2Token = 'eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJhYWwiOiJhYWwyIn0.sig';
     const fetcher = vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
       expect(String(input)).toBe('https://example.supabase.co/auth/v1/user');
-      expect(init?.headers).toEqual(expect.objectContaining({ apikey: 'anon', Authorization: 'Bearer valid-user-token' }));
+      expect(init?.headers).toEqual(expect.objectContaining({ apikey: 'anon', Authorization: `Bearer ${aal2Token}` }));
       return new Response(JSON.stringify({ id: '00000000-0000-0000-0000-000000000099' }), { status: 200 });
     });
     vi.stubGlobal('fetch', fetcher);
     try {
       const response = await createHandler({ rpc: rpcWith({}) })(new Request('https://api.test/api/v1/admin/dashboard', {
-        headers: { authorization: 'Bearer valid-user-token' },
+        headers: { authorization: `Bearer ${aal2Token}` },
       }), env);
       expect(response.status).toBe(200);
     } finally {
       vi.unstubAllGlobals();
     }
+  });
+
+  it('returns bounded normalization evidence and forwards explicit review decisions', async () => {
+    const rpc = rpcWith({ ok: true, raw_record: { source_url: 'https://example.test/evidence?token=secret#private' } });
+    const handler = createHandler({ rpc, authenticateAdmin });
+    const runId = '00000000-0000-0000-0000-000000000021';
+    const detail = await handler(new Request(`https://api.test/api/v1/admin/normalization/${runId}?include_payload=true`, {
+      headers: { authorization: 'Bearer user-token' },
+    }), env);
+    expect(detail.status).toBe(200);
+    expect((await detail.json() as { raw_record: { source_url: string } }).raw_record.source_url).toBe('https://example.test/evidence');
+    expect(rpc.call).toHaveBeenCalledWith('api_admin_normalization_detail', {
+      p_normalization_run_id: runId,
+      p_include_raw_payload: true,
+    }, { admin: true });
+
+    const reviewed = await handler(new Request(`https://api.test/api/v1/admin/normalization/${runId}/review`, {
+      method: 'POST',
+      headers: { authorization: 'Bearer user-token', 'content-type': 'application/json' },
+      body: JSON.stringify({
+        decision: 'approve_candidate',
+        selected_candidate_id: '00000000-0000-0000-0000-000000000022',
+        alias: 'BH',
+        reason: 'Coincide con la evidencia revisada',
+      }),
+    }), env);
+    expect(reviewed.status).toBe(200);
+    expect(rpc.call).toHaveBeenCalledWith('api_admin_review_normalization', expect.objectContaining({
+      p_normalization_run_id: runId,
+      p_decision: 'approve_candidate',
+      p_selected_candidate_id: '00000000-0000-0000-0000-000000000022',
+      p_request_id: expect.any(String),
+    }), { admin: true });
+
+    const alert = await handler(new Request('https://api.test/api/v1/admin/alerts/00000000-0000-0000-0000-000000000023/status', {
+      method: 'POST',
+      headers: { authorization: 'Bearer user-token', 'content-type': 'application/json' },
+      body: JSON.stringify({ status: 'resolved', reason: 'Revisada' }),
+    }), env);
+    expect(alert.status).toBe(200);
+    expect(rpc.call).toHaveBeenCalledWith('api_admin_update_alert_status', expect.objectContaining({
+      p_alert_id: '00000000-0000-0000-0000-000000000023',
+      p_status: 'resolved',
+      p_request_id: expect.any(String),
+    }), { admin: true });
+  });
+
+  it('rejects invalid normalization cursors before invoking privileged RPCs', async () => {
+    const rpc = rpcWith([]);
+    const handler = createHandler({ rpc, authenticateAdmin });
+    const response = await handler(new Request('https://api.test/api/v1/admin/normalization-queue?before_id=not-a-uuid', {
+      headers: { authorization: 'Bearer user-token' },
+    }), env);
+    expect(response.status).toBe(400);
+    expect(rpc.call).not.toHaveBeenCalled();
+  });
+
+  it('forwards a valid keyset cursor for the normalization queue', async () => {
+    const rpc = rpcWith([]);
+    const handler = createHandler({ rpc, authenticateAdmin });
+    const beforeId = '00000000-0000-0000-0000-000000000024';
+    const beforeCreatedAt = '2026-09-03T12:34:56.000Z';
+    const response = await handler(new Request(`https://api.test/api/v1/admin/normalization-queue?before_created_at=${encodeURIComponent(beforeCreatedAt)}&before_id=${beforeId}`, {
+      headers: { authorization: 'Bearer user-token' },
+    }), env);
+    expect(response.status).toBe(200);
+    expect(rpc.call).toHaveBeenCalledWith('api_admin_normalization_queue_v2', expect.objectContaining({
+      p_before_created_at: beforeCreatedAt,
+      p_before_id: beforeId,
+    }), { admin: true });
+  });
+
+  it('blocks Admin routes until the Supabase session reaches aal2', async () => {
+    const authenticateAal1 = async () => ({ id: '00000000-0000-0000-0000-000000000099', aal: 'aal1' as const });
+    const response = await createHandler({ rpc: rpcWith({}), authenticateAdmin: authenticateAal1 })(new Request('https://api.test/api/v1/admin/dashboard'), env);
+    expect(response.status).toBe(403);
+    expect(await response.json()).toEqual({ error: { code: 'mfa_required', message: 'A second factor is required for administrative access' } });
   });
 
   it('derives provider step-up assurance from the validated JWT claim', async () => {

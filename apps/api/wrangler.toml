@@ -4,13 +4,41 @@ compatibility_date = "2026-08-25"
 
 [vars]
 API_VERSION = "v1"
+APP_ENV = "development"
 SUPABASE_TIMEOUT_MS = "5000"
+
+# Abuse controls. The namespace IDs must be unique within the Cloudflare
+# account; reserve/change them in production if the account already uses them.
+[[ratelimits]]
+name = "PUBLIC_RATE_LIMITER"
+namespace_id = "910001"
+
+  [ratelimits.simple]
+  limit = 60
+  period = 60
+
+[[ratelimits]]
+name = "OCR_RATE_LIMITER"
+namespace_id = "910002"
+
+  [ratelimits.simple]
+  limit = 10
+  period = 60
+
+[[ratelimits]]
+name = "ADMIN_RATE_LIMITER"
+namespace_id = "910003"
+
+  [ratelimits.simple]
+  limit = 120
+  period = 60
 
 [ai]
 binding = "AI"
 
 # Secrets are set with `wrangler secret put` and never committed:
 # SUPABASE_URL
-# SUPABASE_ANON_KEY
-# SUPABASE_SERVICE_ROLE_KEY
+# SUPABASE_PUBLISHABLE_KEY
+# SUPABASE_SECRET_KEY
+# (los nombres ANON_KEY/SERVICE_ROLE_KEY se aceptan sólo durante la migración)
 # ADMIN_USER_IDS (comma-separated Supabase auth user UUIDs allowed into Admin)

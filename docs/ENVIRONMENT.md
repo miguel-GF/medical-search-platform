@@ -4,8 +4,8 @@
 
 Los workflows de GitHub no leen un `.env` del repositorio. Requieren estos
 secretos configurados en GitHub Actions: `SUPABASE_ACCESS_TOKEN`,
-`SUPABASE_PROJECT_REF`, `SUPABASE_URL`, `SUPABASE_ANON_KEY`,
-`SUPABASE_SERVICE_ROLE_KEY`, `CLOUDFLARE_API_TOKEN` y
+`SUPABASE_PROJECT_REF`, `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`,
+`SUPABASE_SECRET_KEY`, `CLOUDFLARE_API_TOKEN` y
 `CLOUDFLARE_ACCOUNT_ID`. Se mantienen fuera del árbol de trabajo porque son
 credenciales de automatización, no configuración de una app local.
 
@@ -18,8 +18,8 @@ placeholders, no credenciales funcionales.
 
 | Proyecto | Ejemplo versionado | Variables | Archivo local real |
 | --- | --- | --- | --- |
-| API Cloudflare Worker | `apps/api/.dev.vars.example` | Supabase, timeout, CORS, OCR y administradores | `apps/api/.dev.vars` |
-| Admin Vue | `apps/admin/.env.example` | `VITE_API_URL`, `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` | `apps/admin/.env.local` |
+| API Cloudflare Worker | `apps/api/.dev.vars.example` | Supabase (publishable/secret), entorno, timeout, CORS, OCR y administradores | `apps/api/.dev.vars` |
+| Admin Vue | `apps/admin/.env.example` | `VITE_API_URL`, `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY` | `apps/admin/.env.local` |
 | Patient Flutter/PWA | `apps/patient/.env.example` | `API_BASE_URL` | Flutter usa `--dart-define` (no carga `.env` por sí solo) |
 | OCR FastAPI | `apps/ocr-service/.env.example` | token, motor, límites y puerto | `apps/ocr-service/.env` |
 | Collectors Python | `collectors/.env.example` | DENUE, LOINC y DSN opcional de publicación | `collectors/.env` |
@@ -30,13 +30,20 @@ secretos del servidor a un `.env` del frontend.
 
 ## Qué es público y qué es secreto
 
-- `VITE_SUPABASE_ANON_KEY`/`SUPABASE_ANON_KEY` es una clave pública con políticas
-  RLS; aun así se configura mediante los ejemplos para evitar valores dispersos.
-- `SUPABASE_SERVICE_ROLE_KEY`, `ADMIN_USER_IDS`, `DENUE_API_TOKEN`,
+- `VITE_SUPABASE_PUBLISHABLE_KEY`/`SUPABASE_PUBLISHABLE_KEY` es una clave pública
+  con políticas RLS; aun así se configura mediante los ejemplos para evitar
+  valores dispersos.
+- `SUPABASE_SECRET_KEY`/`SUPABASE_SERVICE_ROLE_KEY`, `ADMIN_USER_IDS`, `DENUE_API_TOKEN`,
   `OCR_SERVICE_TOKEN`, `SUPABASE_ACCESS_TOKEN` y `CLOUDFLARE_API_TOKEN` son
   secretos. Se mantienen sólo en la máquina local, secretos de Wrangler o
   secretos del proveedor de CI.
 - Nunca se imprimen tokens en logs, URLs, artefactos ni mensajes de error.
+
+Las variables nuevas `SUPABASE_PUBLISHABLE_KEY` y `SUPABASE_SECRET_KEY` son
+preferidas por el Worker; las variables `SUPABASE_ANON_KEY` y
+`SUPABASE_SERVICE_ROLE_KEY` quedan sólo como compatibilidad temporal. El
+workflow de DEV acepta ambas nomenclaturas durante la migración. La clave
+secret nunca debe llegar al frontend.
 
 ## Desarrollo local
 
@@ -48,7 +55,9 @@ secretos del servidor a un `.env` del frontend.
    flutter run -d web-server --web-port 8080 --dart-define=API_BASE_URL=http://localhost:8787
    ```
 
-4. Para el API, ejecuta `npx wrangler dev`; Wrangler leerá `apps/api/.dev.vars`.
+4. Para el Admin Vue, ejecuta `npm.cmd run dev` (Vite usa el puerto 5173 por
+   defecto); para el API, ejecuta `npx wrangler dev`; Wrangler leerá
+   `apps/api/.dev.vars`.
 
 Antes de subir cambios, comprueba que `git status` no muestre archivos `.env`,
 `.env.local` ni `.dev.vars` y que los ejemplos sólo contengan placeholders.

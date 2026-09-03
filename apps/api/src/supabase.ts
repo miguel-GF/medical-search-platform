@@ -65,12 +65,17 @@ export class SupabaseRpcClient implements RpcClient {
   }
 
   async call<T>(name: string, body: Record<string, unknown>, options: { admin?: boolean; accessToken?: string } = {}): Promise<T> {
-    const key = options.admin ? this.env.SUPABASE_SERVICE_ROLE_KEY : this.env.SUPABASE_ANON_KEY;
+    const key = options.admin
+      ? this.env.SUPABASE_SECRET_KEY ?? this.env.SUPABASE_SERVICE_ROLE_KEY
+      : this.env.SUPABASE_PUBLISHABLE_KEY ?? this.env.SUPABASE_ANON_KEY;
     if (!key || !this.env.SUPABASE_URL) throw new SupabaseConfigurationError();
     let baseUrl: URL;
     try {
       baseUrl = new URL(this.env.SUPABASE_URL);
-      if (baseUrl.protocol !== 'https:' && baseUrl.protocol !== 'http:') throw new Error('unsupported protocol');
+      const localDevelopment = baseUrl.protocol === 'http:'
+        && (baseUrl.hostname === 'localhost' || baseUrl.hostname === '127.0.0.1' || baseUrl.hostname === '::1')
+        && this.env.APP_ENV !== 'production';
+      if (baseUrl.protocol !== 'https:' && !localDevelopment) throw new Error('https is required for Supabase');
     } catch {
       throw new SupabaseConfigurationError('Supabase URL is invalid');
     }

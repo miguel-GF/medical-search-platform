@@ -4,14 +4,14 @@
 
 begin;
 create extension if not exists pgtap with schema extensions;
-select extensions.plan(15);
+select extensions.plan(19);
 
 select extensions.is(
   (select count(*)::integer
    from pg_proc p
    join pg_namespace n on n.oid = p.pronamespace
    where n.nspname = 'public' and p.proname like 'api_admin_%'),
-  16,
+  23,
   'all internal admin RPCs are present in the expected surface'
 );
 
@@ -41,7 +41,7 @@ select extensions.is(
    join pg_namespace n on n.oid = p.pronamespace
    where n.nspname = 'public' and p.proname like 'api_admin_%'
      and has_function_privilege('service_role', p.oid, 'execute')),
-  16,
+  23,
   'service role can execute all admin RPCs'
 );
 
@@ -109,6 +109,26 @@ select extensions.is(
   has_function_privilege('authenticated', 'public.api_record_analytics_event(text,uuid,jsonb)', 'execute'),
   true,
   'authenticated users may submit only the constrained analytics RPC'
+);
+select extensions.is(
+  has_function_privilege('anon', 'public.api_record_resolution_review(jsonb,text,text)', 'execute'),
+  false,
+  'anonymous users cannot submit review captures directly'
+);
+select extensions.is(
+  has_function_privilege('authenticated', 'public.api_record_resolution_review(jsonb,text,text)', 'execute'),
+  false,
+  'authenticated users cannot submit review captures directly'
+);
+select extensions.is(
+  has_function_privilege('anon', 'public.api_record_resolution_review(jsonb,text)', 'execute'),
+  false,
+  'anonymous users cannot call the compatibility review wrapper'
+);
+select extensions.is(
+  has_function_privilege('authenticated', 'public.api_record_resolution_review(jsonb,text)', 'execute'),
+  false,
+  'authenticated users cannot call the compatibility review wrapper'
 );
 select extensions.is(
   (select count(*)::integer
