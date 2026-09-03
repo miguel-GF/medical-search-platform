@@ -142,18 +142,27 @@ export interface AdminApi {
   prices(): Promise<PriceRow[]>;
   qualityIssues(): Promise<QualityIssueRow[]>;
   alerts(): Promise<AlertRow[]>;
-  resolveNormalization(id: string, input: { selected_item_id: string; alias: string; provider_brand_id?: string; reason?: string }): Promise<unknown>;
-  addManualCandidate(id: string, input: { catalog_item_id: string; reason: string }): Promise<{ candidate_id: string; catalog_item_id: string; created: boolean; method: string }>;
-  reviewNormalization(id: string, input: { decision: 'approve_candidate' | 'no_match'; selected_candidate_id?: string; alias?: string; reason?: string }): Promise<unknown>;
-  updateAlertStatus(id: string, status: 'acknowledged' | 'resolved' | 'ignored', reason?: string): Promise<unknown>;
-  updateQualityIssueStatus(id: string, status: 'acknowledged' | 'resolved' | 'ignored', reason?: string): Promise<unknown>;
+  resolveNormalization(id: string, input: { selected_item_id: string; alias: string; provider_brand_id?: string; reason?: string }, requestId?: string): Promise<unknown>;
+  addManualCandidate(id: string, input: { catalog_item_id: string; reason: string }, requestId?: string): Promise<{ candidate_id: string; catalog_item_id: string; created: boolean; method: string }>;
+  reviewNormalization(id: string, input: { decision: 'approve_candidate' | 'no_match'; selected_candidate_id?: string; alias?: string; reason?: string }, requestId?: string): Promise<unknown>;
+  updateAlertStatus(id: string, status: 'acknowledged' | 'resolved' | 'ignored', reason?: string, requestId?: string): Promise<unknown>;
+  updateQualityIssueStatus(id: string, status: 'acknowledged' | 'resolved' | 'ignored', reason?: string, requestId?: string): Promise<unknown>;
+}
+
+export function createMutationRequestId(): string {
+  try {
+    const generated = globalThis.crypto?.randomUUID?.();
+    if (generated) return generated;
+  } catch {
+    // Fall back to a correlation id. It is not an authentication credential.
+  }
+  return `m-${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
 }
 
 export function createAdminApi(baseUrl: string, accessToken: () => Promise<string | null>, fetcher: typeof fetch = fetch): AdminApi {
   const base = normalizeApiBaseUrl(baseUrl);
-  function mutationRequestId(): string | undefined {
-    try { return globalThis.crypto?.randomUUID?.(); }
-    catch { return undefined; }
+  function mutationHeaders(requestId?: string): Record<string, string> {
+    return { 'x-request-id': requestId ?? createMutationRequestId() };
   }
   async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
     if (base === null) throw new AdminApiError(
@@ -226,11 +235,11 @@ export function createAdminApi(baseUrl: string, accessToken: () => Promise<strin
     prices: () => request<PriceRow[]>('/api/v1/admin/prices?limit=200'),
     qualityIssues: () => request<QualityIssueRow[]>('/api/v1/admin/quality-issues?limit=200'),
     alerts: () => request<AlertRow[]>('/api/v1/admin/alerts?limit=200'),
-    resolveNormalization: (id, input) => request(`/api/v1/admin/normalization/${id}/resolve`, { method: 'POST', body: JSON.stringify(input), headers: { 'x-request-id': mutationRequestId() ?? '' } }),
-    addManualCandidate: (id, input) => request(`/api/v1/admin/normalization/${id}/candidates`, { method: 'POST', body: JSON.stringify(input), headers: { 'x-request-id': mutationRequestId() ?? '' } }),
-    reviewNormalization: (id, input) => request(`/api/v1/admin/normalization/${id}/review`, { method: 'POST', body: JSON.stringify(input), headers: { 'x-request-id': mutationRequestId() ?? '' } }),
-    updateAlertStatus: (id, status, reason) => request(`/api/v1/admin/alerts/${id}/status`, { method: 'POST', body: JSON.stringify({ status, reason }), headers: { 'x-request-id': mutationRequestId() ?? '' } }),
-    updateQualityIssueStatus: (id, status, reason) => request(`/api/v1/admin/quality-issues/${id}/status`, { method: 'POST', body: JSON.stringify({ status, reason }), headers: { 'x-request-id': mutationRequestId() ?? '' } }),
+    resolveNormalization: (id, input, requestId) => request(`/api/v1/admin/normalization/${id}/resolve`, { method: 'POST', body: JSON.stringify(input), headers: mutationHeaders(requestId) }),
+    addManualCandidate: (id, input, requestId) => request(`/api/v1/admin/normalization/${id}/candidates`, { method: 'POST', body: JSON.stringify(input), headers: mutationHeaders(requestId) }),
+    reviewNormalization: (id, input, requestId) => request(`/api/v1/admin/normalization/${id}/review`, { method: 'POST', body: JSON.stringify(input), headers: mutationHeaders(requestId) }),
+    updateAlertStatus: (id, status, reason, requestId) => request(`/api/v1/admin/alerts/${id}/status`, { method: 'POST', body: JSON.stringify({ status, reason }), headers: mutationHeaders(requestId) }),
+    updateQualityIssueStatus: (id, status, reason, requestId) => request(`/api/v1/admin/quality-issues/${id}/status`, { method: 'POST', body: JSON.stringify({ status, reason }), headers: mutationHeaders(requestId) }),
   };
 }
 

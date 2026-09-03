@@ -145,7 +145,7 @@ select extensions.ok(
     '00000000-0000-0000-0000-000000000904',
     '00000000-0000-0000-0000-000000000999',
      'La evidencia del scraper coincide con el servicio canonico',
-     'req-907'
+     'req-9071'
   )->>'created')::boolean,
   'manual candidate is created only through the active catalog'
 );
@@ -162,7 +162,7 @@ select extensions.is(
     'Etiqueta scraper',
     'Aprobada tras revisar evidencia',
      '00000000-0000-0000-0000-000000000999',
-     'req-907-review'
+     'req-9071-review'
   )->>'status',
   'resolved',
   'manual candidate approval resolves the run'
@@ -178,7 +178,7 @@ select extensions.is(
   'approved manual candidate creates the alias'
 );
 select extensions.is(
-   (select count(*)::bigint from audit.events where action = 'normalization.approve_candidate' and entity_id = '00000000-0000-0000-0000-000000000907' and request_id = 'req-907-review'),
+   (select count(*)::bigint from audit.events where action = 'normalization.approve_candidate' and entity_id = '00000000-0000-0000-0000-000000000907' and request_id = 'req-9071-review'),
    1::bigint,
    'normalization approval stores the request id in the audit column'
 );
@@ -190,7 +190,7 @@ select extensions.is(
     'Etiqueta scraper',
     'Aprobada tras revisar evidencia',
     '00000000-0000-0000-0000-000000000999',
-    'req-907-review'
+    'req-9071-review'
   )->>'status'),
   'resolved',
   'repeating the same review request returns the committed decision'
@@ -208,7 +208,7 @@ select extensions.is(
     null,
     'Aprobada como equivalencia puntual de búsqueda',
     '00000000-0000-0000-0000-000000000999',
-    'req-909'
+    'req-9091'
   )->>'status'),
   'resolved',
   'unscoped search approval resolves without creating a global alias'
@@ -229,7 +229,7 @@ select extensions.is(
     null,
     'No corresponde a un servicio clinico del catalogo',
     '00000000-0000-0000-0000-000000000999',
-    'req-908'
+    'req-9081'
   )->>'decision',
   'no_match',
   'admin can explicitly reject a no-match case with a reason'

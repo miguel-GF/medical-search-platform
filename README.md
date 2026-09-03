@@ -14,7 +14,7 @@ La auditoria de seguridad mas reciente y sus pruebas estan en [docs/SECURITY_AUD
 ## Estado actual
 
 - Arquitectura de producto y software: definida.
-- Base de datos V1: migraciones 001-135 aplicadas y verificadas; las migraciones 128-135 agregan segmentacion exacta de paquetes, la cola administrativa de revision, la validacion de proveedor en el flujo de alias y endurecimiento de seguridad/retencion de evidencia.
+- Base de datos V1: migraciones 001-136 aplicadas y verificadas; las migraciones 128-136 agregan segmentacion exacta de paquetes, la cola administrativa de revision, la validacion de proveedor en el flujo de alias, limites de captura publica, mutaciones idempotentes y endurecimiento de seguridad de la evidencia.
 - Despliegue y validación física en Supabase DEV: completado para el Data Engine y el contrato API consumido por Flutter.
 - Collectors Chopo/Ruiz/Salud Digna/DENUE (fixtures, pruebas y corridas live reproducibles), Search API V1 y Admin V1: implementados y probados. Chopo, Ruiz, Salud Digna y DENUE están publicados en Supabase DEV. El gate remoto, los invariantes de base, la API pública y la cuarentena de colectores pasan.
 - Flutter Patient MVP: búsqueda, receta multi-estudio, OCR con revisión, comparación por sucursal, PWA responsive, Android/iOS preparados, consentimiento y telemetría anónima limitada. `Acceso para proveedores` es una entrada secundaria; las mutaciones de proveedor exigen MFA `aal2` en el backend.

@@ -109,6 +109,16 @@ describe('Pruevia API', () => {
     expect(rpc.call).not.toHaveBeenCalled();
   });
 
+  it('fails closed in production when a required limiter binding is missing', async () => {
+    const rpc = rpcWith([]);
+    const response = await createHandler({ rpc })(
+      new Request('https://api.test/api/v1/search?q=biometria'),
+      { ...env, APP_ENV: 'production', ALLOWED_ORIGIN: 'https://admin.example.test' },
+    );
+    expect(response.status).toBe(503);
+    expect(rpc.call).not.toHaveBeenCalled();
+  });
+
   it('sanitizes source and website URLs in public detail payloads', async () => {
     const response = await createHandler({ rpc: rpcWith({ website_url: 'javascript:alert(1)', offers: [{ source_url: 'data:text/html,x' }] }) })(
       new Request('https://api.test/api/v1/providers/00000000-0000-0000-0000-000000000001'),
@@ -128,6 +138,27 @@ describe('Pruevia API', () => {
     expect(response.headers.get('retry-after')).toBe('60');
     expect(limiter.limit).toHaveBeenCalledOnce();
     expect(rpc.call).not.toHaveBeenCalled();
+  });
+
+  it('does not persist unlimited public review captures when the capture limiter rejects them', async () => {
+    const resolution = {
+      query: 'perfil tiroideo',
+      normalized_query: 'perfil tiroideo',
+      engine_version: 'clinical-resolver-v6',
+      status: 'ambiguous',
+      candidates: [],
+    };
+    const call = vi.fn(async <T>(name: string): Promise<T> =>
+      (name === 'api_resolve_search' ? resolution : []) as T,
+    );
+    const reviewLimiter = { limit: vi.fn(async () => ({ success: false })) };
+    const response = await createHandler({ rpc: { call: call as RpcClient['call'] } })(
+      new Request('https://api.test/api/v1/search?q=perfil%20tiroideo'),
+      { ...env, REVIEW_CAPTURE_RATE_LIMITER: reviewLimiter },
+    );
+    expect(response.status).toBe(200);
+    expect(reviewLimiter.limit).toHaveBeenCalledOnce();
+    expect(call).not.toHaveBeenCalledWith('api_record_resolution_review', expect.anything(), expect.anything());
   });
 
   it('fails closed in production when the allowed origin is not explicit HTTPS', async () => {
@@ -408,14 +439,28 @@ describe('Pruevia API', () => {
   });
 
   it('returns bounded normalization evidence and forwards explicit review decisions', async () => {
-    const rpc = rpcWith({ ok: true, raw_record: { source_url: 'https://example.test/evidence?token=secret#private' } });
+    const rpc = rpcWith({
+      ok: true,
+      raw_record: {
+        source_url: 'https://example.test/evidence?token=secret#private',
+        payload: {
+          url: 'https://example.test/raw?access_token=secret',
+          nested: { href: 'https://example.test/nested?sig=secret' },
+        },
+      },
+    });
     const handler = createHandler({ rpc, authenticateAdmin });
     const runId = '00000000-0000-0000-0000-000000000021';
     const detail = await handler(new Request(`https://api.test/api/v1/admin/normalization/${runId}?include_payload=true`, {
       headers: { authorization: 'Bearer user-token' },
     }), env);
     expect(detail.status).toBe(200);
-    expect((await detail.json() as { raw_record: { source_url: string } }).raw_record.source_url).toBe('https://example.test/evidence');
+    const detailPayload = await detail.json() as { raw_record: { source_url: string; payload: { url: string; nested: { href: string } } } };
+    expect(detailPayload.raw_record.source_url).toBe('https://example.test/evidence');
+    expect(detailPayload.raw_record.payload).toEqual({
+      url: 'https://example.test/raw',
+      nested: { href: 'https://example.test/nested' },
+    });
     expect(rpc.call).toHaveBeenCalledWith('api_admin_normalization_detail', {
       p_normalization_run_id: runId,
       p_include_raw_payload: true,

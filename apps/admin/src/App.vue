@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue';
-import { createAdminApi, formatDate, type AlertRow, type CatalogItem, type Dashboard, type LocationRow, type NormalizationDetail, type NormalizationRow, type OfferRow, type PriceRow, type ProviderRow, type QualityIssueRow, type RawRecord } from './api';
+import { createAdminApi, createMutationRequestId, formatDate, type AlertRow, type CatalogItem, type Dashboard, type LocationRow, type NormalizationDetail, type NormalizationRow, type OfferRow, type PriceRow, type ProviderRow, type QualityIssueRow, type RawRecord } from './api';
 import { supabase } from './auth';
 
 type Tab = 'overview' | 'providers' | 'locations' | 'offers' | 'prices' | 'queue' | 'records' | 'quality' | 'alerts';
@@ -50,6 +50,7 @@ const manualCatalogQuery = ref('');
 const manualCatalogResults = ref<CatalogItem[]>([]);
 const manualCatalogItemId = ref('');
 const manualCatalogLoading = ref(false);
+const mutationRequestIds = new Map<string, string>();
 
 const aliasRequired = computed(() => Boolean(selected.value?.provider_brand_id));
 const canApprove = computed(() => !loading.value
@@ -83,6 +84,7 @@ function safeHttpUrl(value: string | null | undefined): string | null {
   try {
     const url = new URL(value);
     if (url.protocol !== 'http:' && url.protocol !== 'https:') return null;
+    if (url.username || url.password) return null;
     url.search = '';
     url.hash = '';
     return url.toString();
@@ -283,7 +285,26 @@ async function openRow(row: NormalizationRow) {
   } catch (cause) { error.value = errorMessage(cause, 'No se pudo cargar la evidencia'); }
 }
 
-function closeReview() { selected.value = null; detail.value = null; selectedCandidateId.value = ''; }
+function closeReview() {
+  const runId = selected.value?.normalization_run_id;
+  if (runId) {
+    mutationRequestIds.delete(`normalization:${runId}:approve`);
+    mutationRequestIds.delete(`normalization:${runId}:no_match`);
+  }
+  selected.value = null;
+  detail.value = null;
+  selectedCandidateId.value = '';
+}
+
+function mutationRequestId(key: string): string {
+  const existing = mutationRequestIds.get(key);
+  if (existing) return existing;
+  const created = createMutationRequestId();
+  mutationRequestIds.set(key, created);
+  return created;
+}
+
+function clearMutationRequestId(key: string) { mutationRequestIds.delete(key); }
 
 async function showPayload() {
   if (!selected.value) return;
@@ -295,6 +316,8 @@ async function approveCandidate() {
   if (!canApprove.value || !selected.value) return;
   loading.value = true;
   error.value = '';
+  const runId = selected.value.normalization_run_id;
+  const requestId = mutationRequestId(`normalization:${runId}:approve`);
   try {
     let candidateId = selectedCandidateId.value;
     if (manualCatalogItemId.value && candidateId === manualCatalogItemId.value) candidateId = '';
@@ -303,10 +326,10 @@ async function approveCandidate() {
         error.value = 'Escribe el motivo de la selección manual antes de aprobar.';
         return;
       }
-      const manual = await api.addManualCandidate(selected.value.normalization_run_id, {
+      const manual = await api.addManualCandidate(runId, {
         catalog_item_id: manualCatalogItemId.value,
         reason: reason.value.trim(),
-      });
+      }, `${requestId}:candidate`);
       candidateId = manual.candidate_id;
     }
     if (!candidateId) return;
@@ -316,7 +339,7 @@ async function approveCandidate() {
       reason: reason.value.trim() || undefined,
     };
     if (aliasRequired.value) reviewInput.alias = alias.value.trim();
-    await api.reviewNormalization(selected.value.normalization_run_id, reviewInput);
+    await api.reviewNormalization(runId, reviewInput, requestId);
     notice.value = aliasRequired.value
       ? 'Candidato aprobado y alias guardado para futuras resoluciones.'
       : 'Candidato aprobado. No se creó un alias global fuera de un proveedor.';
@@ -331,8 +354,10 @@ async function markNoMatch() {
   if (!selected.value || !reason.value.trim()) return;
   loading.value = true;
   error.value = '';
+  const runId = selected.value.normalization_run_id;
+  const requestId = mutationRequestId(`normalization:${runId}:no_match`);
   try {
-    await api.reviewNormalization(selected.value.normalization_run_id, { decision: 'no_match', reason: reason.value.trim() });
+    await api.reviewNormalization(runId, { decision: 'no_match', reason: reason.value.trim() }, requestId);
     notice.value = 'Caso marcado como no_match y no se publicará ninguna equivalencia.';
     closeReview();
     await loadQueue();
@@ -342,12 +367,14 @@ async function markNoMatch() {
 }
 
 async function updateAlert(row: AlertRow, status: 'acknowledged' | 'resolved' | 'ignored') {
-  try { await api.updateAlertStatus(row.alert_id, status); row.status = status; notice.value = `Alerta actualizada: ${status}.`; dashboard.value = await api.dashboard(); }
+  const key = `alert:${row.alert_id}:${status}`;
+  try { await api.updateAlertStatus(row.alert_id, status, undefined, mutationRequestId(key)); row.status = status; clearMutationRequestId(key); notice.value = `Alerta actualizada: ${status}.`; dashboard.value = await api.dashboard(); }
   catch (cause) { error.value = errorMessage(cause, 'No se pudo actualizar la alerta'); }
 }
 
 async function updateQuality(row: QualityIssueRow, status: 'acknowledged' | 'resolved' | 'ignored') {
-  try { await api.updateQualityIssueStatus(row.issue_id, status); row.status = status; notice.value = `Issue actualizado: ${status}.`; dashboard.value = await api.dashboard(); }
+  const key = `quality:${row.issue_id}:${status}`;
+  try { await api.updateQualityIssueStatus(row.issue_id, status, undefined, mutationRequestId(key)); row.status = status; clearMutationRequestId(key); notice.value = `Issue actualizado: ${status}.`; dashboard.value = await api.dashboard(); }
   catch (cause) { error.value = errorMessage(cause, 'No se pudo actualizar el issue'); }
 }
 
@@ -406,6 +433,7 @@ async function signOut() {
 }
 
 function resetAdminState(options: { preservePasswordSetup?: boolean } = {}) {
+  mutationRequestIds.clear();
   session.value = null;
   passwordSetupRequired.value = options.preservePasswordSetup === true;
   newPassword.value = '';

@@ -34,4 +34,17 @@ describe('admin API client', () => {
     expect(token).not.toHaveBeenCalled();
     expect(fetcher).not.toHaveBeenCalled();
   });
+
+  it('keeps a caller-provided mutation id stable on the request', async () => {
+    const fetcher = vi.fn(async () => new Response(JSON.stringify({ status: 'resolved' }), { status: 200 }));
+    const api = createAdminApi('https://api.test', async () => 'secret', fetcher);
+    await api.reviewNormalization('00000000-0000-0000-0000-000000000001', {
+      decision: 'no_match',
+      reason: 'No corresponde',
+    }, 'review-12345678');
+    expect(fetcher).toHaveBeenCalledWith(
+      'https://api.test/api/v1/admin/normalization/00000000-0000-0000-0000-000000000001/review',
+      expect.objectContaining({ headers: expect.objectContaining({ 'x-request-id': 'review-12345678' }) }),
+    );
+  });
 });

@@ -27,6 +27,8 @@ placeholders, no credenciales funcionales.
 En el Worker, Wrangler toma los valores locales desde `.dev.vars` y los secretos
 de producción deben cargarse con `wrangler secret put`. No se deben trasladar
 secretos del servidor a un `.env` del frontend.
+Los bindings de rate limit se definen en `apps/api/wrangler.toml`, incluido
+`REVIEW_CAPTURE_RATE_LIMITER`; los cuatro deben existir en produccion.
 
 ## Qué es público y qué es secreto
 

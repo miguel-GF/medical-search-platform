@@ -61,10 +61,10 @@ export function createHandler(dependencies: Dependencies) {
       const rateLimitResponse = await enforceRateLimit(request, url, env, origin, requestId);
       if (rateLimitResponse) return rateLimitResponse;
       if (url.pathname === '/api/v1/search' && request.method === 'GET') {
-        return await searchResponse(url, dependencies.rpc, origin, requestId);
+        return await searchResponse(request, url, dependencies.rpc, env, origin, requestId);
       }
       if (url.pathname === '/api/v1/resolve' && request.method === 'POST') {
-        return await resolveResponse(request, dependencies.rpc, origin, requestId);
+        return await resolveResponse(request, dependencies.rpc, env, origin, requestId);
       }
       if (url.pathname === '/api/v1/resolve-batch' && request.method === 'POST') {
         return await resolveBatchResponse(request, dependencies.rpc, origin);
@@ -139,7 +139,7 @@ export function createWorkerHandler(env: Env) {
   return createHandler({ rpc: new SupabaseRpcClient(env) });
 }
 
-async function searchResponse(url: URL, rpc: RpcClient, origin: string, requestId: string): Promise<Response> {
+async function searchResponse(request: Request, url: URL, rpc: RpcClient, env: Env, origin: string, requestId: string): Promise<Response> {
   const query = (url.searchParams.get('q') ?? '').trim();
   if (!query || query.length > 200 || !/[\p{L}\p{N}]/u.test(query)) {
     return json({ error: { code: 'invalid_query', message: 'q is required and must be at most 200 characters' } }, 400, origin);
@@ -175,7 +175,7 @@ async function searchResponse(url: URL, rpc: RpcClient, origin: string, requestI
     p_location_id: locationId,
     p_limit: limit,
   });
-  await captureResolutionReview(resolution, rpc, domain, requestId);
+  await captureResolutionReview(resolution, rpc, domain, requestId, request, env);
   const publicResolution = isResolutionResponse(resolution) ? sanitizePublicResolution(resolution) : null;
   if (publicResolution && publicResolution.status !== 'resolved') {
     return json({ query, results: groupResolutionCandidates(publicResolution.candidates ?? []) }, 200, origin);
@@ -188,7 +188,7 @@ async function searchResponse(url: URL, rpc: RpcClient, origin: string, requestI
   return json({ query, results: groupResolutionCandidates(publicResolution?.candidates ?? []) }, 200, origin);
 }
 
-async function resolveResponse(request: Request, rpc: RpcClient, origin: string, requestId: string): Promise<Response> {
+async function resolveResponse(request: Request, rpc: RpcClient, env: Env, origin: string, requestId: string): Promise<Response> {
   const input = await readJsonObject(request, 16_384, origin);
   if (input instanceof Response) return input;
   const query = typeof input.text === 'string' ? input.text.trim() : '';
@@ -219,7 +219,7 @@ async function resolveResponse(request: Request, rpc: RpcClient, origin: string,
     p_location_id: locationId,
     p_limit: limit,
   });
-  await captureResolutionReview(payload, rpc, domain, requestId);
+  await captureResolutionReview(payload, rpc, domain, requestId, request, env);
   return json(sanitizePublicResolution(payload), 200, origin);
 }
 
@@ -228,8 +228,9 @@ async function resolveResponse(request: Request, rpc: RpcClient, origin: string,
  * outage must not turn a valid patient-facing resolution into a 5xx, while
  * the capture RPC itself remains service-role-only and deduplicated in SQL.
  */
-async function captureResolutionReview(payload: ResolutionResponse, rpc: RpcClient, domain: string, requestId: string): Promise<void> {
+async function captureResolutionReview(payload: ResolutionResponse, rpc: RpcClient, domain: string, requestId: string, request: Request, env: Env): Promise<void> {
   if (payload?.status !== 'ambiguous' && payload?.status !== 'no_match') return;
+  if (!await allowReviewCapture(request, env)) return;
   try {
     await rpc.call('api_record_resolution_review', {
       p_payload: payload,
@@ -243,6 +244,21 @@ async function captureResolutionReview(payload: ResolutionResponse, rpc: RpcClie
         error_tag: error instanceof SupabaseRpcError ? error.tag : 'REVIEW_CAPTURE',
       retryable: error instanceof SupabaseRpcError ? error.retryable : true,
     }));
+  }
+}
+
+async function allowReviewCapture(request: Request, env: Env): Promise<boolean> {
+  const limiter = env.REVIEW_CAPTURE_RATE_LIMITER;
+  if (!limiter) {
+    if (env.APP_ENV === 'production') return false;
+    return true;
+  }
+  try {
+    const result = await limiter.limit({ key: `review_capture:${rateLimitIdentity(request)}` });
+    return result.success;
+  } catch {
+    if (env.APP_ENV === 'production') return false;
+    return true;
   }
 }
 
@@ -326,8 +342,17 @@ function sanitizePublicPayload(value: unknown): unknown {
   if (!isRecord(value)) return value;
   return Object.fromEntries(Object.entries(value).map(([key, entry]) => [
     key,
-    key === 'source_url' || key === 'website_url' ? safeHttpUrl(entry) : sanitizePublicPayload(entry),
+    isUrlField(key) ? safeHttpUrl(entry) : sanitizePublicPayload(entry),
   ]));
+}
+
+function isUrlField(key: string): boolean {
+  const normalized = key.toLowerCase();
+  return normalized === 'url'
+    || normalized === 'uri'
+    || normalized === 'href'
+    || normalized.endsWith('_url')
+    || normalized.endsWith('_uri');
 }
 
 async function resolveBatchResponse(request: Request, rpc: RpcClient, origin: string): Promise<Response> {
@@ -1371,7 +1396,19 @@ async function enforceRateLimit(request: Request, url: URL, env: Env, origin: st
   const scope = rateLimitScope(url.pathname, request.method);
   if (!scope) return null;
   const limiter = rateLimiterForScope(scope, env);
-  if (!limiter) return null;
+  if (!limiter) {
+    if (env.APP_ENV !== 'production') return null;
+    return errorJson(
+      'rate_limit_unavailable',
+      'The service is temporarily unavailable.',
+      503,
+      origin,
+      requestId,
+      'API.SERVER.RATE_LIMIT_CONFIGURATION',
+      'high',
+      true,
+    );
+  }
   try {
     const result = await limiter.limit({ key: `${scope}:${rateLimitIdentity(request)}` });
     if (result.success) return null;
@@ -1391,7 +1428,6 @@ async function enforceRateLimit(request: Request, url: URL, env: Env, origin: st
     // In development a missing binding should not prevent local work. In
     // production, fail closed so a deployment without its abuse-control
     // binding cannot expose expensive or privileged routes without limits.
-    console.warn(JSON.stringify({ event: 'rate_limit_unavailable', request_id: requestId, scope }));
     if (env.APP_ENV === 'production') {
       return errorJson(
         'rate_limit_unavailable',
