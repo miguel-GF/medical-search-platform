@@ -161,6 +161,28 @@ describe('Pruevia API', () => {
     expect(call).not.toHaveBeenCalledWith('api_record_resolution_review', expect.anything(), expect.anything());
   });
 
+  it('also bounds public review captures across clients', async () => {
+    const resolution = {
+      query: 'perfil tiroideo',
+      normalized_query: 'perfil tiroideo',
+      engine_version: 'clinical-resolver-v6',
+      status: 'ambiguous',
+      candidates: [],
+    };
+    const call = vi.fn(async <T>(name: string): Promise<T> =>
+      (name === 'api_resolve_search' ? resolution : []) as T,
+    );
+    const reviewLimiter = { limit: vi.fn(async ({ key }: { key: string }) => ({ success: !key.endsWith(':global') })) };
+    const response = await createHandler({ rpc: { call: call as RpcClient['call'] } })(
+      new Request('https://api.test/api/v1/search?q=perfil%20tiroideo'),
+      { ...env, REVIEW_CAPTURE_RATE_LIMITER: reviewLimiter },
+    );
+    expect(response.status).toBe(200);
+    expect(reviewLimiter.limit).toHaveBeenCalledTimes(2);
+    expect(reviewLimiter.limit).toHaveBeenLastCalledWith({ key: 'review_capture:global' });
+    expect(call).not.toHaveBeenCalledWith('api_record_resolution_review', expect.anything(), expect.anything());
+  });
+
   it('fails closed in production when the allowed origin is not explicit HTTPS', async () => {
     const rpc = rpcWith([]);
     const response = await createHandler({ rpc })(

@@ -1,5 +1,5 @@
 import { SupabaseConfigurationError, SupabaseResponseError, SupabaseRpcError, SupabaseRpcClient, SupabaseTimeoutError } from './supabase.js';
-import type { AdminAlert, AdminCatalogItem, AdminNormalizationDetail, AdminNormalizationQueueRow, AdminQualityIssue, AdminUser, Env, PackageResolutionResponse, RateLimitBinding, ResolutionCandidate, ResolutionResponse, RpcClient, SearchRow } from './types.js';
+import type { AdminAlert, AdminCatalogItem, AdminNormalizationDetail, AdminNormalizationQueueRow, AdminQualityIssue, AdminUser, Env, OcrCorrection, PackageCandidate, PackageItem, PackageLocation, PackageOffer, PackageResolutionResponse, PackageSolution, RateLimitBinding, ResolutionCandidate, ResolutionResponse, RpcClient, SearchRow } from './types.js';
 import {
   buildPackageResolution,
   normalizeBatchRpcPayload,
@@ -254,8 +254,12 @@ async function allowReviewCapture(request: Request, env: Env): Promise<boolean> 
     return true;
   }
   try {
-    const result = await limiter.limit({ key: `review_capture:${rateLimitIdentity(request)}` });
-    return result.success;
+    const clientResult = await limiter.limit({ key: `review_capture:${rateLimitIdentity(request)}` });
+    if (!clientResult.success) return false;
+    // The per-client key stops one caller from flooding the queue. A second
+    // shared key also bounds a distributed botnet using the same binding.
+    const globalResult = await limiter.limit({ key: 'review_capture:global' });
+    return globalResult.success;
   } catch {
     if (env.APP_ENV === 'production') return false;
     return true;
@@ -325,16 +329,165 @@ function safePublicText(value: unknown, maxLength: number): string {
 }
 
 function sanitizePackageResolution(payload: PackageResolutionResponse): PackageResolutionResponse {
+  const items = Array.isArray(payload.items)
+    ? payload.items.slice(0, 30).map(sanitizePackageItem)
+    : [];
   return {
-    ...payload,
-    solutions: payload.solutions.map((solution) => ({
-      ...solution,
-      selected_offers: solution.selected_offers.map((offer) => ({
-        ...offer,
-        source_url: safeHttpUrl(offer.source_url),
-      })),
-    })),
+    query: safePublicText(payload.query, 4_000),
+    engine_version: safePublicText(payload.engine_version, 100),
+    objective: isPackageObjective(payload.objective) ? payload.objective : 'all_in_one',
+    package_status: isPackageStatus(payload.package_status) ? payload.package_status : 'no_match',
+    coverage_status: isCoverageStatus(payload.coverage_status) ? payload.coverage_status : 'none',
+    items,
+    ...(Array.isArray(payload.ocr_corrections)
+      ? { ocr_corrections: payload.ocr_corrections.slice(0, 30).map(sanitizePackageOcrCorrection).filter((correction): correction is NonNullable<PackageResolutionResponse['ocr_corrections']>[number] => correction !== null) }
+      : {}),
+    clarifications: Array.isArray(payload.clarifications)
+      ? payload.clarifications.slice(0, 30).map((clarification) => ({
+        index: safePackageIndex(clarification.index),
+        input: safePublicText(clarification.input, 200),
+        reason_code: safePublicText(clarification.reason_code, 100),
+        candidates: Array.isArray(clarification.candidates)
+          ? clarification.candidates.slice(0, 20).map(sanitizePackageCandidate).filter((candidate): candidate is PackageCandidate => candidate !== null)
+          : [],
+      }))
+      : [],
+    solutions: Array.isArray(payload.solutions) ? payload.solutions.slice(0, 20).map(sanitizePackageSolution) : [],
   };
+}
+
+function sanitizePackageItem(item: PackageItem): PackageItem {
+  const correction = sanitizeOcrCorrection(item.ocr_correction);
+  return {
+    index: safePackageIndex(item.index),
+    input: safePublicText(item.input, 200),
+    normalized_query: safePublicText(item.normalized_query, 200),
+    status: isPackageItemStatus(item.status) ? item.status : 'no_match',
+    candidates: Array.isArray(item.candidates)
+      ? item.candidates.slice(0, 20).map(sanitizePackageCandidate).filter((candidate): candidate is PackageCandidate => candidate !== null)
+      : [],
+    ...(item.reason_code ? { reason_code: safePublicText(item.reason_code, 100) } : {}),
+    ...(correction ? { ocr_correction: correction } : {}),
+  };
+}
+
+function sanitizePackageCandidate(candidate: PackageCandidate): PackageCandidate | null {
+  if (!isUuid(candidate.service_id)) return null;
+  return {
+    service_id: candidate.service_id,
+    display_name: safePublicText(candidate.display_name, 500),
+    matched_term: safePublicText(candidate.matched_term, 500),
+    term_source: safePublicText(candidate.term_source, 100),
+    confidence: clampUnit(numberValue(candidate.confidence) ?? 0),
+    resolution_status: candidate.resolution_status === 'resolved' ? 'resolved' : 'ambiguous',
+    match_method: safePublicText(candidate.match_method, 100),
+    // Resolver explanations can contain internal evidence and raw ingest data.
+    // They are for the authenticated Admin detail endpoint only.
+    explanation: {},
+  };
+}
+
+function sanitizeOcrCorrection(value: unknown): OcrCorrection | null {
+  if (!isRecord(value)) return null;
+  const correctionType = value.correction_type;
+  if (correctionType !== 'character_confusion' && correctionType !== 'spacing' && correctionType !== 'lexical_review') return null;
+  return {
+    suggested_text: safePublicText(value.suggested_text, 200),
+    correction_type: correctionType,
+    confidence: clampUnit(numberValue(value.confidence) ?? 0),
+    source_note: safePublicText(value.source_note, 200) || null,
+  };
+}
+
+function sanitizePackageOcrCorrection(value: unknown): NonNullable<PackageResolutionResponse['ocr_corrections']>[number] | null {
+  if (!isRecord(value)) return null;
+  const correction = sanitizeOcrCorrection(value);
+  if (!correction) return null;
+  return {
+    index: safePackageIndex(value.index),
+    input: safePublicText(value.input, 200),
+    ...correction,
+  };
+}
+
+function sanitizePackageSolution(solution: PackageSolution): PackageSolution {
+  return {
+    coverage_count: nonNegativeInteger(solution.coverage_count),
+    requested_count: nonNegativeInteger(solution.requested_count),
+    coverage_percent: Math.max(0, Math.min(100, numberValue(solution.coverage_percent) ?? 0)),
+    missing_item_indexes: Array.isArray(solution.missing_item_indexes)
+      ? solution.missing_item_indexes.slice(0, 30).map(safePackageIndex)
+      : [],
+    location_count: nonNegativeInteger(solution.location_count),
+    locations: Array.isArray(solution.locations)
+      ? solution.locations.slice(0, 20).map(sanitizePackageLocation).filter((location): location is PackageLocation => location !== null)
+      : [],
+    total_amount_minor: numberValue(solution.total_amount_minor),
+    currency: safePublicText(solution.currency, 3) || null,
+    requires_quote: solution.requires_quote === true,
+    distance_meters: numberValue(solution.distance_meters),
+    selected_offers: Array.isArray(solution.selected_offers)
+      ? solution.selected_offers.slice(0, 30).filter(isRecord).map(sanitizePackageOffer)
+      : [],
+  };
+}
+
+function sanitizePackageLocation(location: PackageLocation): PackageLocation | null {
+  const id = stringValue(location.id);
+  if (!id) return null;
+  return {
+    id: id.slice(0, 100),
+    name: safePublicText(location.name, 300),
+    provider_brand_id: stringValue(location.provider_brand_id)?.slice(0, 100) ?? '',
+    provider_name: safePublicText(location.provider_name, 300),
+    latitude: numberValue(location.latitude),
+    longitude: numberValue(location.longitude),
+    distance_meters: numberValue(location.distance_meters),
+  };
+}
+
+function sanitizePackageOffer(offer: Record<string, unknown>): Record<string, unknown> {
+  return {
+    item_index: safePackageIndex(offer.item_index),
+    item_id: stringValue(offer.item_id)?.slice(0, 100) ?? '',
+    offer_id: stringValue(offer.offer_id)?.slice(0, 100) ?? '',
+    provider_brand_id: stringValue(offer.provider_brand_id)?.slice(0, 100) ?? '',
+    provider_name: safePublicText(offer.provider_name, 300),
+    provider_location_id: stringValue(offer.provider_location_id)?.slice(0, 100) ?? '',
+    provider_location_name: safePublicText(offer.provider_location_name, 300),
+    amount_minor: numberValue(offer.amount_minor),
+    currency: safePublicText(offer.currency, 3) || null,
+    requires_quote: offer.requires_quote === true,
+    source_url: safeHttpUrl(offer.source_url),
+  };
+}
+
+function clampUnit(value: number): number { return Math.max(0, Math.min(1, value)); }
+
+function nonNegativeInteger(value: unknown): number {
+  const number = numberValue(value);
+  return number !== null && Number.isInteger(number) && number >= 0 ? number : 0;
+}
+
+function safePackageIndex(value: unknown): number {
+  const number = nonNegativeInteger(value);
+  return number <= 30 ? number : 0;
+}
+
+function isPackageObjective(value: unknown): value is PackageResolutionResponse['objective'] {
+  return value === 'all_in_one' || value === 'lowest_cost' || value === 'nearest' || value === 'balanced';
+}
+
+function isPackageStatus(value: unknown): value is PackageResolutionResponse['package_status'] {
+  return value === 'ready' || value === 'needs_clarification' || value === 'partial' || value === 'no_match';
+}
+
+function isCoverageStatus(value: unknown): value is PackageResolutionResponse['coverage_status'] {
+  return value === 'complete' || value === 'partial' || value === 'none';
+}
+
+function isPackageItemStatus(value: unknown): value is PackageItem['status'] {
+  return value === 'resolved' || value === 'ambiguous' || value === 'no_match';
 }
 
 function sanitizePublicPayload(value: unknown): unknown {
@@ -772,6 +925,7 @@ async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClien
       p_decision: body.decision,
       p_reviewer_user_id: user.id,
       p_reason: typeof body.reason === 'string' ? body.reason : null,
+      p_operation_request_id: requestId,
     }, { admin: true }), 200, origin);
   }
   const providerClaimRevokeMatch = url.pathname.match(/^\/api\/v1\/admin\/provider-claims\/([^/]+)\/revoke$/i);
@@ -786,6 +940,7 @@ async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClien
       p_claim_id: providerClaimRevokeMatch[1],
       p_reviewer_user_id: user.id,
       p_reason: body.reason,
+      p_operation_request_id: requestId,
     }, { admin: true }), 200, origin);
   }
   const providerChangeReviewMatch = url.pathname.match(/^\/api\/v1\/admin\/provider-change-requests\/([^/]+)\/review$/i);
@@ -804,6 +959,7 @@ async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClien
       p_decision: body.decision,
       p_reviewer_user_id: user.id,
       p_reason: typeof body.reason === 'string' ? body.reason : null,
+      p_operation_request_id: requestId,
     }, { admin: true }), 200, origin);
   }
   const resolveMatch = url.pathname.match(/^\/api\/v1\/admin\/normalization\/([^/]+)\/resolve$/i);

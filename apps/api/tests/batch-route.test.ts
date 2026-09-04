@@ -117,6 +117,30 @@ describe('POST /api/v1/resolve-batch', () => {
     }));
   });
 
+  it('does not expose resolver explanations in public batch responses', async () => {
+    const payload = {
+      ...rpcPayload,
+      items: [{
+        ...rpcPayload.items[0],
+        candidates: [{
+          ...rpcPayload.items[0].candidates[0],
+          explanation: { raw_ingest: 'patient text and internal evidence', token: 'secret' },
+        }],
+      }],
+    };
+    const response = await createHandler({ rpc: rpcWith(payload) })(new Request('https://api.test/api/v1/resolve-batch', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ items: ['BH'] }),
+    }), env);
+    expect(response.status).toBe(200);
+    const result = await response.json() as { items: Array<{ candidates: Array<{ explanation: Record<string, unknown> }> }>; clarifications: unknown[] };
+    expect(result.items[0].candidates[0].explanation).toEqual({});
+    expect(JSON.stringify(result)).not.toContain('raw_ingest');
+    expect(JSON.stringify(result)).not.toContain('secret');
+    expect(result.clarifications).toEqual([]);
+  });
+
   it('sanitizes source URLs in selected package offers', async () => {
     const payload = {
       ...rpcPayload,

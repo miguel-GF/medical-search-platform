@@ -105,7 +105,15 @@ async function establishMfa() {
   if (!supabase) return false;
   try {
   const assurance = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
-  if (assurance.error) { authError.value = 'No se pudo consultar el estado MFA.'; return false; }
+  if (assurance.error) {
+    // Fail closed: a session without a confirmed assurance level must never
+    // fall through to the administrative shell.
+    authError.value = 'No se pudo consultar el estado MFA.';
+    mfaPending.value = true;
+    mfaSetupRequired.value = false;
+    mfaFactorId.value = '';
+    return false;
+  }
   if (assurance.data.currentLevel === 'aal2') {
     mfaPending.value = false;
     mfaSetupRequired.value = false;
@@ -113,7 +121,15 @@ async function establishMfa() {
     return true;
   }
   const factors = await supabase.auth.mfa.listFactors();
-  if (factors.error) { authError.value = 'No se pudieron consultar los factores MFA.'; return false; }
+  if (factors.error) {
+    // Keep the authenticated session behind the MFA gate while Supabase is
+    // unavailable. The API independently requires aal2 as a second defense.
+    authError.value = 'No se pudieron consultar los factores MFA.';
+    mfaPending.value = true;
+    mfaSetupRequired.value = false;
+    mfaFactorId.value = '';
+    return false;
+  }
   const verified = factors.data.totp.find((factor) => factor.status === 'verified');
   if (!verified) {
     mfaPending.value = true;

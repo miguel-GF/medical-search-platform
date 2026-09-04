@@ -4,7 +4,7 @@
 
 begin;
 create extension if not exists pgtap with schema extensions;
-select extensions.plan(53);
+select extensions.plan(56);
 
 select extensions.has_table('identity', 'provider_claims', 'provider claims table exists');
 select extensions.has_table('identity', 'provider_memberships', 'provider memberships table exists');
@@ -137,10 +137,23 @@ select extensions.is(
     (select id from identity.provider_claims where provider_location_id = '00000000-0000-0000-0000-000000000803'),
     'approved',
     '00000000-0000-0000-0000-000000000899',
-    'Approved in test'
+    'Approved in test',
+    'provider-claim-0803'
   )->>'status'),
   'approved',
   'admin approval changes claim status'
+);
+
+select extensions.is(
+  (public.api_admin_review_provider_claim(
+    (select id from identity.provider_claims where provider_location_id = '00000000-0000-0000-0000-000000000803'),
+    'approved',
+    '00000000-0000-0000-0000-000000000899',
+    'Approved in test',
+    'provider-claim-0803'
+  )->>'status'),
+  'approved',
+  'replaying claim approval returns the committed result'
 );
 
 select extensions.is(
@@ -247,10 +260,23 @@ select extensions.is(
     (select id from identity.provider_change_requests order by created_at desc limit 1),
     'approved',
     '00000000-0000-0000-0000-000000000899',
-    'Profile evidence accepted'
+    'Profile evidence accepted',
+    'provider-change-0803'
   )->>'status'),
   'approved',
   'admin approval applies a profile change'
+);
+
+select extensions.is(
+  (public.api_admin_review_provider_change(
+    (select id from identity.provider_change_requests order by created_at desc limit 1),
+    'approved',
+    '00000000-0000-0000-0000-000000000899',
+    'Profile evidence accepted',
+    'provider-change-0803'
+  )->>'status'),
+  'approved',
+  'replaying profile approval returns the committed result'
 );
 
 select extensions.is(
@@ -277,10 +303,22 @@ select extensions.is(
   (public.api_admin_revoke_provider_claim(
     (select id from identity.provider_claims where provider_location_id = '00000000-0000-0000-0000-000000000803'),
     '00000000-0000-0000-0000-000000000899',
-    'Branch relationship ended'
+    'Branch relationship ended',
+    'provider-revoke-0803'
   )->>'status'),
   'revoked',
   'admin can revoke an approved claim with a reason'
+);
+
+select extensions.is(
+  (public.api_admin_revoke_provider_claim(
+    (select id from identity.provider_claims where provider_location_id = '00000000-0000-0000-0000-000000000803'),
+    '00000000-0000-0000-0000-000000000899',
+    'Branch relationship ended',
+    'provider-revoke-0803'
+  )->>'status'),
+  'revoked',
+  'replaying claim revocation returns the committed result'
 );
 
 select extensions.is(

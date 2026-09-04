@@ -11,7 +11,7 @@ select extensions.is(
    from pg_proc p
    join pg_namespace n on n.oid = p.pronamespace
    where n.nspname = 'public' and p.proname like 'api_admin_%'),
-  23,
+  26,
   'all internal admin RPCs are present in the expected surface'
 );
 
@@ -41,7 +41,7 @@ select extensions.is(
    join pg_namespace n on n.oid = p.pronamespace
    where n.nspname = 'public' and p.proname like 'api_admin_%'
      and has_function_privilege('service_role', p.oid, 'execute')),
-  23,
+  26,
   'service role can execute all admin RPCs'
 );
 
