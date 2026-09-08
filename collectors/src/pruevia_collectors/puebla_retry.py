@@ -13,11 +13,20 @@ import re
 import time
 from collections import Counter
 from pathlib import Path
+from math import isfinite
 from typing import Any, Mapping
 
-from .config import load_local_environment
-from .pipeline import CollectorRunner
-from .puebla_discovery import DISCOVERY_VERSION, PueblaSeed, _empty_summary, _summarize_run
+from .config import load_local_environment, require_local_private_host_mode
+from .pipeline import CollectorRunner, _safe_error_detail
+from .puebla_discovery import (
+    DISCOVERY_VERSION,
+    MAX_DISCOVERY_FIXTURE_BYTES,
+    MAX_DISCOVERY_DELAY_SECONDS,
+    MAX_HARD_PROVIDERS,
+    PueblaSeed,
+    _empty_summary,
+    _summarize_run,
+)
 from .providers.generic import GenericCrawlConfig, GenericProviderAdapter, GenericWebClient
 
 
@@ -27,8 +36,12 @@ PERMANENT_ERROR = re.compile(r"robots\.txt|private, loopback|unresolved|\b404\b|
 
 def _json(path: Path) -> object:
     try:
-        return json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as error:
+        with path.open("rb") as handle:
+            raw = handle.read(MAX_DISCOVERY_FIXTURE_BYTES + 1)
+        if len(raw) > MAX_DISCOVERY_FIXTURE_BYTES:
+            raise ValueError("discovery manifest exceeds the hard size limit")
+        return json.loads(raw.decode("utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as error:
         raise ValueError(f"invalid discovery manifest: {path}: {error}") from error
 
 
@@ -47,8 +60,8 @@ def is_retryable_provider(provider: Mapping[str, Any]) -> bool:
 def build_retry_seeds(manifest: Mapping[str, Any], *, max_providers: int) -> tuple[PueblaSeed, ...]:
     if manifest.get("version") != DISCOVERY_VERSION:
         raise ValueError("manifest version is not supported by this retry command")
-    if max_providers < 1:
-        raise ValueError("max_providers must be positive")
+    if not 1 <= max_providers <= MAX_HARD_PROVIDERS:
+        raise ValueError(f"max_providers must be between 1 and {MAX_HARD_PROVIDERS}")
     providers = manifest.get("providers")
     if not isinstance(providers, list):
         raise ValueError("manifest providers must be an array")
@@ -84,6 +97,9 @@ def retry_puebla_discovery(
     allow_private_hosts: bool = False,
     respect_robots: bool = True,
 ) -> dict[str, Any]:
+    require_local_private_host_mode(allow_private_hosts)
+    if not isinstance(delay_between_providers, (int, float)) or isinstance(delay_between_providers, bool) or not isfinite(float(delay_between_providers)) or not 0 <= delay_between_providers <= MAX_DISCOVERY_DELAY_SECONDS:
+        raise ValueError("delay_between_providers must be between 0 and 60")
     manifest_value = _json(Path(manifest_path))
     if not isinstance(manifest_value, Mapping):
         raise ValueError("discovery manifest must be an object")
@@ -111,7 +127,7 @@ def retry_puebla_discovery(
             )
             adapter = GenericProviderAdapter(config, client=client)
         except (ValueError, OSError) as error:
-            summaries.append(_empty_summary(seed, "blocked", str(error)))
+            summaries.append(_empty_summary(seed, "blocked", _safe_error_detail(error)))
             continue
         try:
             summary = CollectorRunner(root).run(adapter)
@@ -186,7 +202,7 @@ def main() -> int:
             respect_robots=not args.ignore_robots,
         )
     except (OSError, ValueError, json.JSONDecodeError) as error:
-        print(json.dumps({"status": "blocked", "error": str(error)}, ensure_ascii=False, indent=2))
+        print(json.dumps({"status": "blocked", "error": _safe_error_detail(error)}, ensure_ascii=False, indent=2))
         return 2
     print(json.dumps(result, ensure_ascii=False, indent=2))
     return 0 if result["status"] == "succeeded" else 2

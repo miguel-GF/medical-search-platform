@@ -14,21 +14,43 @@ Los archivos reales (`.env`, `.env.local`, `.dev.vars`) están ignorados por Git
 nunca deben contenerse en un commit. Los valores de ejemplo son nombres y
 placeholders, no credenciales funcionales.
 
+Si una credencial aparece en un archivo local, aunque este ignorado, trátala
+como expuesta: revócala y genera una nueva en el proveedor antes de volver a
+usar el entorno. El repositorio no conserva copias de respaldo de esos
+secretos; usa un gestor de secretos o las variables protegidas de CI.
+
 ## Aplicaciones y herramientas
 
 | Proyecto | Ejemplo versionado | Variables | Archivo local real |
 | --- | --- | --- | --- |
 | API Cloudflare Worker | `apps/api/.dev.vars.example` | Supabase (publishable/secret), entorno, timeout, CORS, OCR y administradores | `apps/api/.dev.vars` |
-| Admin Vue | `apps/admin/.env.example` | `VITE_API_URL`, `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY` | `apps/admin/.env.local` |
+| Admin Vue | `apps/admin/.env.example` | `VITE_API_URL`, `VITE_API_ALLOWED_HOSTS` (obligatoria en produccion), `VITE_SUPABASE_URL`, `VITE_SUPABASE_ALLOWED_HOSTS` (obligatoria en produccion), `VITE_SUPABASE_PUBLISHABLE_KEY` | `apps/admin/.env.local` |
 | Patient Flutter/PWA | `apps/patient/.env.example` | `API_BASE_URL` | Flutter usa `--dart-define` (no carga `.env` por sí solo) |
 | OCR FastAPI | `apps/ocr-service/.env.example` | token, motor, límites y puerto | `apps/ocr-service/.env` |
 | Collectors Python | `collectors/.env.example` | DENUE, LOINC y DSN opcional de publicación | `collectors/.env` |
 
+Para Patient, los builds profile/release deben recibir `API_ALLOWED_HOSTS` con
+el hostname exacto del Worker junto con `API_BASE_URL`; el cliente rechaza
+origenes no declarados antes de enviar texto o imagenes. El build web debe
+generar tambien `build/web/_headers` con
+`apps/patient/tool/render_web_headers.dart`; la CSP queda limitada a esos
+hosts y no a cualquier HTTPS.
+
 En el Worker, Wrangler toma los valores locales desde `.dev.vars` y los secretos
 de producción deben cargarse con `wrangler secret put`. No se deben trasladar
 secretos del servidor a un `.env` del frontend.
+`APP_ENV` debe declararse siempre: `development` o `test` solo para entornos
+locales/pruebas; cualquier valor ausente o desconocido se trata como entorno
+seguro y hace fallar el Worker si falta un origen HTTPS explícito o un binding
+de rate limit.
 Los bindings de rate limit se definen en `apps/api/wrangler.toml`, incluido
 `REVIEW_CAPTURE_RATE_LIMITER`; los cuatro deben existir en produccion.
+
+La configuracion iOS `Release` usa firma manual `Apple Distribution` y no puede
+caer en una identidad de desarrollo. El pipeline debe proporcionar
+`PRUEVIA_IOS_TEAM_ID` y `PRUEVIA_IOS_PROVISIONING_PROFILE` como ajustes de build
+protegidos (junto con el certificado/perfil efimeros); nunca los guardes en el
+repositorio ni en un bundle de la app.
 
 ## Qué es público y qué es secreto
 

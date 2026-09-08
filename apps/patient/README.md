@@ -9,6 +9,10 @@ flutter pub get
 flutter run -d web-server --web-port 8080 --dart-define=API_BASE_URL=http://localhost:8787
 ```
 
+Los builds profile/release requieren tambien `API_ALLOWED_HOSTS` con el
+hostname exacto del Worker; esto evita enviar imagenes clinicas a un host
+arbitrario por una configuracion equivocada.
+
 `API_BASE_URL` debe apuntar al Worker/API desplegado. La búsqueda pública no
 requiere autenticación. El botón **Acceso para proveedores** es secundario y
 no convierte la pantalla inicial en un registro.
@@ -29,5 +33,6 @@ variable, pero el valor se inyecta en compilación con `--dart-define`.
 ```text
 flutter analyze
 flutter test
-flutter build web --release --dart-define=API_BASE_URL=https://api.example
+flutter build web --release --dart-define=API_BASE_URL=https://api.example --dart-define=API_ALLOWED_HOSTS=api.example
+dart run tool/render_web_headers.dart --output build/web/_headers --allowed-hosts api.example
 ```

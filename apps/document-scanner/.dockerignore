@@ -1,0 +1,8 @@
+# The scanner image only needs its manifest and source package. Keep local
+# environments, credentials, caches and fixtures out of every build context.
+*
+!pyproject.toml
+!constraints.txt
+!README.md
+!src/
+!src/**

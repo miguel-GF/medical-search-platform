@@ -11,8 +11,10 @@ from uuid import UUID
 
 try:
     from .loinc_release import INDEX_MANIFEST_SUFFIX, rank_candidates
+    from .artifact_io import read_json_file
 except ImportError:  # pragma: no cover - supports direct script execution
     from loinc_release import INDEX_MANIFEST_SUFFIX, rank_candidates
+    from artifact_io import read_json_file
 
 
 def _manifest_path(index_path: Path) -> Path:
@@ -32,8 +34,8 @@ def _load_manifest(index_path: Path) -> dict:
     if not path.exists():
         raise ValueError(f"LOINC index manifest is required: {path}")
     try:
-        manifest = json.loads(path.read_text(encoding="utf-8"))
-    except json.JSONDecodeError as error:
+        manifest = read_json_file(path)
+    except (OSError, UnicodeError, json.JSONDecodeError, ValueError) as error:
         raise ValueError(f"Invalid LOINC index manifest: {path}") from error
     if not isinstance(manifest, dict):
         raise ValueError("LOINC index manifest must be an object")
@@ -48,8 +50,8 @@ def _load_manifest(index_path: Path) -> dict:
 
 def load_queue(path: Path) -> dict:
     try:
-        payload = json.loads(path.read_text(encoding="utf-8"))
-    except json.JSONDecodeError as error:
+        payload = read_json_file(path, max_bytes=8 * 1024 * 1024)
+    except (OSError, UnicodeError, json.JSONDecodeError, ValueError) as error:
         raise ValueError(f"Invalid LOINC review queue JSON: {path}") from error
     if not isinstance(payload, dict):
         raise ValueError("LOINC review queue root must be an object")

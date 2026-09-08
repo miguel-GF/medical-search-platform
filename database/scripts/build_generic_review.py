@@ -18,6 +18,11 @@ from pathlib import Path
 from typing import Any, Iterable, Mapping
 from urllib.parse import urlparse
 
+try:
+    from .artifact_io import iter_jsonl, read_json_file, safe_http_url
+except ImportError:  # pragma: no cover - direct script execution
+    from artifact_io import iter_jsonl, read_json_file, safe_http_url
+
 
 ALLOWED_CLASSIFICATIONS = {
     "reject_noise",
@@ -43,8 +48,8 @@ def normalize(value: str) -> str:
 
 def _read_json(path: Path) -> Any:
     try:
-        return json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as error:
+        return read_json_file(path, max_bytes=8 * 1024 * 1024)
+    except (OSError, ValueError, UnicodeError) as error:
         raise ValueError(f"invalid JSON file: {path}: {error}") from error
 
 
@@ -58,19 +63,11 @@ def _iter_raw_records(artifact_root: Path) -> Iterable[dict[str, Any]]:
         raise ValueError(f"artifact root has no raw_records.jsonl files: {artifact_root}")
     for path in paths:
         try:
-            lines = path.read_text(encoding="utf-8").splitlines()
-        except OSError as error:
+            rows = iter_jsonl(path)
+            for value in rows:
+                yield value
+        except (OSError, ValueError, UnicodeError) as error:
             raise ValueError(f"cannot read artifact: {path}: {error}") from error
-        for line_number, line in enumerate(lines, 1):
-            if not line.strip():
-                continue
-            try:
-                value = json.loads(line)
-            except json.JSONDecodeError as error:
-                raise ValueError(f"invalid JSON at {path}:{line_number}: {error}") from error
-            if not isinstance(value, dict):
-                raise ValueError(f"raw record must be an object at {path}:{line_number}")
-            yield value
 
 
 def _load_decisions(value: object) -> dict[tuple[str, str], dict[str, Any]]:
@@ -137,7 +134,7 @@ def _offer_row(raw: Mapping[str, Any]) -> dict[str, Any]:
     label = str(payload.get("provider_display_name") or "").strip()
     if not label:
         raise ValueError(f"offer has no provider_display_name: {raw.get('external_record_id')}")
-    evidence_url = str(payload.get("evidence_page_url") or raw.get("source_url") or "").strip()
+    evidence_url = safe_http_url(payload.get("evidence_page_url") or raw.get("source_url"))
     if not evidence_url:
         raise ValueError(f"offer has no evidence URL: {raw.get('external_record_id')}")
     source_key = str(raw.get("source_key") or "").strip()

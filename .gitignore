@@ -31,3 +31,7 @@ database/artifacts/loinc/
 __pycache__/
 *.py[cod]
 *.egg-info/
+
+# Crash/heap artifacts can contain request payloads or signing material.
+*.hprof
+*.dump

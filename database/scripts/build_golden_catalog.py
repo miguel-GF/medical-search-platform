@@ -14,6 +14,11 @@ import unicodedata
 from pathlib import Path
 from uuid import NAMESPACE_URL, uuid5
 
+try:
+    from .artifact_io import read_json_file, read_jsonl
+except ImportError:  # pragma: no cover - direct script execution
+    from artifact_io import read_json_file, read_jsonl
+
 BRANDS = {
     "ruiz_puebla": {"brand_key": "ruiz", "brand_name": "Laboratorios Ruiz", "slug": "laboratorios-ruiz"},
     "salud_digna_puebla": {"brand_key": "salud_digna", "brand_name": "Salud Digna", "slug": "salud-digna"},
@@ -32,7 +37,7 @@ def stable_id(kind: str, key: str) -> str:
 
 
 def read_rows(path: Path) -> list[dict]:
-    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line]
+    return read_jsonl(path)
 
 
 def service_type(department_slug: str, title: str) -> tuple[str, str]:
@@ -64,7 +69,7 @@ def build(
     salud_digna_rows = read_rows(salud_digna_path) if salud_digna_path else []
     approved_rows: list[dict] = []
     if approved_mappings_path:
-        approved_data = json.loads(approved_mappings_path.read_text(encoding="utf-8"))
+        approved_data = read_json_file(approved_mappings_path, max_bytes=8 * 1024 * 1024)
         approved_rows = approved_data.get("mappings", []) if isinstance(approved_data, dict) else approved_data
         if not isinstance(approved_rows, list):
             raise ValueError("approved mappings must contain a mappings list")
@@ -85,7 +90,9 @@ def build(
 
     ruiz_allowed_ids: set[str] | None = None
     if baseline_fixture_path:
-        baseline = json.loads(baseline_fixture_path.read_text(encoding="utf-8"))
+        baseline = read_json_file(baseline_fixture_path, max_bytes=8 * 1024 * 1024)
+        if not isinstance(baseline, dict):
+            raise ValueError("baseline fixture must be a JSON object")
         ruiz_allowed_ids = {
             str(mapping.get("external_record_id"))
             for mapping in baseline.get("mappings", [])

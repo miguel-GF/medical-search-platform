@@ -7,36 +7,84 @@ on:
     paths:
       - 'apps/api/**'
 
+# Deployment uses explicit Cloudflare/Supabase secrets; it does not need a
+# write-capable repository token. This limits blast radius for action changes.
+permissions:
+  contents: read
+
 jobs:
   deploy:
+    # A push to an unprotected branch must never receive deployment
+    # credentials. Configure branch protection (and preferably a required
+    # environment approval) before enabling this workflow.
+    # DEV deployments are allowed only from the protected develop branch.
+    # A manual dispatch must not turn a protected production branch into a
+    # cross-environment deployment by accident.
+    if: github.ref_protected == true && github.ref == 'refs/heads/develop'
+    environment:
+      name: development
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: apps/api
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: '22'
           cache: npm
           cache-dependency-path: apps/api/package-lock.json
       - run: npm ci
+      - run: npm audit --audit-level=high
       - run: npm run typecheck
       - run: npm test
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.11'
+      - uses: supabase/setup-cli@ab058987d8d6c725971f6cf9d0b5c98467e30bd1 # v1.7.1
+        with:
+          version: 2.116.0
+      - name: Verify coupled Supabase schema before publishing Worker
+        working-directory: database
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
+        run: |
+          if [ -z "$SUPABASE_ACCESS_TOKEN" ] || [ -z "$SUPABASE_PROJECT_REF" ]; then
+            echo "::error::Supabase migration gate is not configured"
+            exit 1
+          fi
+          supabase link --project-ref "$SUPABASE_PROJECT_REF"
+          python scripts/check_migration_order.py
+          python scripts/check_runtime_schema.py
       - name: Configure Worker secrets
         env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           # Prefer the current Supabase key names while retaining a migration
           # fallback until the repository secrets are renamed.
           SUPABASE_PUBLISHABLE_KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY || secrets.SUPABASE_ANON_KEY }}
           SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY || secrets.SUPABASE_SERVICE_ROLE_KEY }}
           ADMIN_USER_IDS: ${{ secrets.ADMIN_USER_IDS }}
+          ALLOWED_ORIGIN: ${{ secrets.ALLOWED_ORIGIN }}
         run: |
-          printf '%s' "$SUPABASE_URL" | npx wrangler secret put SUPABASE_URL
-          printf '%s' "$SUPABASE_PUBLISHABLE_KEY" | npx wrangler secret put SUPABASE_PUBLISHABLE_KEY
-          printf '%s' "$SUPABASE_SECRET_KEY" | npx wrangler secret put SUPABASE_SECRET_KEY
-          printf '%s' "$ADMIN_USER_IDS" | npx wrangler secret put ADMIN_USER_IDS
-      - run: npx wrangler deploy
+          for name in CLOUDFLARE_API_TOKEN CLOUDFLARE_ACCOUNT_ID SUPABASE_URL SUPABASE_PUBLISHABLE_KEY SUPABASE_SECRET_KEY ADMIN_USER_IDS ALLOWED_ORIGIN; do
+            if [ -z "${!name}" ]; then
+              echo "::error::Missing required deployment configuration: $name"
+              exit 1
+            fi
+          done
+          # Use the lockfile-installed CLI only; never let npx download a
+          # mutable package while Cloudflare credentials are in the process.
+          printf '%s' "$SUPABASE_URL" | npm exec --offline -- wrangler secret put SUPABASE_URL
+          printf '%s' "$SUPABASE_PUBLISHABLE_KEY" | npm exec --offline -- wrangler secret put SUPABASE_PUBLISHABLE_KEY
+          printf '%s' "$SUPABASE_SECRET_KEY" | npm exec --offline -- wrangler secret put SUPABASE_SECRET_KEY
+          printf '%s' "$ADMIN_USER_IDS" | npm exec --offline -- wrangler secret put ADMIN_USER_IDS
+          printf '%s' "$ALLOWED_ORIGIN" | npm exec --offline -- wrangler secret put ALLOWED_ORIGIN
+      - run: npm exec --offline -- wrangler deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

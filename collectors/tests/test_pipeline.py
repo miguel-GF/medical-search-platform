@@ -1,8 +1,10 @@
 import json
 from pathlib import Path
+import pytest
 
 from pruevia_collectors.models import Observation, SourceRecord, SourceSpec
-from pruevia_collectors.pipeline import CollectorRunner
+from pruevia_collectors import pipeline
+from pruevia_collectors.pipeline import CollectorRunner, MAX_ARTIFACT_LINE_BYTES
 
 
 class StaticCollector:
@@ -89,6 +91,152 @@ def test_adapter_failure_after_partial_data_is_quarantined(tmp_path: Path):
     summary = CollectorRunner(tmp_path).run(FailingCollector())
     assert summary.status == "quarantined"
     assert "collector failure" in summary.errors[0]
+
+
+def test_runner_rejects_oversized_payloads_and_redacts_error_urls(tmp_path: Path):
+    source = SourceSpec("fixture", "Fixture", "manual")
+    oversized = SourceRecord(
+        source_key="fixture",
+        record_type="provider_location",
+        payload={"description": "x" * (512 * 1024)},
+    )
+
+    class FailingCollector:
+        def __init__(self):
+            self.source = source
+
+        def collect(self):
+            yield oversized
+            raise RuntimeError("upstream https://example.test/?token=do-not-persist")
+
+    summary = CollectorRunner(tmp_path).run(FailingCollector())
+    assert summary.records_rejected == 1
+    assert any("safety limit" in error for error in summary.errors)
+    assert all("do-not-persist" not in error for error in summary.errors)
+
+
+def test_runner_rejects_oversized_observation_values(tmp_path: Path):
+    source = SourceSpec("fixture", "Fixture", "manual")
+    oversized = SourceRecord(
+        source_key="fixture",
+        record_type="provider_location",
+        payload={"name": "ok"},
+        observations=(
+            Observation(
+                entity_type="provider_location",
+                attribute_name="notes",
+                observed_value="x" * (512 * 1024),
+            ),
+        ),
+    )
+    summary = CollectorRunner(tmp_path).run(StaticCollector(source, [oversized]))
+
+    assert summary.records_rejected == 1
+    assert any("observation payload exceeds" in error for error in summary.errors)
+    assert (Path(summary.artifact_directory) / "observations.jsonl").read_text(encoding="utf-8") == ""
+
+
+def test_quarantine_reader_rejects_oversized_lines_before_buffering(tmp_path: Path):
+    path = tmp_path / "observations.jsonl"
+    path.write_bytes(b"x" * (MAX_ARTIFACT_LINE_BYTES + 1))
+
+    try:
+        CollectorRunner._mark_observations_quarantined(path)
+    except ValueError as error:
+        assert "exceeds the safety limit" in str(error)
+    else:
+        raise AssertionError("oversized quarantine line was accepted")
+
+
+def test_runner_halts_before_artifact_disk_exhaustion(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+    monkeypatch.setattr(pipeline, "MAX_ARTIFACT_BYTES", 10)
+    source = SourceSpec("fixture", "Fixture", "manual")
+
+    summary = CollectorRunner(tmp_path).run(StaticCollector(source, [record("fixture", "1")]))
+
+    assert summary.status == "failed"
+    assert summary.records_valid == 0
+    assert any("artifact exceeds safety limit" in error for error in summary.errors)
+
+
+def test_runner_removes_signed_query_material_from_source_urls(tmp_path: Path):
+    source = SourceSpec("fixture", "Fixture", "manual")
+    unsafe = SourceRecord(
+        source_key="fixture",
+        record_type="provider_location",
+        source_url="https://example.test/source?access_token=do-not-persist#fragment",
+        payload={"name": "ok"},
+    )
+    summary = CollectorRunner(tmp_path).run(StaticCollector(source, [unsafe]))
+    raw = json.loads((Path(summary.artifact_directory) / "raw_records.jsonl").read_text(encoding="utf-8"))
+    assert raw["source_url"] == "https://example.test/source"
+    assert "do-not-persist" not in json.dumps(raw)
+
+
+def test_runner_removes_signed_query_material_from_endpoint_metadata(tmp_path: Path):
+    source = SourceSpec(
+        "fixture",
+        "Fixture",
+        "manual",
+        endpoint_url="https://example.test/catalog?session=do-not-persist#fragment",
+    )
+    summary = CollectorRunner(tmp_path).run(StaticCollector(source, []))
+    manifest = json.loads((Path(summary.artifact_directory) / "run_manifest.json").read_text(encoding="utf-8"))
+    assert manifest["endpoint_url"] == "https://example.test/catalog"
+    assert "do-not-persist" not in json.dumps(manifest)
+
+
+def test_invalid_record_artifacts_redact_exception_urls(tmp_path: Path):
+    source = SourceSpec("fixture", "Fixture", "manual")
+
+    class InvalidRecord:
+        source_key = "fixture"
+        record_type = "provider_location"
+        payload = {"name": "ok"}
+
+        @property
+        def observations(self):
+            raise ValueError("parser rejected https://example.test/?access_token=do-not-persist")
+
+    summary = CollectorRunner(tmp_path).run(StaticCollector(source, [InvalidRecord()]))
+    raw = json.loads((Path(summary.artifact_directory) / "raw_records.jsonl").read_text(encoding="utf-8"))
+    assert raw["parse_status"] == "invalid"
+    assert "do-not-persist" not in json.dumps(raw)
+    assert "[REDACTED]" in raw["error_detail"]
+
+
+def test_invalid_record_artifacts_redact_unrecognized_query_material(tmp_path: Path):
+    source = SourceSpec("fixture", "Fixture", "manual")
+
+    class InvalidRecord:
+        source_key = "fixture"
+        record_type = "provider_location"
+        payload = {"name": "ok"}
+
+        @property
+        def observations(self):
+            raise ValueError("parser rejected https://example.test/?session=private-value")
+
+    summary = CollectorRunner(tmp_path).run(StaticCollector(source, [InvalidRecord()]))
+    raw = json.loads((Path(summary.artifact_directory) / "raw_records.jsonl").read_text(encoding="utf-8"))
+    assert "private-value" not in json.dumps(raw)
+    assert "[REDACTED]" in raw["error_detail"]
+
+
+def test_runner_bounds_reported_error_count(tmp_path: Path):
+    source = SourceSpec("fixture", "Fixture", "manual")
+
+    class NoisyCollector:
+        def __init__(self):
+            self.source = source
+            self.errors = [f"error-{index}" for index in range(500)]
+
+        def collect(self):
+            return iter(())
+
+    summary = CollectorRunner(tmp_path).run(NoisyCollector())
+    assert len(summary.errors) == 101
+    assert summary.errors[-1] == "additional errors omitted"
 
 
 def test_last_success_uses_manifest_time_not_uuid_order(tmp_path: Path):

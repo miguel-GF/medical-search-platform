@@ -18,4 +18,18 @@ void main() {
       isTrue,
     );
   });
+
+  test('consent can be declined and revoked with identifier rotation', () async {
+    SharedPreferences.setMockInitialValues({});
+    final preferences = await PatientPreferences.load();
+    await preferences.completeOnboarding(consent: false);
+    expect(preferences.onboardingComplete, isTrue);
+    expect(preferences.consentGiven, isFalse);
+    final before = preferences.anonymousId;
+    await preferences.completeOnboarding(consent: true);
+    expect(preferences.consentGiven, isTrue);
+    await preferences.revokeConsent();
+    expect(preferences.consentGiven, isFalse);
+    expect(preferences.anonymousId, isNot(before));
+  });
 }

@@ -2,8 +2,11 @@ import json
 from pathlib import Path
 
 import httpx
+import pytest
 
 from pruevia_collectors.providers.ruiz import (
+    MAX_RUIZ_DEPARTMENTS,
+    MAX_RUIZ_RECORDS,
     RuizAdapter,
     RuizClient,
     RuizDepartment,
@@ -133,3 +136,14 @@ def test_ruiz_client_rejects_external_redirect_before_requesting_target():
     finally:
         client._client.close()
     assert calls == ["https://example.test/general-home"]
+
+
+def test_ruiz_limits_reject_unsafe_configuration():
+    with pytest.raises(ValueError, match="HTTPS origin"):
+        RuizClient(base_url="http://example.test")
+    with pytest.raises(ValueError, match="max_records"):
+        RuizAdapter(object(), max_records=MAX_RUIZ_RECORDS + 1)
+    with pytest.raises(ValueError, match="department catalog"):
+        from pruevia_collectors.providers.ruiz import _decode_departments
+
+        _decode_departments([{"id": index, "title": "x", "url": "x"} for index in range(MAX_RUIZ_DEPARTMENTS + 1)])

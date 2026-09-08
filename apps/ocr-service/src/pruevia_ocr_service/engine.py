@@ -1,11 +1,32 @@
 from __future__ import annotations
 
+import hashlib
 import re
 from dataclasses import dataclass
 from difflib import SequenceMatcher
+from itertools import islice
+from pathlib import Path
 from typing import Any, Protocol
 
 from PIL import Image, ImageEnhance, ImageFilter, ImageOps
+
+from .config import settings
+
+
+MAX_OCR_LINES = 500
+MAX_OCR_LINE_CHARS = 500
+# Keep the post-filter response bounded too. A recognizer can legally return
+# many short fragments joined by conjunctions; splitting those fragments must
+# not create an unbounded list after the detector cap has already been met.
+MAX_FORMATTED_LINES = 500
+REQUIRED_RAPIDOCR_MODELS = {
+    # Hashes come from RapidOCR 3.9.2's pinned default_models.yaml. Keep this
+    # map in source so a writable/misconfigured model directory cannot cause
+    # RapidOCR to fetch and execute an unreviewed ONNX file.
+    "PP-OCRv6_det_small.onnx": "090f04abcd9d9a7498bc4ebf677e4cb9bdce1fe4197ddb7e529f1ef44e1ff94f",
+    "ch_ppocr_mobile_v2.0_cls_mobile.onnx": "e47acedf663230f8863ff1ab0e64dd2d82b838fceb5957146dab185a89d6215c",
+    "PP-OCRv6_rec_small.onnx": "6f327246b50388f3c176ae304bd95767ea6dc0c9ae92153ef8cbe210b3c14884",
+}
 
 
 @dataclass(frozen=True)
@@ -37,15 +58,27 @@ class EngineUnavailableError(RuntimeError):
 class RapidOcrEngine:
     name = "rapidocr"
 
-    def __init__(self, min_line_confidence: float = 0.30) -> None:
+    def __init__(self, min_line_confidence: float = 0.30, model_root_dir: str | None = None) -> None:
         try:
             import numpy as np
             from rapidocr import RapidOCR
         except ImportError as exc:
             raise EngineUnavailableError("rapidocr and onnxruntime are required") from exc
         self._np = np
+        model_root = Path(model_root_dir or settings.model_root_dir)
+        if (
+            not model_root.is_absolute()
+            or model_root.is_symlink()
+            or not model_root.is_dir()
+            or any(not _verified_model(model_root / filename, digest)
+                   for filename, digest in REQUIRED_RAPIDOCR_MODELS.items())
+        ):
+            # RapidOCR otherwise downloads missing models with requests during
+            # initialization. A production request must never trigger an
+            # unreviewed network fetch or write into site-packages.
+            raise EngineUnavailableError("verified RapidOCR models are not bundled")
         try:
-            self._engine = RapidOCR()
+            self._engine = RapidOCR(params={"Global.model_root_dir": str(model_root)})
         except Exception as exc:
             raise EngineUnavailableError("rapidocr models could not be initialized") from exc
         self._min_line_confidence = min_line_confidence
@@ -81,10 +114,23 @@ def preprocess_image(image: Image.Image) -> Image.Image:
     return gray.filter(ImageFilter.MedianFilter(size=3))
 
 
-def build_engine(engine_name: str, min_line_confidence: float) -> OcrEngine:
+def build_engine(engine_name: str, min_line_confidence: float, model_root_dir: str | None = None) -> OcrEngine:
     if engine_name == "rapidocr":
-        return RapidOcrEngine(min_line_confidence=min_line_confidence)
+        return RapidOcrEngine(min_line_confidence=min_line_confidence, model_root_dir=model_root_dir)
     raise EngineUnavailableError(f"unsupported OCR_ENGINE: {engine_name}")
+
+
+def _verified_model(path: Path, expected_sha256: str) -> bool:
+    if path.is_symlink() or not path.is_file():
+        return False
+    digest = hashlib.sha256()
+    try:
+        with path.open("rb") as model:
+            for chunk in iter(lambda: model.read(1024 * 1024), b""):
+                digest.update(chunk)
+    except OSError:
+        return False
+    return digest.hexdigest() == expected_sha256
 
 
 def format_order_lines(lines: list[RecognizedLine]) -> list[RecognizedLine]:
@@ -124,19 +170,21 @@ def format_order_lines(lines: list[RecognizedLine]) -> list[RecognizedLine]:
     selected = lines[marker_index + 1:] if marker_index is not None else lines
     output: list[RecognizedLine] = []
     for line in _merge_lines(selected):
+        if len(output) >= MAX_FORMATTED_LINES:
+            break
         if not line.text.strip():
             continue
         fragment = _extract_study_fragment(line)
         if fragment is not None:
-            output.extend(_split_compound_study_line(_trim_study_metadata_suffix(fragment)))
+            output.extend(_split_compound_study_line(_trim_study_metadata_suffix(fragment))[:MAX_FORMATTED_LINES - len(output)])
         elif (
             not metadata.search(line.text.strip())
             and not metadata_extra.search(line.text.strip())
             and not metadata_english.search(line.text.strip())
             and not narrative_english.search(line.text.strip())
         ):
-            output.extend(_split_compound_study_line(_trim_study_metadata_suffix(line)))
-    return output
+            output.extend(_split_compound_study_line(_trim_study_metadata_suffix(line))[:MAX_FORMATTED_LINES - len(output)])
+    return output[:MAX_FORMATTED_LINES]
 
 
 def _split_compound_study_line(line: RecognizedLine) -> list[RecognizedLine]:
@@ -147,7 +195,10 @@ def _split_compound_study_line(line: RecognizedLine) -> list[RecognizedLine]:
     per-study contract while preserving the original uncertain tokens. The
     clinical resolver, not this OCR layer, decides whether each token exists.
     """
-    parts = [part.strip() for part in re.split(r"\s+(?:e|y)\s+", line.text, flags=re.IGNORECASE) if part.strip()]
+    # Limit splitting itself, not just the final list, so a pathological OCR
+    # line containing thousands of conjunctions cannot allocate thousands of
+    # intermediate strings before the output cap is applied.
+    parts = [part.strip() for part in re.split(r"\s+(?:e|y)\s+", line.text, maxsplit=MAX_FORMATTED_LINES - 1, flags=re.IGNORECASE) if part.strip()]
     if len(parts) < 2 or any(len(part) < 2 for part in parts):
         return [line]
     return [RecognizedLine(text=part, confidence=line.confidence, box=line.box) for part in parts]
@@ -263,12 +314,12 @@ def _result_lines(result: Any, min_line_confidence: float) -> list[RecognizedLin
     raw_texts = getattr(result, "txts", None)
     raw_scores = getattr(result, "scores", None)
     raw_boxes = getattr(result, "boxes", None)
-    texts = list(raw_texts) if raw_texts is not None else []
-    scores = list(raw_scores) if raw_scores is not None else []
-    boxes = list(raw_boxes) if raw_boxes is not None else []
+    texts = list(islice(raw_texts, MAX_OCR_LINES)) if raw_texts is not None else []
+    scores = list(islice(raw_scores, MAX_OCR_LINES)) if raw_scores is not None else []
+    boxes = list(islice(raw_boxes, MAX_OCR_LINES)) if raw_boxes is not None else []
     lines: list[RecognizedLine] = []
     for index, text in enumerate(texts):
-        value = str(text).strip()
+        value = str(text).strip()[:MAX_OCR_LINE_CHARS]
         confidence = float(scores[index]) if index < len(scores) else 0.0
         if not value or confidence < min_line_confidence:
             continue

@@ -3,6 +3,10 @@ from pathlib import Path
 import httpx
 
 from pruevia_collectors.providers.chopo import (
+    MAX_CHOPO_ATTEMPTS,
+    MAX_CHOPO_PAGES,
+    MAX_CHOPO_PRODUCTS,
+    ChopoAdapter,
     ChopoClient,
     ChopoPage,
     ChopoListingParser,
@@ -11,6 +15,7 @@ from pruevia_collectors.providers.chopo import (
     parse_chopo_product,
     parse_price_text,
 )
+import pytest
 
 
 def fixture_page() -> ChopoPage:
@@ -78,6 +83,16 @@ def test_chopo_parser_does_not_capture_search_autocomplete_items():
     parser = ChopoListingParser(page_url="https://www.chopo.com.mx/puebla/estudios")
     parser.feed('<dd><div class="product-name">AUTOCOMPLETE</div></dd>')
     assert parser.finish() == []
+
+
+def test_chopo_parser_bounds_hostile_tag_fanout_and_capture_text():
+    parser = ChopoListingParser(page_url="https://www.chopo.com.mx/puebla/estudios")
+    parser.feed("<a class='catalog-grid-item__name-link' href='/puebla/x'>" + "A" * 20_000 + "</a>")
+    for index in range(3_000):
+        parser.feed(f"<a class='catalog-grid-item__name-link' href='/puebla/{index}'>x</a>")
+    records = parser.finish()
+    assert len(records) <= 2_000
+    assert all(len(record["name"]) <= 4_000 for record in records)
 
 
 def test_chopo_client_reuses_client_and_retries_transient_statuses():
@@ -155,3 +170,15 @@ def test_chopo_client_rejects_external_redirect_before_requesting_target():
     finally:
         client._client = None
     assert fake.calls == ["https://www.chopo.com.mx/puebla/estudios"]
+
+
+def test_chopo_runtime_limits_reject_unbounded_configuration():
+    with pytest.raises(ValueError, match="between 1 and 5"):
+        ChopoClient(max_attempts=MAX_CHOPO_ATTEMPTS + 1)
+    with pytest.raises(ValueError, match="between 1 and 500"):
+        ChopoAdapter(ChopoClient(client=object()), max_pages=MAX_CHOPO_PAGES + 1)
+    urls = [f"https://www.chopo.com.mx/puebla/{index}" for index in range(MAX_CHOPO_PRODUCTS + 1)]
+    with pytest.raises(ValueError, match="too many"):
+        from pruevia_collectors.providers.chopo import ChopoProductAdapter
+
+        ChopoProductAdapter(ChopoClient(client=object()), urls)

@@ -2,7 +2,7 @@ import hashlib
 import json
 from pathlib import Path
 
-from database.scripts.classify_denue_candidates import classify, normalize, repair_text
+from database.scripts.classify_denue_candidates import classify, classify_record, normalize, repair_text
 
 
 def _artifact(root: Path, rows: list[dict]) -> Path:
@@ -89,3 +89,15 @@ def test_classification_filters_and_deduplicates_by_identity_and_coordinates(tmp
     assert result["candidates"][0]["source_record_ids"] == ["1", "2"]
     assert result["candidates"][0]["brand_match"]["brand_key"] == "salud_digna"
 
+
+def test_classification_does_not_propagate_signed_source_urls():
+    row = {
+        "external_record_id": "1",
+        "source_url": "https://example.test/ficha?access_token=secret#fragment",
+        "payload": _row("1", "Laboratorio", "Laboratorios medicos y de diagnostico del sector privado"),
+    }
+
+    result = classify_record(row)
+
+    assert result["source_url"] == "https://example.test/ficha"
+    assert "secret" not in json.dumps(result)

@@ -10,6 +10,11 @@ import sys
 from pathlib import Path
 from uuid import UUID
 
+try:  # Package import for tests; direct import for the CLI entrypoint.
+    from .artifact_io import MAX_FIXTURE_BYTES, read_json_file
+except ImportError:  # pragma: no cover - exercised by direct script invocation
+    from artifact_io import MAX_FIXTURE_BYTES, read_json_file
+
 
 LOINC_SYSTEM = "http://loinc.org"
 LOINC_CODE_RE = re.compile(r"^[A-Za-z0-9]{1,12}-[0-9]$")
@@ -54,7 +59,7 @@ def _validate_version(value: object) -> str:
 
 
 def load_fixture(path: Path) -> dict:
-    payload = json.loads(path.read_text(encoding="utf-8"))
+    payload = read_json_file(path, max_bytes=MAX_FIXTURE_BYTES)
     if not isinstance(payload, dict):
         raise ValueError("LOINC fixture root must be an object")
     version = _validate_version(payload.get("loinc_version"))
@@ -106,8 +111,8 @@ def _validate_index_manifest(
             raise ValueError(f"LOINC index manifest is required: {manifest_path}")
         return
     try:
-        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    except json.JSONDecodeError as error:
+        manifest = read_json_file(manifest_path)
+    except (OSError, UnicodeError, json.JSONDecodeError, ValueError) as error:
         raise ValueError(f"Invalid LOINC index manifest: {manifest_path}") from error
     if not isinstance(manifest, dict):
         raise ValueError("LOINC index manifest must be an object")

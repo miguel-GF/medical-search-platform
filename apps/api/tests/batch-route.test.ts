@@ -6,6 +6,7 @@ const env: Env = {
   SUPABASE_URL: 'https://example.supabase.co',
   SUPABASE_ANON_KEY: 'anon',
   SUPABASE_SERVICE_ROLE_KEY: 'service',
+  APP_ENV: 'test',
   ADMIN_USER_IDS: '',
   API_VERSION: 'v1',
 };

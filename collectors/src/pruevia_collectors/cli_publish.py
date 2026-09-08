@@ -32,7 +32,13 @@ def load_summary(artifact_directory: Path) -> tuple[SourceSpec, RunSummary]:
     manifest_path = artifact_directory / "run_manifest.json"
     if not manifest_path.exists():
         raise FileNotFoundError(f"run manifest not found: {manifest_path}")
-    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    with manifest_path.open("rb") as handle:
+        manifest_bytes = handle.read(256 * 1024 + 1)
+    if len(manifest_bytes) > 256 * 1024:
+        raise ValueError("run manifest exceeds the safety limit")
+    manifest = json.loads(manifest_bytes.decode("utf-8"))
+    if not isinstance(manifest, dict):
+        raise ValueError("run manifest must be a JSON object")
     source = SourceSpec(
         source_key=manifest["source_key"],
         name=manifest["source_name"],
@@ -63,10 +69,8 @@ def artifact_counts(artifact_directory: Path) -> dict[str, int]:
     observations_path = artifact_directory / "observations.jsonl"
     if not raw_path.exists() or not observations_path.exists():
         raise FileNotFoundError(f"collector artifacts are incomplete: {artifact_directory}")
-    raw_rows = [json.loads(line) for line in raw_path.read_text(encoding="utf-8").splitlines() if line]
-    observation_rows = [
-        json.loads(line) for line in observations_path.read_text(encoding="utf-8").splitlines() if line
-    ]
+    raw_rows = IngestPublisher._read_jsonl(raw_path)
+    observation_rows = IngestPublisher._read_jsonl(observations_path)
     return {
         "raw_records": len(raw_rows),
         "parsed_raw_records": sum(row.get("parse_status") == "parsed" for row in raw_rows),

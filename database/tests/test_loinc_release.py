@@ -11,7 +11,11 @@ import pytest
 
 from database.scripts.loinc_release import (
     INDEX_FIELDS,
+    MAX_ENV_FILE_BYTES,
+    _RejectRedirectHandler,
+    _copy_bounded,
     _credentials,
+    _load_env_file,
     _validate_download_url,
     _validate_sha256,
     _validate_version,
@@ -99,6 +103,16 @@ def test_release_metadata_rejects_path_traversal_and_untrusted_download_hosts():
         _validate_sha256("not-a-digest")
 
 
+def test_loinc_requests_reject_redirects_and_downloads_are_bounded():
+    with pytest.raises(ValueError, match="redirect rejected"):
+        _RejectRedirectHandler().redirect_request(None, "https://evil.example", "GET", {})
+
+    destination = io.BytesIO()
+    with pytest.raises(ValueError, match="exceeds the safety limit"):
+        _copy_bounded(io.BytesIO(b"0123456789"), destination, maximum=4)
+    assert destination.getvalue() == b""
+
+
 def test_credentials_load_from_local_env_without_overriding_process_values(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ):
@@ -121,6 +135,13 @@ def test_credentials_load_from_local_env_without_overriding_process_values(
         "from-process",
         "process-secret",
     )
+
+
+def test_env_file_is_bounded(tmp_path: Path) -> None:
+    env_file = tmp_path / ".env"
+    env_file.write_bytes(b"X" * (MAX_ENV_FILE_BYTES + 1))
+    with pytest.raises(ValueError, match="env file exceeds"):
+        _load_env_file(env_file)
 
 
 def test_extract_loinc_table_from_nested_archive(tmp_path: Path):

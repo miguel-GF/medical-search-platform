@@ -12,11 +12,16 @@ import json
 from pathlib import Path
 from typing import Any, Mapping
 
+try:  # Package import for tests; direct import for the CLI entrypoint.
+    from .artifact_io import MAX_FIXTURE_BYTES, read_json_file
+except ImportError:  # pragma: no cover - exercised by direct script invocation
+    from artifact_io import MAX_FIXTURE_BYTES, read_json_file
+
 
 def _json(path: Path) -> Mapping[str, Any]:
     try:
-        value = json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as error:
+        value = read_json_file(path, max_bytes=MAX_FIXTURE_BYTES)
+    except (OSError, UnicodeError, json.JSONDecodeError, ValueError) as error:
         raise ValueError(f"invalid coverage JSON: {path}: {error}") from error
     if not isinstance(value, Mapping):
         raise ValueError(f"coverage JSON must be an object: {path}")

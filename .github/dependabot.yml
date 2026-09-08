@@ -1,0 +1,37 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+  - package-ecosystem: npm
+    directory: /apps/api
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+  - package-ecosystem: npm
+    directory: /apps/admin
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+  - package-ecosystem: pip
+    directory: /collectors
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+  - package-ecosystem: pip
+    directory: /apps/ocr-service
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+  - package-ecosystem: pip
+    directory: /apps/document-scanner
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+  - package-ecosystem: pub
+    directory: /apps/patient
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10

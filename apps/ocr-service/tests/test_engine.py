@@ -1,6 +1,17 @@
 from pruevia_ocr_service.engine import RecognizedLine, format_order_lines
 
 
+def test_rapidocr_fails_closed_when_verified_models_are_missing(tmp_path):
+    from pruevia_ocr_service.engine import EngineUnavailableError, RapidOcrEngine
+
+    try:
+        RapidOcrEngine(model_root_dir=str(tmp_path))
+    except EngineUnavailableError as exc:
+        assert str(exc) == "verified RapidOCR models are not bundled"
+    else:
+        raise AssertionError("RapidOCR must not download models at request time")
+
+
 def test_format_order_lines_extracts_study_after_fuzzy_laboratory_label():
     lines = [
         RecognizedLine(
@@ -57,3 +68,24 @@ def test_format_order_lines_trims_metadata_fused_after_imaging_study():
     ])
 
     assert [line.text for line in result] == ["MRI Brain without contrast"]
+
+
+def test_result_lines_bounds_adversarial_engine_output():
+    from pruevia_ocr_service.engine import _result_lines
+
+    class Result:
+        txts = (f"Glucosa {index}" for index in range(10_000))
+        scores = (0.9 for _ in range(10_000))
+        boxes = None
+
+    lines = _result_lines(Result(), 0.3)
+    assert len(lines) == 500
+    assert all(len(line.text) <= 500 for line in lines)
+
+
+def test_format_order_lines_caps_conjunction_amplification():
+    # One detector row can contain many conjunctions. The formatter must not
+    # turn that into an unbounded response list.
+    value = " e ".join(f"estudio{index}" for index in range(10_000))
+    result = format_order_lines([RecognizedLine(value, 0.9)])
+    assert len(result) == 500

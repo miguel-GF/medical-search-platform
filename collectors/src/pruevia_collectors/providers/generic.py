@@ -22,11 +22,12 @@ from html.parser import HTMLParser
 from math import isfinite
 from typing import Any, Iterable, Mapping, Sequence
 from urllib.robotparser import RobotFileParser
-from urllib.parse import urldefrag, urljoin, urlparse
+from urllib.parse import urldefrag, urljoin, urlparse, urlunparse
 
 import httpx
 
 from ..models import Observation, SourceRecord, SourceSpec
+from .public_transport import PublicAddressTransport, public_address
 
 
 MAX_DEFAULT_RESPONSE_BYTES = 2_000_000
@@ -36,7 +37,20 @@ MAX_HARD_DEPTH = 5
 MAX_HARD_DELAY_SECONDS = 60.0
 MAX_HARD_ATTEMPTS = 5
 MAX_HARD_REDIRECTS = 10
+MAX_HARD_SEEDS = 20
 MAX_DEFAULT_REDIRECTS = 5
+MAX_RESPONSE_SECONDS = 60.0
+MAX_PARSER_TAGS = 100_000
+MAX_PARSER_TEXT_CHARS = 500_000
+MAX_PARSER_HEADINGS = 500
+MAX_PARSER_LINKS = 2_000
+MAX_PARSER_JSONLD_BLOCKS = 100
+MAX_PARSER_JSONLD_CHARS = 256_000
+MAX_PARSER_META_ENTRIES = 100
+MAX_PARSER_META_VALUE_CHARS = 2_000
+MAX_PARSER_FRAGMENT_CHARS = 4_000
+MAX_JSONLD_NODES = 5_000
+MAX_JSONLD_DEPTH = 64
 DEFAULT_USER_AGENT = "PrueviaGenericCollector/0.1 (+https://pruevia.local/collector)"
 GENERIC_PARSER_VERSION = "0.1.0"
 PRICE_RE = re.compile(
@@ -106,6 +120,8 @@ class GenericCrawlConfig:
     def __post_init__(self) -> None:
         if not self.seed_urls:
             raise ValueError("at least one seed URL is required")
+        if len(self.seed_urls) > MAX_HARD_SEEDS:
+            raise ValueError(f"seed_urls must contain at most {MAX_HARD_SEEDS} URLs")
         if not 1 <= self.max_pages <= MAX_HARD_PAGES or not 0 <= self.max_depth <= MAX_HARD_DEPTH:
             raise ValueError("max_pages must be between 1 and 500; max_depth must be between 0 and 5")
         if not 0 <= self.delay_seconds <= MAX_HARD_DELAY_SECONDS:
@@ -203,12 +219,19 @@ def _safe_link(value: object | None, *, fallback: str) -> str:
     """Keep candidate links navigable without emitting script/data URLs."""
 
     raw = str(value or "").strip()
-    if not raw:
-        return fallback
+    fallback_url = ""
     try:
-        return _canonical_url(raw, base_url=fallback)
+        fallback_parsed = urlparse(_canonical_url(fallback))
+        fallback_url = urlunparse((fallback_parsed.scheme, fallback_parsed.netloc, fallback_parsed.path, fallback_parsed.params, "", ""))
     except ValueError:
-        return fallback
+        pass
+    if not raw:
+        return fallback_url
+    try:
+        parsed = urlparse(_canonical_url(raw, base_url=fallback))
+        return urlunparse((parsed.scheme, parsed.netloc, parsed.path, parsed.params, "", ""))
+    except ValueError:
+        return fallback_url
 
 
 def _public_host(host: str) -> bool:
@@ -216,16 +239,42 @@ def _public_host(host: str) -> bool:
         addresses = {info[4][0] for info in socket.getaddrinfo(host, 443, type=socket.SOCK_STREAM)}
     except (OSError, socket.gaierror):
         return False
-    return bool(addresses) and all(
-        not (
-            ipaddress.ip_address(address).is_private
-            or ipaddress.ip_address(address).is_loopback
-            or ipaddress.ip_address(address).is_link_local
-            or ipaddress.ip_address(address).is_reserved
-            or ipaddress.ip_address(address).is_multicast
-        )
-        for address in addresses
-    )
+    # ``is_global`` also rejects non-routable classes that are easy to miss
+    # with a denylist (CGNAT, unspecified and documentation ranges).
+    return bool(addresses) and all(public_address(address) for address in addresses)
+
+
+def _bounded_response_bytes(response: httpx.Response, maximum: int) -> bytes:
+    """Read decoded bytes incrementally and stop before an oversized body is buffered."""
+
+    content_length = response.headers.get("content-length", "").strip()
+    if content_length:
+        try:
+            declared_size = int(content_length)
+        except ValueError as error:
+            raise ValueError("generic response has an invalid Content-Length") from error
+        if declared_size < 0:
+            raise ValueError("generic response has an invalid Content-Length")
+        if declared_size > maximum:
+            raise ValueError("generic page exceeds max_response_bytes")
+    # Do not let a compressed response expand inside httpx before our byte cap
+    # is applied. Requests explicitly advertise identity encoding.
+    if response.headers.get('content-encoding', 'identity').strip().lower() not in ('', 'identity'):
+        raise ValueError('generic crawler refuses compressed responses')
+    started = time.monotonic()
+    content = bytearray()
+    for chunk in response.iter_bytes():
+        # httpx's read timeout is an inactivity timeout. A hostile origin can
+        # still drip one byte just before each read timeout indefinitely, so
+        # enforce a hard wall-clock budget for the complete response too.
+        if time.monotonic() - started > MAX_RESPONSE_SECONDS:
+            raise ValueError("generic page exceeded max_response_seconds")
+        if len(content) + len(chunk) > maximum:
+            raise ValueError("generic page exceeds max_response_bytes")
+        content.extend(chunk)
+    if time.monotonic() - started > MAX_RESPONSE_SECONDS:
+        raise ValueError("generic page exceeded max_response_seconds")
+    return bytes(content)
 
 
 class GenericWebClient:
@@ -243,6 +292,8 @@ class GenericWebClient:
         respect_robots: bool = True,
         client: httpx.Client | None = None,
     ) -> None:
+        if len(seed_urls) > MAX_HARD_SEEDS:
+            raise ValueError(f"at most {MAX_HARD_SEEDS} seed URLs are allowed")
         seeds = tuple(_canonical_url(url) for url in seed_urls if url.strip())
         if not seeds:
             raise ValueError("at least one valid seed URL is required")
@@ -266,7 +317,10 @@ class GenericWebClient:
         self._robots: RobotFileParser | None = None
         self._robots_loaded = False
         self._owns_client = client is None
-        self._client = client or httpx.Client(timeout=timeout_seconds, follow_redirects=True)
+        self._client = client or httpx.Client(
+            timeout=timeout_seconds, follow_redirects=False, trust_env=False,
+            transport=None if allow_private_hosts else PublicAddressTransport(),
+        )
 
     def close(self) -> None:
         if self._owns_client:
@@ -285,30 +339,34 @@ class GenericWebClient:
                     # Validate each hop before issuing the next request.  Using
                     # httpx's automatic redirects would contact an external or
                     # private target before the final URL could be checked.
-                    response = self._client.get(
+                    # Re-check immediately before the connection to narrow the
+                    # DNS-rebinding window. The connected peer is checked too.
+                    self._validate_host(current)
+                    with self._client.stream(
+                        "GET",
                         current,
-                        headers={"Accept": "text/html,application/xhtml+xml", "User-Agent": DEFAULT_USER_AGENT},
+                        headers={"Accept": "text/html,application/xhtml+xml", "User-Agent": DEFAULT_USER_AGENT, "Accept-Encoding": "identity"},
                         follow_redirects=False,
-                    )
-                    if 300 <= response.status_code < 400:
-                        if redirect_count >= self.max_redirects:
-                            raise ValueError("generic crawler exceeded max_redirects")
-                        location = response.headers.get("location", "").strip()
-                        if not location:
-                            raise ValueError("generic redirect has no Location header")
-                        current = _canonical_url(location, base_url=current)
-                        self._validate_host(current)
-                        continue
-                    response.raise_for_status()
-                    resolved = _canonical_url(str(response.url))
-                    self._validate_host(resolved)
-                    content_type = response.headers.get("content-type", "text/html").casefold()
-                    if "html" not in content_type and "text/" not in content_type:
-                        raise ValueError(f"unsupported generic page content type: {content_type}")
-                    raw = response.content
-                    if len(raw) > self.max_response_bytes:
-                        raise ValueError("generic page exceeds max_response_bytes")
-                    return GenericPage(url=resolved, html=decode_html(raw, response.encoding), content_type=content_type)
+                    ) as response:
+                        self._validate_peer(response)
+                        if 300 <= response.status_code < 400:
+                            if redirect_count >= self.max_redirects:
+                                raise ValueError("generic crawler exceeded max_redirects")
+                            location = response.headers.get("location", "").strip()
+                            if not location:
+                                raise ValueError("generic redirect has no Location header")
+                            current = _canonical_url(location, base_url=current)
+                            self._validate_host(current)
+                            continue
+                        response.raise_for_status()
+                        resolved = _canonical_url(str(response.url))
+                        self._validate_host(resolved)
+                        content_type = response.headers.get("content-type", "text/html").casefold()
+                        if "html" not in content_type and "text/" not in content_type:
+                            raise ValueError(f"unsupported generic page content type: {content_type}")
+                        encoding = response.encoding
+                        raw = _bounded_response_bytes(response, self.max_response_bytes)
+                    return GenericPage(url=resolved, html=decode_html(raw, encoding), content_type=content_type)
                 raise ValueError("generic crawler exceeded max_redirects")
             except (httpx.HTTPStatusError, httpx.RequestError, ValueError) as error:
                 last_error = error
@@ -327,41 +385,45 @@ class GenericWebClient:
             parsed = urlparse(self.seed_urls[0])
             try:
                 robots_url = f"{parsed.scheme}://{parsed.netloc}/robots.txt"
-                response = self._fetch_robots(robots_url)
-                if response.status_code in {404, 410}:
+                status_code, response_text = self._fetch_robots(robots_url)
+                if status_code in {404, 410}:
                     self._robots = None
-                elif response.status_code >= 400:
+                elif status_code >= 400:
                     self._robots = RobotFileParser()
                     self._robots.parse(["User-agent: *", "Disallow: /"])
                 else:
                     self._robots = RobotFileParser(robots_url)
-                    self._robots.parse(response.text.splitlines())
+                    self._robots.parse(response_text.splitlines())
             except (httpx.RequestError, UnicodeError):
                 self._robots = RobotFileParser()
                 self._robots.parse(["User-agent: *", "Disallow: /"])
             self._robots_loaded = True
         return self._robots is None or self._robots.can_fetch(DEFAULT_USER_AGENT, url)
 
-    def _fetch_robots(self, robots_url: str) -> httpx.Response:
+    def _fetch_robots(self, robots_url: str) -> tuple[int, str]:
         """Fetch robots.txt without allowing an unchecked redirect hop."""
 
         current = _canonical_url(robots_url)
         self._validate_host(current)
         for redirect_count in range(self.max_redirects + 1):
-            response = self._client.get(
-                current,
-                headers={"Accept": "text/plain", "User-Agent": DEFAULT_USER_AGENT},
-                follow_redirects=False,
-            )
-            if not 300 <= response.status_code < 400:
-                return response
-            if redirect_count >= self.max_redirects:
-                raise ValueError("generic robots.txt exceeded max_redirects")
-            location = response.headers.get("location", "").strip()
-            if not location:
-                raise ValueError("generic robots.txt redirect has no Location header")
-            current = _canonical_url(location, base_url=current)
             self._validate_host(current)
+            with self._client.stream(
+                "GET",
+                current,
+                headers={"Accept": "text/plain", "User-Agent": DEFAULT_USER_AGENT, "Accept-Encoding": "identity"},
+                follow_redirects=False,
+            ) as response:
+                self._validate_peer(response)
+                if not 300 <= response.status_code < 400:
+                    raw = _bounded_response_bytes(response, self.max_response_bytes) if response.status_code < 400 else b""
+                    return response.status_code, decode_html(raw, response.encoding)
+                if redirect_count >= self.max_redirects:
+                    raise ValueError("generic robots.txt exceeded max_redirects")
+                location = response.headers.get("location", "").strip()
+                if not location:
+                    raise ValueError("generic robots.txt redirect has no Location header")
+                current = _canonical_url(location, base_url=current)
+                self._validate_host(current)
         raise ValueError("generic robots.txt exceeded max_redirects")
 
     def _validate_host(self, url: str) -> None:
@@ -370,6 +432,25 @@ class GenericWebClient:
             raise ValueError("generic crawler refuses redirects or links outside the seed host allowlist")
         if not self.allow_private_hosts and not _public_host(host):
             raise ValueError("generic crawler refuses private, loopback, reserved or unresolved hosts")
+
+    def _validate_peer(self, response: httpx.Response) -> None:
+        """Reject a non-global connected peer when the transport exposes it."""
+
+        if self.allow_private_hosts:
+            return
+        stream = response.extensions.get("network_stream")
+        get_extra_info = getattr(stream, "get_extra_info", None)
+        if not callable(get_extra_info):
+            return
+        peer = get_extra_info("server_addr")
+        address = peer[0] if isinstance(peer, tuple) and peer else peer
+        if address:
+            try:
+                is_global = ipaddress.ip_address(str(address).split("%", 1)[0]).is_global
+            except ValueError as error:
+                raise ValueError("generic crawler could not validate the connected peer") from error
+            if not is_global:
+                raise ValueError("generic crawler refuses a non-global connected peer")
 
 
 class _DocumentParser(HTMLParser):
@@ -384,8 +465,21 @@ class _DocumentParser(HTMLParser):
         self._heading: tuple[str, list[str]] | None = None
         self._jsonld: list[str] | None = None
         self._anchor: tuple[str, list[str]] | None = None
+        self._tag_count = 0
+        self._text_chars = 0
+        self._jsonld_chars = 0
+        self._budget_exhausted = False
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if self._budget_exhausted:
+            return
+        self._tag_count += 1
+        if self._tag_count > MAX_PARSER_TAGS:
+            # HTMLParser still receives the remaining input, but the handler
+            # becomes a no-op. This prevents a hostile page with millions of
+            # tiny tags from growing parser-side lists without bound.
+            self._budget_exhausted = True
+            return
         attributes = {key.casefold(): value or "" for key, value in attrs}
         tag = tag.casefold()
         if tag in {"script", "style", "noscript", "template"}:
@@ -397,21 +491,24 @@ class _DocumentParser(HTMLParser):
             return
         if tag == "meta":
             key = attributes.get("property") or attributes.get("name")
-            if key and attributes.get("content"):
-                self.meta[key.casefold()] = attributes["content"].strip()
+            if key and attributes.get("content") and len(self.meta) < MAX_PARSER_META_ENTRIES:
+                self.meta[key.casefold()[:200]] = attributes["content"].strip()[:MAX_PARSER_META_VALUE_CHARS]
         elif tag in {"h1", "h2", "h3", "h4"}:
-            self._heading = (tag, [])
+            self._heading = (tag, []) if len(self.headings) < MAX_PARSER_HEADINGS else None
         elif tag == "a" and attributes.get("href"):
-            self._anchor = (attributes["href"], [])
+            self._anchor = (attributes["href"][:2_000], []) if len(self.links) < MAX_PARSER_LINKS else None
 
     def handle_endtag(self, tag: str) -> None:
+        if self._budget_exhausted:
+            return
         tag = tag.casefold()
         if tag == "script":
             if self._jsonld is not None:
                 content = "".join(self._jsonld).strip()
-                if content:
+                if content and len(self.jsonld) < MAX_PARSER_JSONLD_BLOCKS:
                     self.jsonld.append(content)
                 self._jsonld = None
+                self._jsonld_chars = 0
             self._skip_depth = max(0, self._skip_depth - 1)
             return
         if tag in {"style", "noscript", "template"}:
@@ -421,25 +518,37 @@ class _DocumentParser(HTMLParser):
             return
         if self._heading and tag == self._heading[0]:
             text = _clean_text(" ".join(self._heading[1]))
-            if text:
+            if text and len(self.headings) < MAX_PARSER_HEADINGS:
                 self.headings.append(text)
             self._heading = None
         if self._anchor and tag == "a":
-            self.links.append(self._anchor[0])
+            if len(self.links) < MAX_PARSER_LINKS:
+                self.links.append(self._anchor[0])
             self._anchor = None
 
     def handle_data(self, data: str) -> None:
+        if self._budget_exhausted:
+            return
         if self._jsonld is not None:
-            self._jsonld.append(data)
+            remaining = MAX_PARSER_JSONLD_CHARS - self._jsonld_chars
+            if remaining > 0:
+                piece = data[:remaining]
+                self._jsonld.append(piece)
+                self._jsonld_chars += len(piece)
             return
         if self._skip_depth:
             return
         if data.strip():
-            self.text_parts.append(data)
+            remaining = MAX_PARSER_TEXT_CHARS - self._text_chars
+            if remaining <= 0:
+                return
+            piece = data[:remaining]
+            self.text_parts.append(piece)
+            self._text_chars += len(piece)
             if self._heading:
-                self._heading[1].append(data)
+                self._heading[1].append(piece[:MAX_PARSER_FRAGMENT_CHARS])
             if self._anchor:
-                self._anchor[1].append(data)
+                self._anchor[1].append(piece[:MAX_PARSER_FRAGMENT_CHARS])
 
 
 def _clean_text(value: object) -> str:
@@ -447,14 +556,23 @@ def _clean_text(value: object) -> str:
 
 
 def _json_nodes(value: Any) -> Iterable[dict[str, Any]]:
-    if isinstance(value, list):
-        for item in value:
-            yield from _json_nodes(item)
-    elif isinstance(value, dict):
-        graph = value.get("@graph")
-        if isinstance(graph, list):
-            yield from _json_nodes(graph)
-        yield value
+    # JSON-LD is supplied by an external provider page. Walk it iteratively
+    # with explicit budgets so deeply nested arrays or a very large @graph
+    # cannot exhaust Python's recursion limit or grow the node list forever.
+    pending: list[tuple[Any, int]] = [(value, 0)]
+    emitted = 0
+    while pending and emitted < MAX_JSONLD_NODES:
+        current, depth = pending.pop()
+        if depth > MAX_JSONLD_DEPTH:
+            continue
+        if isinstance(current, list):
+            pending.extend((item, depth + 1) for item in reversed(current[:MAX_JSONLD_NODES]))
+        elif isinstance(current, dict):
+            graph = current.get("@graph")
+            if isinstance(graph, list):
+                pending.extend((item, depth + 1) for item in reversed(graph[:MAX_JSONLD_NODES]))
+            yield current
+            emitted += 1
 
 
 def _types(node: Mapping[str, Any]) -> set[str]:
@@ -741,16 +859,17 @@ def _source_key_for_host(host: str) -> str:
 def _location_record(source_key: str, page: GenericPage, provider_name: str, location: Mapping[str, Any]) -> SourceRecord:
     name = _first_text(location.get("name"), provider_name)
     external_id = _stable_id("location", page.url, name)
+    page_url = _safe_link(page.url, fallback=page.url)
     payload = {
         "provider_display_name": name,
         "provider_legal_name": _first_text(location.get("legal_name")),
         "provider_external_id": external_id,
-        "location_url": _safe_link(_first_text(location.get("url"), page.url), fallback=page.url),
+        "location_url": _safe_link(_first_text(location.get("url"), page.url), fallback=page_url),
         "address": dict(location.get("address") or {}),
         "coordinates": location.get("coordinates"),
         "phone": _first_text(location.get("phone")),
         "evidence_method": "jsonld_local_business",
-        "evidence_page_url": page.url,
+        "evidence_page_url": page_url,
     }
     observations = [
         Observation(
@@ -762,7 +881,7 @@ def _location_record(source_key: str, page: GenericPage, provider_name: str, loc
         Observation(
             entity_type="provider_location",
             attribute_name="source_url",
-            observed_value=page.url,
+            observed_value=page_url,
             confidence=_evidence_confidence(payload["evidence_method"]),
         ),
     ]
@@ -780,7 +899,7 @@ def _location_record(source_key: str, page: GenericPage, provider_name: str, loc
         source_key=source_key,
         record_type="provider_location_discovered",
         external_record_id=external_id,
-        source_url=page.url,
+        source_url=page_url,
         payload=payload,
         observations=tuple(observations),
     )
@@ -789,16 +908,17 @@ def _location_record(source_key: str, page: GenericPage, provider_name: str, loc
 def _offer_record(source_key: str, page: GenericPage, provider_name: str, offer: Mapping[str, Any]) -> SourceRecord:
     title = _clean_text(offer.get("name"))
     external_id = _stable_id("offer", str(offer.get("url") or page.url), title)
+    page_url = _safe_link(page.url, fallback=page.url)
     price = offer.get("price_minor")
     payload = {
         "provider_display_name": title,
         "provider_brand_hint": provider_name,
         "provider_external_id": external_id,
         "provider_sku": None,
-        "product_url": _safe_link(_first_text(offer.get("url"), page.url), fallback=page.url),
+        "product_url": _safe_link(_first_text(offer.get("url"), page.url), fallback=page_url),
         "prices": {"regular": price} if isinstance(price, int) else {},
         "evidence_method": offer.get("method", "pattern"),
-        "evidence_page_url": page.url,
+        "evidence_page_url": page_url,
         "claim_status": "candidate",
     }
     observations = [
@@ -840,7 +960,7 @@ def _offer_record(source_key: str, page: GenericPage, provider_name: str, offer:
         source_key=source_key,
         record_type="provider_offer_price" if payload["prices"] else "provider_offer_discovered",
         external_record_id=external_id,
-        source_url=page.url,
+        source_url=page_url,
         payload=payload,
         observations=tuple(observations),
     )
@@ -868,7 +988,9 @@ class GenericProviderAdapter:
             source_type="public_website",
             usage_policy_status="review_required",
             endpoint_type="html",
-            endpoint_url=config.seed_urls[0],
+            # Keep query/fragment material out of manifests and the ingest
+            # database; seed URLs themselves remain available to the crawler.
+            endpoint_url=_safe_link(config.seed_urls[0], fallback="") or None,
             parser_version=GENERIC_PARSER_VERSION,
         )
         self.parser = GenericPageParser()

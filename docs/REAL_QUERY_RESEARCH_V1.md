@@ -83,7 +83,7 @@ explícito sólo porque contiene las palabras “anticuerpos covid”.
 Desde `database/`:
 
 ```powershell
-npx.cmd supabase@latest db query --linked --file supabase/tests/resolver_benchmark_v2_test.sql
+npx.cmd supabase@2.116.0 db query --linked --file supabase/tests/resolver_benchmark_v2_test.sql
 ```
 
 Desde la raíz del repositorio, regenerar el fixture y SQL:

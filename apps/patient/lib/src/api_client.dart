@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 import 'models.dart';
@@ -31,21 +32,28 @@ class PatientApiException implements Exception {
   String toString() => message;
 }
 
+class _ResponseTooLargeException implements Exception {}
+
+class _ResponseEncodingException implements Exception {}
+
+class _ResponseLengthMismatchException implements Exception {}
+
 class PatientApiClient {
   PatientApiClient({String? baseUrl, http.Client? client, Duration? timeout})
-    : baseUrl =
-          (baseUrl ??
-                  const String.fromEnvironment(
-                    'API_BASE_URL',
-                    defaultValue: 'http://localhost:8787',
-                  ))
-              .replaceFirst(RegExp(r'/*$'), ''),
+    : baseUrl = _secureBaseUrl(
+        baseUrl ??
+            const String.fromEnvironment(
+              'API_BASE_URL',
+              defaultValue: 'http://localhost:8787',
+            ),
+      ),
       _client = client ?? http.Client(),
       timeout = timeout ?? const Duration(seconds: 15);
 
   final String baseUrl;
   final http.Client _client;
   final Duration timeout;
+  static const int _maxResponseBytes = 2 * 1024 * 1024;
 
   Future<SearchResponse> search(
     String query, {
@@ -63,8 +71,11 @@ class PatientApiClient {
       params['lng'] = '$longitude';
     }
     final response = await _request(
-      () => _client.get(
-        Uri.parse('$baseUrl/api/v1/search').replace(queryParameters: params),
+      () => _sendRequest(
+        http.Request(
+          'GET',
+          Uri.parse('$baseUrl/api/v1/search').replace(queryParameters: params),
+        ),
       ),
     );
     return SearchResponse.fromJson(await _decode(response));
@@ -126,17 +137,56 @@ class PatientApiClient {
   }
 
   Future<JsonMap> _post(String path, JsonMap body) async {
-    final response = await _request(
-      () => _client.post(
-        Uri.parse('$baseUrl$path'),
-        headers: const {
+    final response = await _request(() {
+      final request = http.Request('POST', Uri.parse('$baseUrl$path'))
+        ..headers.addAll(const {
           'content-type': 'application/json',
           'accept': 'application/json',
-        },
-        body: jsonEncode(body),
-      ),
-    );
+        })
+        ..body = jsonEncode(body);
+      return _sendRequest(request);
+    });
     return _decode(response);
+  }
+
+  Future<http.Response> _sendRequest(http.BaseRequest request) async {
+    // Never forward clinical queries or images to a redirect target. The API
+    // base is configured at build time, but an unexpected redirect (or a
+    // compromised edge) must fail closed instead of leaking the request.
+    request.followRedirects = false;
+    request.maxRedirects = 0;
+    final streamed = await _client.send(request);
+    final encoding =
+        streamed.headers['content-encoding']?.trim().toLowerCase() ?? '';
+    if (encoding != '' && encoding != 'identity') {
+      await streamed.stream.listen((_) {}).cancel();
+      throw _ResponseEncodingException();
+    }
+    final declaredLength = streamed.contentLength;
+    if (declaredLength != null &&
+        (declaredLength < 0 || declaredLength > _maxResponseBytes)) {
+      await streamed.stream.listen((_) {}).cancel();
+      throw _ResponseTooLargeException();
+    }
+    final builder = BytesBuilder(copy: false);
+    var total = 0;
+    await for (final chunk in streamed.stream) {
+      total += chunk.length;
+      if (total > _maxResponseBytes) throw _ResponseTooLargeException();
+      builder.add(chunk);
+    }
+    if (declaredLength != null && total != declaredLength) {
+      throw _ResponseLengthMismatchException();
+    }
+    return http.Response.bytes(
+      builder.takeBytes(),
+      streamed.statusCode,
+      headers: streamed.headers,
+      request: streamed.request,
+      isRedirect: streamed.isRedirect,
+      persistentConnection: streamed.persistentConnection,
+      reasonPhrase: streamed.reasonPhrase,
+    );
   }
 
   Future<http.Response> _request(
@@ -162,6 +212,30 @@ class PatientApiClient {
         errorTag: 'CLIENT.CONNECTION',
         retryable: true,
       );
+    } on _ResponseTooLargeException {
+      throw PatientApiException(
+        502,
+        'invalid_response',
+        'El servicio devolviÃ³ una respuesta invÃ¡lida.',
+        type: 'protocol',
+        errorTag: 'CLIENT.PROTOCOL',
+      );
+    } on _ResponseEncodingException {
+      throw PatientApiException(
+        502,
+        'invalid_response',
+        'El servicio devolviÃ³ una respuesta invÃ¡lida.',
+        type: 'protocol',
+        errorTag: 'CLIENT.PROTOCOL',
+      );
+    } on _ResponseLengthMismatchException {
+      throw PatientApiException(
+        502,
+        'invalid_response',
+        'El servicio devolviÃ³ una respuesta invÃ¡lida.',
+        type: 'protocol',
+        errorTag: 'CLIENT.PROTOCOL',
+      );
     } catch (error) {
       throw PatientApiException(
         503,
@@ -177,8 +251,14 @@ class PatientApiClient {
   Future<JsonMap> _decode(http.Response response) async {
     JsonMap payload;
     try {
+      if (response.bodyBytes.length > _maxResponseBytes) {
+        throw const FormatException('response too large');
+      }
       final decoded = jsonDecode(response.body);
-      payload = decoded is JsonMap ? decoded : <String, dynamic>{};
+      if (decoded is! JsonMap) {
+        throw const FormatException('response must be an object');
+      }
+      payload = decoded;
     } on FormatException {
       throw PatientApiException(
         response.statusCode,
@@ -196,15 +276,13 @@ class PatientApiClient {
       throw PatientApiException(
         response.statusCode,
         code,
-        _localizedMessage(
-          code,
-          _string(error['message']) ?? 'No se pudo completar la solicitud.',
-        ),
+        _localizedMessage(code),
         type: _string(error['type']) ?? 'request',
         errorTag: _string(error['error_tag']) ?? 'API.REQUEST',
         severity: _string(error['severity']) ?? 'medium',
         retryable: error['retryable'] == true,
-        requestId: _string(error['request_id']) ?? response.headers['x-request-id'],
+        requestId:
+            _string(error['request_id']) ?? response.headers['x-request-id'],
       );
     }
     return payload;
@@ -213,7 +291,7 @@ class PatientApiClient {
   String? _string(Object? value) =>
       value is String && value.isNotEmpty ? value : null;
 
-  String _localizedMessage(String code, String fallback) => switch (code) {
+  String _localizedMessage(String code) => switch (code) {
     'service_not_configured' =>
       'El servicio de búsqueda no está configurado. Inténtalo más tarde.',
     'upstream_timeout' || 'client_timeout' =>
@@ -233,14 +311,99 @@ class PatientApiClient {
     'invalid_domain' => 'La búsqueda solicitada no es válida.',
     'not_found' => 'No encontramos esa información.',
     'route_requires_id' => 'Falta seleccionar un elemento.',
-    'unauthorized' || 'mfa_required' =>
-      'Necesitas autenticarte para realizar esta acción.',
+    'unauthorized' ||
+    'mfa_required' => 'Necesitas autenticarte para realizar esta acción.',
     'forbidden' => 'No tienes permisos para realizar esta acción.',
-    'ocr_unavailable' => 'La lectura de recetas no está disponible en este momento.',
+    'ocr_unavailable' =>
+      'La lectura de recetas no está disponible en este momento.',
     'ocr_failed' || 'ocr_unusable' =>
       'No pudimos leer la receta con suficiente seguridad. Revisa el texto e inténtalo de nuevo.',
-    _ => fallback,
+    // Never display an upstream message verbatim: it can contain stack traces,
+    // internal URLs or medical text. Diagnostics use the request ID instead.
+    _ => 'No se pudo completar la solicitud. Inténtalo de nuevo.',
   };
 
   void close() => _client.close();
+}
+
+const _apiAllowedHosts = String.fromEnvironment('API_ALLOWED_HOSTS');
+
+String _secureBaseUrl(String value) {
+  final candidate = value.trim().replaceFirst(RegExp(r'/*$'), '');
+  final uri = Uri.tryParse(candidate);
+  final loopback =
+      uri != null &&
+      (uri.host == 'localhost' || uri.host == '127.0.0.1' || uri.host == '::1');
+  final secure =
+      uri != null &&
+      uri.isAbsolute &&
+      uri.host.isNotEmpty &&
+      uri.scheme == 'https' &&
+      uri.userInfo.isEmpty &&
+      _isPublicHost(uri.host) &&
+      (uri.path.isEmpty || uri.path == '/') &&
+      !uri.hasQuery &&
+      !uri.hasFragment &&
+      (uri.port == 443 || uri.port == 0);
+  final localDevelopment =
+      kDebugMode &&
+      uri != null &&
+      uri.isAbsolute &&
+      uri.scheme == 'http' &&
+      loopback &&
+      uri.userInfo.isEmpty &&
+      (uri.path.isEmpty || uri.path == '/') &&
+      !uri.hasQuery &&
+      !uri.hasFragment;
+  final productionHostAllowed = kDebugMode ||
+      _apiAllowedHosts
+          .split(',')
+          .map((host) => host.trim().toLowerCase())
+          .where((host) => host.isNotEmpty)
+          .contains(uri?.host.toLowerCase());
+  if (!secure && !localDevelopment) {
+    throw ArgumentError.value(
+      value,
+      'baseUrl',
+      'must be an HTTPS origin (HTTP is allowed only for loopback development)',
+    );
+  }
+  if (secure && !productionHostAllowed) {
+    throw ArgumentError.value(
+      value,
+      'baseUrl',
+      'must use a host declared in API_ALLOWED_HOSTS outside debug builds',
+    );
+  }
+  return candidate;
+}
+
+bool _isPublicHost(String hostname) {
+  final host = hostname.toLowerCase().replaceFirst(RegExp(r'\.$'), '');
+  if (host.isEmpty ||
+      host == 'localhost' ||
+      host.endsWith('.localhost') ||
+      host.endsWith('.local') ||
+      host.endsWith('.internal') ||
+      host.endsWith('.home.arpa') ||
+      host.codeUnits.any((unit) => unit > 0x7f)) {
+    return false;
+  }
+  final ipv4 = RegExp(r'^(\d+)\.(\d+)\.(\d+)\.(\d+)$').firstMatch(host);
+  if (ipv4 == null) return !host.contains(':');
+  final octets = [1, 2, 3, 4]
+      .map((index) => int.tryParse(ipv4.group(index) ?? '') ?? -1)
+      .toList(growable: false);
+  if (octets.any((part) => part < 0 || part > 255)) return false;
+  final first = octets[0], second = octets[1];
+  return first != 0 &&
+      first != 10 &&
+      first != 127 &&
+      first != 169 &&
+      !(first == 172 && second >= 16 && second <= 31) &&
+      !(first == 192 && (second == 0 || second == 168)) &&
+      !(first == 100 && second >= 64 && second <= 127) &&
+      !(first == 198 && (second == 18 || second == 19 || second == 51)) &&
+      !(first == 203 && second == 0) &&
+      first < 224;
 }

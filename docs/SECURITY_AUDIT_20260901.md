@@ -92,11 +92,12 @@ externo se rechaza sin solicitar el destino.
 
 ## Controles agregados en el corte Flutter/proveedor
 
-Las mutaciones de proveedor derivan el nivel de aseguramiento (`aal`) del JWT
-que Supabase ya validó. Las lecturas de reclamos y membresías pueden operar en
-`aal1` para mostrar el enrolamiento; toda mutación `POST` o `PATCH` exige
-`aal2`, es decir, un segundo factor verificado. El cliente nunca puede elevar
-su rol enviando un campo propio.
+Las operaciones de proveedor derivan el nivel de aseguramiento (`aal`) del JWT
+que Supabase ya validó. Las lecturas de reclamos y membresías también exigen
+`aal2` para no revelar relaciones de cuenta antes del segundo factor; `aal1`
+solo se usa durante el inicio de sesión y el enrolamiento. Todas las mutaciones
+`POST` o `PATCH` exigen igualmente un segundo factor verificado. El cliente
+nunca puede elevar su rol enviando un campo propio.
 
 La migración `20260901120000_127_anonymous_analytics_events.sql` crea una tabla
 sin permisos directos para `anon`/`authenticated` y un RPC con lista cerrada de

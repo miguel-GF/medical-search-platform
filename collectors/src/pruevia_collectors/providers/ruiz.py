@@ -1,19 +1,31 @@
 from __future__ import annotations
 
 import time
+import json
+import re
 from dataclasses import dataclass
 from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
+from math import isfinite
 from typing import Any, Iterable, Mapping, Sequence
-from urllib.parse import quote
+from urllib.parse import quote, urlparse
 
 import httpx
 
 from ..models import Observation, SourceRecord, SourceSpec
-from .http import request_with_same_host_redirects
+from .http import bounded_response_bytes, request_with_same_host_redirects
+from .public_transport import PublicAddressTransport
 
 
 RUIZ_BASE_URL = "https://laboratoriosruiz.com"
 RUIZ_GENERAL_HOME_URL = f"{RUIZ_BASE_URL}/general-home"
+MAX_RUIZ_ATTEMPTS = 5
+MAX_RUIZ_TIMEOUT_SECONDS = 120.0
+MAX_RUIZ_DELAY_SECONDS = 60.0
+MAX_RUIZ_RECORDS = 10_000
+MAX_RUIZ_PER_DEPARTMENT = 1_000
+MAX_RUIZ_DEPARTMENTS = 500
+MAX_RUIZ_LOCATIONS = 1_000
+MAX_RUIZ_SLUG_CHARS = 128
 
 
 @dataclass(frozen=True)
@@ -33,14 +45,34 @@ class RuizClient:
         retry_backoff_seconds: float = 1.5,
         client: httpx.Client | None = None,
     ) -> None:
-        if max_attempts < 1:
-            raise ValueError("max_attempts must be positive")
+        parsed_base = urlparse(base_url.rstrip("/"))
+        try:
+            port = parsed_base.port
+        except ValueError as error:
+            raise ValueError("Ruiz base URL must use a valid HTTPS URL") from error
+        if (
+            parsed_base.scheme != "https"
+            or not parsed_base.hostname
+            or parsed_base.username
+            or parsed_base.password
+            or parsed_base.query
+            or parsed_base.fragment
+            or parsed_base.path not in ("", "/")
+            or port not in (None, 443)
+        ):
+            raise ValueError("Ruiz base URL must be an HTTPS origin without credentials")
+        if not isinstance(max_attempts, int) or isinstance(max_attempts, bool) or not 1 <= max_attempts <= MAX_RUIZ_ATTEMPTS:
+            raise ValueError("max_attempts must be between 1 and 5")
+        if not isinstance(timeout_seconds, (int, float)) or isinstance(timeout_seconds, bool) or not isfinite(float(timeout_seconds)) or not 0 < timeout_seconds <= MAX_RUIZ_TIMEOUT_SECONDS:
+            raise ValueError("timeout_seconds must be between 0 and 120")
+        if not isinstance(retry_backoff_seconds, (int, float)) or isinstance(retry_backoff_seconds, bool) or not isfinite(float(retry_backoff_seconds)) or not 0 <= retry_backoff_seconds <= MAX_RUIZ_DELAY_SECONDS:
+            raise ValueError("retry_backoff_seconds must be between 0 and 60")
         self.base_url = base_url.rstrip("/")
         self.timeout_seconds = timeout_seconds
         self.max_attempts = max_attempts
         self.retry_backoff_seconds = retry_backoff_seconds
         self._owns_client = client is None
-        self._client = client or httpx.Client(timeout=timeout_seconds, follow_redirects=False)
+        self._client = client or httpx.Client(timeout=timeout_seconds, follow_redirects=False, trust_env=False, transport=PublicAddressTransport())
 
     def close(self) -> None:
         if self._owns_client:
@@ -50,6 +82,8 @@ class RuizClient:
         return self._get_json("/general-home")
 
     def fetch_departments(self, department_slug: str) -> list[Mapping[str, Any]]:
+        if not isinstance(department_slug, str) or len(department_slug) > MAX_RUIZ_SLUG_CHARS or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]*", department_slug):
+            raise ValueError("Ruiz department slug must be a bounded safe path segment")
         payload = self._get_json(f"/departments-studies/{quote(department_slug, safe='')}")
         rows = payload.get("departments", [])
         if not isinstance(rows, list):
@@ -68,11 +102,14 @@ class RuizClient:
                     headers={"Accept": "application/json", "User-Agent": "PrueviaCollector/0.1"},
                 )
                 response.raise_for_status()
-                payload = response.json()
-                if not isinstance(payload, Mapping):
-                    raise ValueError(f"Ruiz response must be an object: {path}")
-                return payload
-            except (httpx.HTTPStatusError, httpx.RequestError):
+                try:
+                    payload = json.loads(bounded_response_bytes(response, max_bytes=2 * 1024 * 1024))
+                    if not isinstance(payload, Mapping):
+                        raise ValueError(f"Ruiz response must be an object: {path}")
+                    return payload
+                finally:
+                    response.close()
+            except (httpx.HTTPStatusError, httpx.RequestError, RecursionError):
                 if attempt == self.max_attempts:
                     raise
                 time.sleep(self.retry_backoff_seconds * attempt)
@@ -97,8 +134,10 @@ class RuizAdapter:
         per_department_limit: int = 20,
         zone_id: int = 4,
     ) -> None:
-        if max_records < 1 or per_department_limit < 1:
-            raise ValueError("Ruiz record limits must be positive")
+        if not isinstance(max_records, int) or isinstance(max_records, bool) or not 1 <= max_records <= MAX_RUIZ_RECORDS:
+            raise ValueError("max_records must be between 1 and 10000")
+        if not isinstance(per_department_limit, int) or isinstance(per_department_limit, bool) or not 1 <= per_department_limit <= MAX_RUIZ_PER_DEPARTMENT:
+            raise ValueError("per_department_limit must be between 1 and 1000")
         self.client = client
         self.max_records = max_records
         self.per_department_limit = per_department_limit
@@ -106,7 +145,10 @@ class RuizAdapter:
 
     def collect(self) -> Iterable[SourceRecord]:
         home = self.client.fetch_home()
-        for row in home.get("pos", []) if isinstance(home.get("pos"), list) else []:
+        positions = home.get("pos", []) if isinstance(home.get("pos"), list) else []
+        if len(positions) > MAX_RUIZ_LOCATIONS:
+            raise ValueError("Ruiz location catalog exceeds the safety limit")
+        for row in positions:
             if _is_active_for_zone(row, self.zone_id):
                 yield ruiz_location_to_record(row, base_url=self.client.base_url)
         departments = _decode_departments(home.get("departments"))
@@ -219,6 +261,8 @@ def _decode_departments(value: Any) -> tuple[RuizDepartment, ...]:
     if not isinstance(value, list):
         raise ValueError("Ruiz home payload has no departments list")
     result: list[RuizDepartment] = []
+    if len(value) > MAX_RUIZ_DEPARTMENTS:
+        raise ValueError("Ruiz department catalog exceeds the safety limit")
     for row in value:
         if not isinstance(row, Mapping):
             continue
@@ -277,6 +321,8 @@ def _to_minor_units(value: Any) -> int | None:
     try:
         amount = Decimal(str(value).replace(",", "")).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
     except (InvalidOperation, ValueError):
+        return None
+    if not amount.is_finite() or amount <= 0 or amount > Decimal(10_000_000):
         return None
     return int(amount * 100)
 

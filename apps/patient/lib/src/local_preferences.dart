@@ -8,6 +8,7 @@ class PatientPreferences {
 
   final SharedPreferences _prefs;
   static const _consentKey = 'pruevia.consent.v1';
+  static const _onboardingKey = 'pruevia.onboarding.v1';
   static const _themeKey = 'pruevia.theme.v1';
   static const _anonymousIdKey = 'pruevia.anonymous_id.v1';
 
@@ -15,6 +16,7 @@ class PatientPreferences {
       PatientPreferences._(await SharedPreferences.getInstance());
 
   bool get consentGiven => _prefs.getBool(_consentKey) ?? false;
+  bool get onboardingComplete => _prefs.getBool(_onboardingKey) ?? false;
 
   ThemeMode get themeMode => switch (_prefs.getString(_themeKey)) {
     'dark' => ThemeMode.dark,
@@ -45,7 +47,20 @@ class PatientPreferences {
     caseSensitive: false,
   ).hasMatch(value);
 
-  Future<void> grantConsent() async => _prefs.setBool(_consentKey, true);
+  Future<void> completeOnboarding({required bool consent}) async {
+    await _prefs.setBool(_consentKey, consent);
+    await _prefs.setBool(_onboardingKey, true);
+  }
+
+  Future<void> grantConsent() => completeOnboarding(consent: true);
+
+  Future<void> revokeConsent() async {
+    await _prefs.setBool(_consentKey, false);
+    // A new identifier prevents linking events recorded before revocation to
+    // events recorded after a later opt-in.
+    await _prefs.remove(_anonymousIdKey);
+  }
+
   Future<void> setThemeMode(ThemeMode mode) async =>
       _prefs.setString(_themeKey, switch (mode) {
         ThemeMode.dark => 'dark',

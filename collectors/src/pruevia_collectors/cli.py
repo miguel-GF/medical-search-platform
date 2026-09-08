@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 
 from .config import load_local_environment
-from .pipeline import CollectorRunner
+from .pipeline import CollectorRunner, _safe_error_detail
 from .providers.denue import DenueAdapter, DenueClient, DenueQuery
 
 
@@ -29,7 +29,9 @@ def main() -> int:
         query = DenueQuery(args.condition, args.latitude, args.longitude, args.radius_meters)
         adapter = DenueAdapter(DenueClient(), [query])
     except ValueError as error:
-        print(json.dumps({"status": "blocked", "error": str(error)}, ensure_ascii=False, indent=2))
+        # Validation errors can include provider/client details; keep the CLI
+        # output bounded and redact URL/query credentials just like artifacts.
+        print(json.dumps({"status": "blocked", "error": _safe_error_detail(error)}, ensure_ascii=False, indent=2))
         return 2
     summary = CollectorRunner(args.artifact_root).run(adapter)
     print(json.dumps(summary.__dict__, ensure_ascii=False, indent=2))

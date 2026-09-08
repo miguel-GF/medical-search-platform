@@ -16,8 +16,10 @@ from pathlib import Path
 from typing import Any, Mapping
 
 try:
+    from .artifact_io import MAX_ARTIFACT_ROWS, read_json_file, read_jsonl, safe_http_url
     from .classify_denue_candidates import normalize, repair_text
 except ImportError:  # pragma: no cover - direct script execution
+    from artifact_io import MAX_ARTIFACT_ROWS, read_json_file, read_jsonl, safe_http_url
     from classify_denue_candidates import normalize, repair_text
 
 
@@ -84,14 +86,13 @@ def branch_name_similarity(left: str, right: str) -> float:
 
 
 def read_provider_locations(artifact: Path, brand_key: str) -> list[dict[str, Any]]:
-    manifest = json.loads((artifact / "run_manifest.json").read_text(encoding="utf-8"))
+    manifest = read_json_file(artifact / "run_manifest.json")
+    if not isinstance(manifest, dict):
+        raise ValueError(f"provider manifest must be a JSON object: {artifact}")
     if manifest.get("status") != "succeeded" or manifest.get("errors"):
         raise ValueError(f"provider artifact is not a succeeded run: {artifact}")
     locations: list[dict[str, Any]] = []
-    for line in (artifact / "raw_records.jsonl").read_text(encoding="utf-8").splitlines():
-        if not line.strip():
-            continue
-        row = json.loads(line)
+    for row in read_jsonl(artifact / "raw_records.jsonl"):
         if row.get("record_type") != "provider_location_discovered":
             continue
         payload = row.get("payload")
@@ -107,7 +108,7 @@ def read_provider_locations(artifact: Path, brand_key: str) -> list[dict[str, An
                 "source_run_id": manifest.get("run_id"),
                 "external_record_id": str(row.get("external_record_id") or payload.get("provider_external_id") or ""),
                 "record_hash": row.get("record_hash"),
-                "source_url": row.get("source_url") or payload.get("location_url"),
+                "source_url": safe_http_url(row.get("source_url") or payload.get("location_url")),
                 "name": repair_text(payload.get("provider_display_name")),
                 "address": repair_text(payload.get("address_line_1")),
                 "postal_code": repair_text(payload.get("postal_code")),
@@ -144,10 +145,14 @@ def _best_location(candidate: dict[str, Any], locations: list[dict[str, Any]]) -
 
 
 def match(candidates_fixture: Path, provider_artifacts: Mapping[str, Path]) -> dict[str, Any]:
-    fixture = json.loads(candidates_fixture.read_text(encoding="utf-8"))
+    fixture = read_json_file(candidates_fixture, max_bytes=8 * 1024 * 1024)
+    if not isinstance(fixture, dict):
+        raise ValueError("DENUE candidate fixture must be a JSON object")
     candidates = fixture.get("candidates")
     if not isinstance(candidates, list):
         raise ValueError("DENUE candidate fixture must contain a candidates list")
+    if len(candidates) > MAX_ARTIFACT_ROWS:
+        raise ValueError(f"DENUE candidate fixture exceeds {MAX_ARTIFACT_ROWS} candidates")
     provider_locations: list[dict[str, Any]] = []
     for brand_key, artifact in sorted(provider_artifacts.items()):
         provider_locations.extend(read_provider_locations(artifact, brand_key))
@@ -166,7 +171,7 @@ def match(candidates_fixture: Path, provider_artifacts: Mapping[str, Path]) -> d
             "name": candidate.get("name"),
             "legal_name": candidate.get("legal_name"),
             "coordinates": candidate.get("coordinates"),
-            "source_url": candidate.get("source_url"),
+            "source_url": safe_http_url(candidate.get("source_url")),
             "brand_match": brand,
         }
         if not brand:

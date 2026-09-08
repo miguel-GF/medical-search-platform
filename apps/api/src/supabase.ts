@@ -54,6 +54,9 @@ export class SupabaseResponseError extends Error {
   }
 }
 
+const MAX_RPC_RESPONSE_BYTES = 2 * 1024 * 1024;
+const MAX_RPC_ERROR_BYTES = 16 * 1024;
+
 export class SupabaseRpcClient implements RpcClient {
   private readonly fetcher: typeof fetch;
 
@@ -65,21 +68,47 @@ export class SupabaseRpcClient implements RpcClient {
   }
 
   async call<T>(name: string, body: Record<string, unknown>, options: { admin?: boolean; accessToken?: string } = {}): Promise<T> {
-    const key = options.admin
-      ? this.env.SUPABASE_SECRET_KEY ?? this.env.SUPABASE_SERVICE_ROLE_KEY
-      : this.env.SUPABASE_PUBLISHABLE_KEY ?? this.env.SUPABASE_ANON_KEY;
+    // RPC names are internal constants. Validate them at the transport
+    // boundary anyway so a future call site can never turn a path segment into
+    // traversal, a query string, or a host-relative URL.
+    if (!/^[a-z][a-z0-9_]{0,63}$/.test(name)) {
+      throw new SupabaseConfigurationError('Supabase RPC name is invalid');
+    }
+    // Public API RPCs are Worker-only so their validation/rate limits cannot
+    // be bypassed through PostgREST. Provider routes also use service-only
+    // wrappers with the actor derived from a verified Supabase session.
+    // accessToken is a transport option, not an authorization bypass; any
+    // user-token call remains subject to the database role's RPC privileges.
+    // Treat the presence of `accessToken` as an explicit request to use the
+    // user-token lane. A truthiness check would silently fall back to the
+    // service key for an empty/malformed token, turning a future call-site bug
+    // into a privilege escalation. Fail closed before any request is sent.
+    const userAccessToken = options.accessToken;
+    if (userAccessToken !== undefined
+      && (typeof userAccessToken !== 'string' || userAccessToken.length === 0
+        || userAccessToken.length > 8_192 || /\s/.test(userAccessToken))) {
+      throw new SupabaseConfigurationError('Supabase access token is invalid');
+    }
+    const key = userAccessToken !== undefined
+      ? this.env.SUPABASE_PUBLISHABLE_KEY ?? this.env.SUPABASE_ANON_KEY
+      : this.env.SUPABASE_SECRET_KEY ?? this.env.SUPABASE_SERVICE_ROLE_KEY;
     if (!key || !this.env.SUPABASE_URL) throw new SupabaseConfigurationError();
     let baseUrl: URL;
     try {
       baseUrl = new URL(this.env.SUPABASE_URL);
       const localDevelopment = baseUrl.protocol === 'http:'
         && (baseUrl.hostname === 'localhost' || baseUrl.hostname === '127.0.0.1' || baseUrl.hostname === '::1')
-        && this.env.APP_ENV !== 'production';
+        && (this.env.APP_ENV === 'development' || this.env.APP_ENV === 'test');
       if (baseUrl.protocol !== 'https:' && !localDevelopment) throw new Error('https is required for Supabase');
+      if (baseUrl.username || baseUrl.password || baseUrl.search || baseUrl.hash
+        || (baseUrl.pathname !== '' && baseUrl.pathname !== '/')
+        || (baseUrl.protocol === 'https:' && baseUrl.port && baseUrl.port !== '443')) {
+        throw new Error('Supabase URL must be a clean origin');
+      }
     } catch {
       throw new SupabaseConfigurationError('Supabase URL is invalid');
     }
-    const authorization = options.accessToken ?? key;
+    const authorization = userAccessToken ?? key;
     const timeoutMs = parseTimeout(this.env.SUPABASE_TIMEOUT_MS);
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort('supabase_timeout'), timeoutMs);
@@ -92,14 +121,25 @@ export class SupabaseRpcClient implements RpcClient {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(body),
+        // Supabase RPCs must stay on the configured origin. Following a
+        // redirect could disclose a privileged API key or provider JWT to an
+        // unexpected host, while caching clinical responses creates a side
+        // channel between users.
+        redirect: 'error',
+        cache: 'no-store',
         signal: controller.signal,
       });
       if (!response.ok) {
-        const detail = await response.text();
+        let detail = '';
+        try {
+          detail = await readResponseText(response, MAX_RPC_ERROR_BYTES);
+        } catch {
+          detail = 'invalid upstream error body';
+        }
         throw new SupabaseRpcError(name, response.status, detail.slice(0, 500));
       }
       try {
-        return (await response.json()) as T;
+        return JSON.parse(await readResponseText(response, MAX_RPC_RESPONSE_BYTES)) as T;
       } catch {
         throw new SupabaseResponseError(name);
       }
@@ -110,6 +150,40 @@ export class SupabaseRpcClient implements RpcClient {
       clearTimeout(timer);
     }
   }
+}
+
+async function readResponseText(response: Response, maximum: number): Promise<string> {
+  const encoding = response.headers.get('content-encoding')?.trim().toLowerCase() ?? '';
+  if (encoding !== '' && encoding !== 'identity') throw new Error('compressed upstream response rejected');
+  const length = response.headers.get('content-length');
+  if (length !== null && (!/^\d{1,10}$/.test(length) || Number(length) > maximum)) {
+    throw new Error('upstream response exceeds limit');
+  }
+  const reader = response.body?.getReader();
+  if (!reader) {
+    const empty = new Uint8Array();
+    if (length !== null && Number(length) !== 0) throw new Error('upstream response length mismatch');
+    return new TextDecoder().decode(empty);
+  }
+  const bytes = new Uint8Array(maximum);
+  let offset = 0;
+  try {
+    while (true) {
+      const chunk = await reader.read();
+      if (chunk.done) break;
+      const value = chunk.value;
+      if (offset + value.byteLength > maximum) throw new Error('upstream response exceeds limit');
+      bytes.set(value, offset);
+      offset += value.byteLength;
+    }
+  } catch (error) {
+    try { await reader.cancel(); } catch { /* best-effort connection cleanup */ }
+    throw error;
+  } finally {
+    reader.releaseLock();
+  }
+  if (length !== null && offset !== Number(length)) throw new Error('upstream response length mismatch');
+  return new TextDecoder().decode(bytes.subarray(0, offset));
 }
 
 function parseTimeout(value: string | undefined): number {

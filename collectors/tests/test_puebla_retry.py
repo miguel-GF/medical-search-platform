@@ -50,3 +50,8 @@ def test_retry_seeds_reject_wrong_manifest_version():
     manifest["version"] = "other"
     with pytest.raises(ValueError, match="version"):
         build_retry_seeds(manifest, max_providers=1)
+
+
+def test_retry_seeds_reject_unbounded_provider_budget():
+    with pytest.raises(ValueError, match="max_providers"):
+        build_retry_seeds(_manifest(), max_providers=501)

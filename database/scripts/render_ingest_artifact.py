@@ -15,6 +15,11 @@ import re
 from pathlib import Path
 from uuid import NAMESPACE_URL, UUID, uuid5
 
+try:
+    from .artifact_io import read_json_file, read_jsonl
+except ImportError:  # pragma: no cover - supports `python scripts/foo.py`
+    from artifact_io import read_json_file, read_jsonl
+
 
 # ``provider_discovered`` was used by the first generic collector prototype;
 # the database contract names this evidence source ``public_website``.
@@ -41,11 +46,11 @@ def canonical_hash(payload: object) -> str:
 
 
 def read_artifact(path: Path) -> tuple[dict, list[dict], list[dict]]:
-    manifest = json.loads((path / "run_manifest.json").read_text(encoding="utf-8"))
-    raw = [json.loads(line) for line in (path / "raw_records.jsonl").read_text(encoding="utf-8").splitlines() if line]
-    observations = [
-        json.loads(line) for line in (path / "observations.jsonl").read_text(encoding="utf-8").splitlines() if line
-    ]
+    manifest = read_json_file(path / "run_manifest.json")
+    if not isinstance(manifest, dict):
+        raise ValueError("run manifest must be a JSON object")
+    raw = read_jsonl(path / "raw_records.jsonl")
+    observations = read_jsonl(path / "observations.jsonl")
     return manifest, raw, observations
 
 
@@ -59,26 +64,42 @@ def validate(manifest: dict, raw: list[dict], observations: list[dict]) -> list[
         UUID(str(manifest["run_id"]))
     except (KeyError, ValueError) as error:
         raise ValueError("manifest run_id must be a UUID") from error
-    if len(raw) != int(manifest.get("records_received", -1)):
+    try:
+        records_received = int(manifest.get("records_received", -1))
+        records_valid = int(manifest.get("records_valid", -1))
+        records_rejected = int(manifest.get("records_rejected", -1))
+    except (TypeError, ValueError) as error:
+        raise ValueError("manifest record counts must be integers") from error
+    if min(records_received, records_valid, records_rejected) < 0 or records_valid + records_rejected > records_received:
+        raise ValueError("manifest record counts are inconsistent")
+    if len(raw) != records_received:
         raise ValueError("raw record count does not match manifest")
     parsed: list[dict] = []
     seen_hashes: set[str] = set()
     for row in raw:
+        if not isinstance(row, dict):
+            raise ValueError("raw artifact rows must be JSON objects")
         if row.get("source_key") != source_key or row.get("parse_status") != "parsed":
             raise ValueError("artifact contains non-parsed or foreign raw records")
         record_hash = row.get("record_hash")
         if not isinstance(record_hash, str) or not re.fullmatch(r"[0-9a-f]{64}", record_hash):
             raise ValueError("raw record has an invalid record hash")
-        if canonical_hash(row.get("payload")) != record_hash:
+        payload = row.get("payload")
+        if not isinstance(payload, dict):
+            raise ValueError("raw record payload must be an object")
+        if len(json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str).encode("utf-8")) > 512 * 1024:
+            raise ValueError("raw record payload exceeds the safety limit")
+        if canonical_hash(payload) != record_hash:
             raise ValueError("raw record hash does not match payload")
         if record_hash in seen_hashes:
             raise ValueError("artifact contains duplicate record hashes")
         seen_hashes.add(record_hash)
         parsed.append(row)
-    if len(parsed) != int(manifest.get("records_valid", -1)) or int(manifest.get("records_rejected", -1)) != 0:
+    if len(parsed) != records_valid or records_rejected != 0:
         raise ValueError("artifact record counts do not match manifest")
-    if any(row.get("source_key") != source_key or row.get("record_hash") not in seen_hashes for row in observations):
-        raise ValueError("observations contain a foreign or unknown record hash")
+    for row in observations:
+        if not isinstance(row, dict) or row.get("source_key") != source_key or row.get("record_hash") not in seen_hashes:
+            raise ValueError("observations contain a foreign or unknown record hash")
     return parsed
 
 
@@ -157,7 +178,10 @@ def main() -> int:
     args = parser.parse_args()
     if bool(args.output) == bool(args.chunk_dir):
         raise SystemExit("exactly one of --output or --chunk-dir is required")
-    source_key = json.loads((args.artifact / "run_manifest.json").read_text(encoding="utf-8"))["source_key"]
+    manifest = read_json_file(args.artifact / "run_manifest.json")
+    if not isinstance(manifest, dict) or "source_key" not in manifest:
+        raise SystemExit("run manifest must contain a source_key")
+    source_key = manifest["source_key"]
     if args.chunk_dir:
         chunks = render_chunks(args.artifact, args.max_bytes)
         args.chunk_dir.mkdir(parents=True, exist_ok=True)

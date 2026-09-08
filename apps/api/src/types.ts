@@ -7,12 +7,15 @@ export interface Env {
   SUPABASE_TIMEOUT_MS?: string;
   APP_ENV?: 'development' | 'test' | 'production' | string;
   ADMIN_USER_IDS?: string;
+  /** Off by default during the internal release; database gates also apply. */
+  PROVIDER_DOCUMENTS_ENABLED?: string;
   API_VERSION?: string;
   ALLOWED_ORIGIN?: string;
   PUBLIC_RATE_LIMITER?: RateLimitBinding;
   REVIEW_CAPTURE_RATE_LIMITER?: RateLimitBinding;
   OCR_RATE_LIMITER?: RateLimitBinding;
   ADMIN_RATE_LIMITER?: RateLimitBinding;
+  PROVIDER_RATE_LIMITER?: RateLimitBinding;
   AI?: OcrAiBinding;
   OCR_AI_MODEL?: string;
   OCR_SERVICE_URL?: string;
@@ -42,7 +45,7 @@ export interface RpcClient {
 export interface AdminUser {
   id: string;
   /** Supabase Authenticator Assurance Level. Admin routes require aal2. */
-  aal?: 'aal1' | 'aal2';
+  aal: 'aal1' | 'aal2';
 }
 
 export interface SearchRow {

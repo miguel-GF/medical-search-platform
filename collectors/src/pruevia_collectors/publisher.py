@@ -4,11 +4,41 @@ import hashlib
 import json
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse, urlunparse
 
 from psycopg import Connection
 from psycopg.types.json import Jsonb
 
 from .models import RunSummary, SourceSpec
+from .pipeline import MAX_RECORD_PAYLOAD_BYTES
+
+
+# Publishing is an operator/CI boundary, but artifact directories can still
+# be tampered with or come from an untrusted crawl. Keep malformed input from
+# consuming unbounded memory before the first SQL statement is executed.
+MAX_ARTIFACT_ROWS = 100_000
+MAX_ARTIFACT_LINE_BYTES = 2 * 1024 * 1024
+MAX_ARTIFACT_BYTES = 256 * 1024 * 1024
+
+
+def _safe_endpoint_url(value: object) -> str | None:
+    """Persist only a navigable endpoint origin/path, never signed material."""
+
+    if not isinstance(value, str) or not value.strip():
+        return None
+    try:
+        parsed = urlparse(value.strip())
+        if (
+            parsed.scheme not in {"http", "https"}
+            or not parsed.hostname
+            or parsed.username
+            or parsed.password
+        ):
+            return None
+        clean = urlunparse((parsed.scheme, parsed.netloc, parsed.path, parsed.params, "", ""))
+        return clean if len(clean) <= 2_000 else None
+    except ValueError:
+        return None
 
 
 class IngestPublisher:
@@ -52,10 +82,16 @@ class IngestPublisher:
     def _validate_artifacts(self, source: SourceSpec, summary: RunSummary, raw_path: Path, observations_path: Path) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
         if summary.status not in {"succeeded", "quarantined", "failed"}:
             raise ValueError(f"unsupported collector run status: {summary.status}")
+        for field_name in ("records_received", "records_valid", "records_rejected"):
+            value = getattr(summary, field_name)
+            if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+                raise ValueError(f"{field_name} must be a non-negative integer")
+        if summary.records_valid + summary.records_rejected > summary.records_received:
+            raise ValueError("run record counts are inconsistent")
         try:
-            raw_rows = [json.loads(line) for line in raw_path.read_text(encoding="utf-8").splitlines() if line]
-            observation_rows = [json.loads(line) for line in observations_path.read_text(encoding="utf-8").splitlines() if line]
-        except (OSError, json.JSONDecodeError) as error:
+            raw_rows = self._read_jsonl(raw_path)
+            observation_rows = self._read_jsonl(observations_path)
+        except (OSError, UnicodeError, json.JSONDecodeError, ValueError) as error:
             raise ValueError(f"collector artifact JSON is invalid: {error}") from error
         if len(raw_rows) != summary.records_received:
             raise ValueError("raw record count does not match the run summary")
@@ -71,7 +107,13 @@ class IngestPublisher:
             record_hash = row.get("record_hash")
             if not isinstance(record_hash, str) or len(record_hash) != 64:
                 raise ValueError("raw record has an invalid hash")
-            expected_hash = hashlib.sha256(self._canonical_json(row.get("payload")).encode("utf-8")).hexdigest()
+            payload = row.get("payload")
+            if not isinstance(payload, dict):
+                raise ValueError("parsed raw record payload must be an object")
+            serialized_payload = self._canonical_json(payload).encode("utf-8")
+            if len(serialized_payload) > MAX_RECORD_PAYLOAD_BYTES:
+                raise ValueError("raw record payload exceeds the safety limit")
+            expected_hash = hashlib.sha256(serialized_payload).hexdigest()
             if record_hash != expected_hash:
                 raise ValueError("raw record hash does not match its payload")
             parsed_hashes.add(record_hash)
@@ -81,7 +123,33 @@ class IngestPublisher:
             raise ValueError("observations contain a hash without a parsed raw record")
         return raw_rows, observation_rows
 
+    @staticmethod
+    def _read_jsonl(path: Path) -> list[dict[str, Any]]:
+        rows: list[dict[str, Any]] = []
+        total_bytes = 0
+        with path.open("rb") as handle:
+            while True:
+                raw_line = handle.readline(MAX_ARTIFACT_LINE_BYTES + 1)
+                if not raw_line:
+                    break
+                total_bytes += len(raw_line)
+                if total_bytes > MAX_ARTIFACT_BYTES:
+                    raise ValueError(f"artifact exceeds {MAX_ARTIFACT_BYTES} bytes")
+                if len(raw_line) > MAX_ARTIFACT_LINE_BYTES:
+                    raise ValueError(f"artifact line exceeds {MAX_ARTIFACT_LINE_BYTES} bytes")
+                line = raw_line.decode("utf-8").strip()
+                if not line:
+                    continue
+                if len(rows) >= MAX_ARTIFACT_ROWS:
+                    raise ValueError(f"artifact exceeds {MAX_ARTIFACT_ROWS} rows")
+                row = json.loads(line)
+                if not isinstance(row, dict):
+                    raise ValueError("artifact rows must be JSON objects")
+                rows.append(row)
+        return rows
+
     def _ensure_source(self, source: SourceSpec) -> str:
+        endpoint_url = _safe_endpoint_url(source.endpoint_url)
         row = self.connection.execute(
             """
             select id
@@ -104,7 +172,7 @@ class IngestPublisher:
                 (
                     source.endpoint_type,
                     source.parser_version,
-                    source.endpoint_url,
+                    endpoint_url,
                     source.expected_min_records,
                     source.expected_max_records,
                     source.max_negative_deviation_pct,
@@ -126,6 +194,7 @@ class IngestPublisher:
 
     def _ensure_endpoint(self, source_id: str, source: SourceSpec) -> str:
         endpoint_name = f"{source.name} collector endpoint"
+        endpoint_url = _safe_endpoint_url(source.endpoint_url)
         row = self.connection.execute(
             """
             select id
@@ -153,7 +222,7 @@ class IngestPublisher:
                     endpoint_name,
                     source.endpoint_type,
                     source.parser_version,
-                    source.endpoint_url,
+                    endpoint_url,
                     source.expected_min_records,
                     source.expected_max_records,
                     source.max_negative_deviation_pct,

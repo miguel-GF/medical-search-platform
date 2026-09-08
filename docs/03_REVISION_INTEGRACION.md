@@ -6,6 +6,10 @@
 
 ## Estado operativo actualizado
 
+> Este documento conserva un corte histÃ³rico. La menciÃ³n de `db push` no es
+> una instrucciÃ³n vigente; revisa `docs/SECURITY_HARDENING_20260904.md` antes
+> de aplicar cambios en Supabase.
+
 ### Corte ejecutado: 28 de agosto de 2026
 
 El flujo previo a Flutter está operativo técnicamente en DEV. Supabase contiene 175 servicios activos, 226 ofertas, 23 sucursales, 7 proveedores y 437 precios vigentes. La cobertura multi-proveedor comercial existente sigue siendo 44 de 175 servicios con precio vigente en al menos dos proveedores; los cuatro proveedores genéricos nuevos no aportan precio hasta que publiquen uno explícito. Los precios cero usados por Ruiz como sentinela de descuento no disponible fueron eliminados y ahora existe una restricción positiva en `supply.price_versions`. Las migraciones 075-081 agregan lookup administrativo, hardening de integridad y búsqueda con diversidad de proveedores.
@@ -14,7 +18,7 @@ El smoke test Gate A confirma 10/10 aserciones y el Gate A de viabilidad es posi
 
 Admin V1 ahora expone dashboard, providers, locations, offers, prices, crawl runs, RAW, cola de normalización, calidad y alertas. Las lecturas operativas usan RPCs `service_role`; la sesión del operador usa Supabase Auth y el allowlist `ADMIN_USER_IDS` del Worker.
 
-Limitaciones explicitas: la corrida live de DENUE ya fue verificada localmente y publicada (489 registros válidos en Puebla); el token se mantiene sólo en `collectors/.env`, ignorado por Git. La cobertura multi-proveedor combina coincidencias exactas y 41 equivalencias manuales revisadas en `database/fixtures/gate_a_chopo_mappings.json`; no se aprueban equivalencias fuzzy implícitas. La cola `no_match` se mantiene visible para revisión humana.
+Limitaciones explicitas: la corrida live de DENUE ya fue verificada localmente y publicada (489 registros válidos en Puebla); las credenciales de DENUE/LOINC deben inyectarse fuera del repositorio (por ejemplo, un `collectors/.env` local ignorado por Git) y no se distribuyen con el proyecto. La cobertura multi-proveedor combina coincidencias exactas y 41 equivalencias manuales revisadas en `database/fixtures/gate_a_chopo_mappings.json`; no se aprueban equivalencias fuzzy implícitas. La cola `no_match` se mantiene visible para revisión humana.
 
 La base ya no está solo en revisión estática. El proyecto Supabase enlazado (`pruevia-dev`, región `us-east-1`) recibió las migraciones 001-094 y el seed mediante `db push --include-seed`. La validación remota confirmó 13 schemas, 45 tablas, las extensiones `postgis`, `pg_trgm`, `unaccent` y `pgcrypto`, un dominio de salud, 9 tipos de muestra y 4 feature flags.
 

@@ -21,9 +21,11 @@ from uuid import UUID
 try:  # Package import for tests; direct import for the CLI entrypoint.
     from .publish_golden_catalog import chunk_transaction, normalize, q, sql_geography, stable_id
     from .render_ingest_artifact import read_artifact, validate
+    from .artifact_io import MAX_FIXTURE_BYTES, read_json_file
 except ImportError:  # pragma: no cover - exercised by direct script invocation
     from publish_golden_catalog import chunk_transaction, normalize, q, sql_geography, stable_id
     from render_ingest_artifact import read_artifact, validate
+    from artifact_io import MAX_FIXTURE_BYTES, read_json_file
 
 
 SOURCE_KEY_RE = re.compile(r"^[a-z0-9_]+$")
@@ -33,8 +35,8 @@ ALLOWED_METHODS = {"manual", "exact"}
 
 def _json(path: Path) -> object:
     try:
-        return json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as error:
+        return read_json_file(path, max_bytes=MAX_FIXTURE_BYTES)
+    except (OSError, UnicodeError, json.JSONDecodeError, ValueError) as error:
         raise ValueError(f"invalid JSON file: {path}: {error}") from error
 
 

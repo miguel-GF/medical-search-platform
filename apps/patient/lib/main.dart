@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:typed_data';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +11,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'src/api_client.dart';
 import 'src/local_preferences.dart';
 import 'src/models.dart';
+import 'src/picked_file_cleanup_stub.dart'
+    if (dart.library.io) 'src/picked_file_cleanup_io.dart';
 import 'src/theme.dart';
 
 Future<void> main() async {
@@ -16,6 +21,16 @@ Future<void> main() async {
   // debug error surface. Network/API errors are handled inline; this is the
   // last-resort UI fallback for an unexpected rendering failure.
   ErrorWidget.builder = (_) => const _AppErrorFallback();
+  FlutterError.onError = (details) {
+    // Release builds must not send OCR text, URLs or widget payloads to the
+    // platform's default exception logger. Keep verbose diagnostics local to
+    // debug development only.
+    if (kDebugMode) FlutterError.dumpErrorToConsole(details);
+  };
+  PlatformDispatcher.instance.onError = (error, _) {
+    if (kDebugMode) debugPrint('Unhandled Flutter error: $error');
+    return true;
+  };
   final preferences = await PatientPreferences.load();
   runApp(PatientApp(preferences: preferences));
 }
@@ -39,9 +54,9 @@ class _AppErrorFallback extends StatelessWidget {
               const SizedBox(height: 12),
               Text(
                 'Algo no salió como esperábamos',
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.w800,
-                ),
+                style: Theme.of(
+                  context,
+                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800),
               ),
               const SizedBox(height: 8),
               const Text(
@@ -77,6 +92,19 @@ class _PatientAppState extends State<PatientApp> {
     if (mounted) setState(() => _themeMode = mode);
   }
 
+  Future<void> _finishOnboarding(bool consent) async {
+    await widget.preferences.completeOnboarding(consent: consent);
+    if (consent) {
+      await _api.recordEvent(
+        'consent_granted',
+        consentGiven: true,
+        anonymousId: widget.preferences.anonymousId,
+        metadata: const {'surface': 'pwa'},
+      );
+    }
+    if (mounted) setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) => MaterialApp(
     title: 'Pruevia',
@@ -87,31 +115,32 @@ class _PatientAppState extends State<PatientApp> {
     theme: buildPrueviaTheme(Brightness.light),
     darkTheme: buildPrueviaTheme(Brightness.dark),
     themeMode: _themeMode,
-    home: widget.preferences.consentGiven
+    home: widget.preferences.onboardingComplete
         ? PatientShell(
             api: _api,
             preferences: widget.preferences,
             themeMode: _themeMode,
             onThemeChanged: _setTheme,
-          )
-        : ConsentScreen(
-            onAccept: () async {
-              await widget.preferences.grantConsent();
-              await _api.recordEvent(
-                'consent_granted',
-                consentGiven: true,
-                anonymousId: widget.preferences.anonymousId,
-                metadata: const {'surface': 'pwa'},
-              );
+            onConsentRevoked: () async {
+              await widget.preferences.revokeConsent();
               if (mounted) setState(() {});
             },
+          )
+        : ConsentScreen(
+            onAccept: () => _finishOnboarding(true),
+            onDecline: () => _finishOnboarding(false),
           ),
   );
 }
 
 class ConsentScreen extends StatelessWidget {
-  const ConsentScreen({super.key, required this.onAccept});
+  const ConsentScreen({
+    super.key,
+    required this.onAccept,
+    required this.onDecline,
+  });
   final Future<void> Function() onAccept;
+  final Future<void> Function() onDecline;
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -163,6 +192,14 @@ class ConsentScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                const SizedBox(height: 8),
+                SizedBox(
+                  width: double.infinity,
+                  child: TextButton(
+                    onPressed: onDecline,
+                    child: const Text('Continuar sin analítica'),
+                  ),
+                ),
                 const SizedBox(height: 12),
                 Text(
                   'Puedes borrar tus preferencias del navegador en cualquier momento.',
@@ -184,24 +221,36 @@ class PatientShell extends StatefulWidget {
     required this.preferences,
     required this.themeMode,
     required this.onThemeChanged,
+    required this.onConsentRevoked,
   });
   final PatientApiClient api;
   final PatientPreferences preferences;
   final ThemeMode themeMode;
   final Future<void> Function(ThemeMode mode) onThemeChanged;
+  final Future<void> Function() onConsentRevoked;
   @override
   State<PatientShell> createState() => _PatientShellState();
 }
 
 class _PatientShellState extends State<PatientShell> {
   int _index = 0;
+  final _orderKey = GlobalKey<_OrderScreenState>();
   void _openOrder() => setState(() => _index = 1);
+
+  void _selectTab(int value) {
+    if (_index == 1 && value != 1) {
+      _orderKey.currentState?._clearSensitiveOrderData();
+    }
+    setState(() => _index = value);
+  }
 
   Future<void> _openProviderAccess() async {
     await widget.api.recordEvent(
       'provider_contact_clicked',
       consentGiven: widget.preferences.consentGiven,
-      anonymousId: widget.preferences.anonymousId,
+      anonymousId: widget.preferences.consentGiven
+          ? widget.preferences.anonymousId
+          : '',
       metadata: const {'surface': 'pwa'},
     );
     if (!mounted) return;
@@ -222,11 +271,16 @@ class _PatientShellState extends State<PatientShell> {
         onOpenOrder: _openOrder,
         onOpenProviderAccess: _openProviderAccess,
       ),
-      OrderScreen(api: widget.api, preferences: widget.preferences),
+      OrderScreen(
+        key: _orderKey,
+        api: widget.api,
+        preferences: widget.preferences,
+      ),
       SettingsScreen(
         preferences: widget.preferences,
         themeMode: widget.themeMode,
         onThemeChanged: widget.onThemeChanged,
+        onConsentRevoked: widget.onConsentRevoked,
       ),
     ];
     final wide = MediaQuery.sizeOf(context).width >= 900;
@@ -255,7 +309,7 @@ class _PatientShellState extends State<PatientShell> {
           if (wide)
             NavigationRail(
               selectedIndex: _index,
-              onDestinationSelected: (value) => setState(() => _index = value),
+              onDestinationSelected: _selectTab,
               labelType: NavigationRailLabelType.all,
               destinations: const [
                 NavigationRailDestination(
@@ -281,7 +335,7 @@ class _PatientShellState extends State<PatientShell> {
           ? null
           : NavigationBar(
               selectedIndex: _index,
-              onDestinationSelected: (value) => setState(() => _index = value),
+              onDestinationSelected: _selectTab,
               destinations: const [
                 NavigationDestination(
                   icon: Icon(Icons.search),
@@ -335,6 +389,7 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _loading = true;
       _error = null;
+      _response = null;
     });
     try {
       final response = await widget.api.search(query);
@@ -343,7 +398,9 @@ class _HomeScreenState extends State<HomeScreen> {
       await widget.api.recordEvent(
         'search_completed',
         consentGiven: widget.preferences.consentGiven,
-        anonymousId: widget.preferences.anonymousId,
+        anonymousId: widget.preferences.consentGiven
+            ? widget.preferences.anonymousId
+            : '',
         metadata: {'result_count': response.services.length},
       );
     } on PatientApiException catch (error) {
@@ -392,6 +449,7 @@ class _HomeScreenState extends State<HomeScreen> {
             final stacked = constraints.maxWidth < 560;
             final field = TextField(
               controller: _query,
+              inputFormatters: [LengthLimitingTextInputFormatter(200)],
               textInputAction: TextInputAction.search,
               onSubmitted: (_) => _search(),
               decoration: const InputDecoration(
@@ -577,7 +635,8 @@ class OrderScreen extends StatefulWidget {
   State<OrderScreen> createState() => _OrderScreenState();
 }
 
-class _OrderScreenState extends State<OrderScreen> {
+class _OrderScreenState extends State<OrderScreen> with WidgetsBindingObserver {
+  static const _maxImageBytes = 5 * 1024 * 1024;
   final _text = TextEditingController();
   final _picker = ImagePicker();
   PackageObjective _objective = PackageObjective.allInOne;
@@ -586,11 +645,61 @@ class _OrderScreenState extends State<OrderScreen> {
   String? _mimeType;
   String? _error;
   bool _loading = false;
+  // Invalidate in-flight work whenever medical state is erased or the app is
+  // backgrounded, so a late network response cannot repopulate the UI.
+  int _sensitiveGeneration = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    // image_picker can leave a capture in its temporary cache if Android
+    // kills the activity while the picker is open. Recovering the lost handle
+    // and deleting it immediately prevents a later restart from retaining a
+    // medical image outside the in-memory order state.
+    if (!kIsWeb) unawaited(_discardLostPickerData());
+  }
+
+  Future<void> _discardLostPickerData() async {
+    try {
+      final lost = await _picker.retrieveLostData();
+      for (final file in lost.files ?? const <XFile>[]) {
+        await deletePickedFile(file.path);
+      }
+    } catch (_) {
+      // A missing plugin or an already-collected cache file is harmless.
+    }
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.inactive ||
+        state == AppLifecycleState.paused) {
+      _clearSensitiveOrderData();
+    }
+  }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _sensitiveGeneration += 1;
+    _selectedImage = null;
+    _response = null;
     _text.dispose();
     super.dispose();
+  }
+
+  void _clearSensitiveOrderData() {
+    _sensitiveGeneration += 1;
+    if (!mounted) return;
+    setState(() {
+      _selectedImage = null;
+      _mimeType = null;
+      _response = null;
+      _text.clear();
+      _error = null;
+      _loading = false;
+    });
   }
 
   Future<void> _resolveText() async {
@@ -598,6 +707,7 @@ class _OrderScreenState extends State<OrderScreen> {
       setState(() => _error = 'Pega o escribe al menos un estudio.');
       return;
     }
+    final generation = _sensitiveGeneration;
     setState(() {
       _loading = true;
       _error = null;
@@ -607,32 +717,40 @@ class _OrderScreenState extends State<OrderScreen> {
         text: _text.text,
         objective: _objective,
       );
-      if (!mounted) return;
+      if (!mounted || generation != _sensitiveGeneration) return;
       setState(() => _response = response);
+      if (!mounted || generation != _sensitiveGeneration) return;
       await widget.api.recordEvent(
         'package_resolved',
         consentGiven: widget.preferences.consentGiven,
-        anonymousId: widget.preferences.anonymousId,
+        anonymousId: widget.preferences.consentGiven
+            ? widget.preferences.anonymousId
+            : '',
         metadata: {
           'item_count': response.items.length,
           'status': response.packageStatus,
         },
       );
     } on PatientApiException catch (error) {
-      if (mounted) setState(() => _error = error.message);
+      if (mounted && generation == _sensitiveGeneration) {
+        setState(() => _error = error.message);
+      }
     } catch (_) {
-      if (mounted) {
+      if (mounted && generation == _sensitiveGeneration) {
         setState(
           () => _error =
               'No pudimos resolver la receta. Revisa tu conexión e inténtalo de nuevo.',
         );
       }
     } finally {
-      if (mounted) setState(() => _loading = false);
+      if (mounted && generation == _sensitiveGeneration) {
+        setState(() => _loading = false);
+      }
     }
   }
 
   Future<void> _pickImage(ImageSource source) async {
+    final generation = _sensitiveGeneration;
     try {
       final file = await _picker.pickImage(
         source: source,
@@ -641,19 +759,35 @@ class _OrderScreenState extends State<OrderScreen> {
         maxHeight: 2500,
       );
       if (file == null) return;
-      final bytes = await file.readAsBytes();
-      if (bytes.length > 5 * 1024 * 1024) {
+      // Stream the picked file with a hard cap instead of loading an
+      // untrusted local file completely before checking its size.
+      final builder = BytesBuilder(copy: false);
+      var totalBytes = 0;
+      try {
+        await for (final chunk in file.openRead()) {
+          totalBytes += chunk.length;
+          if (totalBytes > _maxImageBytes) break;
+          builder.add(chunk);
+        }
+      } finally {
+        await deletePickedFile(file.path);
+      }
+      if (totalBytes > _maxImageBytes) {
+        if (!mounted || generation != _sensitiveGeneration) return;
         setState(
           () => _error =
               'La imagen supera el límite de 5 MiB. Elige una foto más ligera.',
         );
         return;
       }
+      if (!mounted || generation != _sensitiveGeneration) return;
+      final bytes = builder.takeBytes();
       final mime = _mimeFor(file.name);
       setState(() {
         _selectedImage = bytes;
         _mimeType = mime;
         _error = null;
+        _response = null;
         _loading = true;
       });
       final response = await widget.api.resolveImage(
@@ -661,31 +795,41 @@ class _OrderScreenState extends State<OrderScreen> {
         mime,
         objective: _objective,
       );
-      if (!mounted) return;
+      if (!mounted || generation != _sensitiveGeneration) return;
       setState(() {
         _response = response;
+        // Do not retain the original medical image after OCR has completed.
+        _selectedImage = null;
+        _mimeType = null;
         if (response.ocr != null) _text.text = response.ocr!.text;
       });
+      if (!mounted || generation != _sensitiveGeneration) return;
       await widget.api.recordEvent(
         'package_resolved_from_image',
         consentGiven: widget.preferences.consentGiven,
-        anonymousId: widget.preferences.anonymousId,
+        anonymousId: widget.preferences.consentGiven
+            ? widget.preferences.anonymousId
+            : '',
         metadata: {
           'item_count': response.items.length,
           'review_required': response.ocr?.reviewRequired ?? false,
         },
       );
     } on PatientApiException catch (error) {
-      if (mounted) setState(() => _error = error.message);
+      if (mounted && generation == _sensitiveGeneration) {
+        setState(() => _error = error.message);
+      }
     } catch (_) {
-      if (mounted) {
+      if (mounted && generation == _sensitiveGeneration) {
         setState(
           () => _error =
               'No pudimos leer esa imagen. Puedes escribir los estudios manualmente.',
         );
       }
     } finally {
-      if (mounted) setState(() => _loading = false);
+      if (mounted && generation == _sensitiveGeneration) {
+        setState(() => _loading = false);
+      }
     }
   }
 
@@ -722,6 +866,7 @@ class _OrderScreenState extends State<OrderScreen> {
               children: [
                 TextField(
                   controller: _text,
+                  inputFormatters: [LengthLimitingTextInputFormatter(4000)],
                   minLines: 5,
                   maxLines: 10,
                   textCapitalization: TextCapitalization.sentences,
@@ -791,6 +936,14 @@ class _OrderScreenState extends State<OrderScreen> {
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ],
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton.icon(
+                    onPressed: _loading ? null : _clearSensitiveOrderData,
+                    icon: const Icon(Icons.delete_outline),
+                    label: const Text('Borrar datos de esta orden'),
+                  ),
+                ),
               ],
             ),
           ),
@@ -869,6 +1022,7 @@ class OcrReviewCard extends StatelessWidget {
             const SizedBox(height: 12),
             TextField(
               controller: controller,
+              inputFormatters: [LengthLimitingTextInputFormatter(4000)],
               minLines: 2,
               maxLines: 8,
               decoration: const InputDecoration(labelText: 'Texto reconocido'),
@@ -1072,9 +1226,15 @@ class _SearchResultsExplorerState extends State<SearchResultsExplorer> {
     final selectedKey = groups.any((group) => group.key == _selectedProvider)
         ? _selectedProvider!
         : groups.firstOrNull?.key;
-    final selected = groups.where((group) => group.key == selectedKey).firstOrNull;
-    final unmatched = widget.services.where((service) => service.offers.isEmpty).toList(growable: false);
-    final ambiguous = widget.services.where((service) => service.resolutionStatus == 'ambiguous').length;
+    final selected = groups
+        .where((group) => group.key == selectedKey)
+        .firstOrNull;
+    final unmatched = widget.services
+        .where((service) => service.offers.isEmpty)
+        .toList(growable: false);
+    final ambiguous = widget.services
+        .where((service) => service.resolutionStatus == 'ambiguous')
+        .length;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -1121,7 +1281,8 @@ class _SearchResultsExplorerState extends State<SearchResultsExplorer> {
                     child: selected == null
                         ? const _EmptyState(
                             title: 'Selecciona un proveedor',
-                            text: 'Elige una empresa para ver sus sucursales, precios y fuentes.',
+                            text:
+                                'Elige una empresa para ver sus sucursales, precios y fuentes.',
                           )
                         : _ProviderDetails(group: selected),
                   ),
@@ -1157,8 +1318,8 @@ class _SearchInterpretation extends StatelessWidget {
     final text = providerCount == 0
         ? 'El catálogo reconoce $serviceCount servicio${serviceCount == 1 ? '' : 's'}, pero no hay una oferta comercial vigente para mostrar.'
         : ambiguousCount == 0
-            ? 'Encontramos $serviceCount servicio${serviceCount == 1 ? '' : 's'} en $providerCount proveedor${providerCount == 1 ? '' : 'es'}. Selecciona una empresa para comparar sus sucursales.'
-            : 'Encontramos $serviceCount posible${serviceCount == 1 ? '' : 's'} coincidencia${serviceCount == 1 ? '' : 's'}. $ambiguousCount requiere${ambiguousCount == 1 ? '' : 'n'} confirmar la variante exacta.';
+        ? 'Encontramos $serviceCount servicio${serviceCount == 1 ? '' : 's'} en $providerCount proveedor${providerCount == 1 ? '' : 'es'}. Selecciona una empresa para comparar sus sucursales.'
+        : 'Encontramos $serviceCount posible${serviceCount == 1 ? '' : 's'} coincidencia${serviceCount == 1 ? '' : 's'}. $ambiguousCount requiere${ambiguousCount == 1 ? '' : 'n'} confirmar la variante exacta.';
     return Card(
       color: Theme.of(context).colorScheme.primaryContainer,
       child: Padding(
@@ -1166,13 +1327,19 @@ class _SearchInterpretation extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(Icons.fact_check_outlined, color: Theme.of(context).colorScheme.onPrimaryContainer),
+            Icon(
+              Icons.fact_check_outlined,
+              color: Theme.of(context).colorScheme.onPrimaryContainer,
+            ),
             const SizedBox(width: 12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Esto es lo que encontramos', style: TextStyle(fontWeight: FontWeight.w800)),
+                  const Text(
+                    'Esto es lo que encontramos',
+                    style: TextStyle(fontWeight: FontWeight.w800),
+                  ),
                   const SizedBox(height: 4),
                   Text(text),
                   const SizedBox(height: 4),
@@ -1197,14 +1364,17 @@ class _ProviderGroup {
   final String name;
   final Map<String, _BranchGroup> branches = <String, _BranchGroup>{};
 
-  int get offerCount => branches.values.fold(0, (sum, branch) => sum + branch.offers.length);
+  int get offerCount =>
+      branches.values.fold(0, (sum, branch) => sum + branch.offers.length);
   int get serviceCount => branches.values
       .expand((branch) => branch.offers)
       .map((entry) => entry.service.id)
       .toSet()
       .length;
-  int get branchCount => branches.values.where((branch) => !branch.isUnscoped).length;
-  bool get hasUnscopedBranch => branches.values.any((branch) => branch.isUnscoped);
+  int get branchCount =>
+      branches.values.where((branch) => !branch.isUnscoped).length;
+  bool get hasUnscopedBranch =>
+      branches.values.any((branch) => branch.isUnscoped);
 
   String get branchSummary {
     final confirmed = branchCount;
@@ -1236,7 +1406,8 @@ List<_ProviderGroup> _providerGroups(List<SearchService> services) {
   final groups = <String, _ProviderGroup>{};
   for (final service in services) {
     for (final offer in service.offers) {
-      final providerKey = offer.providerId ?? offer.providerName.trim().toLowerCase();
+      final providerKey =
+          offer.providerId ?? offer.providerName.trim().toLowerCase();
       final provider = groups.putIfAbsent(
         providerKey,
         () => _ProviderGroup(providerKey, offer.providerName),
@@ -1257,7 +1428,11 @@ List<_ProviderGroup> _providerGroups(List<SearchService> services) {
 }
 
 class _ProviderPicker extends StatelessWidget {
-  const _ProviderPicker({required this.groups, required this.selectedKey, required this.onSelected});
+  const _ProviderPicker({
+    required this.groups,
+    required this.selectedKey,
+    required this.onSelected,
+  });
 
   final List<_ProviderGroup> groups;
   final String? selectedKey;
@@ -1275,7 +1450,9 @@ class _ProviderPicker extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
             child: Text(
               'Proveedores encontrados',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800),
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800),
             ),
           ),
           ...groups.map(
@@ -1283,12 +1460,22 @@ class _ProviderPicker extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 6),
               child: ListTile(
                 selected: group.key == selectedKey,
-                selectedTileColor: Theme.of(context).colorScheme.primaryContainer.withValues(alpha: .55),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                selectedTileColor: Theme.of(
+                  context,
+                ).colorScheme.primaryContainer.withValues(alpha: .55),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
                 onTap: () => onSelected(group.key),
                 leading: CircleAvatar(child: Text('${group.offerCount}')),
-                title: Text(group.name, maxLines: 2, overflow: TextOverflow.ellipsis),
-                subtitle: Text('${group.serviceCount} estudio${group.serviceCount == 1 ? '' : 's'} · ${group.branchSummary}'),
+                title: Text(
+                  group.name,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                subtitle: Text(
+                  '${group.serviceCount} estudio${group.serviceCount == 1 ? '' : 's'} · ${group.branchSummary}',
+                ),
                 trailing: const Icon(Icons.chevron_right),
               ),
             ),
@@ -1321,9 +1508,16 @@ class _ProviderDetails extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(group.name, style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800)),
+                      Text(
+                        group.name,
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
                       const SizedBox(height: 4),
-                      Text('${group.offerCount} coincidencia${group.offerCount == 1 ? '' : 's'} · ${group.branchSummary}'),
+                      Text(
+                        '${group.offerCount} coincidencia${group.offerCount == 1 ? '' : 's'} · ${group.branchSummary}',
+                      ),
                     ],
                   ),
                 ),
@@ -1337,9 +1531,11 @@ class _ProviderDetails extends StatelessWidget {
           branches.length > 1
               ? 'Compara las sucursales: sus estudios y precios aparecen debajo'
               : branches.first.isUnscoped
-                  ? 'Alcance publicado · sucursal por confirmar'
-                  : 'Información por sucursal',
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800),
+              ? 'Alcance publicado · sucursal por confirmar'
+              : 'Información por sucursal',
+          style: Theme.of(
+            context,
+          ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800),
         ),
         const SizedBox(height: 8),
         ...branches.map((branch) => _BranchCard(branch: branch)),
@@ -1365,7 +1561,9 @@ class _BranchCard extends StatelessWidget {
             contentPadding: EdgeInsets.zero,
             leading: const Icon(Icons.location_on_outlined),
             title: Text(branch.name),
-            subtitle: Text('${branch.offers.length} coincidencia${branch.offers.length == 1 ? '' : 's'}'),
+            subtitle: Text(
+              '${branch.offers.length} coincidencia${branch.offers.length == 1 ? '' : 's'}',
+            ),
           ),
           ...branch.offers.map((entry) => _ProviderServiceTile(entry: entry)),
         ],
@@ -1385,7 +1583,9 @@ class _ProviderServiceTile extends StatelessWidget {
     margin: const EdgeInsets.only(top: 8),
     padding: const EdgeInsets.all(12),
     decoration: BoxDecoration(
-      color: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: .45),
+      color: Theme.of(
+        context,
+      ).colorScheme.surfaceContainerHighest.withValues(alpha: .45),
       borderRadius: BorderRadius.circular(12),
     ),
     child: Column(
@@ -1395,14 +1595,20 @@ class _ProviderServiceTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              child: Text(entry.service.displayName, style: const TextStyle(fontWeight: FontWeight.w800)),
+              child: Text(
+                entry.service.displayName,
+                style: const TextStyle(fontWeight: FontWeight.w800),
+              ),
             ),
             const SizedBox(width: 8),
             _StatusChip(status: _serviceMatchStatus(entry.service)),
           ],
         ),
         const SizedBox(height: 8),
-        Align(alignment: Alignment.centerRight, child: _OfferPricing(offer: entry.offer)),
+        Align(
+          alignment: Alignment.centerRight,
+          child: _OfferPricing(offer: entry.offer),
+        ),
       ],
     ),
   );
@@ -1426,9 +1632,14 @@ class _UnmatchedServices extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Estudios reconocidos sin oferta vigente', style: TextStyle(fontWeight: FontWeight.w800)),
+          const Text(
+            'Estudios reconocidos sin oferta vigente',
+            style: TextStyle(fontWeight: FontWeight.w800),
+          ),
           const SizedBox(height: 4),
-          const Text('Los identificamos en el catálogo, pero no hay un precio o proveedor publicado para mostrar.'),
+          const Text(
+            'Los identificamos en el catálogo, pero no hay un precio o proveedor publicado para mostrar.',
+          ),
           const SizedBox(height: 10),
           ...services.map(
             (service) => ListTile(
@@ -1462,9 +1673,9 @@ class ServiceCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                     service.displayName,
-                    style: Theme.of(
-                      context,
-                    ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -1513,7 +1724,10 @@ class _OfferRow extends StatelessWidget {
                 const SizedBox(height: 12),
                 SizedBox(
                   width: double.infinity,
-                  child: Align(alignment: Alignment.centerRight, child: pricing),
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: pricing,
+                  ),
                 ),
               ],
             );
@@ -1542,13 +1756,19 @@ class _OfferIdentity extends StatelessWidget {
   Widget build(BuildContext context) => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Text(offer.providerName, style: const TextStyle(fontWeight: FontWeight.w700)),
+      Text(
+        offer.providerName,
+        style: const TextStyle(fontWeight: FontWeight.w700),
+      ),
       Text(
         offer.locationName ?? 'Sin sucursal vinculada',
         style: Theme.of(context).textTheme.bodySmall,
       ),
       if (offer.distanceMeters != null)
-        Text(_distance(offer.distanceMeters!), style: Theme.of(context).textTheme.bodySmall),
+        Text(
+          _distance(offer.distanceMeters!),
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
     ],
   );
 }
@@ -1567,7 +1787,9 @@ class _OfferPricing extends StatelessWidget {
           offer.amountMinor == null
               ? 'Cotizar'
               : _money(offer.amountMinor!, offer.currency ?? 'MXN'),
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800),
+          style: Theme.of(
+            context,
+          ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800),
         ),
         if (offer.amountMinor != null && priceLabel != null)
           Text(priceLabel, style: Theme.of(context).textTheme.bodySmall),
@@ -1628,10 +1850,12 @@ class SettingsScreen extends StatelessWidget {
     required this.preferences,
     required this.themeMode,
     required this.onThemeChanged,
+    required this.onConsentRevoked,
   });
   final PatientPreferences preferences;
   final ThemeMode themeMode;
   final Future<void> Function(ThemeMode mode) onThemeChanged;
+  final Future<void> Function() onConsentRevoked;
   @override
   Widget build(BuildContext context) => _PageFrame(
     child: Column(
@@ -1687,6 +1911,7 @@ class SettingsScreen extends StatelessWidget {
               const Divider(height: 1),
               ListTile(
                 leading: const Icon(Icons.delete_outline),
+                onTap: preferences.consentGiven ? onConsentRevoked : null,
                 title: const Text('Consentimiento anónimo'),
                 subtitle: Text(
                   preferences.consentGiven
@@ -1798,17 +2023,18 @@ class _PageFrameState extends State<_PageFrame> {
   Widget build(BuildContext context) => SafeArea(
     child: CallbackShortcuts(
       bindings: <ShortcutActivator, VoidCallback>{
-        const SingleActivator(LogicalKeyboardKey.pageDown):
-            () => _scrollBy(.9),
-        const SingleActivator(LogicalKeyboardKey.pageUp):
-            () => _scrollBy(-.9),
-        const SingleActivator(LogicalKeyboardKey.arrowDown):
-            () => _scrollBy(.15),
-        const SingleActivator(LogicalKeyboardKey.arrowUp):
-            () => _scrollBy(-.15),
+        const SingleActivator(LogicalKeyboardKey.pageDown): () => _scrollBy(.9),
+        const SingleActivator(LogicalKeyboardKey.pageUp): () => _scrollBy(-.9),
+        const SingleActivator(LogicalKeyboardKey.arrowDown): () =>
+            _scrollBy(.15),
+        const SingleActivator(LogicalKeyboardKey.arrowUp): () =>
+            _scrollBy(-.15),
         const SingleActivator(LogicalKeyboardKey.home): () => _scrollTo(0),
-        const SingleActivator(LogicalKeyboardKey.end):
-            () => _scrollTo(_scrollController.hasClients ? _scrollController.position.maxScrollExtent : 0),
+        const SingleActivator(LogicalKeyboardKey.end): () => _scrollTo(
+          _scrollController.hasClients
+              ? _scrollController.position.maxScrollExtent
+              : 0,
+        ),
       },
       child: Focus(
         autofocus: true,
@@ -2062,5 +2288,78 @@ String _date(String value) =>
 
 Future<void> _open(String value) async {
   final uri = Uri.tryParse(value);
-  if (uri != null) await launchUrl(uri, mode: LaunchMode.externalApplication);
+  // Source links are untrusted API data. Never hand schemes such as
+  // javascript:, file: or custom app deep-links to the operating system, and
+  // never open literal internal/reserved hosts from a catalog response.
+  if (uri == null ||
+      uri.scheme != 'https' ||
+      uri.host.isEmpty ||
+      uri.userInfo.isNotEmpty ||
+      (uri.port != 0 && uri.port != 443) ||
+      !_isPublicHost(uri.host) ||
+      !_isTrustedSourceHost(uri.host)) {
+    return;
+  }
+  await launchUrl(uri, mode: LaunchMode.externalApplication);
+}
+
+const _trustedSourceDomains = <String>{
+  'chopo.com.mx',
+  'laboratoriosruiz.com',
+  'salud-digna.org',
+  'emarketingsd.org',
+  'inegi.org.mx',
+  'familylabs.com.mx',
+  'laboratorioasesores.com',
+  'labxonaca.com',
+  'semindigital.com',
+};
+
+bool _isTrustedSourceHost(String host) {
+  final value = host.toLowerCase().replaceFirst(RegExp(r'\.$'), '');
+  return _trustedSourceDomains.any(
+    (domain) => value == domain || value.endsWith('.$domain'),
+  );
+}
+
+bool _isPublicHost(String host) {
+  final value = host.toLowerCase().replaceFirst(RegExp(r'\.$'), '');
+  if (value.isEmpty ||
+      value == 'localhost' ||
+      value.endsWith('.localhost') ||
+      value.endsWith('.local') ||
+      value.endsWith('.internal') ||
+      value.codeUnits.any((unit) => unit > 0x7f)) {
+    return false;
+  }
+  final ipv4 = RegExp(r'^(\d+)\.(\d+)\.(\d+)\.(\d+)$').firstMatch(value);
+  if (ipv4 != null) {
+    final octets = [
+      1,
+      2,
+      3,
+      4,
+    ].map((index) => int.tryParse(ipv4.group(index) ?? '') ?? -1).toList();
+    if (octets.any((part) => part < 0 || part > 255)) return false;
+    final a = octets[0], b = octets[1];
+    return a != 0 &&
+        a != 10 &&
+        a != 127 &&
+        a != 169 &&
+        !(a == 172 && b >= 16 && b <= 31) &&
+        !(a == 192 && b == 168);
+  }
+  // IPv6 loopback, link-local, unique-local and unspecified addresses.
+  final ipv6 = value.startsWith('[') && value.endsWith(']')
+      ? value.substring(1, value.length - 1)
+      : value;
+  if (ipv6 == '::' ||
+      ipv6 == '::1' ||
+      ipv6.startsWith('fe80:') ||
+      ipv6.startsWith('fc') ||
+      ipv6.startsWith('fd') ||
+      ipv6.contains(':')) {
+    return false;
+  }
+  return true;
 }

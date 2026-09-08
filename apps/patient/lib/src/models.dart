@@ -1,11 +1,22 @@
 typedef JsonMap = Map<String, dynamic>;
 
-double? _doubleValue(Object? value) =>
-    value is num ? value.toDouble() : double.tryParse('$value');
+double? _doubleValue(Object? value) {
+  final parsed = value is num ? value.toDouble() : double.tryParse('$value');
+  return parsed != null && parsed.isFinite ? parsed : null;
+}
+
 int? _intValue(Object? value) =>
     value is num ? value.toInt() : int.tryParse('$value');
 String? _stringValue(Object? value) =>
-    value is String && value.trim().isNotEmpty ? value.trim() : null;
+    value is String && value.trim().isNotEmpty && value.length <= 4096
+    ? value.trim()
+    : null;
+
+Iterable<Object?> _boundedList(Object? value, int maxItems) =>
+    value is List ? value.take(maxItems) : const <Object?>[];
+
+JsonMap _record(Object? value) =>
+    value is JsonMap ? value : const <String, dynamic>{};
 
 class SearchOffer {
   const SearchOffer({
@@ -37,17 +48,17 @@ class SearchOffer {
   final String? lastSeenAt;
 
   factory SearchOffer.fromJson(JsonMap json) {
-    final provider = (json['provider'] as JsonMap?) ?? <String, dynamic>{};
-    final location = json['location'] as JsonMap?;
-    final price = json['price'] as JsonMap?;
+    final provider = _record(json['provider']);
+    final location = json['location'] is JsonMap
+        ? json['location'] as JsonMap
+        : null;
+    final price = json['price'] is JsonMap ? json['price'] as JsonMap : null;
     final rawPrices = json['prices'];
-    final prices = rawPrices is List
-        ? rawPrices
-              .whereType<JsonMap>()
-              .map(SearchPrice.fromJson)
-              .toList(growable: false)
-        : const <SearchPrice>[];
-    final source = json['source'] as JsonMap?;
+    final prices = _boundedList(
+      rawPrices,
+      100,
+    ).whereType<JsonMap>().map(SearchPrice.fromJson).toList(growable: false);
+    final source = json['source'] is JsonMap ? json['source'] as JsonMap : null;
     return SearchOffer(
       id: _stringValue(json['id']) ?? 'offer',
       providerName: _stringValue(provider['name']) ?? 'Proveedor',
@@ -102,11 +113,11 @@ class SearchService {
   final String? resolutionStatus;
 
   factory SearchService.fromJson(JsonMap json) {
-    final service = (json['service'] as JsonMap?) ?? <String, dynamic>{};
-    final offers = (json['offers'] as List<dynamic>? ?? const [])
-        .whereType<JsonMap>()
-        .map(SearchOffer.fromJson)
-        .toList(growable: false);
+    final service = _record(json['service']);
+    final offers = _boundedList(
+      json['offers'],
+      100,
+    ).whereType<JsonMap>().map(SearchOffer.fromJson).toList(growable: false);
     return SearchService(
       id: _stringValue(service['id']) ?? 'service',
       displayName: _stringValue(service['display_name']) ?? 'Servicio',
@@ -125,10 +136,10 @@ class SearchResponse {
 
   factory SearchResponse.fromJson(JsonMap json) => SearchResponse(
     query: _stringValue(json['query']) ?? '',
-    services: (json['results'] as List<dynamic>? ?? const [])
-        .whereType<JsonMap>()
-        .map(SearchService.fromJson)
-        .toList(growable: false),
+    services: _boundedList(
+      json['results'],
+      100,
+    ).whereType<JsonMap>().map(SearchService.fromJson).toList(growable: false),
   );
 }
 
@@ -188,7 +199,7 @@ class PackageItem {
     input: _stringValue(json['input']) ?? '',
     status: _stringValue(json['status']) ?? 'no_match',
     reasonCode: _stringValue(json['reason_code']),
-    candidates: (json['candidates'] as List<dynamic>? ?? const [])
+    candidates: _boundedList(json['candidates'], 50)
         .whereType<JsonMap>()
         .map(PackageCandidate.fromJson)
         .toList(growable: false),
@@ -241,14 +252,14 @@ class PackageSolution {
     requestedCount: _intValue(json['requested_count']) ?? 0,
     coveragePercent: _doubleValue(json['coverage_percent']) ?? 0,
     locationCount: _intValue(json['location_count']) ?? 0,
-    locations: (json['locations'] as List<dynamic>? ?? const [])
+    locations: _boundedList(json['locations'], 50)
         .whereType<JsonMap>()
         .map(PackageLocation.fromJson)
         .toList(growable: false),
-    missingIndexes: (json['missing_item_indexes'] as List<dynamic>? ?? const [])
-        .whereType<num>()
-        .map((e) => e.toInt())
-        .toList(growable: false),
+    missingIndexes: _boundedList(
+      json['missing_item_indexes'],
+      100,
+    ).whereType<num>().map((e) => e.toInt()).toList(growable: false),
     totalAmountMinor: _intValue(json['total_amount_minor']),
     currency: _stringValue(json['currency']),
     requiresQuote: json['requires_quote'] == true,
@@ -269,10 +280,10 @@ class OcrPreview {
   factory OcrPreview.fromJson(JsonMap json) => OcrPreview(
     text: _stringValue(json['text']) ?? '',
     reviewRequired: json['review_required'] == true,
-    lowConfidenceLines:
-        (json['low_confidence_lines'] as List<dynamic>? ?? const [])
-            .whereType<String>()
-            .toList(growable: false),
+    lowConfidenceLines: _boundedList(
+      json['low_confidence_lines'],
+      100,
+    ).whereType<String>().where((line) => line.length <= 4096).toList(growable: false),
   );
 }
 
@@ -297,11 +308,11 @@ class PackageResponse {
     packageStatus: _stringValue(json['package_status']) ?? 'no_match',
     coverageStatus: _stringValue(json['coverage_status']) ?? 'none',
     query: _stringValue(json['query']),
-    items: (json['items'] as List<dynamic>? ?? const [])
-        .whereType<JsonMap>()
-        .map(PackageItem.fromJson)
-        .toList(growable: false),
-    solutions: (json['solutions'] as List<dynamic>? ?? const [])
+    items: _boundedList(
+      json['items'],
+      100,
+    ).whereType<JsonMap>().map(PackageItem.fromJson).toList(growable: false),
+    solutions: _boundedList(json['solutions'], 20)
         .whereType<JsonMap>()
         .map(PackageSolution.fromJson)
         .toList(growable: false),

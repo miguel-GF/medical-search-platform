@@ -29,6 +29,10 @@ const JSON_HEADERS = {
   'cache-control': 'no-store',
   'x-content-type-options': 'nosniff',
   'referrer-policy': 'no-referrer',
+  'content-security-policy': "default-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'",
+  'x-frame-options': 'DENY',
+  'permissions-policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=()',
+  'strict-transport-security': 'max-age=63072000; includeSubDomains; preload',
 };
 const ANALYTICS_EVENTS = new Set([
   'consent_granted',
@@ -41,12 +45,21 @@ const ANALYTICS_EVENTS = new Set([
 const ANALYTICS_METADATA_KEYS = new Set(['result_count', 'item_count', 'status', 'review_required', 'surface']);
 const ANALYTICS_STATUSES = new Set(['ready', 'partial', 'needs_clarification', 'no_match']);
 const ANALYTICS_SURFACES = new Set(['web', 'pwa', 'android', 'ios']);
+const AUTH_USER_MAX_RESPONSE_BYTES = 64 * 1024;
+const MAX_PUBLIC_PAYLOAD_DEPTH = 32;
+const MAX_PUBLIC_PAYLOAD_ENTRIES = 1_000;
+const MAX_PUBLIC_PAYLOAD_STRING_LENGTH = 64 * 1024;
+const SENSITIVE_PUBLIC_PAYLOAD_KEY = /(password|passphrase|secret|token|authorization|cookie|api[_-]?key|private[_-]?key|access[_-]?token|refresh[_-]?token|client[_-]?secret)/i;
 
 export function createHandler(dependencies: Dependencies) {
   return async function handle(request: Request, env: Env): Promise<Response> {
     const origin = configuredCorsOrigin(env.ALLOWED_ORIGIN);
     const requestId = requestIdFor(request);
-    if (env.APP_ENV === 'production' && !isSecureConfiguredOrigin(env.ALLOWED_ORIGIN)) {
+    // Only explicitly named local/test environments may relax origin and
+    // abuse-control requirements. An omitted or unknown APP_ENV must never
+    // silently downgrade a deployment into development behavior.
+    const relaxedEnvironment = env.APP_ENV === 'development' || env.APP_ENV === 'test';
+    if (!relaxedEnvironment && !isSecureConfiguredOrigin(env.ALLOWED_ORIGIN)) {
       console.error(JSON.stringify({ event: 'api_configuration_error', request_id: requestId, reason: 'https_origin_required' }));
       return errorJson('service_not_configured', 'The API is not securely configured.', 503, origin, requestId, 'API.SERVER.CONFIGURATION', 'high', false);
     }
@@ -250,8 +263,7 @@ async function captureResolutionReview(payload: ResolutionResponse, rpc: RpcClie
 async function allowReviewCapture(request: Request, env: Env): Promise<boolean> {
   const limiter = env.REVIEW_CAPTURE_RATE_LIMITER;
   if (!limiter) {
-    if (env.APP_ENV === 'production') return false;
-    return true;
+    return env.APP_ENV === 'development' || env.APP_ENV === 'test';
   }
   try {
     const clientResult = await limiter.limit({ key: `review_capture:${rateLimitIdentity(request)}` });
@@ -261,8 +273,7 @@ async function allowReviewCapture(request: Request, env: Env): Promise<boolean> 
     const globalResult = await limiter.limit({ key: 'review_capture:global' });
     return globalResult.success;
   } catch {
-    if (env.APP_ENV === 'production') return false;
-    return true;
+    return env.APP_ENV === 'development' || env.APP_ENV === 'test';
   }
 }
 
@@ -279,22 +290,27 @@ function sanitizePublicResolution(payload: ResolutionResponse): ResolutionRespon
     : 'no_match';
   const candidates = isResolutionResponse(payload)
     ? payload.candidates
-      .filter((candidate) => isUuid(candidate.service_id))
+      // The RPC boundary is untrusted at runtime. Do not let one malformed
+      // candidate turn a patient request into a Worker exception.
+      .filter((candidate): candidate is ResolutionCandidate => isRecord(candidate) && isUuidValue(candidate.service_id))
       .slice(0, 20)
-      .map((candidate) => ({
-        service_id: candidate.service_id,
-        display_name: safePublicText(candidate.display_name, 500),
-        matched_term: safePublicText(candidate.matched_term, 500),
-        term_source: safePublicText(candidate.term_source, 100),
-        provider_brand_id: stringValue(candidate.provider_brand_id),
-        confidence: Math.max(0, Math.min(1, numberValue(candidate.confidence) ?? 0)),
-        resolution_status: candidate.resolution_status === 'resolved' ? 'resolved' as const : 'ambiguous' as const,
-        match_method: safePublicText(candidate.match_method, 100),
-        // Explanations can contain resolver evidence and internal metadata.
-        // They are available only through the authenticated Admin detail API.
-        explanation: {},
-        offers: status === 'resolved' ? candidate.offers.slice(0, 100).map(sanitizePublicOffer) : [],
-      }))
+      .map((candidate) => {
+        const offers = Array.isArray(candidate.offers) ? candidate.offers.filter(isRecord) : [];
+        return {
+          service_id: candidate.service_id,
+          display_name: safePublicText(candidate.display_name, 500),
+          matched_term: safePublicText(candidate.matched_term, 500),
+          term_source: safePublicText(candidate.term_source, 100),
+          provider_brand_id: stringValue(candidate.provider_brand_id),
+          confidence: Math.max(0, Math.min(1, numberValue(candidate.confidence) ?? 0)),
+          resolution_status: candidate.resolution_status === 'resolved' ? 'resolved' as const : 'ambiguous' as const,
+          match_method: safePublicText(candidate.match_method, 100),
+          // Explanations can contain resolver evidence and internal metadata.
+          // They are available only through the authenticated Admin detail API.
+          explanation: {},
+          offers: status === 'resolved' ? offers.slice(0, 100).map(sanitizePublicOffer) : [],
+        };
+      })
     : [];
   return {
     query: safePublicText(payload?.query, 200),
@@ -330,7 +346,7 @@ function safePublicText(value: unknown, maxLength: number): string {
 
 function sanitizePackageResolution(payload: PackageResolutionResponse): PackageResolutionResponse {
   const items = Array.isArray(payload.items)
-    ? payload.items.slice(0, 30).map(sanitizePackageItem)
+    ? payload.items.filter(isRecord).slice(0, 30).map(sanitizePackageItem)
     : [];
   return {
     query: safePublicText(payload.query, 4_000),
@@ -343,16 +359,16 @@ function sanitizePackageResolution(payload: PackageResolutionResponse): PackageR
       ? { ocr_corrections: payload.ocr_corrections.slice(0, 30).map(sanitizePackageOcrCorrection).filter((correction): correction is NonNullable<PackageResolutionResponse['ocr_corrections']>[number] => correction !== null) }
       : {}),
     clarifications: Array.isArray(payload.clarifications)
-      ? payload.clarifications.slice(0, 30).map((clarification) => ({
+      ? payload.clarifications.filter(isRecord).slice(0, 30).map((clarification) => ({
         index: safePackageIndex(clarification.index),
         input: safePublicText(clarification.input, 200),
         reason_code: safePublicText(clarification.reason_code, 100),
         candidates: Array.isArray(clarification.candidates)
-          ? clarification.candidates.slice(0, 20).map(sanitizePackageCandidate).filter((candidate): candidate is PackageCandidate => candidate !== null)
+          ? clarification.candidates.filter(isRecord).slice(0, 20).map(sanitizePackageCandidate).filter((candidate): candidate is PackageCandidate => candidate !== null)
           : [],
       }))
       : [],
-    solutions: Array.isArray(payload.solutions) ? payload.solutions.slice(0, 20).map(sanitizePackageSolution) : [],
+    solutions: Array.isArray(payload.solutions) ? payload.solutions.filter(isRecord).slice(0, 20).map(sanitizePackageSolution) : [],
   };
 }
 
@@ -364,7 +380,7 @@ function sanitizePackageItem(item: PackageItem): PackageItem {
     normalized_query: safePublicText(item.normalized_query, 200),
     status: isPackageItemStatus(item.status) ? item.status : 'no_match',
     candidates: Array.isArray(item.candidates)
-      ? item.candidates.slice(0, 20).map(sanitizePackageCandidate).filter((candidate): candidate is PackageCandidate => candidate !== null)
+      ? item.candidates.filter(isRecord).slice(0, 20).map(sanitizePackageCandidate).filter((candidate): candidate is PackageCandidate => candidate !== null)
       : [],
     ...(item.reason_code ? { reason_code: safePublicText(item.reason_code, 100) } : {}),
     ...(correction ? { ocr_correction: correction } : {}),
@@ -372,7 +388,7 @@ function sanitizePackageItem(item: PackageItem): PackageItem {
 }
 
 function sanitizePackageCandidate(candidate: PackageCandidate): PackageCandidate | null {
-  if (!isUuid(candidate.service_id)) return null;
+  if (!isRecord(candidate) || !isUuidValue(candidate.service_id)) return null;
   return {
     service_id: candidate.service_id,
     display_name: safePublicText(candidate.display_name, 500),
@@ -420,7 +436,7 @@ function sanitizePackageSolution(solution: PackageSolution): PackageSolution {
       : [],
     location_count: nonNegativeInteger(solution.location_count),
     locations: Array.isArray(solution.locations)
-      ? solution.locations.slice(0, 20).map(sanitizePackageLocation).filter((location): location is PackageLocation => location !== null)
+      ? solution.locations.filter(isRecord).slice(0, 20).map(sanitizePackageLocation).filter((location): location is PackageLocation => location !== null)
       : [],
     total_amount_minor: numberValue(solution.total_amount_minor),
     currency: safePublicText(solution.currency, 3) || null,
@@ -433,6 +449,7 @@ function sanitizePackageSolution(solution: PackageSolution): PackageSolution {
 }
 
 function sanitizePackageLocation(location: PackageLocation): PackageLocation | null {
+  if (!isRecord(location)) return null;
   const id = stringValue(location.id);
   if (!id) return null;
   return {
@@ -490,12 +507,34 @@ function isPackageItemStatus(value: unknown): value is PackageItem['status'] {
   return value === 'resolved' || value === 'ambiguous' || value === 'no_match';
 }
 
-function sanitizePublicPayload(value: unknown): unknown {
-  if (Array.isArray(value)) return value.map((entry) => sanitizePublicPayload(entry));
+function sanitizePublicPayload(value: unknown, depth = 0): unknown {
+  if (typeof value === 'string') {
+    // A bounded RPC response can still contain one pathological string. Keep
+    // the admin/public copy bounded before recursively rebuilding it.
+    return value.length > MAX_PUBLIC_PAYLOAD_STRING_LENGTH
+      ? value.slice(0, MAX_PUBLIC_PAYLOAD_STRING_LENGTH)
+      : value;
+  }
+  if (!value || typeof value !== 'object') return value;
+  // Raw ingest evidence is untrusted and may contain arbitrarily nested JSON.
+  // Stop before recursion can exhaust the Worker stack while retaining all
+  // ordinary public/admin response shapes.
+  if (depth >= MAX_PUBLIC_PAYLOAD_DEPTH) return null;
+  // A bounded response body can still contain a huge number of tiny array
+  // elements/keys. Reject oversized collections before allocating a second
+  // recursively sanitized copy, preventing cardinality-based CPU/memory DoS.
+  if (Array.isArray(value)) {
+    if (value.length > MAX_PUBLIC_PAYLOAD_ENTRIES) return null;
+    return value.map((entry) => sanitizePublicPayload(entry, depth + 1));
+  }
   if (!isRecord(value)) return value;
-  return Object.fromEntries(Object.entries(value).map(([key, entry]) => [
+  const entries = Object.entries(value);
+  if (entries.length > MAX_PUBLIC_PAYLOAD_ENTRIES) return null;
+  return Object.fromEntries(entries.map(([key, entry]) => [
     key,
-    isUrlField(key) ? safeHttpUrl(entry) : sanitizePublicPayload(entry),
+    SENSITIVE_PUBLIC_PAYLOAD_KEY.test(key)
+      ? '[REDACTED]'
+      : isUrlField(key) ? safeHttpUrl(entry) : sanitizePublicPayload(entry, depth + 1),
   ]));
 }
 
@@ -530,6 +569,12 @@ async function resolveImageResponse(request: Request, rpc: RpcClient, env: Env, 
     if (error instanceof RequestBodyTooLargeError) {
       return json({ error: { code: 'payload_too_large', message: 'The image request is too large' } }, 413, origin);
     }
+    if (error instanceof RequestBodyTimeoutError) {
+      return json({ error: { code: 'request_timeout', message: 'Request body timed out' } }, 408, origin);
+    }
+    if (error instanceof RequestBodyEncodingError) {
+      return json({ error: { code: 'unsupported_content_encoding', message: 'Compressed request bodies are not supported' } }, 415, origin);
+    }
     return json({ error: { code: 'invalid_json', message: 'Request body must be valid JSON' } }, 400, origin);
   }
   if (!body || typeof body !== 'object' || Array.isArray(body)) {
@@ -553,6 +598,7 @@ async function resolveImageResponse(request: Request, rpc: RpcClient, env: Env, 
         env.OCR_SERVICE_TOKEN,
         image,
         parsePositiveInt(env.OCR_SERVICE_TIMEOUT_MS, 20_000, 1_000, 60_000),
+        env.APP_ENV === 'development' || env.APP_ENV === 'test',
       )
       : await recognizeOrderImage(env.AI, image, env.OCR_AI_MODEL);
   } catch (error) {
@@ -656,23 +702,53 @@ function parseAnalyticsMetadata(value: unknown): Record<string, unknown> | null 
 }
 
 class RequestBodyTooLargeError extends Error {}
+class RequestBodyTimeoutError extends Error {}
+class RequestBodyEncodingError extends Error {}
+const REQUEST_BODY_MAX_SECONDS = 30;
+// A bounded byte count alone is not enough: a chunked request can contain
+// millions of tiny chunks and exhaust object overhead before reaching that
+// byte limit. Cloudflare normally delivers much larger chunks; this cap is a
+// defensive ceiling for hostile clients and malformed upstream streams.
+const REQUEST_BODY_MAX_CHUNKS = 4_096;
 
 async function readRequestText(request: Request, maxBytes: number): Promise<string> {
+  const encoding = request.headers.get('content-encoding')?.trim().toLowerCase() ?? '';
+  // The Worker intentionally accepts identity-encoded JSON only. Automatic
+  // decompression would make the byte ceiling ambiguous and can turn a tiny
+  // compressed request into a CPU/memory amplification vector.
+  if (encoding !== '' && encoding !== 'identity') throw new RequestBodyEncodingError();
+  // Reject malformed or duplicated Content-Length values. A proxy that sees
+  // a different length from the Worker could otherwise parse the same body
+  // under conflicting boundaries (the stream cap below remains the final
+  // defense for chunked requests without this header).
+  const declaredLength = request.headers.get('content-length')?.trim();
+  if (declaredLength !== undefined && declaredLength !== null && declaredLength !== ''
+      && (!/^\d{1,10}$/.test(declaredLength) || Number(declaredLength) > maxBytes)) {
+    throw new RequestBodyTooLargeError();
+  }
   if (!request.body) return '';
   const reader = request.body.getReader();
   const chunks: Uint8Array[] = [];
   let totalBytes = 0;
+  let chunkCount = 0;
+  const deadline = Date.now() + REQUEST_BODY_MAX_SECONDS * 1000;
   try {
     while (true) {
-      const { done, value } = await reader.read();
+      const { done, value } = await readRequestChunk(reader, deadline);
       if (done) break;
+      chunkCount += 1;
+      if (chunkCount > REQUEST_BODY_MAX_CHUNKS) {
+        throw new RequestBodyTooLargeError();
+      }
       totalBytes += value.byteLength;
       if (totalBytes > maxBytes) {
-        await reader.cancel();
         throw new RequestBodyTooLargeError();
       }
       chunks.push(value);
     }
+  } catch (error) {
+    try { await reader.cancel(); } catch { /* best-effort cleanup */ }
+    throw error;
   } finally {
     reader.releaseLock();
   }
@@ -683,6 +759,53 @@ async function readRequestText(request: Request, maxBytes: number): Promise<stri
     offset += chunk.byteLength;
   }
   return new TextDecoder().decode(bodyBytes);
+}
+
+async function readRequestChunk(
+  reader: ReadableStreamDefaultReader<Uint8Array>,
+  deadline: number,
+): Promise<ReadableStreamReadResult<Uint8Array>> {
+  const remainingMs = deadline - Date.now();
+  if (remainingMs <= 0) throw new RequestBodyTimeoutError();
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => reject(new RequestBodyTimeoutError()), remainingMs);
+    reader.read().then(
+      (result) => { clearTimeout(timer); resolve(result); },
+      (error) => { clearTimeout(timer); reject(error); },
+    );
+  });
+}
+
+async function readBoundedResponseText(response: Response, maxBytes: number): Promise<string> {
+  const encoding = response.headers.get('content-encoding')?.trim().toLowerCase() ?? '';
+  if (encoding !== '' && encoding !== 'identity') throw new Error('compressed auth response rejected');
+  const length = response.headers.get('content-length')?.trim() ?? null;
+  if (length !== null && (!/^\d{1,8}$/.test(length) || Number(length) > maxBytes)) {
+    throw new Error('auth response exceeds limit');
+  }
+  const reader = response.body?.getReader();
+  if (!reader) {
+    if (length !== null && Number(length) !== 0) throw new Error('auth response length mismatch');
+    return '';
+  }
+  const bytes = new Uint8Array(maxBytes);
+  let offset = 0;
+  try {
+    while (true) {
+      const chunk = await reader.read();
+      if (chunk.done) break;
+      if (offset + chunk.value.byteLength > maxBytes) throw new Error('auth response exceeds limit');
+      bytes.set(chunk.value, offset);
+      offset += chunk.value.byteLength;
+    }
+  } catch (error) {
+    try { await reader.cancel(); } catch { /* best-effort cleanup */ }
+    throw error;
+  } finally {
+    reader.releaseLock();
+  }
+  if (length !== null && offset !== Number(length)) throw new Error('auth response length mismatch');
+  return new TextDecoder().decode(bytes.subarray(0, offset));
 }
 
 interface PackageContext {
@@ -791,6 +914,15 @@ async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClien
       },
     }, 403, origin);
   }
+  if (env.PROVIDER_DOCUMENTS_ENABLED !== 'true'
+    && /^\/api\/v1\/admin\/(?:provider-documents\/|provider-claims\/[^/]+\/documents$)/i.test(url.pathname)) {
+    return json({ error: { code: 'provider_documents_disabled', message: 'Provider documents are closed for the internal release' } }, 503, origin);
+  }
+  // Idempotency keys are client supplied and are intentionally stable across
+  // retries. Scope the value to the authenticated administrator before it
+  // reaches the database replay table, otherwise two admins reusing a common
+  // key could suppress one another's mutation or receive the other's replay.
+  const operationRequestId = await scopedAdminRequestId(requestId, user.id);
   if (request.method === 'GET' && url.pathname === '/api/v1/admin/dashboard') {
     return json(await rpc.call('api_admin_dashboard', {}, { admin: true }), 200, origin);
   }
@@ -881,7 +1013,7 @@ async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClien
       p_status: body.status,
       p_reason: typeof body.reason === 'string' ? body.reason : null,
       p_reviewer_user_id: user.id,
-      p_request_id: requestId,
+      p_request_id: operationRequestId,
     }, { admin: true }), 200, origin);
   }
   const qualityStatusMatch = url.pathname.match(/^\/api\/v1\/admin\/quality-issues\/([^/]+)\/status$/i);
@@ -900,7 +1032,7 @@ async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClien
       p_status: body.status,
       p_reason: typeof body.reason === 'string' ? body.reason : null,
       p_reviewer_user_id: user.id,
-      p_request_id: requestId,
+      p_request_id: operationRequestId,
     }, { admin: true }), 200, origin);
   }
   if (request.method === 'GET' && url.pathname === '/api/v1/admin/provider-claims') {
@@ -908,6 +1040,34 @@ async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClien
   }
   if (request.method === 'GET' && url.pathname === '/api/v1/admin/provider-change-requests') {
     return json(sanitizePublicPayload(await rpc.call('api_admin_provider_change_requests', { p_status: url.searchParams.get('status'), p_limit: parseBoundedInt(url.searchParams.get('limit'), 100, 1, 200) }, { admin: true })), 200, origin);
+  }
+  const providerClaimDocumentsMatch = url.pathname.match(/^\/api\/v1\/admin\/provider-claims\/([^/]+)\/documents$/i);
+  if (providerClaimDocumentsMatch && request.method === 'GET') {
+    if (!isUuid(providerClaimDocumentsMatch[1])) return json({ error: { code: 'invalid_id', message: 'claim id must be a UUID' } }, 400, origin);
+    return json(sanitizePublicPayload(await rpc.call('api_admin_provider_claim_documents', {
+      p_claim_id: providerClaimDocumentsMatch[1],
+    }, { admin: true })), 200, origin);
+  }
+  const providerDocumentReviewMatch = url.pathname.match(/^\/api\/v1\/admin\/provider-documents\/([^/]+)\/review$/i);
+  if (providerDocumentReviewMatch && request.method === 'POST') {
+    if (!isUuid(providerDocumentReviewMatch[1])) return json({ error: { code: 'invalid_id', message: 'document id must be a UUID' } }, 400, origin);
+    const body = await readJsonObject(request, 16_384, origin);
+    if (body instanceof Response) return body;
+    if (body.decision !== 'accepted' && body.decision !== 'rejected') {
+      return json({ error: { code: 'invalid_body', message: 'decision must be accepted or rejected' } }, 400, origin);
+    }
+    if (body.decision === 'rejected' && (typeof body.reason !== 'string' || body.reason.trim().length === 0)) {
+      return json({ error: { code: 'invalid_body', message: 'a rejection reason is required' } }, 400, origin);
+    }
+    if (body.reason !== undefined && body.reason !== null && (typeof body.reason !== 'string' || body.reason.length > 2000)) {
+      return json({ error: { code: 'invalid_body', message: 'reason must be at most 2000 characters' } }, 400, origin);
+    }
+    return json(await rpc.call('api_admin_review_provider_document', {
+      p_document_id: providerDocumentReviewMatch[1],
+      p_decision: body.decision,
+      p_reviewer_user_id: user.id,
+      p_reason: typeof body.reason === 'string' ? body.reason : null,
+    }, { admin: true }), 200, origin);
   }
   const providerClaimReviewMatch = url.pathname.match(/^\/api\/v1\/admin\/provider-claims\/([^/]+)\/review$/i);
   if (providerClaimReviewMatch && request.method === 'POST') {
@@ -925,7 +1085,7 @@ async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClien
       p_decision: body.decision,
       p_reviewer_user_id: user.id,
       p_reason: typeof body.reason === 'string' ? body.reason : null,
-      p_operation_request_id: requestId,
+      p_operation_request_id: operationRequestId,
     }, { admin: true }), 200, origin);
   }
   const providerClaimRevokeMatch = url.pathname.match(/^\/api\/v1\/admin\/provider-claims\/([^/]+)\/revoke$/i);
@@ -940,7 +1100,7 @@ async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClien
       p_claim_id: providerClaimRevokeMatch[1],
       p_reviewer_user_id: user.id,
       p_reason: body.reason,
-      p_operation_request_id: requestId,
+      p_operation_request_id: operationRequestId,
     }, { admin: true }), 200, origin);
   }
   const providerChangeReviewMatch = url.pathname.match(/^\/api\/v1\/admin\/provider-change-requests\/([^/]+)\/review$/i);
@@ -959,7 +1119,7 @@ async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClien
       p_decision: body.decision,
       p_reviewer_user_id: user.id,
       p_reason: typeof body.reason === 'string' ? body.reason : null,
-      p_operation_request_id: requestId,
+      p_operation_request_id: operationRequestId,
     }, { admin: true }), 200, origin);
   }
   const resolveMatch = url.pathname.match(/^\/api\/v1\/admin\/normalization\/([^/]+)\/resolve$/i);
@@ -983,7 +1143,7 @@ async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClien
       p_provider_brand_id: typeof body.provider_brand_id === 'string' ? body.provider_brand_id : null,
       p_reason: typeof body.reason === 'string' ? body.reason : 'Manual admin review',
       p_reviewer_user_id: user.id,
-      p_request_id: requestId,
+      p_request_id: operationRequestId,
     }, { admin: true }), 200, origin);
   }
   const manualCandidateMatch = url.pathname.match(/^\/api\/v1\/admin\/normalization\/([^/]+)\/candidates$/i);
@@ -999,7 +1159,7 @@ async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClien
       p_catalog_item_id: body.catalog_item_id,
       p_reviewer_user_id: user.id,
       p_reason: body.reason.trim(),
-      p_request_id: requestId,
+      p_request_id: operationRequestId,
     }, { admin: true }), 200, origin);
   }
   const reviewMatch = url.pathname.match(/^\/api\/v1\/admin\/normalization\/([^/]+)\/review$/i);
@@ -1029,14 +1189,13 @@ async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClien
       p_alias: typeof body.alias === 'string' ? body.alias : null,
       p_reason: typeof body.reason === 'string' ? body.reason : null,
       p_reviewer_user_id: user.id,
-      p_request_id: requestId,
+      p_request_id: operationRequestId,
     }, { admin: true }), 200, origin);
   }
   return json({ error: { code: 'not_found', message: 'Admin route not found' } }, 404, origin);
 }
 
 interface AuthenticatedUser extends AdminUser {
-  accessToken: string;
   /** Supabase's validated JWT assurance level; missing claims are aal1. */
   aal: 'aal1' | 'aal2';
 }
@@ -1051,26 +1210,34 @@ async function providerResponse(
 ): Promise<Response> {
   const user = await authenticateUser(request, env);
   if (!user) return json({ error: { code: 'unauthorized', message: 'Provider authorization required' } }, 401, origin);
-  // Reading one's own claims is allowed at AAL1 so the client can display the
-  // enrollment step. Any provider mutation requires a verified second factor.
-  if (request.method !== 'GET' && user.aal !== 'aal2') {
+  // Provider claims and memberships reveal account relationships and lead to
+  // privileged mutations. Require the stepped-up session for the whole
+  // surface; MFA enrollment state comes from Supabase Auth, not these RPCs.
+  if (user.aal !== 'aal2') {
     return json({
       error: {
         code: 'mfa_required',
-        message: 'A second factor is required for provider changes',
+        message: 'A second factor is required for provider access',
       },
     }, 403, origin);
   }
-  const rpcOptions = { accessToken: user.accessToken };
+  if (env.PROVIDER_DOCUMENTS_ENABLED !== 'true'
+    && /^\/api\/v1\/provider\/claims\/[^/]+\/documents$/i.test(url.pathname)) {
+    return json({ error: { code: 'provider_documents_disabled', message: 'Provider documents are closed for the internal release' } }, 503, origin);
+  }
+  const providerContext = { p_actor_user_id: user.id, p_actor_aal: user.aal };
+  const rpcOptions = { admin: true };
 
   if (url.pathname === '/api/v1/provider/claims' && request.method === 'GET') {
-    return json(await rpc.call('api_provider_my_claims', {
+    return json(await rpc.call('api_server_provider_my_claims', {
+      ...providerContext,
       p_status: url.searchParams.get('status'),
       p_limit: parseBoundedInt(url.searchParams.get('limit'), 50, 1, 100),
     }, rpcOptions), 200, origin);
   }
   if (url.pathname === '/api/v1/provider/memberships' && request.method === 'GET') {
-    return json(await rpc.call('api_provider_my_memberships', {
+    return json(await rpc.call('api_server_provider_my_memberships', {
+      ...providerContext,
       p_status: url.searchParams.get('status'),
       p_limit: parseBoundedInt(url.searchParams.get('limit'), 100, 1, 200),
     }, rpcOptions), 200, origin);
@@ -1097,7 +1264,8 @@ async function providerResponse(
     if (body.reason !== undefined && body.reason !== null && (typeof body.reason !== 'string' || body.reason.length > 2000)) {
       return json({ error: { code: 'invalid_body', message: 'reason must be at most 2000 characters' } }, 400, origin);
     }
-    return json(await rpc.call('api_provider_create_claim', {
+    return json(await rpc.call('api_server_provider_create_claim', {
+      ...providerContext,
       p_scope_type: body.scope_type,
       p_provider_brand_id: body.provider_brand_id,
       p_provider_location_id: body.provider_location_id ?? null,
@@ -1117,7 +1285,8 @@ async function providerResponse(
     if (typeof body.document_type !== 'string' || typeof body.object_key !== 'string' || typeof body.sha256 !== 'string') {
       return json({ error: { code: 'invalid_body', message: 'document_type, object_key and sha256 are required' } }, 400, origin);
     }
-    return json(await rpc.call('api_provider_add_claim_document', {
+    return json(await rpc.call('api_server_provider_add_claim_document', {
+      ...providerContext,
       p_claim_id: documentMatch[1],
       p_document_type: body.document_type,
       p_object_key: body.object_key,
@@ -1137,7 +1306,8 @@ async function providerResponse(
     if (body.provider_location_id !== undefined && body.provider_location_id !== null && !isUuidValue(body.provider_location_id)) {
       return json({ error: { code: 'invalid_body', message: 'provider_location_id must be a UUID' } }, 400, origin);
     }
-    return json(await rpc.call('api_provider_invite_member', {
+    return json(await rpc.call('api_server_provider_invite_member', {
+      ...providerContext,
       p_claim_id: memberMatch[1],
       p_user_id: body.user_id,
       p_role: body.role,
@@ -1153,7 +1323,8 @@ async function providerResponse(
     if (!isUuidValue(body.claim_id) || !isRecord(body.changes)) {
       return json({ error: { code: 'invalid_body', message: 'claim_id and changes object are required' } }, 400, origin);
     }
-    return json(await rpc.call('api_provider_submit_location_change', {
+    return json(await rpc.call('api_server_provider_submit_location_change', {
+      ...providerContext,
       p_claim_id: body.claim_id,
       p_provider_location_id: profileMatch[1],
       p_changes: body.changes,
@@ -1162,7 +1333,10 @@ async function providerResponse(
   const membershipAcceptMatch = url.pathname.match(/^\/api\/v1\/provider\/memberships\/([^/]+)\/accept$/i);
   if (membershipAcceptMatch && request.method === 'POST') {
     if (!isUuid(membershipAcceptMatch[1])) return json({ error: { code: 'invalid_id', message: 'membership id must be a UUID' } }, 400, origin);
-    return json(await rpc.call('api_provider_accept_membership', { p_membership_id: membershipAcceptMatch[1] }, rpcOptions), 200, origin);
+    return json(await rpc.call('api_server_provider_accept_membership', {
+      ...providerContext,
+      p_membership_id: membershipAcceptMatch[1],
+    }, rpcOptions), 200, origin);
   }
 
   return json({ error: { code: 'not_found', message: 'Provider route not found' } }, 404, origin);
@@ -1180,14 +1354,19 @@ async function verifyUser(request: Request, env: Env): Promise<AuthenticatedUser
   const authorization = request.headers.get('authorization') ?? '';
   const match = authorization.match(/^Bearer\s+([^\s]+)$/i);
   const publishableKey = env.SUPABASE_PUBLISHABLE_KEY ?? env.SUPABASE_ANON_KEY;
-  if (!match || !env.SUPABASE_URL || !publishableKey) return null;
+  // Supabase access tokens are small JWTs. Reject oversized bearer headers
+  // before forwarding or base64-decoding attacker-controlled input.
+  if (!match || match[1].length > 8_192 || !env.SUPABASE_URL || !publishableKey) return null;
   let supabaseBaseUrl: URL;
   try {
     supabaseBaseUrl = new URL(env.SUPABASE_URL);
     const localDevelopment = supabaseBaseUrl.protocol === 'http:'
       && (supabaseBaseUrl.hostname === 'localhost' || supabaseBaseUrl.hostname === '127.0.0.1' || supabaseBaseUrl.hostname === '::1')
-      && env.APP_ENV !== 'production';
+      && (env.APP_ENV === 'development' || env.APP_ENV === 'test');
     if (supabaseBaseUrl.protocol !== 'https:' && !localDevelopment) return null;
+    if (supabaseBaseUrl.username || supabaseBaseUrl.password || supabaseBaseUrl.search || supabaseBaseUrl.hash
+      || (supabaseBaseUrl.pathname !== '' && supabaseBaseUrl.pathname !== '/')
+      || (supabaseBaseUrl.protocol === 'https:' && supabaseBaseUrl.port && supabaseBaseUrl.port !== '443')) return null;
   } catch {
     return null;
   }
@@ -1196,12 +1375,39 @@ async function verifyUser(request: Request, env: Env): Promise<AuthenticatedUser
   try {
     const response = await fetch(new URL('/auth/v1/user', supabaseBaseUrl).toString(), {
       headers: { apikey: publishableKey, Authorization: `Bearer ${match[1]}` },
+      // Authentication responses must never be cached or followed to an
+      // untrusted host with a bearer token in flight.
+      redirect: 'error',
+      cache: 'no-store',
       signal: controller.signal,
     });
-    if (!response.ok) return null;
-    const user = await response.json() as { id?: unknown };
+    if (!response.ok) {
+      try { await response.body?.cancel(); } catch { /* best-effort cleanup */ }
+      return null;
+    }
+    const user = JSON.parse(await readBoundedResponseText(response, AUTH_USER_MAX_RESPONSE_BYTES)) as { id?: unknown; is_anonymous?: unknown; factors?: unknown };
     if (typeof user.id !== 'string' || !isUuid(user.id)) return null;
-    return { id: user.id, accessToken: match[1], aal: readJwtAal(match[1]) };
+    // Supabase can issue an AAL2 token to an anonymous identity that enrolled
+    // a factor. That proves possession of the factor, but it is not a
+    // verified provider account and must not reach either admin or provider
+    // surfaces. Fail closed when the Auth response omits the field as well:
+    // accepting an unknown identity type would turn a future Auth response
+    // shape change into a privilege bypass. The value comes from Auth's
+    // validated /user response, never from a client-supplied claim.
+    if (user.is_anonymous !== false) return null;
+    const aal = readJwtAal(match[1]);
+    if (aal !== 'aal2') return { id: user.id, aal };
+    // Match Auth's actual listFactors contract: it calls getUser() and reads
+    // top-level user.factors. There is no PostgREST /auth/factors endpoint.
+    // This fresh, token-validated response belongs to the current user;
+    // user_metadata and JWT factor claims are never used as enrollment proof.
+    // A stale aal2 token with a removed/unverified TOTP factor fails closed.
+    const hasVerifiedFactor = Array.isArray(user.factors)
+      && user.factors.some((factor) => isRecord(factor)
+        && isUuidValue(factor.id)
+        && factor.factor_type === 'totp'
+        && factor.status === 'verified');
+    return { id: user.id, aal: hasVerifiedFactor ? 'aal2' : 'aal1' };
   } catch {
     return null;
   } finally {
@@ -1237,13 +1443,21 @@ function groupSearchRows(rows: SearchRow[]) {
     prices: Map<string, Record<string, unknown>>;
     source: Record<string, unknown> | null;
   };
+  // The RPC result is typed at compile time only; a bad row from an
+  // unexpectedly changed view or poisoned catalog must not crash the public
+  // endpoint or emit unbounded text. Keep the response bounded even if the
+  // database-side limit is accidentally removed.
+  const safeRows = (Array.isArray(rows) ? rows : [])
+    .map(normalizeSearchRow)
+    .filter((row): row is SearchRow => row !== null)
+    .slice(0, 500);
   const concreteOfferKeys = new Set(
-    rows
+    safeRows
       .filter((row) => row.provider_location_id !== null)
       .map((row) => `${row.service_id}:${row.offer_id}`),
   );
   const services = new Map<string, { service: Record<string, unknown>; offers: Map<string, GroupedOffer> }>();
-  for (const row of rows) {
+  for (const row of safeRows) {
     // A brand-level fallback with no price is not useful when the same offer
     // already has a concrete branch row. It otherwise renders as a duplicate
     // card pointing to the same source URL.
@@ -1310,17 +1524,59 @@ function groupSearchRows(rows: SearchRow[]) {
   }));
 }
 
+function normalizeSearchRow(value: unknown): SearchRow | null {
+  if (!isRecord(value)
+    || !isUuidValue(value.service_id)
+    || !isUuidValue(value.offer_id)
+    || !isUuidValue(value.provider_brand_id)) return null;
+  const locationId = value.provider_location_id === null || value.provider_location_id === undefined
+    ? null
+    : isUuidValue(value.provider_location_id) ? value.provider_location_id : null;
+  const latitude = boundedNumber(value.latitude, -90, 90);
+  const longitude = boundedNumber(value.longitude, -180, 180);
+  const amount = numberValue(value.amount_minor);
+  return {
+    service_id: value.service_id,
+    display_name: safePublicText(value.display_name, 500),
+    matched_term: safePublicText(value.matched_term, 500),
+    term_source: safePublicText(value.term_source, 100),
+    confidence: clampUnit(numberValue(value.confidence) ?? 0),
+    offer_id: value.offer_id,
+    provider_brand_id: value.provider_brand_id,
+    provider_name: safePublicText(value.provider_name, 300) || 'Proveedor',
+    provider_location_id: locationId,
+    provider_location_name: locationId ? safePublicText(value.provider_location_name, 300) : null,
+    latitude,
+    longitude,
+    distance_meters: boundedNumber(value.distance_meters, 0, 100_000_000),
+    source_url: safeHttpUrl(value.source_url),
+    price_type: safePublicText(value.price_type, 100) || null,
+    price_key: safePublicText(value.price_key, 100) || null,
+    amount_minor: amount !== null && amount >= 0 && amount <= 1_000_000_000_000 ? amount : null,
+    currency: safePublicText(value.currency, 3) || null,
+    price_last_seen_at: safePublicText(value.price_last_seen_at, 80) || null,
+  };
+}
+
+function boundedNumber(value: unknown, min: number, max: number): number | null {
+  const number = numberValue(value);
+  return number !== null && number >= min && number <= max ? number : null;
+}
+
 function groupResolutionCandidates(candidates: ResolutionCandidate[]) {
-  return candidates.map((candidate) => ({
-    service: {
-      id: candidate.service_id,
-      display_name: candidate.display_name,
-      matched_term: candidate.matched_term,
-      term_source: candidate.term_source,
-      confidence: candidate.confidence,
-      resolution_status: candidate.resolution_status,
-    },
-    offers: candidate.offers.map((offer) => ({
+  return candidates
+    .filter((candidate): candidate is ResolutionCandidate => isRecord(candidate) && isUuidValue(candidate.service_id))
+    .slice(0, 20)
+    .map((candidate) => ({
+      service: {
+        id: candidate.service_id,
+        display_name: safePublicText(candidate.display_name, 500),
+        matched_term: safePublicText(candidate.matched_term, 500),
+        term_source: safePublicText(candidate.term_source, 100),
+        confidence: clampUnit(numberValue(candidate.confidence) ?? 0),
+        resolution_status: candidate.resolution_status === 'resolved' ? 'resolved' : 'ambiguous',
+      },
+      offers: (Array.isArray(candidate.offers) ? candidate.offers.filter(isRecord) : []).slice(0, 100).map((offer) => ({
       id: stringValue(offer.offer_id) ?? 'offer',
       provider: {
         id: stringValue(offer.provider_brand_id),
@@ -1348,8 +1604,8 @@ function groupResolutionCandidates(candidates: ResolutionCandidate[]) {
       source: safeHttpUrl(offer.source_url)
         ? { url: safeHttpUrl(offer.source_url), last_seen_at: stringValue(offer.price_last_seen_at) }
         : null,
-    })),
-  }));
+      })),
+    }));
 }
 
 function stringValue(value: unknown): string | null {
@@ -1358,10 +1614,13 @@ function stringValue(value: unknown): string | null {
 
 function safeHttpUrl(value: unknown): string | null {
   const raw = stringValue(value);
-  if (!raw) return null;
+  if (!raw || raw.length > 4_096) return null;
   try {
     const parsed = new URL(raw);
-    if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') return null;
+    // Source links are untrusted ingested data. Only expose canonical HTTPS
+    // origins; an HTTP link could be modified in transit and an alternate
+    // port can target a local/admin service when opened by an operator.
+    if (parsed.protocol !== 'https:' || (parsed.port && parsed.port !== '443') || !isPublicHost(parsed.hostname)) return null;
     if (parsed.username || parsed.password) return null;
     // Query strings and fragments may contain signed URLs, access tokens or
     // tracking identifiers. Public/admin screens only need the canonical
@@ -1372,6 +1631,29 @@ function safeHttpUrl(value: unknown): string | null {
   } catch {
     return null;
   }
+}
+
+function isPublicHost(hostname: string): boolean {
+  const host = hostname.toLowerCase().replace(/\.$/, '');
+  if (!host || host === 'localhost' || host.endsWith('.localhost')
+    || host.endsWith('.local') || host.endsWith('.internal') || host.endsWith('.home.arpa')
+    || /[^\x00-\x7f]/.test(host)) return false;
+  const ipv4 = /^(\d+)\.(\d+)\.(\d+)\.(\d+)$/.exec(host);
+  if (ipv4) {
+    const octets = ipv4.slice(1).map(Number);
+    if (octets.some((part) => !Number.isInteger(part) || part < 0 || part > 255)) return false;
+    const [first, second] = octets;
+    return first !== 0 && first !== 10 && first !== 127 && first !== 169
+      && !(first === 172 && second >= 16 && second <= 31)
+      && !(first === 192 && (second === 0 || second === 168))
+      && !(first === 100 && second >= 64 && second <= 127)
+      && !(first === 198 && (second === 18 || second === 19 || second === 51))
+      && !(first === 203 && second === 0)
+      && first < 224;
+  }
+  // Refuse all literal IPv6 addresses here. Provider source links use DNS
+  // names, and this avoids loopback/link-local/ULA parser edge cases.
+  return !host.includes(':');
 }
 
 function numberValue(value: unknown): number | null {
@@ -1411,6 +1693,8 @@ async function readJsonObject(request: Request, maxBytes: number, origin: string
     return parsed;
   } catch (error) {
     if (error instanceof RequestBodyTooLargeError) return json({ error: { code: 'payload_too_large', message: 'The request body is too large' } }, 413, origin);
+    if (error instanceof RequestBodyTimeoutError) return json({ error: { code: 'request_timeout', message: 'Request body timed out' } }, 408, origin);
+    if (error instanceof RequestBodyEncodingError) return json({ error: { code: 'unsupported_content_encoding', message: 'Compressed request bodies are not supported' } }, 415, origin);
     return json({ error: { code: 'invalid_json', message: 'Request body must be valid JSON' } }, 400, origin);
   }
 }
@@ -1553,7 +1837,7 @@ async function enforceRateLimit(request: Request, url: URL, env: Env, origin: st
   if (!scope) return null;
   const limiter = rateLimiterForScope(scope, env);
   if (!limiter) {
-    if (env.APP_ENV !== 'production') return null;
+    if (env.APP_ENV === 'development' || env.APP_ENV === 'test') return null;
     return errorJson(
       'rate_limit_unavailable',
       'The service is temporarily unavailable.',
@@ -1584,7 +1868,7 @@ async function enforceRateLimit(request: Request, url: URL, env: Env, origin: st
     // In development a missing binding should not prevent local work. In
     // production, fail closed so a deployment without its abuse-control
     // binding cannot expose expensive or privileged routes without limits.
-    if (env.APP_ENV === 'production') {
+    if (env.APP_ENV !== 'development' && env.APP_ENV !== 'test') {
       return errorJson(
         'rate_limit_unavailable',
         'The service is temporarily unavailable.',
@@ -1600,18 +1884,20 @@ async function enforceRateLimit(request: Request, url: URL, env: Env, origin: st
   }
 }
 
-function rateLimitScope(path: string, method: string): 'public' | 'ocr' | 'admin' | null {
+function rateLimitScope(path: string, method: string): 'public' | 'ocr' | 'admin' | 'provider' | null {
   if (path === '/api/v1/resolve-image' && method === 'POST') return 'ocr';
   if (path === '/api/v1/search' && method === 'GET') return 'public';
   if (method === 'GET' && /^\/api\/v1\/(?:services|providers)\/[^/]+(?:\/(?:providers|services))?$/i.test(path)) return 'public';
   if ((path === '/api/v1/resolve' || path === '/api/v1/resolve-batch' || path === '/api/v1/events') && method === 'POST') return 'public';
   if (path.startsWith('/api/v1/admin/')) return 'admin';
+  if (path.startsWith('/api/v1/provider/')) return 'provider';
   return null;
 }
 
-function rateLimiterForScope(scope: 'public' | 'ocr' | 'admin', env: Env): RateLimitBinding | undefined {
+function rateLimiterForScope(scope: 'public' | 'ocr' | 'admin' | 'provider', env: Env): RateLimitBinding | undefined {
   if (scope === 'ocr') return env.OCR_RATE_LIMITER;
   if (scope === 'admin') return env.ADMIN_RATE_LIMITER;
+  if (scope === 'provider') return env.PROVIDER_RATE_LIMITER;
   return env.PUBLIC_RATE_LIMITER;
 }
 
@@ -1650,6 +1936,12 @@ function requestIdFor(request: Request): string {
   // cannot be polluted with arbitrary control characters or huge values.
   if (/^[A-Za-z0-9._:-]{8,96}$/.test(supplied)) return supplied;
   return crypto.randomUUID();
+}
+
+async function scopedAdminRequestId(requestId: string, userId: string): Promise<string> {
+  const input = new TextEncoder().encode(`pruevia-admin-idempotency:${userId}:${requestId}`);
+  const digest = await crypto.subtle.digest('SHA-256', input);
+  return Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, '0')).join('');
 }
 
 function json(value: unknown, status: number, origin: string, requestId?: string): Response {

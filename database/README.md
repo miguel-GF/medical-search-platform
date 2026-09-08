@@ -36,11 +36,20 @@ supabase test db
 
 ## Deploy to DEV
 
+Antes de aplicar cualquier migraciÃ³n, consulta el estado remoto y el corte de
+seguridad vigente. Las migraciones de aislamiento Worker/Storage requieren una
+ventana coordinada; no ejecutes un `db push` en solitario.
+
 ```bash
 supabase login
 supabase link
-supabase db push --include-seed
+npx.cmd supabase@2.116.0 migration list --linked
+npx.cmd supabase@2.116.0 db push --linked --dry-run
 ```
+
+El `db push` real sÃ³lo debe ejecutarse con autorizaciÃ³n explÃ­cita, contratos
+SQL aprobados y despliegue coordinado del Worker/scanner. Consulta
+`../docs/SECURITY_HARDENING_20260904.md` para el procedimiento actual.
 
 Once migrations are adopted, do not make ad-hoc schema changes directly on the remote project. All database changes should become versioned migration files.
 

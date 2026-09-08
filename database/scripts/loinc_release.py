@@ -31,6 +31,13 @@ DEFAULT_ARTIFACT_DIR = Path("database/artifacts/loinc")
 INDEX_MANIFEST_SUFFIX = ".manifest.json"
 LOINC_VERSION_RE = re.compile(r"^[0-9]+(?:\.[0-9]+){1,3}(?:[-+][A-Za-z0-9.-]+)?$")
 SHA256_RE = re.compile(r"^[0-9a-fA-F]{64}$")
+# A current LOINC release is far below this ceiling. The cap prevents a
+# compromised endpoint (or a corrupt response) from filling the operator's
+# disk before checksum verification.
+MAX_RELEASE_BYTES = 512 * 1024 * 1024
+MAX_METADATA_BYTES = 1 * 1024 * 1024
+MAX_TABLE_BYTES = 512 * 1024 * 1024
+MAX_ENV_FILE_BYTES = 256 * 1024
 INDEX_FIELDS = (
     "LOINC_NUM",
     "COMPONENT",
@@ -82,6 +89,18 @@ UrlOpener = Callable[..., BinaryIO]
 ENV_NAME_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 
 
+class _RejectRedirectHandler(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, *_args, **_kwargs):  # type: ignore[no-untyped-def]
+        raise ValueError("LOINC download redirect rejected")
+
+
+_SAFE_OPENER = urllib.request.build_opener(_RejectRedirectHandler)
+
+
+def _safe_urlopen(request: urllib.request.Request) -> BinaryIO:
+    return _SAFE_OPENER.open(request, timeout=30)
+
+
 def _validate_version(value: object) -> str:
     version = str(value or "").strip()
     if not LOINC_VERSION_RE.fullmatch(version):
@@ -123,7 +142,11 @@ def _load_env_file(path: Path | None) -> None:
 
     if path is None or not path.exists():
         return
-    for raw_line in path.read_text(encoding="utf-8").splitlines():
+    with path.open("rb") as handle:
+        raw = handle.read(MAX_ENV_FILE_BYTES + 1)
+    if len(raw) > MAX_ENV_FILE_BYTES:
+        raise ValueError("LOINC env file exceeds the safety limit")
+    for raw_line in raw.decode("utf-8").splitlines():
         line = raw_line.strip()
         if not line or line.startswith("#"):
             continue
@@ -149,7 +172,7 @@ def _request(
     *,
     username: str,
     password: str,
-    opener: UrlOpener = urllib.request.urlopen,
+    opener: UrlOpener | None = None,
 ) -> BinaryIO:
     request = urllib.request.Request(
         url,
@@ -159,7 +182,7 @@ def _request(
             "User-Agent": "pruevia-loinc-import/1.0",
         },
     )
-    return opener(request)
+    return (opener or _safe_urlopen)(request)
 
 
 def fetch_metadata(
@@ -167,7 +190,7 @@ def fetch_metadata(
     password: str,
     version: str | None = None,
     *,
-    opener: UrlOpener = urllib.request.urlopen,
+    opener: UrlOpener | None = None,
 ) -> dict:
     """Fetch release metadata from the authenticated LOINC Download API."""
 
@@ -176,7 +199,10 @@ def fetch_metadata(
         query = "?" + urllib.parse.urlencode({"version": version})
     url = f"{LOINC_API_BASE}/Loinc{query}"
     with _request(url, username=username, password=password, opener=opener) as response:
-        payload = json.load(response)
+        raw_payload = response.read(MAX_METADATA_BYTES + 1)
+        if len(raw_payload) > MAX_METADATA_BYTES:
+            raise ValueError("LOINC metadata response exceeds the safety limit")
+        payload = json.loads(raw_payload.decode("utf-8"))
     if not isinstance(payload, dict):
         raise ValueError("LOINC metadata response must be an object")
     required = ("version", "downloadUrl", "downloadMD5Hash")
@@ -195,7 +221,7 @@ def download_release(
     output_dir: Path,
     *,
     expected_sha256: str | None = None,
-    opener: UrlOpener = urllib.request.urlopen,
+    opener: UrlOpener | None = None,
 ) -> Path:
     """Download a release and verify the official MD5 plus optional SHA-256."""
 
@@ -217,7 +243,7 @@ def download_release(
             password=password,
             opener=opener,
         ) as response, output_path.open("wb") as destination:
-            shutil.copyfileobj(response, destination)
+            _copy_bounded(response, destination)
     except Exception:
         output_path.unlink(missing_ok=True)
         metadata_path.unlink(missing_ok=True)
@@ -260,6 +286,27 @@ def download_release(
     return output_path
 
 
+def _copy_bounded(source: BinaryIO, destination: BinaryIO, maximum: int = MAX_RELEASE_BYTES) -> None:
+    headers = getattr(source, "headers", None)
+    raw_length = headers.get("Content-Length") if headers is not None else None
+    if raw_length is not None:
+        try:
+            declared_length = int(raw_length)
+        except (TypeError, ValueError) as error:
+            raise ValueError("LOINC response has an invalid content length") from error
+        if declared_length < 0 or declared_length > maximum:
+            raise ValueError("LOINC release exceeds the safety limit")
+    copied = 0
+    while True:
+        chunk = source.read(1024 * 1024)
+        if not chunk:
+            return
+        copied += len(chunk)
+        if copied > maximum:
+            raise ValueError("LOINC release exceeds the safety limit")
+        destination.write(chunk)
+
+
 def _find_member(archive: zipfile.ZipFile, filename: str) -> str:
     normalized_target = Path(filename).as_posix().casefold()
     preferred = [
@@ -289,9 +336,16 @@ def extract_loinc_table(zip_path: Path, output_dir: Path) -> Path:
     output_dir.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(zip_path) as archive:
         member = _find_member(archive, "Loinc.csv")
+        info = archive.getinfo(member)
+        if info.file_size < 0 or info.file_size > MAX_TABLE_BYTES:
+            raise ValueError("LOINC table exceeds the safety limit")
         destination = output_dir / "Loinc.csv"
-        with archive.open(member) as source, destination.open("wb") as target:
-            shutil.copyfileobj(source, target)
+        try:
+            with archive.open(member) as source, destination.open("wb") as target:
+                _copy_bounded(source, target, MAX_TABLE_BYTES)
+        except Exception:
+            destination.unlink(missing_ok=True)
+            raise
     return destination
 
 

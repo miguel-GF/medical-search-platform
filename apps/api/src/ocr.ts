@@ -5,6 +5,8 @@ export const OCR_MAX_BYTES = 5 * 1024 * 1024;
 export const OCR_MAX_BASE64_LENGTH = Math.ceil(OCR_MAX_BYTES / 3) * 4 + 64;
 export const OCR_MAX_OUTPUT_TOKENS = 384;
 export const DEFAULT_OCR_MODEL = '@cf/moondream/moondream3.1-9B-A2B';
+export const OCR_MAX_RESPONSE_BYTES = 128 * 1024;
+const OCR_MIN_EXTERNAL_SERVICE_TOKEN_BYTES = 32;
 export const OCR_PROMPT = [
   'Act as a literal OCR transcriber for this medical order.',
   'The photo may be rotated, skewed, low contrast, or handwritten; read it in any orientation.',
@@ -100,40 +102,59 @@ export async function recognizeOrderImageViaService(
   serviceToken: string | undefined,
   input: OcrImageInput,
   timeoutMs = 20_000,
+  allowLocalHttp = false,
 ): Promise<OcrResult> {
   if (!serviceUrl?.trim()) throw new OcrUnavailableError('OCR service URL is not configured');
   let endpoint: string;
   try {
     const base = new URL(serviceUrl);
-    const localDevelopment = base.protocol === 'http:'
+    const localDevelopment = allowLocalHttp && base.protocol === 'http:'
       && (base.hostname === 'localhost' || base.hostname === '127.0.0.1' || base.hostname === '::1');
     if (base.protocol !== 'https:' && !localDevelopment) throw new Error('https is required for OCR service');
+    if (base.username || base.password || base.search || base.hash
+      || (base.pathname !== '' && base.pathname !== '/')
+      || (base.protocol === 'https:' && base.port && base.port !== '443')) throw new Error('OCR service URL must be a clean origin');
+    const localService = allowLocalHttp
+      && (base.hostname === 'localhost' || base.hostname === '127.0.0.1' || base.hostname === '::1');
+    // The OCR endpoint receives medical images and the bearer token. Never
+    // allow a production configuration to target loopback, link-local,
+    // private/reserved IPv4, literal IPv6, or pseudo-local hostnames; an
+    // accidental/malicious URL must not turn this outbound call into SSRF.
+    if (!localService && !isPublicHost(base.hostname)) {
+      throw new Error('OCR service host must be public');
+    }
+    const token = serviceToken?.trim() ?? '';
+    if (!localService && new TextEncoder().encode(token).length < OCR_MIN_EXTERNAL_SERVICE_TOKEN_BYTES) {
+      throw new Error('OCR service token is too short for a non-local endpoint');
+    }
     endpoint = new URL('/v1/ocr/order', base).toString();
   } catch (error) {
     throw new OcrUnavailableError(error instanceof Error ? error.message : 'OCR service URL is invalid');
   }
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), Math.max(1_000, timeoutMs));
+  const boundedTimeout = Number.isFinite(timeoutMs) ? Math.max(1_000, Math.min(timeoutMs, 60_000)) : 20_000;
+  const timeout = setTimeout(() => controller.abort(), boundedTimeout);
   try {
-    const headers: Record<string, string> = { 'content-type': 'application/json' };
+    const headers: Record<string, string> = { 'content-type': 'application/json', 'accept-encoding': 'identity' };
     if (serviceToken?.trim()) headers.authorization = `Bearer ${serviceToken.trim()}`;
     const response = await fetch(endpoint, {
       method: 'POST',
       headers,
       body: JSON.stringify({ image: `data:${input.mime_type};base64,${bytesToBase64(input.bytes)}` }),
       signal: controller.signal,
+      redirect: 'error',
     });
-    let payload: unknown = null;
-    try {
-      payload = await response.json();
-    } catch {
-      payload = null;
-    }
     if (!response.ok) {
       if (response.status === 401 || response.status === 503) {
         throw new OcrUnavailableError('OCR service is unavailable or unauthorized');
       }
       throw new OcrRecognitionError('OCR service rejected the image');
+    }
+    let payload: unknown;
+    try {
+      payload = JSON.parse(await readBoundedResponseText(response, OCR_MAX_RESPONSE_BYTES));
+    } catch {
+      throw new OcrRecognitionError('OCR service returned an invalid response');
     }
     const value = payload && typeof payload === 'object' ? payload as Record<string, unknown> : {};
     const text = cleanOcrText(value.text);
@@ -152,6 +173,54 @@ export async function recognizeOrderImageViaService(
   } finally {
     clearTimeout(timeout);
   }
+}
+
+function isPublicHost(hostname: string): boolean {
+  const host = hostname.toLowerCase().replace(/\.$/, '');
+  if (!host || host === 'localhost' || host.endsWith('.localhost') || host.endsWith('.local')
+      || host.endsWith('.internal') || host.endsWith('.home.arpa') || host.includes(':')
+      || /[^\x21-\x7e]/.test(host)) return false;
+  const ipv4 = /^(\d+)\.(\d+)\.(\d+)\.(\d+)$/.exec(host);
+  if (!ipv4) return true;
+  const octets = ipv4.slice(1).map(Number);
+  if (octets.some((octet) => !Number.isInteger(octet) || octet < 0 || octet > 255)) return false;
+  const [a, b] = octets;
+  if (a === 0 || a === 10 || a === 127 || (a === 100 && b >= 64 && b <= 127)
+      || (a === 169 && b === 254) || (a === 172 && b >= 16 && b <= 31)
+      || (a === 192 && b === 0) || (a === 192 && b === 168)
+      || (a === 198 && b >= 18 && b <= 19) || (a === 198 && b === 51)
+      || (a === 203 && b === 0) || a >= 224) return false;
+  return true;
+}
+
+async function readBoundedResponseText(response: Response, maximum: number): Promise<string> {
+  const encoding = response.headers.get('content-encoding')?.trim().toLowerCase() ?? '';
+  if (encoding !== '' && encoding !== 'identity') throw new Error('compressed OCR response rejected');
+  const length = response.headers.get('content-length');
+  if (length !== null && (!/^\d{1,8}$/.test(length) || Number(length) > maximum)) throw new Error('OCR response exceeds limit');
+  const reader = response.body?.getReader();
+  if (!reader) {
+    if (length !== null && Number(length) !== 0) throw new Error('OCR response length mismatch');
+    return '';
+  }
+  const bytes = new Uint8Array(maximum);
+  let offset = 0;
+  try {
+    while (true) {
+      const chunk = await reader.read();
+      if (chunk.done) break;
+      if (offset + chunk.value.byteLength > maximum) throw new Error('OCR response exceeds limit');
+      bytes.set(chunk.value, offset);
+      offset += chunk.value.byteLength;
+    }
+  } catch (error) {
+    try { await reader.cancel(); } catch { /* best-effort connection cleanup */ }
+    throw error;
+  } finally {
+    reader.releaseLock();
+  }
+  if (length !== null && offset !== Number(length)) throw new Error('OCR response length mismatch');
+  return new TextDecoder().decode(bytes.subarray(0, offset));
 }
 
 function parseOcrLines(value: unknown): OcrLine[] | undefined {

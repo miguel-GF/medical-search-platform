@@ -236,4 +236,4 @@ select extensions.is((select count(*)::integer from resolver_benchmark_results w
 select * from extensions.finish();
 
 
-commit;
+rollback;

@@ -5,7 +5,7 @@
   "scripts": {
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "dev": "wrangler dev",
+    "dev": "wrangler dev --var APP_ENV:development --var ALLOWED_ORIGIN:http://localhost:5173",
     "deploy": "wrangler deploy"
   },
   "devDependencies": {

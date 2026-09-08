@@ -16,17 +16,24 @@ import time
 from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
+from math import isfinite
 from typing import Any, Iterable, Mapping, Sequence
 from urllib.parse import urlsplit, urlunsplit
 
-from .config import load_local_environment
-from .pipeline import CollectorRunner
+from .config import load_local_environment, require_local_private_host_mode
+from .pipeline import CollectorRunner, _safe_error_detail
 from .providers.generic import GenericCrawlConfig, GenericProviderAdapter, GenericWebClient
 
 
 DISCOVERY_VERSION = "puebla-generic-discovery-v1"
 DEFAULT_MAX_PROVIDERS = 100
 DEFAULT_MAX_SEEDS_PER_HOST = 3
+MAX_HARD_PROVIDERS = 500
+MAX_HARD_SEEDS_PER_HOST = 10
+MAX_DISCOVERY_DELAY_SECONDS = 60.0
+MAX_DISCOVERY_FIXTURE_BYTES = 16 * 1024 * 1024
+MAX_SUMMARY_ROWS = 100_000
+MAX_SUMMARY_LINE_BYTES = 2 * 1024 * 1024
 
 
 @dataclass(frozen=True)
@@ -72,7 +79,9 @@ def normalize_website_url(value: object | None) -> str | None:
         host = host[4:]
     netloc = host if port is None else f"{host}:{port}"
     path = parts.path or "/"
-    return urlunsplit((parts.scheme.casefold(), netloc, path, parts.query, ""))
+    # Website fields are leads, not credentials. Never carry signed query
+    # material into crawl manifests or exception messages.
+    return urlunsplit((parts.scheme.casefold(), netloc, path, "", ""))
 
 
 def _rows(fixture: Mapping[str, Any], include_review: bool) -> list[Mapping[str, Any]]:
@@ -95,8 +104,8 @@ def build_puebla_seeds(
 ) -> tuple[PueblaSeed, ...]:
     """Build deterministic host buckets from a classified DENUE fixture."""
 
-    if max_seeds_per_host < 1:
-        raise ValueError("max_seeds_per_host must be positive")
+    if not 1 <= max_seeds_per_host <= MAX_HARD_SEEDS_PER_HOST:
+        raise ValueError(f"max_seeds_per_host must be between 1 and {MAX_HARD_SEEDS_PER_HOST}")
     buckets: dict[str, dict[str, Any]] = {}
     for row in _rows(fixture, include_review):
         url = normalize_website_url(row.get("website_url"))
@@ -155,14 +164,34 @@ def _summarize_run(seed: PueblaSeed, summary: Any, adapter: GenericProviderAdapt
     counts = Counter()
     raw_path = Path(summary.artifact_directory) / "raw_records.jsonl"
     if raw_path.exists():
-        for line in raw_path.read_text(encoding="utf-8").splitlines():
-            if not line.strip():
-                continue
-            try:
-                record_type = json.loads(line).get("record_type")
-            except json.JSONDecodeError:
-                continue
-            counts[record_type] += 1
+        # The artifact contains provider-controlled evidence. Stream it with
+        # the same hard line/row bounds as CollectorRunner instead of creating
+        # a second, unbounded in-memory copy while building the coverage
+        # manifest.
+        with raw_path.open("rb") as handle:
+            for _ in range(MAX_SUMMARY_ROWS):
+                raw_line = handle.readline(MAX_SUMMARY_LINE_BYTES + 1)
+                if not raw_line:
+                    break
+                if len(raw_line) > MAX_SUMMARY_LINE_BYTES:
+                    raise ValueError("raw record line exceeds the hard artifact limit")
+                try:
+                    line = raw_line.decode("utf-8").strip()
+                    if not line:
+                        continue
+                    value = json.loads(line)
+                except (UnicodeError, json.JSONDecodeError):
+                    continue
+                if isinstance(value, Mapping):
+                    record_type = value.get("record_type")
+                    if isinstance(record_type, str) and record_type:
+                        counts[record_type] += 1
+            else:
+                # A well-formed CollectorRunner artifact cannot exceed this
+                # row budget. Reject a tampered artifact rather than silently
+                # producing an incomplete coverage report.
+                if handle.readline(1):
+                    raise ValueError("raw artifact exceeds the hard row limit")
     status = summary.status
     # A reachable page with no extractable evidence is different from a
     # successful discovery and must be visible in coverage reports.
@@ -207,11 +236,17 @@ def run_puebla_discovery(
 ) -> dict[str, Any]:
     """Run bounded discovery for a deterministic subset of Puebla hosts."""
 
-    if max_providers < 1:
-        raise ValueError("max_providers must be positive")
-    if delay_between_providers < 0:
-        raise ValueError("delay_between_providers cannot be negative")
-    fixture = json.loads(Path(fixture_path).read_text(encoding="utf-8"))
+    require_local_private_host_mode(allow_private_hosts)
+    if not 1 <= max_providers <= MAX_HARD_PROVIDERS:
+        raise ValueError(f"max_providers must be between 1 and {MAX_HARD_PROVIDERS}")
+    if not isinstance(delay_between_providers, (int, float)) or isinstance(delay_between_providers, bool) or not isfinite(float(delay_between_providers)) or not 0 <= delay_between_providers <= MAX_DISCOVERY_DELAY_SECONDS:
+        raise ValueError("delay_between_providers must be between 0 and 60")
+    fixture_file = Path(fixture_path)
+    with fixture_file.open("rb") as handle:
+        fixture_bytes = handle.read(MAX_DISCOVERY_FIXTURE_BYTES + 1)
+    if len(fixture_bytes) > MAX_DISCOVERY_FIXTURE_BYTES:
+        raise ValueError("DENUE fixture exceeds the hard size limit")
+    fixture = json.loads(fixture_bytes.decode("utf-8"))
     if not isinstance(fixture, Mapping):
         raise ValueError("DENUE fixture must be a JSON object")
     seeds = build_puebla_seeds(
@@ -243,7 +278,7 @@ def run_puebla_discovery(
             )
             adapter = GenericProviderAdapter(config, client=client)
         except (ValueError, OSError) as error:
-            summaries.append(_empty_summary(seed, "blocked", str(error)))
+            summaries.append(_empty_summary(seed, "blocked", _safe_error_detail(error)))
             continue
         try:
             summary = CollectorRunner(root).run(adapter)
@@ -340,7 +375,7 @@ def main() -> int:
             respect_robots=not args.ignore_robots,
         )
     except (OSError, ValueError, json.JSONDecodeError) as error:
-        print(json.dumps({"status": "blocked", "error": str(error)}, ensure_ascii=False, indent=2))
+        print(json.dumps({"status": "blocked", "error": _safe_error_detail(error)}, ensure_ascii=False, indent=2))
         return 2
     print(json.dumps(result, ensure_ascii=False, indent=2))
     return 0 if result["status"] == "succeeded" else 2

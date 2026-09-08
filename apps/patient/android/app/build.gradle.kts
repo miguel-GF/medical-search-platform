@@ -25,11 +25,53 @@ android {
         versionName = flutter.versionName
     }
 
+    // A release artifact must never fall back to the debug keystore. Apart
+    // from exposing a non-production trust identity, that would let a
+    // seemingly legitimate package be replaced or make secure updates
+    // impossible. CI/release machines provide these values as secrets.
+    val releaseStorePath = providers.environmentVariable("PRUEVIA_RELEASE_STORE_FILE").orNull
+    val releaseStorePassword = providers.environmentVariable("PRUEVIA_RELEASE_STORE_PASSWORD").orNull
+    val releaseKeyAlias = providers.environmentVariable("PRUEVIA_RELEASE_KEY_ALIAS").orNull
+    val releaseKeyPassword = providers.environmentVariable("PRUEVIA_RELEASE_KEY_PASSWORD").orNull
+    val releaseSigningConfigured = listOf(
+        releaseStorePath,
+        releaseStorePassword,
+        releaseKeyAlias,
+        releaseKeyPassword,
+    ).all { !it.isNullOrBlank() }
+    val releaseTaskRequested = gradle.startParameter.taskNames.any {
+        val task = it.substringAfterLast(':').lowercase()
+        task.contains("release") || task in setOf("assemble", "bundle", "build")
+    }
+
+    if (releaseTaskRequested && !releaseSigningConfigured) {
+        throw GradleException(
+            "Production Android release signing is not configured. " +
+                "Set PRUEVIA_RELEASE_STORE_FILE, PRUEVIA_RELEASE_STORE_PASSWORD, " +
+                "PRUEVIA_RELEASE_KEY_ALIAS and PRUEVIA_RELEASE_KEY_PASSWORD."
+        )
+    }
+
+    if (releaseSigningConfigured) {
+        signingConfigs {
+            create("prueviaRelease") {
+                storeFile = file(requireNotNull(releaseStorePath))
+                storePassword = releaseStorePassword
+                keyAlias = releaseKeyAlias
+                keyPassword = releaseKeyPassword
+            }
+        }
+    }
+
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("debug")
+            // With no production credentials this remains unsigned (and a
+            // release task fails above), never debug-signed.
+            if (releaseSigningConfigured) {
+                signingConfig = signingConfigs.getByName("prueviaRelease")
+            } else {
+                signingConfig = null
+            }
         }
     }
 }

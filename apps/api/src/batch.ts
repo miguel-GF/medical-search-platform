@@ -11,6 +11,11 @@ import type {
 export const PACKAGE_MAX_ITEMS = 30;
 export const PACKAGE_MAX_ITEM_LENGTH = 200;
 export const PACKAGE_MAX_TEXT_LENGTH = 4_000;
+// The database response is still an untrusted network boundary. A 2 MiB JSON
+// response can contain far more rows than the package solver needs; keep the
+// amount of hostile/malformed data that reaches the combinatorial code bounded.
+const PACKAGE_RPC_MAX_ITEMS = 60;
+const PACKAGE_RPC_MAX_OFFERS = 5_000;
 
 const OBJECTIVES: PackageObjective[] = ['all_in_one', 'lowest_cost', 'nearest', 'balanced'];
 
@@ -253,7 +258,11 @@ export function buildPackageResolution(
 
 interface LocationBucket {
   location: PackageSolution['locations'][number];
-  offers: PackageOffer[];
+  // At most one (best) offer per requested item is needed for a location.
+  // Keeping this index avoids repeatedly scanning every offer for every
+  // location combination, which otherwise turns a large upstream payload into
+  // a CPU-amplification vector.
+  offersByItem: Map<number, PackageOffer>;
   covered: Set<number>;
 }
 
@@ -264,8 +273,9 @@ function findPackageSolutions(
   maxSolutions: number,
 ): PackageSolution[] {
   const byLocation = new Map<string, LocationBucket>();
+  const requestedIndexes = new Set(items.map((item) => item.index));
   for (const offer of offers) {
-    if (!offer.provider_location_id) continue;
+    if (!offer.provider_location_id || !Number.isInteger(offer.item_index) || !requestedIndexes.has(offer.item_index)) continue;
     let bucket = byLocation.get(offer.provider_location_id);
     if (!bucket) {
       bucket = {
@@ -278,12 +288,15 @@ function findPackageSolutions(
           longitude: offer.longitude,
           distance_meters: offer.distance_meters,
         },
-        offers: [],
+        offersByItem: new Map<number, PackageOffer>(),
         covered: new Set<number>(),
       };
       byLocation.set(offer.provider_location_id, bucket);
     }
-    bucket.offers.push(offer);
+    const previous = bucket.offersByItem.get(offer.item_index);
+    if (!previous || compareOffers(offer, previous) < 0) {
+      bucket.offersByItem.set(offer.item_index, offer);
+    }
     bucket.covered.add(offer.item_index);
   }
   const candidates = [...byLocation.values()]
@@ -322,8 +335,9 @@ function evaluateCombination(
   const selected: PackageOffer[] = [];
   const missing: number[] = [];
   for (const item of items) {
-    const options = locationIds.flatMap((locationId) => buckets.get(locationId)?.offers ?? [])
-      .filter((offer) => offer.item_index === item.index)
+    const options = locationIds
+      .map((locationId) => buckets.get(locationId)?.offersByItem.get(item.index))
+      .filter((offer): offer is PackageOffer => Boolean(offer))
       .sort(compareOffers);
     const best = options[0];
     if (best) selected.push(best);
@@ -404,10 +418,21 @@ export function normalizeBatchRpcPayload(value: unknown): PackageRpcResponse {
   const input = value as Partial<PackageRpcResponse>;
   return {
     engine_version: typeof input.engine_version === 'string' ? input.engine_version : 'clinical-resolver-v6',
-    items: Array.isArray(input.items) ? input.items as PackageItem[] : [],
-    offers: Array.isArray(input.offers) ? input.offers as PackageOffer[] : [],
-    ocr_corrections: Array.isArray(input.ocr_corrections) ? input.ocr_corrections as PackageRpcResponse['ocr_corrections'] : undefined,
+    // Supabase responses are trusted for authorization, not for shape. Drop
+    // malformed array entries before the deterministic resolver touches them;
+    // otherwise a null/object from a bad migration could crash the Worker.
+    // The caps also prevent an oversized-but-valid upstream JSON response from
+    // amplifying CPU in the package set-cover solver.
+    items: Array.isArray(input.items) ? input.items.filter(isRecord).slice(0, PACKAGE_RPC_MAX_ITEMS) as PackageItem[] : [],
+    offers: Array.isArray(input.offers) ? input.offers.filter(isRecord).slice(0, PACKAGE_RPC_MAX_OFFERS) as PackageOffer[] : [],
+    ocr_corrections: Array.isArray(input.ocr_corrections)
+      ? input.ocr_corrections.filter(isRecord) as PackageRpcResponse['ocr_corrections']
+      : undefined,
   };
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
 
 export type { PackageCandidate };

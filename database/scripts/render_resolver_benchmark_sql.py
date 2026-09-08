@@ -6,6 +6,11 @@ import argparse
 import json
 from pathlib import Path
 
+try:  # Package import for tests; direct import for the CLI entrypoint.
+    from .artifact_io import MAX_FIXTURE_BYTES, read_json_file
+except ImportError:  # pragma: no cover - exercised by direct script invocation
+    from artifact_io import MAX_FIXTURE_BYTES, read_json_file
+
 
 def sql(value: object) -> str:
     if value is None:
@@ -106,7 +111,7 @@ select * from resolved;
 
 {tail}
 
-commit;
+rollback;
 """
 
 
@@ -116,7 +121,7 @@ def main() -> int:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--diagnostic", action="store_true")
     args = parser.parse_args()
-    fixture = json.loads(args.fixture.read_text(encoding="utf-8"))
+    fixture = read_json_file(args.fixture, max_bytes=MAX_FIXTURE_BYTES)
     args.output.write_text(render(fixture, diagnostic=args.diagnostic), encoding="utf-8")
     print(f"wrote benchmark SQL for {len(fixture['cases'])} cases to {args.output}")
     return 0

@@ -5,7 +5,36 @@ import json
 from pathlib import Path
 
 from .pipeline import CollectorRunner
-from .providers.chopo import ChopoAdapter, ChopoClient, ChopoProductAdapter
+from .providers.chopo import (
+    MAX_CHOPO_PRODUCTS,
+    ChopoAdapter,
+    ChopoClient,
+    ChopoProductAdapter,
+)
+
+
+MAX_PRODUCT_URL_FILE_BYTES = 256 * 1024
+MAX_PRODUCT_URLS = 10_000
+MAX_PRODUCT_URL_LINE_BYTES = 4 * 1024
+
+
+def _read_product_urls(path: Path) -> list[str]:
+    """Read an operator-supplied URL list with explicit resource limits."""
+
+    with path.open("rb") as handle:
+        raw = handle.read(MAX_PRODUCT_URL_FILE_BYTES + 1)
+    if len(raw) > MAX_PRODUCT_URL_FILE_BYTES:
+        raise ValueError("product URL file exceeds the safety limit")
+    urls: list[str] = []
+    for raw_line in raw.splitlines():
+        if len(raw_line) > MAX_PRODUCT_URL_LINE_BYTES:
+            raise ValueError("product URL line exceeds the safety limit")
+        line = raw_line.decode("utf-8").strip()
+        if line and not line.lstrip().startswith("#"):
+            urls.append(line)
+    if len(urls) > MAX_PRODUCT_URLS:
+        raise ValueError("product URL file contains too many URLs")
+    return urls
 
 
 def main() -> int:
@@ -27,13 +56,13 @@ def main() -> int:
     client = ChopoClient(max_attempts=args.max_attempts, retry_backoff_seconds=args.retry_backoff_seconds)
     try:
         if args.product_url_file:
-            urls = [line.strip() for line in args.product_url_file.read_text(encoding="utf-8").splitlines() if line.strip() and not line.lstrip().startswith("#")]
-            if args.product_offset < 0:
-                raise ValueError("product offset cannot be negative")
+            urls = _read_product_urls(args.product_url_file)
+            if not 0 <= args.product_offset <= MAX_CHOPO_PRODUCTS:
+                raise ValueError("product offset must be between 0 and 10000")
             urls = urls[args.product_offset :]
             if args.max_products is not None:
-                if args.max_products < 1:
-                    raise ValueError("max products must be positive")
+                if not 1 <= args.max_products <= MAX_CHOPO_PRODUCTS:
+                    raise ValueError("max products must be between 1 and 10000")
                 urls = urls[: args.max_products]
             adapter = ChopoProductAdapter(
                 client,

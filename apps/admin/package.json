@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "render:headers": "node scripts/render_headers.mjs",
     "typecheck": "tsc --noEmit",
     "test": "vitest run"
   },

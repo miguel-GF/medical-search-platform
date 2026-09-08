@@ -3,6 +3,7 @@ from pathlib import Path
 import httpx
 import pytest
 from pruevia_collectors.providers.salud_digna import (
+    MAX_SALUD_DIGNA_LOCATIONS,
     SaludDignaAdapter,
     SaludDignaClient,
     SaludDignaLocationPage,
@@ -178,3 +179,16 @@ def test_salud_digna_adapter_rejects_empty_catalog():
 
     with pytest.raises(ValueError, match="no studies"):
         list(SaludDignaAdapter(EmptyClient(), ("puebla-municipio-libre",)).collect())
+
+
+def test_salud_digna_limits_reject_unsafe_urls_and_unbounded_inputs():
+    with pytest.raises(ValueError, match="HTTPS origin"):
+        SaludDignaClient(origin="http://example.test")
+    client = SaludDignaClient(origin="https://example.test", services_base_url="https://services.test", client=object())
+    try:
+        with pytest.raises(ValueError, match="safe path segment"):
+            client.location_url("puebla?redirect=evil")
+    finally:
+        client._client = None
+    with pytest.raises(ValueError, match="too many"):
+        SaludDignaAdapter(object(), [f"location-{index}" for index in range(MAX_SALUD_DIGNA_LOCATIONS + 1)])

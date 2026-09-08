@@ -1,15 +1,18 @@
 import json
 from pathlib import Path
+import socket
 
 import httpx
 import pytest
 
 from pruevia_collectors.providers.generic import (
+    MAX_HARD_SEEDS,
     GenericCrawlConfig,
     GenericPage,
     GenericPageParser,
     GenericProviderAdapter,
     GenericWebClient,
+    _offer_record,
     decode_html,
     parse_price_minor,
 )
@@ -145,6 +148,31 @@ def test_generic_parser_never_emits_script_links():
     assert offers[0]["url"] == "https://lab.example/estudios"
 
 
+def test_generic_artifacts_strip_signed_query_material_from_page_and_product_urls():
+    page = GenericPage("https://lab.example/estudios?page=2&session=private-value", "", "text/html")
+    record = _offer_record(
+        "generic_lab",
+        page,
+        "Laboratorio",
+        {"name": "Glucosa", "url": "/estudios/glucosa?sig=private-value", "price_minor": 8900, "method": "jsonld_offer"},
+    )
+    assert record.source_url == "https://lab.example/estudios"
+    assert record.payload["product_url"] == "https://lab.example/estudios/glucosa"
+    assert record.payload["evidence_page_url"] == "https://lab.example/estudios"
+    assert all("private-value" not in str(value) for value in (record.source_url, record.payload))
+
+
+def test_generic_source_endpoint_does_not_persist_seed_query_material():
+    class StubClient:
+        allowed_hosts = {"testserver", "www.testserver"}
+
+    adapter = GenericProviderAdapter(
+        GenericCrawlConfig(("https://testserver/catalog?session=private-value",), max_pages=1),
+        client=StubClient(),
+    )
+    assert adapter.source.endpoint_url == "https://testserver/catalog"
+
+
 def test_generic_parser_drops_nonclinical_product_jsonld():
     page = GenericPage(
         "https://lab.example/",
@@ -153,6 +181,31 @@ def test_generic_parser_drops_nonclinical_product_jsonld():
     )
 
     assert GenericPageParser().parse(page)["offers"] == []
+
+
+def test_generic_parser_bounds_hostile_tag_and_link_fanout():
+    page = GenericPage(
+        "https://lab.example/",
+        "<body>" + "<a href='/x'>x</a>" * 3_000 + "<h2>Glucosa</h2>" * 700 + "</body>",
+        "text/html",
+    )
+    result = GenericPageParser().parse(page)
+    assert len(result["links"]) <= 2_000
+    assert len(result["headings"]) <= 500
+    assert len(result["evidence_text"]) <= 4_000
+
+
+def test_generic_parser_handles_deep_jsonld_without_recursion_failure():
+    nested: object = {"@type": "MedicalTest", "name": "Glucosa"}
+    for _ in range(200):
+        nested = [nested]
+    page = GenericPage(
+        "https://lab.example/",
+        '<script type="application/ld+json">' + json.dumps(nested) + "</script>",
+        "text/html",
+    )
+    result = GenericPageParser().parse(page)
+    assert isinstance(result["offers"], list)
 
 
 def test_generic_adapter_is_bounded_to_seed_host_and_emits_evidence(tmp_path: Path):
@@ -253,6 +306,79 @@ def test_generic_client_rejects_external_redirect_before_requesting_target():
     assert calls == ["https://testserver/"]
 
 
+def test_generic_client_streams_and_rejects_oversized_bodies():
+    def handler(request: httpx.Request):
+        return httpx.Response(
+            200,
+            content=b"x" * 20_000,
+            headers={"content-type": "text/html"},
+            request=request,
+        )
+
+    http_client = httpx.Client(transport=httpx.MockTransport(handler))
+    client = GenericWebClient(
+        ["http://testserver/"],
+        allow_private_hosts=True,
+        respect_robots=False,
+        max_response_bytes=16_384,
+        client=http_client,
+    )
+    try:
+        with pytest.raises(RuntimeError, match="max_response_bytes"):
+            client.fetch("http://testserver/")
+    finally:
+        http_client.close()
+
+
+def test_generic_client_enforces_total_response_wall_clock(monkeypatch: pytest.MonkeyPatch):
+    ticks = iter((0.0, 61.0))
+    monkeypatch.setattr("pruevia_collectors.providers.generic.time.monotonic", lambda: next(ticks))
+
+    def handler(request: httpx.Request):
+        return httpx.Response(200, content=b"ok", headers={"content-type": "text/html"}, request=request)
+
+    http_client = httpx.Client(transport=httpx.MockTransport(handler))
+    client = GenericWebClient(
+        ["http://testserver/"],
+        allow_private_hosts=True,
+        respect_robots=False,
+        client=http_client,
+    )
+    try:
+        with pytest.raises(RuntimeError, match="max_response_seconds"):
+            client.fetch("http://testserver/")
+    finally:
+        http_client.close()
+
+
+def test_generic_client_rejects_private_connected_peer(monkeypatch: pytest.MonkeyPatch):
+    class PrivatePeer:
+        def get_extra_info(self, name: str):
+            return ("127.0.0.1", 443) if name == "server_addr" else None
+
+    monkeypatch.setattr(
+        "pruevia_collectors.providers.generic.socket.getaddrinfo",
+        lambda *_args, **_kwargs: [(socket.AF_INET, socket.SOCK_STREAM, 6, "", ("8.8.8.8", 443))],
+    )
+
+    def handler(request: httpx.Request):
+        return httpx.Response(
+            200,
+            text="<h1>unexpected</h1>",
+            headers={"content-type": "text/html"},
+            extensions={"network_stream": PrivatePeer()},
+            request=request,
+        )
+
+    http_client = httpx.Client(transport=httpx.MockTransport(handler))
+    client = GenericWebClient(["https://example.com/"], respect_robots=False, client=http_client)
+    try:
+        with pytest.raises(RuntimeError, match="non-global connected peer"):
+            client.fetch("https://example.com/")
+    finally:
+        http_client.close()
+
+
 def test_generic_client_honors_robots_txt():
     def handler(request: httpx.Request):
         if request.url.path == "/robots.txt":
@@ -302,6 +428,8 @@ def test_generic_config_rejects_multiple_hosts():
         GenericCrawlConfig(("https://example/",), max_pages=501)
     with pytest.raises(ValueError, match="between 0 and 5"):
         GenericCrawlConfig(("https://example/",), max_depth=6)
+    with pytest.raises(ValueError, match="at most 20"):
+        GenericCrawlConfig(tuple(f"https://example/{index}" for index in range(MAX_HARD_SEEDS + 1)))
 
 
 def test_generic_config_treats_apex_and_www_as_one_site():

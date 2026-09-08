@@ -48,7 +48,7 @@ Ejecutar contra Supabase DEV enlazado:
 
 ```powershell
 $path = (Resolve-Path database/supabase/tests/resolver_benchmark_test.sql).Path
-npx supabase@latest db query --linked --file $path
+npx supabase@2.116.0 db query --linked --file $path
 ```
 
 El gate exige 10 aserciones pgTAP, incluyendo 200/200 casos conformes,

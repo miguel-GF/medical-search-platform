@@ -1,10 +1,14 @@
 -- Provider claim, organization/sucursal scope and membership invariants.
 -- Run against the linked project with:
--- npx.cmd supabase@latest db query --linked --file supabase/tests/provider_claims_test.sql
+-- npx.cmd supabase@2.116.0 db query --linked --file supabase/tests/provider_claims_test.sql
 
 begin;
+-- Exercise the deferred document workflow in this rollback-only fixture.
+-- internal_document_freeze_test.sql separately verifies the release closure.
+drop trigger if exists internal_document_write_freeze on identity.verification_documents;
+drop policy if exists provider_documents_internal_freeze on storage.objects;
 create extension if not exists pgtap with schema extensions;
-select extensions.plan(56);
+select extensions.plan(62);
 
 select extensions.has_table('identity', 'provider_claims', 'provider claims table exists');
 select extensions.has_table('identity', 'provider_memberships', 'provider memberships table exists');
@@ -15,8 +19,8 @@ select extensions.has_table('identity', 'provider_change_requests', 'provider ch
 
 select extensions.is(
   has_function_privilege('authenticated', 'public.api_provider_create_claim(text,uuid,uuid,uuid,text,text,text,jsonb)', 'execute'),
-  true,
-  'authenticated users can call provider self-service RPCs'
+  false,
+  'authenticated users cannot call provider self-service RPCs directly'
 );
 select extensions.is(
   has_function_privilege('anon', 'public.api_provider_create_claim(text,uuid,uuid,uuid,text,text,text,jsonb)', 'execute'),
@@ -70,7 +74,12 @@ on conflict (id) do nothing;
 insert into auth.users(id, aud, role, email, created_at, updated_at, is_sso_user, is_anonymous)
 values ('00000000-0000-0000-0000-000000000898', 'authenticated', 'authenticated', 'provider-claims-other@example.invalid', now(), now(), false, false)
 on conflict (id) do nothing;
+insert into auth.mfa_factors(id, user_id, factor_type, status, created_at, updated_at, secret)
+values ('00000000-0000-0000-0000-000000000897', '00000000-0000-0000-0000-000000000899', 'totp', 'verified', now(), now(), 'provider-claims-factor-899'),
+       ('00000000-0000-0000-0000-000000000896', '00000000-0000-0000-0000-000000000898', 'totp', 'verified', now(), now(), 'provider-claims-factor-898')
+on conflict (id) do nothing;
 select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-000000000899', true);
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-000000000899","role":"authenticated","aal":"aal2"}', true);
 
 select extensions.is(
   public.api_provider_create_claim(
@@ -113,10 +122,17 @@ select extensions.is(
   'claimant can list own claims'
 );
 
+insert into storage.objects(bucket_id, name, owner_id)
+values (
+  'provider-claims',
+  (select id::text from identity.provider_claims where provider_location_id = '00000000-0000-0000-0000-000000000803') || '/00000000-0000-0000-0000-000000000811.pdf',
+  '00000000-0000-0000-0000-000000000899'
+);
+
 select extensions.is(
   (public.api_provider_add_claim_document(
     (select id from identity.provider_claims where provider_location_id = '00000000-0000-0000-0000-000000000803'),
-    'rfc', 'provider-claims/801/rfc.pdf', repeat('a', 64), '{}'::jsonb
+    'rfc', 'provider-claims/' || (select id from identity.provider_claims where provider_location_id = '00000000-0000-0000-0000-000000000803') || '/00000000-0000-0000-0000-000000000811.pdf', repeat('a', 64), '{}'::jsonb
   )->>'status'),
   'pending',
   'claimant can attach a document reference'
@@ -130,6 +146,44 @@ select extensions.throws_ok(
   'P0001',
   'Invalid document object key',
   'document references cannot escape their storage prefix'
+);
+
+select extensions.throws_ok(
+  $$select public.api_provider_add_claim_document(
+    (select id from identity.provider_claims where provider_location_id = '00000000-0000-0000-0000-000000000803'),
+    'rfc', 'provider-claims/00000000-0000-0000-0000-000000000999/00000000-0000-0000-0000-000000000812.pdf', repeat('c', 64), '{}'::jsonb
+  )$$,
+  'P0001',
+  'Document object key must be bound to its claim',
+  'document references are bound to the claimant claim id'
+);
+
+select extensions.throws_ok(
+  $$select public.api_admin_review_provider_claim(
+    (select id from identity.provider_claims where provider_location_id = '00000000-0000-0000-0000-000000000803'),
+    'approved', '00000000-0000-0000-0000-000000000899', 'Pending evidence must fail'
+  )$$,
+  'P0001',
+  'Claim requires accepted, verified evidence',
+  'claim approval cannot accept pending evidence implicitly'
+);
+
+select extensions.is(
+  (public.api_server_record_provider_document_scan(
+    (select id from identity.verification_documents where claim_id = (select id from identity.provider_claims where provider_location_id = '00000000-0000-0000-0000-000000000803')),
+    repeat('a', 64), 'application/pdf', 1024, 'clean', 'ClamAV 1.5.4/99999/Fri Sep 04 12:00:00 2026', null
+  )->>'content_verified'),
+  'true',
+  'service-only RPC records a matching clean scan attestation (bytes are not scanned by this SQL test)'
+);
+
+select extensions.is(
+  (public.api_admin_review_provider_document(
+    (select id from identity.verification_documents where claim_id = (select id from identity.provider_claims where provider_location_id = '00000000-0000-0000-0000-000000000803')),
+    'accepted', '00000000-0000-0000-0000-000000000899', 'Document inspected'
+  )->>'status'),
+  'accepted',
+  'admin explicitly accepts only verified evidence'
 );
 
 select extensions.is(
@@ -187,7 +241,7 @@ select extensions.is(
    where claim_id = (select id from identity.provider_claims where provider_location_id = '00000000-0000-0000-0000-000000000803')
    order by created_at desc limit 1),
   'accepted',
-  'approval accepts submitted evidence documents'
+  'claim approval preserves the explicitly accepted evidence document'
 );
 
 select extensions.is(
@@ -294,8 +348,8 @@ select extensions.is(
 );
 
 select extensions.is(
-  (select count(*)::integer from audit.events where action in ('provider.claim_created', 'provider.claim_document_added', 'provider.claim_reviewed', 'provider.member_invited', 'provider.membership_accepted', 'provider.profile_change_submitted', 'provider.profile_change_reviewed')),
-  7,
+  (select count(*)::integer from audit.events where action in ('provider.claim_created', 'provider.claim_document_added', 'provider.claim_document_scanned', 'provider.claim_document_reviewed', 'provider.claim_reviewed', 'provider.member_invited', 'provider.membership_accepted', 'provider.profile_change_submitted', 'provider.profile_change_reviewed')),
+  9,
   'claim lifecycle actions are audited'
 );
 
@@ -358,11 +412,13 @@ select extensions.is(
 
 select extensions.is(
   (set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-000000000898', true) is not null
+   and set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-000000000898","role":"authenticated","aal":"aal2"}', true) is not null
    and (select count(*) from public.api_provider_my_claims()) = 0),
   true,
   'provider claims are isolated to the authenticated user'
 );
 select set_config('request.jwt.claim.sub', '00000000-0000-0000-0000-000000000899', true);
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-000000000899","role":"authenticated","aal":"aal2"}', true);
 
 select extensions.throws_ok(
   $$insert into identity.provider_claims(
@@ -393,7 +449,7 @@ select extensions.throws_ok(
     'approved', '00000000-0000-0000-0000-000000000899', 'Without evidence'
   )$$,
   'P0001',
-  'Claim requires at least one verification document',
+  'Claim requires accepted, verified evidence',
   'admin approval requires evidence'
 );
 
@@ -425,13 +481,38 @@ select extensions.is(
   'second organization can claim the brand independently'
 );
 
+insert into storage.objects(bucket_id, name, owner_id)
+values (
+  'provider-claims',
+  (select id::text from identity.provider_claims where organization_id = '00000000-0000-0000-0000-000000000805') || '/00000000-0000-0000-0000-000000000813.pdf',
+  '00000000-0000-0000-0000-000000000899'
+);
+
 select extensions.is(
   (public.api_provider_add_claim_document(
     (select id from identity.provider_claims where organization_id = '00000000-0000-0000-0000-000000000805'),
-    'acta_constitutiva', 'provider-claims/805/acta.pdf', repeat('b', 64), '{}'::jsonb
+    'acta_constitutiva', 'provider-claims/' || (select id from identity.provider_claims where organization_id = '00000000-0000-0000-0000-000000000805') || '/00000000-0000-0000-0000-000000000813.pdf', repeat('b', 64), '{}'::jsonb
   )->>'status'),
   'pending',
   'brand claim can submit evidence'
+);
+
+select extensions.is(
+  (public.api_server_record_provider_document_scan(
+    (select id from identity.verification_documents where claim_id = (select id from identity.provider_claims where organization_id = '00000000-0000-0000-0000-000000000805')),
+    repeat('b', 64), 'application/pdf', 2048, 'clean', 'ClamAV 1.5.4/99999/Fri Sep 04 12:00:00 2026', null
+  )->>'content_verified'),
+  'true',
+  'brand evidence also requires a recorded clean scan attestation'
+);
+
+select extensions.is(
+  (public.api_admin_review_provider_document(
+    (select id from identity.verification_documents where claim_id = (select id from identity.provider_claims where organization_id = '00000000-0000-0000-0000-000000000805')),
+    'accepted', '00000000-0000-0000-0000-000000000899', 'Brand document inspected'
+  )->>'status'),
+  'accepted',
+  'brand evidence requires explicit document review'
 );
 
 select extensions.is(
@@ -473,9 +554,10 @@ select extensions.is(
 select extensions.is(
   (select count(*)::integer from audit.events where action in (
     'provider.claim_created','provider.claim_document_added','provider.claim_reviewed','provider.member_invited',
-    'provider.membership_accepted','provider.profile_change_submitted','provider.profile_change_reviewed','provider.claim_revoked'
+    'provider.claim_document_scanned','provider.claim_document_reviewed','provider.membership_accepted',
+    'provider.profile_change_submitted','provider.profile_change_reviewed','provider.claim_revoked'
   )),
-  14,
+  18,
   'all claim, membership, profile and revocation events are audited'
 );
 

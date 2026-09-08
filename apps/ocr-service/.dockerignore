@@ -1,6 +1,8 @@
-.venv
-__pycache__
-.pytest_cache
-*.pyc
-.env
-tests
+# The image copies only its manifests and source package. Keep local
+# environments, credentials, caches and fixtures out of every build context.
+*
+!pyproject.toml
+!constraints.txt
+!README.md
+!src/
+!src/**

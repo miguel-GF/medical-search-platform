@@ -26,7 +26,7 @@ pruevia-puebla-retry = "pruevia_collectors.puebla_retry:main"
 pruevia-publish = "pruevia_collectors.cli_publish:main"
 
 [project.optional-dependencies]
-dev = ["pytest>=8,<9"]
+dev = ["pytest>=9.0.3,<10"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

@@ -21,6 +21,11 @@ import re
 import unicodedata
 from pathlib import Path
 
+try:  # Package import for tests; direct import for the CLI entrypoint.
+    from .artifact_io import MAX_FIXTURE_BYTES, read_json_file
+except ImportError:  # pragma: no cover - exercised by direct script invocation
+    from artifact_io import MAX_FIXTURE_BYTES, read_json_file
+
 
 IDS = {
     "dens_forearm_dual": "acae8edf-0d1b-5883-8e47-697834d9b3f1",
@@ -274,7 +279,7 @@ def build() -> dict:
         raise ValueError("benchmark v2 query strings must be unique")
 
     v1_path = Path(__file__).parents[1] / "fixtures" / "resolver_benchmark_v1.json"
-    v1 = json.loads(v1_path.read_text(encoding="utf-8"))
+    v1 = read_json_file(v1_path, max_bytes=MAX_FIXTURE_BYTES)
     v1_normalized = {normalize(case["query"]) for case in v1["cases"] if normalize(case["query"])}
     overlap = sorted({normalize(query) for query in queries} & v1_normalized)
     if overlap:

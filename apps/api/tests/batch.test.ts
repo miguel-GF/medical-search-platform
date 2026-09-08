@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   buildPackageResolution,
+  normalizeBatchRpcPayload,
   parseBatchRequest,
   readCatalogSegments,
   splitBatchText,
@@ -117,6 +118,27 @@ describe('compound study parsing', () => {
 });
 
 describe('deterministic package solver', () => {
+  it('drops malformed RPC array entries before solving', () => {
+    const normalized = normalizeBatchRpcPayload({
+      items: [null, item(1, 'BH', 'bh'), 'invalid'],
+      offers: [null, offer(1, 'bh'), 42],
+      ocr_corrections: [null, { index: 1, input: 'BH' }],
+    });
+    expect(normalized.items).toHaveLength(1);
+    expect(normalized.offers).toHaveLength(1);
+    expect(normalized.ocr_corrections).toHaveLength(1);
+  });
+
+  it('caps hostile RPC arrays before package solving', () => {
+    const normalized = normalizeBatchRpcPayload({
+      items: Array.from({ length: 100 }, (_, index) => item(index + 1, 'BH', `bh-${index}`)),
+      offers: Array.from({ length: 5_005 }, (_, index) => offer(1, `bh-${index}`)),
+    });
+    expect(normalized.items).toHaveLength(60);
+    expect(normalized.offers).toHaveLength(5_000);
+    expect(buildPackageResolution({ ...normalized, engine_version: 'test' }, 'BH', 'all_in_one', 1).solutions).toHaveLength(1);
+  });
+
   it('does not invent a package when a prescription has unresolved studies', () => {
     const payload: PackageRpcResponse = {
       engine_version: 'clinical-resolver-v6',

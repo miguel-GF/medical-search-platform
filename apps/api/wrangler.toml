@@ -4,7 +4,8 @@ compatibility_date = "2026-08-25"
 
 [vars]
 API_VERSION = "v1"
-APP_ENV = "development"
+APP_ENV = "production"
+PROVIDER_DOCUMENTS_ENABLED = "false"
 SUPABASE_TIMEOUT_MS = "5000"
 
 # Abuse controls. The namespace IDs must be unique within the Cloudflare
@@ -39,6 +40,14 @@ namespace_id = "910003"
 
   [ratelimits.simple]
   limit = 120
+  period = 60
+
+[[ratelimits]]
+name = "PROVIDER_RATE_LIMITER"
+namespace_id = "910005"
+
+  [ratelimits.simple]
+  limit = 60
   period = 60
 
 [ai]

@@ -5,6 +5,7 @@ import type { Env, OcrAiBinding, RpcClient } from '../src/types.js';
 const env: Env = {
   SUPABASE_URL: 'https://example.supabase.co',
   SUPABASE_ANON_KEY: 'anon',
+  APP_ENV: 'test',
   ADMIN_USER_IDS: '',
   OCR_AI_MODEL: '@cf/moondream/moondream3.1-9B-A2B',
 };
@@ -86,7 +87,7 @@ describe('POST /api/v1/resolve-image', () => {
     const ai: OcrAiBinding = { run: vi.fn(async () => ({ answer: 'SHOULD NOT RUN' })) };
     const rpc = rpcWith({ engine_version: 'clinical-resolver-v6', items: [item], offers: [] });
     const serviceFetch = vi.fn(async (_input: RequestInfo | URL, init?: RequestInit) => {
-      expect(init?.headers).toEqual(expect.objectContaining({ authorization: 'Bearer python-secret' }));
+      expect(init?.headers).toEqual(expect.objectContaining({ authorization: 'Bearer python-secret-012345678901234567890123456789' }));
       return new Response(JSON.stringify({
         text: 'BH', engine: 'python_ocr', model: 'PP-OCRv6_rec_small', confidence: 0.91,
         lines: [{ text: 'BH', confidence: 0.88 }, { text: 'EGO', confidence: 0.99 }],
@@ -102,7 +103,7 @@ describe('POST /api/v1/resolve-image', () => {
         ...env,
         AI: ai,
         OCR_SERVICE_URL: 'https://ocr.internal.example',
-        OCR_SERVICE_TOKEN: 'python-secret',
+        OCR_SERVICE_TOKEN: 'python-secret-012345678901234567890123456789',
       });
       expect(response.status).toBe(200);
       expect((await response.json()) as Record<string, unknown>).toEqual(expect.objectContaining({
@@ -117,6 +118,54 @@ describe('POST /api/v1/resolve-image', () => {
       }));
       expect(ai.run).not.toHaveBeenCalled();
       expect(serviceFetch).toHaveBeenCalledWith('https://ocr.internal.example/v1/ocr/order', expect.anything());
+    } finally {
+      vi.unstubAllGlobals();
+    }
+  });
+
+  it('rejects OCR redirects, oversized responses and unsafe service origins', async () => {
+    const rpc = rpcWith({ engine_version: 'clinical-resolver-v6', items: [item], offers: [] });
+    const handler = createHandler({ rpc });
+    const ai: OcrAiBinding = { run: vi.fn(async () => ({ answer: 'SHOULD NOT RUN' })) };
+    const makeRequest = () => new Request('https://api.test/api/v1/resolve-image', {
+      method: 'POST', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ image: 'data:image/jpeg;base64,/9j/4AA=' }),
+    });
+    const fetcher = vi.fn(async () => new Response(null, { status: 302, headers: { location: 'https://evil.example/' } }));
+    vi.stubGlobal('fetch', fetcher);
+    try {
+      const weakToken = await handler(makeRequest(), { ...env, AI: ai, OCR_SERVICE_URL: 'https://ocr.internal.example', OCR_SERVICE_TOKEN: 'short-token' });
+      expect(weakToken.status).toBe(503);
+      expect(fetcher).not.toHaveBeenCalled();
+      const redirected = await handler(makeRequest(), { ...env, AI: ai, OCR_SERVICE_URL: 'https://ocr.internal.example', OCR_SERVICE_TOKEN: 'python-secret-012345678901234567890123456789' });
+      expect(redirected.status).toBe(502);
+      const malformedOrigin = await handler(makeRequest(), { ...env, AI: ai, OCR_SERVICE_URL: 'https://user:pass@ocr.internal.example?token=secret', OCR_SERVICE_TOKEN: 'python-secret-012345678901234567890123456789' });
+      expect(malformedOrigin.status).toBe(503);
+      vi.stubGlobal('fetch', vi.fn(async () => new Response('x', { status: 200, headers: { 'content-length': '200000' } })));
+      const oversized = await handler(makeRequest(), { ...env, AI: ai, OCR_SERVICE_URL: 'https://ocr.internal.example', OCR_SERVICE_TOKEN: 'python-secret-012345678901234567890123456789' });
+      expect(oversized.status).toBe(502);
+    } finally {
+      vi.unstubAllGlobals();
+    }
+  });
+
+  it('does not allow loopback OCR URLs when the Worker is not local', async () => {
+    const fetcher = vi.fn();
+    vi.stubGlobal('fetch', fetcher);
+    try {
+      const response = await createHandler({ rpc: rpcWith({}) })(new Request('https://api.test/api/v1/resolve-image', {
+        method: 'POST', headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ image: 'data:image/jpeg;base64,/9j/4AA=' }),
+      }), {
+        ...env,
+        APP_ENV: 'production',
+        ALLOWED_ORIGIN: 'https://app.example',
+        OCR_RATE_LIMITER: { limit: async () => ({ success: true }) },
+        OCR_SERVICE_URL: 'http://127.0.0.1:8000',
+        OCR_SERVICE_TOKEN: 'python-secret',
+      });
+      expect(response.status).toBe(503);
+      expect(fetcher).not.toHaveBeenCalled();
     } finally {
       vi.unstubAllGlobals();
     }

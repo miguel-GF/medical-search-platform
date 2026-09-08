@@ -2,17 +2,26 @@ from __future__ import annotations
 
 import os
 import re
+import json
 from dataclasses import dataclass
+from math import isfinite
 from typing import Any, Iterable, Mapping, Sequence
-from urllib.parse import quote
+from urllib.parse import quote, urlparse
 
 import httpx
 
 from ..models import Observation, SourceRecord, SourceSpec
-from .http import request_with_same_host_redirects
+from .http import bounded_response_bytes, request_with_same_host_redirects
+from .public_transport import PublicAddressTransport
 
 
 DENUE_BASE_URL = "https://www.inegi.org.mx/app/api/denue/v1/consulta"
+MAX_DENUE_CONDITION_CHARS = 256
+MAX_DENUE_QUERIES = 100
+MAX_DENUE_ROWS = 20_000
+MAX_DENUE_TIMEOUT_SECONDS = 120.0
+MAX_DENUE_TOKEN_CHARS = 256
+MAX_DENUE_EXTERNAL_ID_CHARS = 256
 
 
 @dataclass(frozen=True)
@@ -23,9 +32,13 @@ class DenueQuery:
     radius_meters: int = 5000
 
     def __post_init__(self) -> None:
-        if not self.condition.strip():
+        if not isinstance(self.condition, str) or not self.condition.strip() or len(self.condition.strip()) > MAX_DENUE_CONDITION_CHARS:
             raise ValueError("DENUE condition cannot be empty")
-        if not 1 <= self.radius_meters <= 5000:
+        if not isinstance(self.latitude, (int, float)) or isinstance(self.latitude, bool) or not isfinite(float(self.latitude)) or not -90 <= self.latitude <= 90:
+            raise ValueError("DENUE latitude must be between -90 and 90")
+        if not isinstance(self.longitude, (int, float)) or isinstance(self.longitude, bool) or not isfinite(float(self.longitude)) or not -180 <= self.longitude <= 180:
+            raise ValueError("DENUE longitude must be between -180 and 180")
+        if not isinstance(self.radius_meters, int) or isinstance(self.radius_meters, bool) or not 1 <= self.radius_meters <= 5000:
             raise ValueError("DENUE radius must be between 1 and 5000 meters")
 
 
@@ -45,16 +58,30 @@ class DenueClient:
         client: httpx.Client | None = None,
     ) -> None:
         self.token = token or os.getenv("DENUE_API_TOKEN")
-        if not self.token:
+        if not isinstance(self.token, str) or not self.token or len(self.token) > MAX_DENUE_TOKEN_CHARS or any(ord(char) < 0x20 or ord(char) == 0x7F for char in self.token):
             raise ValueError("DENUE_API_TOKEN is required for live requests")
+        parsed_base = urlparse(base_url)
+        if (
+            parsed_base.scheme != "https"
+            or parsed_base.hostname != "www.inegi.org.mx"
+            or parsed_base.username
+            or parsed_base.password
+            or parsed_base.query
+            or parsed_base.fragment
+            or parsed_base.port not in (None, 443)
+            or parsed_base.path.rstrip("/") != "/app/api/denue/v1/consulta"
+        ):
+            raise ValueError("DENUE base_url must be the official HTTPS endpoint")
         self.base_url = base_url.rstrip("/")
+        if not isinstance(timeout_seconds, (int, float)) or isinstance(timeout_seconds, bool) or not isfinite(float(timeout_seconds)) or not 0 < timeout_seconds <= MAX_DENUE_TIMEOUT_SECONDS:
+            raise ValueError("timeout_seconds must be between 0 and 120")
         self.timeout_seconds = timeout_seconds
         self._client = client
 
     def search(self, query: DenueQuery) -> list[Mapping[str, Any]]:
         url = self.build_search_url(query)
         owns_client = self._client is None
-        client = self._client or httpx.Client(timeout=self.timeout_seconds, follow_redirects=False)
+        client = self._client or httpx.Client(timeout=self.timeout_seconds, follow_redirects=False, trust_env=False, transport=PublicAddressTransport())
         try:
             try:
                 response = request_with_same_host_redirects(
@@ -65,7 +92,14 @@ class DenueClient:
                     headers={"Accept": "application/json", "User-Agent": "PrueviaCollector/0.1"},
                 )
                 response.raise_for_status()
-                return _decode_rows(response.json())
+                try:
+                    try:
+                        decoded = json.loads(bounded_response_bytes(response, max_bytes=2 * 1024 * 1024))
+                    except (ValueError, RecursionError) as error:
+                        raise ValueError("DENUE response is not valid JSON") from error
+                    return _decode_rows(decoded)
+                finally:
+                    response.close()
             except (httpx.HTTPStatusError, httpx.RequestError) as error:
                 # DENUE requires the token in the URL path. Never propagate
                 # that URL into the run manifest or CLI error output.
@@ -100,6 +134,8 @@ class DenueAdapter:
     )
 
     def __init__(self, client: DenueClient, queries: Sequence[DenueQuery]) -> None:
+        if len(queries) > MAX_DENUE_QUERIES:
+            raise ValueError("too many DENUE queries")
         self.client = client
         self.queries = tuple(queries)
 
@@ -119,7 +155,9 @@ def denue_row_to_record(row: Mapping[str, Any], *, query: DenueQuery | None = No
     external_id = _first_value(row, "Id", "ID", "id", "id_establecimiento", "CLEE", "clee")
     if external_id is None:
         raise ValueError("DENUE row has no stable Id/CLEE")
-    external_id = str(external_id)
+    external_id = str(external_id).strip()
+    if not external_id or len(external_id) > MAX_DENUE_EXTERNAL_ID_CHARS:
+        raise ValueError("DENUE row has an invalid stable Id/CLEE")
     payload = dict(row)
     if query:
         payload["_denue_query"] = {
@@ -176,11 +214,15 @@ def denue_row_to_record(row: Mapping[str, Any], *, query: DenueQuery | None = No
 
 def _decode_rows(value: Any) -> list[Mapping[str, Any]]:
     if isinstance(value, list):
+        if len(value) > MAX_DENUE_ROWS:
+            raise ValueError("DENUE response contains too many rows")
         return [row for row in value if isinstance(row, Mapping)]
     if isinstance(value, Mapping):
         for key in ("data", "Data", "resultados", "Resultados", "establecimientos"):
             rows = value.get(key)
             if isinstance(rows, list):
+                if len(rows) > MAX_DENUE_ROWS:
+                    raise ValueError("DENUE response contains too many rows")
                 return [row for row in rows if isinstance(row, Mapping)]
         if _first_value(value, "Id", "ID", "id", "CLEE") is not None:
             return [value]
@@ -223,6 +265,10 @@ def _coordinates_from_row(row: Mapping[str, Any]) -> dict[str, float] | None:
     try:
         if latitude in (None, "") or longitude in (None, ""):
             return None
-        return {"latitude": float(latitude), "longitude": float(longitude)}
+        parsed_latitude = float(latitude)
+        parsed_longitude = float(longitude)
+        if not isfinite(parsed_latitude) or not isfinite(parsed_longitude) or not -90 <= parsed_latitude <= 90 or not -180 <= parsed_longitude <= 180:
+            return None
+        return {"latitude": parsed_latitude, "longitude": parsed_longitude}
     except (TypeError, ValueError):
         return None

@@ -61,7 +61,7 @@ def decode_image_input(
             normalized = ImageOps.exif_transpose(opened).convert("RGB")
     except ImageInputError:
         raise
-    except (UnidentifiedImageError, OSError) as exc:
+    except (Image.DecompressionBombError, UnidentifiedImageError, OSError) as exc:
         raise ImageInputError("image contents could not be decoded") from exc
     return DecodedImage(raw=raw, mime_type=declared_mime, image=normalized)
 

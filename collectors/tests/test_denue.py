@@ -50,6 +50,22 @@ def test_denue_client_rejects_invalid_radius():
         raise AssertionError("expected invalid radius to fail")
 
 
+def test_denue_query_rejects_invalid_coordinates_and_controlled_condition():
+    with pytest.raises(ValueError, match="latitude"):
+        DenueQuery("laboratorio", 91, -98)
+    with pytest.raises(ValueError, match="longitude"):
+        DenueQuery("laboratorio", 19, float("nan"))
+    with pytest.raises(ValueError, match="condition"):
+        DenueQuery("x" * 257, 19, -98)
+
+
+def test_denue_client_rejects_non_official_base_before_token_can_leak():
+    from pruevia_collectors.providers.denue import DenueClient
+
+    with pytest.raises(ValueError, match="official HTTPS endpoint"):
+        DenueClient(token="secret-token-123", base_url="https://evil.example/denue")
+
+
 def test_denue_client_redacts_token_from_transport_errors():
     from pruevia_collectors.providers.denue import DenueClient
 

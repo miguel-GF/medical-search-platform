@@ -6,6 +6,7 @@ import {
   OCR_PROMPT,
   parseOcrImageInput,
   recognizeOrderImage,
+  recognizeOrderImageViaService,
 } from '../src/ocr.js';
 import type { OcrAiBinding } from '../src/types.js';
 
@@ -21,6 +22,28 @@ describe('OCR input boundary', () => {
     expect(() => parseOcrImageInput({ image: 'not base64', mime_type: 'image/jpeg' })).toThrowError(OcrInputError);
     expect(() => parseOcrImageInput({ image: '', mime_type: 'image/jpeg' })).toThrowError(OcrInputError);
     expect(() => parseOcrImageInput({ image: 'AAE=', mime_type: 'image/jpeg' })).toThrowError(OcrInputError);
+  });
+
+  it('rejects an OCR service URL with a path before sending the image or token', async () => {
+    await expect(recognizeOrderImageViaService(
+      'https://ocr.example/internal',
+      'x'.repeat(32),
+      { bytes: [255, 216, 255], mime_type: 'image/jpeg' },
+      1_000,
+      false,
+    )).rejects.toBeInstanceOf(OcrUnavailableError);
+  });
+
+  it('rejects private and loopback OCR hosts outside local development', async () => {
+    for (const url of ['https://127.0.0.1', 'https://10.0.0.7', 'https://[::1]']) {
+      await expect(recognizeOrderImageViaService(
+        url,
+        'x'.repeat(32),
+        { bytes: [255, 216, 255], mime_type: 'image/jpeg' },
+        1_000,
+        false,
+      )).rejects.toBeInstanceOf(OcrUnavailableError);
+    }
   });
 });
 

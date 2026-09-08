@@ -25,6 +25,8 @@ def test_benchmark_sql_escapes_queries_and_contains_remote_assertions():
     assert "adversarial and unrelated input returns no_match" in sql
     assert "DROP TABLE catalog.items" in sql
     assert "<script>alert(''xss'')</script>" in sql
+    assert sql.rstrip().endswith("rollback;")
+    assert render(fixture, diagnostic=True).rstrip().endswith("rollback;")
 
 
 def test_benchmark_fixture_round_trips_as_json():

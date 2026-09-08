@@ -9,7 +9,9 @@ void main() {
     tester,
   ) async {
     await tester.pumpWidget(
-      MaterialApp(home: ConsentScreen(onAccept: () async {})),
+      MaterialApp(
+        home: ConsentScreen(onAccept: () async {}, onDecline: () async {}),
+      ),
     );
 
     expect(find.text('Encuentra dónde hacer tus estudios'), findsOneWidget);

@@ -16,6 +16,11 @@ from pathlib import Path
 from urllib.parse import urlparse
 from uuid import NAMESPACE_URL, uuid5
 
+try:
+    from .artifact_io import MAX_FIXTURE_BYTES, read_json_file, read_jsonl
+except ImportError:  # pragma: no cover - supports `python scripts/foo.py`
+    from artifact_io import MAX_FIXTURE_BYTES, read_json_file, read_jsonl
+
 
 def stable_id(kind: str, key: str) -> str:
     return str(uuid5(NAMESPACE_URL, f"https://pruevia.local/{kind}/{key}"))
@@ -69,12 +74,22 @@ def validate_artifact(manifest: dict, raw: list[dict], observations: list[dict],
         raise ValueError(f"{expected_source_key} artifact contains collector errors")
     if manifest.get("source_key") != expected_source_key:
         raise ValueError(f"artifact source key mismatch for {expected_source_key}")
-    if len(raw) != int(manifest.get("records_received", -1)):
+    try:
+        records_received = int(manifest.get("records_received", -1))
+        records_valid = int(manifest.get("records_valid", -1))
+        records_rejected = int(manifest.get("records_rejected", -1))
+    except (TypeError, ValueError) as error:
+        raise ValueError(f"{expected_source_key} manifest record counts must be integers") from error
+    if min(records_received, records_valid, records_rejected) < 0 or records_valid + records_rejected > records_received:
+        raise ValueError(f"{expected_source_key} manifest record counts are inconsistent")
+    if len(raw) != records_received:
         raise ValueError(f"{expected_source_key} raw record count does not match its manifest")
     parsed_hashes: set[str] = set()
     parsed_count = 0
     rejected_count = 0
     for row in raw:
+        if not isinstance(row, dict):
+            raise ValueError(f"{expected_source_key} artifact rows must be JSON objects")
         if row.get("source_key") != expected_source_key:
             raise ValueError(f"{expected_source_key} artifact contains another source")
         if row.get("parse_status") != "parsed":
@@ -84,25 +99,30 @@ def validate_artifact(manifest: dict, raw: list[dict], observations: list[dict],
         record_hash = row.get("record_hash")
         if not isinstance(record_hash, str) or not re.fullmatch(r"[0-9a-f]{64}", record_hash):
             raise ValueError(f"{expected_source_key} artifact contains an invalid record hash")
-        if artifact_record_hash(row.get("payload")) != record_hash:
+        payload = row.get("payload")
+        if not isinstance(payload, dict):
+            raise ValueError(f"{expected_source_key} raw record payload must be an object")
+        if len(json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str).encode("utf-8")) > 512 * 1024:
+            raise ValueError(f"{expected_source_key} raw record payload exceeds the safety limit")
+        if artifact_record_hash(payload) != record_hash:
             raise ValueError(f"{expected_source_key} artifact record hash mismatch")
         parsed_hashes.add(record_hash)
         validate_url(row.get("source_url"), f"{expected_source_key} source_url")
         payload = row.get("payload") or {}
         validate_url(payload.get("product_url"), f"{expected_source_key} product_url")
-    if parsed_count != int(manifest.get("records_valid", -1)) or rejected_count != int(manifest.get("records_rejected", -1)):
+    if parsed_count != records_valid or rejected_count != records_rejected:
         raise ValueError(f"{expected_source_key} artifact counts do not match its manifest")
     for row in observations:
-        if row.get("record_hash") not in parsed_hashes:
+        if not isinstance(row, dict) or row.get("record_hash") not in parsed_hashes:
             raise ValueError(f"{expected_source_key} contains an orphan observation")
 
 
 def read_artifact(path: Path) -> tuple[dict, list[dict], list[dict]]:
-    manifest = json.loads((path / "run_manifest.json").read_text(encoding="utf-8"))
-    raw = [json.loads(line) for line in (path / "raw_records.jsonl").read_text(encoding="utf-8").splitlines() if line]
-    observations = [
-        json.loads(line) for line in (path / "observations.jsonl").read_text(encoding="utf-8").splitlines() if line
-    ]
+    manifest = read_json_file(path / "run_manifest.json")
+    if not isinstance(manifest, dict):
+        raise ValueError("run manifest must be a JSON object")
+    raw = read_jsonl(path / "raw_records.jsonl")
+    observations = read_jsonl(path / "observations.jsonl")
     return manifest, raw, observations
 
 
@@ -302,7 +322,7 @@ def main() -> int:
     args = parser.parse_args()
     if bool(args.output) == bool(args.chunk_dir):
         raise SystemExit("exactly one of --output or --chunk-dir is required")
-    sql = render(json.loads(args.fixture.read_text(encoding="utf-8")), args.ruiz_artifact, args.chopo_artifact, args.salud_digna_artifact)
+    sql = render(read_json_file(args.fixture, max_bytes=MAX_FIXTURE_BYTES), args.ruiz_artifact, args.chopo_artifact, args.salud_digna_artifact)
     if args.chunk_dir:
         chunks = chunk_transaction(sql, args.max_bytes)
         args.chunk_dir.mkdir(parents=True, exist_ok=True)

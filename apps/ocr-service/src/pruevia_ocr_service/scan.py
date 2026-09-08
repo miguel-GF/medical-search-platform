@@ -11,6 +11,21 @@ from .engine import EngineUnavailableError, build_engine, format_order_lines, pr
 from .image import ImageInputError, decode_image_input
 
 
+def _read_image_bounded(path: Path, max_bytes: int) -> bytes:
+    """Read at most one byte over the configured limit.
+
+    The HTTP endpoint already bounds request bodies, but this local CLI can be
+    pointed at an arbitrary operator-supplied path.  Avoid loading an
+    unbounded file into memory before the decoder gets a chance to reject it.
+    """
+
+    with path.open("rb") as source:
+        raw = source.read(max_bytes + 1)
+    if len(raw) > max_bytes:
+        raise ImageInputError(f"image must be between 1 byte and {max_bytes} bytes")
+    return raw
+
+
 def main() -> None:
     # Windows PowerShell may expose a cp1252 stdout while OCR returns symbols
     # such as circled list markers.  Keep the diagnostic CLI from crashing on
@@ -25,7 +40,7 @@ def main() -> None:
     if mime_type is None:
         raise SystemExit("image must have a .jpg, .jpeg, .png or .webp extension")
     try:
-        raw = args.image.read_bytes()
+        raw = _read_image_bounded(args.image, settings.max_image_bytes)
         decoded = decode_image_input(
             base64.b64encode(raw).decode("ascii"),
             mime_type,

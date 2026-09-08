@@ -5,6 +5,7 @@ import time
 from dataclasses import dataclass
 from decimal import Decimal, ROUND_HALF_UP
 from html.parser import HTMLParser
+from math import isfinite
 from typing import Any, Iterable, Mapping, Sequence
 from json import JSONDecoder
 from urllib.parse import urljoin, urlparse
@@ -12,10 +13,24 @@ from urllib.parse import urljoin, urlparse
 import httpx
 
 from ..models import Observation, SourceRecord, SourceSpec
-from .http import request_with_same_host_redirects
+from .http import bounded_response_bytes, request_with_same_host_redirects
+from .public_transport import PublicAddressTransport
 
 
 CHOPO_PUEBLA_URL = "https://www.chopo.com.mx/puebla/estudios"
+MAX_CHOPO_RECORDS = 2_000
+MAX_CHOPO_TAGS = 100_000
+MAX_CHOPO_STACK_DEPTH = 256
+MAX_CHOPO_CAPTURE_CHARS = 4_000
+MAX_CHOPO_ATTRIBUTE_CHARS = 2_000
+MAX_CHOPO_PAGES = 500
+MAX_CHOPO_PRODUCTS = 10_000
+MAX_CHOPO_ATTEMPTS = 5
+MAX_CHOPO_TIMEOUT_SECONDS = 120.0
+MAX_CHOPO_DELAY_SECONDS = 60.0
+MAX_CHOPO_PRODUCT_PAYLOAD_CHARS = 512_000
+MAX_CHOPO_PRICE_TEXT_CHARS = 4_096
+MAX_CHOPO_PRICE_DIGITS = 24
 
 
 @dataclass(frozen=True)
@@ -47,14 +62,30 @@ class ChopoClient:
         retry_backoff_seconds: float = 1.5,
         client: httpx.Client | None = None,
     ) -> None:
-        self.base_url = base_url
+        parsed_base = urlparse(base_url.rstrip("/"))
+        if (
+            parsed_base.scheme != "https"
+            or not parsed_base.hostname
+            or parsed_base.username
+            or parsed_base.password
+            or parsed_base.query
+            or parsed_base.fragment
+            or (parsed_base.port not in (None, 443))
+            or not parsed_base.path.startswith("/puebla/")
+        ):
+            raise ValueError("Chopo base URL must be an HTTPS Puebla path without credentials")
+        if not isinstance(timeout_seconds, (int, float)) or isinstance(timeout_seconds, bool) or not isfinite(float(timeout_seconds)) or not 0 < timeout_seconds <= MAX_CHOPO_TIMEOUT_SECONDS:
+            raise ValueError("timeout_seconds must be between 0 and 120")
+        if not isinstance(max_attempts, int) or isinstance(max_attempts, bool) or not 1 <= max_attempts <= MAX_CHOPO_ATTEMPTS:
+            raise ValueError("max_attempts must be between 1 and 5")
+        if not isinstance(retry_backoff_seconds, (int, float)) or isinstance(retry_backoff_seconds, bool) or not isfinite(float(retry_backoff_seconds)) or not 0 <= retry_backoff_seconds <= MAX_CHOPO_DELAY_SECONDS:
+            raise ValueError("retry_backoff_seconds must be between 0 and 60")
+        self.base_url = base_url.rstrip("/")
         self.timeout_seconds = timeout_seconds
-        if max_attempts < 1:
-            raise ValueError("max_attempts must be positive")
         self.max_attempts = max_attempts
         self.retry_backoff_seconds = retry_backoff_seconds
         self._owns_client = client is None
-        self._client = client or httpx.Client(timeout=self.timeout_seconds, follow_redirects=False)
+        self._client = client or httpx.Client(timeout=self.timeout_seconds, follow_redirects=False, trust_env=False, transport=PublicAddressTransport())
 
     def close(self) -> None:
         if self._owns_client:
@@ -66,11 +97,11 @@ class ChopoClient:
         if not self._owns_client:
             return
         self._client.close()
-        self._client = httpx.Client(timeout=self.timeout_seconds, follow_redirects=False)
+        self._client = httpx.Client(timeout=self.timeout_seconds, follow_redirects=False, trust_env=False, transport=PublicAddressTransport())
 
     def fetch_page(self, page_number: int) -> ChopoPage:
-        if page_number < 1:
-            raise ValueError("Chopo page number must be positive")
+        if not isinstance(page_number, int) or isinstance(page_number, bool) or not 1 <= page_number <= MAX_CHOPO_PAGES:
+            raise ValueError("Chopo page number must be between 1 and 500")
         if page_number == 1:
             url = self.base_url
         else:
@@ -88,8 +119,11 @@ class ChopoClient:
                 resolved_url = str(response.url)
                 if not self._is_official_puebla_url(resolved_url):
                     raise ValueError("Chopo response redirected outside the official Puebla path")
-                response.encoding = "utf-8"
-                return ChopoPage(page_number=page_number, url=resolved_url, html=response.text)
+                try:
+                    raw = bounded_response_bytes(response, max_bytes=2 * 1024 * 1024)
+                    return ChopoPage(page_number=page_number, url=resolved_url, html=raw.decode("utf-8", "replace"))
+                finally:
+                    response.close()
             except (httpx.HTTPStatusError, httpx.RequestError) as error:
                 if (
                     isinstance(error, httpx.HTTPStatusError)
@@ -116,8 +150,11 @@ class ChopoClient:
                 resolved_url = str(response.url)
                 if not self._is_official_puebla_url(resolved_url):
                     raise ValueError("Chopo response redirected outside the official Puebla path")
-                response.encoding = "utf-8"
-                return ChopoProductPage(url=resolved_url, html=response.text)
+                try:
+                    raw = bounded_response_bytes(response, max_bytes=2 * 1024 * 1024)
+                    return ChopoProductPage(url=resolved_url, html=raw.decode("utf-8", "replace"))
+                finally:
+                    response.close()
             except (httpx.HTTPStatusError, httpx.RequestError) as error:
                 if (
                     isinstance(error, httpx.HTTPStatusError)
@@ -130,7 +167,7 @@ class ChopoClient:
     def _is_official_puebla_url(self, value: str) -> bool:
         parsed = urlparse(value)
         return (
-            parsed.scheme in {"http", "https"}
+            parsed.scheme == "https"
             and parsed.hostname == urlparse(self.base_url).hostname
             and parsed.path.startswith("/puebla/")
         )
@@ -146,8 +183,17 @@ class ChopoListingParser(HTMLParser):
         self.current: dict[str, Any] | None = None
         self.stack: list[str] = []
         self.capture: tuple[str, str, int, list[str]] | None = None
+        self._capture_chars = 0
+        self._tag_count = 0
+        self._budget_exhausted = False
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if self._budget_exhausted:
+            return
+        self._tag_count += 1
+        if self._tag_count > MAX_CHOPO_TAGS or len(self.stack) >= MAX_CHOPO_STACK_DEPTH:
+            self._budget_exhausted = True
+            return
         attributes = dict(attrs)
         classes = set((attributes.get("class") or "").split())
         self.stack.append(tag)
@@ -156,7 +202,7 @@ class ChopoListingParser(HTMLParser):
             self._flush_current()
             self.current = {
                 "name": "",
-                "url": urljoin(self.page_url, attributes.get("href") or ""),
+                "url": urljoin(self.page_url, (attributes.get("href") or "")[:MAX_CHOPO_ATTRIBUTE_CHARS]),
             }
             self._start_capture("name", tag)
         elif self.current is not None and "catalog-grid-item__price" in classes:
@@ -166,25 +212,32 @@ class ChopoListingParser(HTMLParser):
         elif self.current is not None and "product-ico-specialty" in classes:
             specialty = attributes.get("alt")
             if specialty:
-                self.current["specialty"] = specialty.strip()
+                self.current["specialty"] = specialty.strip()[:MAX_CHOPO_ATTRIBUTE_CHARS]
         elif self.current is not None and tag == "form" and attributes.get("data-role") == "tocart-form":
             sku = attributes.get("data-product-sku")
             if sku:
-                self.current["sku"] = sku.strip()
+                self.current["sku"] = sku.strip()[:200]
 
     def handle_endtag(self, tag: str) -> None:
+        if self._budget_exhausted:
+            return
         if self.capture is not None:
             field, capture_tag, depth, buffer = self.capture
             if tag == capture_tag and len(self.stack) == depth:
                 if self.current is not None:
                     self.current[field] = " ".join("".join(buffer).split())
                 self.capture = None
+                self._capture_chars = 0
         if self.stack:
             self.stack.pop()
 
     def handle_data(self, data: str) -> None:
         if self.capture is not None:
-            self.capture[3].append(data)
+            remaining = MAX_CHOPO_CAPTURE_CHARS - self._capture_chars
+            if remaining > 0:
+                piece = data[:remaining]
+                self.capture[3].append(piece)
+                self._capture_chars += len(piece)
 
     def finish(self) -> list[dict[str, Any]]:
         self._flush_current()
@@ -192,13 +245,16 @@ class ChopoListingParser(HTMLParser):
 
     def _start_capture(self, field: str, tag: str) -> None:
         self.capture = (field, tag, len(self.stack), [])
+        self._capture_chars = 0
 
     def _flush_current(self) -> None:
         if not self.current:
             return
-        self.records.append(self.current)
+        if len(self.records) < MAX_CHOPO_RECORDS:
+            self.records.append(self.current)
         self.current = None
         self.capture = None
+        self._capture_chars = 0
 
 
 class ChopoAdapter:
@@ -212,8 +268,10 @@ class ChopoAdapter:
     )
 
     def __init__(self, client: ChopoClient, *, max_pages: int = 1, page_delay_seconds: float = 0.5) -> None:
-        if max_pages < 1:
-            raise ValueError("max_pages must be positive")
+        if not isinstance(max_pages, int) or isinstance(max_pages, bool) or not 1 <= max_pages <= MAX_CHOPO_PAGES:
+            raise ValueError("max_pages must be between 1 and 500")
+        if not isinstance(page_delay_seconds, (int, float)) or isinstance(page_delay_seconds, bool) or not isfinite(float(page_delay_seconds)) or not 0 <= page_delay_seconds <= MAX_CHOPO_DELAY_SECONDS:
+            raise ValueError("page_delay_seconds must be between 0 and 60")
         self.client = client
         self.max_pages = max_pages
         self.page_delay_seconds = page_delay_seconds
@@ -256,10 +314,12 @@ class ChopoProductAdapter:
         urls = tuple(dict.fromkeys(url.strip() for url in product_urls if url.strip()))
         if not urls:
             raise ValueError("at least one Chopo product URL is required")
-        if page_delay_seconds < 0:
-            raise ValueError("page_delay_seconds cannot be negative")
-        if session_batch_size < 1:
-            raise ValueError("session batch size must be positive")
+        if len(urls) > MAX_CHOPO_PRODUCTS:
+            raise ValueError("too many Chopo product URLs")
+        if not isinstance(page_delay_seconds, (int, float)) or isinstance(page_delay_seconds, bool) or not isfinite(float(page_delay_seconds)) or not 0 <= page_delay_seconds <= MAX_CHOPO_DELAY_SECONDS:
+            raise ValueError("page_delay_seconds must be between 0 and 60")
+        if not isinstance(session_batch_size, int) or isinstance(session_batch_size, bool) or not 1 <= session_batch_size <= MAX_CHOPO_PRODUCTS:
+            raise ValueError("session batch size must be between 1 and 10000")
         self.client = client
         self.product_urls = urls
         self.page_delay_seconds = page_delay_seconds
@@ -285,17 +345,19 @@ def parse_chopo_product(page: ChopoProductPage) -> SourceRecord:
     start = page.html.find(marker)
     if start < 0:
         raise ValueError(f"Chopo product page has no structured product payload: {page.url}")
+    payload_text = page.html[start + len(marker) : start + len(marker) + MAX_CHOPO_PRODUCT_PAYLOAD_CHARS]
     try:
-        product, _ = JSONDecoder().raw_decode(page.html[start + len(marker) :])
-    except ValueError as error:
+        product, _ = JSONDecoder().raw_decode(payload_text)
+    except (ValueError, RecursionError) as error:
         raise ValueError(f"Chopo product payload is not valid JSON: {page.url}") from error
     if not isinstance(product, Mapping):
         raise ValueError(f"Chopo product payload is not an object: {page.url}")
 
-    name = str(product.get("name") or "").strip()
-    sku = str(product.get("sku") or "").strip() or None
+    name = str(product.get("name") or "").strip()[:MAX_CHOPO_ATTRIBUTE_CHARS]
+    sku = str(product.get("sku") or "").strip()[:200] or None
     product_id = product.get("productId")
-    if not name or product_id in (None, ""):
+    product_id_text = str(product_id).strip()[:200] if product_id not in (None, "") else ""
+    if not name or not product_id_text:
         raise ValueError(f"Chopo product requires name and productId: {page.url}")
     pricing = product.get("pricing")
     if not isinstance(pricing, Mapping):
@@ -316,23 +378,23 @@ def parse_chopo_product(page: ChopoProductPage) -> SourceRecord:
         "market": "Puebla",
         "provider_display_name": name,
         "provider_sku": sku,
-        "provider_product_id": str(product_id),
+        "provider_product_id": product_id_text,
         "product_url": page.url,
-        "canonical_product_url": product.get("canonicalUrl"),
+        "canonical_product_url": str(product.get("canonicalUrl") or "").strip()[:MAX_CHOPO_ATTRIBUTE_CHARS] or None,
         "specialty": None,
         "prices": prices,
     }
     observations = [
         Observation(entity_type="offer", attribute_name="provider_display_name", observed_value=name),
         Observation(entity_type="offer", attribute_name="provider_sku", observed_value=sku),
-        Observation(entity_type="offer", attribute_name="provider_product_id", observed_value=str(product_id)),
+        Observation(entity_type="offer", attribute_name="provider_product_id", observed_value=product_id_text),
         Observation(entity_type="offer", attribute_name="product_url", observed_value=page.url),
         Observation(entity_type="price", attribute_name="prices", observed_value=prices),
     ]
     return SourceRecord(
         source_key="chopo_puebla",
         record_type="provider_offer_price",
-        external_record_id=sku or str(product_id),
+        external_record_id=sku or product_id_text,
         source_url=page.url,
         payload=payload,
         observations=tuple(observations),
@@ -379,7 +441,7 @@ def chopo_item_to_record(item: Mapping[str, Any], *, page: ChopoPage) -> SourceR
 
 
 def parse_price_text(value: str) -> dict[str, int]:
-    amounts = re.findall(r"\$\s*([0-9][0-9,]*(?:\.[0-9]{1,2})?)", value)
+    amounts = re.findall(r"\$\s*([0-9][0-9,]*(?:\.[0-9]{1,2})?)", str(value)[:MAX_CHOPO_PRICE_TEXT_CHARS])
     if not amounts:
         return {}
     parsed = [_to_minor_units(amount) for amount in amounts]
@@ -392,15 +454,28 @@ def parse_price_text(value: str) -> dict[str, int]:
 
 
 def _to_minor_units(value: str) -> int:
-    amount = Decimal(value.replace(",", "")).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+    normalized = value.replace(",", "")
+    if len(normalized.replace(".", "")) > MAX_CHOPO_PRICE_DIGITS:
+        return 0
+    try:
+        amount = Decimal(normalized).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+    except Exception:
+        return 0
+    if not amount.is_finite() or amount <= 0 or amount > Decimal(10_000_000):
+        return 0
     return int(amount * 100)
 
 
 def _price_minor(value: Any) -> int | None:
     if value in (None, ""):
         return None
+    normalized = str(value).replace(",", "").strip()
+    if len(normalized.replace(".", "")) > MAX_CHOPO_PRICE_DIGITS:
+        return None
     try:
         amount = Decimal(str(value)).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
     except Exception:
+        return None
+    if not amount.is_finite() or amount <= 0 or amount > Decimal(10_000_000):
         return None
     return int(amount * 100)

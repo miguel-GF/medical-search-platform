@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pruevia-document-scanner"
+version = "0.1.0"
+description = "Private, fail-closed scanning worker for provider evidence"
+requires-python = ">=3.10"
+dependencies = ["httpx==0.28.1"]
+
+[project.optional-dependencies]
+dev = ["pytest==9.0.3"]
+
+[project.scripts]
+pruevia-document-scanner = "pruevia_document_scanner.worker:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

@@ -23,6 +23,11 @@ from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
 
+try:
+    from .artifact_io import read_json_file, read_jsonl, safe_http_url
+except ImportError:  # pragma: no cover - direct script execution
+    from artifact_io import read_json_file, read_jsonl, safe_http_url
+
 
 CLASSIFIER_VERSION = "denue-candidates-v1"
 DIRECT_ACTIVITY = "laboratorios medicos y de diagnostico del sector privado"
@@ -139,7 +144,7 @@ def classify_record(row: dict[str, Any], *, duplicate_count: int = 1) -> dict[st
     result: dict[str, Any] = {
         "external_record_id": str(row.get("external_record_id") or payload.get("Id") or ""),
         "record_hash": row.get("record_hash"),
-        "source_url": row.get("source_url"),
+        "source_url": safe_http_url(row.get("source_url")),
         "name": name,
         "legal_name": legal_name,
         "activity": activity,
@@ -155,7 +160,7 @@ def classify_record(row: dict[str, Any], *, duplicate_count: int = 1) -> dict[st
         },
         "coordinates": {"latitude": coords[0], "longitude": coords[1]} if coords else None,
         "phone": repair_text(payload.get("Telefono")),
-        "website_url": repair_text(payload.get("Sitio_internet")),
+        "website_url": safe_http_url(repair_text(payload.get("Sitio_internet"))),
         "classification": classification,
         "review_status": review_status,
         "reason": reason,
@@ -171,8 +176,10 @@ def classify_record(row: dict[str, Any], *, duplicate_count: int = 1) -> dict[st
 def read_artifact(artifact: Path) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     manifest_path = artifact / "run_manifest.json"
     raw_path = artifact / "raw_records.jsonl"
-    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    rows = [json.loads(line) for line in raw_path.read_text(encoding="utf-8").splitlines() if line.strip()]
+    manifest = read_json_file(manifest_path)
+    if not isinstance(manifest, dict):
+        raise ValueError("DENUE manifest must be a JSON object")
+    rows = read_jsonl(raw_path)
     if manifest.get("source_key") != "denue":
         raise ValueError("artifact source_key must be denue")
     if manifest.get("status") != "succeeded" or manifest.get("errors"):

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Callable
+import time
 from urllib.parse import urljoin, urlparse
 
 import httpx
@@ -10,6 +11,37 @@ import httpx
 
 REDIRECT_STATUSES = frozenset({301, 302, 303, 307, 308})
 MAX_REDIRECTS = 5
+MAX_PROVIDER_RESPONSE_BYTES = 4 * 1024 * 1024
+MAX_RESPONSE_SECONDS = 60.0
+
+
+def bounded_response_bytes(
+    response: httpx.Response,
+    *,
+    max_bytes: int = MAX_PROVIDER_RESPONSE_BYTES,
+    max_seconds: float = MAX_RESPONSE_SECONDS,
+) -> bytes:
+    """Read a provider response with byte and wall-clock limits."""
+
+    if not 1 <= max_bytes <= MAX_PROVIDER_RESPONSE_BYTES:
+        raise ValueError("max_bytes is outside the hard provider response cap")
+    encoding = response.headers.get("content-encoding", "").strip().casefold()
+    if encoding not in {"", "identity"}:
+        raise ValueError("compressed provider responses are rejected")
+    length = response.headers.get("content-length")
+    if length is not None and (not length.isdigit() or len(length) > 10 or int(length) > max_bytes):
+        raise ValueError("provider response exceeds the byte limit")
+    started = time.monotonic()
+    content = bytearray()
+    for chunk in response.iter_bytes():
+        if time.monotonic() - started > max_seconds:
+            raise ValueError("provider response exceeded the time limit")
+        if len(content) + len(chunk) > max_bytes:
+            raise ValueError("provider response exceeds the byte limit")
+        content.extend(chunk)
+    if length is not None and len(content) != int(length):
+        raise ValueError("provider response length mismatch")
+    return bytes(content)
 
 
 def request_with_same_host_redirects(
@@ -46,8 +78,10 @@ def request_with_same_host_redirects(
             raise ValueError("provider request exceeded max_redirects")
         location = response.headers.get("location", "").strip()
         if not location:
+            response.close()
             raise ValueError("provider redirect has no Location header")
         current = urljoin(current, location)
+        response.close()
         _validate_target(current, expected.scheme, expected_host, expected_port)
     raise ValueError("provider request exceeded max_redirects")
 

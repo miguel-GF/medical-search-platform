@@ -1,14 +1,18 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { createAdminApi, createMutationRequestId, formatDate, type AlertRow, type CatalogItem, type Dashboard, type LocationRow, type NormalizationDetail, type NormalizationRow, type OfferRow, type PriceRow, type ProviderRow, type QualityIssueRow, type RawRecord } from './api';
-import { supabase } from './auth';
+import { matchesPasswordCallback, supabase } from './auth';
+import { safeHttpUrl } from './safe-url';
 
 type Tab = 'overview' | 'providers' | 'locations' | 'offers' | 'prices' | 'queue' | 'records' | 'quality' | 'alerts';
-const api = createAdminApi(import.meta.env.VITE_API_URL ?? 'http://localhost:8787', async () => (await supabase?.auth.getSession())?.data.session?.access_token ?? null);
+// A production bundle must never silently target a developer's localhost.
+// Keep the convenience fallback only for Vite's explicit dev mode; an absent
+// production URL becomes a client configuration error and sends no token.
+const api = createAdminApi(import.meta.env.VITE_API_URL ?? (import.meta.env.DEV ? 'http://localhost:8787' : ''), async () => (await supabase?.auth.getSession())?.data.session?.access_token ?? null);
 const session = ref<import('@supabase/supabase-js').Session | null>(null);
 const email = ref('');
 const password = ref('');
-const passwordSetupRequired = ref(hasPasswordSetupLink());
+const passwordSetupRequired = ref(false);
 const newPassword = ref('');
 const confirmPassword = ref('');
 const authError = ref('');
@@ -51,6 +55,9 @@ const manualCatalogResults = ref<CatalogItem[]>([]);
 const manualCatalogItemId = ref('');
 const manualCatalogLoading = ref(false);
 const mutationRequestIds = new Map<string, string>();
+// Every logout or account switch advances this generation. Async Auth/API
+// work captures it and must not write a late result into a different session.
+let authGeneration = 0;
 
 const aliasRequired = computed(() => Boolean(selected.value?.provider_brand_id));
 const canApprove = computed(() => !loading.value
@@ -71,26 +78,9 @@ function errorMessage(cause: unknown, fallback: string): string {
   return cause instanceof Error ? cause.message : fallback;
 }
 
-function hasPasswordSetupLink(): boolean {
-  if (typeof window === 'undefined') return false;
-  const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ''));
-  const queryParams = new URLSearchParams(window.location.search);
-  const type = hashParams.get('type') ?? queryParams.get('type');
-  return type === 'invite' || type === 'recovery';
-}
-
-function safeHttpUrl(value: string | null | undefined): string | null {
-  if (!value) return null;
-  try {
-    const url = new URL(value);
-    if (url.protocol !== 'http:' && url.protocol !== 'https:') return null;
-    if (url.username || url.password) return null;
-    url.search = '';
-    url.hash = '';
-    return url.toString();
-  } catch {
-    return null;
-  }
+function clearAuthCallbackUrl() {
+  if (typeof window === 'undefined') return;
+  window.history.replaceState({}, document.title, window.location.pathname);
 }
 
 function sanitizeDetail(value: NormalizationDetail | null): NormalizationDetail | null {
@@ -101,10 +91,17 @@ function sanitizeDetail(value: NormalizationDetail | null): NormalizationDetail 
   };
 }
 
+function isCurrentAuth(generation: number, userId: string | null): boolean {
+  return generation === authGeneration && (session.value?.user.id ?? null) === userId;
+}
+
 async function establishMfa() {
   if (!supabase) return false;
+  const generation = authGeneration;
+  const userId = session.value?.user.id ?? null;
   try {
   const assurance = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+  if (!isCurrentAuth(generation, userId)) return false;
   if (assurance.error) {
     // Fail closed: a session without a confirmed assurance level must never
     // fall through to the administrative shell.
@@ -114,13 +111,8 @@ async function establishMfa() {
     mfaFactorId.value = '';
     return false;
   }
-  if (assurance.data.currentLevel === 'aal2') {
-    mfaPending.value = false;
-    mfaSetupRequired.value = false;
-    await refresh();
-    return true;
-  }
   const factors = await supabase.auth.mfa.listFactors();
+  if (!isCurrentAuth(generation, userId)) return false;
   if (factors.error) {
     // Keep the authenticated session behind the MFA gate while Supabase is
     // unavailable. The API independently requires aal2 as a second defense.
@@ -129,6 +121,16 @@ async function establishMfa() {
     mfaSetupRequired.value = false;
     mfaFactorId.value = '';
     return false;
+  }
+  // Supabase can temporarily report a stale aal2 JWT after a factor is
+  // unenrolled. Never render the administrative shell unless the current
+  // factors response still contains a verified factor as well.
+  const hasVerifiedFactor = factors.data.all.some((factor) => factor.status === 'verified');
+  if (assurance.data.currentLevel === 'aal2' && hasVerifiedFactor) {
+    mfaPending.value = false;
+    mfaSetupRequired.value = false;
+    await refresh();
+    return true;
   }
   const verified = factors.data.totp.find((factor) => factor.status === 'verified');
   if (!verified) {
@@ -141,6 +143,7 @@ async function establishMfa() {
   mfaSetupRequired.value = false;
   return false;
   } catch {
+    if (!isCurrentAuth(generation, userId)) return false;
     authError.value = 'No se pudo consultar el estado de autenticación. Inténtalo de nuevo.';
     mfaPending.value = true;
     return false;
@@ -149,16 +152,20 @@ async function establishMfa() {
 
 async function verifyMfa() {
   if (!supabase || !mfaFactorId.value || !/^\d{6}$/.test(mfaCode.value.trim())) {
-    authError.value = 'Escribe el código de seis dígitos de tu autenticador.';
+    authError.value = 'Escribe el codigo de seis digitos de tu autenticador.';
     return;
   }
+  const generation = authGeneration;
+  const userId = session.value?.user.id ?? null;
   mfaLoading.value = true;
   authError.value = '';
   try {
   const challenge = await supabase.auth.mfa.challenge({ factorId: mfaFactorId.value });
+  if (!isCurrentAuth(generation, userId)) { mfaLoading.value = false; return; }
   if (challenge.error) { authError.value = 'No se pudo iniciar el desafío MFA.'; mfaLoading.value = false; return; }
   mfaChallengeId.value = challenge.data.id;
   const verification = await supabase.auth.mfa.verify({ factorId: mfaFactorId.value, challengeId: mfaChallengeId.value, code: mfaCode.value.trim() });
+  if (!isCurrentAuth(generation, userId)) { mfaLoading.value = false; return; }
   if (verification.error) {
     authError.value = 'El código MFA no es válido o ya expiró.';
     mfaLoading.value = false;
@@ -169,6 +176,7 @@ async function verifyMfa() {
   await supabase.auth.refreshSession();
   await establishMfa();
   } catch {
+    if (!isCurrentAuth(generation, userId)) { mfaLoading.value = false; return; }
     authError.value = 'No se pudo completar la verificación MFA. Inténtalo de nuevo.';
     mfaChallengeId.value = '';
   }
@@ -177,10 +185,13 @@ async function verifyMfa() {
 
 async function beginEnrollment() {
   if (!supabase) return;
+  const generation = authGeneration;
+  const userId = session.value?.user.id ?? null;
   mfaLoading.value = true;
   authError.value = '';
   try {
   const result = await supabase.auth.mfa.enroll({ factorType: 'totp', friendlyName: `Admin ${session.value?.user.email ?? email.value.trim()}` });
+  if (!isCurrentAuth(generation, userId)) { mfaLoading.value = false; return; }
   if (result.error) authError.value = 'No se pudo iniciar el registro del autenticador.';
   else {
     enrollmentFactorId.value = result.data.id;
@@ -188,6 +199,7 @@ async function beginEnrollment() {
     enrollmentSecret.value = result.data.totp.secret;
   }
   } catch {
+    if (!isCurrentAuth(generation, userId)) { mfaLoading.value = false; return; }
     authError.value = 'No se pudo iniciar el registro del autenticador. Inténtalo de nuevo.';
   }
   mfaLoading.value = false;
@@ -195,15 +207,19 @@ async function beginEnrollment() {
 
 async function verifyEnrollment() {
   if (!supabase || !enrollmentFactorId.value || !/^\d{6}$/.test(enrollmentCode.value.trim())) {
-    authError.value = 'Escribe el código de seis dígitos mostrado por tu autenticador.';
+    authError.value = 'Escribe el codigo de seis digitos mostrado por tu autenticador.';
     return;
   }
+  const generation = authGeneration;
+  const userId = session.value?.user.id ?? null;
   mfaLoading.value = true;
   authError.value = '';
   try {
   const challenge = await supabase.auth.mfa.challenge({ factorId: enrollmentFactorId.value });
+  if (!isCurrentAuth(generation, userId)) { mfaLoading.value = false; return; }
   if (challenge.error) { authError.value = 'No se pudo validar el autenticador.'; mfaLoading.value = false; return; }
   const verification = await supabase.auth.mfa.verify({ factorId: enrollmentFactorId.value, challengeId: challenge.data.id, code: enrollmentCode.value.trim() });
+  if (!isCurrentAuth(generation, userId)) { mfaLoading.value = false; return; }
   if (verification.error) { authError.value = 'El código no es válido. Revisa la hora del dispositivo.'; mfaLoading.value = false; return; }
   enrollmentCode.value = '';
   enrollmentQr.value = '';
@@ -212,15 +228,19 @@ async function verifyEnrollment() {
   await supabase.auth.refreshSession();
   await establishMfa();
   } catch {
+    if (!isCurrentAuth(generation, userId)) { mfaLoading.value = false; return; }
     authError.value = 'No se pudo completar el registro MFA. Inténtalo de nuevo.';
   }
   mfaLoading.value = false;
 }
 
 async function loadQueue(reset = true) {
+  const generation = authGeneration;
+  const userId = session.value?.user.id ?? null;
   const last = queue.value[queue.value.length - 1];
   const cursor = !reset && last ? { before_created_at: last.created_at, before_id: last.normalization_run_id } : undefined;
   const rows = await api.normalizationQueue(queueStatus.value === 'all' ? undefined : queueStatus.value, queueInputType.value || undefined, cursor);
+  if (!isCurrentAuth(generation, userId)) return;
   if (reset) queue.value = rows;
   else queue.value = [...queue.value, ...rows];
   queueHasMore.value = rows.length === 100;
@@ -228,56 +248,82 @@ async function loadQueue(reset = true) {
 
 async function loadMoreQueue() {
   if (!queueHasMore.value || queueLoadingMore.value) return;
+  const generation = authGeneration;
+  const userId = session.value?.user.id ?? null;
   queueLoadingMore.value = true;
   try { await loadQueue(false); }
-  catch (cause) { error.value = errorMessage(cause, 'No se pudo cargar más casos'); }
+  catch (cause) {
+    if (isCurrentAuth(generation, userId)) error.value = errorMessage(cause, 'No se pudo cargar más casos');
+  }
   finally { queueLoadingMore.value = false; }
 }
 
 async function refresh() {
+  const generation = authGeneration;
+  const userId = session.value?.user.id ?? null;
   loading.value = true;
   error.value = '';
   try {
-    dashboard.value = await api.dashboard();
+    const nextDashboard = await api.dashboard();
+    if (!isCurrentAuth(generation, userId)) return;
+    dashboard.value = nextDashboard;
     if (tab.value === 'queue') await loadQueue();
-    if (tab.value === 'records') records.value = await api.rawRecords();
-    if (tab.value === 'providers') providers.value = await api.providers();
-    if (tab.value === 'locations') locations.value = await api.locations();
-    if (tab.value === 'offers') offers.value = await api.offers();
-    if (tab.value === 'prices') prices.value = (await api.prices()).map((row) => ({ ...row, source_url: safeHttpUrl(row.source_url) }));
-    if (tab.value === 'quality') qualityIssues.value = await api.qualityIssues();
-    if (tab.value === 'alerts') alerts.value = await api.alerts();
-  } catch (cause) { error.value = errorMessage(cause, 'No se pudo consultar la API'); }
+    if (tab.value === 'records') { const value = await api.rawRecords(); if (!isCurrentAuth(generation, userId)) return; records.value = value; }
+    if (tab.value === 'providers') { const value = await api.providers(); if (!isCurrentAuth(generation, userId)) return; providers.value = value; }
+    if (tab.value === 'locations') { const value = await api.locations(); if (!isCurrentAuth(generation, userId)) return; locations.value = value; }
+    if (tab.value === 'offers') { const value = await api.offers(); if (!isCurrentAuth(generation, userId)) return; offers.value = value; }
+    if (tab.value === 'prices') { const value = (await api.prices()).map((row) => ({ ...row, source_url: safeHttpUrl(row.source_url) })); if (!isCurrentAuth(generation, userId)) return; prices.value = value; }
+    if (tab.value === 'quality') { const value = await api.qualityIssues(); if (!isCurrentAuth(generation, userId)) return; qualityIssues.value = value; }
+    if (tab.value === 'alerts') { const value = await api.alerts(); if (!isCurrentAuth(generation, userId)) return; alerts.value = value; }
+  } catch (cause) {
+    if (isCurrentAuth(generation, userId)) error.value = errorMessage(cause, 'No se pudo consultar la API');
+  }
   finally { loading.value = false; }
 }
 
 async function switchTab(next: Tab) {
+  const generation = authGeneration;
+  const userId = session.value?.user.id ?? null;
   tab.value = next;
   notice.value = '';
   try {
     if (next === 'queue' && !queue.value.length) await loadQueue();
-    if (next === 'records' && !records.value.length) records.value = await api.rawRecords();
-    if (next === 'providers' && !providers.value.length) providers.value = await api.providers();
-    if (next === 'locations' && !locations.value.length) locations.value = await api.locations();
-    if (next === 'offers' && !offers.value.length) offers.value = await api.offers();
-    if (next === 'prices' && !prices.value.length) prices.value = (await api.prices()).map((row) => ({ ...row, source_url: safeHttpUrl(row.source_url) }));
-    if (next === 'quality' && !qualityIssues.value.length) qualityIssues.value = await api.qualityIssues();
-    if (next === 'alerts' && !alerts.value.length) alerts.value = await api.alerts();
-  } catch (cause) { error.value = errorMessage(cause, 'No se pudo cargar la sección'); }
+    if (next === 'records' && !records.value.length) { const value = await api.rawRecords(); if (!isCurrentAuth(generation, userId)) return; records.value = value; }
+    if (next === 'providers' && !providers.value.length) { const value = await api.providers(); if (!isCurrentAuth(generation, userId)) return; providers.value = value; }
+    if (next === 'locations' && !locations.value.length) { const value = await api.locations(); if (!isCurrentAuth(generation, userId)) return; locations.value = value; }
+    if (next === 'offers' && !offers.value.length) { const value = await api.offers(); if (!isCurrentAuth(generation, userId)) return; offers.value = value; }
+    if (next === 'prices' && !prices.value.length) { const value = (await api.prices()).map((row) => ({ ...row, source_url: safeHttpUrl(row.source_url) })); if (!isCurrentAuth(generation, userId)) return; prices.value = value; }
+    if (next === 'quality' && !qualityIssues.value.length) { const value = await api.qualityIssues(); if (!isCurrentAuth(generation, userId)) return; qualityIssues.value = value; }
+    if (next === 'alerts' && !alerts.value.length) { const value = await api.alerts(); if (!isCurrentAuth(generation, userId)) return; alerts.value = value; }
+  } catch (cause) {
+    if (isCurrentAuth(generation, userId)) error.value = errorMessage(cause, 'No se pudo cargar la sección');
+  }
 }
 
 async function changeQueueFilter() {
+  const generation = authGeneration;
+  const userId = session.value?.user.id ?? null;
   try { await loadQueue(); }
-  catch (cause) { error.value = errorMessage(cause, 'No se pudo cargar la cola'); }
+  catch (cause) {
+    if (isCurrentAuth(generation, userId)) error.value = errorMessage(cause, 'No se pudo cargar la cola');
+  }
 }
 
 async function searchCatalog() {
+  const generation = authGeneration;
+  const userId = session.value?.user.id ?? null;
   const query = manualCatalogQuery.value.trim();
   manualCatalogItemId.value = '';
   if (query.length < 2) { manualCatalogResults.value = []; return; }
   manualCatalogLoading.value = true;
-  try { manualCatalogResults.value = await api.catalogItems(query); }
-  catch (cause) { error.value = errorMessage(cause, 'No se pudo buscar en el catálogo'); }
+  try {
+    const value = await api.catalogItems(query);
+    if (!isCurrentAuth(generation, userId)) return;
+    manualCatalogResults.value = value;
+  }
+  catch (cause) {
+    if (isCurrentAuth(generation, userId)) error.value = errorMessage(cause, 'No se pudo buscar en el catálogo');
+  }
   finally { manualCatalogLoading.value = false; }
 }
 
@@ -287,6 +333,8 @@ function chooseManualCatalogItem(item: CatalogItem) {
 }
 
 async function openRow(row: NormalizationRow) {
+  const generation = authGeneration;
+  const userId = session.value?.user.id ?? null;
   selected.value = row;
   detail.value = null;
   selectedCandidateId.value = '';
@@ -296,9 +344,11 @@ async function openRow(row: NormalizationRow) {
   manualCatalogResults.value = [];
   manualCatalogItemId.value = '';
   try {
-    detail.value = sanitizeDetail(await api.normalizationDetail(row.normalization_run_id));
+    const value = sanitizeDetail(await api.normalizationDetail(row.normalization_run_id));
+    if (!isCurrentAuth(generation, userId)) return;
+    detail.value = value;
     if (detail.value?.candidates.length === 1) selectedCandidateId.value = detail.value.candidates[0].candidate_id;
-  } catch (cause) { error.value = errorMessage(cause, 'No se pudo cargar la evidencia'); }
+  } catch (cause) { if (isCurrentAuth(generation, userId)) error.value = errorMessage(cause, 'No se pudo cargar la evidencia'); }
 }
 
 function closeReview() {
@@ -324,12 +374,22 @@ function clearMutationRequestId(key: string) { mutationRequestIds.delete(key); }
 
 async function showPayload() {
   if (!selected.value) return;
-    try { detail.value = sanitizeDetail(await api.normalizationDetail(selected.value.normalization_run_id, true)); }
-  catch (cause) { error.value = errorMessage(cause, 'No se pudo cargar el payload'); }
+  const generation = authGeneration;
+  const userId = session.value?.user.id ?? null;
+  const runId = selected.value.normalization_run_id;
+  try {
+    const value = sanitizeDetail(await api.normalizationDetail(runId, true));
+    if (!isCurrentAuth(generation, userId)) return;
+    detail.value = value;
+  } catch (cause) {
+    if (isCurrentAuth(generation, userId)) error.value = errorMessage(cause, 'No se pudo cargar el payload');
+  }
 }
 
 async function approveCandidate() {
   if (!canApprove.value || !selected.value) return;
+  const generation = authGeneration;
+  const userId = session.value?.user.id ?? null;
   loading.value = true;
   error.value = '';
   const runId = selected.value.normalization_run_id;
@@ -346,6 +406,7 @@ async function approveCandidate() {
         catalog_item_id: manualCatalogItemId.value,
         reason: reason.value.trim(),
       }, `${requestId}:candidate`);
+      if (!isCurrentAuth(generation, userId)) return;
       candidateId = manual.candidate_id;
     }
     if (!candidateId) return;
@@ -356,56 +417,101 @@ async function approveCandidate() {
     };
     if (aliasRequired.value) reviewInput.alias = alias.value.trim();
     await api.reviewNormalization(runId, reviewInput, requestId);
+    if (!isCurrentAuth(generation, userId)) return;
     notice.value = aliasRequired.value
       ? 'Candidato aprobado y alias guardado para futuras resoluciones.'
       : 'Candidato aprobado. No se creó un alias global fuera de un proveedor.';
     closeReview();
     await loadQueue();
-    dashboard.value = await api.dashboard();
-  } catch (cause) { error.value = errorMessage(cause, 'No se pudo aprobar el candidato'); }
+    const nextDashboard = await api.dashboard();
+    if (!isCurrentAuth(generation, userId)) return;
+    dashboard.value = nextDashboard;
+  } catch (cause) {
+    if (isCurrentAuth(generation, userId)) error.value = errorMessage(cause, 'No se pudo aprobar el candidato');
+  }
   finally { loading.value = false; }
 }
 
 async function markNoMatch() {
   if (!selected.value || !reason.value.trim()) return;
+  const generation = authGeneration;
+  const userId = session.value?.user.id ?? null;
   loading.value = true;
   error.value = '';
   const runId = selected.value.normalization_run_id;
   const requestId = mutationRequestId(`normalization:${runId}:no_match`);
   try {
     await api.reviewNormalization(runId, { decision: 'no_match', reason: reason.value.trim() }, requestId);
+    if (!isCurrentAuth(generation, userId)) return;
     notice.value = 'Caso marcado como no_match y no se publicará ninguna equivalencia.';
     closeReview();
     await loadQueue();
-    dashboard.value = await api.dashboard();
-  } catch (cause) { error.value = errorMessage(cause, 'No se pudo marcar el caso'); }
+    const nextDashboard = await api.dashboard();
+    if (!isCurrentAuth(generation, userId)) return;
+    dashboard.value = nextDashboard;
+  } catch (cause) {
+    if (isCurrentAuth(generation, userId)) error.value = errorMessage(cause, 'No se pudo marcar el caso');
+  }
   finally { loading.value = false; }
 }
 
 async function updateAlert(row: AlertRow, status: 'acknowledged' | 'resolved' | 'ignored') {
+  const generation = authGeneration;
+  const userId = session.value?.user.id ?? null;
   const key = `alert:${row.alert_id}:${status}`;
-  try { await api.updateAlertStatus(row.alert_id, status, undefined, mutationRequestId(key)); row.status = status; clearMutationRequestId(key); notice.value = `Alerta actualizada: ${status}.`; dashboard.value = await api.dashboard(); }
-  catch (cause) { error.value = errorMessage(cause, 'No se pudo actualizar la alerta'); }
+  try {
+    await api.updateAlertStatus(row.alert_id, status, undefined, mutationRequestId(key));
+    if (!isCurrentAuth(generation, userId)) return;
+    row.status = status;
+    clearMutationRequestId(key);
+    notice.value = `Alerta actualizada: ${status}.`;
+    const nextDashboard = await api.dashboard();
+    if (!isCurrentAuth(generation, userId)) return;
+    dashboard.value = nextDashboard;
+  }
+  catch (cause) {
+    if (isCurrentAuth(generation, userId)) error.value = errorMessage(cause, 'No se pudo actualizar la alerta');
+  }
 }
 
 async function updateQuality(row: QualityIssueRow, status: 'acknowledged' | 'resolved' | 'ignored') {
+  const generation = authGeneration;
+  const userId = session.value?.user.id ?? null;
   const key = `quality:${row.issue_id}:${status}`;
-  try { await api.updateQualityIssueStatus(row.issue_id, status, undefined, mutationRequestId(key)); row.status = status; clearMutationRequestId(key); notice.value = `Issue actualizado: ${status}.`; dashboard.value = await api.dashboard(); }
-  catch (cause) { error.value = errorMessage(cause, 'No se pudo actualizar el issue'); }
+  try {
+    await api.updateQualityIssueStatus(row.issue_id, status, undefined, mutationRequestId(key));
+    if (!isCurrentAuth(generation, userId)) return;
+    row.status = status;
+    clearMutationRequestId(key);
+    notice.value = `Issue actualizado: ${status}.`;
+    const nextDashboard = await api.dashboard();
+    if (!isCurrentAuth(generation, userId)) return;
+    dashboard.value = nextDashboard;
+  }
+  catch (cause) {
+    if (isCurrentAuth(generation, userId)) error.value = errorMessage(cause, 'No se pudo actualizar el issue');
+  }
 }
 
 async function signIn() {
   if (!supabase || !email.value.trim() || !password.value) return;
+  if (email.value.trim().length > 320 || password.value.length > 256) {
+    authError.value = 'El correo o la contraseÃ±a exceden el lÃ­mite permitido.';
+    return;
+  }
+  const generation = authGeneration;
   authLoading.value = true;
   authError.value = '';
   authFlowInProgress = true;
   try {
   const result = await supabase.auth.signInWithPassword({ email: email.value.trim(), password: password.value });
   password.value = '';
+  if (authGeneration !== generation) { authLoading.value = false; return; }
   if (result.error) { authError.value = 'No se pudo iniciar sesión.'; authLoading.value = false; return; }
   session.value = result.data.session;
   await establishMfa();
   } catch {
+    if (authGeneration !== generation) return;
     authError.value = 'No se pudo iniciar sesión. Revisa tu conexión e inténtalo de nuevo.';
   } finally {
     authFlowInProgress = false;
@@ -415,7 +521,9 @@ async function signIn() {
 
 async function setPassword() {
   if (!supabase || !session.value) return;
-  if (newPassword.value.length < 12) {
+  const generation = authGeneration;
+  const userId = session.value.user.id;
+  if (newPassword.value.length < 12 || newPassword.value.length > 256) {
     authError.value = 'La contraseña debe tener al menos 12 caracteres.';
     return;
   }
@@ -426,7 +534,8 @@ async function setPassword() {
   authLoading.value = true;
   authError.value = '';
   try {
-    const result = await supabase.auth.updateUser({ password: newPassword.value });
+  const result = await supabase.auth.updateUser({ password: newPassword.value });
+    if (!isCurrentAuth(generation, userId)) { authLoading.value = false; return; }
     if (result.error) {
       authError.value = 'No se pudo guardar la contraseña. Solicita una nueva invitación si el enlace expiró.';
       return;
@@ -436,6 +545,7 @@ async function setPassword() {
     passwordSetupRequired.value = false;
     await establishMfa();
   } catch {
+    if (!isCurrentAuth(generation, userId)) return;
     authError.value = 'No se pudo guardar la contraseña. Inténtalo de nuevo.';
   } finally {
     authLoading.value = false;
@@ -443,12 +553,17 @@ async function setPassword() {
 }
 
 async function signOut() {
+  // Invalidate in-flight enrollment, MFA and data requests before waiting on
+  // the network logout. Otherwise a late TOTP secret or admin response could
+  // be written after the user has already initiated a different session.
+  authGeneration += 1;
   try { await supabase?.auth.signOut(); }
   catch { /* Local state is cleared even if the network logout fails. */ }
   finally { resetAdminState(); }
 }
 
 function resetAdminState(options: { preservePasswordSetup?: boolean } = {}) {
+  authGeneration += 1;
   mutationRequestIds.clear();
   session.value = null;
   passwordSetupRequired.value = options.preservePasswordSetup === true;
@@ -493,6 +608,16 @@ function resetAdminState(options: { preservePasswordSetup?: boolean } = {}) {
 let authFlowInProgress = false;
 
 async function syncAuthState(nextSession: import('@supabase/supabase-js').Session | null, event = '') {
+  const generation = authGeneration;
+  // A URL query flag alone is attacker-controlled. Enter password setup only
+  // after Supabase has accepted a real recovery/invitation credential and
+  // emitted the corresponding authenticated event.
+  const validatedPasswordFlow = Boolean(nextSession) && (event === 'PASSWORD_RECOVERY'
+    || (['SIGNED_IN', 'INITIAL_SESSION'].includes(event) && matchesPasswordCallback(nextSession)));
+  if (validatedPasswordFlow) {
+    passwordSetupRequired.value = true;
+    clearAuthCallbackUrl();
+  }
   const previousUserId = session.value?.user.id ?? null;
   const nextUserId = nextSession?.user.id ?? null;
   const shouldSetupPassword = passwordSetupRequired.value;
@@ -506,24 +631,24 @@ async function syncAuthState(nextSession: import('@supabase/supabase-js').Sessio
     session.value = nextSession;
     email.value = nextSession.user.email ?? '';
     mfaPending.value = true;
-    if (!passwordSetupRequired.value) await establishMfa();
+    if (!passwordSetupRequired.value && isCurrentAuth(authGeneration, nextUserId)) await establishMfa();
     return;
   }
   if (event === 'TOKEN_REFRESHED' && !passwordSetupRequired.value) {
-    await establishMfa();
+    if (isCurrentAuth(generation, nextUserId)) await establishMfa();
   }
 }
 
 onMounted(async () => {
   if (!supabase) return;
   try {
-    session.value = (await supabase.auth.getSession()).data.session;
-    if (session.value) {
-      email.value = session.value.user.email ?? '';
-      if (passwordSetupRequired.value) mfaPending.value = true;
-      else await establishMfa();
-    }
-    const subscription = supabase.auth.onAuthStateChange((event, nextSession) => { void syncAuthState(nextSession, event); });
+    // Subscribe before waiting for SDK initialization; it emits INITIAL_SESSION
+    // for restoration. Defer Auth calls until its notification lock is released.
+    const subscription = supabase.auth.onAuthStateChange((event, nextSession) => {
+      setTimeout(() => {
+        if (authSubscription) void syncAuthState(nextSession, event);
+      }, 0);
+    });
     authSubscription = subscription.data.subscription;
   } catch {
     resetAdminState();
@@ -531,7 +656,9 @@ onMounted(async () => {
   }
 });
 onUnmounted(() => {
+  authGeneration += 1;
   authSubscription?.unsubscribe();
+  authSubscription = null;
   enrollmentQr.value = '';
   enrollmentSecret.value = '';
   enrollmentCode.value = '';

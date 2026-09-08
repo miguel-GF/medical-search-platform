@@ -5,7 +5,7 @@ from fastapi.testclient import TestClient
 
 from pruevia_ocr_service.app import create_app
 from pruevia_ocr_service.config import settings
-from pruevia_ocr_service.engine import EngineResult, RecognizedLine
+from pruevia_ocr_service.engine import EngineResult, EngineUnavailableError, RecognizedLine
 
 
 PNG_1X1 = base64.b64encode(
@@ -57,6 +57,34 @@ def test_order_requires_token_when_configured():
     assert response.status_code == 401
 
 
+def test_order_rejects_duplicate_authorization_headers():
+    app = create_app(app_settings=replace(settings, service_token="secret"), engine_factory=fake_engine_factory)
+    response = TestClient(app).post(
+        "/v1/ocr/order",
+        headers=[("Authorization", "Bearer wrong"), ("Authorization", "Bearer secret")],
+        json={"image": f"data:image/png;base64,{PNG_1X1}"},
+    )
+    assert response.status_code == 401
+
+
+def test_order_rejects_compressed_body_before_buffering():
+    app = create_app(app_settings=replace(settings, service_token="secret"), engine_factory=fake_engine_factory)
+    response = TestClient(app).post(
+        "/v1/ocr/order",
+        headers={"Authorization": "Bearer secret", "Content-Encoding": "gzip"},
+        content=b"{}",
+    )
+    assert response.status_code == 415
+    assert response.json()["error"]["code"] == "unsupported_content_encoding"
+
+
+def test_internal_service_does_not_publish_openapi_schema():
+    app = create_app(app_settings=replace(settings, service_token="secret"), engine_factory=fake_engine_factory)
+    client = TestClient(app)
+    assert client.get("/openapi.json").status_code == 401
+    assert client.get("/openapi.json", headers={"Authorization": "Bearer secret"}).status_code == 404
+
+
 def test_order_fails_closed_when_token_is_not_configured():
     app = create_app(app_settings=replace(settings, service_token=""), engine_factory=fake_engine_factory)
     response = TestClient(app).post(
@@ -65,6 +93,71 @@ def test_order_fails_closed_when_token_is_not_configured():
     )
     assert response.status_code == 503
     assert response.json()["detail"]["code"] == "ocr_not_configured"
+
+
+def test_order_does_not_disclose_engine_initialization_details():
+    def unavailable_engine_factory(_name: str, _min_confidence: float):
+        raise EngineUnavailableError("model path C:\\secret\\weights.onnx is missing")
+
+    app = create_app(
+        app_settings=replace(settings, service_token="secret"),
+        engine_factory=unavailable_engine_factory,
+    )
+    response = TestClient(app).post(
+        "/v1/ocr/order",
+        headers={"Authorization": "Bearer secret"},
+        json={"image": f"data:image/png;base64,{PNG_1X1}"},
+    )
+    assert response.status_code == 503
+    payload = response.json()["detail"]
+    assert payload == {"code": "ocr_unavailable", "message": "OCR engine is temporarily unavailable"}
+
+
+def test_external_ocr_binding_rejects_short_or_placeholder_tokens():
+    for token in ("secret", "change-me-for-non-local-deployments"):
+        app = create_app(
+            app_settings=replace(settings, service_token=token, host="0.0.0.0"),
+            engine_factory=fake_engine_factory,
+        )
+        response = TestClient(app).post(
+            "/v1/ocr/order",
+            headers={"Authorization": f"Bearer {token}"},
+            json={"image": f"data:image/png;base64,{PNG_1X1}"},
+        )
+        assert response.status_code == 503
+        assert response.json()["detail"]["code"] == "ocr_not_configured"
+
+
+def test_order_rejects_streamed_body_before_json_is_buffered():
+    app_settings = replace(settings, service_token="secret", max_image_bytes=64)
+    app = create_app(app_settings=app_settings, engine_factory=fake_engine_factory)
+
+    def oversized_chunks():
+        yield b'{"image":"'
+        yield b"A" * 20_000
+        yield b'"}'
+
+    response = TestClient(app).post(
+        "/v1/ocr/order",
+        headers={"Authorization": "Bearer secret", "Content-Type": "application/json"},
+        content=oversized_chunks(),
+    )
+    assert response.status_code == 413
+    assert response.json()["error"]["code"] == "payload_too_large"
+
+
+def test_unauthorized_order_is_rejected_before_streaming_body():
+    app = create_app(app_settings=replace(settings, service_token="secret"), engine_factory=fake_engine_factory)
+    consumed = False
+
+    def body_chunks():
+        nonlocal consumed
+        consumed = True
+        yield b"x" * 100
+
+    response = TestClient(app).post("/v1/ocr/order", content=body_chunks())
+    assert response.status_code == 401
+    assert consumed is False
 
 
 def test_order_lines_merge_same_row_and_drop_footer():

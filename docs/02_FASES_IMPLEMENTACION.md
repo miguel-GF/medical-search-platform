@@ -1069,9 +1069,11 @@ apariencia. La app no persiste recetas, imágenes ni resultados clínicos en
 SharedPreferences. La telemetría es opcional, anónima, limitada a eventos
 permitidos y sólo se envía después del consentimiento.
 
-El backend aplica `aal2` (MFA verificado) a las mutaciones de proveedor; las
-lecturas de reclamos/membresías pueden mostrar el paso de inscripción en
-`aal1`. Ningún rol enviado por Flutter se considera autoridad.
+El backend aplica `aal2` (MFA verificado) a todas las operaciones de proveedor,
+incluidas las lecturas de reclamos y membresías. La política vigente endurece
+estas lecturas para no revelar relaciones de cuenta antes del segundo factor;
+`aal1` queda únicamente para mostrar el paso de inscripción y completar
+el segundo factor. Ningún rol enviado por Flutter se considera autoridad.
 
 ## Corte de implementacion Fase 10 - Resolucion de multiples estudios (29 de agosto de 2026)
 

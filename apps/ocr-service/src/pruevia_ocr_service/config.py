@@ -37,6 +37,9 @@ class Settings:
     min_line_confidence: float = _float_env("OCR_MIN_LINE_CONFIDENCE", 0.30, 0.0, 1.0)
     max_image_bytes: int = _int_env("OCR_MAX_IMAGE_BYTES", 5 * 1024 * 1024, 1, 20 * 1024 * 1024)
     max_image_pixels: int = _int_env("OCR_MAX_IMAGE_PIXELS", 25_000_000, 1, 100_000_000)
+    # Production images must contain the verified RapidOCR model files. The
+    # engine refuses to download missing models at request time.
+    model_root_dir: str = os.getenv("OCR_MODEL_ROOT", "/opt/pruevia/models").strip() or "/opt/pruevia/models"
     host: str = os.getenv("OCR_HOST", "127.0.0.1")
     port: int = _int_env("OCR_PORT", 8000, 1, 65_535)
 

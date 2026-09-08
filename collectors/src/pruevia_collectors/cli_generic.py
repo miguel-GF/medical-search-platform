@@ -4,8 +4,8 @@ import argparse
 import json
 from pathlib import Path
 
-from .config import load_local_environment
-from .pipeline import CollectorRunner
+from .config import load_local_environment, require_local_private_host_mode
+from .pipeline import CollectorRunner, _safe_error_detail
 from .providers.generic import GenericCrawlConfig, GenericProviderAdapter, GenericWebClient
 
 
@@ -44,6 +44,7 @@ def build_parser() -> argparse.ArgumentParser:
 def main() -> int:
     args = build_parser().parse_args()
     try:
+        require_local_private_host_mode(args.allow_private_hosts)
         config = GenericCrawlConfig(
             seed_urls=tuple(args.seed_url),
             max_pages=args.max_pages,
@@ -60,7 +61,7 @@ def main() -> int:
         )
         adapter = GenericProviderAdapter(config, client=client)
     except ValueError as error:
-        print(json.dumps({"status": "blocked", "error": str(error)}, ensure_ascii=False, indent=2))
+        print(json.dumps({"status": "blocked", "error": _safe_error_detail(error)}, ensure_ascii=False, indent=2))
         return 2
     try:
         summary = CollectorRunner(args.artifact_root).run(adapter)

@@ -130,6 +130,8 @@ export class AdminApiError extends Error {
   }
 }
 
+const MAX_ADMIN_RESPONSE_BYTES = 2 * 1024 * 1024;
+
 export interface AdminApi {
   dashboard(): Promise<Dashboard>;
   normalizationQueue(status?: string, inputType?: string, cursor?: { before_created_at: string; before_id: string }): Promise<NormalizationRow[]>;
@@ -186,6 +188,11 @@ export function createAdminApi(baseUrl: string, accessToken: () => Promise<strin
     try {
       response = await fetcher(`${base}${path}`, {
         ...init,
+        // Administrative responses contain provider claims, raw evidence and
+        // review decisions. Never allow a redirect or an intermediary cache
+        // to turn the bearer request into a credential/data disclosure.
+        redirect: 'error',
+        cache: 'no-store',
         headers: { authorization: `Bearer ${token}`, 'content-type': 'application/json', ...(init.headers ?? {}) },
       });
     } catch {
@@ -198,12 +205,27 @@ export function createAdminApi(baseUrl: string, accessToken: () => Promise<strin
         true,
       );
     }
-    const payload = await response.json().catch(() => null);
+    let payload: unknown = null;
+    try {
+      payload = await readBoundedJson(response, MAX_ADMIN_RESPONSE_BYTES);
+    } catch {
+      if (response.ok) {
+        throw new AdminApiError(
+          'La respuesta del servicio no es válida o es demasiado grande.',
+          502,
+          'invalid_response',
+          'CLIENT.RESPONSE',
+          'high',
+          true,
+          response.headers.get('x-request-id') ?? undefined,
+        );
+      }
+    }
     if (!response.ok) {
       const error = (payload as { error?: { code?: string; message?: string; type?: string; error_tag?: string; severity?: string; retryable?: boolean; request_id?: string } } | null)?.error;
       const code = error?.code ?? 'request_failed';
       throw new AdminApiError(
-        localizeError(code, error?.message ?? `HTTP ${response.status}`),
+        localizeError(code, response.status),
         response.status,
         code,
         error?.error_tag ?? 'API.REQUEST',
@@ -235,29 +257,84 @@ export function createAdminApi(baseUrl: string, accessToken: () => Promise<strin
     prices: () => request<PriceRow[]>('/api/v1/admin/prices?limit=200'),
     qualityIssues: () => request<QualityIssueRow[]>('/api/v1/admin/quality-issues?limit=200'),
     alerts: () => request<AlertRow[]>('/api/v1/admin/alerts?limit=200'),
-    resolveNormalization: (id, input, requestId) => request(`/api/v1/admin/normalization/${id}/resolve`, { method: 'POST', body: JSON.stringify(input), headers: mutationHeaders(requestId) }),
-    addManualCandidate: (id, input, requestId) => request(`/api/v1/admin/normalization/${id}/candidates`, { method: 'POST', body: JSON.stringify(input), headers: mutationHeaders(requestId) }),
-    reviewNormalization: (id, input, requestId) => request(`/api/v1/admin/normalization/${id}/review`, { method: 'POST', body: JSON.stringify(input), headers: mutationHeaders(requestId) }),
-    updateAlertStatus: (id, status, reason, requestId) => request(`/api/v1/admin/alerts/${id}/status`, { method: 'POST', body: JSON.stringify({ status, reason }), headers: mutationHeaders(requestId) }),
-    updateQualityIssueStatus: (id, status, reason, requestId) => request(`/api/v1/admin/quality-issues/${id}/status`, { method: 'POST', body: JSON.stringify({ status, reason }), headers: mutationHeaders(requestId) }),
+    // Encode every server-provided identifier as one path segment. This keeps
+    // a malformed/poisoned ID from changing the route or query string while
+    // the API still performs its UUID validation server-side.
+    resolveNormalization: (id, input, requestId) => request(`/api/v1/admin/normalization/${encodeURIComponent(id)}/resolve`, { method: 'POST', body: JSON.stringify(input), headers: mutationHeaders(requestId) }),
+    addManualCandidate: (id, input, requestId) => request(`/api/v1/admin/normalization/${encodeURIComponent(id)}/candidates`, { method: 'POST', body: JSON.stringify(input), headers: mutationHeaders(requestId) }),
+    reviewNormalization: (id, input, requestId) => request(`/api/v1/admin/normalization/${encodeURIComponent(id)}/review`, { method: 'POST', body: JSON.stringify(input), headers: mutationHeaders(requestId) }),
+    updateAlertStatus: (id, status, reason, requestId) => request(`/api/v1/admin/alerts/${encodeURIComponent(id)}/status`, { method: 'POST', body: JSON.stringify({ status, reason }), headers: mutationHeaders(requestId) }),
+    updateQualityIssueStatus: (id, status, reason, requestId) => request(`/api/v1/admin/quality-issues/${encodeURIComponent(id)}/status`, { method: 'POST', body: JSON.stringify({ status, reason }), headers: mutationHeaders(requestId) }),
   };
+}
+
+async function readBoundedJson(response: Response, maximum: number): Promise<unknown> {
+  const encoding = response.headers.get('content-encoding')?.trim().toLowerCase() ?? '';
+  if (encoding !== '' && encoding !== 'identity') throw new Error('compressed admin response rejected');
+  const length = response.headers.get('content-length')?.trim() ?? null;
+  if (length !== null && (!/^\d{1,10}$/.test(length) || Number(length) > maximum)) {
+    throw new Error('admin response exceeds limit');
+  }
+  const reader = response.body?.getReader();
+  if (!reader) {
+    if (length !== null && Number(length) !== 0) throw new Error('admin response length mismatch');
+    return null;
+  }
+  const bytes = new Uint8Array(maximum);
+  let offset = 0;
+  try {
+    while (true) {
+      const chunk = await reader.read();
+      if (chunk.done) break;
+      if (offset + chunk.value.byteLength > maximum) throw new Error('admin response exceeds limit');
+      bytes.set(chunk.value, offset);
+      offset += chunk.value.byteLength;
+    }
+  } catch (error) {
+    try { await reader.cancel(); } catch { /* best-effort cleanup */ }
+    throw error;
+  } finally {
+    reader.releaseLock();
+  }
+  if (length !== null && offset !== Number(length)) throw new Error('admin response length mismatch');
+  const text = new TextDecoder().decode(bytes.subarray(0, offset));
+  return text.trim() ? JSON.parse(text) : null;
 }
 
 function normalizeApiBaseUrl(value: string): string | null {
   const candidate = value.trim();
-  if (!candidate) return '';
+  // A missing production API URL must fail closed. Returning an empty string
+  // would make fetch() resolve the route against the Admin origin and send the
+  // bearer token to the static host instead of raising a configuration error.
+  if (!candidate) return null;
   try {
     const parsed = new URL(candidate);
-    const localDevelopment = parsed.protocol === 'http:'
+    const localDevelopment = import.meta.env.DEV && parsed.protocol === 'http:'
       && (parsed.hostname === 'localhost' || parsed.hostname === '127.0.0.1' || parsed.hostname === '::1');
     if (parsed.protocol !== 'https:' && !localDevelopment) return null;
+    // The API URL is concatenated with route paths below. Query/fragment
+    // values here would be malformed routing at best and accidentally expose
+    // credentials at worst, so only a clean origin (or an intentional path
+    // prefix) is accepted.
+    if (parsed.username || parsed.password || parsed.search || parsed.hash
+      || (parsed.protocol === 'https:' && parsed.port && parsed.port !== '443')) return null;
+    // A production build must be bound to the reviewed Worker origin. HTTPS
+    // alone cannot prevent a typo or compromised build environment from
+    // sending the Supabase bearer token to an attacker-controlled host.
+    if (!import.meta.env.DEV) {
+      const allowedHosts = (import.meta.env.VITE_API_ALLOWED_HOSTS ?? '')
+        .split(',')
+        .map((host: string) => host.trim().toLowerCase())
+        .filter(Boolean);
+      if (allowedHosts.length === 0 || !allowedHosts.includes(parsed.hostname.toLowerCase())) return null;
+    }
     return parsed.toString().replace(/\/$/, '');
   } catch {
     return null;
   }
 }
 
-function localizeError(code: string, fallback: string): string {
+function localizeError(code: string, status: number): string {
   switch (code) {
     case 'mfa_required': return 'Confirma el segundo factor de tu autenticador para entrar al panel.';
     case 'service_not_configured': return 'El servicio de datos no está configurado. Revisa la configuración del entorno.';
@@ -268,7 +345,12 @@ function localizeError(code: string, fallback: string): string {
     case 'forbidden': return 'Tu cuenta no tiene permisos para esta acción.';
     case 'invalid_body': return 'La solicitud administrativa no tiene un formato válido.';
     case 'not_found': return 'No encontramos el recurso solicitado.';
-    default: return fallback;
+    // Never render an arbitrary upstream message: a compromised or
+    // misconfigured API could otherwise inject SQL errors, stack traces or
+    // sensitive data into the operator UI.
+    default: return status >= 500
+      ? 'El servicio no pudo completar la solicitud. Inténtalo de nuevo más tarde.'
+      : 'La solicitud no pudo completarse. Revisa los datos e inténtalo de nuevo.';
   }
 }
 

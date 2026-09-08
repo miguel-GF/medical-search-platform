@@ -9,6 +9,11 @@ Este documento conserva el corte del 31 de agosto. La corrección posterior de
 ACL de RPC administrativos y su regresión de seguridad están documentadas en
 `docs/SECURITY_AUDIT_20260901.md` y en las migraciones 124–126.
 
+> **Corte historico.** No ejecutes desde este documento comandos que apliquen
+> migraciones. El estado vigente y el procedimiento seguro estan en
+> `docs/SECURITY_HARDENING_20260904.md`; requiere una migracion coordinada con
+> el Worker y el scanner.
+
 ## Cambios aplicados
 
 - `118_provider_claims`: claims, verificaciones, documentos referenciados,
@@ -36,10 +41,11 @@ Proyecto Supabase enlazado: `ymtcmfgwuzdqtsbuvzqf`.
 Comandos ejecutados desde `database/supabase`:
 
 ```text
-npx.cmd supabase@latest db push --linked --skip-vault --yes
-npx.cmd supabase@latest db push --linked --dry-run --skip-vault
-npx.cmd supabase@latest migration list --linked
-npx.cmd supabase@latest db query --linked --file supabase/tests/provider_claims_test.sql
+# No ejecutar sin la ventana coordinada descrita en SECURITY_HARDENING_20260904.md.
+# npx.cmd supabase@2.116.0 db push --linked --skip-vault --yes
+npx.cmd supabase@2.116.0 db push --linked --dry-run --skip-vault
+npx.cmd supabase@2.116.0 migration list --linked
+npx.cmd supabase@2.116.0 db query --linked --file supabase/tests/provider_claims_test.sql
 ```
 
 Resultados observados:

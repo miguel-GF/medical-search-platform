@@ -9,6 +9,7 @@ APP_ENV="development"
 API_VERSION="v1"
 ALLOWED_ORIGIN="http://localhost:5173"
 ADMIN_USER_IDS="<supabase-auth-user-uuid>"
+PROVIDER_DOCUMENTS_ENABLED="false"
 OCR_AI_MODEL="@cf/moondream/moondream3.1-9B-A2B"
 # Optional private FastAPI OCR service. When set, this takes precedence over Workers AI.
 # OCR_SERVICE_URL="http://127.0.0.1:8000"

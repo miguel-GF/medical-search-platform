@@ -26,6 +26,10 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Pruevia usa la cámara únicamente para leer la orden médica que tú elijas.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Pruevia accede a la foto que selecciones para transcribir tu orden médica.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

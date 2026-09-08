@@ -4,18 +4,30 @@ Este documento deja reproducible el entorno que ya se puede operar sin desplegar
 
 ## Supabase
 
+**Aviso de seguridad (2026-09-04):** las migraciones 1150-2200 cambian la
+frontera Worker/DB y aun requieren un despliegue coordinado. No ejecutar un
+`db push` aislado con este arbol de trabajo. Consultar
+[el estado y los pendientes de seguridad](SECURITY_HARDENING_20260904.md)
+antes de seguir los comandos historicos de esta seccion.
+
 Desde `database/`:
 
 ```powershell
-npx.cmd supabase@latest db push --linked --include-seed
-npx.cmd supabase@latest db push --linked --dry-run
-npx.cmd supabase@latest db query --linked --file supabase/tests/database_v1_test.sql
-npx.cmd supabase@latest db query --linked --file supabase/tests/database_v1_invariants.sql
-npx.cmd supabase@latest db query --linked --file supabase/tests/public_api_test.sql
-npx.cmd supabase@latest db query --linked --file supabase/tests/gate_a_test.sql
-npx.cmd supabase@latest db query --linked --file supabase/tests/resolver_benchmark_v2_test.sql
-npx.cmd supabase@latest db query --linked --file supabase/tests/provider_claims_test.sql
+npx.cmd supabase@2.116.0 migration list --linked
+npx.cmd supabase@2.116.0 db push --linked --dry-run
+npx.cmd supabase@2.116.0 db query --linked --file supabase/tests/database_v1_test.sql
+npx.cmd supabase@2.116.0 db query --linked --file supabase/tests/database_v1_invariants.sql
+npx.cmd supabase@2.116.0 db query --linked --file supabase/tests/public_api_test.sql
+npx.cmd supabase@2.116.0 db query --linked --file supabase/tests/gate_a_test.sql
+npx.cmd supabase@2.116.0 db query --linked --file supabase/tests/resolver_benchmark_v2_test.sql
+npx.cmd supabase@2.116.0 db query --linked --file supabase/tests/provider_claims_test.sql
 ```
+
+El comando `db push` sin `--dry-run` se omite deliberadamente: las migraciones
+de aislamiento de Worker/Storage requieren una ventana coordinada y la
+compuerta de esquema. No aplicar cambios remotos desde esta guía sin revisar
+`SECURITY_HARDENING_20260904.md`, ejecutar los contratos y autorizar el
+despliegue conjunto.
 
 ### Acceso administrativo y MFA
 
@@ -28,7 +40,10 @@ terminar en un puerto sin servicio o expirar antes de llegar al panel.
 El panel administrativo usa Supabase Auth con correo/contraseÃ±a y TOTP MFA
 (Google Authenticator, Authy o 1Password). No se implementa un generador de
 cÃ³digos propio. El backend exige que el JWT tenga `aal2` en todas las rutas
-`/api/v1/admin/*`; ademÃ¡s, el usuario debe estar incluido en `ADMIN_USER_IDS`.
+`/api/v1/admin/*` y `/api/v1/provider/*`; ademÃ¡s, el usuario debe estar
+incluido en `ADMIN_USER_IDS` para Admin. AAL1, claims ausentes y factores no
+verificados se rechazan. El Worker y los wrappers de servicio comprueban
+tambien que exista un factor `verified` vigente.
 
 Para habilitarlo en el proyecto enlazado:
 
@@ -47,7 +62,12 @@ el factor. La documentaciÃ³n de referencia es
 
 La configuracion local exige reautenticacion reciente para cambiar contrasenas
 (`secure_password_change = true`); replica este ajuste en Auth remoto antes de
-usar el panel en produccion.
+usar el panel en produccion. En Auth remoto activa tambien **Leaked password
+protection** y una longitud minima de contrasena de 12 caracteres. Verifica
+estos valores en el Dashboard antes de dar acceso al primer administrador;
+confirma el correo electrónico, desactiva los inicios de sesión anónimos y no
+permitas el linking manual salvo que exista un caso revisado. Estos controles
+no pueden quedar sustituidos por una variable del frontend.
 
 El QR de inscripcion contiene el secreto compartido del factor. Muestralo una
 sola vez, escanealo unicamente en el autenticador del operador y no conserves
@@ -131,7 +151,7 @@ python database/scripts/render_ingest_artifact.py collectors/artifacts/<source>/
   --chunk-dir $env:TEMP/pruevia-ingest-chunks --max-bytes 100000
 Push-Location database/supabase
 Get-ChildItem $env:TEMP/pruevia-ingest-chunks/*.sql | Sort-Object Name | ForEach-Object {
-  npx.cmd supabase@latest db query --linked --file $_.FullName
+  npx.cmd supabase@2.116.0 db query --linked --file $_.FullName
 }
 Pop-Location
 
@@ -148,7 +168,7 @@ python database/scripts/publish_golden_catalog.py `
   --chunk-dir $env:TEMP/pruevia-catalog-chunks --max-bytes 100000
 Push-Location database/supabase
 Get-ChildItem $env:TEMP/pruevia-catalog-chunks/*.sql | Sort-Object Name | ForEach-Object {
-  npx.cmd supabase@latest db query --linked --file $_.FullName
+  npx.cmd supabase@2.116.0 db query --linked --file $_.FullName
 }
 Pop-Location
 ```
@@ -170,7 +190,7 @@ python database/scripts/render_clinical_mappings.py `
   --chunk-dir $env:TEMP/pruevia-clinical-mappings --max-bytes 100000
 Push-Location database/supabase
 Get-ChildItem $env:TEMP/pruevia-clinical-mappings/*.sql | Sort-Object Name | ForEach-Object {
-  npx.cmd supabase@latest db query --linked --file $_.FullName
+  npx.cmd supabase@2.116.0 db query --linked --file $_.FullName
 }
 Pop-Location
 ```
@@ -363,7 +383,7 @@ Los objetivos disponibles son `all_in_one` (predeterminado), `lowest_cost`,
 La prueba remota del RPC se ejecuta desde `database/`:
 
 ```powershell
-npx.cmd supabase@latest db query --linked --file supabase/tests/resolver_package_test.sql
+npx.cmd supabase@2.116.0 db query --linked --file supabase/tests/resolver_package_test.sql
 ```
 
 ### OCR de ordenes
@@ -417,8 +437,8 @@ Para verificar la correccion OCR contra la base enlazada:
 
 ```powershell
 cd database
-npx.cmd supabase@latest db query --linked --file supabase/tests/ocr_correction_test.sql
-npx.cmd supabase@latest db query --linked --file supabase/tests/resolution_confidence_guard_test.sql
+npx.cmd supabase@2.116.0 db query --linked --file supabase/tests/ocr_correction_test.sql
+npx.cmd supabase@2.116.0 db query --linked --file supabase/tests/resolution_confidence_guard_test.sql
 ```
 
 La tabla `catalog.ocr_correction_rules` es pequena y revisada. Las variantes

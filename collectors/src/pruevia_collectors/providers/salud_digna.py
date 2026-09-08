@@ -10,6 +10,7 @@ from dataclasses import dataclass
 from decimal import ROUND_HALF_UP, Decimal, InvalidOperation
 from math import isfinite
 from typing import Any
+from urllib.parse import urlparse
 
 import certifi
 import httpx
@@ -20,13 +21,22 @@ except ImportError:  # pragma: no cover - dependency is installed in supported e
     truststore = None  # type: ignore[assignment]
 
 from ..models import Observation, SourceRecord, SourceSpec
-from .http import request_with_same_host_redirects
+from .http import bounded_response_bytes, request_with_same_host_redirects
+from .public_transport import PublicAddressTransport
 
 SALUD_DIGNA_ORIGIN = "https://www.salud-digna.org"
 SALUD_DIGNA_SERVICES_URL = "https://api.emarketingsd.org"
 SALUD_DIGNA_LOCATION_PREFIX = f"{SALUD_DIGNA_ORIGIN}/"
 SALUD_DIGNA_CATEGORIES_PATH = "/Citas/Citas2/EstudiosPorSucursal"
 SALUD_DIGNA_STUDIES_PATH = "/Citas/Citas2/SubEstudiosPorSucursalPP"
+MAX_SALUD_DIGNA_ATTEMPTS = 5
+MAX_SALUD_DIGNA_TIMEOUT_SECONDS = 120.0
+MAX_SALUD_DIGNA_DELAY_SECONDS = 60.0
+MAX_SALUD_DIGNA_LOCATIONS = 100
+MAX_SALUD_DIGNA_CATEGORIES = 500
+MAX_SALUD_DIGNA_STUDIES = 20_000
+MAX_SALUD_DIGNA_SLUG_CHARS = 128
+MAX_SALUD_DIGNA_FIELD_CHARS = 4_000
 
 
 @dataclass(frozen=True)
@@ -49,10 +59,29 @@ class SaludDignaClient:
         retry_backoff_seconds: float = 1.5,
         client: httpx.Client | None = None,
     ) -> None:
-        if max_attempts < 1:
-            raise ValueError("max_attempts must be positive")
-        if timeout_seconds <= 0:
-            raise ValueError("timeout_seconds must be positive")
+        for label, value in (("origin", origin), ("services_base_url", services_base_url)):
+            parsed = urlparse(value.rstrip("/"))
+            try:
+                port = parsed.port
+            except ValueError as error:
+                raise ValueError(f"{label} must use a valid HTTPS URL") from error
+            if (
+                parsed.scheme != "https"
+                or not parsed.hostname
+                or parsed.username
+                or parsed.password
+                or parsed.query
+                or parsed.fragment
+                or parsed.path not in ("", "/")
+                or port not in (None, 443)
+            ):
+                raise ValueError(f"{label} must be an HTTPS origin without credentials")
+        if not isinstance(max_attempts, int) or isinstance(max_attempts, bool) or not 1 <= max_attempts <= MAX_SALUD_DIGNA_ATTEMPTS:
+            raise ValueError("max_attempts must be between 1 and 5")
+        if not isinstance(timeout_seconds, (int, float)) or isinstance(timeout_seconds, bool) or not isfinite(float(timeout_seconds)) or not 0 < timeout_seconds <= MAX_SALUD_DIGNA_TIMEOUT_SECONDS:
+            raise ValueError("timeout_seconds must be between 0 and 120")
+        if not isinstance(retry_backoff_seconds, (int, float)) or isinstance(retry_backoff_seconds, bool) or not isfinite(float(retry_backoff_seconds)) or not 0 <= retry_backoff_seconds <= MAX_SALUD_DIGNA_DELAY_SECONDS:
+            raise ValueError("retry_backoff_seconds must be between 0 and 60")
         self.origin = origin.rstrip("/")
         self.services_base_url = services_base_url.rstrip("/")
         self.timeout_seconds = timeout_seconds
@@ -62,6 +91,8 @@ class SaludDignaClient:
         self._client = client or httpx.Client(
             timeout=timeout_seconds,
             follow_redirects=False,
+            trust_env=False,
+            transport=PublicAddressTransport(),
             verify=_ssl_context(),
         )
 
@@ -71,15 +102,22 @@ class SaludDignaClient:
 
     def location_url(self, slug: str) -> str:
         clean_slug = slug.strip().strip("/")
-        if not clean_slug or "/" in clean_slug:
-            raise ValueError("Salud Digna location slug must be a single path segment")
+        if (
+            not clean_slug
+            or len(clean_slug) > MAX_SALUD_DIGNA_SLUG_CHARS
+            or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]*", clean_slug)
+        ):
+            raise ValueError("Salud Digna location slug must be a bounded safe path segment")
         return f"{self.origin}/{clean_slug}"
 
     def fetch_location(self, slug: str) -> SaludDignaLocationPage:
         url = self.location_url(slug)
         response = self._request("GET", url, headers={"Accept": "text/html"})
-        response.encoding = "utf-8"
-        return SaludDignaLocationPage(slug=slug.strip().strip("/"), url=str(response.url), html=response.text)
+        try:
+            raw = bounded_response_bytes(response, max_bytes=2 * 1024 * 1024)
+            return SaludDignaLocationPage(slug=slug.strip().strip("/"), url=str(response.url), html=raw.decode("utf-8", "replace"))
+        finally:
+            response.close()
 
     def fetch_studies(self, *, location_id: str | int) -> list[Mapping[str, Any]]:
         categories_payload = self._request_json(
@@ -87,23 +125,36 @@ class SaludDignaClient:
             f"{self.services_base_url}{SALUD_DIGNA_CATEGORIES_PATH}",
             params={"idSucursal": str(location_id)},
         )
-        categories = _decode_rows(categories_payload, keys=("Estudios", "estudios", "data", "Data", "result", "results", "items"))
+        categories = _decode_rows(
+            categories_payload,
+            keys=("Estudios", "estudios", "data", "Data", "result", "results", "items"),
+            max_rows=MAX_SALUD_DIGNA_CATEGORIES,
+        )
         studies: list[Mapping[str, Any]] = []
         for category in categories:
             category_id = _first_value(category, "Id", "id", "IdEstudio", "idEstudio")
             if category_id in (None, ""):
                 continue
+            category_id_text = str(category_id).strip()[:200]
             payload = self._request_json(
                 "GET",
                 f"{self.services_base_url}{SALUD_DIGNA_STUDIES_PATH}",
                 params={
-                    "estudio[Id]": str(category_id),
+                    "estudio[Id]": category_id_text,
                     "sucursal[Id]": str(location_id),
                     "filtro": "1",
                     "busqueda": "",
                 },
             )
-            studies.extend(_decode_rows(payload, keys=("Estudios", "estudios", "data", "Data", "result", "results", "items")))
+            studies.extend(
+                _decode_rows(
+                    payload,
+                    keys=("Estudios", "estudios", "data", "Data", "result", "results", "items"),
+                    max_rows=MAX_SALUD_DIGNA_STUDIES,
+                )
+            )
+            if len(studies) > MAX_SALUD_DIGNA_STUDIES:
+                raise ValueError("Salud Digna study catalog exceeds the safety limit")
         return studies
 
     def _request(self, method: str, url: str, **kwargs: Any) -> httpx.Response:
@@ -133,9 +184,11 @@ class SaludDignaClient:
     def _request_json(self, method: str, url: str, **kwargs: Any) -> Any:
         response = self._request(method, url, headers={"Accept": "application/json"}, **kwargs)
         try:
-            return response.json()
-        except ValueError as error:
+            return json.loads(bounded_response_bytes(response, max_bytes=2 * 1024 * 1024))
+        except (ValueError, RecursionError) as error:
             raise ValueError(f"Salud Digna response is not valid JSON: {url}") from error
+        finally:
+            response.close()
 
 
 def _ssl_context() -> ssl.SSLContext:
@@ -168,8 +221,10 @@ class SaludDignaAdapter:
         slugs = tuple(slug.strip().strip("/") for slug in location_slugs if slug.strip().strip("/"))
         if not slugs:
             raise ValueError("at least one Salud Digna location slug is required")
-        if page_delay_seconds < 0:
-            raise ValueError("page_delay_seconds cannot be negative")
+        if len(slugs) > MAX_SALUD_DIGNA_LOCATIONS:
+            raise ValueError("too many Salud Digna locations")
+        if not isinstance(page_delay_seconds, (int, float)) or isinstance(page_delay_seconds, bool) or not isfinite(float(page_delay_seconds)) or not 0 <= page_delay_seconds <= MAX_SALUD_DIGNA_DELAY_SECONDS:
+            raise ValueError("page_delay_seconds must be between 0 and 60")
         self.client = client
         self.location_slugs = slugs
         self.include_catalog = include_catalog
@@ -308,20 +363,24 @@ def _next_data(html: str) -> Mapping[str, Any]:
         raise ValueError("Salud Digna page has no __NEXT_DATA__ payload")
     try:
         value = json.loads(match.group(1))
-    except json.JSONDecodeError as error:
+    except (json.JSONDecodeError, RecursionError) as error:
         raise ValueError("Salud Digna __NEXT_DATA__ is invalid JSON") from error
     if not isinstance(value, Mapping):
         raise TypeError("Salud Digna __NEXT_DATA__ must be an object")
     return value
 
 
-def _decode_rows(payload: Any, *, keys: Sequence[str]) -> list[Mapping[str, Any]]:
+def _decode_rows(payload: Any, *, keys: Sequence[str], max_rows: int = MAX_SALUD_DIGNA_STUDIES) -> list[Mapping[str, Any]]:
     if isinstance(payload, list):
+        if len(payload) > max_rows:
+            raise ValueError("Salud Digna response contains too many rows")
         return [row for row in payload if isinstance(row, Mapping)]
     if isinstance(payload, Mapping):
         for key in keys:
             value = payload.get(key)
             if isinstance(value, list):
+                if len(value) > max_rows:
+                    raise ValueError("Salud Digna response contains too many rows")
                 return [row for row in value if isinstance(row, Mapping)]
         if any(key in payload for key in ("Id", "id", "Descripcion", "descripcion", "Nombre", "nombre")):
             return [payload]
@@ -341,7 +400,7 @@ def _first_value(row: Mapping[str, Any], *keys: str) -> Any:
 
 
 def _text(value: Any) -> str:
-    return " ".join(str(value or "").split())
+    return " ".join(str(value or "").split())[:MAX_SALUD_DIGNA_FIELD_CHARS]
 
 
 def _coordinates(latitude: Any, longitude: Any) -> dict[str, float] | None:
@@ -384,7 +443,7 @@ def _money(value: Any) -> int | None:
         amount = Decimal(str(value).replace("$", "").replace(",", "").strip()).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
     except (InvalidOperation, ValueError):
         return None
-    if amount <= 0 or amount > Decimal(10000000):
+    if not amount.is_finite() or amount <= 0 or amount > Decimal(10000000):
         return None
     return int(amount * 100)
 
@@ -393,6 +452,7 @@ def _number(value: Any) -> Decimal | None:
     if value in (None, "", "N/A", "NA"):
         return None
     try:
-        return Decimal(str(value).replace("%", "").strip())
+        number = Decimal(str(value).replace("%", "").strip())
     except (InvalidOperation, ValueError):
         return None
+    return number if number.is_finite() else None
