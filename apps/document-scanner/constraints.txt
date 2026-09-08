@@ -1,6 +1,6 @@
 # Reviewed direct/transitive versions for the scanner job. Update through a
 # vulnerability-reviewed dependency change, never with an unconstrained install.
-anyio==4.14.2
+anyio==4.15.1
 certifi==2026.7.22
 h11==0.16.0
 httpcore==1.0.9
