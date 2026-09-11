@@ -142,7 +142,9 @@ export async function recognizeOrderImageViaService(
       headers,
       body: JSON.stringify({ image: `data:${input.mime_type};base64,${bytesToBase64(input.bytes)}` }),
       signal: controller.signal,
-      redirect: 'error',
+      // Never forward the service bearer token. workerd implements manual
+      // redirect handling and the non-ok branch rejects every 3xx response.
+      redirect: 'manual',
     });
     if (!response.ok) {
       if (response.status === 401 || response.status === 503) {

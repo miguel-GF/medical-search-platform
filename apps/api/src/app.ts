@@ -778,9 +778,13 @@ async function readRequestChunk(
 
 async function readBoundedResponseText(response: Response, maxBytes: number): Promise<string> {
   const encoding = response.headers.get('content-encoding')?.trim().toLowerCase() ?? '';
-  if (encoding !== '' && encoding !== 'identity') throw new Error('compressed auth response rejected');
+  const encoded = encoding !== '' && encoding !== 'identity';
+  if (encoded && !['gzip', 'br', 'deflate'].includes(encoding)) throw new Error('unsupported auth response encoding');
   const length = response.headers.get('content-length')?.trim() ?? null;
-  if (length !== null && (!/^\d{1,8}$/.test(length) || Number(length) > maxBytes)) {
+  // Workers exposes a decoded response stream while an upstream compressed
+  // Content-Length may still describe the encoded bytes. The stream limit is
+  // the authoritative bound for encoded responses.
+  if (length !== null && (!/^\d{1,8}$/.test(length) || (!encoded && Number(length) > maxBytes))) {
     throw new Error('auth response exceeds limit');
   }
   const reader = response.body?.getReader();
@@ -804,7 +808,7 @@ async function readBoundedResponseText(response: Response, maxBytes: number): Pr
   } finally {
     reader.releaseLock();
   }
-  if (length !== null && offset !== Number(length)) throw new Error('auth response length mismatch');
+  if (!encoded && length !== null && offset !== Number(length)) throw new Error('auth response length mismatch');
   return new TextDecoder().decode(bytes.subarray(0, offset));
 }
 
@@ -1344,10 +1348,27 @@ async function providerResponse(
 
 async function verifyAdmin(request: Request, env: Env): Promise<AdminUser | null> {
   const user = await verifyUser(request, env);
-  if (!user) return null;
+  if (!user) {
+    console.warn(JSON.stringify({ event: 'admin_auth_rejected', reason: 'user_validation_failed' }));
+    return null;
+  }
   const allowedIds = new Set((env.ADMIN_USER_IDS ?? '').split(',').map((value) => value.trim().toLowerCase()).filter(isUuid));
-  if (allowedIds.size === 0) return null;
-  return allowedIds.has(user.id.toLowerCase()) ? { id: user.id, aal: user.aal } : null;
+  if (allowedIds.size === 0) {
+    console.warn(JSON.stringify({ event: 'admin_auth_rejected', reason: 'allowlist_empty' }));
+    return null;
+  }
+  if (!allowedIds.has(user.id.toLowerCase())) {
+    console.warn(JSON.stringify({ event: 'admin_auth_rejected', reason: 'user_not_allowlisted' }));
+    return null;
+  }
+  return { id: user.id, aal: user.aal };
+}
+
+function rejectAuth(reason: string): null {
+  // Reasons are deliberately coarse and contain no account identifiers or
+  // bearer material; they only help local operators diagnose a 401.
+  console.warn(JSON.stringify({ event: 'auth_rejected', reason }));
+  return null;
 }
 
 async function verifyUser(request: Request, env: Env): Promise<AuthenticatedUser | null> {
@@ -1356,37 +1377,44 @@ async function verifyUser(request: Request, env: Env): Promise<AuthenticatedUser
   const publishableKey = env.SUPABASE_PUBLISHABLE_KEY ?? env.SUPABASE_ANON_KEY;
   // Supabase access tokens are small JWTs. Reject oversized bearer headers
   // before forwarding or base64-decoding attacker-controlled input.
-  if (!match || match[1].length > 8_192 || !env.SUPABASE_URL || !publishableKey) return null;
+  if (!match || match[1].length > 8_192 || !env.SUPABASE_URL || !publishableKey) return rejectAuth('missing_or_invalid_bearer_config');
   let supabaseBaseUrl: URL;
   try {
     supabaseBaseUrl = new URL(env.SUPABASE_URL);
     const localDevelopment = supabaseBaseUrl.protocol === 'http:'
       && (supabaseBaseUrl.hostname === 'localhost' || supabaseBaseUrl.hostname === '127.0.0.1' || supabaseBaseUrl.hostname === '::1')
       && (env.APP_ENV === 'development' || env.APP_ENV === 'test');
-    if (supabaseBaseUrl.protocol !== 'https:' && !localDevelopment) return null;
+    if (supabaseBaseUrl.protocol !== 'https:' && !localDevelopment) return rejectAuth('invalid_supabase_transport');
     if (supabaseBaseUrl.username || supabaseBaseUrl.password || supabaseBaseUrl.search || supabaseBaseUrl.hash
       || (supabaseBaseUrl.pathname !== '' && supabaseBaseUrl.pathname !== '/')
-      || (supabaseBaseUrl.protocol === 'https:' && supabaseBaseUrl.port && supabaseBaseUrl.port !== '443')) return null;
+      || (supabaseBaseUrl.protocol === 'https:' && supabaseBaseUrl.port && supabaseBaseUrl.port !== '443')) return rejectAuth('invalid_supabase_url');
   } catch {
-    return null;
+    return rejectAuth('invalid_supabase_url');
   }
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 5000);
   try {
-    const response = await fetch(new URL('/auth/v1/user', supabaseBaseUrl).toString(), {
-      headers: { apikey: publishableKey, Authorization: `Bearer ${match[1]}` },
-      // Authentication responses must never be cached or followed to an
-      // untrusted host with a bearer token in flight.
-      redirect: 'error',
-      cache: 'no-store',
-      signal: controller.signal,
-    });
+    let response: Response;
+    try {
+      response = await fetch(new URL('/auth/v1/user', supabaseBaseUrl).toString(), {
+        headers: { apikey: publishableKey, Authorization: `Bearer ${match[1]}` },
+        // Authentication responses must never be cached or followed to an
+        // untrusted host with a bearer token in flight.
+        // workerd supports manual redirects, not the browser-only `error`
+        // mode. A manual 3xx is non-ok below and is never followed.
+        redirect: 'manual',
+        cache: 'no-store',
+        signal: controller.signal,
+      });
+    } catch {
+      return rejectAuth('auth_fetch_failed');
+    }
     if (!response.ok) {
       try { await response.body?.cancel(); } catch { /* best-effort cleanup */ }
-      return null;
+      return rejectAuth('auth_user_rejected');
     }
     const user = JSON.parse(await readBoundedResponseText(response, AUTH_USER_MAX_RESPONSE_BYTES)) as { id?: unknown; is_anonymous?: unknown; factors?: unknown };
-    if (typeof user.id !== 'string' || !isUuid(user.id)) return null;
+    if (typeof user.id !== 'string' || !isUuid(user.id)) return rejectAuth('invalid_auth_user');
     // Supabase can issue an AAL2 token to an anonymous identity that enrolled
     // a factor. That proves possession of the factor, but it is not a
     // verified provider account and must not reach either admin or provider
@@ -1394,7 +1422,7 @@ async function verifyUser(request: Request, env: Env): Promise<AuthenticatedUser
     // accepting an unknown identity type would turn a future Auth response
     // shape change into a privilege bypass. The value comes from Auth's
     // validated /user response, never from a client-supplied claim.
-    if (user.is_anonymous !== false) return null;
+    if (user.is_anonymous !== false) return rejectAuth('anonymous_or_unknown_identity');
     const aal = readJwtAal(match[1]);
     if (aal !== 'aal2') return { id: user.id, aal };
     // Match Auth's actual listFactors contract: it calls getUser() and reads
@@ -1408,8 +1436,17 @@ async function verifyUser(request: Request, env: Env): Promise<AuthenticatedUser
         && factor.factor_type === 'totp'
         && factor.status === 'verified');
     return { id: user.id, aal: hasVerifiedFactor ? 'aal2' : 'aal1' };
-  } catch {
-    return null;
+  } catch (error) {
+    const reason = error instanceof SyntaxError
+      ? 'auth_response_invalid_json'
+      : error instanceof Error && error.message === 'unsupported auth response encoding'
+        ? 'auth_response_unsupported_encoding'
+        : error instanceof Error && error.message === 'auth response length mismatch'
+          ? 'auth_response_length_mismatch'
+          : error instanceof Error && error.message === 'auth response exceeds limit'
+            ? 'auth_response_too_large'
+            : 'auth_validation_error';
+    return rejectAuth(reason);
   } finally {
     clearTimeout(timer);
   }

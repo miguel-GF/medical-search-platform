@@ -190,14 +190,26 @@ async function beginEnrollment() {
   mfaLoading.value = true;
   authError.value = '';
   try {
-  const result = await supabase.auth.mfa.enroll({ factorType: 'totp', friendlyName: `Admin ${session.value?.user.email ?? email.value.trim()}` });
-  if (!isCurrentAuth(generation, userId)) { mfaLoading.value = false; return; }
-  if (result.error) authError.value = 'No se pudo iniciar el registro del autenticador.';
-  else {
-    enrollmentFactorId.value = result.data.id;
-    enrollmentQr.value = result.data.totp.qr_code;
-    enrollmentSecret.value = result.data.totp.secret;
-  }
+    // A failed first enrollment can leave an unverified factor behind. Auth
+    // refuses a second enrollment while that orphan exists, so remove only
+    // unverified TOTP factors owned by this already-authenticated session.
+    const currentFactors = await supabase.auth.mfa.listFactors();
+    if (currentFactors.error) throw currentFactors.error;
+    for (const factor of currentFactors.data.totp.filter((item) => item.status === 'unverified')) {
+      const removed = await supabase.auth.mfa.unenroll({ factorId: factor.id });
+      if (removed.error) throw removed.error;
+    }
+    const result = await supabase.auth.mfa.enroll({ factorType: 'totp', friendlyName: `Admin ${session.value?.user.email ?? email.value.trim()}` });
+    if (!isCurrentAuth(generation, userId)) { mfaLoading.value = false; return; }
+    if (result.error) authError.value = 'No se pudo iniciar el registro del autenticador.';
+    else {
+      enrollmentFactorId.value = result.data.id;
+      // Supabase Auth returns a complete SVG data URL. The template encodes the
+      // SVG payload itself, so remove only that trusted media prefix first;
+      // encoding the complete data URL would render the QR as a broken image.
+      enrollmentQr.value = result.data.totp.qr_code.replace(/^data:image\/svg\+xml;[^,]*,/, '');
+      enrollmentSecret.value = result.data.totp.secret;
+    }
   } catch {
     if (!isCurrentAuth(generation, userId)) { mfaLoading.value = false; return; }
     authError.value = 'No se pudo iniciar el registro del autenticador. Inténtalo de nuevo.';

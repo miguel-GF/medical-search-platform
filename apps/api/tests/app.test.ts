@@ -645,7 +645,7 @@ describe('Pruevia API', () => {
     const fetcher = vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
       const target = String(input);
       expect(init?.headers).toEqual(expect.objectContaining({ apikey: 'anon', Authorization: `Bearer ${aal2Token}` }));
-      expect(init?.redirect).toBe('error');
+      expect(init?.redirect).toBe('manual');
       expect(init?.cache).toBe('no-store');
       expect(target).toBe('https://example.supabase.co/auth/v1/user');
       return new Response(JSON.stringify({

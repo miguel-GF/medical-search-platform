@@ -125,7 +125,10 @@ export class SupabaseRpcClient implements RpcClient {
         // redirect could disclose a privileged API key or provider JWT to an
         // unexpected host, while caching clinical responses creates a side
         // channel between users.
-        redirect: 'error',
+        // Cloudflare workerd does not implement redirect="error". Manual
+        // preserves the same security property: 3xx responses are returned
+        // as non-ok below and the privileged headers are never forwarded.
+        redirect: 'manual',
         cache: 'no-store',
         signal: controller.signal,
       });

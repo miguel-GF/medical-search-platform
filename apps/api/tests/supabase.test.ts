@@ -16,7 +16,7 @@ describe('Supabase RPC transport', () => {
       expect(String(input)).toBe('https://project.supabase.co/rest/v1/rpc/api_search');
       expect(init?.headers).toEqual(expect.objectContaining({ apikey: 'service-key', Authorization: 'Bearer service-key' }));
       expect(init?.signal).toBeInstanceOf(AbortSignal);
-      expect(init?.redirect).toBe('error');
+      expect(init?.redirect).toBe('manual');
       expect(init?.cache).toBe('no-store');
       return new Response(JSON.stringify([{ service_id: 'service-1' }]), { status: 200 });
     });
