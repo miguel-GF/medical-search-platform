@@ -8,6 +8,8 @@ export interface Dashboard {
   active_offers: number;
   normalization_ambiguous: number;
   normalization_no_match: number;
+  /** Rows already finalized as no-match, kept for audit but not open work. */
+  normalization_closed_no_match?: number;
   open_alerts: number;
   critical_alerts: number;
   recent_runs: CrawlRun[];
@@ -115,6 +117,18 @@ export interface PriceRow { price_version_id: string; provider_name: string; ser
 export interface QualityIssueRow { issue_id: string; issue_code: string; severity: string; status: string; source_id: string | null; crawl_run_id: string | null; details: Record<string, unknown>; created_at: string; }
 export interface AlertRow { alert_id: string; alert_code: string; severity: string; status: string; source: string | null; title: string; detail: string | null; created_at: string; }
 
+export interface ExactReprocessResult {
+  applied: boolean;
+  replayed: boolean;
+  backlog_total: number;
+  eligible_total: number;
+  selected: number;
+  processed: number;
+  skipped: number;
+  remaining_eligible: number;
+  request_id: string | null;
+}
+
 export class AdminApiError extends Error {
   constructor(
     message: string,
@@ -149,6 +163,7 @@ export interface AdminApi {
   reviewNormalization(id: string, input: { decision: 'approve_candidate' | 'no_match'; selected_candidate_id?: string; alias?: string; reason?: string }, requestId?: string): Promise<unknown>;
   updateAlertStatus(id: string, status: 'acknowledged' | 'resolved' | 'ignored', reason?: string, requestId?: string): Promise<unknown>;
   updateQualityIssueStatus(id: string, status: 'acknowledged' | 'resolved' | 'ignored', reason?: string, requestId?: string): Promise<unknown>;
+  reprocessExactNormalizations(input?: { apply?: boolean; limit?: number }, requestId?: string): Promise<ExactReprocessResult>;
 }
 
 export function createMutationRequestId(): string {
@@ -265,6 +280,7 @@ export function createAdminApi(baseUrl: string, accessToken: () => Promise<strin
     reviewNormalization: (id, input, requestId) => request(`/api/v1/admin/normalization/${encodeURIComponent(id)}/review`, { method: 'POST', body: JSON.stringify(input), headers: mutationHeaders(requestId) }),
     updateAlertStatus: (id, status, reason, requestId) => request(`/api/v1/admin/alerts/${encodeURIComponent(id)}/status`, { method: 'POST', body: JSON.stringify({ status, reason }), headers: mutationHeaders(requestId) }),
     updateQualityIssueStatus: (id, status, reason, requestId) => request(`/api/v1/admin/quality-issues/${encodeURIComponent(id)}/status`, { method: 'POST', body: JSON.stringify({ status, reason }), headers: mutationHeaders(requestId) }),
+    reprocessExactNormalizations: (input = {}, requestId) => request<ExactReprocessResult>('/api/v1/admin/normalization/reprocess-exact', { method: 'POST', body: JSON.stringify({ apply: input.apply === true, limit: input.limit ?? 100 }), headers: mutationHeaders(requestId) }),
   };
 }
 

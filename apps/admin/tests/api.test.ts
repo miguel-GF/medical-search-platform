@@ -91,6 +91,30 @@ describe('admin API client', () => {
     );
   });
 
+  it('sends bounded controls for safe exact reprocessing', async () => {
+    const fetcher = vi.fn(async () => new Response(JSON.stringify({
+      applied: false,
+      replayed: false,
+      backlog_total: 947,
+      eligible_total: 13,
+      selected: 13,
+      processed: 0,
+      skipped: 0,
+      remaining_eligible: 13,
+      request_id: 'request-1',
+    }), { status: 200 }));
+    const api = createAdminApi('https://api.test', async () => 'secret', fetcher);
+    await expect(api.reprocessExactNormalizations({ apply: false, limit: 200 }, 'exact-12345678')).resolves.toMatchObject({ eligible_total: 13 });
+    expect(fetcher).toHaveBeenCalledWith(
+      'https://api.test/api/v1/admin/normalization/reprocess-exact',
+      expect.objectContaining({
+        method: 'POST',
+        body: JSON.stringify({ apply: false, limit: 200 }),
+        headers: expect.objectContaining({ 'x-request-id': 'exact-12345678' }),
+      }),
+    );
+  });
+
   it('rejects oversized successful API responses before buffering them', async () => {
     const fetcher = vi.fn(async () => new Response('x'.repeat(2 * 1024 * 1024 + 1), { status: 200 }));
     await expect(createAdminApi('https://api.test', async () => 'secret', fetcher).dashboard()).rejects.toMatchObject({

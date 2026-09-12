@@ -956,6 +956,25 @@ async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClien
       origin,
     );
   }
+  if (request.method === 'POST' && url.pathname === '/api/v1/admin/normalization/reprocess-exact') {
+    const body = await readJsonObject(request, 16_384, origin);
+    if (body instanceof Response) return body;
+    const apply = body.apply === undefined ? false : body.apply;
+    const limit = body.limit === undefined ? 100 : body.limit;
+    if (typeof apply !== 'boolean'
+      || typeof limit !== 'number'
+      || !Number.isInteger(limit)
+      || limit < 1
+      || limit > 200) {
+      return json({ error: { code: 'invalid_body', message: 'apply must be boolean and limit must be an integer between 1 and 200' } }, 400, origin);
+    }
+    return json(await rpc.call('api_admin_reprocess_exact_normalizations', {
+      p_reviewer_user_id: user.id,
+      p_limit: limit,
+      p_apply: apply,
+      p_request_id: operationRequestId,
+    }, { admin: true }), 200, origin);
+  }
   const normalizationDetailMatch = url.pathname.match(/^\/api\/v1\/admin\/normalization\/([^/]+)$/i);
   if (normalizationDetailMatch && request.method === 'GET') {
     if (!isUuid(normalizationDetailMatch[1])) return json({ error: { code: 'invalid_id', message: 'normalization run id must be a UUID' } }, 400, origin);

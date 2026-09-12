@@ -633,6 +633,47 @@ describe('Pruevia API', () => {
     expect(call[1].p_request_id).not.toBe('shared-review-key');
   });
 
+  it('previews and forwards the safe exact normalization batch', async () => {
+    const result = {
+      applied: false,
+      replayed: false,
+      backlog_total: 947,
+      eligible_total: 13,
+      selected: 13,
+      processed: 0,
+      skipped: 0,
+      remaining_eligible: 13,
+      request_id: null,
+    };
+    const rpc = rpcWith(result);
+    const handler = createHandler({ rpc, authenticateAdmin });
+    const response = await handler(new Request('https://api.test/api/v1/admin/normalization/reprocess-exact', {
+      method: 'POST',
+      headers: { authorization: 'Bearer user-token', 'content-type': 'application/json' },
+      body: JSON.stringify({ apply: false, limit: 200 }),
+    }), env);
+    expect(response.status).toBe(200);
+    expect(await response.json()).toEqual(result);
+    expect(rpc.call).toHaveBeenCalledWith('api_admin_reprocess_exact_normalizations', expect.objectContaining({
+      p_reviewer_user_id: '00000000-0000-0000-0000-000000000099',
+      p_limit: 200,
+      p_apply: false,
+      p_request_id: expect.stringMatching(/^[a-f0-9]{64}$/),
+    }), { admin: true });
+  });
+
+  it('rejects malformed exact reprocessing controls before privileged RPCs', async () => {
+    const rpc = rpcWith({});
+    const handler = createHandler({ rpc, authenticateAdmin });
+    const response = await handler(new Request('https://api.test/api/v1/admin/normalization/reprocess-exact', {
+      method: 'POST',
+      headers: { authorization: 'Bearer user-token', 'content-type': 'application/json' },
+      body: JSON.stringify({ apply: 'yes', limit: 999 }),
+    }), env);
+    expect(response.status).toBe(400);
+    expect(rpc.call).not.toHaveBeenCalled();
+  });
+
   it('forwards the admin catalog lookup', async () => {
     const rpc = rpcWith([{ item_id: row.service_id, display_name: 'Biometría hemática', service_type: 'lab_test', status: 'active' }]);
     const response = await createHandler({ rpc, authenticateAdmin })(new Request('https://api.test/api/v1/admin/catalog-items?q=biometria&limit=10', { headers: { authorization: 'Bearer user-token' } }), env);
