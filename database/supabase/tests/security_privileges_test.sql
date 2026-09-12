@@ -4,14 +4,14 @@
 
 begin;
 create extension if not exists pgtap with schema extensions;
-select extensions.plan(28);
+select extensions.plan(30);
 
 select extensions.is(
   (select count(*)::integer
    from pg_proc p
    join pg_namespace n on n.oid = p.pronamespace
    where n.nspname = 'public' and p.proname like 'api_admin_%'),
-  28,
+  29,
   'all internal admin RPCs are present in the expected surface'
 );
 
@@ -41,8 +41,19 @@ select extensions.is(
    join pg_namespace n on n.oid = p.pronamespace
    where n.nspname = 'public' and p.proname like 'api_admin_%'
      and has_function_privilege('service_role', p.oid, 'execute')),
-  28,
+  29,
   'service role can execute all admin RPCs'
+);
+
+select extensions.is(
+  has_function_privilege('anon', 'public.api_admin_reprocess_exact_normalizations(uuid,integer,boolean,text)', 'execute'),
+  false,
+  'anonymous users cannot execute exact normalization reprocessing'
+);
+select extensions.is(
+  has_function_privilege('service_role', 'public.api_admin_reprocess_exact_normalizations(uuid,integer,boolean,text)', 'execute'),
+  true,
+  'only service role can execute exact normalization reprocessing'
 );
 
 select extensions.is(

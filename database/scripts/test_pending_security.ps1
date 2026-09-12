@@ -13,7 +13,7 @@ if ($Test -notmatch '^[a-z0-9_]+\.sql$' -or !(Test-Path -LiteralPath $testPath))
 $parts = [System.Collections.Generic.List[string]]::new()
 $parts.Add("begin;`nset local lock_timeout = '5s';`nset local statement_timeout = '60s';")
 $migrations = Get-ChildItem (Join-Path $dbRoot 'supabase/migrations') -Filter '*.sql' |
-  Where-Object { $_.Name -ge '20260904115000_provider_aal2_immediate_hardening.sql' -and $_.Name -le $(if ($InternalRelease) { '20260908100000_internal_document_freeze.sql' } else { '20260906240000_provider_change_json_size.sql' }) } |
+  Where-Object { $_.Name -ge '20260904115000_provider_aal2_immediate_hardening.sql' -and $_.Name -le $(if ($InternalRelease) { '20260912100000_admin_exact_reprocessing.sql' } else { '20260906240000_provider_change_json_size.sql' }) } |
   Sort-Object Name
 foreach ($migration in $migrations) {
   $source = [IO.File]::ReadAllText($migration.FullName)

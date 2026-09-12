@@ -4,8 +4,14 @@ Estado: **en curso; no aprobado para produccion**. Este documento distingue
 controles comprobados de trabajo pendiente. No sustituye la revision del resto
 del proyecto ni afirma que el software sea imposible de comprometer.
 
-Revalidacion local: 7 de septiembre de 2026. El estado remoto y los pendientes
-de despliegue descritos abajo siguen vigentes.
+Revalidacion local: 12 de septiembre de 2026. El estado remoto y los
+pendientes de despliegue descritos abajo siguen vigentes.
+
+Desde la revalidación anterior se incorporó un panel Admin profesional con
+tokens de diseño reutilizables, un reprocesamiento exacto acotado a catálogo y
+alias aprobados, y una defensa para no mostrar como trabajo abierto los
+registros `no_match` ya finalizados. La cadena de desarrollo de Wrangler se
+actualizó a versiones sin vulnerabilidades conocidas.
 
 ## Politica de AAL2
 
@@ -101,6 +107,15 @@ dependencias resueltas de collectors, OCR, scanner y scripts de base de datos
 antes de ejecutar sus pruebas. La auditoría aislada más reciente no encontró
 vulnerabilidades conocidas; el paquete editable local se excluye del informe
 porque no existe en PyPI.
+
+### Vulnerabilidades en la cadena local de Wrangler
+
+La auditoría de npm encontró tres alertas altas transitivas en `wrangler`
+4.126.0, `miniflare` 5.20260825 y `sharp` 0.35.2 (libheif). El lockfile y el
+mínimo declarado ahora exigen Wrangler 4.131.1, que resuelve `miniflare`
+5.20260911 y `sharp` 0.35.4. `npm ci --ignore-scripts`, `npm audit` y las
+pruebas de API se ejecutaron con la cadena corregida; no quedan alertas
+conocidas en el proyecto API.
 
 El job de ramas protegidas también comprueba el esquema de privilegios efectivo
 antes de ejecutar contratos o publicar el Worker; si quedan RPC antiguas para
@@ -249,11 +264,11 @@ IPv6 literal; HTTP de loopback queda limitado al desarrollo local.
 | `security_privileges_test.sql` | 28/28 | Privilegios efectivos tras las migraciones pendientes, incluidos los dos helpers de Storage |
 | `provider_aal2_test.sql` | 11/11 | Rechazo de AAL1, claim `aal` ausente, JWT `aal2` sin factor vigente e identidad anonima en las operaciones privilegiadas |
 | `review_json_depth_test.sql` | 3/3 | RedacciÃ³n de secretos y truncamiento fail-closed de JSON profundamente anidado |
-| `python -m pytest -q database/tests` | 120/120 | Scripts, contratos, configuración Auth local fail-closed, lectores de artefactos acotados, descargas LOINC y el gate del ledger de migraciones |
-| API `npm test` y `npm run typecheck` | 100/100; tipado correcto | Pruebas locales, no trafico del Worker publicado; AAL2 exige factor vigente del mismo usuario y `is_anonymous: false` |
+| `python -m pytest -q database/tests` | 123/123 | Scripts, contratos, configuración Auth local fail-closed, lectores de artefactos acotados, descargas LOINC y el gate del ledger de migraciones |
+| API `npm test` y `npm run typecheck` | 116/116; tipado correcto | Pruebas locales, no trafico del Worker publicado; AAL2 exige factor vigente del mismo usuario y `is_anonymous: false` |
 | Document scanner `python -m pytest -q` | 44/44 | Hash/MIME, limites, redireccion, socket ClamAV y respuestas fail-closed |
 | OCR `python -m pytest -q` | 25/25 | Token obligatorio, rechazo de headers duplicados y comprimidos, modelos ausentes fail-closed, límites de imagen/respuesta, salida OCR acotada y token débil fuera de loopback |
-| Admin `npm test` y typecheck | 18/18; tipado correcto | Respuestas acotadas, redirecciones bloqueadas, IDs de ruta codificados, autenticación de panel, orígenes Auth/API limpios y enlaces de fuentes con allowlist |
+| Admin `npm test` y typecheck | 19/19; tipado correcto | Respuestas acotadas, redirecciones bloqueadas, IDs de ruta codificados, autenticación de panel, orígenes Auth/API limpios y enlaces de fuentes con allowlist |
 | Patient `flutter test` y `flutter analyze` | 19/19; sin issues | Respuestas JSON acotadas, origen HTTPS, allowlist de host en profile/release y sin redirecciones |
 | Android Gradle `:app:tasks` + `:app:assembleRelease` | Configura correctamente; release falla sin keystore | No permite firmar `release` con debug keys |
 | iOS Release signing | Configuración estática endurecida | Exige `Apple Distribution`, equipo y perfil suministrados por CI; no hay fallback a `iPhone Developer` |
@@ -261,8 +276,10 @@ IPv6 literal; HTTP de loopback queda limitado al desarrollo local.
 
 El historial remoto consultado en este corte confirma que
 `20260904110000_provider_aal2_enforcement.sql` esta aplicado al proyecto DEV
-enlazado `ymtcmfgwuzdqtsbuvzqf`. Las quince migraciones `20260904115000` a
-`20260906240000` **siguen pendientes**. El verificador de orden remoto confirma
+enlazado `ymtcmfgwuzdqtsbuvzqf`. Las diecisiete migraciones desde
+`20260904115000_provider_aal2_immediate_hardening.sql` hasta
+`20260912100000_admin_exact_reprocessing.sql` **siguen pendientes**. El
+verificador de orden remoto confirma
 que el ledger aplicado sigue siendo un prefijo continuo; no se ha aplicado una
 migracion posterior en aislamiento. Los ensayos no
 registraron ni aplicaron permanentemente esas migraciones. No se desplego
@@ -274,6 +291,12 @@ el esquema remoto aun expone 0 wrappers `api_server_provider_*` de servicio.
 Mientras estos valores no sean `0` y `7` respectivamente tras la migracion, el
 Data API puede saltarse los limites del Worker y el Worker nuevo no es
 compatible con el esquema remoto.
+
+La consulta de cobertura remota separa 946 registros `no_match` ya cerrados
+con decisión final de un único caso abierto. El RPC de reprocesamiento exacto
+aún no existe en remoto; su preview ensayado con rollback devuelve un backlog
+abierto de 1 y cero coincidencias elegibles, por lo que no se ha aplicado
+ningún cambio de datos.
 
 `pip-audit` no reportó vulnerabilidades conocidas para las constraints del
 scanner ni para las dependencias resueltas de collectors y OCR.
@@ -306,11 +329,13 @@ powershell -NoProfile -File database/scripts/test_pending_security.ps1 -Test pro
 powershell -NoProfile -File database/scripts/test_pending_security.ps1 -Test provider_claims_test.sql
 powershell -NoProfile -File database/scripts/test_pending_security.ps1 -Test provider_worker_boundary_test.sql
 powershell -NoProfile -File database/scripts/test_pending_security.ps1 -Test security_privileges_test.sql
+powershell -NoProfile -File database/scripts/test_pending_security.ps1 -Test internal_document_freeze_test.sql -InternalRelease
 python -m pytest -q database/tests
 ```
 
-El script de ensayo solo sirve para la ventana concreta 1150-2400 y requiere
-que esas migraciones no esten aplicadas. Ejecutar los ensayos secuencialmente
+El script de ensayo solo sirve para la ventana concreta 1150-12100000 y requiere
+que esas migraciones no esten aplicadas; la parte 12100000 se incluye con
+`-InternalRelease`. Ejecutar los ensayos secuencialmente
 para evitar competir por los mismos bloqueos DDL. Nunca contra produccion.
 
 Despues de migrar un entorno de pruebas, con Python y el CLI Supabase instalado:
@@ -385,22 +410,22 @@ aislamiento bloquea el despliegue hasta corregirse.
   rutas de Storage en minusculas canonicas; asi los limites de JSON y de objetos
   no pueden eludirse con variantes de mayusculas.
 
-### Revalidacion adicional del 2026-09-06
+### Revalidacion adicional del 2026-09-12
 
 - OCR service: **25/25** tests; los errores de inicializacion del motor ya no
   devuelven rutas, versiones ni detalles internos.
- - API: **100/100** tests y typecheck correctos; se agrego un limite de 1000
+ - API: **116/116** tests y typecheck correctos; se agrego un limite de 1000
   entradas por coleccion, redaccion de claves con forma de credencial y el
   comprobante MFA ahora verifica explícitamente el `user_id` del factor y
   rechaza respuestas Auth sin `is_anonymous: false`.
-- Admin: **18/18** tests y typecheck correctos; los mensajes upstream se
+- Admin: **19/19** tests y typecheck correctos; los mensajes upstream se
   localizan de forma generica y nunca muestran SQL, stack traces o secretos.
 - Patient: **18/18** tests y `flutter analyze` sin issues; iOS incluye overlay
   de privacidad al pasar a segundo plano y durante captura de pantalla. La
   compilacion nativa iOS requiere ejecutarse en macOS/Xcode.
  - Contratos SQL pendientes: Storage **25/25** y provider claims **62/62**;
   tambien pasaron los contratos de Worker **15/15** y privilegios **28/28**.
-- Gate de ledger remoto: **76/91** migraciones aplicadas, **15** pendientes y
+- Gate de ledger remoto: **76/93** migraciones aplicadas, **17** pendientes y
   orden continuo verificado; el gate de esquema sigue fallando hasta migrar.
 
 ## Referencias tecnicas
