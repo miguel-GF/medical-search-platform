@@ -70,37 +70,40 @@ select jsonb_build_object(
     where n.nspname = 'public' and p.prokind = 'f' and has_function_privilege('authenticated', p.oid, 'execute')),
   'public_authenticated_storage_exec', (select count(*)::integer from pg_proc p join pg_namespace n on n.oid = p.pronamespace
     where n.nspname = 'public' and p.prokind = 'f'
-      and p.proname in ('provider_can_access_claim_storage', 'provider_can_upload_claim_storage')
-      and pg_get_function_identity_arguments(p.oid) = 'text'
+      and p.oid in (to_regprocedure('public.provider_can_access_claim_storage(text)'),
+                    to_regprocedure('public.provider_can_upload_claim_storage(text)'))
       and has_function_privilege('authenticated', p.oid, 'execute')),
   'unexpected_public_authenticated_exec', (select count(*)::integer from pg_proc p join pg_namespace n on n.oid = p.pronamespace
     where n.nspname = 'public' and p.prokind = 'f' and has_function_privilege('authenticated', p.oid, 'execute')
-      and not (p.proname in ('provider_can_access_claim_storage', 'provider_can_upload_claim_storage')
-        and pg_get_function_identity_arguments(p.oid) = 'text')),
+      and p.oid not in (to_regprocedure('public.provider_can_access_claim_storage(text)'),
+                        to_regprocedure('public.provider_can_upload_claim_storage(text)'))),
   'scan_queue_service_exec', (select count(*)::integer from pg_proc p join pg_namespace n on n.oid = p.pronamespace
     where n.nspname = 'public' and p.proname = 'api_server_document_scan_queue'
-      and pg_get_function_identity_arguments(p.oid) = 'integer' and has_function_privilege('service_role', p.oid, 'execute')),
+      and p.oid = to_regprocedure('public.api_server_document_scan_queue(integer)')
+      and has_function_privilege('service_role', p.oid, 'execute')),
   'scan_queue_anon_exec', (select count(*)::integer from pg_proc p join pg_namespace n on n.oid = p.pronamespace
     where n.nspname = 'public' and p.proname = 'api_server_document_scan_queue'
-      and pg_get_function_identity_arguments(p.oid) = 'integer' and has_function_privilege('anon', p.oid, 'execute')),
+      and p.oid = to_regprocedure('public.api_server_document_scan_queue(integer)')
+      and has_function_privilege('anon', p.oid, 'execute')),
   'scan_queue_authenticated_exec', (select count(*)::integer from pg_proc p join pg_namespace n on n.oid = p.pronamespace
     where n.nspname = 'public' and p.proname = 'api_server_document_scan_queue'
-      and pg_get_function_identity_arguments(p.oid) = 'integer' and has_function_privilege('authenticated', p.oid, 'execute')),
+      and p.oid = to_regprocedure('public.api_server_document_scan_queue(integer)')
+      and has_function_privilege('authenticated', p.oid, 'execute')),
   'scan_attestation_service_exec', (select count(*)::integer from pg_proc p join pg_namespace n on n.oid = p.pronamespace
     where n.nspname = 'public' and p.proname = 'api_server_record_provider_document_scan'
-      and pg_get_function_identity_arguments(p.oid) = 'uuid, text, text, integer, text, text, text'
+      and p.oid = to_regprocedure('public.api_server_record_provider_document_scan(uuid,text,text,integer,text,text,text)')
       and has_function_privilege('service_role', p.oid, 'execute')),
   'scan_attestation_anon_exec', (select count(*)::integer from pg_proc p join pg_namespace n on n.oid = p.pronamespace
     where n.nspname = 'public' and p.proname = 'api_server_record_provider_document_scan'
-      and pg_get_function_identity_arguments(p.oid) = 'uuid, text, text, integer, text, text, text'
+      and p.oid = to_regprocedure('public.api_server_record_provider_document_scan(uuid,text,text,integer,text,text,text)')
       and has_function_privilege('anon', p.oid, 'execute')),
   'scan_attestation_authenticated_exec', (select count(*)::integer from pg_proc p join pg_namespace n on n.oid = p.pronamespace
     where n.nspname = 'public' and p.proname = 'api_server_record_provider_document_scan'
-      and pg_get_function_identity_arguments(p.oid) = 'uuid, text, text, integer, text, text, text'
+      and p.oid = to_regprocedure('public.api_server_record_provider_document_scan(uuid,text,text,integer,text,text,text)')
       and has_function_privilege('authenticated', p.oid, 'execute')),
   'obsolete_scan_attestation', (select count(*)::integer from pg_proc p join pg_namespace n on n.oid = p.pronamespace
     where n.nspname = 'public' and p.proname = 'api_server_record_provider_document_scan'
-      and pg_get_function_identity_arguments(p.oid) = 'uuid, text, text, integer, text')
+      and p.oid = to_regprocedure('public.api_server_record_provider_document_scan(uuid,text,text,integer,text)'))
 ) as security_schema;
 """
 EXPECTED = {
