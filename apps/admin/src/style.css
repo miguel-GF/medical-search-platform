@@ -10,6 +10,7 @@ h1 { font-size: clamp(1.7rem, 2.4vw, 2.15rem); line-height: 1.12; letter-spacing
 h2 { font-size: 1.25rem; line-height: 1.3; letter-spacing: -.018em; }
 h3 { font-size: .95rem; line-height: 1.4; }
 a { color: var(--brand-primary); }
+a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 3px solid rgb(var(--brand-primary-rgb) / .38); outline-offset: 2px; }
 .ui-icon { display: block; flex: 0 0 auto; }
 .subtitle, .muted, small, .hint { color: var(--color-text-muted); }
 .subtitle { margin-top: 7px; font-size: .9rem; line-height: 1.55; }
@@ -248,4 +249,8 @@ pre { max-width: 430px; max-height: 240px; margin: 8px 0 0; overflow: auto; padd
   .modal { padding: 18px; }
   .modal-actions > button { width: 100%; }
   .manual-search { align-items: stretch; flex-direction: column; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }
