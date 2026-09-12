@@ -261,7 +261,8 @@ IPv6 literal; HTTP de loopback queda limitado al desarrollo local.
 | `provider_claims_test.sql` | 62/62 | Flujo SQL de evidencia, permisos y reclamaciones; sin escaneo de bytes |
 | `provider_scan_queue_test.sql` | 9/9 | Cola de escaneo privada, lease atómico, intentos acotados y backoff de reintentos |
 | `provider_worker_boundary_test.sql` | 15/15 | Roles reales, aislamiento, rechazo de contexto falso, AAL1, actor sin factor vigente e identidad anonima |
-| `security_privileges_test.sql` | 28/28 | Privilegios efectivos tras las migraciones pendientes, incluidos los dos helpers de Storage |
+| `security_privileges_test.sql` | 30/30 | Privilegios efectivos tras las migraciones pendientes, incluido el RPC de reprocesamiento exacto y los dos helpers de Storage |
+| `admin_exact_reprocessing_test.sql` | 20/20 | Preview sin escritura, límites, coincidencia exacta, auditoría, idempotencia y preservación de casos abiertos/cerrados |
 | `provider_aal2_test.sql` | 11/11 | Rechazo de AAL1, claim `aal` ausente, JWT `aal2` sin factor vigente e identidad anonima en las operaciones privilegiadas |
 | `review_json_depth_test.sql` | 3/3 | RedacciÃ³n de secretos y truncamiento fail-closed de JSON profundamente anidado |
 | `python -m pytest -q database/tests` | 124/124 | Scripts, contratos, configuración Auth local fail-closed, lectores de artefactos acotados, descargas LOINC y el gate del ledger de migraciones |
@@ -424,7 +425,8 @@ aislamiento bloquea el despliegue hasta corregirse.
   de privacidad al pasar a segundo plano y durante captura de pantalla. La
   compilacion nativa iOS requiere ejecutarse en macOS/Xcode.
  - Contratos SQL pendientes: Storage **25/25** y provider claims **62/62**;
-  tambien pasaron los contratos de Worker **15/15** y privilegios **28/28**.
+  tambien pasaron los contratos de Worker **15/15**, privilegios **30/30** y
+  reprocesamiento exacto **20/20**.
 - Gate de ledger remoto: **76/93** migraciones aplicadas, **17** pendientes y
   orden continuo verificado; el gate de esquema sigue fallando hasta migrar.
 
