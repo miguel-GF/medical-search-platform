@@ -4,8 +4,8 @@ Estado: **en curso; no aprobado para produccion**. Este documento distingue
 controles comprobados de trabajo pendiente. No sustituye la revision del resto
 del proyecto ni afirma que el software sea imposible de comprometer.
 
-Revalidacion local: 12 de septiembre de 2026. El estado remoto y los
-pendientes de despliegue descritos abajo siguen vigentes.
+Revalidacion local y remota: 12 de septiembre de 2026. El estado de
+despliegue y los pendientes residuales se describen abajo.
 
 Desde la revalidación anterior se incorporó un panel Admin profesional con
 tokens de diseño reutilizables, un reprocesamiento exacto acotado a catálogo y
@@ -51,7 +51,7 @@ actualizó a versiones sin vulnerabilidades conocidas.
 
 ### Evidencia expuesta ante una politica de Storage demasiado amplia
 
-La migracion pendiente de Storage restringia lectura/subida para
+La migracion de Storage restringe lectura/subida para
 `authenticated`, pero no tenia restricciones equivalentes para `anon`.
 Una politica permisiva adicional para ambos roles podia autorizar lecturas y
 subidas anonimas dentro de `provider-claims`, aunque el bucket fuera privado.
@@ -257,47 +257,39 @@ IPv6 literal; HTTP de loopback queda limitado al desarrollo local.
 
 | Comprobacion | Resultado | Alcance |
 | --- | --- | --- |
-| `provider_storage_boundary_test.sql` | 25/25 | Migraciones pendientes ensayadas con ROLLBACK, incluido AAL2 obsoleto, identidad anonima y cuota de objetos por claim en Storage |
+| `provider_storage_boundary_test.sql` | 25/25 | Migraciones aplicadas y contrato ensayado con ROLLBACK, incluido AAL2 obsoleto, identidad anonima y cuota de objetos por claim en Storage |
 | `provider_claims_test.sql` | 62/62 | Flujo SQL de evidencia, permisos y reclamaciones; sin escaneo de bytes |
 | `provider_scan_queue_test.sql` | 9/9 | Cola de escaneo privada, lease atómico, intentos acotados y backoff de reintentos |
 | `provider_worker_boundary_test.sql` | 15/15 | Roles reales, aislamiento, rechazo de contexto falso, AAL1, actor sin factor vigente e identidad anonima |
-| `security_privileges_test.sql` | 30/30 | Privilegios efectivos tras las migraciones pendientes, incluido el RPC de reprocesamiento exacto y los dos helpers de Storage |
-| `admin_exact_reprocessing_test.sql` | 20/20 | Preview sin escritura, límites, coincidencia exacta, auditoría, idempotencia y preservación de casos abiertos/cerrados |
+| `security_privileges_test.sql` | 30/30 | Privilegios efectivos tras las migraciones aplicadas, incluido el RPC de reprocesamiento exacto y los dos helpers de Storage |
+| `admin_exact_reprocessing_test.sql` | 21/21 | Preview sin escritura, límites, coincidencia exacta, auditoría, idempotencia y preservación de casos abiertos/cerrados |
 | `provider_aal2_test.sql` | 11/11 | Rechazo de AAL1, claim `aal` ausente, JWT `aal2` sin factor vigente e identidad anonima en las operaciones privilegiadas |
 | `review_json_depth_test.sql` | 3/3 | RedacciÃ³n de secretos y truncamiento fail-closed de JSON profundamente anidado |
 | `python -m pytest -q database/tests` | 124/124 | Scripts, contratos, configuración Auth local fail-closed, lectores de artefactos acotados, descargas LOINC y el gate del ledger de migraciones |
 | API `npm test` y `npm run typecheck` | 116/116; tipado correcto | Pruebas locales, no trafico del Worker publicado; AAL2 exige factor vigente del mismo usuario y `is_anonymous: false` |
 | Document scanner `python -m pytest -q` | 44/44 | Hash/MIME, limites, redireccion, socket ClamAV y respuestas fail-closed |
 | OCR `python -m pytest -q` | 25/25 | Token obligatorio, rechazo de headers duplicados y comprimidos, modelos ausentes fail-closed, límites de imagen/respuesta, salida OCR acotada y token débil fuera de loopback |
-| Admin `npm test` y typecheck | 19/19; tipado correcto | Respuestas acotadas, redirecciones bloqueadas, IDs de ruta codificados, autenticación de panel, orígenes Auth/API limpios y enlaces de fuentes con allowlist |
+| Admin `npm test` y typecheck | 23/23; tipado correcto | Respuestas acotadas, redirecciones bloqueadas, IDs de ruta codificados, autenticación de panel, orígenes Auth/API limpios, enlaces de fuentes con allowlist y QR TOTP normalizado |
 | Patient `flutter test` y `flutter analyze` | 19/19; sin issues | Respuestas JSON acotadas, origen HTTPS, allowlist de host en profile/release y sin redirecciones |
 | Android Gradle `:app:tasks` + `:app:assembleRelease` | Configura correctamente; release falla sin keystore | No permite firmar `release` con debug keys |
 | iOS Release signing | Configuración estática endurecida | Exige `Apple Distribution`, equipo y perfil suministrados por CI; no hay fallback a `iPhone Developer` |
 | Collectors `python -m pytest -q` | 123/123 | Transporte público fijado, caps de ejecución, parser HTML/JSON-LD acotado, redirecciones, token DENUE y artefactos validados |
 
-El historial remoto consultado en este corte confirma que
-`20260904110000_provider_aal2_enforcement.sql` esta aplicado al proyecto DEV
-enlazado `ymtcmfgwuzdqtsbuvzqf`. Las diecisiete migraciones desde
-`20260904115000_provider_aal2_immediate_hardening.sql` hasta
-`20260912100000_admin_exact_reprocessing.sql` **siguen pendientes**. El
-verificador de orden remoto confirma
-que el ledger aplicado sigue siendo un prefijo continuo; no se ha aplicado una
-migracion posterior en aislamiento. Los ensayos no
-registraron ni aplicaron permanentemente esas migraciones. No se desplego
-ningun Worker en este corte.
+El historial remoto revalidado en este corte confirma que las 93 migraciones
+locales están aplicadas al proyecto DEV enlazado
+`ymtcmfgwuzdqtsbuvzqf`; `db push --linked --dry-run` devuelve
+`upToDate: true`. El gate de esquema remoto pasa y el Worker todavía no se ha
+desplegado en este corte.
 
-La consulta de privilegios remotos mas reciente confirma el bloqueo operativo:
-8 RPC propiedad del Worker siguen ejecutables por `anon` y `authenticated`, y
-el esquema remoto aun expone 0 wrappers `api_server_provider_*` de servicio.
-Mientras estos valores no sean `0` y `7` respectivamente tras la migracion, el
-Data API puede saltarse los limites del Worker y el Worker nuevo no es
-compatible con el esquema remoto.
+La consulta de privilegios remotos confirma la barrera esperada: los wrappers
+`api_server_provider_*` (7/7) solo son ejecutables por `service_role`, las RPC
+del Worker no son ejecutables por `anon`/`authenticated` y los únicos dos
+helpers autenticados son los de Storage previstos por la política.
 
 La consulta de cobertura remota separa 946 registros `no_match` ya cerrados
 con decisión final de un único caso abierto. El RPC de reprocesamiento exacto
-aún no existe en remoto; su preview ensayado con rollback devuelve un backlog
-abierto de 1 y cero coincidencias elegibles, por lo que no se ha aplicado
-ningún cambio de datos.
+existe en remoto; su preview devuelve un backlog abierto de 1 y cero
+coincidencias elegibles, por lo que no se modificaron datos.
 
 `pip-audit` no reportó vulnerabilidades conocidas para las constraints del
 scanner ni para las dependencias resueltas de collectors y OCR.
@@ -309,17 +301,15 @@ reintentos tienen limites estrictos. Los renderizadores offline de DENUE,
 golden/review y el runner de collectors imponen un techo total de artefactos y
 eliminan credenciales de las URLs propagadas. Las listas de URLs de Chopo y los
 archivos `.env` de LOINC suministrados por operadores tambien tienen limites de
-archivo, linea y entradas antes de analizarse. El ensayo SQL pendiente tambien
+archivo, linea y entradas antes de analizarse. El contrato SQL tambien
 cubre la barrera de integridad del actor de auditoria (4/4).
 
-La ejecucion de `supabase db advisors --linked` fue solo de lectura y detecto
-23 funciones propias con `search_path` mutable. La migracion
-`20260906180000_function_search_path_hardening.sql` fija esas funciones a
-`pg_catalog`; aun falta aplicarla en remoto y volver a ejecutar los advisors.
-El mismo informe indica que la proteccion de contrasenas filtradas de Auth esta
-desactivada. Eso no se puede resolver desde una migracion SQL local: debe
-activarse en la configuracion Auth del proyecto y comprobarse con una prueba de
-registro/cambio de contrasena.
+La ejecucion de `supabase db advisors --linked` fue solo de lectura y ahora
+devuelve tres avisos: los dos helpers de Storage `SECURITY DEFINER` ejecutables
+por `authenticated` son intencionales y están documentados; el tercero indica
+que la protección de contraseñas filtradas de Auth sigue desactivada. Esto último
+debe activarse en la configuración Auth del proyecto y comprobarse con una
+prueba de registro/cambio de contraseña.
 
 ## Reproduccion
 
@@ -366,14 +356,13 @@ aislamiento bloquea el despliegue hasta corregirse.
   incluyendo visualizacion administrativa segura. No confundir una lista de
   metadatos con revisar el archivo real. Los documentos historicos sin escaneo
   no quedan validados automaticamente por estas migraciones.
-- Coordinar despliegue de DB y Worker: el Worker local usa RPC que aun no
-  existen en remoto; revocar las RPC antiguas antes de cambiar el Worker puede
-  interrumpir el servicio. No ejecutar `db push` o despliegues aislados siguiendo
-  instrucciones historicas. Hace falta un procedimiento de transicion probado
-  (o mantenimiento controlado), comprobaciones HTTP y recuperacion segura.
-- Aplicar tambien la migracion de `search_path` y activar la proteccion de
-  contrasenas filtradas en Auth. No se debe cerrar la auditoria mientras el
-  advisor remoto siga mostrando esos dos avisos sin una aceptacion documentada.
+- Coordinar el despliegue del Worker compatible con las RPC ya instaladas:
+  revocar las RPC antiguas antes de cambiar el Worker puede interrumpir el
+  servicio. Hace falta un procedimiento de transición probado (o mantenimiento
+  controlado), comprobaciones HTTP y recuperación segura.
+- Activar la protección de contraseñas filtradas en Auth. No se debe cerrar la
+  auditoría mientras el advisor remoto siga mostrando este aviso sin una
+  aceptación documentada.
 - Mantener aplicadas las barreras de factor actual y de identidad no anonima de
   `20260906190000_provider_aal2_current_factor.sql` y
   `20260906210000_provider_storage_current_factor.sql` y
@@ -403,13 +392,9 @@ aislamiento bloquea el despliegue hasta corregirse.
   dominio real del Worker; no se debe restaurar `connect-src https:`. Confirmar
   ademas que el hosting no elimina `_headers` ni las reglas de no-cache para
   HTML/bootstrap/service worker.
-- Aplicar `20260906230000_provider_storage_upload_quota.sql`: la subida ocurre
-  antes de registrar el documento y la migracion limita a diez los objetos por
-  claim con bloqueo transaccional para evitar carreras. La cuota solo afecta
-  nuevas subidas; la evidencia existente permanece legible.
-- Aplicar tambien `20260906240000_provider_change_json_size.sql` y mantener las
-  rutas de Storage en minusculas canonicas; asi los limites de JSON y de objetos
-  no pueden eludirse con variantes de mayusculas.
+- Mantener la cuota de diez objetos por claim y el límite de JSON de cambios ya
+  aplicados por `20260906230000` y `20260906240000`; las rutas de Storage deben
+  seguir en minúsculas canónicas para que esos límites no puedan eludirse.
 
 ### Revalidacion adicional del 2026-09-12
 
@@ -419,16 +404,17 @@ aislamiento bloquea el despliegue hasta corregirse.
   entradas por coleccion, redaccion de claves con forma de credencial y el
   comprobante MFA ahora verifica explícitamente el `user_id` del factor y
   rechaza respuestas Auth sin `is_anonymous: false`.
-- Admin: **19/19** tests y typecheck correctos; los mensajes upstream se
-  localizan de forma generica y nunca muestran SQL, stack traces o secretos.
+- Admin: **23/23** tests y typecheck correctos; los mensajes upstream se
+  localizan de forma generica, el QR TOTP acepta los formatos de Supabase y
+  nunca se muestran SQL, stack traces o secretos.
 - Patient: **18/18** tests y `flutter analyze` sin issues; iOS incluye overlay
   de privacidad al pasar a segundo plano y durante captura de pantalla. La
   compilacion nativa iOS requiere ejecutarse en macOS/Xcode.
- - Contratos SQL pendientes: Storage **25/25** y provider claims **62/62**;
-  tambien pasaron los contratos de Worker **15/15**, privilegios **30/30** y
-  reprocesamiento exacto **20/20**.
-- Gate de ledger remoto: **76/93** migraciones aplicadas, **17** pendientes y
-  orden continuo verificado; el gate de esquema sigue fallando hasta migrar.
+ - Contratos SQL: Storage **25/25** y provider claims **62/62**; también
+  pasaron los contratos de Worker **15/15**, privilegios **30/30** y
+  reprocesamiento exacto **21/21**.
+- Gate de ledger remoto: **93/93** migraciones aplicadas, orden continuo
+  verificado y gate de esquema remoto aprobado.
 
 ## Referencias tecnicas
 
