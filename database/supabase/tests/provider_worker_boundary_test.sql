@@ -72,7 +72,7 @@ select extensions.throws_ok(
 select extensions.throws_ok(
   $$select pg_temp.boundary_call('service_role', $q$select to_jsonb(count(*)) from public.api_server_provider_my_claims(
     '00000000-0000-0000-0000-000000000896', 'aal2')$q$)$$,
-  '42501', 'Authentication required', 'server wrapper rejects an anonymous actor even with a verified factor'
+  '42501', 'Verified provider actor is required', 'server wrapper rejects an anonymous actor even with a verified factor'
 );
 
 select extensions.is(
