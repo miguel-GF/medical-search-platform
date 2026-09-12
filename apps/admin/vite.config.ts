@@ -55,7 +55,14 @@ function securityPolicy(mode: string): Plugin {
         }
         sources.add(parsed.origin);
       }
-      return html.replace('__PRUEVIA_CONNECT_SRC__', [...sources].join(' '));
+      const rendered = html.replace('__PRUEVIA_CONNECT_SRC__', [...sources].join(' '));
+      // Vite injects imported CSS through a <style> element while serving the
+      // development app. Keep the production policy strict (the build emits
+      // an external stylesheet), but allow that development-only injection so
+      // local operators see the real interface instead of unstyled HTML.
+      return mode === 'production'
+        ? rendered
+        : rendered.replace("style-src 'self'", "style-src 'self' 'unsafe-inline'");
     },
   };
 }
