@@ -3,7 +3,7 @@
 
 begin;
 create extension if not exists pgtap with schema extensions;
-select extensions.plan(20);
+select extensions.plan(21);
 
 select extensions.has_function(
   'public',
@@ -61,12 +61,27 @@ insert into catalog.item_names(item_id, name, normalized_name, is_primary)
 values ('00000000-0000-0000-0000-000000009911', 'Exact Reprocess Fixture', 'exact reprocess fixture', true);
 insert into health.services(catalog_item_id, service_type)
 values ('00000000-0000-0000-0000-000000009911', 'lab_test');
+insert into catalog.items(id, domain_id, item_type, status)
+select '00000000-0000-0000-0000-000000009915', id, 'service', 'active'
+from catalog.domains where code = 'health_diagnostics';
+insert into catalog.item_names(item_id, name, normalized_name, is_primary)
+values ('00000000-0000-0000-0000-000000009915', 'Duplicate Reprocess Fixture', 'duplicate reprocess fixture', true);
+insert into health.services(catalog_item_id, service_type)
+values ('00000000-0000-0000-0000-000000009915', 'lab_test');
+insert into catalog.items(id, domain_id, item_type, status)
+select '00000000-0000-0000-0000-000000009917', id, 'service', 'active'
+from catalog.domains where code = 'health_diagnostics';
+insert into catalog.item_names(item_id, name, normalized_name, is_primary)
+values ('00000000-0000-0000-0000-000000009917', 'Duplicate Reprocess Fixture (2)', 'duplicate reprocess fixture', true);
+insert into health.services(catalog_item_id, service_type)
+values ('00000000-0000-0000-0000-000000009917', 'lab_test');
 
 insert into ingest.normalization_runs(id, input_type, raw_text, normalized_input, engine_version, status, created_at)
 values
   ('00000000-0000-0000-0000-000000009912', 'crawler', 'Exact Reprocess Fixture', 'exact reprocess fixture', 'test', 'no_match', '1970-01-01T00:00:00Z'),
   ('00000000-0000-0000-0000-000000009913', 'search', 'Uncovered Reprocess Fixture', 'uncovered reprocess fixture', 'test', 'ambiguous', '1970-01-01T00:00:01Z'),
-  ('00000000-0000-0000-0000-000000009914', 'crawler', 'Closed Reprocess Fixture', 'closed reprocess fixture', 'test', 'no_match', '1970-01-01T00:00:02Z');
+  ('00000000-0000-0000-0000-000000009914', 'crawler', 'Closed Reprocess Fixture', 'closed reprocess fixture', 'test', 'no_match', '1970-01-01T00:00:02Z'),
+  ('00000000-0000-0000-0000-000000009916', 'search', 'Duplicate Reprocess Fixture', 'duplicate reprocess fixture', 'test', 'ambiguous', '1970-01-01T00:00:03Z');
 insert into ingest.normalization_decisions(normalization_run_id, decision_type, reviewer_user_id, reason)
 values (
   '00000000-0000-0000-0000-000000009914', 'no_match',
@@ -77,7 +92,7 @@ select extensions.is(
   (public.api_admin_reprocess_exact_normalizations(
     '00000000-0000-0000-0000-000000009910', 1, false, 'exact-preview-9912'
   )->>'backlog_total')::bigint,
-  (select backlog + 2 from exact_reprocess_baseline),
+  (select backlog + 3 from exact_reprocess_baseline),
   'preview counts only open normalization runs'
 );
 select extensions.is(
@@ -126,6 +141,11 @@ select extensions.is(
   (select status from ingest.normalization_runs where id = '00000000-0000-0000-0000-000000009913'),
   'ambiguous',
   'uncovered ambiguous input remains open'
+);
+select extensions.is(
+  (select status from ingest.normalization_runs where id = '00000000-0000-0000-0000-000000009916'),
+  'ambiguous',
+  'non-unique exact input remains ambiguous'
 );
 select extensions.is(
   (select status from ingest.normalization_runs where id = '00000000-0000-0000-0000-000000009914'),
