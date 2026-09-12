@@ -264,7 +264,7 @@ IPv6 literal; HTTP de loopback queda limitado al desarrollo local.
 | `security_privileges_test.sql` | 28/28 | Privilegios efectivos tras las migraciones pendientes, incluidos los dos helpers de Storage |
 | `provider_aal2_test.sql` | 11/11 | Rechazo de AAL1, claim `aal` ausente, JWT `aal2` sin factor vigente e identidad anonima en las operaciones privilegiadas |
 | `review_json_depth_test.sql` | 3/3 | RedacciÃ³n de secretos y truncamiento fail-closed de JSON profundamente anidado |
-| `python -m pytest -q database/tests` | 123/123 | Scripts, contratos, configuración Auth local fail-closed, lectores de artefactos acotados, descargas LOINC y el gate del ledger de migraciones |
+| `python -m pytest -q database/tests` | 124/124 | Scripts, contratos, configuración Auth local fail-closed, lectores de artefactos acotados, descargas LOINC y el gate del ledger de migraciones |
 | API `npm test` y `npm run typecheck` | 116/116; tipado correcto | Pruebas locales, no trafico del Worker publicado; AAL2 exige factor vigente del mismo usuario y `is_anonymous: false` |
 | Document scanner `python -m pytest -q` | 44/44 | Hash/MIME, limites, redireccion, socket ClamAV y respuestas fail-closed |
 | OCR `python -m pytest -q` | 25/25 | Token obligatorio, rechazo de headers duplicados y comprimidos, modelos ausentes fail-closed, límites de imagen/respuesta, salida OCR acotada y token débil fuera de loopback |
