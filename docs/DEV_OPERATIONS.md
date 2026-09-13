@@ -282,7 +282,7 @@ Robots, DNS no resoluble y HTTP permanente no se reintentan automáticamente.
 La salida es un manifiesto separado para conservar la auditoría temporal.
 
 Las etiquetas genéricas no se publican por similitud. El fixture revisado
-`database/fixtures/generic_provider_mappings_puebla_v1.json` contiene nueve
+`database/fixtures/generic_provider_mappings_puebla_v1.json` contiene diez
 identidades candidatas enlazadas a filas DENUE. Sólo cinco coincidencias
 exactas tienen mapping clínico aprobado; las demás sedes quedan
 `verification_pending` y las ofertas siguen en revisión. El renderer asociado

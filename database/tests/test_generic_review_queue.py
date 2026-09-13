@@ -55,3 +55,21 @@ def test_review_queue_is_no_match_only_and_supports_new_source_override(tmp_path
     assert "'no_match'" in sql
     assert "insert into ingest.normalization_candidates" not in sql
     assert "supply.offers" not in sql
+
+
+def test_review_queue_can_skip_approved_ids_from_another_domain_fixture(tmp_path: Path):
+    sql, counts = render_queue(
+        {"semin_catalog_puebla": _artifact(tmp_path)},
+        {"providers": [], "mappings": []},
+        include_unclassified_sources={"semin_catalog_puebla"},
+        brand_overrides={"semin_catalog_puebla": "laboratorios_semin"},
+        approved_fixtures=(
+            {
+                "mappings": [
+                    {"source_key": "semin_catalog_puebla", "external_record_id": "catalog:1"}
+                ]
+            },
+        ),
+    )
+    assert counts == {"artifacts": 1, "queued": 0, "skipped_approved": 1, "skipped_noise": 0}
+    assert "normalization_runs" not in sql

@@ -81,7 +81,7 @@ Fuente local: `collectors/artifacts/puebla-generic-depth1-hardened/` y su
 `puebla_generic_discovery_manifest.json`. Sus diez corridas exitosas contienen
 54 registros RAW: 48 ofertas sin precio y 6 ubicaciones. No equivalen a diez
 proveedores confirmados: la identidad requiere revisión humana. Se incorporaron
-al entorno enlazado nueve marcas candidatas y 12 ubicaciones DENUE, todas con
+al entorno enlazado diez marcas candidatas y 12 ubicaciones DENUE, todas con
 `verification_pending`; no se publicaron ofertas nuevas por similitud.
 
 | Fuente | Registros RAW |

@@ -1,0 +1,30 @@
+{
+  "version": "official-provider-locations-v1",
+  "source_key": "dr_simi_puebla",
+  "source_system": "dr_simi_official",
+  "source_url": "https://www.ssdrsimi.com.mx/assets/data/sucursalesMAPA.json",
+  "retrieved_at": "2026-09-13T15:21:58Z",
+  "provider": {
+    "provider_key": "dr_simi",
+    "name": "Análisis Clínicos del Dr. Simi",
+    "slug": "analisis-clinicos-dr-simi",
+    "website_url": "https://www.ssdrsimi.com.mx"
+  },
+  "locations": [
+    {
+      "external_id": "7",
+      "slug": "puebla-1-1",
+      "name": "PUEBLA 1-1",
+      "address_line_1": "10 Oriente No. 4, Colonia Centro",
+      "postal_code": "72000",
+      "phone": "222-242-3077",
+      "location_code": "7",
+      "url": "https://www.ssdrsimi.com.mx/sucursales",
+      "coordinates": {
+        "latitude": 19.04812804,
+        "longitude": -98.19602752
+      },
+      "coordinate_source": "DENUE 6378625; official feed confirms unit/address"
+    }
+  ]
+}

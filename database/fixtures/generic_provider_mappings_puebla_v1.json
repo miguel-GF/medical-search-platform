@@ -3,6 +3,15 @@
   "policy": "Only exact normalized labels observed on a public provider website are approved. Panels, modality-only labels and broad marketing copy remain in the review queue.",
   "providers": [
     {
+      "source_key": "chopo_puebla",
+      "provider_key": "chopo",
+      "brand_name": "Laboratorio Médico del Chopo",
+      "slug": "laboratorio-medico-del-chopo",
+      "website_url": "https://www.chopo.com.mx/",
+      "denue_record_ids": ["6786273", "6876806", "9409296", "9412333", "9412334", "9412339", "9415645", "9417229", "9447318", "9455541", "9469206"],
+      "identity_note": "DENUE identifica once sucursales de Laboratorio Médico del Chopo en Puebla y el dominio coincide con el sitio oficial; la vigencia de cada sede debe reconfirmarse antes de publicarla como ubicación activa."
+    },
+    {
       "source_key": "generic_familylabs_com_mx",
       "provider_key": "familylabs",
       "brand_name": "Family Labs",

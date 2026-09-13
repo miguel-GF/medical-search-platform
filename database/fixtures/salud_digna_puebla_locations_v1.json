@@ -1,0 +1,102 @@
+{
+  "version": "official-provider-locations-v1",
+  "source_key": "salud_digna_puebla",
+  "source_url": "https://www.salud-digna.org/ubica-tu-clinica",
+  "retrieved_at": "2026-09-13T14:36:38Z",
+  "provider": {
+    "provider_key": "salud_digna",
+    "name": "Salud Digna",
+    "slug": "salud-digna",
+    "website_url": "https://www.salud-digna.org"
+  },
+  "locations": [
+    {
+      "external_id": "58",
+      "slug": "puebla",
+      "name": "Puebla",
+      "address_line_1": "Av. 2 Pte. #909, Col. Centro, C.P. 72000, Puebla, Puebla. Entre Calles 1 Nte. Y 9 Nte.",
+      "postal_code": "72000",
+      "phone": "2222324709",
+      "coordinates": {"latitude": 19.048813745770087, "longitude": -98.20530058707989},
+      "location_code": "58",
+      "url": "https://www.salud-digna.org/puebla"
+    },
+    {
+      "external_id": "110",
+      "slug": "puebla-xilotzingo",
+      "name": "Puebla Xilotzingo",
+      "address_line_1": "Carretera Valsequillo Km. 26, Rincón De San Ignacio C.P. 72590. Puebla, Puebla. Entre Puesta Del Sol Y Av. Del Jardín",
+      "postal_code": "72590",
+      "phone": "222 232 4709",
+      "coordinates": {"latitude": 18.988536260245287, "longitude": -98.20018194096103},
+      "location_code": "110",
+      "url": "https://www.salud-digna.org/puebla-xilotzingo"
+    },
+    {
+      "external_id": "136",
+      "slug": "puebla-san-sebastian",
+      "name": "San Sebastián",
+      "address_line_1": "Boulevard Xonacatepec #174 Colonia Bosques De San Sebastián, Entre Av. De Las Rosas Y Blvd. Margaritas",
+      "postal_code": null,
+      "phone": "(222) 232 4709",
+      "coordinates": {"latitude": 19.05984706076809, "longitude": -98.1284833297297},
+      "location_code": "136",
+      "url": "https://www.salud-digna.org/puebla-san-sebastian"
+    },
+    {
+      "external_id": "155",
+      "slug": "puebla-el-porvenir",
+      "name": "Puebla El Porvenir",
+      "address_line_1": "Av 14 Ote #4815, Col. Agrícola Resurgimiento, C.P. 72370 Puebla, Puebla. Entre Calles 50 Nte. Y 52 Nte.",
+      "postal_code": "72370",
+      "phone": "222 214 6143",
+      "coordinates": {"latitude": 19.043518808070417, "longitude": -98.15853422242091},
+      "location_code": "155",
+      "url": "https://www.salud-digna.org/puebla-el-porvenir"
+    },
+    {
+      "external_id": "97",
+      "slug": "puebla-capu",
+      "name": "Puebla Capu",
+      "address_line_1": "Blvd. Norte #3860, Col Las Cuartillas, C.P. 72050, Puebla, Puebla. Entre Av. 36 Pte. Y De La Pradera.",
+      "postal_code": "72050",
+      "phone": "222 232 4709",
+      "coordinates": {"latitude": 19.072083281801945, "longitude": -98.20512178055273},
+      "location_code": "97",
+      "url": "https://www.salud-digna.org/puebla-capu"
+    },
+    {
+      "external_id": "332",
+      "slug": "puebla-municipio-libre",
+      "name": "Puebla Municipio Libre",
+      "address_line_1": "Blvd. Municipio Libre #547 Int 6, Col. Jardín, C.P. 72474, Puebla, Puebla. Entre Calles 5 Sur Y 5-a Sur.",
+      "postal_code": "72474",
+      "phone": "222 232 4709",
+      "coordinates": {"latitude": 19.00012285276625, "longitude": -98.22797800253191},
+      "location_code": "332",
+      "url": "https://www.salud-digna.org/puebla-municipio-libre"
+    },
+    {
+      "external_id": "357",
+      "slug": "puebla-angelopolis",
+      "name": "Puebla Angelopolis",
+      "address_line_1": "Av. Del Castillo #5501, Local 25, Col. San Bernardino, C.P. 72820, Tlaxcalancingo, Puebla.",
+      "postal_code": "72820",
+      "phone": "(222) 232-47-09",
+      "coordinates": {"latitude": 19.00392482490768, "longitude": -98.26672053191668},
+      "location_code": "357",
+      "url": "https://www.salud-digna.org/puebla-angelopolis"
+    },
+    {
+      "external_id": "329",
+      "slug": "puebla-azaleas",
+      "name": "Puebla Azaleas",
+      "address_line_1": "Azaleas #907, Col. San Ramón, C.P. 72490, Puebla.",
+      "postal_code": "72490",
+      "phone": "2222324709",
+      "coordinates": {"latitude": 18.975167376329782, "longitude": -98.25792807408033},
+      "location_code": "329",
+      "url": "https://www.salud-digna.org/puebla-azaleas"
+    }
+  ]
+}

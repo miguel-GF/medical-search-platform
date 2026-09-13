@@ -219,7 +219,13 @@ def _address(row: Mapping[str, object]) -> tuple[str | None, str | None, str | N
     return line_1, line_2, locality
 
 
-def render(fixture: object, artifacts: Mapping[str, Path], denue_fixture: object) -> str:
+def render(
+    fixture: object,
+    artifacts: Mapping[str, Path],
+    denue_fixture: object,
+    *,
+    identities_only: bool = False,
+) -> str:
     providers, mappings = _validate_fixture(fixture)
     denue_rows = _validate_denue(providers, denue_fixture)
     indexed_artifacts: dict[str, tuple[dict, dict[str, dict]]] = {}
@@ -302,6 +308,10 @@ def render(fixture: object, artifacts: Mapping[str, Path], denue_fixture: object
                     f"insert into ingest.source_observations(id,source_id,raw_record_id,entity_type,entity_id,attribute_name,observed_value,observed_at,confidence,status) values ({q(identity_observation_id)},{q(stable_id('ingest-source','denue'))},{q(denue_raw_id)},{q('provider_location')},{q(location_id)},{q('generic_identity')},{q(identity_value)}::jsonb,now(),0.8000,'accepted') on conflict(id) do update set entity_id=excluded.entity_id,observed_value=excluded.observed_value,confidence=excluded.confidence,status='accepted';"
                 )
 
+    if identities_only:
+        lines.append("commit;")
+        return "\n".join(lines) + "\n"
+
     emitted_items: set[str] = set()
     for mapping in mappings:
         source_key = str(mapping["source_key"])
@@ -364,13 +374,18 @@ def main() -> int:
     parser.add_argument("--output", type=Path)
     parser.add_argument("--chunk-dir", type=Path)
     parser.add_argument("--max-bytes", type=int, default=400_000)
+    parser.add_argument(
+        "--identities-only",
+        action="store_true",
+        help="write provider brands/markets/locations only; do not publish offers or mappings",
+    )
     args = parser.parse_args()
     if bool(args.output) == bool(args.chunk_dir):
         raise SystemExit("exactly one of --output or --chunk-dir is required")
     fixture = _json(args.fixture)
     denue_fixture = _json(args.denue_fixture)
     artifacts = dict(args.artifact)
-    sql = render(fixture, artifacts, denue_fixture)
+    sql = render(fixture, artifacts, denue_fixture, identities_only=args.identities_only)
     if args.chunk_dir:
         chunks = chunk_transaction(sql, args.max_bytes)
         args.chunk_dir.mkdir(parents=True, exist_ok=True)

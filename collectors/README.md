@@ -96,10 +96,11 @@ python -m pruevia_collectors.cli_generic `
   --max-pages 25 --max-depth 1 --artifact-root artifacts/generic
 ```
 
-#### Candidato SEMIN (Puebla)
+#### Catálogo SEMIN (Puebla)
 
-SEMIN ya entra por el collector genérico; no requiere un adapter dedicado por
-ahora. Para repetir la captura de evidencia pública:
+SEMIN tiene un adapter dedicado (`pruevia-semin`) para recuperar el catálogo
+estructurado y sus sucursales. Para una captura rápida de páginas públicas
+también se puede usar el collector genérico:
 
 ```powershell
 $env:PYTHONPATH = "src"
@@ -117,10 +118,15 @@ la equivalencia clínica correspondiente. Verifica `robots.txt` y los términos
 vigentes antes de cada corrida; una autorización para desarrollar el collector
 no sustituye el permiso contractual del proveedor.
 
-El sitio de Análisis Clínicos del Dr. Simi queda como candidato posterior: su
-contenido es dinámico y no debemos depender de endpoints internos ni de tokens
-embebidos. Sólo se añadirá un adapter si el proveedor ofrece un endpoint
-documentado o una autorización expresa.
+El adapter `pruevia-dr-simi` consume exclusivamente el archivo JSON público de
+sucursales (`assets/data/sucursalesMAPA.json`). No llama endpoints de citas,
+pacientes, resultados ni promociones. La corrida de Puebla confirmó una sede;
+las demás filas DENUE siguen pendientes hasta que el feed oficial las publique.
+
+```powershell
+$env:PYTHONPATH = "src"
+python -m pruevia_collectors.cli_dr_simi --artifact-root artifacts/dr-simi-puebla
+```
 
 El crawler está limitado al host semilla, respeta `robots.txt`, rechaza
 credenciales, redirecciones externas y hosts privados, limita el tamaño de
@@ -219,6 +225,6 @@ python -m pruevia_collectors.cli_semin `
   --artifact-root artifacts/semin-catalog-puebla
 ```
 
-Los precios se marcan como referencia no verificada. La cartera de nueve
+Los precios se marcan como referencia no verificada. La cartera de diez
 identidades candidatas de Puebla y el flujo de revisión están documentados en
 `docs/PUEBLA_PROVIDER_COVERAGE.md`.

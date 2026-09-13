@@ -13,7 +13,7 @@ import json
 import re
 import unicodedata
 from pathlib import Path
-from typing import Any, Mapping
+from typing import Any, Mapping, Sequence
 
 try:
     from .artifact_io import MAX_FIXTURE_BYTES, read_json_file
@@ -63,15 +63,19 @@ def _brand_keys(mapping_fixture: Mapping[str, Any]) -> dict[str, str]:
     return result
 
 
-def _approved(mapping_fixture: Mapping[str, Any]) -> set[tuple[str, str]]:
-    mappings = mapping_fixture.get("mappings")
-    if not isinstance(mappings, list):
-        raise ValueError("mapping fixture mappings must be an array")
-    return {
-        (str(row.get("source_key") or "").strip(), str(row.get("external_record_id") or "").strip())
-        for row in mappings
-        if isinstance(row, Mapping)
-    }
+def _approved(mapping_fixture: Mapping[str, Any], extra_fixtures: Sequence[Mapping[str, Any]] = ()) -> set[tuple[str, str]]:
+    fixtures = (mapping_fixture, *extra_fixtures)
+    result: set[tuple[str, str]] = set()
+    for fixture in fixtures:
+        mappings = fixture.get("mappings")
+        if not isinstance(mappings, list):
+            raise ValueError("mapping fixture mappings must be an array")
+        result.update(
+            (str(row.get("source_key") or "").strip(), str(row.get("external_record_id") or "").strip())
+            for row in mappings
+            if isinstance(row, Mapping)
+        )
+    return result
 
 
 def _decisions(review_fixture: Mapping[str, Any] | None) -> dict[tuple[str, str], Mapping[str, Any]]:
@@ -100,9 +104,10 @@ def render_queue(
     *,
     include_unclassified_sources: set[str] | None = None,
     brand_overrides: Mapping[str, str] | None = None,
+    approved_fixtures: Sequence[Mapping[str, Any]] = (),
 ) -> tuple[str, dict[str, int]]:
     brands = _brand_keys(mapping_fixture)
-    approved = _approved(mapping_fixture)
+    approved = _approved(mapping_fixture, approved_fixtures)
     decisions = _decisions(review_fixture)
     unclassified = include_unclassified_sources or set()
     statements: list[str] = [
@@ -165,6 +170,13 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Render generic provider evidence into the admin review queue")
     parser.add_argument("--mapping-fixture", type=Path, required=True)
     parser.add_argument("--review-fixture", type=Path)
+    parser.add_argument(
+        "--approved-fixture",
+        action="append",
+        default=[],
+        type=Path,
+        help="additional mapping fixture whose source/external IDs are already approved",
+    )
     parser.add_argument("--artifact", action="append", required=True, metavar="SOURCE=PATH")
     parser.add_argument("--unclassified-source", action="append", default=[], help="allow a new source whose labels have no review fixture")
     parser.add_argument("--source-provider", action="append", default=[], metavar="SOURCE=PROVIDER", help="map a new source to an existing provider brand")
@@ -188,6 +200,7 @@ def main() -> int:
             _json(args.review_fixture) if args.review_fixture else None,
             include_unclassified_sources={str(value).strip() for value in args.unclassified_source if str(value).strip()},
             brand_overrides=overrides,
+            approved_fixtures=tuple(_json(path) for path in args.approved_fixture),
         )
         if args.chunk_dir:
             chunks = chunk_transaction(sql, args.max_bytes)
