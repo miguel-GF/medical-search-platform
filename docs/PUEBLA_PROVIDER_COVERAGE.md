@@ -19,9 +19,10 @@ verificación:
   actualización antiguas y no prueba vigencia comercial.
 
 * El collector `pruevia-dr-simi` consulta únicamente el archivo JSON público de
-  sucursales de Análisis Clínicos del Dr. Simi. La corrida de control confirmó
-  una sede de Puebla (unidad 7); las otras cuatro filas DENUE de Dr. Simi siguen
-  como candidatas porque el feed oficial actual no las publica.
+  sucursales y una página pública de campañas de Análisis Clínicos del Dr. Simi.
+  La corrida de control encontró cuatro sedes de Puebla (unidades 7, 374, 180 y
+  260); tres ya tienen coordenadas contrastadas con DENUE y la cuarta queda en
+  revisión por discrepancia de domicilio.
 * El collector dedicado de Chopo recuperó 60 registros actuales de Puebla y
   enlazó 11 ubicaciones DENUE como identidades pendientes. Sus 58 etiquetas no
   aprobadas quedaron en la cola administrativa; no se publicaron por similitud.
@@ -81,11 +82,12 @@ python database/scripts/render_official_provider_locations.py `
 
 ## Sucursales públicas de Dr. Simi
 
-El feed oficial de sucursales se captura sin acceder a cuentas ni a flujos de
-citas. La corrida actual publicó sólo evidencia de ubicación para la unidad 7;
-el domicilio y teléfono son del feed, mientras que las coordenadas se
-contrastaron con DENUE. Las cuatro sedes DENUE restantes no se activan hasta
-que el proveedor las confirme en su fuente oficial.
+El feed oficial de sucursales y la página pública de campaña se capturan sin
+acceder a cuentas ni a flujos de citas. La fuente actual muestra cuatro sedes
+de Puebla; tres se enlazaron con coordenadas DENUE y la unidad 260 permanece
+como evidencia pendiente porque su domicilio oficial no coincide exactamente
+con la fila DENUE disponible. No se infieren estudios ni precios por tener una
+dirección.
 
 ```powershell
 $env:PYTHONPATH = "collectors/src"

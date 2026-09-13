@@ -13,6 +13,7 @@ import re
 import ssl
 import unicodedata
 from collections.abc import Iterable, Mapping
+from html import unescape
 from math import isfinite
 from typing import Any
 from urllib.parse import urlparse
@@ -33,8 +34,10 @@ from .public_transport import PublicAddressTransport
 DR_SIMI_ORIGIN = "https://www.ssdrsimi.com.mx"
 DR_SIMI_BRANCHES_URL = f"{DR_SIMI_ORIGIN}/sucursales"
 DR_SIMI_BRANCHES_JSON_URL = f"{DR_SIMI_ORIGIN}/assets/data/sucursalesMAPA.json"
+DR_SIMI_CAMPAIGN_URL = f"{DR_SIMI_ORIGIN}/campana/colposcopia-permanente"
 MAX_DR_SIMI_BRANCHES = 100
 MAX_DR_SIMI_RESPONSE_BYTES = 512 * 1024
+MAX_DR_SIMI_HTML_BYTES = 1 * 1024 * 1024
 MAX_DR_SIMI_TEXT_CHARS = 4_000
 
 
@@ -90,6 +93,49 @@ def _address(value: object) -> dict[str, str]:
     return result
 
 
+def _strip_html(value: str) -> str:
+    return " ".join(re.sub(r"<[^>]+>", " ", unescape(value)).split())
+
+
+def parse_campaign_branches(html: str) -> list[Mapping[str, Any]]:
+    """Extract Puebla branch cards from a public campaign page.
+
+    The page is server-rendered and links back to the public branch detail
+    route.  We retain only cards whose address explicitly says Puebla,
+    Puebla; other states are intentionally discarded.
+    """
+
+    if not isinstance(html, str) or len(html.encode("utf-8")) > MAX_DR_SIMI_HTML_BYTES:
+        raise ValueError("Dr. Simi campaign page exceeds the safety limit")
+    rows: list[Mapping[str, Any]] = []
+    for match in re.finditer(
+        r'<a[^>]+href=["\']/sucursales\?unidad=([A-Za-z0-9_-]+)["\'][^>]*>(.*?)</a>',
+        html,
+        flags=re.IGNORECASE | re.DOTALL,
+    ):
+        unit_id = _unit_id(match.group(1))
+        body = _strip_html(match.group(2))
+        title_match = re.search(r"^(PUEBLA[^ ]*(?:[ -][^ ]+)?)\s+", body, flags=re.IGNORECASE)
+        address_match = re.search(r"((?:Av\.|Calle|Calz\.|Papagayo).{3,250}?Puebla,\s*Puebla\.\s*C\.?P\.?\s*\d{5})", body, flags=re.IGNORECASE)
+        if address_match is None:
+            address_match = re.search(r"((?:\d{1,3}\s+(?:Oriente|Poniente|Norte|Sur)).{3,250}?Puebla,\s*Puebla\.\s*C\.?P\.?\s*\d{5})", body, flags=re.IGNORECASE)
+        if not title_match or not address_match:
+            continue
+        phone_match = re.search(r"\b(222[- ]?\d{3}[- ]?\d{4})\b", body)
+        rows.append(
+            {
+                "sucursal": _text(title_match.group(1), "sucursal", required=True),
+                "direccion": _text(address_match.group(1), "direccion", required=True),
+                "telefono": phone_match.group(1) if phone_match else "",
+                "unidad": unit_id,
+                "_source_url": DR_SIMI_CAMPAIGN_URL,
+            }
+        )
+    if len(rows) > MAX_DR_SIMI_BRANCHES:
+        raise ValueError("Dr. Simi campaign branch count exceeds the safety limit")
+    return rows
+
+
 def parse_branch(row: Mapping[str, Any]) -> SourceRecord | None:
     if not _is_puebla(row):
         return None
@@ -122,7 +168,7 @@ def parse_branch(row: Mapping[str, Any]) -> SourceRecord | None:
         source_key="dr_simi_puebla",
         record_type="provider_location_discovered",
         external_record_id=unit_id,
-        source_url=DR_SIMI_BRANCHES_JSON_URL,
+        source_url=str(row.get("_source_url") or DR_SIMI_BRANCHES_JSON_URL),
         payload=payload,
         observations=observations,
     )
@@ -135,23 +181,28 @@ class DrSimiClient:
         self,
         *,
         branches_url: str = DR_SIMI_BRANCHES_JSON_URL,
+        campaign_url: str = DR_SIMI_CAMPAIGN_URL,
         timeout_seconds: float = 30.0,
         client: httpx.Client | None = None,
     ) -> None:
-        parsed = urlparse(branches_url)
-        if (
-            parsed.scheme != "https"
-            or parsed.hostname is None
-            or parsed.username
-            or parsed.password
-            or parsed.port not in (None, 443)
-            or parsed.query
-            or parsed.fragment
-        ):
-            raise ValueError("Dr. Simi branches_url must be an HTTPS URL without credentials or query parameters")
+        for field, url in (("branches_url", branches_url), ("campaign_url", campaign_url)):
+            parsed = urlparse(url)
+            if (
+                parsed.scheme != "https"
+                or parsed.hostname is None
+                or parsed.username
+                or parsed.password
+                or parsed.port not in (None, 443)
+                or parsed.query
+                or parsed.fragment
+            ):
+                raise ValueError(f"Dr. Simi {field} must be an HTTPS URL without credentials or query parameters")
+        if urlparse(branches_url).hostname.casefold() != urlparse(campaign_url).hostname.casefold():
+            raise ValueError("Dr. Simi branch sources must share the official host")
         if not 0 < timeout_seconds <= 120 or not isfinite(float(timeout_seconds)):
             raise ValueError("timeout_seconds must be between 0 and 120")
         self.branches_url = branches_url
+        self.campaign_url = campaign_url
         self.timeout_seconds = float(timeout_seconds)
         self._owns_client = client is None
         self._client = client or httpx.Client(
@@ -166,13 +217,13 @@ class DrSimiClient:
         if self._owns_client:
             self._client.close()
 
-    def fetch_branches(self) -> list[Mapping[str, Any]]:
+    def _get(self, url: str, accept: str, max_bytes: int) -> bytes:
         response = request_with_same_host_redirects(
             lambda target, **kwargs: self._client.get(target, **kwargs),
-            self.branches_url,
-            allowed_url=self.branches_url,
+            url,
+            allowed_url=url,
             headers={
-                "Accept": "application/json",
+                "Accept": accept,
                 "Accept-Encoding": "identity",
                 "User-Agent": "PrueviaDrSimiCollector/0.1",
             },
@@ -180,15 +231,28 @@ class DrSimiClient:
         )
         try:
             response.raise_for_status()
-            raw = bounded_response_bytes(response, max_bytes=MAX_DR_SIMI_RESPONSE_BYTES)
-            value = json.loads(raw.decode("utf-8"))
-        except (UnicodeDecodeError, json.JSONDecodeError, ValueError) as error:
-            raise ValueError("Dr. Simi branch feed is not valid bounded JSON") from error
+            return bounded_response_bytes(response, max_bytes=max_bytes)
         finally:
             response.close()
+
+    def fetch_branches(self) -> list[Mapping[str, Any]]:
+        try:
+            value = json.loads(self._get(self.branches_url, "application/json", MAX_DR_SIMI_RESPONSE_BYTES).decode("utf-8"))
+        except (UnicodeDecodeError, json.JSONDecodeError, ValueError) as error:
+            raise ValueError("Dr. Simi branch feed is not valid bounded JSON") from error
         if not isinstance(value, list) or len(value) > MAX_DR_SIMI_BRANCHES:
             raise ValueError("Dr. Simi branch feed must be an array of at most 100 rows")
-        return [row for row in value if isinstance(row, Mapping)]
+        rows = [row for row in value if isinstance(row, Mapping)]
+        try:
+            campaign_rows = parse_campaign_branches(self._get(self.campaign_url, "text/html", MAX_DR_SIMI_HTML_BYTES).decode("utf-8", "replace"))
+        except (UnicodeDecodeError, ValueError):
+            campaign_rows = []
+        seen = {_unit_id(row.get("unidad")) for row in rows if isinstance(row, Mapping) and row.get("unidad") not in (None, "")}
+        for row in campaign_rows:
+            if _unit_id(row.get("unidad")) not in seen:
+                rows.append(row)
+                seen.add(_unit_id(row.get("unidad")))
+        return rows
 
 
 class DrSimiAdapter:
@@ -221,9 +285,11 @@ class DrSimiAdapter:
 
 
 __all__ = [
+    "DR_SIMI_CAMPAIGN_URL",
     "DR_SIMI_BRANCHES_JSON_URL",
     "DR_SIMI_BRANCHES_URL",
     "DrSimiAdapter",
     "DrSimiClient",
+    "parse_campaign_branches",
     "parse_branch",
 ]

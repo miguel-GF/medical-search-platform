@@ -30,6 +30,6 @@ __all__ += [
 from .semin import SeminAdapter, SeminClient
 
 __all__ += ["SeminAdapter", "SeminClient"]
-from .dr_simi import DrSimiAdapter, DrSimiClient, parse_branch
+from .dr_simi import DrSimiAdapter, DrSimiClient, parse_branch, parse_campaign_branches
 
-__all__ += ["DrSimiAdapter", "DrSimiClient", "parse_branch"]
+__all__ += ["DrSimiAdapter", "DrSimiClient", "parse_branch", "parse_campaign_branches"]

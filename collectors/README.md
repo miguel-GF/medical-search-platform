@@ -121,7 +121,8 @@ no sustituye el permiso contractual del proveedor.
 El adapter `pruevia-dr-simi` consume exclusivamente el archivo JSON público de
 sucursales (`assets/data/sucursalesMAPA.json`). No llama endpoints de citas,
 pacientes, resultados ni promociones. La corrida de Puebla confirmó una sede;
-las demás filas DENUE siguen pendientes hasta que el feed oficial las publique.
+la página pública de campaña amplió el hallazgo a cuatro sedes; las coordenadas
+y cualquier catálogo de estudios se verifican por separado.
 
 ```powershell
 $env:PYTHONPATH = "src"

@@ -4,9 +4,11 @@ import httpx
 import pytest
 
 from pruevia_collectors.providers.dr_simi import (
+    DR_SIMI_CAMPAIGN_URL,
     DR_SIMI_BRANCHES_JSON_URL,
     DrSimiAdapter,
     DrSimiClient,
+    parse_campaign_branches,
     parse_branch,
 )
 
@@ -34,6 +36,9 @@ def test_client_and_adapter_parse_public_array_without_other_endpoints():
 
     def handler(request: httpx.Request) -> httpx.Response:
         calls.append(str(request.url))
+        if request.url == DR_SIMI_CAMPAIGN_URL:
+            html = '<a href="/sucursales?unidad=374"><p class="titulo-card">PUEBLA 6-2</p><div class="col-12"><p>222-950-8808 Av. 25 Poniente No. 921 Planta Baja, Col. Chula Vista, Puebla, Puebla. C.P. 72420</p></div></a>'
+            return httpx.Response(200, text=html, headers={"content-type": "text/html"}, request=request)
         return httpx.Response(
             200,
             content=json.dumps(
@@ -52,8 +57,20 @@ def test_client_and_adapter_parse_public_array_without_other_endpoints():
         records = list(DrSimiAdapter(client).collect())
     finally:
         client.close()
-    assert [record.external_record_id for record in records] == ["7"]
-    assert calls == [DR_SIMI_BRANCHES_JSON_URL]
+    assert [record.external_record_id for record in records] == ["7", "374"]
+    assert calls == [DR_SIMI_BRANCHES_JSON_URL, DR_SIMI_CAMPAIGN_URL]
+
+
+def test_campaign_parser_extracts_puebla_cards_and_ignores_other_states():
+    html = (
+        '<a href="/sucursales?unidad=7"><p class="titulo-card">PUEBLA 1-1</p>'
+        '<div class="col-12"><p>10 Oriente No. 4, Col. Centro, Puebla, Puebla. C.P. 72000</p></div></a>'
+        '<a href="/sucursales?unidad=58"><p class="titulo-card">TEPIC 1-1</p>'
+        '<div class="col-12"><p>Puebla Norte No. 229, Col. Centro, Tepic, Nayarit. C.P. 63000</p></div></a>'
+    )
+    rows = parse_campaign_branches(html)
+    assert [(row["unidad"], row["sucursal"]) for row in rows] == [("7", "PUEBLA 1-1")]
+    assert "10 Oriente No. 4" in rows[0]["direccion"]
 
 
 def test_client_rejects_query_urls_and_malformed_feed():

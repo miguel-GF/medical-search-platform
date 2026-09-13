@@ -3,7 +3,7 @@
   "source_key": "dr_simi_puebla",
   "source_system": "dr_simi_official",
   "source_url": "https://www.ssdrsimi.com.mx/assets/data/sucursalesMAPA.json",
-  "retrieved_at": "2026-09-13T15:21:58Z",
+  "retrieved_at": "2026-09-13T15:29:00Z",
   "provider": {
     "provider_key": "dr_simi",
     "name": "Análisis Clínicos del Dr. Simi",
@@ -15,7 +15,7 @@
       "external_id": "7",
       "slug": "puebla-1-1",
       "name": "PUEBLA 1-1",
-      "address_line_1": "10 Oriente No. 4, Colonia Centro",
+      "address_line_1": "10 Oriente No. 4, Col. Centro",
       "postal_code": "72000",
       "phone": "222-242-3077",
       "location_code": "7",
@@ -25,6 +25,36 @@
         "longitude": -98.19602752
       },
       "coordinate_source": "DENUE 6378625; official feed confirms unit/address"
+    },
+    {
+      "external_id": "374",
+      "slug": "puebla-6-2",
+      "name": "PUEBLA 6-2",
+      "address_line_1": "Av. 25 Poniente No. 921 Planta Baja, Col. Chula Vista",
+      "postal_code": "72420",
+      "phone": "222-950-8808",
+      "location_code": "374",
+      "url": "https://www.ssdrsimi.com.mx/sucursales",
+      "coordinates": {
+        "latitude": 19.03890466,
+        "longitude": -98.21133564
+      },
+      "coordinate_source": "DENUE 6378619; official campaign feed confirms unit/address"
+    },
+    {
+      "external_id": "180",
+      "slug": "puebla-3-5",
+      "name": "PUEBLA 3-5",
+      "address_line_1": "Papagayo No. 5302 Altos, Col. La Hacienda",
+      "postal_code": "72570",
+      "phone": "222-888-9843",
+      "location_code": "180",
+      "url": "https://www.ssdrsimi.com.mx/sucursales",
+      "coordinates": {
+        "latitude": 19.01342049,
+        "longitude": -98.19293787
+      },
+      "coordinate_source": "DENUE 6378623; official campaign feed confirms unit/address"
     }
   ]
 }
