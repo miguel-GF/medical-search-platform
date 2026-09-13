@@ -75,14 +75,14 @@ Los contratos historicos de documentos/scanner prueban el flujo diferido levanta
 el cierre solo dentro de su transaccion con rollback. El contrato
 `internal_document_freeze_test.sql` prueba el estado cerrado de esta entrega.
 
-## Lote preparado, no publicado
+## Lote de evidencia publicado; catálogo clínico no publicado
 
 Fuente local: `collectors/artifacts/puebla-generic-depth1-hardened/` y su
 `puebla_generic_discovery_manifest.json`. Sus diez corridas exitosas contienen
 54 registros RAW: 48 ofertas sin precio y 6 ubicaciones. No equivalen a diez
-proveedores nuevos confirmados: falta comparar los identificadores con DEV.
-Las diez corridas pasaron la validacion de integridad del publicador (hashes,
-conteos y referencias de observaciones), sin conexion de escritura a la base.
+proveedores confirmados: la identidad requiere revisión humana. Se incorporaron
+al entorno enlazado nueve marcas candidatas y 12 ubicaciones DENUE, todas con
+`verification_pending`; no se publicaron ofertas nuevas por similitud.
 
 | Fuente | Registros RAW |
 | --- | ---: |
@@ -103,6 +103,13 @@ Importar evidencia en ingest no es aprobar catalogo. No asignar precios a este l
 Registrar IDs creados y modificaciones previas en una transaccion revisada para
 reversion acotada; reprocesar y comprobar que no aumenten duplicados antes de abrir
 otro lote. No ejecutar una publicacion amplia de todas las fuentes.
+
+El adaptador oficial `semin_catalog_puebla` amplía el detalle sin cambiar esta
+regla. La corrida de control del 13-09-2026 capturó 140 estudios únicos con
+precio de referencia y 9 sucursales (149 registros RAW) y su evidencia ya está
+en `ingest`. El catálogo reportó 150 resultados con un identificador repetido
+entre páginas. Los precios llevan `unverified_provider_reference` y no se
+publican automáticamente.
 
 ## Aceptacion final pendiente
 

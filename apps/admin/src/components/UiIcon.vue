@@ -71,6 +71,10 @@ withDefaults(defineProps<{
       <rect x="3" y="5" width="18" height="14" rx="2" />
       <path d="m3 7 9 6 9-6" />
     </template>
+    <template v-else-if="name === 'search'">
+      <circle cx="10.8" cy="10.8" r="6.5" />
+      <path d="m16 16 4.5 4.5" />
+    </template>
     <template v-else-if="name === 'phone'">
       <rect x="7" y="2" width="10" height="20" rx="2" />
       <path d="M11 18h2" />

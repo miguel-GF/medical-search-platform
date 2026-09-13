@@ -96,6 +96,32 @@ python -m pruevia_collectors.cli_generic `
   --max-pages 25 --max-depth 1 --artifact-root artifacts/generic
 ```
 
+#### Candidato SEMIN (Puebla)
+
+SEMIN ya entra por el collector genérico; no requiere un adapter dedicado por
+ahora. Para repetir la captura de evidencia pública:
+
+```powershell
+$env:PYTHONPATH = "src"
+python -m pruevia_collectors.cli_generic `
+  --seed-url https://semindigital.com/ `
+  --seed-url https://semindigital.com/servicios `
+  --seed-url https://semindigital.com/sucursales `
+  --max-pages 25 --max-depth 1 --artifact-root artifacts/semin-generic
+```
+
+La corrida sólo produce candidatos auditables. Las modalidades sin estudio
+específico (por ejemplo, "ultrasonido", "tomografía" o "resonancia") no se
+publican automáticamente; primero deben aportar protocolo, región anatómica y
+la equivalencia clínica correspondiente. Verifica `robots.txt` y los términos
+vigentes antes de cada corrida; una autorización para desarrollar el collector
+no sustituye el permiso contractual del proveedor.
+
+El sitio de Análisis Clínicos del Dr. Simi queda como candidato posterior: su
+contenido es dinámico y no debemos depender de endpoints internos ni de tokens
+embebidos. Sólo se añadirá un adapter si el proveedor ofrece un endpoint
+documentado o una autorización expresa.
+
 El crawler está limitado al host semilla, respeta `robots.txt`, rechaza
 credenciales, redirecciones externas y hosts privados, limita el tamaño de
 respuesta y conserva un ritmo entre páginas. Los registros salen como `provider_location_discovered`,
@@ -179,3 +205,20 @@ Para publicar, usa un DSN de servidor en `PRUEVIA_DATABASE_URL` (nunca una clave
 ```powershell
 python -m pruevia_collectors.cli_publish artifacts/<source>/<run-id>
 ```
+
+### Catálogo público de SEMIN Puebla
+
+El adaptador dedicado captura estudios, categoría, muestra, preparación,
+tiempo de entrega, referencia de precio y sucursales sin llamar operaciones de
+citas. Respeta `robots.txt` y deja todos los registros como `candidate`:
+
+```powershell
+$env:PYTHONPATH = "src"
+python -m pruevia_collectors.cli_semin `
+  --max-pages 8 --max-results 150 --max-details 150 `
+  --artifact-root artifacts/semin-catalog-puebla
+```
+
+Los precios se marcan como referencia no verificada. La cartera de nueve
+identidades candidatas de Puebla y el flujo de revisión están documentados en
+`docs/PUEBLA_PROVIDER_COVERAGE.md`.

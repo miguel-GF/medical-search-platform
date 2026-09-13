@@ -282,9 +282,12 @@ Robots, DNS no resoluble y HTTP permanente no se reintentan automáticamente.
 La salida es un manifiesto separado para conservar la auditoría temporal.
 
 Las etiquetas genéricas no se publican por similitud. El fixture revisado
-`database/fixtures/generic_provider_mappings_puebla_v1.json` contiene sólo
-cuatro coincidencias exactas. El renderer asociado enlaza cada sitio con sus
-filas DENUE, crea sedes con procedencia y ofertas `requires_quote` sin precio.
+`database/fixtures/generic_provider_mappings_puebla_v1.json` contiene nueve
+identidades candidatas enlazadas a filas DENUE. Sólo cinco coincidencias
+exactas tienen mapping clínico aprobado; las demás sedes quedan
+`verification_pending` y las ofertas siguen en revisión. El renderer asociado
+crea sedes con procedencia y ofertas `requires_quote` sin precio sólo para los
+labels aprobados.
 
 Para separar cobertura descubierta de cobertura realmente publicada:
 
@@ -298,8 +301,8 @@ python database/scripts/report_generic_coverage.py `
 
 ### Revision de labels genericos pendientes
 
-La corrida hardened descubrio 48 ofertas: cuatro tienen mapping exacto
-publicado y 44 siguen pendientes. La cola versionada vive en
+La corrida hardened descubrio 48 ofertas: cinco tienen mapping exacto
+aprobado y 43 siguen pendientes. La cola versionada vive en
 `database/fixtures/generic_provider_review_puebla_v1.json`; no contiene
 aprobaciones. Cada label queda en una de estas clases: `reject_noise`,
 `category_not_service`, `ambiguous_modality`, `ambiguous_panel`,

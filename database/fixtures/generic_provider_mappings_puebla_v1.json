@@ -37,6 +37,51 @@
       "website_url": "https://semindigital.com/",
       "denue_record_ids": ["6377846"],
       "identity_note": "DENUE identifies LABORATORIOS SEMIN SIGLO XXI under SEMIN SIGLO XXI and the domain matches the public website evidence; provider verification remains pending."
+    },
+    {
+      "source_key": "generic_lafer_mx",
+      "provider_key": "laboratorios_lafer",
+      "brand_name": "Laboratorios Cl\u00ednicos Lafer",
+      "slug": "laboratorios-lafer",
+      "website_url": "https://lafer.mx/",
+      "denue_record_ids": ["11019755"],
+      "identity_note": "DENUE identifica LABORATORIOS CL\u00cdNICOS LAFER en Puebla y el dominio coincide con la evidencia p\u00fablica del sitio; la identidad y las ofertas siguen verification_pending."
+    },
+    {
+      "source_key": "generic_verkenlab_com",
+      "provider_key": "verkenlab",
+      "brand_name": "Verkenlab",
+      "slug": "verkenlab",
+      "website_url": "https://verkenlab.com/",
+      "denue_record_ids": ["10620203"],
+      "identity_note": "DENUE identifica VERTENLAB en Puebla y el dominio coincide con la evidencia p\u00fablica del sitio; la identidad y las ofertas siguen verification_pending."
+    },
+    {
+      "source_key": "generic_clinicadediagnostico_com",
+      "provider_key": "clinica_diagnostico_radiologia",
+      "brand_name": "Cl\u00ednica de Diagn\u00f3stico Radiolog\u00eda y Ultrasonido",
+      "slug": "clinica-diagnostico-radiologia",
+      "website_url": "https://clinicadediagnostico.com/",
+      "denue_record_ids": ["3458890"],
+      "identity_note": "DENUE identifica una cl\u00ednica de radiolog\u00eda y ultrasonido en Puebla y el dominio coincide con la evidencia p\u00fablica; ubicaci\u00f3n y servicios permanecen como candidatos para verificaci\u00f3n."
+    },
+    {
+      "source_key": "generic_riex_com_mx",
+      "provider_key": "riex_radiologia_dental",
+      "brand_name": "RIEX Radiolog\u00eda Dental",
+      "slug": "riex-radiologia-dental",
+      "website_url": "https://riex.com.mx/",
+      "denue_record_ids": ["11001488"],
+      "identity_note": "DENUE identifica RIEX RADIOLOG\u00cdA DENTAL en Puebla y el dominio coincide con la evidencia p\u00fablica del sitio; el estudio descubierto requiere revisi\u00f3n cl\u00ednica."
+    },
+    {
+      "source_key": "generic_labopat_mx",
+      "provider_key": "labopat_diagnosticos",
+      "brand_name": "Labo Pat Diagn\u00f3sticos",
+      "slug": "labopat-diagnosticos",
+      "website_url": "https://labopat.mx/",
+      "denue_record_ids": ["10229281"],
+      "identity_note": "DENUE identifica LABO PAT en Puebla y el dominio coincide con la evidencia p\u00fablica; s\u00f3lo se incorpor\u00f3 ubicaci\u00f3n candidata, sin asumir servicios."
     }
   ],
   "mappings": [

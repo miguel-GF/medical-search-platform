@@ -26,3 +26,7 @@ __all__ += [
     "GenericWebClient",
     "parse_price_minor",
 ]
+
+from .semin import SeminAdapter, SeminClient
+
+__all__ += ["SeminAdapter", "SeminClient"]

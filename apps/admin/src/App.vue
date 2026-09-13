@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from 'vue';
+import { computed, onMounted, onUnmounted, reactive, ref } from 'vue';
 import { createAdminApi, createMutationRequestId, formatDate, type AlertRow, type CatalogItem, type Dashboard, type ExactReprocessResult, type LocationRow, type NormalizationDetail, type NormalizationRow, type OfferRow, type PriceRow, type ProviderRow, type QualityIssueRow, type RawRecord } from './api';
 import { matchesPasswordCallback, supabase } from './auth';
 import { toQrDataUrl } from './qr';
 import { safeHttpUrl } from './safe-url';
 import UiIcon from './components/UiIcon.vue';
+import TableFilters, { type FilterOption } from './components/TableFilters.vue';
 
 type Tab = 'overview' | 'providers' | 'locations' | 'offers' | 'prices' | 'queue' | 'records' | 'quality' | 'alerts';
 // A production bundle must never silently target a developer's localhost.
@@ -35,19 +36,19 @@ const mobileNavOpen = ref(false);
 const loading = ref(false);
 const error = ref('');
 const notice = ref('');
-const dashboard = ref<Dashboard | null>(null);
-const queue = ref<NormalizationRow[]>([]);
+const dashboardData = ref<Dashboard | null>(null);
+const queueRows = ref<NormalizationRow[]>([]);
 const queueHasMore = ref(false);
 const queueLoadingMore = ref(false);
 const queueStatus = ref('ambiguous');
 const queueInputType = ref('');
-const records = ref<RawRecord[]>([]);
-const providers = ref<ProviderRow[]>([]);
-const locations = ref<LocationRow[]>([]);
-const offers = ref<OfferRow[]>([]);
-const prices = ref<PriceRow[]>([]);
-const qualityIssues = ref<QualityIssueRow[]>([]);
-const alerts = ref<AlertRow[]>([]);
+const recordRows = ref<RawRecord[]>([]);
+const providerRows = ref<ProviderRow[]>([]);
+const locationRows = ref<LocationRow[]>([]);
+const offerRows = ref<OfferRow[]>([]);
+const priceRows = ref<PriceRow[]>([]);
+const qualityIssueRows = ref<QualityIssueRow[]>([]);
+const alertRows = ref<AlertRow[]>([]);
 const exactReprocessLoading = ref(false);
 const exactReprocessResult = ref<ExactReprocessResult | null>(null);
 const selected = ref<NormalizationRow | null>(null);
@@ -60,6 +61,25 @@ const manualCatalogResults = ref<CatalogItem[]>([]);
 const manualCatalogItemId = ref('');
 const manualCatalogLoading = ref(false);
 const mutationRequestIds = new Map<string, string>();
+const AUTO_REFRESH_MS = 30_000;
+let autoRefreshTimer: number | null = null;
+type TimeFilter = 'all' | '7' | '15' | '30';
+interface TableFilterState {
+  query: string;
+  time: TimeFilter;
+  status: string;
+  secondary: string;
+}
+
+const tableFilter = reactive<TableFilterState>({ query: '', time: 'all', status: 'all', secondary: 'all' });
+const timeFilterOptions: FilterOption[] = [
+  { label: 'Todo', value: 'all' },
+  { label: '7 días', value: '7' },
+  { label: '15 días', value: '15' },
+  { label: '30 días', value: '30' },
+];
+const allOption: FilterOption = { label: 'Todos', value: 'all' };
+const statusOptions = (values: FilterOption[]): FilterOption[] => [allOption, ...values];
 // Every logout or account switch advances this generation. Async Auth/API
 // work captures it and must not write a late result into a different session.
 let authGeneration = 0;
@@ -83,7 +103,7 @@ const navigation: { id: Tab; label: string; description: string; icon: string }[
 ];
 
 const cards = computed(() => {
-  const current = dashboard.value;
+  const current = dashboardData.value;
   if (!current) return [];
   const result = [
     { label: 'Catálogo activo', value: current.active_catalog_items, helper: 'servicios canónicos', icon: 'offers', tone: 'teal', action: undefined as string | undefined },
@@ -104,11 +124,120 @@ const currentSection = computed(() => navigation.find((entry) => entry.id === ta
 // The legacy dashboard counted finalized no_match rows as open work. Until
 // the corrected RPC is present, do not expose that misleading number or its
 // review entry in the operator UI.
-const hasAccurateNormalizationCounts = computed(() => dashboard.value?.normalization_closed_no_match !== undefined);
+const hasAccurateNormalizationCounts = computed(() => dashboardData.value?.normalization_closed_no_match !== undefined);
+const tableFilterConfig = computed(() => {
+  const base = { timeOptions: timeFilterOptions, statusLabel: 'Estado', statusOptions: undefined as FilterOption[] | undefined, secondaryLabel: 'Tipo', secondaryOptions: undefined as FilterOption[] | undefined };
+  switch (tab.value) {
+    case 'overview': return { ...base, placeholder: 'Buscar corrida por fuente o estado…', showTime: true, statusOptions: statusOptions([{ label: 'Completadas', value: 'succeeded' }, { label: 'Fallidas', value: 'failed' }, { label: 'Cuarentena', value: 'quarantined' }]) };
+    case 'providers': return { ...base, placeholder: 'Buscar proveedor…', showTime: false, statusOptions: statusOptions([{ label: 'Activos', value: 'active' }, { label: 'Inactivos', value: 'inactive' }]), secondaryLabel: 'Verificación', secondaryOptions: statusOptions([{ label: 'Verificados', value: 'verified' }, { label: 'Pendientes', value: 'pending' }]) };
+    case 'locations': return { ...base, placeholder: 'Buscar sucursal, proveedor o ciudad…', showTime: false, statusOptions: statusOptions([{ label: 'Activas', value: 'active' }, { label: 'Inactivas', value: 'inactive' }]) };
+    case 'offers': return { ...base, placeholder: 'Buscar servicio o proveedor…', showTime: true, statusOptions: statusOptions([{ label: 'Activas', value: 'active' }, { label: 'Inactivas', value: 'inactive' }]) };
+    case 'prices': return { ...base, placeholder: 'Buscar servicio o proveedor…', showTime: true, secondaryLabel: 'Tipo de precio', secondaryOptions: statusOptions([{ label: 'Particular', value: 'cash' }, { label: 'Aseguradora', value: 'insured' }, { label: 'Paquete', value: 'package' }]) };
+    case 'queue': return { ...base, placeholder: 'Buscar texto, proveedor o fuente…', showTime: true, statusLabel: 'Resultado', statusOptions: hasAccurateNormalizationCounts.value ? statusOptions([{ label: 'Ambiguos', value: 'ambiguous' }, { label: 'Sin cobertura', value: 'no_match' }, { label: 'Pendientes', value: 'pending' }]) : statusOptions([{ label: 'Ambiguos', value: 'ambiguous' }, { label: 'Pendientes', value: 'pending' }]), secondaryLabel: 'Origen', secondaryOptions: statusOptions([{ label: 'Proveedor', value: 'crawler' }, { label: 'Búsqueda', value: 'search' }, { label: 'Receta OCR', value: 'ocr' }, { label: 'Manual', value: 'manual' }]) };
+    case 'records': return { ...base, placeholder: 'Buscar fuente, tipo o ID externo…', showTime: true };
+    case 'quality': return { ...base, placeholder: 'Buscar código o detalle…', showTime: true, statusOptions: statusOptions([{ label: 'Abiertas', value: 'open' }, { label: 'Reconocidas', value: 'acknowledged' }, { label: 'Resueltas', value: 'resolved' }, { label: 'Ignoradas', value: 'ignored' }]) };
+    case 'alerts': return { ...base, placeholder: 'Buscar código, título o fuente…', showTime: true, statusOptions: statusOptions([{ label: 'Abiertas', value: 'open' }, { label: 'Reconocidas', value: 'acknowledged' }, { label: 'Resueltas', value: 'resolved' }, { label: 'Ignoradas', value: 'ignored' }]) };
+  }
+});
 const adminInitial = computed(() => (session.value?.user.email?.trim().charAt(0) || 'A').toUpperCase());
 const numberFormatter = new Intl.NumberFormat('es-MX');
 
 function formatNumber(value: number): string { return numberFormatter.format(value); }
+
+function normalizedFilterQuery(): string { return tableFilter.query.trim().toLocaleLowerCase('es-MX'); }
+
+function matchesFilterQuery(query: string, values: unknown[]): boolean {
+  const normalized = query.trim().toLocaleLowerCase('es-MX');
+  if (!normalized) return true;
+  return values.some((value) => String(value ?? '').toLocaleLowerCase('es-MX').includes(normalized));
+}
+
+function matchesTimeFilter(value: string | null | undefined): boolean {
+  if (tableFilter.time === 'all') return true;
+  if (!value) return false;
+  const timestamp = Date.parse(value);
+  if (!Number.isFinite(timestamp)) return false;
+  const days = Number(tableFilter.time);
+  return timestamp >= Date.now() - days * 24 * 60 * 60 * 1000;
+}
+
+function matchesStatusFilter(selected: string, values: unknown[]): boolean {
+  return selected === 'all' || values.some((value) => String(value ?? '') === selected);
+}
+
+function resetTableFilter() {
+  tableFilter.query = '';
+  tableFilter.time = 'all';
+  tableFilter.status = 'all';
+  tableFilter.secondary = 'all';
+}
+
+function setTableStatus(value: string) {
+  tableFilter.status = value;
+  if (tab.value === 'queue') {
+    queueStatus.value = value;
+    void changeQueueFilter();
+  }
+}
+
+function setTableTime(value: string) {
+  if (value === 'all' || value === '7' || value === '15' || value === '30') tableFilter.time = value;
+}
+
+function setTableSecondary(value: string) {
+  tableFilter.secondary = value;
+  if (tab.value === 'queue') {
+    queueInputType.value = value === 'all' ? '' : value;
+    void changeQueueFilter();
+  }
+}
+
+const filteredRecentRuns = computed(() => (dashboardData.value?.recent_runs ?? []).filter((row) =>
+  matchesFilterQuery(normalizedFilterQuery(), [row.source_name, row.status])
+  && matchesTimeFilter(row.started_at)
+  && matchesStatusFilter(tableFilter.status, [row.status])));
+const filteredQueue = computed(() => queueRows.value.filter((row) =>
+  matchesFilterQuery(normalizedFilterQuery(), [row.raw_text, row.normalized_input, row.provider_brand_name, row.source_name, row.status])
+  && matchesTimeFilter(row.created_at)));
+const filteredRecords = computed(() => recordRows.value.filter((row) =>
+  matchesFilterQuery(normalizedFilterQuery(), [row.source_name, row.record_type, row.external_record_id, row.parse_status])
+  && matchesTimeFilter(row.observed_at)));
+const filteredProviders = computed(() => providerRows.value.filter((row) =>
+  matchesFilterQuery(normalizedFilterQuery(), [row.provider_name, row.status, row.verification_status])
+  && matchesStatusFilter(tableFilter.status, [row.status])
+  && matchesStatusFilter(tableFilter.secondary, [row.verification_status])));
+const filteredLocations = computed(() => locationRows.value.filter((row) =>
+  matchesFilterQuery(normalizedFilterQuery(), [row.provider_name, row.location_name, row.address, row.locality, row.status])
+  && matchesStatusFilter(tableFilter.status, [row.status])));
+const filteredOffers = computed(() => offerRows.value.filter((row) =>
+  matchesFilterQuery(normalizedFilterQuery(), [row.provider_name, row.service_name, row.status])
+  && matchesTimeFilter(row.last_seen_at)
+  && matchesStatusFilter(tableFilter.status, [row.status])));
+const filteredPrices = computed(() => priceRows.value.filter((row) =>
+  matchesFilterQuery(normalizedFilterQuery(), [row.provider_name, row.service_name, row.currency, row.price_type])
+  && matchesTimeFilter(row.last_seen_at)
+  && matchesStatusFilter(tableFilter.secondary, [row.price_type])));
+const filteredQualityIssues = computed(() => qualityIssueRows.value.filter((row) =>
+  matchesFilterQuery(normalizedFilterQuery(), [row.issue_code, row.severity, row.status, JSON.stringify(row.details)])
+  && matchesTimeFilter(row.created_at)
+  && matchesStatusFilter(tableFilter.status, [row.status])));
+const filteredAlerts = computed(() => alertRows.value.filter((row) =>
+  matchesFilterQuery(normalizedFilterQuery(), [row.alert_code, row.title, row.source, row.detail, row.severity, row.status])
+  && matchesTimeFilter(row.created_at)
+  && matchesStatusFilter(tableFilter.status, [row.status])));
+// Keep the template readable while exposing only the rows matching the active
+// toolbar filters. The raw collections above remain the source for refreshes.
+const queue = filteredQueue;
+const records = filteredRecords;
+const providers = filteredProviders;
+const locations = filteredLocations;
+const offers = filteredOffers;
+const prices = filteredPrices;
+const qualityIssues = filteredQualityIssues;
+const alerts = filteredAlerts;
+const dashboard = computed(() => dashboardData.value
+  ? { ...dashboardData.value, recent_runs: filteredRecentRuns.value }
+  : null);
 
 function statusLabel(value: string): string {
   const labels: Record<string, string> = {
@@ -347,7 +476,7 @@ async function verifyEnrollment() {
 async function loadQueue(reset = true) {
   const generation = authGeneration;
   const userId = session.value?.user.id ?? null;
-  const last = queue.value[queue.value.length - 1];
+  const last = queueRows.value[queueRows.value.length - 1];
   const cursor = !reset && last ? { before_created_at: last.created_at, before_id: last.normalization_run_id } : undefined;
   // Before the corrected queue RPC is installed, its "all" and "no_match"
   // filters include finalized audit rows. Fail closed to the actionable
@@ -357,8 +486,8 @@ async function loadQueue(reset = true) {
   }
   const rows = await api.normalizationQueue(queueStatus.value === 'all' ? undefined : queueStatus.value, queueInputType.value || undefined, cursor);
   if (!isCurrentAuth(generation, userId)) return;
-  if (reset) queue.value = rows;
-  else queue.value = [...queue.value, ...rows];
+  if (reset) queueRows.value = rows;
+  else queueRows.value = [...queueRows.value, ...rows];
   queueHasMore.value = rows.length === 100;
 }
 
@@ -382,36 +511,60 @@ async function refresh() {
   try {
     const nextDashboard = await api.dashboard();
     if (!isCurrentAuth(generation, userId)) return;
-    dashboard.value = nextDashboard;
+    dashboardData.value = nextDashboard;
     if (tab.value === 'queue') await loadQueue();
-    if (tab.value === 'records') { const value = await api.rawRecords(); if (!isCurrentAuth(generation, userId)) return; records.value = value; }
-    if (tab.value === 'providers') { const value = await api.providers(); if (!isCurrentAuth(generation, userId)) return; providers.value = value; }
-    if (tab.value === 'locations') { const value = await api.locations(); if (!isCurrentAuth(generation, userId)) return; locations.value = value; }
-    if (tab.value === 'offers') { const value = await api.offers(); if (!isCurrentAuth(generation, userId)) return; offers.value = value; }
-    if (tab.value === 'prices') { const value = (await api.prices()).map((row) => ({ ...row, source_url: safeHttpUrl(row.source_url) })); if (!isCurrentAuth(generation, userId)) return; prices.value = value; }
-    if (tab.value === 'quality') { const value = await api.qualityIssues(); if (!isCurrentAuth(generation, userId)) return; qualityIssues.value = value; }
-    if (tab.value === 'alerts') { const value = await api.alerts(); if (!isCurrentAuth(generation, userId)) return; alerts.value = value; }
+    if (tab.value === 'records') { const value = await api.rawRecords(); if (!isCurrentAuth(generation, userId)) return; recordRows.value = value; }
+    if (tab.value === 'providers') { const value = await api.providers(); if (!isCurrentAuth(generation, userId)) return; providerRows.value = value; }
+    if (tab.value === 'locations') { const value = await api.locations(); if (!isCurrentAuth(generation, userId)) return; locationRows.value = value; }
+    if (tab.value === 'offers') { const value = await api.offers(); if (!isCurrentAuth(generation, userId)) return; offerRows.value = value; }
+    if (tab.value === 'prices') { const value = (await api.prices()).map((row) => ({ ...row, source_url: safeHttpUrl(row.source_url) })); if (!isCurrentAuth(generation, userId)) return; priceRows.value = value; }
+    if (tab.value === 'quality') { const value = await api.qualityIssues(); if (!isCurrentAuth(generation, userId)) return; qualityIssueRows.value = value; }
+    if (tab.value === 'alerts') { const value = await api.alerts(); if (!isCurrentAuth(generation, userId)) return; alertRows.value = value; }
   } catch (cause) {
     if (isCurrentAuth(generation, userId)) error.value = errorMessage(cause, 'No se pudo consultar la API');
   }
   finally { loading.value = false; }
 }
 
+function stopAutoRefresh() {
+  if (autoRefreshTimer === null || typeof window === 'undefined') return;
+  window.clearInterval(autoRefreshTimer);
+  autoRefreshTimer = null;
+}
+
+function startAutoRefresh() {
+  if (typeof window === 'undefined') return;
+  stopAutoRefresh();
+  autoRefreshTimer = window.setInterval(() => {
+    if (document.visibilityState !== 'visible' || !session.value || loading.value || authFlowInProgress) return;
+    void refresh();
+  }, AUTO_REFRESH_MS);
+}
+
+function refreshOnVisibilityChange() {
+  if (document.visibilityState === 'visible' && session.value && !loading.value) void refresh();
+}
+
 async function switchTab(next: Tab) {
   const generation = authGeneration;
   const userId = session.value?.user.id ?? null;
+  if (next !== tab.value) resetTableFilter();
+  if (next === 'queue') {
+    tableFilter.status = queueStatus.value || 'all';
+    tableFilter.secondary = queueInputType.value || 'all';
+  }
   tab.value = next;
   mobileNavOpen.value = false;
   notice.value = '';
   try {
-    if (next === 'queue' && !queue.value.length) await loadQueue();
-    if (next === 'records' && !records.value.length) { const value = await api.rawRecords(); if (!isCurrentAuth(generation, userId)) return; records.value = value; }
-    if (next === 'providers' && !providers.value.length) { const value = await api.providers(); if (!isCurrentAuth(generation, userId)) return; providers.value = value; }
-    if (next === 'locations' && !locations.value.length) { const value = await api.locations(); if (!isCurrentAuth(generation, userId)) return; locations.value = value; }
-    if (next === 'offers' && !offers.value.length) { const value = await api.offers(); if (!isCurrentAuth(generation, userId)) return; offers.value = value; }
-    if (next === 'prices' && !prices.value.length) { const value = (await api.prices()).map((row) => ({ ...row, source_url: safeHttpUrl(row.source_url) })); if (!isCurrentAuth(generation, userId)) return; prices.value = value; }
-    if (next === 'quality' && !qualityIssues.value.length) { const value = await api.qualityIssues(); if (!isCurrentAuth(generation, userId)) return; qualityIssues.value = value; }
-    if (next === 'alerts' && !alerts.value.length) { const value = await api.alerts(); if (!isCurrentAuth(generation, userId)) return; alerts.value = value; }
+    if (next === 'queue' && !queueRows.value.length) await loadQueue();
+    if (next === 'records' && !recordRows.value.length) { const value = await api.rawRecords(); if (!isCurrentAuth(generation, userId)) return; recordRows.value = value; }
+    if (next === 'providers' && !providerRows.value.length) { const value = await api.providers(); if (!isCurrentAuth(generation, userId)) return; providerRows.value = value; }
+    if (next === 'locations' && !locationRows.value.length) { const value = await api.locations(); if (!isCurrentAuth(generation, userId)) return; locationRows.value = value; }
+    if (next === 'offers' && !offerRows.value.length) { const value = await api.offers(); if (!isCurrentAuth(generation, userId)) return; offerRows.value = value; }
+    if (next === 'prices' && !priceRows.value.length) { const value = (await api.prices()).map((row) => ({ ...row, source_url: safeHttpUrl(row.source_url) })); if (!isCurrentAuth(generation, userId)) return; priceRows.value = value; }
+    if (next === 'quality' && !qualityIssueRows.value.length) { const value = await api.qualityIssues(); if (!isCurrentAuth(generation, userId)) return; qualityIssueRows.value = value; }
+    if (next === 'alerts' && !alertRows.value.length) { const value = await api.alerts(); if (!isCurrentAuth(generation, userId)) return; alertRows.value = value; }
   } catch (cause) {
     if (isCurrentAuth(generation, userId)) error.value = errorMessage(cause, 'No se pudo cargar la sección');
   }
@@ -542,7 +695,7 @@ async function approveCandidate() {
     await loadQueue();
     const nextDashboard = await api.dashboard();
     if (!isCurrentAuth(generation, userId)) return;
-    dashboard.value = nextDashboard;
+    dashboardData.value = nextDashboard;
   } catch (cause) {
     if (isCurrentAuth(generation, userId)) error.value = errorMessage(cause, 'No se pudo aprobar el candidato');
   }
@@ -565,7 +718,7 @@ async function markNoMatch() {
     await loadQueue();
     const nextDashboard = await api.dashboard();
     if (!isCurrentAuth(generation, userId)) return;
-    dashboard.value = nextDashboard;
+    dashboardData.value = nextDashboard;
   } catch (cause) {
     if (isCurrentAuth(generation, userId)) error.value = errorMessage(cause, 'No se pudo marcar el caso');
   }
@@ -584,7 +737,7 @@ async function updateAlert(row: AlertRow, status: 'acknowledged' | 'resolved' | 
     notice.value = `Alerta actualizada: ${status}.`;
     const nextDashboard = await api.dashboard();
     if (!isCurrentAuth(generation, userId)) return;
-    dashboard.value = nextDashboard;
+    dashboardData.value = nextDashboard;
   }
   catch (cause) {
     if (isCurrentAuth(generation, userId)) error.value = errorMessage(cause, 'No se pudo actualizar la alerta');
@@ -603,7 +756,7 @@ async function updateQuality(row: QualityIssueRow, status: 'acknowledged' | 'res
     notice.value = `Issue actualizado: ${status}.`;
     const nextDashboard = await api.dashboard();
     if (!isCurrentAuth(generation, userId)) return;
-    dashboard.value = nextDashboard;
+    dashboardData.value = nextDashboard;
   }
   catch (cause) {
     if (isCurrentAuth(generation, userId)) error.value = errorMessage(cause, 'No se pudo actualizar el issue');
@@ -705,17 +858,17 @@ function resetAdminState(options: { preservePasswordSetup?: boolean } = {}) {
   exactReprocessResult.value = null;
   tab.value = 'overview';
   mobileNavOpen.value = false;
-  queue.value = [];
+  queueRows.value = [];
   queueHasMore.value = false;
   queueLoadingMore.value = false;
-  records.value = [];
-  providers.value = [];
-  locations.value = [];
-  offers.value = [];
-  prices.value = [];
-  qualityIssues.value = [];
-  alerts.value = [];
-  dashboard.value = null;
+  recordRows.value = [];
+  providerRows.value = [];
+  locationRows.value = [];
+  offerRows.value = [];
+  priceRows.value = [];
+  qualityIssueRows.value = [];
+  alertRows.value = [];
+  dashboardData.value = null;
   selected.value = null;
   detail.value = null;
   selectedCandidateId.value = '';
@@ -761,6 +914,8 @@ async function syncAuthState(nextSession: import('@supabase/supabase-js').Sessio
 }
 
 onMounted(async () => {
+  if (typeof document !== 'undefined') document.addEventListener('visibilitychange', refreshOnVisibilityChange);
+  startAutoRefresh();
   if (!supabase) return;
   try {
     // Subscribe before waiting for SDK initialization; it emits INITIAL_SESSION
@@ -777,6 +932,8 @@ onMounted(async () => {
   }
 });
 onUnmounted(() => {
+  stopAutoRefresh();
+  if (typeof document !== 'undefined') document.removeEventListener('visibilitychange', refreshOnVisibilityChange);
   authGeneration += 1;
   authSubscription?.unsubscribe();
   authSubscription = null;
@@ -795,8 +952,25 @@ onUnmounted(() => {
   <main v-else-if="passwordSetupRequired" class="auth-shell"><form class="auth-card auth-card-centered" @submit.prevent="setPassword"><div class="brand-lockup"><span class="brand-mark"><UiIcon name="locations" :size="22" /></span><strong>Pruevia</strong></div><div class="setup-progress"><span class="active">1</span><i></i><span>2</span></div><p class="eyebrow">PASO 1 DE 2</p><h1>Protege tu cuenta</h1><p class="subtitle">Crea una contraseña única de al menos 12 caracteres. Después configuraremos tu autenticador.</p><label>Nueva contraseña<div class="input-shell"><UiIcon name="lock" :size="18" /><input v-model="newPassword" type="password" autocomplete="new-password" minlength="12" required /></div></label><label>Confirmar contraseña<div class="input-shell"><UiIcon name="check" :size="18" /><input v-model="confirmPassword" type="password" autocomplete="new-password" minlength="12" required /></div></label><p class="password-hint">Usa una frase larga que no utilices en ningún otro servicio.</p><p v-if="authError" class="alert error"><UiIcon name="alerts" :size="18" />{{ authError }}</p><button class="primary primary-large" type="submit" :disabled="authLoading">{{ authLoading ? 'Guardando…' : 'Guardar y continuar' }}</button><button class="text-button" type="button" @click="signOut">Cancelar y cerrar sesión</button></form></main>
   <main v-else-if="mfaPending" class="auth-shell"><form v-if="mfaSetupRequired && !enrollmentQr" class="auth-card auth-card-centered" @submit.prevent="beginEnrollment"><div class="brand-lockup"><span class="brand-mark"><UiIcon name="locations" :size="22" /></span><strong>Pruevia</strong></div><div class="setup-progress"><span class="done"><UiIcon name="check" :size="14" /></span><i class="done"></i><span class="active">2</span></div><span class="auth-icon"><UiIcon name="phone" :size="25" /></span><p class="eyebrow">PASO 2 DE 2</p><h1>Activa el segundo factor</h1><p class="subtitle">Usaremos un código temporal para confirmar que realmente eres tú al realizar cambios importantes.</p><div class="info-box"><UiIcon name="quality" :size="19" /><span>Compatible con Google Authenticator, Microsoft Authenticator, Authy y 1Password.</span></div><p v-if="authError" class="alert error"><UiIcon name="alerts" :size="18" />{{ authError }}</p><button class="primary primary-large" type="submit" :disabled="mfaLoading">{{ mfaLoading ? 'Preparando código…' : 'Configurar autenticador' }}</button><button class="text-button" type="button" @click="signOut">Cerrar sesión</button></form><form v-else-if="mfaSetupRequired" class="auth-card qr-card" @submit.prevent="verifyEnrollment"><div class="brand-lockup"><span class="brand-mark"><UiIcon name="locations" :size="22" /></span><strong>Pruevia</strong></div><p class="eyebrow">CONECTA TU APLICACIÓN</p><h1>Escanea y confirma</h1><p class="subtitle">1. Escanea el QR. &nbsp;2. Escribe abajo los seis dígitos que aparezcan.</p><div class="qr-frame"><img v-if="toQrDataUrl(enrollmentQr)" class="totp-qr" :src="toQrDataUrl(enrollmentQr)" alt="Código QR para configurar TOTP" /><p v-else class="hint">No se pudo cargar el código QR. Usa la clave manual o vuelve a iniciar el registro.</p></div><details class="secret"><summary>No puedo escanear el código QR</summary><p>Agrega esta clave manualmente:</p><code>{{ enrollmentSecret }}</code><p class="hint">No la compartas ni la guardes en capturas.</p></details><label class="code-label">Código de verificación<input v-model="enrollmentCode" class="code-input" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" placeholder="000000" autofocus required /></label><p v-if="authError" class="alert error"><UiIcon name="alerts" :size="18" />{{ authError }}</p><button class="primary primary-large" type="submit" :disabled="mfaLoading">{{ mfaLoading ? 'Verificando código…' : 'Activar y entrar' }}</button><button class="text-button" type="button" @click="signOut">Cancelar configuración</button></form><form v-else class="auth-card auth-card-centered" @submit.prevent="verifyMfa"><div class="brand-lockup"><span class="brand-mark"><UiIcon name="locations" :size="22" /></span><strong>Pruevia</strong></div><span class="auth-icon"><UiIcon name="quality" :size="26" /></span><p class="eyebrow">VERIFICACIÓN DE SEGURIDAD</p><h1>Confirma tu identidad</h1><p class="subtitle">Abre tu autenticador y escribe el código actual de seis dígitos.</p><label class="code-label">Código temporal<input v-model="mfaCode" class="code-input" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" placeholder="000000" autofocus required /></label><p class="code-hint">El código cambia cada 30 segundos.</p><p v-if="authError" class="alert error"><UiIcon name="alerts" :size="18" />{{ authError }}</p><button class="primary primary-large" type="submit" :disabled="mfaLoading">{{ mfaLoading ? 'Verificando…' : 'Entrar al panel' }}</button><button class="text-button" type="button" @click="signOut">Usar otra cuenta</button></form></main>
    <div v-else class="shell">
-    <header class="topbar"><button class="mobile-menu" type="button" aria-label="Abrir menú" @click="mobileNavOpen = !mobileNavOpen"><UiIcon :name="mobileNavOpen ? 'close' : 'menu'" :size="21" /></button><div><p class="breadcrumb">Operaciones <span>/</span> {{ currentSection.label }}</p><h1>{{ currentSection.label }}</h1><p class="subtitle">{{ currentSection.description }} · Información operativa de Pruevia</p></div><div class="topbar-actions"><span class="system-state"><i></i>Sistema operativo</span><button class="refresh" :disabled="loading" @click="refresh"><UiIcon name="refresh" :size="17" />{{ loading ? 'Actualizando…' : 'Actualizar' }}</button></div></header>
+    <header class="topbar"><button class="mobile-menu" type="button" aria-label="Abrir menú" @click="mobileNavOpen = !mobileNavOpen"><UiIcon :name="mobileNavOpen ? 'close' : 'menu'" :size="21" /></button><div><p class="breadcrumb">Operaciones <span>/</span> {{ currentSection.label }}</p><h1>{{ currentSection.label }}</h1><p class="subtitle">{{ currentSection.description }} · Información operativa de Pruevia</p></div><div class="topbar-actions"><span class="system-state"><i></i>Sincronización automática</span><button class="refresh" :disabled="loading" @click="refresh"><UiIcon name="refresh" :size="17" />{{ loading ? 'Actualizando…' : 'Actualizar' }}</button></div></header>
     <nav class="tabs" :class="{ open: mobileNavOpen }" aria-label="Secciones administrativas"><div class="brand-lockup nav-brand"><span class="brand-mark"><UiIcon name="locations" :size="21" /></span><strong>Pruevia</strong><span class="admin-badge">Admin</span></div><p class="nav-heading">MENÚ PRINCIPAL</p><button v-for="entry in navigation" :key="entry.id" :class="{ active: tab === entry.id }" @click="switchTab(entry.id)"><span class="nav-icon"><UiIcon :name="entry.icon" :size="19" /></span><span class="nav-copy"><strong>{{ entry.label }}</strong><small>{{ entry.description }}</small></span><span v-if="entry.id === 'queue' && hasAccurateNormalizationCounts && dashboard?.normalization_pending" class="nav-count">{{ formatNumber(dashboard.normalization_pending) }}</span><span v-if="entry.id === 'alerts' && dashboard?.open_alerts" class="nav-dot"></span></button><div class="nav-session"><span class="avatar">{{ adminInitial }}</span><span><strong>{{ session.user.email }}</strong><small>Administrador</small></span><button type="button" title="Cerrar sesión" aria-label="Cerrar sesión" @click="signOut"><UiIcon name="logout" :size="18" /></button></div></nav>
+    <TableFilters
+      :query="tableFilter.query"
+      :time="tableFilter.time"
+      :status="tableFilter.status"
+      :secondary="tableFilter.secondary"
+      :placeholder="tableFilterConfig.placeholder"
+      :show-time="tableFilterConfig.showTime"
+      :time-options="tableFilterConfig.timeOptions"
+      :status-label="tableFilterConfig.statusLabel"
+      :status-options="tableFilterConfig.statusOptions"
+      :secondary-label="tableFilterConfig.secondaryLabel"
+      :secondary-options="tableFilterConfig.secondaryOptions"
+      @update:query="tableFilter.query = $event"
+      @update:time="setTableTime"
+      @update:status="setTableStatus"
+      @update:secondary="setTableSecondary"
+    />
     <p v-if="error" class="alert error">{{ error }}</p><p v-if="notice" class="alert success">{{ notice }}</p>
     <template v-if="tab === 'overview'">
     <main v-if="tab === 'overview'"><section class="welcome-row"><div><p class="eyebrow">PANORAMA GENERAL</p><h2>Todo lo importante, en un vistazo</h2><p class="subtitle">Prioriza excepciones reales y deja el trabajo repetitivo a la automatización.</p></div><span class="live-label"><UiIcon name="refresh" :size="14" />Datos en tiempo real</span></section><section class="cards"><button v-for="card in cards" :key="card.label" type="button" class="card" :class="`tone-${card.tone}`" :disabled="!card.action" @click="activateSummaryCard(card.action)"><span class="card-icon"><UiIcon :name="card.icon" :size="20" /></span><span class="card-copy"><small>{{ card.label }}</small><strong>{{ formatNumber(card.value) }}</strong><span>{{ card.helper }}</span></span><UiIcon v-if="card.action" class="card-arrow" name="arrow" :size="16" /></button></section><section v-if="dashboard?.normalization_no_match && dashboard?.normalization_closed_no_match !== undefined" class="coverage-banner"><span class="coverage-icon"><UiIcon name="quality" :size="23" /></span><div><h3>No tienes que revisar {{ formatNumber(dashboard.normalization_no_match) }} casos uno por uno</h3><p>Representan cobertura faltante del catálogo. Primero deben reprocesarse y agruparse; la revisión humana queda sólo para decisiones reales.</p></div><button class="secondary" type="button" @click="activateSummaryCard('no_match')">Ver cobertura<UiIcon name="arrow" :size="16" /></button></section><section class="panel"><div class="panel-title"><div><p class="eyebrow">ACTIVIDAD DE INGESTA</p><h2>Corridas recientes</h2><p class="panel-description">Últimas actualizaciones recibidas de laboratorios y proveedores.</p></div><span v-if="dashboard" class="record-count">{{ dashboard.sources }} fuentes · {{ dashboard.crawl_runs }} corridas</span></div><div class="table-wrap"><table><thead><tr><th>Fuente</th><th>Estado</th><th>Recibidos</th><th>Válidos</th><th>Publicados</th><th>Inicio</th></tr></thead><tbody><tr v-for="run in dashboard?.recent_runs ?? []" :key="run.id"><td><strong>{{ run.source_name }}</strong></td><td><span class="status" :class="run.status"><i></i>{{ statusLabel(run.status) }}</span></td><td>{{ formatNumber(run.records_received) }}</td><td>{{ formatNumber(run.records_valid) }}</td><td>{{ formatNumber(run.records_published) }}</td><td>{{ formatDate(run.started_at) }}</td></tr><tr v-if="!dashboard?.recent_runs?.length"><td colspan="6" class="empty">Sin corridas todavía.</td></tr></tbody></table></div></section></main>
@@ -807,7 +981,7 @@ onUnmounted(() => {
     <main v-else-if="tab === 'locations'" class="panel"><div class="panel-title"><div><p class="eyebrow">COBERTURA GEOGRÁFICA</p><h2>Sucursales</h2><p class="panel-description">Ubicaciones donde se ofrecen los servicios.</p></div><span class="record-count">{{ locations.length }} registros</span></div><div class="table-wrap"><table><thead><tr><th>Proveedor</th><th>Sucursal</th><th>Dirección</th><th>Localidad</th><th>Estado</th><th>Coordenadas</th></tr></thead><tbody><tr v-for="row in locations" :key="row.location_id"><td><strong>{{ row.provider_name }}</strong></td><td>{{ row.location_name }}</td><td>{{ row.address ?? '—' }}</td><td>{{ row.locality ?? '—' }}</td><td><span class="status" :class="row.status">{{ statusLabel(row.status) }}</span></td><td>{{ row.latitude ?? '—' }}, {{ row.longitude ?? '—' }}</td></tr><tr v-if="!locations.length"><td colspan="6" class="empty">Sin sucursales.</td></tr></tbody></table></div></main>
     <main v-else-if="tab === 'offers'" class="panel"><div class="panel-title"><div><p class="eyebrow">CATÁLOGO PUBLICADO</p><h2>Servicios</h2><p class="panel-description">Oferta activa por proveedor.</p></div><span class="record-count">{{ offers.length }} registros</span></div><div class="table-wrap"><table><thead><tr><th>Proveedor</th><th>Servicio</th><th>Estado</th><th>Precios vigentes</th><th>Última observación</th></tr></thead><tbody><tr v-for="row in offers" :key="row.offer_id"><td><strong>{{ row.provider_name }}</strong></td><td>{{ row.service_name }}</td><td><span class="status" :class="row.status">{{ statusLabel(row.status) }}</span></td><td>{{ row.current_price_count }}</td><td>{{ formatDate(row.last_seen_at) }}</td></tr><tr v-if="!offers.length"><td colspan="5" class="empty">Sin servicios.</td></tr></tbody></table></div></main>
     <main v-else-if="tab === 'prices'" class="panel"><div class="panel-title"><div><p class="eyebrow">PRECIOS VIGENTES</p><h2>Precios</h2><p class="panel-description">Importes publicados y su última fuente de verificación.</p></div><span class="record-count">{{ prices.length }} registros</span></div><div class="table-wrap"><table><thead><tr><th>Proveedor</th><th>Servicio</th><th>Tipo</th><th>Importe</th><th>Última observación</th><th>Fuente</th></tr></thead><tbody><tr v-for="row in prices" :key="row.price_version_id"><td><strong>{{ row.provider_name }}</strong></td><td>{{ row.service_name }}</td><td>{{ statusLabel(row.price_type) }}</td><td><strong>{{ row.amount_minor / 100 }} {{ row.currency }}</strong></td><td>{{ formatDate(row.last_seen_at) }}</td><td><a v-if="row.source_url" :href="row.source_url" target="_blank" rel="noopener noreferrer">Abrir fuente</a><span v-else>—</span></td></tr><tr v-if="!prices.length"><td colspan="6" class="empty">Sin precios registrados.</td></tr></tbody></table></div></main>
-    <main v-else-if="tab === 'queue'" class="panel"><div v-if="queueStatus === 'no_match' && hasAccurateNormalizationCounts" class="queue-note"><UiIcon name="quality" :size="21" /><div><strong>Sin cobertura no significa error humano</strong><p>Estos registros necesitan catálogo, no descartes manuales. Revisa sólo los que tengan evidencia suficiente.</p></div></div><div class="panel-title"><div><p class="eyebrow">REVISIÓN CONTROLADA</p><h2>Cola de decisiones</h2><p class="hint">El resolver automático ya cerró lo seguro; aquí quedan las excepciones que necesitan contexto.</p></div><div class="panel-tools"><label>Resultado<select v-model="queueStatus" @change="changeQueueFilter"><option value="ambiguous">Ambiguos</option><option v-if="hasAccurateNormalizationCounts" value="no_match">Sin cobertura</option><option value="pending">Pendientes</option><option v-if="hasAccurateNormalizationCounts" value="all">Todos</option></select></label><label>Origen<select v-model="queueInputType" @change="changeQueueFilter"><option value="">Todos</option><option value="search">Búsqueda</option><option value="crawler">Proveedor</option><option value="ocr">Receta OCR</option></select></label><span class="muted">{{ queue.length }} registros</span><button v-if="queueHasMore" class="link" type="button" :disabled="queueLoadingMore" @click="loadMoreQueue">{{ queueLoadingMore ? 'Cargando…' : 'Cargar 100 más' }}</button></div></div><div class="table-wrap"><table><thead><tr><th>Entrada recibida</th><th>Origen</th><th>Fuente</th><th>Resultado</th><th>Candidatos</th><th>Fecha</th><th></th></tr></thead><tbody><tr v-for="row in queue" :key="row.normalization_run_id"><td><strong>{{ row.raw_text ?? row.normalized_input ?? '—' }}</strong><small class="block">{{ row.normalized_input ?? '—' }}</small></td><td>{{ statusLabel(row.input_type) }}</td><td>{{ row.source_name ?? '—' }}</td><td><span class="status" :class="row.status">{{ statusLabel(row.status) }}</span></td><td>{{ row.candidate_count }}</td><td>{{ formatDate(row.created_at) }}</td><td><button class="link" @click="openRow(row)">Revisar</button></td></tr><tr v-if="!queue.length"><td colspan="7" class="empty">No hay casos con estos filtros.</td></tr></tbody></table></div></main>
+    <main v-else-if="tab === 'queue'" class="panel"><div v-if="queueStatus === 'no_match' && hasAccurateNormalizationCounts" class="queue-note"><UiIcon name="quality" :size="21" /><div><strong>Sin cobertura no significa error humano</strong><p>Estos registros necesitan catálogo, no descartes manuales. Revisa sólo los que tengan evidencia suficiente.</p></div></div><div class="panel-title"><div><p class="eyebrow">REVISIÓN CONTROLADA</p><h2>Cola de decisiones</h2><p class="hint">El resolver automático ya cerró lo seguro; aquí quedan las excepciones que necesitan contexto.</p></div><div class="panel-tools"><span class="muted">{{ queue.length }} registros</span><button v-if="queueHasMore" class="link" type="button" :disabled="queueLoadingMore" @click="loadMoreQueue">{{ queueLoadingMore ? 'Cargando…' : 'Cargar 100 más' }}</button></div></div><div class="table-wrap"><table><thead><tr><th>Entrada recibida</th><th>Origen</th><th>Fuente</th><th>Resultado</th><th>Candidatos</th><th>Fecha</th><th></th></tr></thead><tbody><tr v-for="row in queue" :key="row.normalization_run_id"><td><strong>{{ row.raw_text ?? row.normalized_input ?? '—' }}</strong><small class="block">{{ row.normalized_input ?? '—' }}</small></td><td>{{ statusLabel(row.input_type) }}</td><td>{{ row.source_name ?? '—' }}</td><td><span class="status" :class="row.status">{{ statusLabel(row.status) }}</span></td><td>{{ row.candidate_count }}</td><td>{{ formatDate(row.created_at) }}</td><td><button class="link" @click="openRow(row)">Revisar</button></td></tr><tr v-if="!queue.length"><td colspan="7" class="empty">No hay casos con estos filtros.</td></tr></tbody></table></div></main>
     <main v-else-if="tab === 'quality'" class="panel"><div class="panel-title"><div><p class="eyebrow">CALIDAD DE DATOS</p><h2>Integridad de datos</h2><p class="panel-description">Señales que requieren seguimiento antes de publicar información.</p></div><span class="record-count">{{ qualityIssues.length }} registros</span></div><div class="table-wrap"><table><thead><tr><th>Código</th><th>Severidad</th><th>Estado</th><th>Corrida</th><th>Creado</th><th>Detalle</th><th>Acciones</th></tr></thead><tbody><tr v-for="row in qualityIssues" :key="row.issue_id"><td><strong>{{ row.issue_code }}</strong></td><td><span class="status" :class="row.severity">{{ statusLabel(row.severity) }}</span></td><td><span class="status" :class="row.status">{{ statusLabel(row.status) }}</span></td><td>{{ row.crawl_run_id ?? '—' }}</td><td>{{ formatDate(row.created_at) }}</td><td><pre>{{ JSON.stringify(row.details, null, 2) }}</pre></td><td class="actions" v-if="row.status === 'open' || row.status === 'acknowledged'"><button class="link" @click="updateQuality(row, 'acknowledged')">Reconocer</button><button class="link" @click="updateQuality(row, 'resolved')">Resolver</button><button class="link danger-link" @click="updateQuality(row, 'ignored')">Ignorar</button></td><td v-else>—</td></tr><tr v-if="!qualityIssues.length"><td colspan="7" class="empty">No hay incidencias de calidad.</td></tr></tbody></table></div></main>
     <main v-else-if="tab === 'alerts'" class="panel"><div class="panel-title"><div><p class="eyebrow">OPERACIÓN</p><h2>Alertas</h2><p class="panel-description">Eventos que pueden afectar la calidad o disponibilidad del servicio.</p></div><span class="record-count">{{ alerts.length }} registros</span></div><div class="table-wrap"><table><thead><tr><th>Código</th><th>Título</th><th>Severidad</th><th>Estado</th><th>Fuente</th><th>Creado</th><th>Acciones</th></tr></thead><tbody><tr v-for="row in alerts" :key="row.alert_id"><td><strong>{{ row.alert_code }}</strong></td><td><strong>{{ row.title }}</strong><small class="block">{{ row.detail ?? '' }}</small></td><td><span class="status" :class="row.severity">{{ statusLabel(row.severity) }}</span></td><td><span class="status" :class="row.status">{{ statusLabel(row.status) }}</span></td><td>{{ row.source ?? '—' }}</td><td>{{ formatDate(row.created_at) }}</td><td class="actions" v-if="row.status === 'open' || row.status === 'acknowledged'"><button class="link" @click="updateAlert(row, 'acknowledged')">Reconocer</button><button class="link" @click="updateAlert(row, 'resolved')">Resolver</button><button class="link danger-link" @click="updateAlert(row, 'ignored')">Ignorar</button></td><td v-else>—</td></tr><tr v-if="!alerts.length"><td colspan="7" class="empty">No hay alertas activas.</td></tr></tbody></table></div></main>
     <main v-else class="panel"><div class="panel-title"><div><p class="eyebrow">AUDITORÍA</p><h2>Registros fuente recientes</h2><p class="panel-description">Evidencia original recibida de cada proveedor.</p></div><span class="record-count">{{ records.length }} registros</span></div><div class="table-wrap"><table><thead><tr><th>Fuente</th><th>Tipo</th><th>ID externo</th><th>Procesamiento</th><th>Observado</th><th>Payload</th></tr></thead><tbody><tr v-for="record in records" :key="record.raw_record_id"><td><strong>{{ record.source_name }}</strong></td><td>{{ record.record_type }}</td><td>{{ record.external_record_id ?? '—' }}</td><td><span class="status" :class="record.parse_status">{{ statusLabel(record.parse_status) }}</span></td><td>{{ formatDate(record.observed_at) }}</td><td><details><summary>Ver JSON</summary><pre>{{ JSON.stringify(record.payload, null, 2) }}</pre></details></td></tr><tr v-if="!records.length"><td colspan="6" class="empty">Sin registros fuente cargados.</td></tr></tbody></table></div></main>
