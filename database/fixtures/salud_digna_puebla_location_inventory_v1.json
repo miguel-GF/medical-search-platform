@@ -1,0 +1,41 @@
+{
+  "version": "salud-digna-puebla-location-inventory-v1",
+  "source_key": "salud_digna_puebla_locations",
+  "source_run_id": "7fed9484-80e5-48c9-8952-a286e5851a9c",
+  "source_finished_at": "2026-09-13T16:05:49.935659Z",
+  "source_endpoint": "https://api.emarketingsd.org/base/Sucursales/Listado",
+  "state": {"id": 23, "name": "Puebla"},
+  "summary": {
+    "public_entries": 15,
+    "clinic_entries": 13,
+    "diagnostic_centers": 2,
+    "municipalities": 5,
+    "detailed_branch_pages_in_fixture": 8,
+    "pending_page_reconciliation": 7
+  },
+  "verified_page_external_ids": ["58", "110", "136", "155", "97", "332", "357", "329"],
+  "municipalities": [
+    {"id": 2108, "name": "Puebla", "public_entries": 10},
+    {"id": 2113, "name": "San Andrés Cholula", "public_entries": 2},
+    {"id": 2126, "name": "San Martín Texmelucan", "public_entries": 1},
+    {"id": 2134, "name": "San Pedro Cholula", "public_entries": 1},
+    {"id": 2150, "name": "Tehuacán", "public_entries": 1}
+  ],
+  "locations": [
+    {"external_id": "299", "name": "CENTRO ANALITICO LABORATORIO PUEBLA", "municipality_id": 2108, "location_type": "diagnostic_center", "address": null, "coordinates": null},
+    {"external_id": "293", "name": "PET-CT PUEBLA", "municipality_id": 2108, "location_type": "diagnostic_center", "address": null, "coordinates": null},
+    {"external_id": "58", "name": "PUEBLA", "municipality_id": 2108, "location_type": "clinic", "address": "Calle 2 pte. 909 entre 9 y 11 Col. Centro a 1 cuadra del paseo Bravo", "coordinates": {"latitude": 19.0487934, "longitude": -98.2054124}},
+    {"external_id": "329", "name": "PUEBLA AZALEAS", "municipality_id": 2108, "location_type": "clinic", "address": null, "coordinates": null},
+    {"external_id": "274", "name": "PUEBLA AZCARATE", "municipality_id": 2108, "location_type": "clinic", "address": null, "coordinates": null},
+    {"external_id": "97", "name": "PUEBLA CAPU", "municipality_id": 2108, "location_type": "clinic", "address": "Blvd. Norte Heroes de 5 de mayo #3860 Col. Las cuartillas. Entre: de la pedrera y 36 poniente.", "coordinates": {"latitude": 19.0717708, "longitude": -98.2063276}},
+    {"external_id": "155", "name": "PUEBLA EL PORVENIR", "municipality_id": 2108, "location_type": "clinic", "address": "AV 14 OTE #4815, AGRÍCOLA RESURGIMIENTO, 72370 PUEBLA, PUE.", "coordinates": null},
+    {"external_id": "332", "name": "PUEBLA MUNICIPIO LIBRE", "municipality_id": 2108, "location_type": "clinic", "address": null, "coordinates": null},
+    {"external_id": "136", "name": "PUEBLA SAN SEBASTIAN", "municipality_id": 2108, "location_type": "clinic", "address": "Blvr. Xonacatepec #174, entre av. De las Rosas y Blvr. Margaritas, col. Bosques de San Sebastián", "coordinates": null},
+    {"external_id": "110", "name": "PUEBLA XILOTZINGO", "municipality_id": 2108, "location_type": "clinic", "address": "Blvd. Valsequillo #26, col. Xilotzingo, C.P. 72590; Puebla, Puebla", "coordinates": {"latitude": 18.98865, "longitude": -98.200361}},
+    {"external_id": "357", "name": "PUEBLA ANGELOPOLIS", "municipality_id": 2113, "location_type": "clinic", "address": null, "coordinates": null},
+    {"external_id": "232", "name": "SAN ANDRES CHOLULA", "municipality_id": 2113, "location_type": "clinic", "address": null, "coordinates": null},
+    {"external_id": "248", "name": "SAN MARTIN TEXMELUCAN", "municipality_id": 2126, "location_type": "clinic", "address": null, "coordinates": null},
+    {"external_id": "270", "name": "SAN PEDRO CHOLULA", "municipality_id": 2134, "location_type": "clinic", "address": null, "coordinates": null},
+    {"external_id": "320", "name": "TEHUACAN", "municipality_id": 2150, "location_type": "clinic", "address": null, "coordinates": null}
+  ]
+}

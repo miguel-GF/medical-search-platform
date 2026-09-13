@@ -6,9 +6,21 @@ __all__ = ["DenueAdapter", "DenueClient", "DenueQuery", "denue_row_to_record"]
 from .ruiz import RuizAdapter, RuizClient, RuizDepartment
 
 __all__ = ["RuizAdapter", "RuizClient", "RuizDepartment"]
-from .salud_digna import SaludDignaAdapter, SaludDignaClient, SaludDignaLocationPage
+from .salud_digna import (
+    SaludDignaAdapter,
+    SaludDignaClient,
+    SaludDignaLocationInventoryAdapter,
+    SaludDignaLocationPage,
+    salud_digna_inventory_row_to_record,
+)
 
-__all__ += ["SaludDignaAdapter", "SaludDignaClient", "SaludDignaLocationPage"]
+__all__ += [
+    "SaludDignaAdapter",
+    "SaludDignaClient",
+    "SaludDignaLocationInventoryAdapter",
+    "SaludDignaLocationPage",
+    "salud_digna_inventory_row_to_record",
+]
 from .generic import (
     GenericCrawlConfig,
     GenericPage,

@@ -87,6 +87,25 @@ python database/scripts/render_official_provider_locations.py `
   --chunk-dir collectors/artifacts/salud-digna-puebla-all/location-sql
 ```
 
+## Inventario estatal de Salud Digna
+
+El directorio público por estado/municipio devolvió 15 entradas para Puebla:
+13 clínicas y dos centros diagnósticos (Centro Analítico y PET-CT), repartidos
+en Puebla, San Andrés Cholula, San Martín Texmelucan, San Pedro Cholula y
+Tehuacán. Ocho tienen página detallada en el fixture de ubicaciones; los IDs
+274, 293, 299, 232, 248, 270 y 320 quedaron como candidatos pendientes de
+reconciliación de domicilio, coordenadas y slug.
+
+```powershell
+$env:PYTHONPATH = "collectors/src"
+python -m pruevia_collectors.cli_salud_digna_locations `
+  --artifact-root artifacts/salud-digna-puebla-location-directory
+```
+
+La corrida sólo llama el directorio público de estados, municipios y
+sucursales. No usa citas, pacientes, resultados ni pagos, y una fila sin
+domicilio o coordenadas no se convierte en oferta.
+
 ## Sucursales públicas de Dr. Simi
 
 El feed oficial de sucursales y la página pública de campaña se capturan sin
@@ -195,6 +214,7 @@ La frecuencia recomendada es conservadora y depende del tipo de dato:
 | Fuente | Qué actualizar | Cadencia | Regla de frescura |
 | --- | --- | --- | --- |
 | Salud Digna, Chopo, Ruiz y SEMIN | Catálogo/precio público | cada 24 h | cuarentena si faltan datos o supera 48 h |
+| Salud Digna | Directorio estatal de sucursales | cada 7 días | abrir tarea si cambia el conteo o aparece un ID nuevo |
 | Dr. Simi | Feed público de sucursales | cada 7 días | cuarentena si cambia el esquema o baja de 1 sede Puebla |
 | Páginas de sucursal oficiales | domicilio, teléfono, coordenadas, horario | cada 7 días | conservar el último snapshot válido |
 | DENUE | universo de negocios y altas/bajas | mensual | no elimina una sede sin confirmar cierre |

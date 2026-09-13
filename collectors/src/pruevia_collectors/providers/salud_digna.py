@@ -5,6 +5,7 @@ import json
 import re
 import ssl
 import time
+import unicodedata
 from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass
 from decimal import ROUND_HALF_UP, Decimal, InvalidOperation
@@ -29,6 +30,10 @@ SALUD_DIGNA_SERVICES_URL = "https://api.emarketingsd.org"
 SALUD_DIGNA_LOCATION_PREFIX = f"{SALUD_DIGNA_ORIGIN}/"
 SALUD_DIGNA_CATEGORIES_PATH = "/Citas/Citas2/EstudiosPorSucursal"
 SALUD_DIGNA_STUDIES_PATH = "/Citas/Citas2/SubEstudiosPorSucursalPP"
+SALUD_DIGNA_STATES_PATH = "/base/Estados/Listado"
+SALUD_DIGNA_MUNICIPALITIES_PATH = "/base/Municipios/Listado"
+SALUD_DIGNA_BRANCHES_PATH = "/base/Sucursales/Listado"
+SALUD_DIGNA_LOCATION_DIRECTORY_URL = f"{SALUD_DIGNA_ORIGIN}/ubica-tu-clinica"
 MAX_SALUD_DIGNA_ATTEMPTS = 5
 MAX_SALUD_DIGNA_TIMEOUT_SECONDS = 120.0
 MAX_SALUD_DIGNA_DELAY_SECONDS = 60.0
@@ -37,6 +42,9 @@ MAX_SALUD_DIGNA_CATEGORIES = 500
 MAX_SALUD_DIGNA_STUDIES = 20_000
 MAX_SALUD_DIGNA_SLUG_CHARS = 128
 MAX_SALUD_DIGNA_FIELD_CHARS = 4_000
+MAX_SALUD_DIGNA_STATES = 40
+MAX_SALUD_DIGNA_MUNICIPALITIES = 500
+MAX_SALUD_DIGNA_BRANCHES = 2_000
 
 
 @dataclass(frozen=True)
@@ -157,6 +165,80 @@ class SaludDignaClient:
                 raise ValueError("Salud Digna study catalog exceeds the safety limit")
         return studies
 
+    def fetch_states(self, *, country_id: int = 1) -> list[Mapping[str, Any]]:
+        """Return the public state directory used by the clinic locator."""
+
+        if isinstance(country_id, bool) or not isinstance(country_id, int) or not 1 <= country_id <= 1_000:
+            raise ValueError("Salud Digna country id is outside the safety limit")
+        payload = self._request_json(
+            "GET",
+            f"{self.services_base_url}{SALUD_DIGNA_STATES_PATH}",
+            params={"IdPais": str(country_id)},
+        )
+        return _decode_rows(payload, keys=("data", "Data", "result", "results", "items"), max_rows=MAX_SALUD_DIGNA_STATES)
+
+    def fetch_municipalities(self, *, state_id: int | str) -> list[Mapping[str, Any]]:
+        numeric_id = _directory_id(state_id, "state")
+        payload = self._request_json(
+            "GET",
+            f"{self.services_base_url}{SALUD_DIGNA_MUNICIPALITIES_PATH}",
+            params={"IdEstado": str(numeric_id)},
+        )
+        return _decode_rows(payload, keys=("data", "Data", "result", "results", "items"), max_rows=MAX_SALUD_DIGNA_MUNICIPALITIES)
+
+    def fetch_branches(self, *, state_id: int | str, municipality_id: int | str) -> list[Mapping[str, Any]]:
+        state_numeric_id = _directory_id(state_id, "state")
+        municipality_numeric_id = _directory_id(municipality_id, "municipality")
+        payload = self._request_json(
+            "GET",
+            f"{self.services_base_url}{SALUD_DIGNA_BRANCHES_PATH}",
+            params={"IdEstado": str(state_numeric_id), "IdMunicipio": str(municipality_numeric_id)},
+        )
+        return _decode_rows(payload, keys=("data", "Data", "result", "results", "items"), max_rows=MAX_SALUD_DIGNA_BRANCHES)
+
+    def fetch_puebla_location_inventory(self) -> list[Mapping[str, Any]]:
+        """Enumerate every public Puebla-state entry in the clinic locator.
+
+        The endpoint includes diagnostic centers and rows without a slug or
+        address.  They are intentionally returned as candidate evidence so an
+        operator can reconcile them against a branch page before publishing a
+        canonical location.
+        """
+
+        states = self.fetch_states()
+        puebla_states = [
+            row for row in states if _directory_normalize(_first_value(row, "Descripcion", "descripcion", "Nombre", "nombre")) == "puebla"
+        ]
+        if len(puebla_states) != 1:
+            raise ValueError(f"Salud Digna state directory returned {len(puebla_states)} Puebla matches")
+        state_id = _directory_id(_first_value(puebla_states[0], "Id", "id"), "state")
+        municipalities = self.fetch_municipalities(state_id=state_id)
+        inventory: list[Mapping[str, Any]] = []
+        seen_ids: dict[str, str] = {}
+        for municipality in municipalities:
+            municipality_id = _directory_id(_first_value(municipality, "Id", "id"), "municipality")
+            municipality_name = _text(_first_value(municipality, "Descripcion", "descripcion", "Nombre", "nombre"))
+            for branch in self.fetch_branches(state_id=state_id, municipality_id=municipality_id):
+                branch_id = _directory_id(_first_value(branch, "Id", "id", "IdSucursal", "idSucursal"), "branch")
+                branch_name = _text(_first_value(branch, "Descripcion", "descripcion", "Nombre", "nombre"))
+                if not branch_name:
+                    raise ValueError(f"Salud Digna branch {branch_id} has no name")
+                previous_name = seen_ids.get(str(branch_id))
+                if previous_name is not None:
+                    if _directory_normalize(previous_name) != _directory_normalize(branch_name):
+                        raise ValueError(f"Salud Digna branch id has conflicting names: {branch_id}")
+                    continue
+                row = dict(branch)
+                row["_state_id"] = state_id
+                row["_state_name"] = "Puebla"
+                row["_municipality_id"] = municipality_id
+                row["_municipality_name"] = municipality_name
+                inventory.append(row)
+                seen_ids[str(branch_id)] = branch_name
+                if len(inventory) > MAX_SALUD_DIGNA_BRANCHES:
+                    raise ValueError("Salud Digna Puebla branch inventory exceeds the safety limit")
+        return inventory
+
     def _request(self, method: str, url: str, **kwargs: Any) -> httpx.Response:
         headers = {"User-Agent": "PrueviaCollector/0.1", **kwargs.pop("headers", {})}
         for attempt in range(1, self.max_attempts + 1):
@@ -271,6 +353,83 @@ class SaludDignaAdapter:
                     continue
                 seen_external_ids[external_id] = identity
                 yield record
+
+
+class SaludDignaLocationInventoryAdapter:
+    """Collect the public Puebla-state clinic directory without catalogs."""
+
+    source = SourceSpec(
+        source_key="salud_digna_puebla_locations",
+        name="Salud Digna — directorio público de Puebla",
+        source_type="provider_official",
+        usage_policy_status="review_required",
+        expected_min_records=1,
+        expected_max_records=MAX_SALUD_DIGNA_BRANCHES,
+        endpoint_type="api",
+        endpoint_url=f"{SALUD_DIGNA_SERVICES_URL}{SALUD_DIGNA_BRANCHES_PATH}",
+        parser_version="0.1.0",
+    )
+
+    def __init__(self, client: SaludDignaClient) -> None:
+        self.client = client
+
+    def collect(self) -> Iterable[SourceRecord]:
+        seen: set[str] = set()
+        for row in self.client.fetch_puebla_location_inventory():
+            record = salud_digna_inventory_row_to_record(row)
+            key = str(record.external_record_id or "")
+            if key in seen:
+                raise ValueError(f"duplicate Salud Digna directory branch: {key}")
+            seen.add(key)
+            yield record
+
+
+def salud_digna_inventory_row_to_record(row: Mapping[str, Any]) -> SourceRecord:
+    """Convert one public locator row into bounded, candidate-only evidence."""
+
+    branch_id = _directory_id(_first_value(row, "Id", "id", "IdSucursal", "idSucursal"), "branch")
+    name = _text(_first_value(row, "Descripcion", "descripcion", "Nombre", "nombre"))
+    if not name:
+        raise ValueError(f"Salud Digna directory branch {branch_id} has no name")
+    state_name = _text(row.get("_state_name") or _first_value(row, "Estado", "estado"))
+    if _directory_normalize(state_name) != "puebla":
+        raise ValueError(f"Salud Digna directory branch {branch_id} is outside Puebla")
+    municipality_name = _text(row.get("_municipality_name") or _first_value(row, "Municipio", "municipio")) or None
+    address = _text(_first_value(row, "Domicilio", "domicilio", "Direccion", "direccion")) or None
+    coordinates = _directory_coordinates(row.get("Lat", row.get("lat")), row.get("Lng", row.get("lng")))
+    normalized_name = _directory_normalize(name)
+    location_type = "diagnostic_center" if any(token in normalized_name for token in ("pet ct", "centro analitico")) else "clinic"
+    payload = {
+        "provider_brand": "Salud Digna",
+        "market": "Puebla",
+        "provider_display_name": name,
+        "provider_external_id": str(branch_id),
+        "location_url": SALUD_DIGNA_LOCATION_DIRECTORY_URL,
+        "location_type": location_type,
+        "address_line_1": address,
+        "coordinates": coordinates,
+        "municipality_id": row.get("_municipality_id"),
+        "municipality_name": municipality_name,
+        "state_id": row.get("_state_id"),
+        "state_name": "Puebla",
+        "claim_status": "candidate",
+        "evidence_note": "Public clinic directory identity only; branch page, current hours and catalog require separate verification.",
+    }
+    observations = (
+        Observation(entity_type="provider_location", attribute_name="provider_display_name", observed_value=name, confidence=0.99),
+        Observation(entity_type="provider_location", attribute_name="provider_external_id", observed_value=str(branch_id), confidence=0.99),
+        Observation(entity_type="provider_location", attribute_name="address", observed_value=address, confidence=0.95 if address else 0.0),
+        Observation(entity_type="provider_location", attribute_name="coordinates", observed_value=coordinates, confidence=0.95 if coordinates else 0.0),
+        Observation(entity_type="provider_location", attribute_name="municipality_name", observed_value=municipality_name, confidence=0.95),
+    )
+    return SourceRecord(
+        source_key="salud_digna_puebla_locations",
+        record_type="provider_location_discovered",
+        external_record_id=str(branch_id),
+        source_url=f"{SALUD_DIGNA_SERVICES_URL}{SALUD_DIGNA_BRANCHES_PATH}",
+        payload=payload,
+        observations=observations,
+    )
 
 
 def parse_salud_digna_location(page: SaludDignaLocationPage) -> SourceRecord:
@@ -401,6 +560,31 @@ def _first_value(row: Mapping[str, Any], *keys: str) -> Any:
 
 def _text(value: Any) -> str:
     return " ".join(str(value or "").split())[:MAX_SALUD_DIGNA_FIELD_CHARS]
+
+
+def _directory_normalize(value: Any) -> str:
+    folded = unicodedata.normalize("NFKD", _text(value).casefold())
+    plain = "".join(char for char in folded if not unicodedata.combining(char))
+    return re.sub(r"[^a-z0-9]+", " ", plain).strip()
+
+
+def _directory_id(value: Any, kind: str) -> int:
+    if isinstance(value, bool):
+        raise ValueError(f"Salud Digna {kind} id is invalid")
+    try:
+        parsed = int(str(value).strip())
+    except (TypeError, ValueError) as error:
+        raise ValueError(f"Salud Digna {kind} id is invalid") from error
+    if not 1 <= parsed <= 1_000_000:
+        raise ValueError(f"Salud Digna {kind} id is outside the safety limit")
+    return parsed
+
+
+def _directory_coordinates(latitude: Any, longitude: Any) -> dict[str, float] | None:
+    coordinates = _coordinates(latitude, longitude)
+    if coordinates is None or (coordinates["latitude"] == 0 and coordinates["longitude"] == 0):
+        return None
+    return coordinates
 
 
 def _coordinates(latitude: Any, longitude: Any) -> dict[str, float] | None:
