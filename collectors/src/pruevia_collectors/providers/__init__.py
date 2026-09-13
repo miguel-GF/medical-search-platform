@@ -33,3 +33,6 @@ __all__ += ["SeminAdapter", "SeminClient"]
 from .dr_simi import DrSimiAdapter, DrSimiClient, parse_branch, parse_campaign_branches
 
 __all__ += ["DrSimiAdapter", "DrSimiClient", "parse_branch", "parse_campaign_branches"]
+from .linfolab import LinfolabAdapter, LinfolabClient, branch_to_record, parse_branches
+
+__all__ += ["LinfolabAdapter", "LinfolabClient", "branch_to_record", "parse_branches"]

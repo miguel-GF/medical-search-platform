@@ -27,6 +27,13 @@ verificación:
   enlazó 11 ubicaciones DENUE como identidades pendientes. Sus 58 etiquetas no
   aprobadas quedaron en la cola administrativa; no se publicaron por similitud.
 
+* Se añadió `pruevia-linfolab` para la página pública de sucursales. El sitio
+  enumera 19 tarjetas; el parser sólo acepta las que incluyen un domicilio
+  verificable en el enlace oficial de Maps. La captura automática quedó en
+  cuarentena porque el certificado TLS del dominio no pudo validarse desde el
+  entorno de ejecución; no se desactivó la verificación. Una captura revisada
+  permitió publicar seis filas RAW completas, sin convertirlas en estudios.
+
 Los servicios, descripciones, indicaciones y precios de SEMIN son evidencia
 del proveedor, no conceptos clínicos canónicos. No se llaman endpoints de
 citas, pacientes o promociones y no se reutilizan credenciales del sitio.
@@ -151,13 +158,35 @@ ofertas en Supabase.
 
 En el entorno enlazado de pruebas ya se cargaron las diez identidades y sus
 12 ubicaciones DENUE como `verification_pending`; Salud Digna suma ocho
-ubicaciones oficiales y Dr. Simi una ubicación oficial. Las corridas SEMIN (149
-registros), Chopo (60) y Salud Digna (6,923 registros) se guardaron en `ingest`.
+ubicaciones oficiales, Dr. Simi tres ubicaciones oficiales (la unidad 260
+permanece pendiente de verificación). Las corridas SEMIN (149
+registros), Chopo (60), Salud Digna (6,923) y Linfolab (6 sucursales) se
+guardaron en `ingest`. Linfolab tiene tres ubicaciones oficiales enlazadas y
+tres sucursales adicionales conservadas sólo como evidencia RAW.
 La cola administrativa quedó abierta con
 7,138 pendientes (`normalization_pending`): 6,910 estudios Salud Digna, 58 estudios Chopo, 140
 estudios SEMIN y 30 etiquetas genéricas clínicas. Esto permite auditar y
 depurar desde el panel administrativo sin presentar esos estudios como
 resultados confirmados a pacientes.
+
+## Sucursales públicas de Linfolab
+
+La página oficial muestra sedes como Gabriel Pastor, Zavaleta, Cholula, Plaza
+Norte, Tolin y Mayorazgo, además de otras tarjetas cuyo enlace de Maps no
+contiene una dirección. El colector conserva únicamente las seis primeras
+cuando puede leer el domicilio; los estudios, precios y disponibilidad siguen
+fuera de alcance. El sitio también advierte que un estudio puede no prestarse
+en todas las sucursales, por lo que una sede no crea una oferta automática.
+
+```powershell
+$env:PYTHONPATH = "collectors/src"
+python -m pruevia_collectors.cli_linfolab `
+  --artifact-root collectors/artifacts/linfolab-puebla-live
+```
+
+Si la corrida queda en cuarentena, se debe corregir el certificado del
+proveedor o validar manualmente una captura; nunca se debe usar
+`--ignore-robots` ni desactivar TLS en producción.
 
 ## Cadencia operativa y puerta de liberación
 

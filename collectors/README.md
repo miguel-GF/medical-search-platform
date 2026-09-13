@@ -118,15 +118,27 @@ la equivalencia clínica correspondiente. Verifica `robots.txt` y los términos
 vigentes antes de cada corrida; una autorización para desarrollar el collector
 no sustituye el permiso contractual del proveedor.
 
-El adapter `pruevia-dr-simi` consume exclusivamente el archivo JSON público de
-sucursales (`assets/data/sucursalesMAPA.json`). No llama endpoints de citas,
-pacientes, resultados ni promociones. La corrida de Puebla confirmó una sede;
-la página pública de campaña amplió el hallazgo a cuatro sedes; las coordenadas
+El adapter `pruevia-dr-simi` consume el archivo JSON público de sucursales
+(`assets/data/sucursalesMAPA.json`) y la página pública de campaña del mismo
+dominio. No llama endpoints de citas, pacientes, resultados ni promociones.
+La corrida de Puebla confirmó cuatro sedes; tres tienen coordenadas contrastadas
+con DENUE y una queda pendiente por discrepancia de domicilio. Las coordenadas
 y cualquier catálogo de estudios se verifican por separado.
 
 ```powershell
 $env:PYTHONPATH = "src"
 python -m pruevia_collectors.cli_dr_simi --artifact-root artifacts/dr-simi-puebla
+```
+
+El adapter `pruevia-linfolab` lee la página pública de sucursales, respeta
+`robots.txt` y conserva sólo tarjetas con domicilio publicado en el enlace de
+Maps. No infiere estudios ni precios. Si el certificado TLS del proveedor no
+se puede validar, la corrida queda en cuarentena; no se debe desactivar TLS ni
+usar `--ignore-robots` en producción.
+
+```powershell
+$env:PYTHONPATH = "src"
+python -m pruevia_collectors.cli_linfolab --artifact-root artifacts/linfolab-puebla
 ```
 
 El crawler está limitado al host semilla, respeta `robots.txt`, rechaza

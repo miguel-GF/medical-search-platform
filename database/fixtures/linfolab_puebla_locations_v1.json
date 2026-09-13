@@ -1,0 +1,50 @@
+{
+  "version": "official-provider-locations-v1",
+  "source_key": "linfolab_puebla",
+  "source_system": "linfolab_official",
+  "retrieved_at": "2026-09-13T15:29:00Z",
+  "provider": {
+    "provider_key": "linfolab",
+    "name": "Linfolab",
+    "slug": "linfolab",
+    "website_url": "https://linfolabmexico.com.mx/"
+  },
+  "locations": [
+    {
+      "external_id": "gabriel-pastor",
+      "slug": "gabriel-pastor",
+      "name": "GABRIEL PASTOR",
+      "address_line_1": "C. 7 Sur 3701-101",
+      "postal_code": "72420",
+      "phone": "",
+      "url": "https://linfolabmexico.com.mx/sucursales/",
+      "location_code": "gabriel-pastor",
+      "coordinates": {"latitude": 19.032662, "longitude": -98.2117502},
+      "coordinate_source": "official_google_maps_link"
+    },
+    {
+      "external_id": "plaza-norte",
+      "slug": "plaza-norte",
+      "name": "PLAZA NORTE",
+      "address_line_1": "Blvrd Nte 2606-Local 30 y 31",
+      "postal_code": "72070",
+      "phone": "",
+      "url": "https://linfolabmexico.com.mx/sucursales/",
+      "location_code": "plaza-norte",
+      "coordinates": {"latitude": 19.06689669, "longitude": -98.21161131},
+      "coordinate_source": "denue_cross_check"
+    },
+    {
+      "external_id": "tolin",
+      "slug": "tolin",
+      "name": "TOLIN",
+      "address_line_1": "Calz. Ignacio Zaragoza 411-Local 6",
+      "postal_code": "72210",
+      "phone": "",
+      "url": "https://linfolabmexico.com.mx/sucursales/",
+      "location_code": "tolin",
+      "coordinates": {"latitude": 19.07248928, "longitude": -98.17284113},
+      "coordinate_source": "denue_cross_check"
+    }
+  ]
+}
