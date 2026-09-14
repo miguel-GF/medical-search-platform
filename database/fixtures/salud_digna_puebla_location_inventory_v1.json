@@ -10,10 +10,10 @@
     "clinic_entries": 13,
     "diagnostic_centers": 2,
     "municipalities": 5,
-    "detailed_branch_pages_in_fixture": 8,
-    "pending_page_reconciliation": 7
+    "detailed_branch_pages_in_fixture": 13,
+    "pending_page_reconciliation": 2
   },
-  "verified_page_external_ids": ["58", "110", "136", "155", "97", "332", "357", "329"],
+  "verified_page_external_ids": ["58", "97", "110", "136", "155", "232", "248", "270", "274", "320", "329", "332", "357"],
   "municipalities": [
     {"id": 2108, "name": "Puebla", "public_entries": 10},
     {"id": 2113, "name": "San Andrés Cholula", "public_entries": 2},

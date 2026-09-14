@@ -1,8 +1,8 @@
 {
   "version": "official-provider-locations-v1",
   "source_key": "salud_digna_puebla",
-  "source_url": "https://www.salud-digna.org/ubica-tu-clinica",
-  "retrieved_at": "2026-09-13T14:36:38Z",
+  "source_url": "https://salud-digna.org/ubica-tu-clinica",
+  "retrieved_at": "2026-09-14T06:01:11.000000Z",
   "provider": {
     "provider_key": "salud_digna",
     "name": "Salud Digna",
@@ -17,9 +17,26 @@
       "address_line_1": "Av. 2 Pte. #909, Col. Centro, C.P. 72000, Puebla, Puebla. Entre Calles 1 Nte. Y 9 Nte.",
       "postal_code": "72000",
       "phone": "2222324709",
-      "coordinates": {"latitude": 19.048813745770087, "longitude": -98.20530058707989},
+      "coordinates": {
+        "latitude": 19.048813745770087,
+        "longitude": -98.20530058707989
+      },
       "location_code": "58",
       "url": "https://www.salud-digna.org/puebla"
+    },
+    {
+      "external_id": "97",
+      "slug": "puebla-capu",
+      "name": "Puebla Capu",
+      "address_line_1": "Blvd. Norte #3860, Col Las Cuartillas, C.P. 72050, Puebla, Puebla. Entre Av. 36 Pte. Y De La Pradera.",
+      "postal_code": "72050",
+      "phone": "222 232 4709",
+      "coordinates": {
+        "latitude": 19.072083281801945,
+        "longitude": -98.20512178055273
+      },
+      "location_code": "97",
+      "url": "https://www.salud-digna.org/puebla-capu"
     },
     {
       "external_id": "110",
@@ -28,7 +45,10 @@
       "address_line_1": "Carretera Valsequillo Km. 26, Rincón De San Ignacio C.P. 72590. Puebla, Puebla. Entre Puesta Del Sol Y Av. Del Jardín",
       "postal_code": "72590",
       "phone": "222 232 4709",
-      "coordinates": {"latitude": 18.988536260245287, "longitude": -98.20018194096103},
+      "coordinates": {
+        "latitude": 18.988536260245287,
+        "longitude": -98.20018194096103
+      },
       "location_code": "110",
       "url": "https://www.salud-digna.org/puebla-xilotzingo"
     },
@@ -39,7 +59,10 @@
       "address_line_1": "Boulevard Xonacatepec #174 Colonia Bosques De San Sebastián, Entre Av. De Las Rosas Y Blvd. Margaritas",
       "postal_code": null,
       "phone": "(222) 232 4709",
-      "coordinates": {"latitude": 19.05984706076809, "longitude": -98.1284833297297},
+      "coordinates": {
+        "latitude": 19.05984706076809,
+        "longitude": -98.1284833297297
+      },
       "location_code": "136",
       "url": "https://www.salud-digna.org/puebla-san-sebastian"
     },
@@ -50,20 +73,96 @@
       "address_line_1": "Av 14 Ote #4815, Col. Agrícola Resurgimiento, C.P. 72370 Puebla, Puebla. Entre Calles 50 Nte. Y 52 Nte.",
       "postal_code": "72370",
       "phone": "222 214 6143",
-      "coordinates": {"latitude": 19.043518808070417, "longitude": -98.15853422242091},
+      "coordinates": {
+        "latitude": 19.043518808070417,
+        "longitude": -98.15853422242091
+      },
       "location_code": "155",
       "url": "https://www.salud-digna.org/puebla-el-porvenir"
     },
     {
-      "external_id": "97",
-      "slug": "puebla-capu",
-      "name": "Puebla Capu",
-      "address_line_1": "Blvd. Norte #3860, Col Las Cuartillas, C.P. 72050, Puebla, Puebla. Entre Av. 36 Pte. Y De La Pradera.",
-      "postal_code": "72050",
-      "phone": "222 232 4709",
-      "coordinates": {"latitude": 19.072083281801945, "longitude": -98.20512178055273},
-      "location_code": "97",
-      "url": "https://www.salud-digna.org/puebla-capu"
+      "external_id": "232",
+      "slug": "san-andres-cholula",
+      "name": "San Andrés Cholula",
+      "address_line_1": "Carretera Federal Puebla-Atlixco #3532, Col. Concepción de la Cruz, C.P. 72836, San Andrés Cholula, Puebla.",
+      "postal_code": "72836",
+      "phone": "2222324709",
+      "coordinates": {
+        "latitude": 19.036861095038223,
+        "longitude": -98.2494144379581
+      },
+      "location_code": "232",
+      "url": "https://salud-digna.org/san-andres-cholula"
+    },
+    {
+      "external_id": "248",
+      "slug": "san-martin-texmelucan",
+      "name": "San Martín Texmelucan",
+      "address_line_1": "Calle 16 de Septiembre Sur #208, Col. Centro, C.P. 74000, San Martín Texmelucan, Puebla.",
+      "postal_code": "74000",
+      "phone": "2222324709",
+      "coordinates": {
+        "latitude": 19.280918350086363,
+        "longitude": -98.43281860231133
+      },
+      "location_code": "248",
+      "url": "https://salud-digna.org/san-martin-texmelucan"
+    },
+    {
+      "external_id": "270",
+      "slug": "san-pedro-cholula",
+      "name": "San Pedro Cholula",
+      "address_line_1": "Blvd. Forjadores de Puebla #1010, Local 18, Plaza Pabellón Forjadores, Col. Barrio de Jesús Tlatempa, C.P. 72760, San Pedro Cholula, Puebla.",
+      "postal_code": "72760",
+      "phone": "2222324709",
+      "coordinates": {
+        "latitude": 19.074997213416054,
+        "longitude": -98.29200724871768
+      },
+      "location_code": "270",
+      "url": "https://salud-digna.org/san-pedro-cholula"
+    },
+    {
+      "external_id": "274",
+      "slug": "puebla-azcarate",
+      "name": "Puebla Azcarate",
+      "address_line_1": "Calle 24 Nte #6, Col. Resurgimiento Cd. Norte, C.P. 72373, Puebla, Puebla. Entre Av. 24 Nte y Av. Don Juan de Palafox.",
+      "postal_code": "72373",
+      "phone": "2222324709",
+      "coordinates": {
+        "latitude": 19.037473636251562,
+        "longitude": -98.18378051387361
+      },
+      "location_code": "274",
+      "url": "https://salud-digna.org/puebla-azcarate"
+    },
+    {
+      "external_id": "320",
+      "slug": "tehuacan",
+      "name": "Tehuacán",
+      "address_line_1": "Calle 1 Poniente #129, Col. Centro, C.P. 75700, Tehuacán, Puebla.",
+      "postal_code": "75700",
+      "phone": "2222324709",
+      "coordinates": {
+        "latitude": 18.46189986449031,
+        "longitude": -97.39536530362797
+      },
+      "location_code": "320",
+      "url": "https://salud-digna.org/tehuacan"
+    },
+    {
+      "external_id": "329",
+      "slug": "puebla-azaleas",
+      "name": "Puebla Azaleas",
+      "address_line_1": "Azaleas #907, Col. San Ramón, C.P. 72490, Puebla.",
+      "postal_code": "72490",
+      "phone": "2222324709",
+      "coordinates": {
+        "latitude": 18.975167376329782,
+        "longitude": -98.25792807408033
+      },
+      "location_code": "329",
+      "url": "https://www.salud-digna.org/puebla-azaleas"
     },
     {
       "external_id": "332",
@@ -72,7 +171,10 @@
       "address_line_1": "Blvd. Municipio Libre #547 Int 6, Col. Jardín, C.P. 72474, Puebla, Puebla. Entre Calles 5 Sur Y 5-a Sur.",
       "postal_code": "72474",
       "phone": "222 232 4709",
-      "coordinates": {"latitude": 19.00012285276625, "longitude": -98.22797800253191},
+      "coordinates": {
+        "latitude": 19.00012285276625,
+        "longitude": -98.22797800253191
+      },
       "location_code": "332",
       "url": "https://www.salud-digna.org/puebla-municipio-libre"
     },
@@ -83,20 +185,13 @@
       "address_line_1": "Av. Del Castillo #5501, Local 25, Col. San Bernardino, C.P. 72820, Tlaxcalancingo, Puebla.",
       "postal_code": "72820",
       "phone": "(222) 232-47-09",
-      "coordinates": {"latitude": 19.00392482490768, "longitude": -98.26672053191668},
+      "coordinates": {
+        "latitude": 19.00392482490768,
+        "longitude": -98.26672053191668
+      },
       "location_code": "357",
       "url": "https://www.salud-digna.org/puebla-angelopolis"
-    },
-    {
-      "external_id": "329",
-      "slug": "puebla-azaleas",
-      "name": "Puebla Azaleas",
-      "address_line_1": "Azaleas #907, Col. San Ramón, C.P. 72490, Puebla.",
-      "postal_code": "72490",
-      "phone": "2222324709",
-      "coordinates": {"latitude": 18.975167376329782, "longitude": -98.25792807408033},
-      "location_code": "329",
-      "url": "https://www.salud-digna.org/puebla-azaleas"
     }
-  ]
+  ],
+  "source_run_id": "bf391da5-ad8d-45ee-8bef-efa8fe758667"
 }

@@ -7,11 +7,10 @@ verificación:
   identidades candidatas enlazadas a registros DENUE y sus dominios públicos.
   Las identidades se guardan como `verification_pending`; sólo cinco estudios
   tienen equivalencia clínica exacta aprobada.
-* `database/fixtures/salud_digna_puebla_locations_v1.json` conserva ocho
+* `database/fixtures/salud_digna_puebla_locations_v1.json` conserva trece
   sucursales de Salud Digna confirmadas en páginas oficiales de Puebla, con
-  coordenadas, domicilio, teléfono y horarios. El snapshot DENUE tenía cinco;
-  por eso tres sucursales adicionales no deben perderse por depender sólo de
-  DENUE.
+  coordenadas, domicilio y teléfono. El snapshot DENUE tenía cinco; por eso
+  ocho sucursales adicionales no deben perderse por depender sólo de DENUE.
 * El adaptador `pruevia-semin` captura el catálogo público de Laboratorios
   SEMIN. La corrida de control recuperó 140 estudios únicos y nueve
   sucursales (149 registros RAW). Cada precio conserva el estado
@@ -77,7 +76,7 @@ python -m pruevia_collectors.cli_salud_digna `
   --artifact-root artifacts/salud-digna-puebla-all
 ```
 
-Después de publicar el artefacto, el renderer de ubicaciones enlaza las ocho
+Después de publicar el artefacto, el renderer de ubicaciones enlaza las trece
 sucursales oficiales con `core.provider_locations` sin crear ofertas:
 
 ```powershell
@@ -92,9 +91,9 @@ python database/scripts/render_official_provider_locations.py `
 El directorio público por estado/municipio devolvió 15 entradas para Puebla:
 13 clínicas y dos centros diagnósticos (Centro Analítico y PET-CT), repartidos
 en Puebla, San Andrés Cholula, San Martín Texmelucan, San Pedro Cholula y
-Tehuacán. Ocho tienen página detallada en el fixture de ubicaciones; los IDs
-274, 293, 299, 232, 248, 270 y 320 quedaron como candidatos pendientes de
-reconciliación de domicilio, coordenadas y slug.
+Tehuacán. Trece tienen página detallada en el fixture de ubicaciones; sólo los
+centros diagnósticos 293 (PET-CT) y 299 (Centro Analítico) siguen pendientes
+porque el directorio no expone una página de sucursal equivalente.
 
 ```powershell
 $env:PYTHONPATH = "collectors/src"
@@ -176,7 +175,7 @@ La salida es sólo un informe de cobertura: no crea marcas, ubicaciones ni
 ofertas en Supabase.
 
 En el entorno enlazado de pruebas ya se cargaron las diez identidades y sus
-12 ubicaciones DENUE como `verification_pending`; Salud Digna suma ocho
+12 ubicaciones DENUE como `verification_pending`; Salud Digna suma trece
 ubicaciones oficiales, Dr. Simi tres ubicaciones oficiales (la unidad 260
 permanece pendiente de verificación). Las corridas SEMIN (149
 registros), Chopo (60), Salud Digna (6,923) y Linfolab (6 sucursales) se
