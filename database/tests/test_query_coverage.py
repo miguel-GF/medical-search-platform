@@ -66,6 +66,7 @@ def test_http_measurement_rejects_unsafe_origins(value):
 
 def test_http_measurement_allows_loopback_origin():
     assert _validate_origin("http://127.0.0.1:8787/") == "http://127.0.0.1:8787"
+    assert _validate_origin("https://example.com:443/") == "https://example.com:443"
 
 
 def test_http_measurement_sends_utf8_and_summarizes_without_query_text(monkeypatch):

@@ -222,14 +222,15 @@ def measure_http(
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--dsn", default=os.getenv("PRUEVIA_DATABASE_URL"), help="PostgreSQL DSN; defaults to PRUEVIA_DATABASE_URL")
+    parser.add_argument("--dsn", help="PostgreSQL DSN; defaults to PRUEVIA_DATABASE_URL")
     parser.add_argument("--api-url", help="Worker HTTPS origin for patient-facing HTTP measurement")
     parser.add_argument("--origin", help="Optional clean Origin header for the Worker request")
     parser.add_argument("--timeout-seconds", type=float, default=15)
     parser.add_argument("--fixture", type=Path, default=DEFAULT_FIXTURE)
     parser.add_argument("--output", type=Path, help="Optional JSON report path")
     args = parser.parse_args()
-    if bool(args.dsn) == bool(args.api_url):
+    dsn = args.dsn or (None if args.api_url else os.getenv("PRUEVIA_DATABASE_URL"))
+    if bool(dsn) == bool(args.api_url):
         parser.error("provide exactly one of PRUEVIA_DATABASE_URL/--dsn or --api-url")
     try:
         records = read_fixture(args.fixture)
@@ -237,7 +238,7 @@ def main() -> int:
             summary, results = measure_http(args.api_url, records, origin=args.origin, timeout_seconds=args.timeout_seconds)
             layer = "worker_http"
         else:
-            summary, results = measure(args.dsn, records)
+            summary, results = measure(dsn, records)
             layer = "database_rpc"
     except (OSError, ValueError, psycopg.Error) as error:
         print(json.dumps({"status": "blocked", "error": str(error)}, ensure_ascii=False, indent=2))
