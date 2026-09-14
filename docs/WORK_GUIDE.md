@@ -66,10 +66,14 @@ estados existentes. Búsqueda y pills de periodo/estado son el patrón preferido
 para filtros frecuentes; respetar paginación y alcance real de los datos cargados.
 No presentar un filtro sobre una página limitada como búsqueda de toda la base.
 
-La paleta se mantiene en [theme.css](../apps/admin/src/theme.css) y
-[theme.dart](../apps/patient/lib/src/theme.dart). Son tokens equivalentes mantenidos
-en dos tecnologías, no un generador compartido. Actualizar ambos cuando cambie
-la identidad global; usar variables/ThemeData en lugar de nuevos colores dispersos.
+La paleta se mantiene en [theme.css](../apps/admin/src/theme.css),
+[theme.dart](../apps/patient/lib/src/theme.dart) y los tokens de la landing en
+[apps/landing/app/assets/theme.css](../apps/landing/app/assets/theme.css). Son
+tokens equivalentes mantenidos por tecnología, no un generador compartido.
+Actualizar las tres superficies cuando cambie la identidad global; usar
+variables/ThemeData en lugar de nuevos colores dispersos. En la landing, los
+colores decorativos también deben entrar en `theme.css`, no quedar en
+`main.css` ni en SVG inline.
 La configuración de tema oscuro en código no acredita un selector visible.
 
 Verificar en navegador claro/oscuro si aplica, escritorio/móvil, foco de teclado,

@@ -1,7 +1,7 @@
 # Estado y prioridades de Pruevia
 
 Tipo: punto de continuidad. Revisado el 14-sep-2026 sobre el árbol basado en
-`81a42e5`. Esta entrega revalidó contratos contra Supabase DEV, pero no aplicó
+`2502896`. Esta entrega revalidó contratos contra Supabase DEV, pero no aplicó
 migraciones ni publicó servicios.
 Los datos de septiembre citados abajo son cortes de evidencia, no contadores en vivo.
 
@@ -116,6 +116,8 @@ El corpus anonimizado de 64 consultas, medido contra el Worker HTTP local con
 UTF-8, obtuvo 7/7 resoluciones estrictas y 9/9 resoluciones esperadas incluyendo
 preparación, sin resoluciones inesperadas; 51 casos permanecen correctamente en
 `no_match` y 4 en `ambiguous` según su intención no resoluble.
+Los colores decorativos de la landing quedaron centralizados en sus tokens, sin
+hexadecimales dispersos en CSS/SVG.
 
 Se recorrieron estos escenarios contra las referencias y código local:
 
