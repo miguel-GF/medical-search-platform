@@ -72,7 +72,7 @@ supabase migration list --linked
 supabase db push --dry-run
 python scripts/check_migration_order.py
 python scripts/check_runtime_schema.py
-python scripts/run_sql_contracts.py --test clinical_resolver_test.sql
+python scripts/run_sql_contracts.py --cli npx.cmd --package supabase@2.116.0 --test clinical_resolver_test.sql
 ```
 
 El resultado esperado del runner es `PASS <archivo>: N/N` y salida exitosa. Sin

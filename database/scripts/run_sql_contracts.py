@@ -85,7 +85,7 @@ def validate_results(stdout: str, returncode: int, expected: int) -> list[str]:
     return lines
 
 
-def run_contract(path: Path, cli: str) -> int:
+def run_contract(path: Path, cli: str, package: str | None = None) -> int:
     sql, expected = prepare_contract(path.read_text(encoding="utf-8-sig"))
     # TemporaryDirectory handles only this runner's generated artifact. Never
     # run a cleanup against a user-provided repository or database path.
@@ -93,7 +93,7 @@ def run_contract(path: Path, cli: str) -> int:
         artifact = Path(directory) / "contract.sql"
         artifact.write_text(sql, encoding="utf-8")
         response = subprocess.run(
-            [cli, "db", "query", "--linked", "--file", str(artifact)],
+            [cli, *([package] if package else []), "db", "query", "--linked", "--file", str(artifact)],
             cwd=DATABASE, capture_output=True, text=True, encoding="utf-8",
             timeout=120, check=False,
         )
@@ -107,6 +107,10 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--test", help="One filename from supabase/tests (default: all)")
     parser.add_argument("--cli", default="supabase", help="Installed Supabase executable")
+    parser.add_argument(
+        "--package",
+        help="Optional package/version argument when invoking through npx (for example supabase@2.116.0)",
+    )
     args = parser.parse_args()
     cli = shutil.which(args.cli)
     if not cli:
@@ -122,7 +126,7 @@ def main() -> int:
         parser.error("No SQL contracts found")
     for path in paths:
         try:
-            count = run_contract(path, cli)
+            count = run_contract(path, cli, args.package)
         except (ValueError, OSError, subprocess.TimeoutExpired) as exc:
             print(f"FAIL {path.name}: {exc}")
             return 1

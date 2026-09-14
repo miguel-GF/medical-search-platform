@@ -34,7 +34,10 @@ docs/                    # sibling directory: ../docs
 Desde `database`, el proyecto ya está inicializado. `supabase start` arranca el
 entorno local. Un `supabase db reset` recrea sus datos: usarlo sólo en una base
 local desechable identificada o con autorización y recuperación adecuadas.
-Para contratos enlazados usar `python scripts/run_sql_contracts.py`; consultar
+Para contratos enlazados usar `python scripts/run_sql_contracts.py`; si el CLI se
+ejecuta mediante npx en Windows, fijar la versiÃ³n con
+`python scripts/run_sql_contracts.py --cli npx.cmd --package supabase@2.116.0`.
+Consultar
 la guía de operación para entorno, precondiciones y selección de pruebas.
 
 ## Deploy to DEV
