@@ -90,6 +90,10 @@ describe('batch request parser', () => {
       ok: true,
       value: { items: ['glucosa'], preparation_notes: [{ index: 1, text: 'en ayunas' }] },
     });
+    expect(parseBatchRequest({ text: 'Glucosa ayuno 8 hrs' })).toMatchObject({
+      ok: true,
+      value: { items: ['Glucosa'], preparation_notes: [{ index: 1, text: 'ayuno 8 hrs' }] },
+    });
     expect(parseBatchRequest({ items: ['Ayuno de 12 horas'] })).toMatchObject({
       ok: true,
       value: { items: ['Ayuno de 12 horas'], preparation_notes: [] },

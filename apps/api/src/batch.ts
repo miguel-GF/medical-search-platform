@@ -213,7 +213,7 @@ function extractPreparationQualifiers(items: string[]): {
 } {
   const prepared: string[] = [];
   const notes: Array<{ index: number; text: string }> = [];
-  const suffix = /\s+((?:en\s+)?ayun(?:o|as)(?:\s+de\s+\d+(?:[.,]\d+)?\s*horas?)?)\s*$/iu;
+  const suffix = /\s+((?:en\s+)?ayun(?:o|as)(?:(?:\s+de)?\s+\d+(?:[.,]\d+)?\s*(?:h(?:rs?)?|horas?))?)\s*$/iu;
   for (const [position, value] of items.entries()) {
     const match = value.match(suffix);
     const base = match && match.index !== undefined ? value.slice(0, match.index).trim() : value;
