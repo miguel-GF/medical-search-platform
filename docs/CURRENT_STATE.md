@@ -1,7 +1,7 @@
 # Estado y prioridades de Pruevia
 
 Tipo: punto de continuidad. Revisado el 14-sep-2026 sobre el árbol basado en
-`9e7c275`. Esta entrega revalidó contratos contra Supabase DEV, pero no aplicó
+`3c7736c`. Esta entrega revalidó contratos contra Supabase DEV, pero no aplicó
 migraciones ni publicó servicios.
 Los datos de septiembre citados abajo son cortes de evidencia, no contadores en vivo.
 
@@ -13,7 +13,7 @@ trabajo; `bloqueado` necesita una condición externa identificada. No son sinón
 
 | Capacidad | Estado respaldado y evidencia | Límite / siguiente acción |
 | --- | --- | --- |
-| Búsqueda, resolución, paquetes y OCR | Implementados: [Worker](../apps/api/src/app.ts), [tipos](../apps/api/src/types.ts), [tests](../apps/api/tests). | Revalidar el entorno de la prueba y medir recetas; tener rutas no prueba cobertura suficiente. |
+| Búsqueda, resolución, paquetes y OCR | Implementados: [Worker](../apps/api/src/app.ts), [tipos](../apps/api/src/types.ts), [tests](../apps/api/tests). El resolver conserva sufijos explícitos como `en ayuno` en `preparation_note` sin inferencia clínica. | Revalidar el entorno de la prueba y medir recetas; tener rutas no prueba cobertura suficiente. |
 | Paciente Flutter Web/PWA | Implementado: [app](../apps/patient/lib/main.dart), [comandos](../apps/patient/README.md). | Publicación actual y validación física/multiplataforma requieren evidencia propia. |
 | Admin con temas, filtros y MFA | Implementado: [Admin](../apps/admin/src/App.vue), [filtros](../apps/admin/src/components/TableFilters.vue), [Auth](../apps/admin/src/auth.ts). | Probar sesión real y alcance de búsquedas/filtros cuando cambie el backend o el entorno. |
 | Documentos de proveedores | Configuración versionada cerrada por defecto; ver [cierre](../database/supabase/migrations/20260908100000_internal_document_freeze.sql) y [Worker](../apps/api/wrangler.toml). | No reabrir sólo cambiando una variable; necesita propuesta crítica y revisión coordinada. |
