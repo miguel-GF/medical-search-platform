@@ -374,6 +374,11 @@ function sanitizePackageResolution(payload: PackageResolutionResponse): PackageR
 
 function sanitizePackageItem(item: PackageItem): PackageItem {
   const correction = sanitizeOcrCorrection(item.ocr_correction);
+  const preparationNote = typeof item.preparation_note === 'string'
+    && item.preparation_note.trim().length > 0
+    && item.preparation_note.length <= 100
+    ? item.preparation_note.trim()
+    : null;
   return {
     index: safePackageIndex(item.index),
     input: safePublicText(item.input, 200),
@@ -383,6 +388,7 @@ function sanitizePackageItem(item: PackageItem): PackageItem {
       ? item.candidates.filter(isRecord).slice(0, 20).map(sanitizePackageCandidate).filter((candidate): candidate is PackageCandidate => candidate !== null)
       : [],
     ...(item.reason_code ? { reason_code: safePublicText(item.reason_code, 100) } : {}),
+    ...(preparationNote ? { preparation_note: safePublicText(preparationNote, 100) } : {}),
     ...(correction ? { ocr_correction: correction } : {}),
   };
 }
@@ -856,6 +862,7 @@ async function resolvePackagePayload(
     effective.original_text,
     effective.objective,
     effective.max_solutions,
+    effective.preparation_notes,
   ));
 }
 
@@ -875,6 +882,7 @@ async function segmentFreeFormPackageText(
   if (
     parsed.input_source !== 'text'
     || parsed.items.length !== 1
+    || parsed.preparation_notes.length > 0
     || !/\s/.test(parsed.original_text)
     || /[\n;,]/.test(parsed.original_text)
   ) {

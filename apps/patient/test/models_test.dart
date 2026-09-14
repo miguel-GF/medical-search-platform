@@ -49,4 +49,19 @@ void main() {
     });
     expect(response.ocr?.lowConfidenceLines, ['valid line']);
   });
+
+  test('keeps an extracted preparation qualifier as display-only metadata', () {
+    final response = PackageResponse.fromJson({
+      'items': [
+        {
+          'index': 1,
+          'input': 'Biometría hemática',
+          'status': 'resolved',
+          'preparation_note': 'en ayuno de 8 horas',
+          'candidates': [],
+        },
+      ],
+    });
+    expect(response.items.single.preparationNote, 'en ayuno de 8 horas');
+  });
 }

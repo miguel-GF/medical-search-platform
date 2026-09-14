@@ -78,6 +78,24 @@ describe('batch request parser', () => {
     if (items.ok) expect(items.value.input_source).toBe('items');
   });
 
+  it('extracts only explicit fasting suffixes while preserving an auditable note', () => {
+    const result = parseBatchRequest({ text: 'Biometría hemática en ayuno de 8 horas' });
+    expect(result).toMatchObject({ ok: true });
+    if (result.ok) {
+      expect(result.value.items).toEqual(['Biometría hemática']);
+      expect(result.value.original_text).toBe('Biometría hemática en ayuno de 8 horas');
+      expect(result.value.preparation_notes).toEqual([{ index: 1, text: 'en ayuno de 8 horas' }]);
+    }
+    expect(parseBatchRequest({ text: 'glucosa en ayunas' })).toMatchObject({
+      ok: true,
+      value: { items: ['glucosa'], preparation_notes: [{ index: 1, text: 'en ayunas' }] },
+    });
+    expect(parseBatchRequest({ items: ['Ayuno de 12 horas'] })).toMatchObject({
+      ok: true,
+      value: { items: ['Ayuno de 12 horas'], preparation_notes: [] },
+    });
+  });
+
   it('accepts only exact catalog segments that reconstruct the source', () => {
     const response = {
       status: 'segmented',
@@ -150,6 +168,23 @@ describe('deterministic package solver', () => {
     expect(result.coverage_status).toBe('none');
     expect(result.clarifications.map((entry) => entry.index)).toEqual([2, 4]);
     expect(result.solutions).toEqual([]);
+  });
+
+  it('attaches textual preparation notes without changing clinical resolution', () => {
+    const payload: PackageRpcResponse = {
+      engine_version: 'clinical-resolver-v6',
+      items: [item(1, 'Biometría hemática', 'bh')],
+      offers: [],
+    };
+    const result = buildPackageResolution(
+      payload,
+      'Biometría hemática en ayuno',
+      'all_in_one',
+      10,
+      [{ index: 1, text: 'en ayuno' }],
+    );
+    expect(result.items[0]).toMatchObject({ input: 'Biometría hemática', preparation_note: 'en ayuno' });
+    expect(result.items[0].status).toBe('resolved');
   });
 
   it('keeps OCR corrections auditable while using the resolver result', () => {

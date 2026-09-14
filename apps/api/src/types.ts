@@ -112,6 +112,8 @@ export interface PackageItem {
   status: PackageItemStatus;
   candidates: PackageCandidate[];
   reason_code?: string;
+  /** Raw textual preparation qualifier, never a clinical inference. */
+  preparation_note?: string;
   ocr_correction?: OcrCorrection;
 }
 

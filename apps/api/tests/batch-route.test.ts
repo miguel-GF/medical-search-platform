@@ -98,6 +98,25 @@ describe('POST /api/v1/resolve-batch', () => {
     expect(call).toHaveBeenCalledWith('api_resolve_package', expect.objectContaining({ p_items: ['BH EGO'] }));
   });
 
+  it('resolves a study with an explicit fasting suffix and keeps the suffix visible', async () => {
+    const call = vi.fn(async <T>(name: string, _body: Record<string, unknown>): Promise<T> => {
+      if (name === 'api_segment_package_text') throw new Error('segmenter should not run after preparation extraction');
+      return rpcPayload as T;
+    });
+    const rpc: RpcClient = { call: call as RpcClient['call'] };
+    const response = await createHandler({ rpc })(new Request('https://api.test/api/v1/resolve-batch', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ text: 'Biometría hemática en ayuno de 8 horas' }),
+    }), env);
+    expect(response.status).toBe(200);
+    const result = await response.json() as { query: string; items: Array<{ input: string; preparation_note?: string }> };
+    expect(result.query).toBe('Biometría hemática en ayuno de 8 horas');
+    expect(result.items[0]).toMatchObject({ input: 'BH', preparation_note: 'en ayuno de 8 horas' });
+    expect(call).toHaveBeenCalledWith('api_resolve_package', expect.objectContaining({ p_items: ['Biometría hemática'] }));
+    expect(call).not.toHaveBeenCalledWith('api_segment_package_text', expect.anything());
+  });
+
   it('forwards arbitrary study lists to the package RPC and returns the package contract', async () => {
     const rpc = rpcWith(rpcPayload);
     const response = await createHandler({ rpc })(new Request('https://api.test/api/v1/resolve-batch', {

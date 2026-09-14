@@ -186,6 +186,7 @@ class PackageItem {
     required this.status,
     required this.candidates,
     this.reasonCode,
+    this.preparationNote,
   });
 
   final int index;
@@ -193,12 +194,14 @@ class PackageItem {
   final String status;
   final List<PackageCandidate> candidates;
   final String? reasonCode;
+  final String? preparationNote;
 
   factory PackageItem.fromJson(JsonMap json) => PackageItem(
     index: _intValue(json['index']) ?? 0,
     input: _stringValue(json['input']) ?? '',
     status: _stringValue(json['status']) ?? 'no_match',
     reasonCode: _stringValue(json['reason_code']),
+    preparationNote: _stringValue(json['preparation_note']),
     candidates: _boundedList(json['candidates'], 50)
         .whereType<JsonMap>()
         .map(PackageCandidate.fromJson)

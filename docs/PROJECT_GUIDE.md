@@ -97,6 +97,9 @@ Ejemplos de comportamiento:
 - Oferta sin importe vigente: solicitar cotización, sin sumar cero al total.
 - OCR ilegible: conservar texto original y revisión; no completar palabras con
   una supuesta intención clínica.
+- Sufijo textual explícito como "en ayuno de 8 horas": resolver sólo el nombre
+  base y devolver el sufijo como `preparation_note`; no afirmar que el estudio
+  requiere ayuno ni convertir la nota en una instrucción médica.
 
 ## Invariantes y evolución
 

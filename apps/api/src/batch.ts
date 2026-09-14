@@ -24,6 +24,8 @@ export interface ParsedBatchRequest {
   original_text: string;
   /** Whether items came from free-form text and may need catalog segmentation. */
   input_source: 'text' | 'items';
+  /** Explicit textual qualifiers kept outside the clinical catalog label. */
+  preparation_notes: Array<{ index: number; text: string }>;
   objective: PackageObjective;
   max_solutions: number;
 }
@@ -94,12 +96,14 @@ export function parseBatchRequest(input: Record<string, unknown>): BatchParseRes
     return { ok: false, error: { code: 'invalid_items', message: 'max_solutions must be an integer between 1 and 20' } };
   }
 
+  const prepared = extractPreparationQualifiers(items);
   return {
     ok: true,
     value: {
-      items,
+      items: prepared.items,
       original_text: originalText,
       input_source: hasItems ? 'items' : 'text',
+      preparation_notes: prepared.notes,
       objective: objective as PackageObjective,
       max_solutions: maxSolutions,
     },
@@ -197,6 +201,32 @@ function looksLikeStudyPhrase(value: string): boolean {
   return /(?:biometr|hemograma|\bego\b|orina|qu[ií]m|perfil|audiometr|espirom|ultrason|ecograf|resonancia|\brm\b|tomograf|\btac\b|rayos|radiograf|mastograf|electro|holter|gasometr|covid|colposcop|densitometr|glucosa|creatinin|\binr\b|\btp\b|\bttp\b)/i.test(value);
 }
 
+/**
+ * Remove only a bounded, explicit fasting suffix before catalog resolution.
+ * The original phrase is retained in `original_text` and the suffix is
+ * returned as an annotation; this is lexical extraction, not clinical advice
+ * or an inference that the study requires fasting.
+ */
+function extractPreparationQualifiers(items: string[]): {
+  items: string[];
+  notes: Array<{ index: number; text: string }>;
+} {
+  const prepared: string[] = [];
+  const notes: Array<{ index: number; text: string }> = [];
+  const suffix = /\s+((?:en\s+)?ayun(?:o|as)(?:\s+de\s+\d+(?:[.,]\d+)?\s*horas?)?)\s*$/iu;
+  for (const [position, value] of items.entries()) {
+    const match = value.match(suffix);
+    const base = match && match.index !== undefined ? value.slice(0, match.index).trim() : value;
+    if (!match || !base || !looksLikeStudyPhrase(base)) {
+      prepared.push(value);
+      continue;
+    }
+    prepared.push(base);
+    notes.push({ index: position + 1, text: match[1].trim() });
+  }
+  return { items: prepared, notes };
+}
+
 function isValidItemText(value: string): boolean {
   return value.length > 0 && value.length <= PACKAGE_MAX_ITEM_LENGTH && /[\p{L}\p{N}]/u.test(value);
 }
@@ -206,8 +236,19 @@ export function buildPackageResolution(
   query: string,
   objective: PackageObjective,
   maxSolutions: number,
+  preparationNotes: Array<{ index: number; text: string }> = [],
 ): PackageResolutionResponse {
-  const items = [...(payload.items ?? [])].sort((a, b) => a.index - b.index);
+  const notesByIndex = new Map(
+    preparationNotes
+      .filter((note) => Number.isInteger(note.index) && note.index > 0 && typeof note.text === 'string' && note.text.length <= 100)
+      .map((note) => [note.index, note.text.trim()] as const),
+  );
+  const items = [...(payload.items ?? [])]
+    .sort((a, b) => a.index - b.index)
+    .map((item) => {
+      const note = notesByIndex.get(item.index);
+      return note ? { ...item, preparation_note: note } : item;
+    });
   const hasAmbiguous = items.some((item) => item.status === 'ambiguous');
   const resolvedItems = items.filter((item) => item.status === 'resolved');
   const hasNoMatch = items.some((item) => item.status === 'no_match');

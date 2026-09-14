@@ -1129,15 +1129,20 @@ class PackageResultView extends StatelessWidget {
     _ => 'No encontramos coincidencias seguras para esta orden.',
   };
   String _itemMessage(PackageItem item) {
+    final preparation = item.preparationNote == null || item.preparationNote!.isEmpty
+        ? null
+        : 'Indicación de la orden: ${item.preparationNote}';
     if (item.status == 'resolved') {
-      return item.candidates.isNotEmpty
+      final match = item.candidates.isNotEmpty
           ? 'Coincide con ${item.candidates.first.displayName}'
           : 'Coincidencia confirmada';
+      return preparation == null ? match : '$match · $preparation';
     }
     if (item.candidates.isNotEmpty) {
-      return 'Posibles coincidencias: ${item.candidates.map((candidate) => candidate.displayName).join(', ')}';
+      final matches = 'Posibles coincidencias: ${item.candidates.map((candidate) => candidate.displayName).join(', ')}';
+      return preparation == null ? matches : '$matches · $preparation';
     }
-    return 'Necesita revisión manual';
+    return preparation == null ? 'Necesita revisión manual' : 'Necesita revisión manual · $preparation';
   }
 }
 
