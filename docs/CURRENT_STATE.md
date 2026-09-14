@@ -1,7 +1,7 @@
 # Estado y prioridades de Pruevia
 
 Tipo: punto de continuidad. Revisado el 14-sep-2026 sobre el árbol basado en
-`2502896`. Esta entrega revalidó contratos contra Supabase DEV, pero no aplicó
+`4a1d8f3`. Esta entrega revalidó contratos contra Supabase DEV, pero no aplicó
 migraciones ni publicó servicios.
 Los datos de septiembre citados abajo son cortes de evidencia, no contadores en vivo.
 
@@ -66,7 +66,7 @@ acciones distintas; aplicar aprobación crítica cuando corresponda.
 | OPS-01 / alta | Inventariar jobs y alertas realmente activos, cubrir las brechas de [mantenimiento continuo](CONTINUOUS_IMPROVEMENT.md) y revisar CI/dependencias relevantes. | Registrar horario, entorno, ejecución real, fallo/reintento y responsable; proponer servicio/costo nuevo antes de activarlo si requiere aprobación. |
 | ADM-01 / media | Verificar operación del Admin con el volumen actual: búsqueda, periodos, paginación, cola y acciones auditables. | Consulta encuentra un registro fuera de la primera página o declara claramente su alcance; estados de red, vacío y sesión distinguibles. |
 | REL-01 / posterior a cobertura | Preparar prueba externa de Puebla con gate medido, revisión de seguridad pendiente, Auth, orígenes, despliegue y recuperación. | Propuesta de liberación con resultados y limitaciones; aprobación explícita antes de apertura crítica. |
-| REL-02 / alta antes de integrar frontends | Resolver acceso de paciente y Admin desde orígenes distintos: el Worker actual admite un solo `ALLOWED_ORIGIN`. Proponer allowlist explícita o separación de destinos y sus pruebas. | Decisión revisada de seguridad/configuración; aprobación previa si modifica la frontera de acceso. Validar preflight y rechazo de orígenes ajenos antes de desplegar. |
+| REL-02 / alta antes de integrar frontends | Implementada en el Worker la opción opt-in `ALLOWED_ORIGINS`: lista exacta, preflight por origen y 403 sin reflejo para orígenes ajenos; conserva `ALLOWED_ORIGIN` por compatibilidad. | Elegir dominios reales, revisar la frontera de seguridad y aprobar la activación/configuración antes de desplegar. |
 | FUT-01 / posterior | Publicar y ampliar SEO del landing, expansión geográfica y capacidades comerciales según [roadmap](02_FASES_IMPLEMENTACION.md). | Landing base ya implementado; publicación requiere destino, contenido legal/contacto revisado y aprobación crítica. Datos dinámicos y cobertura no se inventan para llenar páginas. |
 
 PUE-01 y captura acotada PUE-03 pueden avanzar sin esperar expansión del catálogo.
@@ -111,7 +111,9 @@ configuración HTTPS placeholder; el build sin configuración continúa rechazan
 la publicación como medida fail-closed. La variante indexable de la landing se
 generó con destinos HTTPS de ejemplo y produjo sitemap/robots; los destinos reales
 siguen sin verificarse.
-El Worker actual también pasó `wrangler deploy --dry-run` (122.31 KiB sin subir).
+El Worker actual también pasó `wrangler deploy --dry-run` (124.28 KiB sin subir),
+con 121 pruebas Vitest y validación de allowlist CORS exacta. La opción
+`ALLOWED_ORIGINS` no está configurada ni desplegada en remoto.
 El corpus anonimizado de 64 consultas, medido contra el Worker HTTP local con
 UTF-8, obtuvo 7/7 resoluciones estrictas y 9/9 resoluciones esperadas incluyendo
 preparación, sin resoluciones inesperadas; 51 casos permanecen correctamente en
@@ -131,7 +133,8 @@ Se recorrieron estos escenarios contra las referencias y código local:
 
 La revisión detectó además el límite actual de un origen CORS y la selección de
 credenciales desactualizada del ADR: se documentó REL-02 y se reconcilió el ADR
-con el código, sin modificar permisos ni comportamiento.
+con el código. La opción plural está preparada y probada, sin modificar permisos
+remotos ni activar una frontera nueva.
 
 Para una capacidad material registrar: fecha, commit/versión, entorno, evidencia
 reproducible, resultado, límites y siguiente acción. Si un archivo/servicio no está
