@@ -57,6 +57,7 @@ no ejecutar primero y avisar después. Avanzar tareas independientes mientras ta
 | D-009 | Mantener HTTPS/RPC con frontera pública en Worker; llamadas normales RPC con clave de servidor. | Reconciliación de comportamiento ya existente, no cambio de seguridad en esta entrega. Reemplaza el uso histórico de clave pública para búsqueda del [ADR-001](ADR-001-WORKER-SUPABASE-REST.md). |
 | D-010 | Detectar mantenimiento, discovery y escalabilidad con iniciativa, sin esperar recordatorios; conservar aprobación crítica. | Preferencia explícita del usuario en esta entrega. [Política y cadencias](CONTINUOUS_IMPROVEMENT.md); los jobs requieren implementación y verificación separadas. |
 | D-011 | La vigilancia del core no bloquea tareas independientes solicitadas, como el landing; el encargo explícito tiene prioridad. | Aclaración del usuario en esta entrega. Escalar sólo dependencias reales y cambios críticos. [Guía](WORK_GUIDE.md#construir-una-capacidad-independiente-ejemplo-landing). |
+| D-012 | La liberación de Puebla se decide por una puerta conjunta de datos, orígenes y publicación, no por el número de filas. | Propuesta no aprobada. Ver [ADR-002](ADR-002-RELEASE-PILOT-GATES.md); no autoriza compras, DNS, mappings ni deploy. |
 
 ## Cómo registrar o reemplazar una decisión
 

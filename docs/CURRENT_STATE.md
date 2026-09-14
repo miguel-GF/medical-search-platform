@@ -92,6 +92,10 @@ proveedores. Repetir desde `database/` con
 `python scripts/run_sql_contracts.py --cli npx.cmd --package supabase@2.116.0`
 antes de liberar un cambio acoplado al esquema.
 
+La propuesta de puerta conjunta para publicación, CORS y reducción controlada de
+la cola está en [ADR-002](ADR-002-RELEASE-PILOT-GATES.md); permanece sin aprobar
+y no autoriza acciones externas.
+
 ## Actualización y traspaso
 
 Validación documental del 14-sep-2026: enlaces locales y anclas de la nueva entrada,

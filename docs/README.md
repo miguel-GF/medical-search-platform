@@ -13,6 +13,7 @@ La conversación original no es lectura obligatoria para incorporarse.
 | [Operación](OPERATIONS_GUIDE.md) | Directorios, comandos, comprobaciones y alcance de resultados. |
 | [Estado y prioridades](CURRENT_STATE.md) | Capacidades y pendientes con evidencia fechada. |
 | [Decisiones](DECISIONS.md) | Autonomía, aprobación de cambios críticos y evolución de reglas. |
+| [ADR de liberación Puebla](ADR-002-RELEASE-PILOT-GATES.md) | Propuesta de puerta conjunta para datos, orígenes y publicación. |
 | [Mantenimiento y discovery](CONTINUOUS_IMPROVEMENT.md) | Iniciativa, cadencias, actualización del código y crecimiento medido. |
 | [Entorno](ENVIRONMENT.md) | Variables, ejemplos y límites de exposición de credenciales. |
 
@@ -24,7 +25,7 @@ La conversación original no es lectura obligatoria para incorporarse.
 | Añadir un laboratorio o sucursal | [Cobertura](WORK_GUIDE.md#ampliar-cobertura-de-puebla) | [Inventario Puebla](PUEBLA_PROVIDER_COVERAGE.md), [collectors](../collectors/README.md). |
 | Corregir resolución u OCR | [Resolver](WORK_GUIDE.md#modificar-resolver-catálogo-u-ocr) | [Benchmark v1](RESOLVER_BENCHMARK_V1.md), [v2](REAL_QUERY_RESEARCH_V1.md), [LOINC](LOINC_INTEGRACION.md), [corpus OCR](OCR_PUBLIC_CORPUS.md). |
 | Diagnosticar login/401 | [Diagnóstico Admin](WORK_GUIDE.md#investigar-un-401-o-fallo-de-conexión-del-admin) | [Errores](ERROR_HANDLING.md), [entorno](ENVIRONMENT.md), pruebas Auth. |
-| Cambiar API/esquema o desplegar | [Operación](OPERATIONS_GUIDE.md) | [Database](../database/README.md), [seguridad](SECURITY_HARDENING_20260904.md), [ADR Worker](ADR-001-WORKER-SUPABASE-REST.md). |
+| Cambiar API/esquema o desplegar | [Operación](OPERATIONS_GUIDE.md) | [Database](../database/README.md), [seguridad](SECURITY_HARDENING_20260904.md), [ADR Worker](ADR-001-WORKER-SUPABASE-REST.md), [ADR liberación](ADR-002-RELEASE-PILOT-GATES.md). |
 | Decidir qué construir después | [Prioridades](CURRENT_STATE.md) | [Decisiones](DECISIONS.md), roadmap como referencia de largo plazo. |
 | Mantener datos/código al día y detectar crecimiento | [Mantenimiento y discovery](CONTINUOUS_IMPROVEMENT.md) | [Cobertura Puebla](PUEBLA_PROVIDER_COVERAGE.md), corridas, alertas y CI del área. |
 | Construir el landing u otra tarea independiente | [Guía de capacidad independiente](WORK_GUIDE.md#construir-una-capacidad-independiente-ejemplo-landing) | [Producto](PROJECT_GUIDE.md), identidad visual y arquitectura prevista. El backlog del core no es un bloqueo automático. |
