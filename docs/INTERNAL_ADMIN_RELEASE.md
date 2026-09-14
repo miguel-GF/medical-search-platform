@@ -1,5 +1,8 @@
 # Prueba interna de Admin y primer lote Puebla
 
+> Corte histórico de prueba interna. Los bloqueos y pasos pendientes de septiembre requieren revalidación antes de reutilizarse.
+> Entrada: [índice vigente](README.md). Estado: [CURRENT_STATE](CURRENT_STATE.md).
+
 ## Estado de esta entrega
 
 - El API cierra documentos por defecto (`PROVIDER_DOCUMENTS_ENABLED` debe ser

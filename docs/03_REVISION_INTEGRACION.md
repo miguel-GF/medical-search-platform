@@ -1,5 +1,8 @@
 # Pruevia — Revisión de integración
 
+> Evaluación histórica del corte indicado en este documento; no acredita el estado operativo actual.
+> Entrada: [índice vigente](README.md). Estado: [CURRENT_STATE](CURRENT_STATE.md).
+
 **Fecha:** 28 de agosto de 2026
 **Alcance:** documentación canónica, migraciones SQL 001-094, seed, collectors y pruebas pgTAP de Database V1.
 **Veredicto:** propuesta coherente y con una base técnica fuerte; la incertidumbre principal está en validar operación de datos y demanda, no en la idea central.

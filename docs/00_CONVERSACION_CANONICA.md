@@ -1,5 +1,8 @@
 # Pruevia — Conversación canónica del proyecto
 
+> Archivo histórico de contexto; no es la entrada obligatoria ni una autorización vigente.
+> Entrada: [índice vigente](README.md). Estado: [CURRENT_STATE](CURRENT_STATE.md).
+
 **Fecha de consolidación:** 22 de agosto de 2026  
 **Estado:** referencia canónica de decisiones, hipótesis, investigación y arquitectura discutidas en esta conversación.  
 **Nombre del producto:** `Pruevia` se utiliza como nombre provisional; el naming definitivo sigue pendiente.
@@ -1195,4 +1198,3 @@ Si la respuesta a ambas es no, probablemente no sea prioridad.
 - `PRUEVIA_DB_V1.zip` — migraciones SQL ejecutables, seeds, tests y documentación de la V1 de PostgreSQL/Supabase.
 - `DB_ARCHITECTURE_V1.md` — arquitectura específica de la base V1.
 - `DB_TABLE_CATALOG_V1.md` — catálogo de las 45 tablas V1.
-

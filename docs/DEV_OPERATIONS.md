@@ -1,5 +1,8 @@
 # Operacion DEV antes de Flutter
 
+> Referencia operativa acumulada. Sus precondiciones y comandos remotos deben contrastarse con el entorno y la guía vigente.
+> Entrada: [índice vigente](README.md). Estado: [CURRENT_STATE](CURRENT_STATE.md).
+
 Este documento deja reproducible el entorno que ya se puede operar sin desplegar Flutter.
 
 ## Supabase

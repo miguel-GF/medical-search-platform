@@ -1,5 +1,8 @@
 # Cobertura de proveedores de Puebla
 
+> Informe de cobertura con snapshots fechados; sus cantidades y cadencias recomendadas no demuestran estado actual ni jobs activos.
+> Entrada: [índice vigente](README.md). Estado: [CURRENT_STATE](CURRENT_STATE.md).
+
 La cartera de proveedores se separa en dos niveles para no publicar datos sin
 verificación:
 

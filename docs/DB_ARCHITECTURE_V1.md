@@ -1,5 +1,8 @@
 # Pruevia — Database Architecture V1
 
+> Modelo de referencia V1; contiene decisiones y capacidades futuras. Verificar migraciones finales y entorno para afirmar implementación.
+> Entrada: [índice vigente](README.md). Estado: [CURRENT_STATE](CURRENT_STATE.md).
+
 ## 1. Architectural stance
 
 Pruevia is modeled as a **reusable catalog/marketplace core** plus a **health-diagnostics domain module**. This is deliberate: the product launches with diagnostic studies, but the same core can later power a different product for medicines, auto parts, industrial parts, etc. without contaminating Pruevia with cross-domain business rules.

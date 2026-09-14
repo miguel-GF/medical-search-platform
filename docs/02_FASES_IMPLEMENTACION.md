@@ -1,5 +1,8 @@
 # Pruevia — Plan de implementación por fases
 
+> Roadmap histórico con cortes acumulados. El orden inmediato de este archivo no sustituye las prioridades vigentes.
+> Entrada: [índice vigente](README.md). Estado: [CURRENT_STATE](CURRENT_STATE.md).
+
 **Versión:** 1.0  
 **Fecha:** 22 de agosto de 2026  
 **Estado general:** las fases de Data Engine, seguridad y el vertical slice de

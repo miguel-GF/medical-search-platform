@@ -2,6 +2,10 @@
 
 Executable PostgreSQL/Supabase foundation for the Pruevia data engine.
 
+Entrada vigente: [operación y comprobaciones](../docs/OPERATIONS_GUIDE.md).
+Para cambios críticos seguir [propuesta y aprobación](../docs/DECISIONS.md#cambios-críticos-y-aprobación).
+El modelo V1 de este documento no acredita el esquema actualmente desplegado.
+
 ## Goals
 
 - Multi-city and multi-country ready.
@@ -27,12 +31,11 @@ docs/                    # sibling directory: ../docs
 
 ## Apply locally
 
-```bash
-supabase init
-supabase start
-supabase db reset
-supabase test db
-```
+Desde `database`, el proyecto ya está inicializado. `supabase start` arranca el
+entorno local. Un `supabase db reset` recrea sus datos: usarlo sólo en una base
+local desechable identificada o con autorización y recuperación adecuadas.
+Para contratos enlazados usar `python scripts/run_sql_contracts.py`; consultar
+la guía de operación para entorno, precondiciones y selección de pruebas.
 
 ## Deploy to DEV
 

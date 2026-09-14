@@ -1,5 +1,8 @@
 # Pruevia V1 Table Catalog
 
+> Inventario del corte V1; no es un conteo actualizado del esquema. Verificar migraciones y base destino.
+> Entrada: [índice vigente](README.md). Estado: [CURRENT_STATE](CURRENT_STATE.md).
+
 The executable foundation currently creates **59 tables**. That is larger than the early ~30-table estimate because the physical review kept provenance, data quality, scope inheritance, geographic integrity, provider identity, audit and consent-gated analytics concerns separate instead of hiding them in JSON.
 
 ## `geo` (1)

@@ -1,5 +1,8 @@
 # Pruevia — Arquitectura canónica
 
+> Referencia de arquitectura con secciones implementadas y futuras; contrastar cada capacidad antes de asumirla desplegada.
+> Entrada: [índice vigente](README.md). Estado: [CURRENT_STATE](CURRENT_STATE.md).
+
 **Versión:** 1.0  
 **Fecha:** 22 de agosto de 2026  
 **Estado:** arquitectura objetivo aprobada para iniciar construcción.  
