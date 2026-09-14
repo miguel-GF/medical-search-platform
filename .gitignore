@@ -14,6 +14,9 @@ node_modules/
 !.dev.vars.example
 dist/
 coverage/
+.nuxt/
+.output/
+apps/landing/.playwright/
 
 # Wrangler local runtime state and linked-project metadata.
 apps/api/.wrangler/

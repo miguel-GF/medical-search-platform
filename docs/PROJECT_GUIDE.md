@@ -27,6 +27,7 @@ por aparecer en la arquitectura de largo plazo.
 | --- | --- |
 | Paciente Flutter | Presentación, captura, confirmación y consumo del contrato: [main.dart](../apps/patient/lib/main.dart), [cliente](../apps/patient/lib/src/api_client.dart), [modelos](../apps/patient/lib/src/models.dart). |
 | Admin Vue/Vite | Operación interna: [App.vue](../apps/admin/src/App.vue), [API](../apps/admin/src/api.ts), [Auth](../apps/admin/src/auth.ts). |
+| Landing Nuxt | Sitio informativo/SEO independiente: [app](../apps/landing/app/pages/index.vue), [configuración](../apps/landing/nuxt.config.ts). No recoge datos médicos. |
 | API Worker TypeScript | HTTP, validación, permisos, límites y coordinación: [rutas](../apps/api/src/app.ts), [tipos](../apps/api/src/types.ts), [RPC](../apps/api/src/supabase.ts). |
 | Supabase/PostgreSQL | Catálogo, equivalencias, reglas de resolución, oferta, precios, auditoría y permisos. [Migraciones](../database/supabase/migrations) y [contratos](../database/supabase/tests). |
 | Collectors Python | Captura acotada, parseo, observaciones y artefactos: [pipeline](../collectors/src/pruevia_collectors/pipeline.py), [adaptadores](../collectors/src/pruevia_collectors/providers). |

@@ -18,6 +18,7 @@ y opciones verificables para realizarlos. El foco actual es construir cobertura
 | --- | --- |
 | `apps/api` | API Cloudflare Worker y coordinación de servicios. |
 | `apps/admin` | Panel Vue de operación y revisión. |
+| `apps/landing` | Landing SEO pública, independiente de la app paciente. |
 | `apps/patient` | Flutter Web/PWA y clientes móviles. |
 | `apps/ocr-service`, `apps/document-scanner` | Extracción y validación de documentos. |
 | `database` | Migraciones, contratos SQL, fixtures y scripts. |

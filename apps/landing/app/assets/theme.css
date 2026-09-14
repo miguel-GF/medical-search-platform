@@ -1,0 +1,18 @@
+/* Shared brand values mirror Admin theme.css and Patient theme.dart.
+   Landing-specific surfaces preserve a warm, light editorial presentation. */
+:root {
+  --brand-primary: #0f766e;
+  --brand-primary-strong: #115e59;
+  --brand-navy: #0f172a;
+  --brand-secondary: #2563eb;
+  --color-canvas: #fbfaf6;
+  --color-surface: #fff;
+  --color-text: #183d39;
+  --color-muted: #546961;
+  --color-border: #dfe5da;
+  --color-mint: #eaf2e5;
+  --color-lime: #d9ebac;
+  --font-sans: "Segoe UI", Inter, system-ui, -apple-system, sans-serif;
+  --radius-card: 22px;
+  color-scheme: light;
+}

@@ -33,6 +33,9 @@ Fuente: [reconciliación Puebla](PUEBLA_PROVIDER_COVERAGE.md) y sus fixtures del
   Son leads del snapshot, no un censo actual ni 213 proveedores confirmados.
 - Cola: último preview remoto registrado en esta sesión reportó 7,028 pendientes
   y cero elegibles adicionales para reproceso exacto; no es una tasa de fallo del paciente.
+- El reporte reproducible de priorización por proveedor/etiqueta está en
+  [puebla_normalization_backlog.sql](../database/reports/puebla_normalization_backlog.sql);
+  agrupa esas filas para revisión sin publicar cambios.
 - Los 946 `no_match` cerrados son historial. No contar cada fila `no_match` como
   tarea abierta: comprobar decisión final con la semántica del dashboard/cola.
 
