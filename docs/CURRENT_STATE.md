@@ -1,7 +1,7 @@
 # Estado y prioridades de Pruevia
 
-Tipo: punto de continuidad. Revisado documentalmente el 14-sep-2026 sobre el árbol
-basado en `b366b58`. Esta entrega no revalidó servicios remotos ni aplicó migraciones.
+Tipo: punto de continuidad. Revisado el 14-sep-2026 sobre el árbol basado en
+`c65043e`. Esta entrega no revalidó servicios remotos ni aplicó migraciones.
 Los datos de septiembre citados abajo son cortes de evidencia, no contadores en vivo.
 
 ## Cómo leer el estado
@@ -18,7 +18,8 @@ trabajo; `bloqueado` necesita una condición externa identificada. No son sinón
 | Documentos de proveedores | Configuración versionada cerrada por defecto; ver [cierre](../database/supabase/migrations/20260908100000_internal_document_freeze.sql) y [Worker](../apps/api/wrangler.toml). | No reabrir sólo cambiando una variable; necesita propuesta crítica y revisión coordinada. |
 | Collectors | Adaptadores presentes para DENUE, Chopo, Ruiz, Salud Digna, SEMIN, Dr. Simi, Linfolab y genérico. [Entrypoints](../collectors/pyproject.toml). | Eficacia y frescura varían por fuente; ver [cobertura](PUEBLA_PROVIDER_COVERAGE.md). |
 | CI y despliegue DEV | Workflows presentes en [.github](../.github/workflows). | No se verificó aquí configuración de GitHub, ejecución reciente ni versión remota. |
-| Dominio / landing SEO | Arquitectura propuesta: raíz para landing, `app`, `admin`, `api` como subdominios. | Compra, DNS, publicación de landing y asociación de dominios no acreditados en esta entrega. |
+| Landing SEO | Implementado localmente en `apps/landing` con Nuxt 4, generación estática, privacidad, robots/sitemap condicionado y headers. | El sitio aún no está publicado: compra, DNS, asociación de dominios y destino real del CTA requieren configuración y verificación. |
+| Dominio Pruevia | Arquitectura definida: raíz para landing, `app`, `admin`, `api` como subdominios. | Compra, DNS y asociación de dominios no acreditados en esta entrega. |
 
 ## Corte de cobertura disponible
 
@@ -62,7 +63,7 @@ acciones distintas; aplicar aprobación crítica cuando corresponda.
 | ADM-01 / media | Verificar operación del Admin con el volumen actual: búsqueda, periodos, paginación, cola y acciones auditables. | Consulta encuentra un registro fuera de la primera página o declara claramente su alcance; estados de red, vacío y sesión distinguibles. |
 | REL-01 / posterior a cobertura | Preparar prueba externa de Puebla con gate medido, revisión de seguridad pendiente, Auth, orígenes, despliegue y recuperación. | Propuesta de liberación con resultados y limitaciones; aprobación explícita antes de apertura crítica. |
 | REL-02 / alta antes de integrar frontends | Resolver acceso de paciente y Admin desde orígenes distintos: el Worker actual admite un solo `ALLOWED_ORIGIN`. Proponer allowlist explícita o separación de destinos y sus pruebas. | Decisión revisada de seguridad/configuración; aprobación previa si modifica la frontera de acceso. Validar preflight y rechazo de orígenes ajenos antes de desplegar. |
-| FUT-01 / posterior | Landing/SEO, expansión geográfica y capacidades comerciales según [roadmap](02_FASES_IMPLEMENTACION.md). | Prioridad de producto confirmada, dependencia de datos resuelta y propuesta específica; no iniciar por aparecer en un documento. |
+| FUT-01 / posterior | Publicar y ampliar SEO del landing, expansión geográfica y capacidades comerciales según [roadmap](02_FASES_IMPLEMENTACION.md). | Landing base ya implementado; publicación requiere destino, contenido legal/contacto revisado y aprobación crítica. Datos dinámicos y cobertura no se inventan para llenar páginas. |
 
 PUE-01 y captura acotada PUE-03 pueden avanzar sin esperar expansión del catálogo.
 PUE-02 debe usar evidencia para priorizar, evitando crecer por volumen sin utilidad.
@@ -88,8 +89,9 @@ se va a usar para liberar un cambio.
 
 Validación documental del 14-sep-2026: enlaces locales y anclas de la nueva entrada,
 guías, decisiones y snapshot comprobados; `git diff --check` sin errores.
-`AGENTS.md` se mantiene por debajo de 150 líneas. No se ejecutaron despliegues ni
-pruebas funcionales por esta entrega exclusivamente documental.
+`AGENTS.md` se mantiene por debajo de 150 líneas. El landing pasó sus pruebas de
+configuración, typecheck, auditoría npm, generación estática y revisión visual
+local; no se ejecutaron despliegues ni se verificaron DNS/servicios remotos.
 
 Se recorrieron estos escenarios contra las referencias y código local:
 
