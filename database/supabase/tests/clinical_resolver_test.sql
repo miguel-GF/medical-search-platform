@@ -2,7 +2,7 @@
 
 begin;
 create extension if not exists pgtap with schema extensions;
-select extensions.plan(18);
+select extensions.plan(22);
 
 select extensions.has_table('catalog', 'item_descriptions', 'clinical descriptions table exists');
 select extensions.has_table('health', 'lab_service_definitions', 'lab attributes table exists');
@@ -77,6 +77,35 @@ select extensions.is(
    where candidate->>'display_name' = 'Biometría hemática'),
   0::bigint,
   'alias does not ignore unmatched query tokens'
+);
+
+select extensions.is(
+  (select count(*)::bigint
+   from jsonb_array_elements(public.api_resolve_search('ANGIOTOMOGRAFIA DE MIEMBROS INFERIORES CONTRASTADA')->'candidates') candidate
+   where core.normalized_text(candidate->>'display_name') = 'electromiografia de extremidades inferiores'),
+  0::bigint,
+  'angiotomography does not leak electromyography'
+);
+select extensions.is(
+  (select count(*)::bigint
+   from jsonb_array_elements(public.api_resolve_search('ANTICUERPOS ANTI AG E HEPATITIS B HBEAC')->'candidates') candidate
+   where core.normalized_text(candidate->>'display_name') = 'biometria hematica'),
+  0::bigint,
+  'hepatitis antibody does not leak blood count'
+);
+select extensions.is(
+  (select count(*)::bigint
+   from jsonb_array_elements(public.api_resolve_search('CREATININA EN ORINA')->'candidates') candidate
+   where core.normalized_text(candidate->>'display_name') = 'creatinina'),
+  0::bigint,
+  'urine creatinine does not collapse into serum creatinine'
+);
+select extensions.is(
+  (select count(*)::bigint
+   from jsonb_array_elements(public.api_resolve_search('CURVA DE TOLERANCIA A LA GLUCOSA')->'candidates') candidate
+   where core.normalized_text(candidate->>'display_name') = 'glucosa'),
+  0::bigint,
+  'glucose tolerance curve does not collapse into glucose'
 );
 
 select * from extensions.finish();

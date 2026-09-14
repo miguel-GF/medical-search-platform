@@ -181,11 +181,24 @@ permanece pendiente de verificación). Las corridas SEMIN (149
 registros), Chopo (60), Salud Digna (6,923) y Linfolab (6 sucursales) se
 guardaron en `ingest`. Linfolab tiene tres ubicaciones oficiales enlazadas y
 tres sucursales adicionales conservadas sólo como evidencia RAW.
-La cola administrativa quedó abierta con
-7,138 pendientes (`normalization_pending`): 6,910 estudios Salud Digna, 58 estudios Chopo, 140
-estudios SEMIN y 30 etiquetas genéricas clínicas. Esto permite auditar y
-depurar desde el panel administrativo sin presentar esos estudios como
-resultados confirmados a pacientes.
+La cola administrativa quedó abierta con 7,028 pendientes
+(`normalization_pending`) después de reprocesar 110 coincidencias exactas
+seguras. La mayor parte sigue siendo Salud Digna (6,804 pendientes abiertos);
+también quedan 140 estudios de SEMIN, 57 de Chopo y etiquetas de proveedores
+pequeños. Los 946 casos con decisión final `no_match` se conservan como
+historial, pero no se muestran como trabajo abierto. Esto permite auditar y
+depurar desde el panel administrativo sin presentar estudios no confirmados a
+pacientes.
+
+El reproceso exacto se puede ejecutar por lotes desde el RPC administrativo;
+sólo acepta un nombre canónico o alias aprobado idéntico y nunca convierte una
+similitud difusa en una oferta:
+
+```sql
+select public.api_admin_reprocess_exact_normalizations(
+  '<ADMIN_USER_UUID>', 200, true, '<REQUEST_ID_UNICO>'
+);
+```
 
 ## Sucursales públicas de Linfolab
 
