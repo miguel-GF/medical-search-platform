@@ -533,6 +533,16 @@ $env:APP_ENV = "production"
 $env:ALLOWED_ORIGIN = "https://admin.<tu-dominio>"
 ```
 
+Si el paciente y Admin vivirán en orígenes distintos, prepara la allowlist
+exacta (sin comodín) y valida el preflight antes de desplegar:
+
+```powershell
+$env:ALLOWED_ORIGINS = "https://app.<tu-dominio>,https://admin.<tu-dominio>"
+```
+
+`ALLOWED_ORIGINS` reemplaza a `ALLOWED_ORIGIN` cuando está presente. Un origen
+fuera de la lista debe responder `403` sin `access-control-allow-origin`.
+
 El Worker rechaza producción sin un origen HTTPS explícito. Las URLs de
 Supabase y OCR también deben ser HTTPS; HTTP sólo se permite para loopback en
 desarrollo.

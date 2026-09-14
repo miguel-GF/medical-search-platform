@@ -50,18 +50,30 @@ const MAX_PUBLIC_PAYLOAD_DEPTH = 32;
 const MAX_PUBLIC_PAYLOAD_ENTRIES = 1_000;
 const MAX_PUBLIC_PAYLOAD_STRING_LENGTH = 64 * 1024;
 const SENSITIVE_PUBLIC_PAYLOAD_KEY = /(password|passphrase|secret|token|authorization|cookie|api[_-]?key|private[_-]?key|access[_-]?token|refresh[_-]?token|client[_-]?secret)/i;
+const MAX_CORS_ORIGIN_LIST_LENGTH = 4_096;
+const MAX_CORS_ORIGINS = 32;
 
 export function createHandler(dependencies: Dependencies) {
   return async function handle(request: Request, env: Env): Promise<Response> {
-    const origin = configuredCorsOrigin(env.ALLOWED_ORIGIN);
+    const corsInput = env.ALLOWED_ORIGINS ?? env.ALLOWED_ORIGIN;
+    const corsOrigins = configuredCorsOrigins(corsInput);
+    const requestOrigin = request.headers.get('origin');
+    const origin = corsOriginForRequest(corsOrigins, requestOrigin);
     const requestId = requestIdFor(request);
     // Only explicitly named local/test environments may relax origin and
     // abuse-control requirements. An omitted or unknown APP_ENV must never
     // silently downgrade a deployment into development behavior.
     const relaxedEnvironment = env.APP_ENV === 'development' || env.APP_ENV === 'test';
-    if (!relaxedEnvironment && !isSecureConfiguredOrigin(env.ALLOWED_ORIGIN)) {
+    if (!relaxedEnvironment && !isSecureConfiguredOrigins(corsInput)) {
       console.error(JSON.stringify({ event: 'api_configuration_error', request_id: requestId, reason: 'https_origin_required' }));
       return errorJson('service_not_configured', 'The API is not securely configured.', 503, origin, requestId, 'API.SERVER.CONFIGURATION', 'high', false);
+    }
+    // When the plural setting is supplied, enforce the allowlist at the HTTP
+    // boundary. A non-browser client can still spoof Origin, so this is not
+    // authentication; it only prevents accidental cross-origin exposure.
+    const allowlistMode = env.ALLOWED_ORIGINS !== undefined;
+    if (allowlistMode && requestOrigin && !origin) {
+      return errorJson('cors_origin_not_allowed', 'The request origin is not allowed.', 403, '', requestId, 'API.SERVER.CORS_ORIGIN', 'medium', false);
     }
     if (request.method === 'OPTIONS') {
       return new Response(null, { status: 204, headers: corsHeaders(origin) });
@@ -1970,26 +1982,52 @@ function rateLimitIdentity(request: Request): string {
   return /^[A-Fa-f0-9:.]{1,64}$/.test(address) ? address : 'unknown-client';
 }
 
-function isSecureConfiguredOrigin(value: string | undefined): boolean {
-  if (!value || value === '*') return false;
+function normalizeCorsOrigin(value: string, protocol: 'http:' | 'https:' | 'any' = 'any'): string | null {
+  const candidate = value.trim();
+  if (!candidate || candidate === '*') return null;
   try {
-    const parsed = new URL(value);
-    return parsed.protocol === 'https:' && parsed.origin === value.replace(/\/$/, '');
+    const parsed = new URL(candidate);
+    if (protocol !== 'any' && parsed.protocol !== protocol) return null;
+    if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') return null;
+    // Origins never carry credentials, paths, queries or fragments. Allow a
+    // single trailing slash in configuration, then normalize to URL.origin.
+    if (parsed.username || parsed.password || parsed.pathname !== '/' || parsed.search || parsed.hash) return null;
+    if (parsed.origin !== candidate.replace(/\/$/, '')) return null;
+    return parsed.origin;
   } catch {
-    return false;
+    return null;
   }
 }
 
-function configuredCorsOrigin(value: string | undefined): string {
+function configuredCorsOrigins(value: string | undefined): string[] {
   const candidate = value?.trim() ?? '';
-  if (!candidate || candidate === '*') return '*';
-  try {
-    const parsed = new URL(candidate);
-    if (parsed.protocol === 'http:' || parsed.protocol === 'https:') return parsed.origin;
-  } catch {
-    // Fall through to the safe wildcard used only for development/misconfig.
+  if (!candidate || candidate === '*' || candidate.length > MAX_CORS_ORIGIN_LIST_LENGTH) return [];
+  const pieces = candidate.split(',');
+  if (pieces.length > MAX_CORS_ORIGINS) return [];
+  const origins = new Set<string>();
+  for (const piece of pieces) {
+    const origin = normalizeCorsOrigin(piece);
+    if (origin) origins.add(origin);
   }
-  return '*';
+  return [...origins];
+}
+
+function isSecureConfiguredOrigins(value: string | undefined): boolean {
+  const candidate = value?.trim() ?? '';
+  if (!candidate || candidate === '*' || candidate.length > MAX_CORS_ORIGIN_LIST_LENGTH) return false;
+  const pieces = candidate.split(',');
+  if (pieces.length === 0 || pieces.length > MAX_CORS_ORIGINS || pieces.some((piece) => !piece.trim())) return false;
+  const origins = pieces.map((piece) => normalizeCorsOrigin(piece, 'https:'));
+  return origins.every((origin): origin is string => origin !== null);
+}
+
+function corsOriginForRequest(configuredOrigins: string[], requestOrigin: string | null): string {
+  if (configuredOrigins.length === 0) return '*';
+  if (!requestOrigin) return configuredOrigins[0];
+  const normalizedRequestOrigin = normalizeCorsOrigin(requestOrigin);
+  return normalizedRequestOrigin && configuredOrigins.includes(normalizedRequestOrigin)
+    ? normalizedRequestOrigin
+    : '';
 }
 
 function requestIdFor(request: Request): string {
@@ -2038,5 +2076,10 @@ function errorJson(
 }
 
 function corsHeaders(origin: string): Record<string, string> {
-  return { 'access-control-allow-origin': origin, 'access-control-allow-headers': 'authorization,content-type,x-request-id,idempotency-key', 'access-control-allow-methods': 'GET,POST,PATCH,OPTIONS' };
+  return {
+    ...(origin ? { 'access-control-allow-origin': origin } : {}),
+    'access-control-allow-headers': 'authorization,content-type,x-request-id,idempotency-key',
+    'access-control-allow-methods': 'GET,POST,PATCH,OPTIONS',
+    'vary': 'Origin',
+  };
 }

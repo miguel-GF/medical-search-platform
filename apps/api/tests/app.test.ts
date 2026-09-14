@@ -262,6 +262,47 @@ describe('Pruevia API', () => {
     expect(rpc.call).not.toHaveBeenCalled();
   });
 
+  it('selects an exact origin from the CORS allowlist and rejects foreign origins', async () => {
+    const rpc = rpcWith([]);
+    const configured = {
+      ...env,
+      APP_ENV: 'production' as const,
+      ALLOWED_ORIGINS: 'https://admin.example.test, https://app.example.test',
+    };
+    const allowed = await createHandler({ rpc })(
+      new Request('https://api.test/health', { headers: { origin: 'https://app.example.test' } }),
+      configured,
+    );
+    expect(allowed.status).toBe(200);
+    expect(allowed.headers.get('access-control-allow-origin')).toBe('https://app.example.test');
+    expect(allowed.headers.get('vary')).toBe('Origin');
+
+    const preflight = await createHandler({ rpc })(
+      new Request('https://api.test/health', { method: 'OPTIONS', headers: { origin: 'https://admin.example.test' } }),
+      configured,
+    );
+    expect(preflight.status).toBe(204);
+    expect(preflight.headers.get('access-control-allow-origin')).toBe('https://admin.example.test');
+
+    const denied = await createHandler({ rpc })(
+      new Request('https://api.test/health', { headers: { origin: 'https://evil.example.test' } }),
+      configured,
+    );
+    expect(denied.status).toBe(403);
+    expect(denied.headers.get('access-control-allow-origin')).toBeNull();
+    expect(await denied.json()).toEqual(expect.objectContaining({ error: expect.objectContaining({ code: 'cors_origin_not_allowed' }) }));
+  });
+
+  it('fails closed in production when any configured CORS origin is unsafe', async () => {
+    const rpc = rpcWith([]);
+    const response = await createHandler({ rpc })(
+      new Request('https://api.test/health'),
+      { ...env, APP_ENV: 'production', ALLOWED_ORIGINS: 'https://app.example.test, *' },
+    );
+    expect(response.status).toBe(503);
+    expect(rpc.call).not.toHaveBeenCalled();
+  });
+
   it('fails closed when APP_ENV is omitted or unknown', async () => {
     const rpc = rpcWith([]);
     const missing = await createHandler({ rpc })(

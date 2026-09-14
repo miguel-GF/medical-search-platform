@@ -11,6 +11,8 @@ export interface Env {
   PROVIDER_DOCUMENTS_ENABLED?: string;
   API_VERSION?: string;
   ALLOWED_ORIGIN?: string;
+  /** Comma-separated exact origins; takes precedence over ALLOWED_ORIGIN when set. */
+  ALLOWED_ORIGINS?: string;
   PUBLIC_RATE_LIMITER?: RateLimitBinding;
   REVIEW_CAPTURE_RATE_LIMITER?: RateLimitBinding;
   OCR_RATE_LIMITER?: RateLimitBinding;

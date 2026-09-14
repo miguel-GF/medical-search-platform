@@ -6,9 +6,12 @@ Estado: **propuesta**, no aprobada ni ejecutada. Fecha: 14-sep-2026.
 
 La landing está implementada como sitio estático en `apps/landing` y el Worker
 API tiene un dry-run de publicación aprobado. El Admin y el paciente son
-frontends distintos. El Worker actual acepta un solo `ALLOWED_ORIGIN`, por lo
-que una configuración que permita Admin y paciente desde orígenes distintos
-requiere una decisión de seguridad. El catálogo conserva 7,028 etiquetas de
+frontends distintos. El Worker conserva compatibilidad con un solo
+`ALLOWED_ORIGIN` y ahora tiene una opción aditiva `ALLOWED_ORIGINS` para una
+allowlist exacta; publicar dos frontends sin activar y probar esa frontera puede
+dejar un CORS demasiado abierto o romper el flujo; una configuración que permita
+Admin y paciente desde orígenes distintos requiere una decisión de seguridad.
+El catálogo conserva 7,028 etiquetas de
 proveedores en `normalization_pending`; no son equivalencias clínicas aprobadas.
 
 No hay dominio comprado, DNS asociado ni servicio público verificado en esta
@@ -24,10 +27,11 @@ contenido legal/contacto.
 2. **Frontera web:** usar un dominio raíz para la landing y subdominios separados
    para paciente, Admin y API, pero mantenerlos no públicos hasta configurar DNS
    y probar TLS. La compra y elección del nombre quedan fuera de este ADR.
-3. **CORS explícito:** preparar una allowlist de orígenes exactos HTTPS para el
-   Worker (sin comodines, listas ambiguas, rutas ni credenciales), con pruebas de
-   preflight, aceptación de cada origen autorizado y rechazo de uno ajeno. No
-   cambiar `ALLOWED_ORIGIN` ni desplegar hasta aprobar la implementación concreta.
+3. **CORS explícito:** activar, con aprobación, `ALLOWED_ORIGINS` como allowlist
+   de orígenes exactos HTTPS para el Worker (sin comodines, listas ambiguas,
+   rutas ni credenciales). El código ya valida preflight y devuelve 403 sin
+   reflejar un origen no permitido; falta decidir los dominios reales y
+   desplegar la configuración.
 4. **Datos clínicos:** trabajar la cola por lotes pequeños priorizados por
    frecuencia y evidencia del proveedor. Cada mapping necesita equivalencia
    clínica revisada, alcance de sucursal, procedencia y prueba de vecino que debe
@@ -66,7 +70,8 @@ contenido legal/contacto.
 1. Registrar en `DECISIONS.md` el alcance exacto aprobado: dominio, orígenes,
    entorno y lote de datos.
 2. Preparar diff de CORS y contratos de seguridad; ejecutar API/Admin/paciente,
-   preflight, rechazo de origen ajeno y pruebas de sesión/MFA.
+   preflight, rechazo de origen ajeno y pruebas de sesión/MFA (la suite del
+   Worker ya cubre esos casos en modo local).
 3. Generar la landing con URLs reales, `INDEXABLE=true`, y revisar los artefactos
    estáticos antes de subirlos.
 4. Para cada lote clínico, ejecutar dry-run, revisar diff y contrato de

@@ -59,3 +59,5 @@ binding = "AI"
 # SUPABASE_SECRET_KEY
 # (los nombres ANON_KEY/SERVICE_ROLE_KEY se aceptan sólo durante la migración)
 # ADMIN_USER_IDS (comma-separated Supabase auth user UUIDs allowed into Admin)
+# ALLOWED_ORIGIN (legacy single origin; use ALLOWED_ORIGINS for multiple frontends)
+# ALLOWED_ORIGINS (optional comma-separated exact origins; do not use '*')

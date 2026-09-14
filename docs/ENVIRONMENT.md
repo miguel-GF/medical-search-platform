@@ -48,6 +48,14 @@ Los bindings de rate limit se definen en `apps/api/wrangler.toml`: público,
 captura de revisión, OCR, Admin y proveedor. Verificar los cinco junto con los
 requisitos del Worker vigente antes de publicar.
 
+Para integrar más de un frontend, `ALLOWED_ORIGINS` acepta una lista separada
+por comas de orígenes exactos y toma precedencia sobre `ALLOWED_ORIGIN`. En
+producción todos deben ser HTTPS, sin rutas, credenciales, query ni fragmentos;
+un origen que no esté en la lista recibe 403 y nunca se refleja en CORS. La
+variable es opt-in: mientras no se configure, el contrato existente de
+`ALLOWED_ORIGIN` permanece vigente. En local se permiten origenes HTTP para
+`localhost`/127.0.0.1 mediante `APP_ENV=development`.
+
 La configuracion iOS `Release` usa firma manual `Apple Distribution` y no puede
 caer en una identidad de desarrollo. El pipeline debe proporcionar
 `PRUEVIA_IOS_TEAM_ID` y `PRUEVIA_IOS_PROVISIONING_PROFILE` como ajustes de build
