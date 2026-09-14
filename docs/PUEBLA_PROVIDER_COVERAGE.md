@@ -117,6 +117,11 @@ como evidencia pendiente porque su domicilio oficial no coincide exactamente
 con la fila DENUE disponible. No se infieren estudios ni precios por tener una
 dirección.
 
+La revalidación pública del 14-sep-2026 conservó ese alcance: Salud Digna devolvió
+15/15 registros válidos (corrida `22e90c7a-4e42-41b4-a076-8dff5c7e84c4`), y Dr.
+Simi devolvió 4/4 (corrida `23cc86c7-adb4-4062-a8a7-d4eae2c44e77`). La unidad 260
+aparece en RAW, pero sigue fuera de la publicación hasta resolver la discrepancia.
+
 ```powershell
 $env:PYTHONPATH = "collectors/src"
 python -m pruevia_collectors.cli_dr_simi `
