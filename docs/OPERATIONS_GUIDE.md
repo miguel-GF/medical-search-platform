@@ -49,7 +49,7 @@ Cuando sea necesario iniciar un helper en segundo plano con `Start-Process`, usa
 | `apps/admin` | `npm.cmd run typecheck`; `npm.cmd test`; `npm.cmd run build` | Tipos, pruebas y bundle; build requiere configuración válida de producción. |
 | `apps/patient` | `flutter analyze`; `flutter test` | Análisis y comportamiento cubierto por tests. |
 | `collectors` | `python -m pytest -q` | Parsers/pipeline/transportes cubiertos por fixtures. |
-| raíz | `python -m pytest -q database/tests` | Renderers, validadores y scripts; no ejecuta por sí solo contratos en Supabase. |
+| raíz | `python -m pytest -q` | Suite Python de database, collectors, scanner y OCR; no ejecuta por sí sola contratos en Supabase. |
 | `apps/ocr-service`, `apps/document-scanner` | `python -m pytest -q` en cada directorio | Servicio afectado con sus dependencias instaladas. |
 | raíz | `git diff --check` | Errores de espacios del diff, no calidad funcional. |
 
