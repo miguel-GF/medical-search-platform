@@ -45,9 +45,12 @@ select extensions.is(
   'one concrete branch exposes coverage for every study'
 );
 select extensions.is(
-  (select (public.api_resolve_package(jsonb_build_array('BH', 'EGO', 'Glucosa'))->'offers'->0->>'requires_quote')::boolean),
+  (select (offer->>'requires_quote')::boolean
+   from jsonb_array_elements(public.api_resolve_package(jsonb_build_array('BH', 'EGO', 'Glucosa'))->'offers') offer
+   where offer->>'provider_location_id' = '00000000-0000-0000-0000-000000000902'
+   limit 1),
   true,
-  'missing prices remain quote-required instead of being fabricated'
+  'missing prices remain quote-required instead of being fabricated for the fixture branch'
 );
 select extensions.is(
   (select jsonb_array_length(public.api_resolve_package(jsonb_build_array('B H', 'Q S completa', 'EGO', 'perfil toroideo'))->'items')),
