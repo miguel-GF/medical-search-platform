@@ -1,7 +1,7 @@
 # Estado y prioridades de Pruevia
 
 Tipo: punto de continuidad. Revisado el 14-sep-2026 sobre el árbol basado en
-`e86a63c`. Esta entrega revalidó contratos contra Supabase DEV, pero no aplicó
+`76c819f`. Esta entrega revalidó contratos contra Supabase DEV, pero no aplicó
 migraciones ni publicó servicios.
 Los datos de septiembre citados abajo son cortes de evidencia, no contadores en vivo.
 
@@ -104,7 +104,9 @@ y resolvió una orden de dos estudios con sufijos explícitos de ayuno, conserva
 ambas notas y cobertura completa. No se ejecutaron despliegues ni se verificaron
 DNS/servicios públicos. El Admin pasó 23 pruebas, typecheck y build con
 configuración HTTPS placeholder; el build sin configuración continúa rechazando
-la publicación como medida fail-closed.
+la publicación como medida fail-closed. La variante indexable de la landing se
+generó con destinos HTTPS de ejemplo y produjo sitemap/robots; los destinos reales
+siguen sin verificarse.
 
 Se recorrieron estos escenarios contra las referencias y código local:
 
