@@ -1,7 +1,8 @@
 # Estado y prioridades de Pruevia
 
 Tipo: punto de continuidad. Revisado el 14-sep-2026 sobre el árbol basado en
-`c65043e`. Esta entrega no revalidó servicios remotos ni aplicó migraciones.
+`9e7c275`. Esta entrega revalidó contratos contra Supabase DEV, pero no aplicó
+migraciones ni publicó servicios.
 Los datos de septiembre citados abajo son cortes de evidencia, no contadores en vivo.
 
 ## Cómo leer el estado
@@ -79,11 +80,14 @@ de la muestra, zona exacta del piloto, tasas objetivo de cobertura y tolerancia 
 datos comerciales desactualizados. El agente debe proponerlos con la medición;
 no inventar un porcentaje y presentarlo como requisito aprobado.
 
-Los benchmarks v1/v2 respaldan sus consultas. El reporte previo de 340 pruebas
-Python aprobadas corresponde a esa ejecución. El último `ok` visible de una consulta
-SQL directa no acredita las 22 aserciones del contrato clínico: revalidar con
-[run_sql_contracts.py](../database/scripts/run_sql_contracts.py) si ese resultado
-se va a usar para liberar un cambio.
+Los benchmarks v1/v2 respaldan sus consultas. La revalidación remota del
+14-sep-2026 ejecutó los 25 contratos SQL (412 aserciones) con el runner fijado a
+Supabase CLI 2.116.0: todos pasaron, incluyendo las 22 aserciones clínicas y el
+contrato de paquetes 10/10. La prueba de paquetes se hizo determinista por
+sucursal fixture porque el catálogo real puede ordenar antes ofertas de otros
+proveedores. Repetir desde `database/` con
+`python scripts/run_sql_contracts.py --cli npx.cmd --package supabase@2.116.0`
+antes de liberar un cambio acoplado al esquema.
 
 ## Actualización y traspaso
 
@@ -91,7 +95,7 @@ Validación documental del 14-sep-2026: enlaces locales y anclas de la nueva ent
 guías, decisiones y snapshot comprobados; `git diff --check` sin errores.
 `AGENTS.md` se mantiene por debajo de 150 líneas. El landing pasó sus pruebas de
 configuración, typecheck, auditoría npm, generación estática y revisión visual
-local; no se ejecutaron despliegues ni se verificaron DNS/servicios remotos.
+local; no se ejecutaron despliegues ni se verificaron DNS/servicios públicos.
 
 Se recorrieron estos escenarios contra las referencias y código local:
 
