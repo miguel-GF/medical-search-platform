@@ -39,3 +39,14 @@ def test_fixture_rejects_personal_data_fields(tmp_path):
     path.write_text(json.dumps(fixture), encoding="utf-8")
     with pytest.raises(ValueError, match="forbidden"):
         read_fixture(path)
+
+
+def test_fixture_rejects_personal_data_fields_inside_records(tmp_path):
+    fixture = {
+        "version": "public-query-research-v1",
+        "records": [{"id": "one", "query": "BH", "expected_action": "resolve", "email": "not-retained"}],
+    }
+    path = tmp_path / "fixture.json"
+    path.write_text(json.dumps(fixture), encoding="utf-8")
+    with pytest.raises(ValueError, match="forbidden"):
+        read_fixture(path)

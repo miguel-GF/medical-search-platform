@@ -43,6 +43,8 @@ def read_fixture(path: Path) -> list[dict[str, Any]]:
     for record in records:
         if not isinstance(record, Mapping):
             raise ValueError("query fixture contains a malformed record")
+        if forbidden.intersection(record):
+            raise ValueError("query fixture record contains forbidden personal-data fields")
         record_id = record.get("id")
         query = record.get("query")
         action = record.get("expected_action")
