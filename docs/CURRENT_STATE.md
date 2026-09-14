@@ -20,7 +20,7 @@ trabajo; `bloqueado` necesita una condición externa identificada. No son sinón
 | Collectors | Adaptadores presentes para DENUE, Chopo, Ruiz, Salud Digna, SEMIN, Dr. Simi, Linfolab y genérico. [Entrypoints](../collectors/pyproject.toml). | Eficacia y frescura varían por fuente; ver [cobertura](PUEBLA_PROVIDER_COVERAGE.md). |
 | CI y despliegue DEV | Workflows presentes en [.github](../.github/workflows). | No se verificó aquí configuración de GitHub, ejecución reciente ni versión remota. |
 | Landing SEO | Implementado localmente en `apps/landing` con Nuxt 4, generación estática, privacidad, robots/sitemap condicionado y headers. | El sitio aún no está publicado: compra, DNS, asociación de dominios y destino real del CTA requieren configuración y verificación. |
-| Dominio Pruevia | Arquitectura definida: raíz para landing, `app`, `admin`, `api` como subdominios. | Compra, DNS y asociación de dominios no acreditados en esta entrega. |
+| Dominio Pruevia | Arquitectura definida: raíz para landing, `app`, `admin`, `api` como subdominios; shortlist investigada en [opciones de dominio](DOMAIN_OPTIONS.md). | Compra, DNS y asociación de dominios no acreditados en esta entrega. |
 
 ## Corte de cobertura disponible
 

@@ -14,6 +14,7 @@ La conversación original no es lectura obligatoria para incorporarse.
 | [Estado y prioridades](CURRENT_STATE.md) | Capacidades y pendientes con evidencia fechada. |
 | [Decisiones](DECISIONS.md) | Autonomía, aprobación de cambios críticos y evolución de reglas. |
 | [ADR de liberación Puebla](ADR-002-RELEASE-PILOT-GATES.md) | Propuesta de puerta conjunta para datos, orígenes y publicación. |
+| [Opciones de dominio](DOMAIN_OPTIONS.md) | Investigación de disponibilidad, arquitectura de subdominios y verificación previa a compra. |
 | [Mantenimiento y discovery](CONTINUOUS_IMPROVEMENT.md) | Iniciativa, cadencias, actualización del código y crecimiento medido. |
 | [Entorno](ENVIRONMENT.md) | Variables, ejemplos y límites de exposición de credenciales. |
 
