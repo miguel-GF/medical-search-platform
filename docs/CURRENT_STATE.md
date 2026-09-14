@@ -112,6 +112,10 @@ la publicación como medida fail-closed. La variante indexable de la landing se
 generó con destinos HTTPS de ejemplo y produjo sitemap/robots; los destinos reales
 siguen sin verificarse.
 El Worker actual también pasó `wrangler deploy --dry-run` (122.31 KiB sin subir).
+El corpus anonimizado de 64 consultas, medido contra el Worker HTTP local con
+UTF-8, obtuvo 7/7 resoluciones estrictas y 9/9 resoluciones esperadas incluyendo
+preparación, sin resoluciones inesperadas; 51 casos permanecen correctamente en
+`no_match` y 4 en `ambiguous` según su intención no resoluble.
 
 Se recorrieron estos escenarios contra las referencias y código local:
 

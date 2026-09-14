@@ -366,6 +366,19 @@ El reporte separa las acciones esperadas (`resolve`, preparación, panel o
 brecha de catálogo) del estado real del resolver. Un `resolved` fuera de una
 acción resoluble se reporta como riesgo, no como mejora. No es un gate ni
 publica aliases; cualquier equivalencia nueva necesita evidencia y revisión.
+Para medir la experiencia completa del paciente, incluyendo el preprocesado del
+Worker (por ejemplo, `preparation_note`), usa la ruta HTTP y bytes UTF-8:
+
+```powershell
+python database/scripts/report_query_coverage.py `
+  --api-url http://127.0.0.1:8787 `
+  --origin http://localhost:5173 `
+  --output $env:TEMP/pruevia-query-coverage-http.json
+```
+
+`--api-url` exige un origen HTTPS limpio; HTTP sólo se permite en loopback. El
+script limita la respuesta, no guarda el texto de las consultas en el resumen y
+no sustituye una prueba remota del entorno que se vaya a publicar.
 
 ## API Worker
 
