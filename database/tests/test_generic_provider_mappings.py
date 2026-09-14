@@ -135,3 +135,46 @@ def test_renderer_rejects_denue_domain_mismatch(tmp_path: Path):
     denue["candidates"][0]["website_url"] = "WWW.OTHER-LAB.COM"
     with pytest.raises(ValueError, match="website does not match"):
         render(_fixture(), {"generic_familylabs_com_mx": _artifact(tmp_path)}, denue)
+
+
+def test_identity_only_renderer_accepts_failed_website_crawl(tmp_path: Path):
+    source_key = "generic_candidate"
+    artifact = tmp_path / source_key
+    artifact.mkdir()
+    (artifact / "raw_records.jsonl").write_text("", encoding="utf-8")
+    (artifact / "observations.jsonl").write_text("", encoding="utf-8")
+    (artifact / "run_manifest.json").write_text(
+        json.dumps(
+            {
+                "source_key": source_key,
+                "source_name": "Candidate website",
+                "source_type": "public_website",
+                "status": "failed",
+                "errors": ["TLS failure"],
+                "records_received": 0,
+                "records_valid": 0,
+                "records_rejected": 0,
+                "run_id": "00000000-0000-0000-0000-000000000003",
+            }
+        ),
+        encoding="utf-8",
+    )
+    fixture = {
+        "version": "candidate-identities-v1",
+        "providers": [
+            {
+                "source_key": source_key,
+                "provider_key": "candidate_lab",
+                "brand_name": "Candidate Lab",
+                "slug": "candidate-lab",
+                "website_url": "https://candidate.example/",
+                "denue_record_ids": ["1"],
+            }
+        ],
+        "mappings": [],
+    }
+    denue = _denue()
+    denue["candidates"][0]["website_url"] = "candidate.example"
+    sql = render(fixture, {source_key: artifact}, denue, identities_only=True)
+    assert "Candidate Lab" in sql
+    assert "supply.offers" not in sql

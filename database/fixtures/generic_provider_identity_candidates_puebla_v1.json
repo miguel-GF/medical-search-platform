@@ -1,0 +1,283 @@
+{
+  "version": "generic-provider-identity-candidates-puebla-v1",
+  "policy": "Identity-only candidate evidence. DENUE and a website domain do not prove current operation, ownership, catalog, price or availability.",
+  "source_run_id": "49e31077-8cbc-438a-9d08-eccad850f30e",
+  "providers": [
+    {
+      "source_key": "generic_adnexamen_com",
+      "provider_key": "adn_examen",
+      "brand_name": "ADN Examen",
+      "slug": "adn-examen",
+      "website_url": "https://adnexamen.com/",
+      "denue_record_ids": [
+        "3462318"
+      ],
+      "identity_note": "DENUE direct-clinical candidate with a matching public website domain; identity, branch activity and services remain verification_pending."
+    },
+    {
+      "source_key": "generic_cediclaboratorios_com",
+      "provider_key": "cedic_laboratorios",
+      "brand_name": "CEDIC Laboratorios",
+      "slug": "cedic-laboratorios",
+      "website_url": "https://cediclaboratorios.com/",
+      "denue_record_ids": [
+        "3254144"
+      ],
+      "identity_note": "DENUE direct-clinical candidate with a matching public website domain; identity, branch activity and services remain verification_pending."
+    },
+    {
+      "source_key": "generic_dxintegra_com",
+      "provider_key": "diagnosticos_integra",
+      "brand_name": "Diagnósticos Integra",
+      "slug": "diagnosticos-integra",
+      "website_url": "https://dxintegra.com/",
+      "denue_record_ids": [
+        "8150854"
+      ],
+      "identity_note": "DENUE direct-clinical candidate with a matching public website domain; identity, branch activity and services remain verification_pending."
+    },
+    {
+      "source_key": "generic_exacta_mx",
+      "provider_key": "laboratorios_exacta",
+      "brand_name": "Laboratorios Exacta",
+      "slug": "laboratorios-exacta",
+      "website_url": "https://exacta.mx/",
+      "denue_record_ids": [
+        "11525837"
+      ],
+      "identity_note": "DENUE direct-clinical candidate with a matching public website domain; identity, branch activity and services remain verification_pending."
+    },
+    {
+      "source_key": "generic_fahorro_com",
+      "provider_key": "farmacias_del_ahorro",
+      "brand_name": "Farmacias del Ahorro — laboratorio",
+      "slug": "farmacias-del-ahorro-laboratorio",
+      "website_url": "https://fahorro.com/",
+      "denue_record_ids": [
+        "9432873",
+        "9432876",
+        "9467285"
+      ],
+      "identity_note": "DENUE direct-clinical candidate with a matching public website domain; identity, branch activity and services remain verification_pending."
+    },
+    {
+      "source_key": "generic_gamamedicinanuclear_com",
+      "provider_key": "gamma_medicina_nuclear",
+      "brand_name": "Gamma Medicina Nuclear",
+      "slug": "gamma-medicina-nuclear",
+      "website_url": "https://gamamedicinanuclear.com/",
+      "denue_record_ids": [
+        "11669957"
+      ],
+      "identity_note": "DENUE direct-clinical candidate with a matching public website domain; identity, branch activity and services remain verification_pending."
+    },
+    {
+      "source_key": "generic_grupomedicofutura_com",
+      "provider_key": "grupo_medico_futura",
+      "brand_name": "Grupo Médico Futura",
+      "slug": "grupo-medico-futura",
+      "website_url": "https://grupomedicofutura.com/",
+      "denue_record_ids": [
+        "3406913",
+        "3406919"
+      ],
+      "identity_note": "DENUE direct-clinical candidate with a matching public website domain; identity, branch activity and services remain verification_pending."
+    },
+    {
+      "source_key": "generic_labbiquiser_com_mx",
+      "provider_key": "laboratorios_biquiser",
+      "brand_name": "Laboratorios Biquiser",
+      "slug": "laboratorios-biquiser",
+      "website_url": "https://labbiquiser.com.mx/",
+      "denue_record_ids": [
+        "3441765"
+      ],
+      "identity_note": "DENUE direct-clinical candidate with a matching public website domain; identity, branch activity and services remain verification_pending."
+    },
+    {
+      "source_key": "generic_laboratorioguadalupe_com",
+      "provider_key": "laboratorios_guadalupe",
+      "brand_name": "Laboratorios Guadalupe",
+      "slug": "laboratorios-guadalupe",
+      "website_url": "https://laboratorioguadalupe.com/",
+      "denue_record_ids": [
+        "12272317",
+        "6272943"
+      ],
+      "identity_note": "DENUE direct-clinical candidate with a matching public website domain; identity, branch activity and services remain verification_pending."
+    },
+    {
+      "source_key": "generic_laboratoriosbiogen_sacom_mx",
+      "provider_key": "laboratorios_quirom",
+      "brand_name": "Laboratorios Qui-Rom",
+      "slug": "laboratorios-quirom",
+      "website_url": "https://laboratoriosbiogen.sacom.mx/",
+      "denue_record_ids": [
+        "3460332"
+      ],
+      "identity_note": "DENUE direct-clinical candidate with a matching public website domain; identity, branch activity and services remain verification_pending."
+    },
+    {
+      "source_key": "generic_laboratorioscastillo_com_mx",
+      "provider_key": "laboratorios_castillo",
+      "brand_name": "Gabinete de Radiología y Ultrasonido Castillo",
+      "slug": "laboratorios-castillo",
+      "website_url": "https://laboratorioscastillo.com.mx/",
+      "denue_record_ids": [
+        "3365512",
+        "8849277",
+        "8849278"
+      ],
+      "identity_note": "DENUE direct-clinical candidate with a matching public website domain; identity, branch activity and services remain verification_pending."
+    },
+    {
+      "source_key": "generic_laboratoriosgaya_com",
+      "provider_key": "laboratorios_gaya",
+      "brand_name": "Laboratorios Gaya",
+      "slug": "laboratorios-gaya",
+      "website_url": "https://laboratoriosgaya.com/",
+      "denue_record_ids": [
+        "6740764"
+      ],
+      "identity_note": "DENUE direct-clinical candidate with a matching public website domain; identity, branch activity and services remain verification_pending."
+    },
+    {
+      "source_key": "generic_labxonaca_com_mx",
+      "provider_key": "althe_radiologia",
+      "brand_name": "Laboratorio e Imagen Radiológica Althe",
+      "slug": "althe-radiologia",
+      "website_url": "https://labxonaca.com.mx/",
+      "denue_record_ids": [
+        "3439708"
+      ],
+      "identity_note": "DENUE direct-clinical candidate with a matching public website domain; identity, branch activity and services remain verification_pending."
+    },
+    {
+      "source_key": "generic_losangeleslaboratorio_com",
+      "provider_key": "laboratorio_los_angeles",
+      "brand_name": "Laboratorio Clínico Especializado Los Ángeles",
+      "slug": "laboratorio-los-angeles",
+      "website_url": "https://losangeleslaboratorio.com/",
+      "denue_record_ids": [
+        "10029629"
+      ],
+      "identity_note": "DENUE direct-clinical candidate with a matching public website domain; identity, branch activity and services remain verification_pending."
+    },
+    {
+      "source_key": "generic_microlabld_com_mx",
+      "provider_key": "microlab",
+      "brand_name": "Microlab",
+      "slug": "microlab",
+      "website_url": "https://microlabld.com.mx/",
+      "denue_record_ids": [
+        "10336249"
+      ],
+      "identity_note": "DENUE direct-clinical candidate with a matching public website domain; identity, branch activity and services remain verification_pending."
+    },
+    {
+      "source_key": "generic_od_grupomedico_com_mx",
+      "provider_key": "sveika_rx",
+      "brand_name": "Sveika RX — radiología dental",
+      "slug": "sveika-rx",
+      "website_url": "https://od_grupomedico.com.mx/",
+      "denue_record_ids": [
+        "12272197"
+      ],
+      "identity_note": "DENUE direct-clinical candidate with a matching public website domain; identity, branch activity and services remain verification_pending."
+    },
+    {
+      "source_key": "generic_piedadlablaboratoriosclinicos_com",
+      "provider_key": "piedad_lab",
+      "brand_name": "Piedad Lab",
+      "slug": "piedad-lab",
+      "website_url": "https://piedadlablaboratoriosclinicos.com/",
+      "denue_record_ids": [
+        "3366771"
+      ],
+      "identity_note": "DENUE direct-clinical candidate with a matching public website domain; identity, branch activity and services remain verification_pending."
+    },
+    {
+      "source_key": "generic_siemso_com_mx",
+      "provider_key": "siemso",
+      "brand_name": "SIEMSO",
+      "slug": "siemso",
+      "website_url": "https://siemso.com.mx/",
+      "denue_record_ids": [
+        "3346931"
+      ],
+      "identity_note": "DENUE direct-clinical candidate with a matching public website domain; identity, branch activity and services remain verification_pending."
+    },
+    {
+      "source_key": "generic_smcarmen_com",
+      "provider_key": "laboratorios_del_carmen",
+      "brand_name": "Laboratorios del Carmen",
+      "slug": "laboratorios-del-carmen",
+      "website_url": "https://smcarmen.com/",
+      "denue_record_ids": [
+        "10751287"
+      ],
+      "identity_note": "DENUE direct-clinical candidate with a matching public website domain; identity, branch activity and services remain verification_pending."
+    },
+    {
+      "source_key": "generic_suvexe_com_mx",
+      "provider_key": "suvex",
+      "brand_name": "SUVEX Centro Radiológico Dental",
+      "slug": "suvex",
+      "website_url": "https://suvexe.com.mx/",
+      "denue_record_ids": [
+        "8801390"
+      ],
+      "identity_note": "DENUE direct-clinical candidate with a matching public website domain; identity, branch activity and services remain verification_pending."
+    },
+    {
+      "source_key": "generic_ultrasonido4dycolorpue_com",
+      "provider_key": "ultrasonido_4d_color",
+      "brand_name": "Ultrasonido 4D y Color Puebla",
+      "slug": "ultrasonido-4d-color",
+      "website_url": "https://ultrasonido4dycolorpue.com/",
+      "denue_record_ids": [
+        "3410829"
+      ],
+      "identity_note": "DENUE direct-clinical candidate with a matching public website domain; identity, branch activity and services remain verification_pending."
+    },
+    {
+      "source_key": "generic_ultrasonido_medico_de_alta_especialidad_doctores_dress_zeron_negocio_sit",
+      "provider_key": "ultrasonido_medico_de_alta_especialidad_doctores_dress_zeron_negocio_sit",
+      "brand_name": "UNIDAD DE ULTRA SONIDO MEDICO",
+      "slug": "ultrasonido-medico-de-alta-especialidad-doctores-dress-zeron-negocio-sit",
+      "website_url": "https://ultrasonido-medico-de-alta-especialidad-doctores-dress-zeron.negocio.site/",
+      "denue_record_ids": [
+        "8279531"
+      ],
+      "identity_note": "DENUE direct-clinical candidate with a matching public website domain; identity, branch activity and services remain verification_pending."
+    },
+    {
+      "source_key": "generic_ultrasonidopuebla_com",
+      "provider_key": "ultrasonido_puebla",
+      "brand_name": "Ultrasonido Puebla",
+      "slug": "ultrasonido-puebla",
+      "website_url": "https://ultrasonidopuebla.com/",
+      "denue_record_ids": [
+        "8774237"
+      ],
+      "identity_note": "DENUE direct-clinical candidate with a matching public website domain; identity, branch activity and services remain verification_pending."
+    },
+    {
+      "source_key": "generic_unnepuebla_mx",
+      "provider_key": "unne_puebla",
+      "brand_name": "Centro Neurológico UNNE",
+      "slug": "unne-puebla",
+      "website_url": "https://unnepuebla.mx/",
+      "denue_record_ids": [
+        "3277978"
+      ],
+      "identity_note": "DENUE direct-clinical candidate with a matching public website domain; identity, branch activity and services remain verification_pending."
+    }
+  ],
+  "mappings": [],
+  "summary": {
+    "providers": 24,
+    "denue_locations": 30,
+    "excluded_existing_or_dedicated_sources": 23
+  }
+}

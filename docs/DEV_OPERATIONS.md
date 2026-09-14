@@ -289,6 +289,11 @@ exactas tienen mapping clínico aprobado; las demás sedes quedan
 crea sedes con procedencia y ofertas `requires_quote` sin precio sólo para los
 labels aprobados.
 
+La cartera adicional `database/fixtures/generic_provider_identity_candidates_puebla_v1.json`
+agrega 24 identidades y 30 ubicaciones DENUE con dominio web coincidente para
+la revision administrativa. Es identity-only: se puede renderizar con
+`--identities-only`, pero nunca crea ofertas, precios ni disponibilidad.
+
 Para separar cobertura descubierta de cobertura realmente publicada:
 
 ```powershell

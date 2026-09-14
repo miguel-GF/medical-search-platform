@@ -226,3 +226,26 @@ sucursales de cada cadena prioritaria, mappings revisados para las búsquedas
 principales, tasa de `no_match` medida con consultas reales y una respuesta
 segura de “requiere revisión” con alternativas. Más filas RAW por sí solas no
 garantizan que una receta completa sea resoluble.
+
+## Identidades adicionales para revisar en Puebla
+
+Ademas de las cadenas con catalogo activo, se incorporo una cartera
+`identity-only` generada desde el snapshot DENUE: 24 marcas candidatas y 30
+ubicaciones con coordenadas y dominio web coincidente. Incluye ADN Examen,
+CEDIC, Diagnosticos Integra, Exacta, Farmacias del Ahorro (laboratorio), Gamma
+Medicina Nuclear, Grupo Medico Futura, Biquiser, Guadalupe, Qui-Rom, Castillo,
+Gaya, Althe, Los Angeles, Microlab, Sveika RX, Piedad Lab, SIEMSO, Laboratorios
+del Carmen, SUVEX y centros locales de ultrasonido y neurologia. Todas quedan
+`verification_pending`: no se crean estudios, precios, disponibilidad ni
+reservas hasta la verificacion humana.
+
+La salida reproducible es:
+
+```powershell
+python database/scripts/build_puebla_website_identity_candidates.py `
+  --denue-fixture database/fixtures/denue_candidates_puebla_v1.json `
+  --output database/fixtures/generic_provider_identity_candidates_puebla_v1.json
+```
+
+El renderer permite artefactos web vacios o fallidos unicamente con
+`--identities-only`; una captura fallida nunca puede publicar una oferta.

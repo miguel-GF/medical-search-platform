@@ -191,8 +191,20 @@ def _validate_denue(providers: Mapping[str, dict], denue: object) -> dict[str, d
     return selected
 
 
-def _artifact_index(artifact: Path, expected_source_key: str) -> tuple[dict, dict[str, dict]]:
+def _artifact_index(
+    artifact: Path,
+    expected_source_key: str,
+    *,
+    allow_non_publishable: bool = False,
+) -> tuple[dict, dict[str, dict]]:
     manifest, raw, observations = read_artifact(artifact)
+    if allow_non_publishable and str(manifest.get("status") or "") != "succeeded":
+        # Identity-only imports are sourced from the independently validated
+        # DENUE fixture.  A failed/empty website crawl must not block adding a
+        # review candidate, and it must never be used to publish offers.
+        if manifest.get("source_key") != expected_source_key:
+            raise ValueError(f"artifact source key mismatch: expected {expected_source_key}")
+        return manifest, {}
     parsed = validate(manifest, raw, observations)
     if manifest.get("source_key") != expected_source_key:
         raise ValueError(f"artifact source key mismatch: expected {expected_source_key}")
@@ -232,7 +244,11 @@ def render(
     for source_key, provider in providers.items():
         if source_key not in artifacts:
             raise ValueError(f"provider source has no artifact: {source_key}")
-        indexed_artifacts[source_key] = _artifact_index(artifacts[source_key], source_key)
+        indexed_artifacts[source_key] = _artifact_index(
+            artifacts[source_key],
+            source_key,
+            allow_non_publishable=identities_only,
+        )
 
     for mapping in mappings:
         manifest, rows = indexed_artifacts[mapping["source_key"]]
