@@ -406,6 +406,22 @@ Los objetivos disponibles son `all_in_one` (predeterminado), `lowest_cost`,
 `nearest` y `balanced`. Las soluciones parciales incluyen
 `missing_item_indexes`; un precio ausente se marca `requires_quote`.
 
+Para una prueba local con acentos en PowerShell, enviar bytes UTF-8 explícitos;
+esto evita confundir una conversión de la consola con un fallo del resolver:
+
+```powershell
+$payload = @{ text = 'Biometría hemática en ayuno de 8 horas; glucosa en ayunas' } | ConvertTo-Json -Compress
+$body = [Text.Encoding]::UTF8.GetBytes($payload)
+Invoke-WebRequest -UseBasicParsing -Method Post `
+  -Uri http://127.0.0.1:8787/api/v1/resolve-batch `
+  -Headers @{ Origin = 'http://localhost:5173'; 'Content-Type' = 'application/json; charset=utf-8' } `
+  -Body $body
+```
+
+La respuesta esperada conserva `preparation_note` en cada estudio y no convierte
+la nota en una instrucción médica. Si se envía texto mal codificado, el resultado
+no sirve para diagnosticar el catálogo.
+
 La prueba remota del RPC se ejecuta desde `database/`:
 
 ```powershell
