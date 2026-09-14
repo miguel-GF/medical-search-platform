@@ -1,7 +1,7 @@
 # Estado y prioridades de Pruevia
 
 Tipo: punto de continuidad. Revisado el 14-sep-2026 sobre el árbol basado en
-`4998efa`. Esta entrega revalidó contratos contra Supabase DEV, pero no aplicó
+`e86a63c`. Esta entrega revalidó contratos contra Supabase DEV, pero no aplicó
 migraciones ni publicó servicios.
 Los datos de septiembre citados abajo son cortes de evidencia, no contadores en vivo.
 
@@ -102,7 +102,9 @@ local; la suite Python raíz pasó `344` pruebas con el `pytest.ini` versionado.
 Worker local, usando `.dev.vars` sin imprimir secretos, respondió `200` en health
 y resolvió una orden de dos estudios con sufijos explícitos de ayuno, conservando
 ambas notas y cobertura completa. No se ejecutaron despliegues ni se verificaron
-DNS/servicios públicos.
+DNS/servicios públicos. El Admin pasó 23 pruebas, typecheck y build con
+configuración HTTPS placeholder; el build sin configuración continúa rechazando
+la publicación como medida fail-closed.
 
 Se recorrieron estos escenarios contra las referencias y código local:
 
