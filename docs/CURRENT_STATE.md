@@ -38,6 +38,9 @@ Fuente: [reconciliación Puebla](PUEBLA_PROVIDER_COVERAGE.md) y sus fixtures del
 - El reporte reproducible de priorización por proveedor/etiqueta está en
   [puebla_normalization_backlog.sql](../database/reports/puebla_normalization_backlog.sql);
   agrupa esas filas para revisión sin publicar cambios.
+- El medidor de experiencia sobre el corpus público anonimizado está en
+  [report_query_coverage.py](../database/scripts/report_query_coverage.py);
+  separa resolución estricta, preparación, ambigüedad y resoluciones inesperadas.
 - Los 946 `no_match` cerrados son historial. No contar cada fila `no_match` como
   tarea abierta: comprobar decisión final con la semántica del dashboard/cola.
 
