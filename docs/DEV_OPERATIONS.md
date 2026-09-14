@@ -352,6 +352,21 @@ Los umbrales por defecto son 30 servicios compartidos, 10 con precio vigente
 en dos proveedores y 90% de sucursales con coordenadas. Un resultado distinto
 de cero significa que la viabilidad aún no está demostrada.
 
+### Query coverage report
+
+Para medir la experiencia de búsqueda sin guardar texto de pacientes, usa el
+corpus público anonimizado y un DSN de sólo lectura:
+
+```powershell
+$env:PRUEVIA_DATABASE_URL = "postgresql://<usuario>:<clave>@<host>:5432/postgres"
+python database/scripts/report_query_coverage.py
+```
+
+El reporte separa las acciones esperadas (`resolve`, preparación, panel o
+brecha de catálogo) del estado real del resolver. Un `resolved` fuera de una
+acción resoluble se reporta como riesgo, no como mejora. No es un gate ni
+publica aliases; cualquier equivalencia nueva necesita evidencia y revisión.
+
 ## API Worker
 
 Desde `apps/api/`:
