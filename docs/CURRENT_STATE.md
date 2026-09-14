@@ -1,7 +1,7 @@
 # Estado y prioridades de Pruevia
 
 Tipo: punto de continuidad. Revisado el 14-sep-2026 sobre el árbol basado en
-`3c7736c`. Esta entrega revalidó contratos contra Supabase DEV, pero no aplicó
+`714ba64`. Esta entrega revalidó contratos contra Supabase DEV, pero no aplicó
 migraciones ni publicó servicios.
 Los datos de septiembre citados abajo son cortes de evidencia, no contadores en vivo.
 
@@ -98,7 +98,8 @@ Validación documental del 14-sep-2026: enlaces locales y anclas de la nueva ent
 guías, decisiones y snapshot comprobados; `git diff --check` sin errores.
 `AGENTS.md` se mantiene por debajo de 150 líneas. El landing pasó sus pruebas de
 configuración, typecheck, auditoría npm, generación estática y revisión visual
-local; no se ejecutaron despliegues ni se verificaron DNS/servicios públicos.
+local; la suite Python raíz pasó `344` pruebas con el `pytest.ini` versionado; no se
+ejecutaron despliegues ni se verificaron DNS/servicios públicos.
 
 Se recorrieron estos escenarios contra las referencias y código local:
 
