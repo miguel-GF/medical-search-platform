@@ -29,6 +29,7 @@ de secretos; usa un gestor de secretos o las variables protegidas de CI.
 | Patient Flutter/PWA | `apps/patient/.env.example` | `API_BASE_URL` | Flutter usa `--dart-define` (no carga `.env` por sí solo) |
 | OCR FastAPI | `apps/ocr-service/.env.example` | token, motor, límites y puerto | `apps/ocr-service/.env` |
 | Collectors Python | `collectors/.env.example` | DENUE, LOINC y DSN opcional de publicación | `collectors/.env` |
+| Correo de solicitudes de proveedores | `apps/document-scanner/.env.mail.example` | SMTP TLS, origen HTTPS del portal y Supabase secreto | gestor de secretos del job privado |
 
 Para Patient, los builds profile/release deben recibir `API_ALLOWED_HOSTS` con
 el hostname exacto del Worker junto con `API_BASE_URL`; el cliente rechaza
@@ -72,6 +73,13 @@ repositorio ni en un bundle de la app.
   secretos. Se mantienen sólo en la máquina local, secretos de Wrangler o
   secretos del proveedor de CI.
 - Nunca se imprimen tokens en logs, URLs, artefactos ni mensajes de error.
+
+El job `pruevia-provider-mail` requiere `SMTP_HOST`, `SMTP_PORT` (465 por
+defecto), `SMTP_USER`, `SMTP_PASSWORD`, `SMTP_FROM`, `PROVIDER_PORTAL_ORIGIN`,
+`SUPABASE_URL` y `SUPABASE_SECRET_KEY`. Debe correr sin proxy, redirecciones ni
+endpoint público; valida que el portal y Supabase sean HTTPS y procesa como
+máximo diez mensajes por tanda. No habilitarlo con un buzón personal ni guardar
+el secreto SMTP en `.env` del frontend.
 
 Las variables nuevas `SUPABASE_PUBLISHABLE_KEY` y `SUPABASE_SECRET_KEY` son
 preferidas por el Worker; las variables `SUPABASE_ANON_KEY` y

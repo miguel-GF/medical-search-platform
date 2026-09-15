@@ -25,3 +25,19 @@ administrativa explícita.
 La imagen o job que lo ejecute debe montar únicamente el socket Unix y el
 secreto. No se debe añadir una ruta del Worker, un endpoint público, un proxy
 HTTP hacia el scanner ni una política de Storage que otorgue `anon` acceso.
+
+## Avisos asíncronos de solicitudes
+
+El mismo paquete incluye `pruevia-provider-mail`, un job privado que entrega la
+outbox de reclamaciones de perfiles. Usa `apps/document-scanner/.env.mail.example`
+como referencia, pero carga los valores reales desde el gestor de secretos:
+
+```text
+pruevia-provider-mail
+```
+
+El proceso reclama un trabajo con lease, envía por SMTP sobre TLS, confirma sólo
+con el lease correcto y reintenta de forma acotada. No registra códigos de
+verificación ni datos de representantes. Primero debe existir un aviso de
+privacidad revisado y un origen HTTPS del portal; la bandera de intake continúa
+cerrada hasta que el responsable del producto apruebe la apertura.

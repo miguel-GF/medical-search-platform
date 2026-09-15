@@ -147,6 +147,10 @@ export class AdminApiError extends Error {
 const MAX_ADMIN_RESPONSE_BYTES = 2 * 1024 * 1024;
 
 export interface AdminApi {
+  providerChanges():Promise<Record<string,any>[]>;
+  reviewProviderChange(id:string,decision:string,reason:string):Promise<unknown>;
+  providerDocument(id:string, action:'access'|'review', data?:Record<string,unknown>):Promise<Record<string,any>>;
+  providerApplications(path?: string, data?: Record<string, unknown>): Promise<Record<string, any>>;
   dashboard(): Promise<Dashboard>;
   normalizationQueue(status?: string, inputType?: string, cursor?: { before_created_at: string; before_id: string }): Promise<NormalizationRow[]>;
   normalizationDetail(id: string, includePayload?: boolean): Promise<NormalizationDetail | null>;
@@ -252,6 +256,10 @@ export function createAdminApi(baseUrl: string, accessToken: () => Promise<strin
     return payload as T;
   }
   return {
+    providerChanges:()=>request<Record<string,any>[]>('/api/v1/admin/provider-change-requests?status=pending&limit=100'),
+    reviewProviderChange:(id,decision,reason)=>request(`/api/v1/admin/provider-change-requests/${encodeURIComponent(id)}/review`,{method:'POST',body:JSON.stringify({decision,reason})}),
+    providerDocument: (id, action, data={}) => request<Record<string,any>>(`/api/v1/admin/provider-documents/${encodeURIComponent(id)}/${action}`,{method:'POST',body:JSON.stringify(data)}),
+    providerApplications: (path = '', data) => request<Record<string, any>>(`/api/v1/admin/provider-applications${path}`, data ? { method: 'POST', body: JSON.stringify(data) } : undefined),
     dashboard: () => request<Dashboard>('/api/v1/admin/dashboard'),
     normalizationQueue: (status, inputType = '', cursor) => {
       const params = new URLSearchParams({ limit: '100' });

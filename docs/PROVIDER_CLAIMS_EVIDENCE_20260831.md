@@ -9,6 +9,15 @@ Este documento conserva el corte del 31 de agosto. La corrección posterior de
 ACL de RPC administrativos y su regresión de seguridad están documentadas en
 `docs/SECURITY_AUDIT_20260901.md` y en las migraciones 124–126.
 
+## Seguimiento implementado el 14-sep-2026
+
+El expediente de reclamación, sus estados, comprobación de contacto oficial,
+outbox asíncrona, solicitudes de privacidad y pantallas Admin/Flutter quedaron
+preparados en las migraciones `20260914120000` y `20260914121000`. El contrato
+local pasó; estas migraciones todavía no se aplicaron al proyecto remoto y el
+registro/documentos siguen cerrados por defecto. La referencia operativa vigente
+es [PROVIDER_CLAIM_WORKFLOW](PROVIDER_CLAIM_WORKFLOW.md).
+
 > **Corte historico.** No ejecutes desde este documento comandos que apliquen
 > migraciones. El estado vigente y el procedimiento seguro estan en
 > `docs/SECURITY_HARDENING_20260904.md`; requiere una migracion coordinada con
@@ -103,10 +112,12 @@ posterior queda limpio (`claim_rows = 0`, `membership_rows = 0`,
 | 122 | `F398789BE5E9C08E7A195E50D0C73C8A58B64CDC4FD52A49BEF750E27D831B32` |
 | 123 | `E931FE08D5C6822C312D0DE7CC4A7F904ADB83D5359962053136838CE6D8D8C5` |
 
-## Pendientes explícitos
+## Pendientes explícitos del corte histórico
 
-Este corte no afirma verificación externa automática. Aún faltan el flujo de
-subida a Storage privado, antivirus/validación MIME, correo de invitación,
-verificación de dominio/teléfono o visita física y las pantallas Flutter de
-proveedor/admin. Esos componentes deben consumir estos RPC sin saltarse la
-revisión ni escribir tablas internas directamente.
+Este corte no afirma verificación externa automática. En el corte del 31 de
+agosto faltaban el flujo de subida a Storage privado, antivirus/validación MIME,
+correo de invitación, verificación de dominio/teléfono o visita física y las
+pantallas Flutter de proveedor/admin. El seguimiento actual conserva el cierre
+por defecto y añade el correo/contacto y el portal; cualquier apertura documental
+debe consumir estos RPC sin saltarse la revisión ni escribir tablas internas
+directamente.

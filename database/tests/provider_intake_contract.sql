@@ -1,0 +1,51 @@
+-- Exercises actual intake SQL and legacy approval/revocation against local fixtures.
+begin;
+insert into auth.users values('10000000-0000-0000-0000-000000000001','owner@example.test',false),('10000000-0000-0000-0000-000000000002','admin@example.test',false),('10000000-0000-0000-0000-000000000003','other@example.test',false);
+insert into auth.mfa_factors select id,'verified' from auth.users;
+insert into core.provider_brands(id,name) values('20000000-0000-0000-0000-000000000001','Laboratorio fixture');
+insert into core.provider_locations(id,provider_brand_id,name) values('30000000-0000-0000-0000-000000000001','20000000-0000-0000-0000-000000000001','Sucursal fixture');
+insert into core.organizations(id,legal_name) values('40000000-0000-0000-0000-000000000001','Empresa fixture');
+do $$
+declare owner_id uuid:='10000000-0000-0000-0000-000000000001'; admin_id uuid:='10000000-0000-0000-0000-000000000002'; other_id uuid:='10000000-0000-0000-0000-000000000003'; app uuid; r jsonb; rev integer; code text; body jsonb;
+begin
+ body:=jsonb_build_object('scope','location','brand_id','20000000-0000-0000-0000-000000000001','location_id','30000000-0000-0000-0000-000000000001','name','Representante fixture','position','Gerente','organization_name','Empresa fixture','work_email','owner@laboratorio.test','notice_version','providers-2026-09-v1','authorized',true);
+ r:=public.api_server_provider_application(owner_id,'aal2',false,'create',null,body);
+ assert r->>'error'='intake_disabled','closed intake';
+ r:=public.api_server_provider_application(owner_id,'aal2',false,'privacy_request',null,'{"kind":"access","message":"Solicito conocer los datos de mi expediente."}');
+ assert r->>'status'='received','privacy channel remains available while intake is closed';
+ begin
+   perform public.api_server_provider_application(owner_id,'aal1',false,'list');
+   raise exception 'AAL1 was accepted';
+ exception when insufficient_privilege then null; end;
+ assert not has_function_privilege('authenticated','public.api_server_provider_application(uuid,text,boolean,text,uuid,jsonb)','execute'),'no direct provider RPC';
+ assert not has_function_privilege('anon','public.api_server_provider_mail(text,uuid,uuid)','execute'),'no public mail queue';
+ assert not has_table_privilege('authenticated','identity.provider_applications','select'),'no direct application table read';
+ assert not has_table_privilege('authenticated','identity.provider_mail_outbox','select'),'no direct mail table read';
+ update identity.provider_intake_settings set controller_name='Pruevia fixture',controller_address='Domicilio ficticio de prueba',privacy_email='privacy@example.test',mail_processor='SMTP fixture',privacy_reviewed=true,enabled=true;
+ r:=public.api_server_provider_application(owner_id,'aal2',false,'create',null,body); assert r->>'status'='draft',r::text; app:=(r->>'id')::uuid;
+ assert (public.api_server_provider_application(other_id,'aal2',false,'detail',app))->>'error'='not_found','cross-user access';
+ assert (public.api_server_provider_application(owner_id,'aal2',false,'list'))->'items'->0->>'id'=app::text,'list owner';
+ assert (public.api_server_provider_application(owner_id,'aal2',false,'submit',app,'{"revision":0}'))->>'error'='stale_revision','optimistic lock';
+ r:=public.api_server_provider_application(owner_id,'aal2',false,'submit',app,'{"revision":1}'); assert r->>'status'='pending',r::text;
+ r:=public.api_server_provider_application(admin_id,'aal2',true,'approve',app,'{"revision":2,"scope_confirmed":true,"message":"Alcance revisado correctamente"}'); assert r->>'error'='organization_required','requires organization';
+ r:=public.api_server_provider_application(admin_id,'aal2',true,'bind_organization',app,'{"revision":2,"organization_id":"40000000-0000-0000-0000-000000000001"}'); assert r->>'revision'='3',r::text;
+ r:=public.api_server_provider_application(admin_id,'aal2',true,'approve',app,'{"revision":3,"scope_confirmed":true,"message":"Alcance revisado correctamente"}'); assert r->>'error'='evidence_required','requires evidence';
+ r:=public.api_server_provider_application(admin_id,'aal2',true,'verify_contact',app,'{"revision":3,"source_url":"https://laboratorio.test/contacto","message":"Dominio oficial revisado contra directorio independiente"}'); assert r->>'revision'='4',r::text;
+ r:=public.api_server_provider_application(owner_id,'aal2',false,'send_verification',app,'{"revision":4}'); assert r->>'revision'='5',r::text;
+ select verification_code into code from identity.provider_mail_outbox where application_id=app and kind='verification';
+ assert length(code)=64,'random challenge';
+ r:=public.api_server_provider_application(owner_id,'aal2',false,'detail',app); assert not (r?'challenge_hash'),'no challenge disclosure';
+ assert not exists(select 1 from jsonb_array_elements(r->'events') e where (e->>'internal')::boolean),'internal notes excluded';
+ r:=public.api_server_provider_application(owner_id,'aal2',false,'verify',app,jsonb_build_object('code',code)); assert r->>'revision'='6',r::text;
+ assert (public.api_server_provider_application(owner_id,'aal2',false,'verify',app,jsonb_build_object('code',code)))->>'error'='verification_expired','single-use challenge';
+ r:=public.api_server_provider_application(admin_id,'aal2',true,'approve',app,'{"revision":6,"scope_confirmed":true,"message":"Representación y alcance revisados correctamente"}'); assert r->>'status'='approved',r::text;
+ assert (select count(*) from identity.provider_memberships where user_id=owner_id and status='active')=1,'membership granted once';
+ assert (public.api_server_provider_application(admin_id,'aal2',true,'approve',app,'{"revision":6}'))->>'error'='stale_revision','double approval';
+ r:=public.api_server_provider_application(admin_id,'aal2',true,'revoke',app,'{"revision":7,"message":"Se terminó la representación"}'); assert r->>'status'='revoked',r::text;
+ assert not exists(select 1 from identity.provider_memberships where user_id=owner_id and status='active'),'revocation removes access';
+ r:=public.api_server_provider_mail('lease'); assert r->>'status'='sending','mail lease';
+ assert (public.api_server_provider_mail('sent',(r->>'id')::uuid,gen_random_uuid()))->>'updated'='false','wrong lease cannot ack';
+ assert (public.api_server_provider_mail('sent',(r->>'id')::uuid,(r->>'lease_id')::uuid))->>'updated'='true','mail ack';
+ raise notice 'Provider intake SQL contract passed';
+end $$;
+rollback;

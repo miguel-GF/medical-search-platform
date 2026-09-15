@@ -17,6 +17,7 @@ La conversación original no es lectura obligatoria para incorporarse.
 | [Opciones de dominio](DOMAIN_OPTIONS.md) | Investigación de disponibilidad, arquitectura de subdominios y verificación previa a compra. |
 | [Mantenimiento y discovery](CONTINUOUS_IMPROVEMENT.md) | Iniciativa, cadencias, actualización del código y crecimiento medido. |
 | [Entorno](ENVIRONMENT.md) | Variables, ejemplos y límites de exposición de credenciales. |
+| [Flujo de reclamaciones](PROVIDER_CLAIM_WORKFLOW.md) | Solicitudes de proveedores, revisión asíncrona, documentos y privacidad. |
 
 ## Qué leer según la tarea
 
@@ -24,6 +25,7 @@ La conversación original no es lectura obligatoria para incorporarse.
 | --- | --- | --- |
 | Cambiar colores, filtros o pantallas | [Guía UI](WORK_GUIDE.md#cambiar-admin-paciente-o-temas) | [Paciente](../apps/patient/README.md), componentes y tokens enlazados. |
 | Añadir un laboratorio o sucursal | [Cobertura](WORK_GUIDE.md#ampliar-cobertura-de-puebla) | [Inventario Puebla](PUEBLA_PROVIDER_COVERAGE.md), [collectors](../collectors/README.md). |
+| Implementar reclamación de un perfil | [Flujo de reclamaciones](PROVIDER_CLAIM_WORKFLOW.md) | [Seguridad](SECURITY_HARDENING_20260904.md), migraciones y pruebas locales. |
 | Corregir resolución u OCR | [Resolver](WORK_GUIDE.md#modificar-resolver-catálogo-u-ocr) | [Benchmark v1](RESOLVER_BENCHMARK_V1.md), [v2](REAL_QUERY_RESEARCH_V1.md), [LOINC](LOINC_INTEGRACION.md), [corpus OCR](OCR_PUBLIC_CORPUS.md). |
 | Diagnosticar login/401 | [Diagnóstico Admin](WORK_GUIDE.md#investigar-un-401-o-fallo-de-conexión-del-admin) | [Errores](ERROR_HANDLING.md), [entorno](ENVIRONMENT.md), pruebas Auth. |
 | Cambiar API/esquema o desplegar | [Operación](OPERATIONS_GUIDE.md) | [Database](../database/README.md), [seguridad](SECURITY_HARDENING_20260904.md), [ADR Worker](ADR-001-WORKER-SUPABASE-REST.md), [ADR liberación](ADR-002-RELEASE-PILOT-GATES.md). |

@@ -1,6 +1,6 @@
 # Estado y prioridades de Pruevia
 
-Tipo: punto de continuidad. Revisado el 14-sep-2026 sobre el árbol basado en
+Tipo: punto de continuidad. Revisado el 15-sep-2026 sobre el árbol basado en
 `0ac5f15`. Esta entrega revalidó contratos contra Supabase DEV, pero no aplicó
 migraciones ni publicó servicios.
 Los datos de septiembre citados abajo son cortes de evidencia, no contadores en vivo.
@@ -17,6 +17,7 @@ trabajo; `bloqueado` necesita una condición externa identificada. No son sinón
 | Paciente Flutter Web/PWA | Implementado: [app](../apps/patient/lib/main.dart), [comandos](../apps/patient/README.md). | Publicación actual y validación física/multiplataforma requieren evidencia propia. |
 | Admin con temas, filtros y MFA | Implementado: [Admin](../apps/admin/src/App.vue), [filtros](../apps/admin/src/components/TableFilters.vue), [Auth](../apps/admin/src/auth.ts). | Probar sesión real y alcance de búsquedas/filtros cuando cambie el backend o el entorno. |
 | Documentos de proveedores | Configuración versionada cerrada por defecto; ver [cierre](../database/supabase/migrations/20260908100000_internal_document_freeze.sql) y [Worker](../apps/api/wrangler.toml). | No reabrir sólo cambiando una variable; necesita propuesta crítica y revisión coordinada. |
+| Reclamación de perfiles | Flujo local implementado: expediente privado, estados, revisión Admin, comprobación de contacto, outbox de correo, solicitudes de privacidad y control de revisión; [referencia](PROVIDER_CLAIM_WORKFLOW.md). Contrato SQL local pasó. | `provider_intake_settings.enabled` y documentos siguen cerrados; faltan responsable legal, aviso integral, SMTP y verificación del destino antes de abrir. No se aplicaron estas migraciones al proyecto remoto. |
 | Collectors | Adaptadores presentes para DENUE, Chopo, Ruiz, Salud Digna, SEMIN, Dr. Simi, Linfolab y genérico. [Entrypoints](../collectors/pyproject.toml). | Eficacia y frescura varían por fuente; ver [cobertura](PUEBLA_PROVIDER_COVERAGE.md). |
 | CI y despliegue DEV | Workflows presentes en [.github](../.github/workflows). | No se verificó aquí configuración de GitHub, ejecución reciente ni versión remota. |
 | Landing SEO | Implementado localmente en `apps/landing` con Nuxt 4, generación estática, privacidad, robots/sitemap condicionado y headers. | El sitio aún no está publicado: compra, DNS, asociación de dominios y destino real del CTA requieren configuración y verificación. |
@@ -98,11 +99,11 @@ y no autoriza acciones externas.
 
 ## Actualización y traspaso
 
-Validación documental del 14-sep-2026: enlaces locales y anclas de la nueva entrada,
+Validación documental y de implementación del 15-sep-2026: enlaces locales y anclas de la nueva entrada,
 guías, decisiones y snapshot comprobados; `git diff --check` sin errores.
 `AGENTS.md` se mantiene por debajo de 150 líneas. El landing pasó sus pruebas de
 configuración, typecheck, auditoría npm, generación estática y revisión visual
-local; la suite Python raíz pasó `350` pruebas con el `pytest.ini` versionado. El
+local; la suite Python raíz pasó `357` pruebas con el `pytest.ini` versionado. El
 Worker local, usando `.dev.vars` sin imprimir secretos, respondió `200` en health
 y resolvió una orden de dos estudios con sufijos explícitos de ayuno, conservando
 ambas notas y cobertura completa. No se ejecutaron despliegues ni se verificaron
@@ -111,8 +112,8 @@ configuración HTTPS placeholder; el build sin configuración continúa rechazan
 la publicación como medida fail-closed. La variante indexable de la landing se
 generó con destinos HTTPS de ejemplo y produjo sitemap/robots; los destinos reales
 siguen sin verificarse.
-El Worker actual también pasó `wrangler deploy --dry-run` (124.28 KiB sin subir),
-con 121 pruebas Vitest y validación de allowlist CORS exacta. La opción
+El Worker actual también pasó `wrangler deploy --dry-run` (133.05 KiB sin subir),
+con 128 pruebas Vitest y validación de allowlist CORS exacta. La opción
 `ALLOWED_ORIGINS` no está configurada ni desplegada en remoto.
 El corpus anonimizado de 64 consultas, medido contra el Worker HTTP local con
 UTF-8, obtuvo 7/7 resoluciones estrictas y 9/9 resoluciones esperadas incluyendo

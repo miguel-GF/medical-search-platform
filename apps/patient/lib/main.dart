@@ -14,6 +14,7 @@ import 'src/models.dart';
 import 'src/picked_file_cleanup_stub.dart'
     if (dart.library.io) 'src/picked_file_cleanup_io.dart';
 import 'src/theme.dart';
+import 'src/provider_portal.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -115,7 +116,9 @@ class _PatientAppState extends State<PatientApp> {
     theme: buildPrueviaTheme(Brightness.light),
     darkTheme: buildPrueviaTheme(Brightness.dark),
     themeMode: _themeMode,
-    home: widget.preferences.onboardingComplete
+    home: Uri.base.queryParameters['provider'] == '1'
+        ? const ProviderPortal()
+        : widget.preferences.onboardingComplete
         ? PatientShell(
             api: _api,
             preferences: widget.preferences,
@@ -254,12 +257,9 @@ class _PatientShellState extends State<PatientShell> {
       metadata: const {'surface': 'pwa'},
     );
     if (!mounted) return;
-    await showModalBottomSheet<void>(
-      context: context,
-      showDragHandle: true,
-      isScrollControlled: true,
-      builder: (_) => const ProviderAccessSheet(),
-    );
+    await Navigator.of(
+      context,
+    ).push(MaterialPageRoute<void>(builder: (_) => const ProviderPortal()));
   }
 
   @override
@@ -1129,7 +1129,8 @@ class PackageResultView extends StatelessWidget {
     _ => 'No encontramos coincidencias seguras para esta orden.',
   };
   String _itemMessage(PackageItem item) {
-    final preparation = item.preparationNote == null || item.preparationNote!.isEmpty
+    final preparation =
+        item.preparationNote == null || item.preparationNote!.isEmpty
         ? null
         : 'Indicación de la orden: ${item.preparationNote}';
     if (item.status == 'resolved') {
@@ -1139,10 +1140,13 @@ class PackageResultView extends StatelessWidget {
       return preparation == null ? match : '$match · $preparation';
     }
     if (item.candidates.isNotEmpty) {
-      final matches = 'Posibles coincidencias: ${item.candidates.map((candidate) => candidate.displayName).join(', ')}';
+      final matches =
+          'Posibles coincidencias: ${item.candidates.map((candidate) => candidate.displayName).join(', ')}';
       return preparation == null ? matches : '$matches · $preparation';
     }
-    return preparation == null ? 'Necesita revisión manual' : 'Necesita revisión manual · $preparation';
+    return preparation == null
+        ? 'Necesita revisión manual'
+        : 'Necesita revisión manual · $preparation';
   }
 }
 

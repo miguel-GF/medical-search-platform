@@ -53,6 +53,27 @@ class PatientApiClient {
   final String baseUrl;
   final http.Client _client;
   final Duration timeout;
+  Future<JsonMap> providerCall(
+    String path, {
+    String? token,
+    JsonMap? data,
+  }) async {
+    if (!path.startsWith('/api/v1/provider')) {
+      throw ArgumentError('Invalid provider path');
+    }
+    final request = http.Request(
+      data == null ? 'GET' : 'POST',
+      Uri.parse('$baseUrl$path'),
+    );
+    if (token != null) request.headers['authorization'] = 'Bearer $token';
+    if (data != null) {
+      request.headers['content-type'] = 'application/json';
+      request.body = jsonEncode(data);
+    }
+    final response = await _request(() => _sendRequest(request));
+    return _decode(response);
+  }
+
   static const int _maxResponseBytes = 2 * 1024 * 1024;
 
   Future<SearchResponse> search(
@@ -355,7 +376,8 @@ String _secureBaseUrl(String value) {
       (uri.path.isEmpty || uri.path == '/') &&
       !uri.hasQuery &&
       !uri.hasFragment;
-  final productionHostAllowed = kDebugMode ||
+  final productionHostAllowed =
+      kDebugMode ||
       _apiAllowedHosts
           .split(',')
           .map((host) => host.trim().toLowerCase())

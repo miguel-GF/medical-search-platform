@@ -17,6 +17,18 @@ arbitrario por una configuracion equivocada.
 requiere autenticación. El botón **Acceso para proveedores** es secundario y
 no convierte la pantalla inicial en un registro.
 
+Para probar el portal de proveedores localmente usa `?provider=1` y declara los
+valores públicos de Supabase y sus allowlists exactas (nunca la clave secreta):
+
+```text
+flutter run -d chrome --dart-define=API_BASE_URL=http://localhost:8787 --dart-define=API_ALLOWED_HOSTS=localhost:8787 --dart-define=SUPABASE_URL=https://project.supabase.co --dart-define=SUPABASE_ALLOWED_HOSTS=project.supabase.co --dart-define=SUPABASE_PUBLISHABLE_KEY=publishable-placeholder
+```
+
+El registro permanece cerrado mientras el API devuelva `enabled: false`. La
+cuenta requiere confirmación de correo y TOTP antes de consultar o modificar un
+expediente; el enlace de comprobación del correo sólo lleva el código en el
+fragmento del navegador y se consume una vez.
+
 Flutter no carga archivos `.env` automáticamente: `.env.example` documenta la
 variable, pero el valor se inyecta en compilación con `--dart-define`.
 

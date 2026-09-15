@@ -1,4 +1,6 @@
 import { SupabaseConfigurationError, SupabaseResponseError, SupabaseRpcError, SupabaseRpcClient, SupabaseTimeoutError } from './supabase.js';
+import { applicationResponse } from './provider-applications.js';
+import { documentAccess } from './provider-document-access.js';
 import type { AdminAlert, AdminCatalogItem, AdminNormalizationDetail, AdminNormalizationQueueRow, AdminQualityIssue, AdminUser, Env, OcrCorrection, PackageCandidate, PackageItem, PackageLocation, PackageOffer, PackageResolutionResponse, PackageSolution, RateLimitBinding, ResolutionCandidate, ResolutionResponse, RpcClient, SearchRow } from './types.js';
 import {
   buildPackageResolution,
@@ -85,6 +87,9 @@ export function createHandler(dependencies: Dependencies) {
       }
       const rateLimitResponse = await enforceRateLimit(request, url, env, origin, requestId);
       if (rateLimitResponse) return rateLimitResponse;
+      if (url.pathname === '/api/v1/provider-intake' && request.method === 'GET') {
+        return json(await dependencies.rpc.call('api_provider_intake_info', {}, { admin: true }), 200, origin);
+      }
       if (url.pathname === '/api/v1/search' && request.method === 'GET') {
         return await searchResponse(request, url, dependencies.rpc, env, origin, requestId);
       }
@@ -947,6 +952,15 @@ async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClien
   // reaches the database replay table, otherwise two admins reusing a common
   // key could suppress one another's mutation or receive the other's replay.
   const operationRequestId = await scopedAdminRequestId(requestId, user.id);
+  const accessMatch=url.pathname.match(/^\/api\/v1\/admin\/provider-documents\/([a-f0-9-]{36})\/access$/i);
+  if(accessMatch && request.method==='POST') {
+    if(!isUuid(accessMatch[1])) return json({error:{code:'invalid_id'}},400,origin);
+    const result=await documentAccess(accessMatch[1],user,rpc,env);
+    return result.error ? json({error:{code:result.error}},409,origin) : json(result,200,origin);
+  }
+  if (/^\/api\/v1\/admin\/provider-applications(?:\/|$)/.test(url.pathname)) {
+    return applicationResponse(request, rpc, user, true, (body, status) => json(body, status, origin), req => readJsonObject(req, 16384, origin));
+  }
   if (request.method === 'GET' && url.pathname === '/api/v1/admin/dashboard') {
     return json(await rpc.call('api_admin_dashboard', {}, { admin: true }), 200, origin);
   }
@@ -1269,6 +1283,9 @@ async function providerResponse(
     return json({ error: { code: 'provider_documents_disabled', message: 'Provider documents are closed for the internal release' } }, 503, origin);
   }
   const providerContext = { p_actor_user_id: user.id, p_actor_aal: user.aal };
+  if (/^\/api\/v1\/provider\/applications(?:\/|$)/.test(url.pathname)) {
+    return applicationResponse(request, rpc, user, false, (body, status) => json(body, status, origin), req => readJsonObject(req, 16384, origin));
+  }
   const rpcOptions = { admin: true };
 
   if (url.pathname === '/api/v1/provider/claims' && request.method === 'GET') {
@@ -1961,6 +1978,7 @@ async function enforceRateLimit(request: Request, url: URL, env: Env, origin: st
 }
 
 function rateLimitScope(path: string, method: string): 'public' | 'ocr' | 'admin' | 'provider' | null {
+  if (path === '/api/v1/provider-intake') return 'public';
   if (path === '/api/v1/resolve-image' && method === 'POST') return 'ocr';
   if (path === '/api/v1/search' && method === 'GET') return 'public';
   if (method === 'GET' && /^\/api\/v1\/(?:services|providers)\/[^/]+(?:\/(?:providers|services))?$/i.test(path)) return 'public';
