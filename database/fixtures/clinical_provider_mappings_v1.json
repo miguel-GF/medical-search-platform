@@ -3,6 +3,16 @@
   "policy": "Only reviewed exact normalized provider labels are published to canonical clinical concepts; panel variants remain unmapped until composition is verified.",
   "mappings": [
     {
+      "source_key": "ruiz_puebla",
+      "provider_key": "ruiz",
+      "external_record_id": "583",
+      "catalog_item_id": "00000000-0000-0000-0000-000000001103",
+      "provider_alias": "CITOMETRIA HEMATICA",
+      "observed_label": "CITOMETRIA HEMATICA",
+      "method": "manual",
+      "reason": "La página oficial de Laboratorios Ruiz publica Citometría hemática (BH), precio vigente y 14 sucursales; se relaciona con Biometría hemática sólo como equivalencia clínica revisada."
+    },
+    {
       "source_key": "chopo_puebla",
       "provider_key": "chopo",
       "external_record_id": "17002",
@@ -51,6 +61,76 @@
       "observed_label": "BIOMETRIA HEMATICA",
       "method": "manual",
       "reason": "Exact official Salud Digna label for the reviewed Biometría hemática concept."
+    },
+    {
+      "source_key": "salud_digna_puebla",
+      "provider_key": "salud_digna",
+      "external_record_id": "58:30977",
+      "catalog_item_id": "00000000-0000-0000-0000-000000001103",
+      "provider_alias": "BIOMETRIA HEMATICA",
+      "observed_label": "BIOMETRIA HEMATICA",
+      "method": "manual",
+      "reason": "Exact official Salud Digna label observed at the Puebla branch; branch scope is preserved and never fanned out to other locations."
+    },
+    {
+      "source_key": "salud_digna_puebla",
+      "provider_key": "salud_digna",
+      "external_record_id": "110:75446",
+      "catalog_item_id": "00000000-0000-0000-0000-000000001103",
+      "provider_alias": "BIOMETRIA HEMATICA",
+      "observed_label": "BIOMETRIA HEMATICA",
+      "method": "manual",
+      "reason": "Exact official Salud Digna label observed at the Puebla Xilotzingo branch; branch scope is preserved and never fanned out to other locations."
+    },
+    {
+      "source_key": "salud_digna_puebla",
+      "provider_key": "salud_digna",
+      "external_record_id": "136:95897",
+      "catalog_item_id": "00000000-0000-0000-0000-000000001103",
+      "provider_alias": "BIOMETRIA HEMATICA",
+      "observed_label": "BIOMETRIA HEMATICA",
+      "method": "manual",
+      "reason": "Exact official Salud Digna label observed at the Puebla San Sebastian branch; branch scope is preserved and never fanned out to other locations."
+    },
+    {
+      "source_key": "salud_digna_puebla",
+      "provider_key": "salud_digna",
+      "external_record_id": "155:652468",
+      "catalog_item_id": "00000000-0000-0000-0000-000000001103",
+      "provider_alias": "BIOMETRIA HEMATICA",
+      "observed_label": "BIOMETRIA HEMATICA",
+      "method": "manual",
+      "reason": "Exact official Salud Digna label observed at the Puebla El Porvenir branch; branch scope is preserved and never fanned out to other locations."
+    },
+    {
+      "source_key": "salud_digna_puebla",
+      "provider_key": "salud_digna",
+      "external_record_id": "97:63953",
+      "catalog_item_id": "00000000-0000-0000-0000-000000001103",
+      "provider_alias": "BIOMETRIA HEMATICA",
+      "observed_label": "BIOMETRIA HEMATICA",
+      "method": "manual",
+      "reason": "Exact official Salud Digna label observed at the Puebla Capu branch; branch scope is preserved and never fanned out to other locations."
+    },
+    {
+      "source_key": "salud_digna_puebla",
+      "provider_key": "salud_digna",
+      "external_record_id": "357:919191",
+      "catalog_item_id": "00000000-0000-0000-0000-000000001103",
+      "provider_alias": "BIOMETRIA HEMATICA",
+      "observed_label": "BIOMETRIA HEMATICA",
+      "method": "manual",
+      "reason": "Exact official Salud Digna label observed at the Puebla Angelopolis branch; branch scope is preserved and never fanned out to other locations."
+    },
+    {
+      "source_key": "salud_digna_puebla",
+      "provider_key": "salud_digna",
+      "external_record_id": "329:868562",
+      "catalog_item_id": "00000000-0000-0000-0000-000000001103",
+      "provider_alias": "BIOMETRIA HEMATICA",
+      "observed_label": "BIOMETRIA HEMATICA",
+      "method": "manual",
+      "reason": "Exact official Salud Digna label observed at the Puebla Azaleas branch; branch scope is preserved and never fanned out to other locations."
     },
     {
       "source_key": "salud_digna_puebla",

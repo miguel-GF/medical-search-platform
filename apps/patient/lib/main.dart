@@ -1614,13 +1614,64 @@ class _ProviderServiceTile extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 8),
-        Align(
-          alignment: Alignment.centerRight,
-          child: _OfferPricing(offer: entry.offer),
+        LayoutBuilder(
+          builder: (context, constraints) {
+            final description = _ServiceDescription(service: entry.service);
+            final pricing = _OfferPricing(offer: entry.offer);
+            if (constraints.maxWidth < 640) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [description, const SizedBox(height: 12), pricing],
+              );
+            }
+            return Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(child: description),
+                const SizedBox(width: 18),
+                SizedBox(width: 360, child: pricing),
+              ],
+            );
+          },
         ),
       ],
     ),
   );
+}
+
+class _ServiceDescription extends StatelessWidget {
+  const _ServiceDescription({required this.service});
+
+  final SearchService service;
+
+  @override
+  Widget build(BuildContext context) {
+    final description = service.description;
+    if (description == null) {
+      return Text(
+        'Descripción general en validación.',
+        style: Theme.of(context).textTheme.bodySmall,
+      );
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(description, style: Theme.of(context).textTheme.bodyMedium),
+        if (service.descriptionSourceUrl != null) ...[
+          const SizedBox(height: 4),
+          TextButton.icon(
+            onPressed: () => _open(service.descriptionSourceUrl!),
+            style: TextButton.styleFrom(
+              padding: EdgeInsets.zero,
+              visualDensity: VisualDensity.compact,
+            ),
+            icon: const Icon(Icons.info_outline, size: 16),
+            label: const Text('Información general · MedlinePlus'),
+          ),
+        ],
+      ],
+    );
+  }
 }
 
 String _serviceMatchStatus(SearchService service) {
@@ -1788,57 +1839,82 @@ class _OfferPricing extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final priceLabel = _priceTypeLabel(offer.priceType);
+    final online = _priceForType(offer, 'online');
+    final inBranch = _priceForType(offer, 'regular');
+    final otherPrices = offer.prices
+        .where(
+          (price) =>
+              price.amountMinor != null &&
+              price.type != 'online' &&
+              price.type != 'regular',
+        )
+        .toList(growable: false);
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
-          offer.amountMinor == null
-              ? 'Cotizar'
-              : _money(offer.amountMinor!, offer.currency ?? 'MXN'),
-          style: Theme.of(
-            context,
-          ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800),
-        ),
-        if (offer.amountMinor != null && priceLabel != null)
-          Text(priceLabel, style: Theme.of(context).textTheme.bodySmall),
-        if (offer.amountMinor != null && offer.locationName == null)
-          Text(
-            'Precio no asociado a una sucursal',
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-        if (offer.prices.length > 1)
-          ...offer.prices
-              .where(
-                (price) =>
-                    price.amountMinor != null &&
-                    (price.amountMinor != offer.amountMinor ||
-                        price.type != offer.priceType),
-              )
-              .map(
-                (price) => Text(
-                  '${_priceTypeLabel(price.type) ?? 'Precio'}: ${_money(price.amountMinor!, price.currency ?? offer.currency ?? 'MXN')}',
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
+        Row(
+          children: [
+            Expanded(
+              child: _PriceCard(
+                label: 'En línea',
+                hint: 'Compra o agenda por internet',
+                icon: Icons.language,
+                price: online,
+                color: Theme.of(context).colorScheme.primary,
               ),
-        if (offer.lastSeenAt != null)
-          Text(
-            'Fuente actualizada ${_date(offer.lastSeenAt!)}',
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-        if (offer.sourceUrl != null)
-          TextButton.icon(
-            onPressed: () => _open(offer.sourceUrl!),
-            icon: const Icon(Icons.open_in_new, size: 16),
-            label: Text(
-              offer.locationName == null
-                  ? 'Ver fuente del proveedor'
-                  : 'Ver fuente de sucursal',
             ),
-          )
+            const SizedBox(width: 8),
+            Expanded(
+              child: _PriceCard(
+                label: 'En sucursal',
+                hint: 'Precio regular en clínica',
+                icon: Icons.storefront_outlined,
+                price: inBranch,
+                color: Theme.of(context).colorScheme.secondary,
+              ),
+            ),
+          ],
+        ),
+        if (otherPrices.isNotEmpty) ...[
+          const SizedBox(height: 7),
+          Wrap(
+            alignment: WrapAlignment.end,
+            spacing: 8,
+            runSpacing: 4,
+            children: otherPrices
+                .map(
+                  (price) => Text(
+                    '${_priceTypeLabel(price.type) ?? 'Otro precio'}: ${_money(price.amountMinor!, price.currency ?? offer.currency ?? 'MXN')}',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                )
+                .toList(growable: false),
+          ),
+        ],
+        if (offer.amountMinor != null && offer.locationName == null)
+          Padding(
+            padding: const EdgeInsets.only(top: 6),
+            child: Text(
+              'Precio no asociado a una sucursal',
+              textAlign: TextAlign.right,
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          ),
+        if (offer.lastSeenAt != null)
+          Padding(
+            padding: const EdgeInsets.only(top: 6),
+            child: Text(
+              'Fuente actualizada ${_date(offer.lastSeenAt!)}',
+              textAlign: TextAlign.right,
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          ),
+        if (_offerHasLink(offer))
+          _OfferLinks(offer: offer)
         else
           Text(
             'Fuente no disponible',
+            textAlign: TextAlign.right,
             style: Theme.of(context).textTheme.bodySmall,
           ),
       ],
@@ -1846,9 +1922,163 @@ class _OfferPricing extends StatelessWidget {
   }
 }
 
+class _PriceCard extends StatelessWidget {
+  const _PriceCard({
+    required this.label,
+    required this.hint,
+    required this.icon,
+    required this.price,
+    required this.color,
+  });
+
+  final String label;
+  final String hint;
+  final IconData icon;
+  final SearchPrice? price;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) => Container(
+    height: 96,
+    padding: const EdgeInsets.all(10),
+    decoration: BoxDecoration(
+      color: color.withValues(alpha: .08),
+      border: Border.all(color: color.withValues(alpha: .65)),
+      borderRadius: BorderRadius.circular(12),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(icon, size: 16, color: color),
+            const SizedBox(width: 5),
+            Expanded(
+              child: Text(
+                label,
+                maxLines: 1,
+                style: TextStyle(color: color, fontWeight: FontWeight.w800),
+              ),
+            ),
+          ],
+        ),
+        const Spacer(),
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.centerLeft,
+          child: Text(
+            price?.amountMinor == null
+                ? 'No publicado'
+                : _money(price!.amountMinor!, price!.currency ?? 'MXN'),
+            style: Theme.of(
+              context,
+            ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w900),
+          ),
+        ),
+        Text(
+          hint,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: Theme.of(context).textTheme.labelSmall,
+        ),
+      ],
+    ),
+  );
+}
+
+bool _offerHasLink(SearchOffer offer) =>
+    offer.sourceUrl != null ||
+    offer.studyUrl != null ||
+    offer.locationUrl != null ||
+    offer.bookingUrl != null;
+
+class _OfferLinks extends StatelessWidget {
+  const _OfferLinks({required this.offer});
+
+  final SearchOffer offer;
+
+  @override
+  Widget build(BuildContext context) {
+    final primaryUrl =
+        offer.bookingUrl ??
+        offer.sourceUrl ??
+        offer.studyUrl ??
+        offer.locationUrl;
+    if (primaryUrl == null) return const SizedBox.shrink();
+    final capability = offer.linkCapability;
+    final primaryLabel = offer.bookingUrl != null
+        ? 'Agendar estudio'
+        : switch (capability) {
+            'study_and_location' => 'Ver estudio y sucursal',
+            'study_only' => 'Ver estudio',
+            'location_only' => 'Abrir sucursal',
+            'provider_only' => 'Abrir sitio del proveedor',
+            _ =>
+              offer.locationName == null
+                  ? 'Ver fuente del proveedor'
+                  : 'Ver fuente de sucursal',
+          };
+    final links = <Widget>[
+      TextButton.icon(
+        onPressed: () => _open(primaryUrl),
+        icon: const Icon(Icons.open_in_new, size: 16),
+        label: Text(primaryLabel),
+      ),
+    ];
+    if (offer.studyUrl != null && offer.studyUrl != primaryUrl) {
+      links.add(
+        TextButton(
+          onPressed: () => _open(offer.studyUrl!),
+          child: const Text('Ver estudio'),
+        ),
+      );
+    }
+    if (offer.locationUrl != null && offer.locationUrl != primaryUrl) {
+      links.add(
+        TextButton(
+          onPressed: () => _open(offer.locationUrl!),
+          child: const Text('Ver sucursal'),
+        ),
+      );
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Wrap(alignment: WrapAlignment.end, children: links),
+        if (capability == 'location_only')
+          Text(
+            'El sitio puede pedir seleccionar el estudio nuevamente.',
+            textAlign: TextAlign.right,
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+      ],
+    );
+  }
+}
+
+SearchPrice? _priceForType(SearchOffer offer, String type) {
+  for (final price in offer.prices) {
+    if (price.type == type && price.amountMinor != null) return price;
+  }
+  if (offer.priceType == type && offer.amountMinor != null) {
+    return SearchPrice(
+      type: offer.priceType,
+      amountMinor: offer.amountMinor,
+      currency: offer.currency,
+      lastSeenAt: offer.lastSeenAt,
+    );
+  }
+  return null;
+}
+
 String? _priceTypeLabel(String? value) => switch (value) {
   'online' => 'Precio en línea',
-  'regular' => 'Precio regular',
+  'regular' => 'Precio en sucursal',
+  'promo' => 'Promoción',
+  'member' => 'Membresía',
+  'cash' => 'Pago en efectivo',
+  'from' => 'Desde',
+  'insurance' => 'Con seguro',
   null || '' => null,
   _ => value,
 };

@@ -54,6 +54,24 @@ def sql_geography(coordinates: dict | None) -> str:
     return f"gis.ST_SetSRID(gis.ST_MakePoint({longitude:.15g}, {latitude:.15g}), 4326)::gis.geography"
 
 
+def provider_location_id_sql(brand_id: str, external_id: str) -> str:
+    """Resolve a canonical location by provider-owned location code.
+
+    Location UUID prefixes differ between the official-directory and legacy
+    catalog import paths. The code/external id is the stable join key and
+    avoids publishing an offer against a guessed UUID.
+    """
+    return (
+        "(select pl.id from core.provider_locations pl "
+        f"where pl.provider_brand_id={q(brand_id)} "
+        f"and (pl.location_code={q(external_id)} or exists ("
+        "select 1 from core.location_external_ids lei "
+        "where lei.provider_location_id=pl.id "
+        f"and lei.external_id={q(external_id)})) "
+        "and pl.status='active' order by pl.id limit 1)"
+    )
+
+
 def artifact_record_hash(payload: object) -> str:
     encoded = json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str).encode("utf-8")
     return hashlib.sha256(encoded).hexdigest()
@@ -216,14 +234,49 @@ def render(fixture: dict, ruiz_artifact: Path, chopo_artifact: Path, salud_digna
         item = item_by_key[mapping["catalog_key"]]
         brand_id = brand_ids[source_key]
         market_id = market_ids[source_key]
-        offer_id = stable_id("offer", f"{provider_key}:{mapping['external_record_id']}")
         display_name = str(payload.get("provider_display_name") or item["canonical_name"])
-        sku = payload.get("provider_sku") or payload.get("provider_external_id") or mapping["external_record_id"]
-        lines.append(
-            f"insert into supply.offers(id,provider_brand_id,catalog_item_id,provider_display_name,normalized_provider_name,provider_sku,status) values ({q(offer_id)},{q(brand_id)},{q(item['item_id'])},{q(display_name)},{q(normalize(display_name))},{q(sku)},'active') on conflict(id) do update set provider_display_name=excluded.provider_display_name,normalized_provider_name=excluded.normalized_provider_name,provider_sku=excluded.provider_sku,status='active';"
+        location_external_id = str(payload.get("location_external_id") or "").strip()
+        scoped_to_location = source_key == "salud_digna_puebla" and bool(location_external_id)
+        location_id_expr = provider_location_id_sql(brand_id, location_external_id) if scoped_to_location else None
+        offer_key = (
+            f"{provider_key}:clinical:{item['item_id']}"
+            if scoped_to_location
+            else f"{provider_key}:{mapping['external_record_id']}"
         )
+        offer_id = stable_id("offer", offer_key)
+        sku = (
+            f"clinical:{item['item_id']}"
+            if scoped_to_location
+            else payload.get("provider_sku") or payload.get("provider_external_id") or mapping["external_record_id"]
+        )
+        if scoped_to_location:
+            lines.append(
+                f"update supply.offers set status='inactive',is_primary=false where provider_brand_id={q(brand_id)} and catalog_item_id={q(item['item_id'])} and id <> {q(offer_id)} and status='active';"
+            )
         lines.append(
-            f"insert into supply.offer_scopes(offer_id,scope_type,provider_market_id,status) values ({q(offer_id)},'market',{q(market_id)},'active') on conflict do nothing;"
+            f"insert into supply.offers(id,provider_brand_id,catalog_item_id,provider_display_name,normalized_provider_name,provider_sku,is_primary,status) values ({q(offer_id)},{q(brand_id)},{q(item['item_id'])},{q(display_name)},{q(normalize(display_name))},{q(sku)},true,'active') on conflict(id) do update set provider_display_name=excluded.provider_display_name,normalized_provider_name=excluded.normalized_provider_name,provider_sku=excluded.provider_sku,is_primary=true,status='active';"
+        )
+        if scoped_to_location:
+            missing_location_message = q(
+                f"Missing canonical provider location for {source_key}:{location_external_id}"
+            )
+            lines.append(
+                f"do $$ begin if {location_id_expr} is null then raise exception {missing_location_message}; end if; end $$;"
+            )
+            lines.append(
+                f"update supply.offer_scopes set status='inactive' where offer_id={q(offer_id)} and scope_type='market' and status='active';"
+            )
+            lines.append(
+                f"insert into supply.offer_scopes(offer_id,scope_type,provider_location_id,status) values ({q(offer_id)},'location',{location_id_expr},'active') on conflict (offer_id,provider_location_id) where scope_type='location' do update set status='active';"
+            )
+        else:
+            lines.append(
+                f"insert into supply.offer_scopes(offer_id,scope_type,provider_market_id,status) values ({q(offer_id)},'market',{q(market_id)},'active') on conflict do nothing;"
+            )
+        scope_filter = (
+            f"os.offer_id={q(offer_id)} and os.scope_type='location' and os.provider_location_id={location_id_expr}"
+            if scoped_to_location
+            else f"os.offer_id={q(offer_id)} and os.scope_type='market'"
         )
         for price_key, amount in (payload.get("prices") or {}).items():
             # Provider APIs use zero as a sentinel for an unavailable discount.
@@ -238,14 +291,28 @@ def render(fixture: dict, ruiz_artifact: Path, chopo_artifact: Path, salud_digna
             price_type, db_price_key = type_map.get(price_key, ("other", price_key))
             obs_lookup = f"(select so.id from ingest.source_observations so join ingest.raw_records rr on rr.id=so.raw_record_id where rr.crawl_run_id={q(artifacts[source_key][0]['run_id'])}::uuid and rr.record_hash={q(mapping['record_hash'])} and so.entity_type='price' and so.attribute_name='prices' limit 1)"
             lines.append(
-                f"update supply.price_versions pv set is_current=false,valid_to=now(),last_seen_at=now() from supply.offer_scopes os where pv.offer_scope_id=os.id and os.offer_id={q(offer_id)} and os.scope_type='market' and pv.price_type={q(price_type)} and pv.channel='any' and pv.price_key={q(db_price_key)} and pv.is_current and pv.amount_minor is distinct from {int(amount)};"
+                f"update supply.price_versions pv set is_current=false,valid_to=now(),last_seen_at=now() from supply.offer_scopes os where pv.offer_scope_id=os.id and {scope_filter} and pv.price_type={q(price_type)} and pv.channel='any' and pv.price_key={q(db_price_key)} and pv.is_current and pv.amount_minor is distinct from {int(amount)};"
             )
             lines.append(
-                f"insert into supply.price_versions(offer_scope_id,price_type,channel,price_key,amount_minor,currency,source_observation_id,confidence) select os.id,{q(price_type)},'any',{q(db_price_key)},{int(amount)},'MXN',{obs_lookup},1.0 from supply.offer_scopes os where os.offer_id={q(offer_id)} and os.scope_type='market' on conflict (offer_scope_id,price_type,channel,price_key) where is_current do update set last_seen_at=now(),source_observation_id=excluded.source_observation_id,is_current=true;"
+                f"insert into supply.price_versions(offer_scope_id,price_type,channel,price_key,amount_minor,currency,source_observation_id,confidence) select os.id,{q(price_type)},'any',{q(db_price_key)},{int(amount)},'MXN',{obs_lookup},1.0 from supply.offer_scopes os where {scope_filter} on conflict (offer_scope_id,price_type,channel,price_key) where is_current do update set last_seen_at=now(),source_observation_id=excluded.source_observation_id,is_current=true;"
             )
-        lines.append(
-            f"insert into supply.offer_links(offer_scope_id,link_type,url,label,status) select os.id,'details',{q(payload.get('product_url'))},{q('Provider details')},'active' from supply.offer_scopes os where os.offer_id={q(offer_id)} and not exists(select 1 from supply.offer_links l where l.offer_scope_id=os.id and l.link_type='details' and l.url={q(payload.get('product_url'))});"
-        )
+        if scoped_to_location:
+            handoff = json.dumps({
+                "study_label": display_name,
+                "study_external_id": str(payload.get("provider_external_id") or ""),
+                "location_external_id": location_external_id,
+                "reason": "El sitio público requiere seleccionar el estudio después de abrir la sucursal.",
+            }, ensure_ascii=False, separators=(",", ":"))
+            lines.append(
+                f"insert into supply.offer_links(offer_scope_id,link_type,link_target,link_capability,url,label,handoff_data,status) select os.id,'details','location','location_only',{q(payload.get('product_url'))},{q('Sucursal del proveedor')},{q(handoff)}::jsonb,'active' from supply.offer_scopes os where {scope_filter} and not exists(select 1 from supply.offer_links l where l.offer_scope_id=os.id and l.link_target='location' and l.url={q(payload.get('product_url'))});"
+            )
+            lines.append(
+                f"insert into supply.offer_links(offer_scope_id,link_type,link_target,link_capability,url,label,handoff_data,status) select os.id,'other','handoff','none',{q(payload.get('product_url'))},{q('Continuar con contexto')},{q(handoff)}::jsonb,'active' from supply.offer_scopes os where {scope_filter} and not exists(select 1 from supply.offer_links l where l.offer_scope_id=os.id and l.link_target='handoff');"
+            )
+        else:
+            lines.append(
+                f"insert into supply.offer_links(offer_scope_id,link_type,link_target,link_capability,url,label,status) select os.id,'details','study','study_only',{q(payload.get('product_url'))},{q('Estudio del proveedor')},'active' from supply.offer_scopes os where {scope_filter} and not exists(select 1 from supply.offer_links l where l.offer_scope_id=os.id and l.link_target='study' and l.url={q(payload.get('product_url'))});"
+            )
         normalization_id = stable_id("normalization-run", f"{source_key}:{mapping['record_hash']}")
         method = str(mapping.get("method") or ("exact" if source_key == "ruiz_puebla" else "alias"))
         mapping_reason = str(

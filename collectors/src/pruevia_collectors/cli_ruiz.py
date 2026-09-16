@@ -5,13 +5,23 @@ import json
 from pathlib import Path
 
 from .pipeline import CollectorRunner
-from .providers.ruiz import RuizAdapter, RuizClient
+from .providers.ruiz import MAX_RUIZ_RECORDS, RuizAdapter, RuizClient
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run the Pruevia Laboratorios Ruiz Puebla collector")
-    parser.add_argument("--max-records", type=int, default=200)
-    parser.add_argument("--per-department", type=int, default=20)
+    parser.add_argument(
+        "--max-records",
+        type=int,
+        default=MAX_RUIZ_RECORDS,
+        help=f"maximum offer records for the run (default: {MAX_RUIZ_RECORDS})",
+    )
+    parser.add_argument(
+        "--per-department",
+        type=int,
+        default=None,
+        help="optional pilot cap per department; omitted means scan the complete bounded department catalog",
+    )
     parser.add_argument("--artifact-root", type=Path, default=Path("artifacts"))
     args = parser.parse_args()
     client = RuizClient()

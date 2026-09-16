@@ -43,6 +43,8 @@ void main() {
               services: [
                 SearchService(
                   id: 'service-1',
+                  description:
+                      'Mide las células presentes en una muestra de sangre.',
                   displayName: 'Biometría hemática',
                   confidence: 1,
                   offers: [
@@ -52,6 +54,18 @@ void main() {
                       providerName: 'Laboratorio pequeño',
                       locationId: 'location-1',
                       locationName: 'Sucursal Centro',
+                      prices: const [
+                        SearchPrice(
+                          type: 'online',
+                          amountMinor: 18479,
+                          currency: 'MXN',
+                        ),
+                        SearchPrice(
+                          type: 'regular',
+                          amountMinor: 28428,
+                          currency: 'MXN',
+                        ),
+                      ],
                     ),
                     SearchOffer(
                       id: 'offer-2',
@@ -72,6 +86,17 @@ void main() {
     expect(find.text('Proveedores encontrados'), findsOneWidget);
     expect(find.text('Laboratorio pequeño'), findsWidgets);
     expect(find.textContaining('2 sucursales'), findsWidgets);
-    expect(find.text('Compara las sucursales: sus estudios y precios aparecen debajo'), findsOneWidget);
+    expect(
+      find.text(
+        'Compara las sucursales: sus estudios y precios aparecen debajo',
+      ),
+      findsOneWidget,
+    );
+    expect(find.text('En línea'), findsWidgets);
+    expect(find.text('En sucursal'), findsWidgets);
+    expect(
+      find.text('Mide las células presentes en una muestra de sangre.'),
+      findsWidgets,
+    );
   });
 }

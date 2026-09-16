@@ -65,11 +65,22 @@ export interface SearchRow {
   longitude: number | null;
   distance_meters: number | null;
   source_url: string | null;
+  /** Provider links are capability-tagged; source_url is retained for legacy RPCs. */
+  study_url?: string | null;
+  location_url?: string | null;
+  booking_url?: string | null;
+  link_capability?: 'study_only' | 'location_only' | 'study_and_location' | 'provider_only' | 'none' | string | null;
   price_type: string | null;
   price_key: string | null;
   amount_minor: number | null;
   currency: string | null;
   price_last_seen_at: string | null;
+}
+
+export interface ServiceSummaryRow {
+  service_id: string;
+  description: string;
+  source_url: string | null;
 }
 
 export interface ResolutionCandidate {
@@ -138,6 +149,10 @@ export interface PackageOffer {
   longitude: number | null;
   distance_meters: number | null;
   source_url: string | null;
+  study_url?: string | null;
+  location_url?: string | null;
+  booking_url?: string | null;
+  link_capability?: string | null;
   price_type: string | null;
   price_key: string | null;
   amount_minor: number | null;

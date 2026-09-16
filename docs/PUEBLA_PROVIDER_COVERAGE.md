@@ -28,6 +28,17 @@ verificación:
 * El collector dedicado de Chopo recuperó 60 registros actuales de Puebla y
   enlazó 11 ubicaciones DENUE como identidades pendientes. Sus 58 etiquetas no
   aprobadas quedaron en la cola administrativa; no se publicaron por similitud.
+* Ruiz ahora recorre el catálogo completo acotado (4,617 registros en la
+  corrida de control). La equivalencia revisada de `CITOMETRIA HEMATICA` (ID
+  583) se publica como Biometría hemática con su enlace oficial de estudio;
+  antes se perdía por truncar cada departamento a 20 filas.
+* Salud Digna conserva ocho observaciones oficiales de Biometría hemática en
+  sucursales de Puebla. Cada sucursal se publica como un scope concreto y el
+  enlace se etiqueta como `location_only`: el sitio requiere seleccionar el
+  estudio después de abrir la sede y no se inventa una URL profunda.
+* Verkenlab quedó como equivalencia exacta candidata para Biometría hemática;
+  su precio y página se publican sólo después de ejecutar el renderer genérico
+  con el artefacto revisado.
 
 * Se añadió `pruevia-linfolab` para la página pública de sucursales. El sitio
   enumera 19 tarjetas; el parser sólo acepta las que incluyen un domicilio

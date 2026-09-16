@@ -7,6 +7,7 @@ import pytest
 from pruevia_collectors.providers.ruiz import (
     MAX_RUIZ_DEPARTMENTS,
     MAX_RUIZ_RECORDS,
+    MAX_RUIZ_RESPONSE_BYTES,
     RuizAdapter,
     RuizClient,
     RuizDepartment,
@@ -58,6 +59,37 @@ def test_ruiz_adapter_filters_inactive_and_limits_each_department():
     assert [record.external_record_id for record in records] == ["99", "6146", "701"]
 
 
+def test_ruiz_adapter_default_scans_beyond_old_twenty_record_pilot_cap():
+    data = fixture_data()
+    late_study = data["departments"]["analisis-clinicos"][0]
+    fillers = [
+        {
+            "id": 20_000 + index,
+            "title": f"ESTUDIO AUXILIAR {index}",
+            "url": f"estudio-auxiliar-{index}",
+            "price_list": "100",
+            "active": 1,
+            "zone_id": 4,
+        }
+        for index in range(21)
+    ]
+    data["departments"]["analisis-clinicos"] = fillers + [late_study]
+
+    class FakeClient:
+        base_url = "https://example.test"
+
+        def fetch_home(self):
+            return data["home"]
+
+        def fetch_departments(self, slug):
+            return data["departments"][slug]
+
+    records = list(RuizAdapter(FakeClient()).collect())
+
+    assert any(record.external_record_id == "6146" for record in records)
+    assert len(records) == 23
+
+
 def test_ruiz_location_maps_coordinates_and_address():
     record = ruiz_location_to_record(
         {
@@ -77,9 +109,11 @@ def test_ruiz_location_maps_coordinates_and_address():
 
 def test_ruiz_client_requests_json_endpoints():
     calls = []
+    encodings = []
 
     def handler(request: httpx.Request):
         calls.append(str(request.url))
+        encodings.append(request.headers.get("accept-encoding"))
         if request.url.path == "/general-home":
             return httpx.Response(200, json={"departments": []}, request=request)
         return httpx.Response(200, json={"departments": []}, request=request)
@@ -92,6 +126,7 @@ def test_ruiz_client_requests_json_endpoints():
         client._client.close()
 
     assert calls == ["https://example.test/general-home", "https://example.test/departments-studies/analisis-clinicos"]
+    assert encodings == ["identity", "identity"]
 
 
 def test_ruiz_client_retries_transient_http_errors():
@@ -116,6 +151,21 @@ def test_ruiz_client_retries_transient_http_errors():
         client._client.close()
 
     assert calls == 2
+
+
+def test_ruiz_client_accepts_current_catalog_payload_size_without_unbounded_reads():
+    payload = {"departments": [], "padding": "x" * (2 * 1024 * 1024 + 1)}
+
+    def handler(request: httpx.Request):
+        return httpx.Response(200, json=payload, request=request)
+
+    client = RuizClient(base_url="https://example.test", client=httpx.Client(transport=httpx.MockTransport(handler)))
+    try:
+        assert client.fetch_home()["departments"] == []
+    finally:
+        client._client.close()
+
+    assert MAX_RUIZ_RESPONSE_BYTES == 4 * 1024 * 1024
 
 
 def test_ruiz_client_rejects_external_redirect_before_requesting_target():

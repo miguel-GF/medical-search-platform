@@ -53,6 +53,11 @@ indisponible; ese artefacto no debe usarse para publicar ofertas.
 La base del servicio puede cambiarse con `--services-base-url` solo cuando el
 proveedor publique oficialmente otro endpoint.
 
+El adapter de Laboratorios Ruiz recorre por defecto el catálogo acotado completo
+(hasta 10,000 ofertas entre todos los departamentos). `--per-department` sólo
+debe usarse para un piloto explícito; dejarlo omitido evita perder estudios que
+aparecen después de las primeras filas del endpoint, como Citometría hemática.
+
 El collector de DENUE requiere `DENUE_API_TOKEN` y recibe coordenadas/radio explícitos.
 
 Para recorrer automáticamente los sitios web declarados por los candidatos
@@ -86,6 +91,11 @@ presupuesto acotado de enlaces internos y extrae, en este orden:
    `Service`, `Offer`);
 2. headings y precios con patrones deterministas (`$`, `MXN`, precio/costo);
 3. domicilio, teléfono, código postal y coordenadas cuando están publicados.
+
+Reconoce tanto Biometría hemática como Citometría hemática. Algunos CMS colocan
+el nombre del estudio en el `alt` de una imagen de tarjeta y el precio en un
+encabezado vecino; ese patrón se conserva como evidencia candidata, igual que
+los demás resultados del collector, y no constituye por sí solo una aprobación.
 
 Ejemplo:
 

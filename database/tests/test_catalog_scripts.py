@@ -27,7 +27,7 @@ def _artifact(root: Path, source_key: str, rows: list[dict]) -> Path:
 
 
 def test_golden_catalog_and_publisher_accept_salud_digna_artifact(tmp_path: Path):
-    payload = {"provider_display_name": "Glucosa", "provider_external_id": "17", "provider_sku": "17", "product_url": "https://example.test/glucosa", "prices": {"regular": 11999}}
+    payload = {"provider_display_name": "Glucosa", "provider_external_id": "17", "provider_sku": "17", "location_external_id": "332", "product_url": "https://example.test/glucosa", "prices": {"regular": 11999}}
     ruiz = _artifact(tmp_path, "ruiz_puebla", [{"external_record_id": "17", "source_url": "https://example.test/ruiz/17", "payload": payload}])
     chopo = _artifact(tmp_path, "chopo_puebla", [{"external_record_id": "17", "source_url": "https://example.test/chopo/17", "payload": payload}])
     salud = _artifact(tmp_path, "salud_digna_puebla", [{"external_record_id": "332:17", "source_url": "https://example.test/salud/17", "payload": payload}])
@@ -39,6 +39,8 @@ def test_golden_catalog_and_publisher_accept_salud_digna_artifact(tmp_path: Path
     assert any(mapping["source_key"] == "salud_digna_puebla" for mapping in fixture["mappings"])
     assert "salud-digna" in sql
     assert "salud_digna_puebla" in sql
+    assert "provider_location_id,status" in sql
+    assert "'location','location_only'" in sql
 
 
 def test_golden_catalog_sql_can_be_chunked_for_linked_queries():

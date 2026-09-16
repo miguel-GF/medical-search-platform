@@ -91,6 +91,32 @@ describe('Pruevia API', () => {
     expect(payload.results[0].offers[0].source).toBeNull();
   });
 
+  it('adds a bounded, sourced description without exposing internal notes', async () => {
+    const call = vi.fn(async (name: string) => {
+      if (name === 'api_search') return [row];
+      if (name === 'api_service_summaries') {
+        return [{
+          service_id: row.service_id,
+          description: 'Mide las células presentes en una muestra de sangre.',
+          source_url: 'https://medlineplus.gov/spanish/ency/article/003642.htm?tracking=1',
+          source_note: 'internal review note',
+        }];
+      }
+      return null;
+    });
+    const response = await createHandler({ rpc: { call: call as RpcClient['call'] } })(
+      new Request('https://api.test/api/v1/search?q=biometria'),
+      env,
+    );
+    const payload = await response.json() as { results: Array<{ service: Record<string, unknown> }> };
+
+    expect(payload.results[0].service).toEqual(expect.objectContaining({
+      description: 'Mide las células presentes en una muestra de sangre.',
+      description_source_url: 'https://medlineplus.gov/spanish/ency/article/003642.htm',
+    }));
+    expect(payload.results[0].service).not.toHaveProperty('source_note');
+  });
+
   it('removes query strings and fragments from public source URLs', async () => {
     const response = await createHandler({ rpc: rpcWith([{ ...row, source_url: 'https://example.test/study?token=secret#private' }]) })(
       new Request('https://api.test/api/v1/search?q=biometria'),
@@ -98,6 +124,30 @@ describe('Pruevia API', () => {
     );
     const payload = await response.json() as { results: Array<{ offers: Array<{ source: { url: string } | null }> }> };
     expect(payload.results[0].offers[0].source).toEqual({ url: 'https://example.test/study', last_seen_at: row.price_last_seen_at });
+  });
+
+  it('exposes only sanitized, capability-tagged provider links', async () => {
+    const response = await createHandler({ rpc: rpcWith([{
+      ...row,
+      source_url: 'https://salud-digna.example/sucursal',
+      study_url: 'https://salud-digna.example/estudio?token=secret',
+      location_url: 'https://salud-digna.example/sucursal?tracking=1',
+      booking_url: 'javascript:alert(1)',
+      link_capability: 'location_only',
+    }]) })(
+      new Request('https://api.test/api/v1/search?q=biometria'),
+      env,
+    );
+    const payload = await response.json() as { results: Array<{ offers: Array<{ source: Record<string, unknown> | null }> }> };
+    expect(payload.results[0].offers[0].source).toEqual({
+      url: 'https://salud-digna.example/sucursal',
+      study_url: 'https://salud-digna.example/estudio',
+      location_url: 'https://salud-digna.example/sucursal',
+      link_capability: 'location_only',
+      last_seen_at: row.price_last_seen_at,
+    });
+    expect(JSON.stringify(payload)).not.toContain('secret');
+    expect(JSON.stringify(payload)).not.toContain('javascript:');
   });
 
   it('does not expose insecure or alternate-port source URLs', async () => {

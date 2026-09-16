@@ -31,6 +31,10 @@ class SearchOffer {
     this.priceType,
     this.prices = const [],
     this.sourceUrl,
+    this.studyUrl,
+    this.locationUrl,
+    this.bookingUrl,
+    this.linkCapability,
     this.lastSeenAt,
   });
 
@@ -45,6 +49,10 @@ class SearchOffer {
   final String? priceType;
   final List<SearchPrice> prices;
   final String? sourceUrl;
+  final String? studyUrl;
+  final String? locationUrl;
+  final String? bookingUrl;
+  final String? linkCapability;
   final String? lastSeenAt;
 
   factory SearchOffer.fromJson(JsonMap json) {
@@ -71,6 +79,17 @@ class SearchOffer {
       priceType: _stringValue(price?['type']),
       prices: prices,
       sourceUrl: _stringValue(source?['url']),
+      studyUrl:
+          _stringValue(source?['study_url']) ?? _stringValue(json['study_url']),
+      locationUrl:
+          _stringValue(source?['location_url']) ??
+          _stringValue(json['location_url']),
+      bookingUrl:
+          _stringValue(source?['booking_url']) ??
+          _stringValue(json['booking_url']),
+      linkCapability:
+          _stringValue(source?['link_capability']) ??
+          _stringValue(json['link_capability']),
       lastSeenAt: _stringValue(source?['last_seen_at']),
     );
   }
@@ -104,6 +123,8 @@ class SearchService {
     required this.confidence,
     required this.offers,
     this.resolutionStatus,
+    this.description,
+    this.descriptionSourceUrl,
   });
 
   final String id;
@@ -111,6 +132,8 @@ class SearchService {
   final double confidence;
   final List<SearchOffer> offers;
   final String? resolutionStatus;
+  final String? description;
+  final String? descriptionSourceUrl;
 
   factory SearchService.fromJson(JsonMap json) {
     final service = _record(json['service']);
@@ -124,6 +147,8 @@ class SearchService {
       confidence: _doubleValue(service['confidence']) ?? 0,
       offers: offers,
       resolutionStatus: _stringValue(service['resolution_status']),
+      description: _stringValue(service['description']),
+      descriptionSourceUrl: _stringValue(service['description_source_url']),
     );
   }
 }
@@ -283,10 +308,10 @@ class OcrPreview {
   factory OcrPreview.fromJson(JsonMap json) => OcrPreview(
     text: _stringValue(json['text']) ?? '',
     reviewRequired: json['review_required'] == true,
-    lowConfidenceLines: _boundedList(
-      json['low_confidence_lines'],
-      100,
-    ).whereType<String>().where((line) => line.length <= 4096).toList(growable: false),
+    lowConfidenceLines: _boundedList(json['low_confidence_lines'], 100)
+        .whereType<String>()
+        .where((line) => line.length <= 4096)
+        .toList(growable: false),
   );
 }
 

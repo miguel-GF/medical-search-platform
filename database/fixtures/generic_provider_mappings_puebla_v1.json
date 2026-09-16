@@ -143,6 +143,16 @@
       "observed_label": "Mastograf\u00eda",
       "method": "manual",
       "reason": "Coincidencia exacta normalizada con el nombre can\u00f3nico de Mastograf\u00eda en la p\u00e1gina p\u00fablica de Laboratorios Semin."
+    },
+    {
+      "source_key": "generic_verkenlab_com",
+      "provider_key": "verkenlab",
+      "external_record_id": "8ce94b23d15c28ec56a8656d2686e968",
+      "catalog_item_id": "00000000-0000-0000-0000-000000001103",
+      "provider_alias": "Biometría Hemática",
+      "observed_label": "Biometria Hematica",
+      "method": "manual",
+      "reason": "La página oficial de Verkenlab publica explícitamente Biometría Hemática, precio regular y sus sedes; se aprueba sólo esta etiqueta exacta, sin inferir otros estudios."
     }
   ]
 }

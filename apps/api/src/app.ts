@@ -1,7 +1,7 @@
 import { SupabaseConfigurationError, SupabaseResponseError, SupabaseRpcError, SupabaseRpcClient, SupabaseTimeoutError } from './supabase.js';
 import { applicationResponse } from './provider-applications.js';
 import { documentAccess } from './provider-document-access.js';
-import type { AdminAlert, AdminCatalogItem, AdminNormalizationDetail, AdminNormalizationQueueRow, AdminQualityIssue, AdminUser, Env, OcrCorrection, PackageCandidate, PackageItem, PackageLocation, PackageOffer, PackageResolutionResponse, PackageSolution, RateLimitBinding, ResolutionCandidate, ResolutionResponse, RpcClient, SearchRow } from './types.js';
+import type { AdminAlert, AdminCatalogItem, AdminNormalizationDetail, AdminNormalizationQueueRow, AdminQualityIssue, AdminUser, Env, OcrCorrection, PackageCandidate, PackageItem, PackageLocation, PackageOffer, PackageResolutionResponse, PackageSolution, RateLimitBinding, ResolutionCandidate, ResolutionResponse, RpcClient, SearchRow, ServiceSummaryRow } from './types.js';
 import {
   buildPackageResolution,
   normalizeBatchRpcPayload,
@@ -208,14 +208,68 @@ async function searchResponse(request: Request, url: URL, rpc: RpcClient, env: E
   await captureResolutionReview(resolution, rpc, domain, requestId, request, env);
   const publicResolution = isResolutionResponse(resolution) ? sanitizePublicResolution(resolution) : null;
   if (publicResolution && publicResolution.status !== 'resolved') {
-    return json({ query, results: groupResolutionCandidates(publicResolution.candidates ?? []) }, 200, origin);
+    const results = await addServiceSummaries(groupResolutionCandidates(publicResolution.candidates ?? []), rpc, requestId);
+    return json({ query, results }, 200, origin);
   }
-  if (grouped.length > 0) return json({ query, results: grouped }, 200, origin);
+  if (grouped.length > 0) {
+    const results = await addServiceSummaries(grouped, rpc, requestId);
+    return json({ query, results }, 200, origin);
+  }
 
   // Keep the public search useful when the clinical catalog recognizes a
   // service but no provider has a current offer. The search UI can then say
   // "recognized, no active offer" instead of looking like a typo/no-match.
-  return json({ query, results: groupResolutionCandidates(publicResolution?.candidates ?? []) }, 200, origin);
+  const results = await addServiceSummaries(groupResolutionCandidates(publicResolution?.candidates ?? []), rpc, requestId);
+  return json({ query, results }, 200, origin);
+}
+
+async function addServiceSummaries<T extends { service: Record<string, unknown> }>(
+  groups: T[],
+  rpc: RpcClient,
+  requestId: string,
+): Promise<T[]> {
+  const serviceIds = [...new Set(groups
+    .map((group) => stringValue(group.service.id))
+    .filter((id): id is string => id !== null && isUuidValue(id)))]
+    .slice(0, 100);
+  if (serviceIds.length === 0) return groups;
+  try {
+    const rows = await rpc.call<ServiceSummaryRow[]>('api_service_summaries', {
+      p_service_ids: serviceIds,
+      p_locale: 'es-MX',
+    }, { admin: true });
+    const summaries = new Map<string, { description: string; sourceUrl: string | null }>();
+    for (const value of Array.isArray(rows) ? rows.slice(0, 100) : []) {
+      if (!isRecord(value) || !isUuidValue(value.service_id)) continue;
+      const description = safePublicText(value.description, 700);
+      if (!description) continue;
+      summaries.set(value.service_id, {
+        description,
+        sourceUrl: safeHttpUrl(value.source_url),
+      });
+    }
+    return groups.map((group) => {
+      const id = stringValue(group.service.id);
+      const summary = id ? summaries.get(id) : undefined;
+      return {
+        ...group,
+        service: {
+          ...group.service,
+          description: summary?.description ?? null,
+          description_source_url: summary?.sourceUrl ?? null,
+        },
+      };
+    });
+  } catch (error) {
+    // Descriptions aid comprehension but an optional lookup must never take
+    // down patient search during a staggered API/database deployment.
+    console.error(JSON.stringify({
+      event: 'service_summary_lookup_failed',
+      request_id: requestId,
+      error_tag: error instanceof SupabaseRpcError ? error.tag : 'SERVICE_SUMMARY',
+    }));
+    return groups;
+  }
 }
 
 async function resolveResponse(request: Request, rpc: RpcClient, env: Env, origin: string, requestId: string): Promise<Response> {
@@ -339,6 +393,7 @@ function sanitizePublicResolution(payload: ResolutionResponse): ResolutionRespon
 }
 
 function sanitizePublicOffer(offer: Record<string, unknown>): Record<string, unknown> {
+  const source = sanitizeOfferSource(offer);
   return {
     offer_id: stringValue(offer.offer_id),
     provider_brand_id: stringValue(offer.provider_brand_id),
@@ -349,12 +404,56 @@ function sanitizePublicOffer(offer: Record<string, unknown>): Record<string, unk
     longitude: numberValue(offer.longitude),
     distance_meters: numberValue(offer.distance_meters),
     source_url: safeHttpUrl(offer.source_url),
+    ...(source ? {
+      study_url: source.study_url ?? null,
+      location_url: source.location_url ?? null,
+      booking_url: source.booking_url ?? null,
+      link_capability: source.link_capability ?? null,
+    } : {}),
     price_type: safePublicText(offer.price_type, 100),
     price_key: safePublicText(offer.price_key, 100),
     amount_minor: numberValue(offer.amount_minor),
     currency: safePublicText(offer.currency, 3),
     price_last_seen_at: safePublicText(offer.price_last_seen_at, 80),
   };
+}
+
+/**
+ * Links come from crawled/provider data and are untrusted. Keep each URL
+ * independently sanitized and expose only the capability declared by the
+ * source. A provider page must never be presented as a study+branch deep link.
+ */
+function sanitizeOfferSource(value: object): {
+  url: string | null;
+  study_url?: string;
+  location_url?: string;
+  booking_url?: string;
+  link_capability?: string;
+  last_seen_at: string | null;
+} | null {
+  const row = value as Record<string, unknown>;
+  const url = safeHttpUrl(row.source_url);
+  const studyUrl = safeHttpUrl(row.study_url);
+  const locationUrl = safeHttpUrl(row.location_url);
+  const bookingUrl = safeHttpUrl(row.booking_url);
+  const capability = stringValue(row.link_capability);
+  const lastSeenAt = stringValue(row.price_last_seen_at);
+  if (!url && !studyUrl && !locationUrl && !bookingUrl) return null;
+  const source: {
+    url: string | null;
+    study_url?: string;
+    location_url?: string;
+    booking_url?: string;
+    link_capability?: string;
+    last_seen_at: string | null;
+  } = { url, last_seen_at: lastSeenAt };
+  if (studyUrl) source.study_url = studyUrl;
+  if (locationUrl) source.location_url = locationUrl;
+  if (bookingUrl) source.booking_url = bookingUrl;
+  if (capability && ['study_only', 'location_only', 'study_and_location', 'provider_only', 'none'].includes(capability)) {
+    source.link_capability = capability;
+  }
+  return source;
 }
 
 function safePublicText(value: unknown, maxLength: number): string {
@@ -487,6 +586,7 @@ function sanitizePackageLocation(location: PackageLocation): PackageLocation | n
 }
 
 function sanitizePackageOffer(offer: Record<string, unknown>): Record<string, unknown> {
+  const source = sanitizeOfferSource(offer);
   return {
     item_index: safePackageIndex(offer.item_index),
     item_id: stringValue(offer.item_id)?.slice(0, 100) ?? '',
@@ -499,6 +599,12 @@ function sanitizePackageOffer(offer: Record<string, unknown>): Record<string, un
     currency: safePublicText(offer.currency, 3) || null,
     requires_quote: offer.requires_quote === true,
     source_url: safeHttpUrl(offer.source_url),
+    ...(source ? {
+      study_url: source.study_url ?? null,
+      location_url: source.location_url ?? null,
+      booking_url: source.booking_url ?? null,
+      link_capability: source.link_capability ?? null,
+    } : {}),
   };
 }
 
@@ -1584,9 +1690,7 @@ function groupSearchRows(rows: SearchRow[]) {
       distance_meters: row.distance_meters,
       price: null,
       prices: new Map<string, Record<string, unknown>>(),
-      source: safeHttpUrl(row.source_url)
-        ? { url: safeHttpUrl(row.source_url), last_seen_at: row.price_last_seen_at }
-        : null,
+      source: sanitizeOfferSource(row),
     };
     if (row.amount_minor !== null) {
       const price = {
@@ -1643,6 +1747,10 @@ function normalizeSearchRow(value: unknown): SearchRow | null {
     longitude,
     distance_meters: boundedNumber(value.distance_meters, 0, 100_000_000),
     source_url: safeHttpUrl(value.source_url),
+    study_url: safeHttpUrl(value.study_url),
+    location_url: safeHttpUrl(value.location_url),
+    booking_url: safeHttpUrl(value.booking_url),
+    link_capability: stringValue(value.link_capability),
     price_type: safePublicText(value.price_type, 100) || null,
     price_key: safePublicText(value.price_key, 100) || null,
     amount_minor: amount !== null && amount >= 0 && amount <= 1_000_000_000_000 ? amount : null,
@@ -1694,9 +1802,7 @@ function groupResolutionCandidates(candidates: ResolutionCandidate[]) {
             last_seen_at: stringValue(offer.price_last_seen_at),
           },
       prices: [],
-      source: safeHttpUrl(offer.source_url)
-        ? { url: safeHttpUrl(offer.source_url), last_seen_at: stringValue(offer.price_last_seen_at) }
-        : null,
+      source: sanitizeOfferSource(offer),
       })),
     }));
 }

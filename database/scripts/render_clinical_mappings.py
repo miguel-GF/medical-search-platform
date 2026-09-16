@@ -19,6 +19,7 @@ try:  # Package import for tests; direct import for the CLI entrypoint.
         artifact_record_hash,
         chunk_transaction,
         normalize,
+        provider_location_id_sql,
         q,
         stable_id,
     )
@@ -29,6 +30,7 @@ except ImportError:  # pragma: no cover - exercised by the direct script command
         artifact_record_hash,
         chunk_transaction,
         normalize,
+        provider_location_id_sql,
         q,
         stable_id,
     )
@@ -37,6 +39,13 @@ except ImportError:  # pragma: no cover - exercised by the direct script command
 
 
 PROVIDERS = {
+    "ruiz_puebla": {
+        "provider_key": "ruiz",
+        "brand_key": "ruiz",
+        "brand_name": "Laboratorios Ruiz",
+        "slug": "laboratorios-ruiz",
+        "website_url": "https://laboratoriosruiz.com",
+    },
     "chopo_puebla": {
         "provider_key": "chopo",
         "brand_key": "chopo",
@@ -104,6 +113,12 @@ def _artifact_index(artifact: Path, source_key: str) -> tuple[dict, dict[str, di
         raise ValueError(f"artifact source key mismatch: expected {source_key}")
     indexed: dict[str, dict] = {}
     for row in parsed:
+        # A full provider crawl may contain both location-discovery rows and
+        # offer rows sharing the same provider id (for example Ruiz branch 1
+        # and study 1).  Clinical mappings resolve only offer records; mixing
+        # record types would make a valid full-catalog artifact look corrupt.
+        if row.get("record_type") not in {"provider_offer_price", "provider_offer_discovered"}:
+            continue
         external_id = str(row.get("external_record_id") or "")
         if not external_id:
             continue
@@ -175,9 +190,21 @@ def render(fixture: object, artifacts: Mapping[str, Path]) -> str:
         brand_id = stable_id("provider-brand", provider["brand_key"])
         market_id = stable_id("provider-market", f"{provider['brand_key']}:puebla")
         item_id = str(mapping["catalog_item_id"])
-        offer_id = stable_id("offer", f"{provider_key}:{external_id}")
         normalization_id = stable_id("normalization-run", f"clinical:{source_key}:{record_hash}")
         price_rows = _price_rows(payload, mapping_key=f"{source_key}:{external_id}")
+        # Salud Digna's study feed is returned per branch.  A market scope
+        # would incorrectly fan one branch's price and URL out to every
+        # location, so preserve the concrete location whenever the artifact
+        # provides its stable external id.
+        location_external_id = str(payload.get("location_external_id") or "").strip()
+        scoped_to_location = source_key == "salud_digna_puebla" and bool(location_external_id)
+        location_id_expr = provider_location_id_sql(brand_id, location_external_id) if scoped_to_location else None
+        # A branch feed emits a different provider id for each location, but
+        # those rows are one clinical offer with many concrete scopes. Reuse
+        # one canonical offer id so the primary-offer uniqueness rule cannot
+        # reject the second branch.
+        offer_key = f"{provider_key}:clinical:{item_id}" if scoped_to_location else f"{provider_key}:{external_id}"
+        offer_id = stable_id("offer", offer_key)
 
         if source_key not in emitted_sources:
             lines.append(
@@ -193,24 +220,61 @@ def render(fixture: object, artifacts: Mapping[str, Path]) -> str:
         lines.append(
             f"insert into catalog.item_aliases(item_id,alias,normalized_alias,alias_type,provider_brand_id,confidence,status,source_note,approved_at) values ({q(item_id)},{q(provider_alias)},{q(normalize(provider_alias))},'provider_name',{q(brand_id)},1.0,'approved',{q(reason)},now()) on conflict (item_id,locale,provider_brand_id,normalized_alias) where provider_brand_id is not null and status <> 'rejected' do update set alias=excluded.alias,source_note=excluded.source_note,status='approved',approved_at=now();"
         )
-        sku = str(payload.get("provider_sku") or payload.get("provider_external_id") or external_id)
+        if scoped_to_location:
+            lines.append(
+                f"update supply.offers set status='inactive',is_primary=false where provider_brand_id={q(brand_id)} and catalog_item_id={q(item_id)} and id <> {q(offer_id)} and status='active';"
+            )
+        sku = f"clinical:{item_id}" if scoped_to_location else str(payload.get("provider_sku") or payload.get("provider_external_id") or external_id)
         lines.append(
-            f"insert into supply.offers(id,provider_brand_id,catalog_item_id,provider_display_name,normalized_provider_name,provider_sku,status) values ({q(offer_id)},{q(brand_id)},{q(item_id)},{q(observed_name)},{q(normalize(observed_name))},{q(sku)},'active') on conflict(id) do update set catalog_item_id=excluded.catalog_item_id,provider_display_name=excluded.provider_display_name,normalized_provider_name=excluded.normalized_provider_name,provider_sku=excluded.provider_sku,status='active';"
+            f"insert into supply.offers(id,provider_brand_id,catalog_item_id,provider_display_name,normalized_provider_name,provider_sku,is_primary,status) values ({q(offer_id)},{q(brand_id)},{q(item_id)},{q(observed_name)},{q(normalize(observed_name))},{q(sku)},true,'active') on conflict(id) do update set catalog_item_id=excluded.catalog_item_id,provider_display_name=excluded.provider_display_name,normalized_provider_name=excluded.normalized_provider_name,provider_sku=excluded.provider_sku,is_primary=true,status='active';"
         )
-        lines.append(
-            f"insert into supply.offer_scopes(offer_id,scope_type,provider_market_id,status) values ({q(offer_id)},'market',{q(market_id)},'active') on conflict (offer_id,provider_market_id) where scope_type='market' do update set status='active';"
+        if scoped_to_location:
+            missing_location_message = q(
+                f"Missing canonical provider location for {source_key}:{location_external_id}"
+            )
+            lines.append(
+                f"do $$ begin if {location_id_expr} is null then raise exception {missing_location_message}; end if; end $$;"
+            )
+            lines.append(
+                f"update supply.offer_scopes set status='inactive' where offer_id={q(offer_id)} and scope_type='market' and status='active';"
+            )
+            lines.append(
+                f"insert into supply.offer_scopes(offer_id,scope_type,provider_location_id,status) values ({q(offer_id)},'location',{location_id_expr},'active') on conflict (offer_id,provider_location_id) where scope_type='location' do update set status='active';"
+            )
+        else:
+            lines.append(
+                f"insert into supply.offer_scopes(offer_id,scope_type,provider_market_id,status) values ({q(offer_id)},'market',{q(market_id)},'active') on conflict (offer_id,provider_market_id) where scope_type='market' do update set status='active';"
+            )
+        scope_filter = (
+            f"os.offer_id={q(offer_id)} and os.scope_type='location' and os.provider_location_id={location_id_expr}"
+            if scoped_to_location
+            else f"os.offer_id={q(offer_id)} and os.scope_type='market'"
         )
         observation_lookup = f"(select so.id from ingest.source_observations so join ingest.raw_records rr on rr.id=so.raw_record_id where rr.crawl_run_id={q(manifest['run_id'])}::uuid and rr.record_hash={q(record_hash)} and so.entity_type='price' and so.attribute_name='prices' order by so.created_at desc limit 1)"
         for price_type, price_key, amount in price_rows:
             lines.append(
-                f"update supply.price_versions pv set is_current=false,valid_to=now(),last_seen_at=now() from supply.offer_scopes os where pv.offer_scope_id=os.id and os.offer_id={q(offer_id)} and os.scope_type='market' and pv.price_type={q(price_type)} and pv.channel='any' and pv.price_key={q(price_key)} and pv.is_current and pv.amount_minor is distinct from {amount};"
+                f"update supply.price_versions pv set is_current=false,valid_to=now(),last_seen_at=now() from supply.offer_scopes os where pv.offer_scope_id=os.id and {scope_filter} and pv.price_type={q(price_type)} and pv.channel='any' and pv.price_key={q(price_key)} and pv.is_current and pv.amount_minor is distinct from {amount};"
             )
             lines.append(
-                f"insert into supply.price_versions(offer_scope_id,price_type,channel,price_key,amount_minor,currency,source_observation_id,confidence) select os.id,{q(price_type)},'any',{q(price_key)},{amount},'MXN',{observation_lookup},1.0 from supply.offer_scopes os where os.offer_id={q(offer_id)} and os.scope_type='market' on conflict (offer_scope_id,price_type,channel,price_key) where is_current do update set amount_minor=excluded.amount_minor,last_seen_at=now(),source_observation_id=excluded.source_observation_id,is_current=true;"
+                f"insert into supply.price_versions(offer_scope_id,price_type,channel,price_key,amount_minor,currency,source_observation_id,confidence) select os.id,{q(price_type)},'any',{q(price_key)},{amount},'MXN',{observation_lookup},1.0 from supply.offer_scopes os where {scope_filter} on conflict (offer_scope_id,price_type,channel,price_key) where is_current do update set amount_minor=excluded.amount_minor,last_seen_at=now(),source_observation_id=excluded.source_observation_id,is_current=true;"
             )
-        lines.append(
-            f"insert into supply.offer_links(offer_scope_id,link_type,url,label,status) select os.id,'details',{q(payload.get('product_url'))},{q('Provider details')},'active' from supply.offer_scopes os where os.offer_id={q(offer_id)} and not exists(select 1 from supply.offer_links l where l.offer_scope_id=os.id and l.link_type='details' and l.url={q(payload.get('product_url'))});"
-        )
+        if scoped_to_location:
+            handoff = json.dumps({
+                "study_label": observed_name,
+                "study_external_id": str(payload.get("provider_external_id") or ""),
+                "location_external_id": location_external_id,
+                "reason": "El sitio público requiere seleccionar el estudio después de abrir la sucursal.",
+            }, ensure_ascii=False, separators=(",", ":"))
+            lines.append(
+                f"insert into supply.offer_links(offer_scope_id,link_type,link_target,link_capability,url,label,handoff_data,status) select os.id,'details','location','location_only',{q(payload.get('product_url'))},{q('Sucursal del proveedor')},{q(handoff)}::jsonb,'active' from supply.offer_scopes os where {scope_filter} and not exists(select 1 from supply.offer_links l where l.offer_scope_id=os.id and l.link_target='location' and l.url={q(payload.get('product_url'))});"
+            )
+            lines.append(
+                f"insert into supply.offer_links(offer_scope_id,link_type,link_target,link_capability,url,label,handoff_data,status) select os.id,'other','handoff','none',{q(payload.get('product_url'))},{q('Continuar con contexto')},{q(handoff)}::jsonb,'active' from supply.offer_scopes os where {scope_filter} and not exists(select 1 from supply.offer_links l where l.offer_scope_id=os.id and l.link_target='handoff');"
+            )
+        else:
+            lines.append(
+                f"insert into supply.offer_links(offer_scope_id,link_type,link_target,link_capability,url,label,status) select os.id,'details','study','study_only',{q(payload.get('product_url'))},{q('Estudio del proveedor')},'active' from supply.offer_scopes os where {scope_filter} and not exists(select 1 from supply.offer_links l where l.offer_scope_id=os.id and l.link_target='study' and l.url={q(payload.get('product_url'))});"
+            )
         lines.append(
             f"insert into ingest.normalization_runs(id,input_type,raw_record_id,provider_brand_id,raw_text,normalized_input,engine_version,status,resolved_at) select {q(normalization_id)},'crawler',rr.id,{q(brand_id)},{q(observed_name)},{q(normalize(observed_name))},{q(str(fixture.get('version','clinical-provider-mappings-v1')) if isinstance(fixture, dict) else 'clinical-provider-mappings-v1')},'resolved',now() from ingest.raw_records rr where rr.crawl_run_id={q(manifest['run_id'])}::uuid and rr.record_hash={q(record_hash)} on conflict(id) do nothing;"
         )

@@ -26,6 +26,7 @@ MAX_RUIZ_PER_DEPARTMENT = 1_000
 MAX_RUIZ_DEPARTMENTS = 500
 MAX_RUIZ_LOCATIONS = 1_000
 MAX_RUIZ_SLUG_CHARS = 128
+MAX_RUIZ_RESPONSE_BYTES = 4 * 1024 * 1024
 
 
 @dataclass(frozen=True)
@@ -99,11 +100,15 @@ class RuizClient:
                     url,
                     allowed_url=self.base_url,
                     max_redirects=5,
-                    headers={"Accept": "application/json", "User-Agent": "PrueviaCollector/0.1"},
+                    headers={
+                        "Accept": "application/json",
+                        "Accept-Encoding": "identity",
+                        "User-Agent": "PrueviaCollector/0.1",
+                    },
                 )
                 response.raise_for_status()
                 try:
-                    payload = json.loads(bounded_response_bytes(response, max_bytes=2 * 1024 * 1024))
+                    payload = json.loads(bounded_response_bytes(response, max_bytes=MAX_RUIZ_RESPONSE_BYTES))
                     if not isinstance(payload, Mapping):
                         raise ValueError(f"Ruiz response must be an object: {path}")
                     return payload
@@ -130,14 +135,18 @@ class RuizAdapter:
         self,
         client: RuizClient,
         *,
-        max_records: int = 200,
-        per_department_limit: int = 20,
+        max_records: int = MAX_RUIZ_RECORDS,
+        per_department_limit: int | None = None,
         zone_id: int = 4,
     ) -> None:
         if not isinstance(max_records, int) or isinstance(max_records, bool) or not 1 <= max_records <= MAX_RUIZ_RECORDS:
             raise ValueError("max_records must be between 1 and 10000")
-        if not isinstance(per_department_limit, int) or isinstance(per_department_limit, bool) or not 1 <= per_department_limit <= MAX_RUIZ_PER_DEPARTMENT:
-            raise ValueError("per_department_limit must be between 1 and 1000")
+        if per_department_limit is not None and (
+            not isinstance(per_department_limit, int)
+            or isinstance(per_department_limit, bool)
+            or not 1 <= per_department_limit <= MAX_RUIZ_PER_DEPARTMENT
+        ):
+            raise ValueError("per_department_limit must be between 1 and 1000 when provided")
         self.client = client
         self.max_records = max_records
         self.per_department_limit = per_department_limit
@@ -164,7 +173,7 @@ class RuizAdapter:
                 yield ruiz_row_to_record(row, department=department, base_url=self.client.base_url)
                 emitted += 1
                 selected += 1
-                if selected >= self.per_department_limit:
+                if self.per_department_limit is not None and selected >= self.per_department_limit:
                     break
 
 

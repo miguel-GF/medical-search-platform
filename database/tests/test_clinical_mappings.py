@@ -79,6 +79,51 @@ def _fixture(label: str = "GLUCOSA") -> dict:
     }
 
 
+def _salud_digna_artifact(root: Path) -> Path:
+    path = root / "salud_digna_puebla"
+    path.mkdir()
+    payload = {
+        "provider_display_name": "BIOMETRIA HEMATICA",
+        "provider_external_id": "888346",
+        "location_external_id": "332",
+        "product_url": "https://www.salud-digna.org/puebla-municipio-libre",
+        "prices": {"regular": 18479},
+    }
+    record_hash = _hash(payload)
+    raw = {
+        "source_key": "salud_digna_puebla",
+        "record_type": "provider_offer_price",
+        "external_record_id": "332:888346",
+        "source_url": payload["product_url"],
+        "record_hash": record_hash,
+        "parse_status": "parsed",
+        "payload": payload,
+    }
+    observation = {
+        "source_key": "salud_digna_puebla",
+        "record_hash": record_hash,
+        "entity_type": "price",
+        "attribute_name": "prices",
+        "observed_value": payload["prices"],
+        "status": "candidate",
+    }
+    (path / "raw_records.jsonl").write_text(json.dumps(raw) + "\n", encoding="utf-8")
+    (path / "observations.jsonl").write_text(json.dumps(observation) + "\n", encoding="utf-8")
+    (path / "run_manifest.json").write_text(
+        json.dumps({
+            "source_key": "salud_digna_puebla",
+            "status": "succeeded",
+            "errors": [],
+            "records_received": 1,
+            "records_valid": 1,
+            "records_rejected": 0,
+            "run_id": "00000000-0000-0000-0000-000000000002",
+        }),
+        encoding="utf-8",
+    )
+    return path
+
+
 def test_clinical_mapping_renderer_emits_offer_price_and_decision(tmp_path: Path):
     artifact = _artifact(tmp_path)
     sql = render(_fixture(), {"chopo_puebla": artifact})
@@ -94,3 +139,29 @@ def test_clinical_mapping_renderer_rejects_changed_observed_label(tmp_path: Path
     artifact = _artifact(tmp_path, label="GLUCOSA ALTERADA")
     with pytest.raises(ValueError, match="mapping label changed"):
         render(_fixture(), {"chopo_puebla": artifact})
+
+
+def test_salud_digna_offer_scope_resolves_existing_location_by_code(tmp_path: Path):
+    artifact = _salud_digna_artifact(tmp_path)
+    fixture = {
+        "version": "test-mappings-v1",
+        "mappings": [{
+            "source_key": "salud_digna_puebla",
+            "provider_key": "salud_digna",
+            "external_record_id": "332:888346",
+            "catalog_item_id": "00000000-0000-0000-0000-000000001103",
+            "provider_alias": "BIOMETRIA HEMATICA",
+            "observed_label": "BIOMETRIA HEMATICA",
+            "method": "manual",
+            "reason": "Reviewed exact test mapping",
+        }],
+    }
+
+    sql = render(fixture, {"salud_digna_puebla": artifact})
+
+    assert "scope_type='location'" in sql
+    assert "pl.location_code='332'" in sql
+    assert "Missing canonical provider location" in sql
+    assert "link_target,link_capability" in sql
+    assert "clinical:00000000-0000-0000-0000-000000001103" in sql
+    assert "status='inactive',is_primary=false" in sql

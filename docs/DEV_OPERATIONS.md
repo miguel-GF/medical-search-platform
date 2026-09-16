@@ -128,7 +128,8 @@ Desde `collectors/`:
 ```powershell
 $env:PYTHONPATH = "src"
 python -m pruevia_collectors.cli_chopo --max-pages 4
-python -m pruevia_collectors.cli_ruiz --max-records 200 --per-department 20
+# Ruiz recorre el catálogo completo dentro del límite de seguridad por defecto.
+python -m pruevia_collectors.cli_ruiz
 python -m pruevia_collectors.cli_salud_digna --location-slug puebla-municipio-libre
 python -m pruevia_collectors.cli --condition laboratorio --latitude 19.0433 --longitude -98.2011 --radius-meters 5000
 # Si la paginación de Chopo está limitada por el edge, usar el set revisado:
@@ -188,6 +189,7 @@ con el artefacto descargado:
 ```powershell
 python database/scripts/render_clinical_mappings.py `
   --fixture database/fixtures/clinical_provider_mappings_v1.json `
+  --artifact ruiz_puebla=collectors/artifacts/ruiz-full-20260915/ruiz-puebla/<run-id> `
   --artifact chopo_puebla=collectors/artifacts/chopo-puebla/<run-id> `
   --artifact salud_digna_puebla=collectors/artifacts/salud-digna-puebla/<run-id> `
   --chunk-dir $env:TEMP/pruevia-clinical-mappings --max-bytes 100000

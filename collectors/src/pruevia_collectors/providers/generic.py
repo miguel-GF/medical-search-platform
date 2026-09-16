@@ -52,7 +52,7 @@ MAX_PARSER_FRAGMENT_CHARS = 4_000
 MAX_JSONLD_NODES = 5_000
 MAX_JSONLD_DEPTH = 64
 DEFAULT_USER_AGENT = "PrueviaGenericCollector/0.1 (+https://pruevia.local/collector)"
-GENERIC_PARSER_VERSION = "0.1.0"
+GENERIC_PARSER_VERSION = "0.2.0"
 PRICE_RE = re.compile(
     r"(?<![\w])(?:MXN\s*)?(?:\$\s*)?([0-9]{1,3}(?:[,.][0-9]{3})*(?:[,.][0-9]{1,2})?|[0-9]+(?:[,.][0-9]{1,2})?)(?:\s*MXN)?(?![\w])",
     re.IGNORECASE,
@@ -60,7 +60,7 @@ PRICE_RE = re.compile(
 POSTAL_RE = re.compile(r"(?:C\.?\s*P\.?|codigo postal)\s*[:#-]?\s*(\d{5})", re.IGNORECASE)
 PHONE_RE = re.compile(r"(?:\+?52\s*)?(?:\(?\d{2,3}\)?[\s.-]*)?\d{3,4}[\s.-]*\d{3,4}")
 SERVICE_HINT_RE = re.compile(
-    r"\b(?:biometr[ií]a|hemograma|orina|ego|glucosa|creatinina|tiroid\w*|tsh|qu[ií]mica|laboratorio|ultrasonido|radiolog[ií]a|tomograf[ií]a|resonancia|mastograf[ií]a|electrocardiograma|electromiograf[ií]a|an[aá]lisis cl[ií]nico|perfil|albumina|ant[ií]geno|covid|vdrl|reacciones|electrolitos|deshidrogenasa|lipidos|hep[aá]tico|rx|columna|torax|prueba)\b",
+    r"\b(?:biometr[ií]a|citometr[ií]a|hemograma|orina|ego|glucosa|creatinina|tiroid\w*|tsh|qu[ií]mica|laboratorio|ultrasonido|radiolog[ií]a|tomograf[ií]a|resonancia|mastograf[ií]a|electrocardiograma|electromiograf[ií]a|an[aá]lisis cl[ií]nico|perfil|albumina|ant[ií]geno|covid|vdrl|reacciones|electrolitos|deshidrogenasa|lipidos|hep[aá]tico|rx|columna|torax|prueba)\b",
     re.IGNORECASE,
 )
 INSULIN_HINT_RE = re.compile(r"\binsulina\b", re.IGNORECASE)
@@ -72,6 +72,7 @@ GENERIC_TITLE_WORDS = {
     "nosotros",
     "servicios",
     "precios",
+    "estudios",
     "cotizacion",
     "ubicacion",
     "sucursales",
@@ -92,6 +93,32 @@ OFFER_TYPES = {"product", "service", "medicaltest", "offer"}
 def _is_service_hint(value: object) -> bool:
     text = str(value or "")
     return bool(SERVICE_HINT_RE.search(text) or INSULIN_HINT_RE.search(text))
+
+
+def _service_alt_title(value: object | None) -> str:
+    """Extract a clinical title from an image alt used as a card label.
+
+    Some small provider sites (including Wix pages) render a study name only
+    in the accessible image alt and put its visible price in a neighboring
+    heading.  Keep this fallback narrow: require a known service hint and
+    discard the common filename extension/prefix so an image filename is not
+    published as the study name.
+    """
+
+    text = _clean_text(value)
+    if not text:
+        return ""
+    # Treat filename separators as word boundaries so names such as
+    # ``imgi_22_Citometría Hemática.png`` remain discoverable.
+    text = re.sub(r"[_-]+", " ", text)
+    match = SERVICE_HINT_RE.search(text)
+    if not match:
+        match = INSULIN_HINT_RE.search(text)
+    if not match:
+        return ""
+    title = text[match.start() :]
+    title = re.sub(r"\s*\.(?:avif|gif|jpe?g|png|svg|webp)\s*$", "", title, flags=re.IGNORECASE)
+    return _clean_text(title)[:180]
 
 
 def _is_price_heading(value: object) -> bool:
@@ -495,6 +522,20 @@ class _DocumentParser(HTMLParser):
                 self.meta[key.casefold()[:200]] = attributes["content"].strip()[:MAX_PARSER_META_VALUE_CHARS]
         elif tag in {"h1", "h2", "h3", "h4"}:
             self._heading = (tag, []) if len(self.headings) < MAX_PARSER_HEADINGS else None
+        elif tag == "img":
+            # A few provider CMSs expose the study title only through the
+            # accessible image alt (their price remains visible as a nearby
+            # heading). Treat only recognized clinical labels as headings;
+            # generic/logo alts must never become offers.
+            title = _service_alt_title(attributes.get("alt"))
+            if title:
+                if len(self.headings) < MAX_PARSER_HEADINGS:
+                    self.headings.append(title)
+                remaining = MAX_PARSER_TEXT_CHARS - self._text_chars
+                if remaining > 0:
+                    piece = title[:remaining]
+                    self.text_parts.append(piece)
+                    self._text_chars += len(piece)
         elif tag == "a" and attributes.get("href"):
             self._anchor = (attributes["href"][:2_000], []) if len(self.links) < MAX_PARSER_LINKS else None
 
@@ -821,7 +862,11 @@ class GenericPageParser:
             end = min(next_positions) if next_positions else min(len(text), start + 700)
             segment = text[start:end]
             cursor = max(cursor, start + len(cleaned_heading))
-            for price_match in list(PRICE_RE.finditer(segment))[:5]:
+            # Generic records have one regular-price slot.  Keep the first
+            # explicit amount attached to the title; subsequent amounts on
+            # the same card are commonly member/promo prices and must not be
+            # mislabeled as additional regular offers.
+            for price_match in list(PRICE_RE.finditer(segment))[:1]:
                 raw_price = price_match.group(0)
                 context = segment[max(0, price_match.start() - 100) : min(len(segment), price_match.end() + 100)].casefold()
                 explicit_currency = "$" in raw_price or "mxn" in raw_price.casefold()

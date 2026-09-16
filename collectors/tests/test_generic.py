@@ -36,6 +36,10 @@ HTML = """
 """
 
 
+def _fixture_html(name: str) -> str:
+    return (Path(__file__).parent / "fixtures" / name).read_text(encoding="utf-8")
+
+
 def test_price_parser_supports_mexican_formats():
     assert parse_price_minor("$250.00") == 25000
     assert parse_price_minor("MXN 1,299.50") == 129950
@@ -131,6 +135,106 @@ def test_generic_parser_recovers_adjacent_elementor_prices_for_structured_servic
             "url": "https://laboratorioasesores.com/servicio/",
             "method": "price_pattern",
         },
+    ]
+
+
+def test_generic_parser_recognizes_citometria_as_a_clinical_service():
+    page = GenericPage(
+        "https://lab.example/promociones",
+        """
+        <html><body>
+          <h2>Citometría Hemática</h2><p>Precio $99.00</p>
+        </body></html>
+        """,
+        "text/html",
+    )
+
+    assert GenericPageParser().parse(page)["offers"] == [
+        {
+            "name": "Citometría Hemática",
+            "price_minor": 9900,
+            "url": "https://lab.example/promociones",
+            "method": "price_pattern",
+        }
+    ]
+
+
+def test_generic_parser_recovers_study_name_from_image_alt_card():
+    page = GenericPage(
+        "https://lab.example/promociones",
+        """
+        <html><body>
+          <div><img alt="imgi_22_Citometr&iacute;a Hem&aacute;tica.png" /></div>
+          <h2>$99.00</h2>
+          <p>Conteo sangu&iacute;neo completo de c&eacute;lulas presentes en la sangre.</p>
+        </body></html>
+        """,
+        "text/html",
+    )
+
+    assert GenericPageParser().parse(page)["offers"] == [
+        {
+            "name": "Citometr\u00eda Hem\u00e1tica",
+            "price_minor": 9900,
+            "url": "https://lab.example/promociones",
+            "method": "price_pattern",
+        }
+    ]
+
+
+def test_generic_parser_keeps_only_primary_price_from_membership_card():
+    page = GenericPage(
+        "https://lab.example/biometria-hematica",
+        """
+        <html><body>
+          <h1>Biometría Hemática</h1>
+          <p>Precio: $285.00</p><p>Promoción con membresía: $242.25</p>
+        </body></html>
+        """,
+        "text/html",
+    )
+
+    assert GenericPageParser().parse(page)["offers"] == [
+        {
+            "name": "Biometría Hemática",
+            "price_minor": 28500,
+            "url": "https://lab.example/biometria-hematica",
+            "method": "price_pattern",
+        }
+    ]
+
+
+def test_generic_verken_fixture_extracts_biometria_regular_price():
+    page = GenericPage(
+        "https://verkenlab.com/cat/laboratorio/biometria-hematica",
+        _fixture_html("generic_verken_biometria.html"),
+        "text/html",
+    )
+
+    assert GenericPageParser().parse(page)["offers"] == [
+        {
+            "name": "Biometria Hematica",
+            "price_minor": 28500,
+            "url": "https://verkenlab.com/cat/laboratorio/biometria-hematica",
+            "method": "price_pattern",
+        }
+    ]
+
+
+def test_generic_gaya_fixture_extracts_citometria_from_image_alt():
+    page = GenericPage(
+        "https://www.gayalaboratorios.com/promociones",
+        _fixture_html("generic_gaya_citometria.html"),
+        "text/html",
+    )
+
+    assert GenericPageParser().parse(page)["offers"] == [
+        {
+            "name": "Citometr\u00eda Hem\u00e1tica",
+            "price_minor": 9900,
+            "url": "https://www.gayalaboratorios.com/promociones",
+            "method": "price_pattern",
+        }
     ]
 
 
