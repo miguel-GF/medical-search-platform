@@ -11,7 +11,7 @@ from dataclasses import dataclass
 from decimal import ROUND_HALF_UP, Decimal, InvalidOperation
 from math import isfinite
 from typing import Any
-from urllib.parse import urlparse
+from urllib.parse import quote, urlparse
 
 import certifi
 import httpx
@@ -484,6 +484,18 @@ def salud_digna_study_to_record(
     location_id = location.external_record_id or ""
     location_slug = str(location.payload.get("location_slug") or "")
     product_url = client.location_url(location_slug)
+    raw_study = dict(row)
+    # Salud Digna's public booking app accepts the service id and study label
+    # in the route.  The branch remains a separate verified URL because the
+    # site stores the selected branch in localStorage rather than accepting a
+    # stable query parameter for it.
+    service_id = _first_value(row, "IdServicio", "idServicio", "EstudioID", "estudioID")
+    booking_url = None
+    if service_id not in (None, ""):
+        service_text = str(service_id).strip()
+        if re.fullmatch(r"[0-9]{1,6}", service_text):
+            booking_origin = str(getattr(client, "origin", SALUD_DIGNA_ORIGIN)).rstrip("/")
+            booking_url = f"{booking_origin}/citas/{service_text}?sp={quote(name, safe='')}"
     prices = _prices(row)
     payload = {
         "provider_brand": "Salud Digna",
@@ -494,14 +506,16 @@ def salud_digna_study_to_record(
         "location_external_id": location_id,
         "location_slug": location_slug,
         "product_url": product_url,
+        "booking_url": booking_url,
         "category": _text(_first_value(row, "Categoria", "categoria", "Tipo", "tipo")) or None,
         "prices": prices,
-        "raw_study": dict(row),
+        "raw_study": raw_study,
     }
     observations = [
         Observation(entity_type="offer", attribute_name="provider_display_name", observed_value=name),
         Observation(entity_type="offer", attribute_name="provider_external_id", observed_value=str(external_id)),
         Observation(entity_type="offer", attribute_name="product_url", observed_value=product_url),
+        Observation(entity_type="offer", attribute_name="booking_url", observed_value=booking_url),
         Observation(entity_type="offer", attribute_name="location_external_id", observed_value=location_id),
     ]
     if prices:

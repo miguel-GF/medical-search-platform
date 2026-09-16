@@ -12,6 +12,7 @@ import json
 import math
 from pathlib import Path
 from typing import Mapping
+from urllib.parse import quote
 from uuid import UUID
 
 try:  # Package import for tests; direct import for the CLI entrypoint.
@@ -265,6 +266,18 @@ def render(fixture: object, artifacts: Mapping[str, Path]) -> str:
                 "location_external_id": location_external_id,
                 "reason": "El sitio público requiere seleccionar el estudio después de abrir la sucursal.",
             }, ensure_ascii=False, separators=(",", ":"))
+            booking_url = str(payload.get("booking_url") or "").strip()
+            if not booking_url and source_key == "salud_digna_puebla":
+                raw_study = payload.get("raw_study")
+                if isinstance(raw_study, dict):
+                    service_id = raw_study.get("IdServicio") or raw_study.get("idServicio") or raw_study.get("EstudioID") or raw_study.get("estudioID")
+                    service_text = str(service_id or "").strip()
+                    if service_text.isdigit() and len(service_text) <= 6:
+                        booking_url = f"https://www.salud-digna.org/citas/{service_text}?sp={quote(observed_name, safe='')}"
+            if booking_url:
+                lines.append(
+                    f"insert into supply.offer_links(offer_scope_id,link_type,link_target,link_capability,url,label,handoff_data,status) select os.id,'booking','booking','study_only',{q(booking_url)},{q('Agendar estudio')},{q(handoff)}::jsonb,'active' from supply.offer_scopes os where {scope_filter} and not exists(select 1 from supply.offer_links l where l.offer_scope_id=os.id and l.link_target='booking' and l.url={q(booking_url)});"
+                )
             lines.append(
                 f"insert into supply.offer_links(offer_scope_id,link_type,link_target,link_capability,url,label,handoff_data,status) select os.id,'details','location','location_only',{q(payload.get('product_url'))},{q('Sucursal del proveedor')},{q(handoff)}::jsonb,'active' from supply.offer_scopes os where {scope_filter} and not exists(select 1 from supply.offer_links l where l.offer_scope_id=os.id and l.link_target='location' and l.url={q(payload.get('product_url'))});"
             )

@@ -41,10 +41,10 @@ select extensions.ok(
   'api_search exposes link capability'
 );
 select extensions.ok(
-  position('provider_location_id is distinct from' in pg_get_functiondef(
+  position('distinct on (s.offer_id, s.provider_location_id' in pg_get_functiondef(
     'public.api_resolve_search_v4(text,text,double precision,double precision,uuid,integer)'::regprocedure
   )) > 0,
-  'resolver suppresses a legacy fallback when a concrete branch exists'
+  'resolver preserves rows that identify a concrete branch'
 );
 
 insert into core.provider_brands(id, name, normalized_name, slug)

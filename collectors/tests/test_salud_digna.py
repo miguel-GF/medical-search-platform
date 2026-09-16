@@ -45,6 +45,16 @@ def test_salud_digna_study_maps_promotion_from_discount():
     assert any(observation.entity_type == "price" for observation in record.observations)
 
 
+def test_salud_digna_study_builds_booking_deep_link_from_service_id():
+    record = salud_digna_study_to_record(
+        {"Id": 17, "Descripcion": "Biometría hemática", "EstudioID": 2, "Precio": 120},
+        location=location_record(),
+        client=SaludDignaClient(origin="https://example.test", services_base_url="https://services.test"),
+    )
+
+    assert record.payload["booking_url"] == "https://example.test/citas/2?sp=Biometr%C3%ADa%20hem%C3%A1tica"
+
+
 def test_salud_digna_price_parser_drops_zero_sentinels():
     record = salud_digna_study_to_record(
         {"Id": 17, "Descripcion": "Glucosa", "Precio": 0},
