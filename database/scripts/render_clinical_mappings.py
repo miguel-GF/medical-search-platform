@@ -282,7 +282,7 @@ def render(fixture: object, artifacts: Mapping[str, Path]) -> str:
             f"insert into ingest.normalization_candidates(normalization_run_id,catalog_item_id,rank,score,method,explanation_data) values ({q(normalization_id)},{q(item_id)},1,1.0,{q(method)},{q(json.dumps({'reason': reason, 'source_key': source_key, 'external_record_id': external_id}, ensure_ascii=False, separators=(',', ':')))}::jsonb) on conflict do nothing;"
         )
         lines.append(
-            f"insert into ingest.normalization_decisions(normalization_run_id,selected_item_id,decision_type,reason) values ({q(normalization_id)},{q(item_id)},'manual',{q(reason)}) on conflict do nothing;"
+            f"insert into ingest.normalization_decisions(normalization_run_id,selected_item_id,decision_type,reason) select {q(normalization_id)},{q(item_id)},'manual',{q(reason)} where not exists (select 1 from ingest.normalization_decisions nd where nd.normalization_run_id={q(normalization_id)} and nd.decision_type in ('automatic','manual','ambiguous','rejected','no_match')) on conflict do nothing;"
         )
     lines.append("commit;")
     return "\n".join(lines) + "\n"

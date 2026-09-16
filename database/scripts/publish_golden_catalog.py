@@ -326,7 +326,7 @@ def render(fixture: dict, ruiz_artifact: Path, chopo_artifact: Path, salud_digna
             f"insert into ingest.normalization_candidates(normalization_run_id,catalog_item_id,rank,score,method,explanation_data) values ({q(normalization_id)},{q(item['item_id'])},1,1.0,{q(method)},{jb({'reason':mapping_reason,'source_key':source_key})}) on conflict do nothing;"
         )
         lines.append(
-            f"insert into ingest.normalization_decisions(normalization_run_id,selected_item_id,decision_type,reason) select {q(normalization_id)},{q(item['item_id'])},'automatic',{q(mapping_reason)} where not exists(select 1 from ingest.normalization_decisions where normalization_run_id={q(normalization_id)} and decision_type='automatic');"
+            f"insert into ingest.normalization_decisions(normalization_run_id,selected_item_id,decision_type,reason) select {q(normalization_id)},{q(item['item_id'])},'automatic',{q(mapping_reason)} where not exists(select 1 from ingest.normalization_decisions nd where nd.normalization_run_id={q(normalization_id)} and nd.decision_type in ('automatic','manual','ambiguous','rejected','no_match'));"
         )
 
     # Keep every unresolved provider label auditable in the normalization queue.
@@ -344,7 +344,7 @@ def render(fixture: dict, ruiz_artifact: Path, chopo_artifact: Path, salud_digna
             f"insert into ingest.normalization_runs(id,input_type,raw_record_id,provider_brand_id,raw_text,normalized_input,engine_version,status) select {q(run_id)},'crawler',rr.id,{q(brand_ids[source_key])},{q(queue['raw_text'])},{q(queue['normalized_input'])},{q(fixture['version'])},'no_match' from ingest.raw_records rr where rr.crawl_run_id={q(source_artifact[0]['run_id'])}::uuid and rr.record_hash={q(row.get('record_hash'))} on conflict(id) do nothing;"
         )
         lines.append(
-            f"insert into ingest.normalization_decisions(normalization_run_id,decision_type,reason) select {q(run_id)},'no_match',{q(queue['reason'])} where not exists(select 1 from ingest.normalization_decisions where normalization_run_id={q(run_id)} and decision_type='no_match');"
+            f"insert into ingest.normalization_decisions(normalization_run_id,decision_type,reason) select {q(run_id)},'no_match',{q(queue['reason'])} where not exists(select 1 from ingest.normalization_decisions nd where nd.normalization_run_id={q(run_id)} and nd.decision_type in ('automatic','manual','ambiguous','rejected','no_match'));"
         )
 
     lines.append("commit;")
