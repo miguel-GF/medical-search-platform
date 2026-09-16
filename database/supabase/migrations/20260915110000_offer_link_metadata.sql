@@ -55,19 +55,38 @@ alter table supply.offer_links
   alter column handoff_data set default '{}'::jsonb,
   alter column handoff_data set not null;
 
-alter table supply.offer_links
-  add constraint supply_offer_links_target_ck
-  check (link_target in ('study', 'location', 'booking', 'provider', 'handoff'));
-
-alter table supply.offer_links
-  add constraint supply_offer_links_capability_ck
-  check (link_capability in (
-    'study_only', 'location_only', 'study_and_location', 'provider_only', 'none'
-  ));
-
-alter table supply.offer_links
-  add constraint supply_offer_links_handoff_object_ck
-  check (jsonb_typeof(handoff_data) = 'object');
+do $$
+begin
+  if not exists (
+    select 1 from pg_constraint
+    where conrelid = 'supply.offer_links'::regclass
+      and conname = 'supply_offer_links_target_ck'
+  ) then
+    alter table supply.offer_links
+      add constraint supply_offer_links_target_ck
+      check (link_target in ('study', 'location', 'booking', 'provider', 'handoff'));
+  end if;
+  if not exists (
+    select 1 from pg_constraint
+    where conrelid = 'supply.offer_links'::regclass
+      and conname = 'supply_offer_links_capability_ck'
+  ) then
+    alter table supply.offer_links
+      add constraint supply_offer_links_capability_ck
+      check (link_capability in (
+        'study_only', 'location_only', 'study_and_location', 'provider_only', 'none'
+      ));
+  end if;
+  if not exists (
+    select 1 from pg_constraint
+    where conrelid = 'supply.offer_links'::regclass
+      and conname = 'supply_offer_links_handoff_object_ck'
+  ) then
+    alter table supply.offer_links
+      add constraint supply_offer_links_handoff_object_ck
+      check (jsonb_typeof(handoff_data) = 'object');
+  end if;
+end $$;
 
 create index if not exists supply_offer_links_target_idx
   on supply.offer_links(offer_scope_id, link_target, status);

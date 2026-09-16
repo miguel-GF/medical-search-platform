@@ -2,7 +2,7 @@
 
 begin;
 create extension if not exists pgtap with schema extensions;
-select extensions.plan(19);
+select extensions.plan(20);
 
 select extensions.has_column('supply', 'offer_links', 'link_target',
   'offer links distinguish study, location, booking and provider targets');
@@ -39,6 +39,12 @@ select extensions.ok(
     'public.api_search(text,text,double precision,double precision,uuid,integer)'::regprocedure
   )) > 0,
   'api_search exposes link capability'
+);
+select extensions.ok(
+  position('provider_location_id is distinct from' in pg_get_functiondef(
+    'public.api_resolve_search_v4(text,text,double precision,double precision,uuid,integer)'::regprocedure
+  )) > 0,
+  'resolver suppresses a legacy fallback when a concrete branch exists'
 );
 
 insert into core.provider_brands(id, name, normalized_name, slug)
