@@ -93,3 +93,29 @@ def test_official_location_renderer_accepts_an_explicit_source_key(tmp_path: Pat
     (artifact / "raw_records.jsonl").write_text(json.dumps(raw) + "\n", encoding="utf-8")
     sql = render(fixture, artifact)
     assert "dr_simi_official" in sql
+
+
+def test_official_location_renderer_accepts_location_source_key_alias(tmp_path: Path):
+    artifact = _artifact(tmp_path)
+    manifest_path = artifact / "run_manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["source_key"] = "salud_digna_puebla_locations"
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+    raw_path = artifact / "raw_records.jsonl"
+    raw = json.loads(raw_path.read_text(encoding="utf-8"))
+    raw["source_key"] = "salud_digna_puebla_locations"
+    raw_path.write_text(json.dumps(raw) + "\n", encoding="utf-8")
+    observations_path = artifact / "observations.jsonl"
+    observation = {
+        "source_key": "salud_digna_puebla_locations",
+        "record_hash": raw["record_hash"],
+        "entity_type": "provider_location",
+        "attribute_name": "location",
+        "observed_value": raw["payload"],
+        "status": "candidate",
+    }
+    observations_path.write_text(json.dumps(observation) + "\n", encoding="utf-8")
+
+    sql = render(_fixture(), artifact)
+
+    assert "core.provider_locations" in sql

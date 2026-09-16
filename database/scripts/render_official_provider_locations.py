@@ -99,11 +99,16 @@ def _validate_fixture(fixture: Mapping[str, Any]) -> tuple[dict[str, str], list[
     return {"provider_key": provider_key, "name": provider_name, "slug": provider_slug, "website_url": website_url}, locations, source_key, source_system
 
 
-def _artifact_locations(artifact: Path, expected_source_key: str) -> tuple[dict[str, Any], dict[str, dict[str, Any]]]:
+def _artifact_locations(
+    artifact: Path,
+    expected_source_keys: set[str],
+) -> tuple[dict[str, Any], dict[str, dict[str, Any]]]:
     manifest, raw, observations = read_artifact(artifact)
     parsed = validate(manifest, raw, observations)
-    if manifest.get("source_key") != expected_source_key:
-        raise ValueError(f"artifact source_key must be {expected_source_key}")
+    actual_source_key = str(manifest.get("source_key") or "")
+    if actual_source_key not in expected_source_keys:
+        expected = ", ".join(sorted(expected_source_keys))
+        raise ValueError(f"artifact source_key must be one of: {expected}")
     indexed: dict[str, dict[str, Any]] = {}
     for row in parsed:
         if row.get("record_type") != "provider_location_discovered":
@@ -117,7 +122,14 @@ def _artifact_locations(artifact: Path, expected_source_key: str) -> tuple[dict[
 
 def render(fixture: Mapping[str, Any], artifact: Path) -> str:
     provider, locations, source_key, source_system = _validate_fixture(fixture)
-    manifest, artifact_rows = _artifact_locations(artifact, source_key)
+    # The location collector intentionally uses a separate source key so its
+    # directory evidence cannot be confused with offer/price observations.
+    # The fixture still owns the provider identity, therefore accept the
+    # conventional ``<provider>_locations`` alias at this join boundary.
+    manifest, artifact_rows = _artifact_locations(
+        artifact,
+        {source_key, f"{source_key}_locations"},
+    )
     for location in locations:
         row = artifact_rows.get(location["external_id"])
         if row is None:
