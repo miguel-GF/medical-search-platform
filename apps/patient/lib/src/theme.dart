@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 abstract final class PrueviaColors {
   static const teal = Color(0xFF0F766E);
   static const tealStrong = Color(0xFF115E59);
+  static const green = Color(0xFF65B586);
   static const navy = Color(0xFF0F172A);
   static const canvas = Color(0xFFF8FAFC);
   static const success = Color(0xFF15803D);

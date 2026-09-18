@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Pruevia — P como ruta, variante 1</title>
+  <desc id="desc">Monograma P blanco formado por un recorrido continuo dentro de un cuadrado verde azulado redondeado.</desc>
+  <rect width="256" height="256" rx="56" fill="#0F766E"/>
+  <path d="M76 194V62h62c28 0 46 14 46 36s-18 36-46 36H76" fill="none" stroke="#fff" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="76" cy="62" r="7" fill="#fff"/>
+</svg>

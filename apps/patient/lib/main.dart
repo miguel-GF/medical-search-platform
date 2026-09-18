@@ -2321,10 +2321,14 @@ class PrueviaLogo extends StatelessWidget {
             color: color,
             borderRadius: BorderRadius.circular(compact ? 9 : 12),
           ),
-          child: Icon(
-            Icons.add_location_alt_outlined,
-            color: Theme.of(context).colorScheme.onPrimary,
-            size: compact ? 19 : 25,
+          child: Center(
+            child: CustomPaint(
+              size: Size.square(compact ? 19 : 25),
+              painter: _PrueviaMarkPainter(
+                pageColor: Theme.of(context).colorScheme.onPrimary,
+                cutoutColor: color,
+              ),
+            ),
           ),
         ),
         const SizedBox(width: 10),
@@ -2338,6 +2342,180 @@ class PrueviaLogo extends StatelessWidget {
       ],
     );
   }
+}
+
+class _PrueviaMarkPainter extends CustomPainter {
+  const _PrueviaMarkPainter({
+    required this.pageColor,
+    required this.cutoutColor,
+  });
+
+  final Color pageColor;
+  final Color cutoutColor;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scale = size.width / 256;
+    final leftPage = Path()
+      ..moveTo(32 * scale, 46 * scale)
+      ..quadraticBezierTo(32 * scale, 32 * scale, 47 * scale, 34 * scale)
+      ..cubicTo(
+        87 * scale,
+        38 * scale,
+        116 * scale,
+        49 * scale,
+        128 * scale,
+        68 * scale,
+      )
+      ..lineTo(128 * scale, 218 * scale)
+      ..cubicTo(
+        105 * scale,
+        193 * scale,
+        78 * scale,
+        183 * scale,
+        47 * scale,
+        181 * scale,
+      )
+      ..quadraticBezierTo(32 * scale, 180 * scale, 32 * scale, 166 * scale)
+      ..close();
+    final rightPage = Path()
+      ..moveTo(136 * scale, 68 * scale)
+      ..cubicTo(
+        150 * scale,
+        49 * scale,
+        181 * scale,
+        36 * scale,
+        218 * scale,
+        24 * scale,
+      )
+      ..quadraticBezierTo(232 * scale, 20 * scale, 232 * scale, 36 * scale)
+      ..lineTo(232 * scale, 157 * scale)
+      ..quadraticBezierTo(232 * scale, 167 * scale, 221 * scale, 168 * scale)
+      ..cubicTo(
+        182 * scale,
+        172 * scale,
+        155 * scale,
+        188 * scale,
+        136 * scale,
+        218 * scale,
+      )
+      ..close();
+    final pagePaint = Paint()
+      ..color = pageColor
+      ..style = PaintingStyle.fill;
+    canvas
+      ..drawPath(leftPage, pagePaint)
+      ..drawPath(rightPage, pagePaint);
+
+    final letterP = Path()
+      ..moveTo(56 * scale, 176 * scale)
+      ..lineTo(56 * scale, 75 * scale)
+      ..cubicTo(
+        78 * scale,
+        77 * scale,
+        99 * scale,
+        80 * scale,
+        109 * scale,
+        87 * scale,
+      )
+      ..cubicTo(
+        121 * scale,
+        95 * scale,
+        126 * scale,
+        107 * scale,
+        124 * scale,
+        120 * scale,
+      )
+      ..cubicTo(
+        122 * scale,
+        133 * scale,
+        114 * scale,
+        141 * scale,
+        103 * scale,
+        144 * scale,
+      )
+      ..cubicTo(
+        93 * scale,
+        146 * scale,
+        83 * scale,
+        143 * scale,
+        74 * scale,
+        140 * scale,
+      )
+      ..lineTo(74 * scale, 181 * scale)
+      ..cubicTo(
+        68 * scale,
+        179 * scale,
+        62 * scale,
+        178 * scale,
+        56 * scale,
+        176 * scale,
+      )
+      ..close();
+    final cutoutPaint = Paint()
+      ..color = cutoutColor
+      ..style = PaintingStyle.fill;
+    canvas.drawPath(letterP, cutoutPaint);
+    final letterPCounter = Path()
+      ..moveTo(74 * scale, 94 * scale)
+      ..lineTo(74 * scale, 121 * scale)
+      ..cubicTo(
+        84 * scale,
+        123 * scale,
+        93 * scale,
+        127 * scale,
+        99 * scale,
+        125 * scale,
+      )
+      ..cubicTo(
+        104 * scale,
+        123 * scale,
+        107 * scale,
+        119 * scale,
+        107 * scale,
+        113 * scale,
+      )
+      ..cubicTo(
+        107 * scale,
+        106 * scale,
+        104 * scale,
+        101 * scale,
+        98 * scale,
+        99 * scale,
+      )
+      ..cubicTo(
+        92 * scale,
+        96 * scale,
+        84 * scale,
+        95 * scale,
+        74 * scale,
+        94 * scale,
+      )
+      ..close();
+    canvas.drawPath(letterPCounter, pagePaint);
+
+    final linePaint = Paint()
+      ..color = cutoutColor
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 15 * scale
+      ..strokeCap = StrokeCap.round;
+    canvas
+      ..drawLine(
+        Offset(158 * scale, 95 * scale),
+        Offset(210 * scale, 76 * scale),
+        linePaint,
+      )
+      ..drawLine(
+        Offset(158 * scale, 127 * scale),
+        Offset(197 * scale, 113 * scale),
+        linePaint,
+      );
+  }
+
+  @override
+  bool shouldRepaint(covariant _PrueviaMarkPainter oldDelegate) =>
+      oldDelegate.pageColor != pageColor ||
+      oldDelegate.cutoutColor != cutoutColor;
 }
 
 class _Eyebrow extends StatelessWidget {

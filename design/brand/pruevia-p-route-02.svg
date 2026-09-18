@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Pruevia — P como ruta, variante 2</title>
+  <desc id="desc">Monograma P compacto con un punto interior que sugiere búsqueda y origen dentro de un cuadrado verde azulado redondeado.</desc>
+  <rect width="256" height="256" rx="56" fill="#0F766E"/>
+  <path d="M78 194V64h58c25 0 42 13 42 33s-17 33-42 33H78" fill="none" stroke="#fff" stroke-width="17" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="119" cy="97" r="8" fill="#0F766E" stroke="#fff" stroke-width="6"/>
+</svg>

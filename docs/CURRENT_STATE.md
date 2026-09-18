@@ -1,6 +1,6 @@
 # Estado y prioridades de Pruevia
 
-Tipo: punto de continuidad. Revisado el 15-sep-2026 sobre el árbol basado en
+Tipo: punto de continuidad. Revisado el 17-sep-2026 sobre el árbol local basado en
 `0ac5f15`. Esta entrega revalidó contratos contra Supabase DEV, pero no aplicó
 migraciones ni publicó servicios.
 Los datos de septiembre citados abajo son cortes de evidencia, no contadores en vivo.
@@ -21,6 +21,7 @@ trabajo; `bloqueado` necesita una condición externa identificada. No son sinón
 | Collectors | Adaptadores presentes para DENUE, Chopo, Ruiz, Salud Digna, SEMIN, Dr. Simi, Linfolab y genérico. [Entrypoints](../collectors/pyproject.toml). | Eficacia y frescura varían por fuente; ver [cobertura](PUEBLA_PROVIDER_COVERAGE.md). |
 | CI y despliegue DEV | Workflows presentes en [.github](../.github/workflows). | No se verificó aquí configuración de GitHub, ejecución reciente ni versión remota. |
 | Landing SEO | Implementado localmente en `apps/landing` con Nuxt 4, generación estática, privacidad, robots/sitemap condicionado y headers. | El sitio aún no está publicado: compra, DNS, asociación de dominios y destino real del CTA requieren configuración y verificación. |
+| Identidad visual | Implementada localmente: libro abierto con P y líneas de orden, favicon de landing/admin, marca inline en Vue/Flutter, iconos PWA, Android/iOS y splash del paciente; [fuentes y renderer](../design/brand/README.md). | No se publicaron aplicaciones; iOS no se compiló en este entorno Windows. Los iconos funcionales de ubicación se conservaron deliberadamente. |
 | Dominio Pruevia | Arquitectura definida: raíz para landing, `app`, `admin`, `api` como subdominios; shortlist investigada en [opciones de dominio](DOMAIN_OPTIONS.md). | Compra, DNS y asociación de dominios no acreditados en esta entrega. |
 
 ## Corte de cobertura disponible
@@ -99,17 +100,23 @@ y no autoriza acciones externas.
 
 ## Actualización y traspaso
 
-Validación documental y de implementación del 15-sep-2026: enlaces locales y anclas de la nueva entrada,
+Validación documental y de implementación del 17-sep-2026: enlaces locales y anclas de la nueva entrada,
 guías, decisiones y snapshot comprobados; `git diff --check` sin errores.
 `AGENTS.md` se mantiene por debajo de 150 líneas. El landing pasó sus pruebas de
 configuración, typecheck, auditoría npm, generación estática y revisión visual
 local; la suite Python raíz pasó `357` pruebas con el `pytest.ini` versionado. El
-Worker local, usando `.dev.vars` sin imprimir secretos, respondió `200` en health
+símbolo de libro con P y líneas de orden se integró en las tres aplicaciones
+visuales y se regeneraron 29 derivados PNG; la validación comprobó sus dimensiones
+y ausencia de assets vacíos. El paciente pasó `flutter analyze`, 23 pruebas y `flutter build web`;
+el Admin pasó 23 pruebas, typecheck y build con placeholders HTTPS. El build
+sin configuración continúa rechazando la publicación como medida fail-closed.
+Android debug permanece bloqueado por el conflicto preexistente entre
+`usesCleartextTraffic=true` del manifest debug y `false` del principal; el
+release exige la firma configurada y no se relajaron esas protecciones.
+El Worker local, usando `.dev.vars` sin imprimir secretos, respondió `200` en health
 y resolvió una orden de dos estudios con sufijos explícitos de ayuno, conservando
 ambas notas y cobertura completa. No se ejecutaron despliegues ni se verificaron
-DNS/servicios públicos. El Admin pasó 23 pruebas, typecheck y build con
-configuración HTTPS placeholder; el build sin configuración continúa rechazando
-la publicación como medida fail-closed. La variante indexable de la landing se
+DNS/servicios públicos. La variante indexable de la landing se
 generó con destinos HTTPS de ejemplo y produjo sitemap/robots; los destinos reales
 siguen sin verificarse.
 El Worker actual también pasó `wrangler deploy --dry-run` (133.05 KiB sin subir),

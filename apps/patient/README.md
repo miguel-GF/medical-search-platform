@@ -32,6 +32,20 @@ fragmento del navegador y se consume una vez.
 Flutter no carga archivos `.env` automáticamente: `.env.example` documenta la
 variable, pero el valor se inyecta en compilación con `--dart-define`.
 
+## Marca e iconos
+
+La identidad aprobada usa el libro abierto con la P y las líneas de orden de
+`design/brand/pruevia-mark.svg`.
+Desde la raíz del repositorio, para regenerar favicon, PWA, Android, iOS y
+splash después de modificar el SVG:
+
+```text
+python design/brand/render_assets.py
+```
+
+El icono de marca no sustituye los iconos funcionales de ubicación usados para
+mostrar sucursales.
+
 ## Principios del MVP
 
 - Búsqueda y receta funcionan como visitante.
