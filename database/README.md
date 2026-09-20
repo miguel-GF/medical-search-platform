@@ -29,6 +29,24 @@ database/
 docs/                    # sibling directory: ../docs
 ```
 
+La migración `20260918100000_product_feedback_android_pilot.sql` prepara el
+feedback anónimo y la cola aislada de testers Android en el esquema `research`.
+Instala ambos flujos cerrados por defecto. La consulta pública se declara para
+adultos en Play, pero no bloquea a menores ni crea cuentas de paciente; la cola
+de testers exige confirmar 18 años. Su contrato es
+`supabase/tests/product_feedback_pilot_test.sql`. La migración ya fue aplicada
+al proyecto DEV enlazado el 19-sep-2026 y el contrato remoto pasó `22/22`.
+
+La migración `20260919100000_pilot_cohort_click_analytics.sql` añade la meta de
+20 testers, la activación comprobada y el reloj de 21 días, además de clics
+estructurados de oferta y agregados con alcance Admin/proveedor. No almacena texto
+de búsquedas ni recetas; las filas pseudónimas vencen a los 400 días para sostener
+como máximo la ventana anual del dashboard. Su contrato es
+`supabase/tests/pilot_cohort_click_analytics_test.sql` (22 aserciones). Fue
+aplicada al proyecto DEV enlazado el 19-sep-2026: el contrato pasó `22/22` y el
+de privilegios `30/30`. La configuración permanece cerrada en `0/20`, sin fecha
+de inicio y sin envío de notificaciones.
+
 ## Apply locally
 
 Desde `database`, el proyecto ya está inicializado. `supabase start` arranca el
@@ -129,4 +147,7 @@ returned and remains the audit/display value.
 
 ## What is intentionally not in V1 yet
 
-The schemas `analytics`, `marketplace`, `sensitive`, and `billing` are reserved now but their high-volume/transaction tables are added by later migrations when those product phases begin. Their target model is documented in [`../docs/DB_ARCHITECTURE_V1.md`](../docs/DB_ARCHITECTURE_V1.md).
+The schemas `marketplace`, `sensitive`, and `billing` remain reserved for later
+phases. `analytics` now contains anonymous product events and structured offer
+clicks; it remains private behind service-role RPC boundaries. The broader target
+model is documented in [`../docs/DB_ARCHITECTURE_V1.md`](../docs/DB_ARCHITECTURE_V1.md).

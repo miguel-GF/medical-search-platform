@@ -1,8 +1,10 @@
 # Estado y prioridades de Pruevia
 
-Tipo: punto de continuidad. Revisado el 17-sep-2026 sobre el árbol local basado en
-`0ac5f15`. Esta entrega revalidó contratos contra Supabase DEV, pero no aplicó
-migraciones ni publicó servicios.
+Tipo: punto de continuidad. Revisado el 19-sep-2026 sobre el árbol local, el
+ledger remoto enlazado y el Worker DEV. Las migraciones de feedback, cohorte y
+analítica de clics están aplicadas en DEV. El Worker está publicado con el
+scheduler fail-closed y CORS restringido temporalmente a su propio origen; aún
+no existe un frontend HTTPS DEV publicado.
 Los datos de septiembre citados abajo son cortes de evidencia, no contadores en vivo.
 
 ## Cómo leer el estado
@@ -15,14 +17,30 @@ trabajo; `bloqueado` necesita una condición externa identificada. No son sinón
 | --- | --- | --- |
 | Búsqueda, resolución, paquetes y OCR | Implementados: [Worker](../apps/api/src/app.ts), [tipos](../apps/api/src/types.ts), [tests](../apps/api/tests). El resolver conserva sufijos explícitos como `en ayuno` en `preparation_note` sin inferencia clínica. | Revalidar el entorno de la prueba y medir recetas; tener rutas no prueba cobertura suficiente. |
 | Paciente Flutter Web/PWA | Implementado: [app](../apps/patient/lib/main.dart), [comandos](../apps/patient/README.md). | Publicación actual y validación física/multiplataforma requieren evidencia propia. |
+| Feedback y prueba cerrada Android | Implementados en DEV: endpoints Worker, esquema aislado `research`, formulario de testers, feedback estructurado en Patient y cola/triage en Admin. La cohorte está cerrada y en `0/20`; al abrirla seguirá `registro → invitación simultánea → 20 activos → Día N/21`. No envía correos automáticamente ni inicia el reloj al registrarse. La prueba cubre Puebla, San Andrés Cholula, San Pedro Cholula, Cuautlancingo, Coronango y Amozoc. Las migraciones `20260918100000` y `20260919100000` están aplicadas; sus contratos remotos pasaron `22/22` cada uno. | Faltan el nombre legal completo y domicilio real autorizados, enlace real de Google Play, mecanismo de envío, activación de la convocatoria y orígenes HTTPS reales. No se enviaron notificaciones ni invitaciones. La audiencia de Play es 18+ sin bloquear menores; el registro de testers exige 18+. |
+| Clics hacia proveedores | Implementado y desplegado en DEV: evento estructurado por oferta/estudio/sucursal/acción, consentimiento de analítica del paciente, agregados globales en Admin y panel limitado por membresía en Proveedores. No se guardan consultas, recetas ni diagnósticos; los proveedores no reciben IDs anónimos ni datos de competidores. El contrato remoto pasó `22/22` y privilegios `30/30`; el tablero inicia en cero. | Falta validar visualmente ambos paneles con sesiones reales Admin/proveedor y publicar frontends HTTPS DEV. La prueba SQL acredita el aislamiento por membresía, no una sesión real de interfaz. |
 | Admin con temas, filtros y MFA | Implementado: [Admin](../apps/admin/src/App.vue), [filtros](../apps/admin/src/components/TableFilters.vue), [Auth](../apps/admin/src/auth.ts). | Probar sesión real y alcance de búsquedas/filtros cuando cambie el backend o el entorno. |
 | Documentos de proveedores | Configuración versionada cerrada por defecto; ver [cierre](../database/supabase/migrations/20260908100000_internal_document_freeze.sql) y [Worker](../apps/api/wrangler.toml). | No reabrir sólo cambiando una variable; necesita propuesta crítica y revisión coordinada. |
 | Reclamación de perfiles | Flujo local implementado: expediente privado, estados, revisión Admin, comprobación de contacto, outbox de correo, solicitudes de privacidad y control de revisión; [referencia](PROVIDER_CLAIM_WORKFLOW.md). Contrato SQL local pasó. | `provider_intake_settings.enabled` y documentos siguen cerrados; faltan responsable legal, aviso integral, SMTP y verificación del destino antes de abrir. No se aplicaron estas migraciones al proyecto remoto. |
 | Collectors | Adaptadores presentes para DENUE, Chopo, Ruiz, Salud Digna, SEMIN, Dr. Simi, Linfolab y genérico. [Entrypoints](../collectors/pyproject.toml). | Eficacia y frescura varían por fuente; ver [cobertura](PUEBLA_PROVIDER_COVERAGE.md). |
 | CI y despliegue DEV | Workflows presentes en [.github](../.github/workflows). | No se verificó aquí configuración de GitHub, ejecución reciente ni versión remota. |
-| Landing SEO | Implementado localmente en `apps/landing` con Nuxt 4, generación estática, privacidad, robots/sitemap condicionado y headers. | El sitio aún no está publicado: compra, DNS, asociación de dominios y destino real del CTA requieren configuración y verificación. |
+| Landing SEO | Implementado localmente en `apps/landing` con Nuxt 4, generación estática, privacidad, robots/sitemap condicionado, headers y accesos configurables a app web/PWA, proveedores, soporte y testers. | El sitio aún no está publicado: compra, DNS, URLs reales, correo de soporte y destino real del CTA requieren configuración y verificación. |
 | Identidad visual | Implementada localmente: libro abierto con P y líneas de orden, favicon de landing/admin, marca inline en Vue/Flutter, iconos PWA, Android/iOS y splash del paciente; [fuentes y renderer](../design/brand/README.md). | No se publicaron aplicaciones; iOS no se compiló en este entorno Windows. Los iconos funcionales de ubicación se conservaron deliberadamente. |
 | Dominio Pruevia | Arquitectura definida: raíz para landing, `app`, `admin`, `api` como subdominios; shortlist investigada en [opciones de dominio](DOMAIN_OPTIONS.md). | Compra, DNS y asociación de dominios no acreditados en esta entrega. |
+
+## Estado del ledger remoto
+
+La consulta `npx.cmd supabase@2.116.0 migration list --linked` del
+19-sep-2026 confirmó `107/107` migraciones aplicadas hasta `20260919100000`.
+Los contratos remotos de feedback y cohorte/clics pasaron `22/22` cada uno, y
+el contrato de privilegios pasó `30/30`. El Worker `pruevia-api-dev` se publicó
+con versión `1dae2f0f-655d-40f0-abab-3fbcedb4abe4` y trigger `17 * * * *`.
+`NORMALIZATION_REPROCESS_ENABLED` no está configurada, por lo que no ejecuta
+escrituras automáticas. Mientras no exista un frontend HTTPS DEV,
+`ALLOWED_ORIGINS` permite sólo el origen exacto del propio Worker: health y el
+estado público del piloto responden `200`, un origen ajeno recibe `403` y las
+rutas Admin/proveedor responden `401` sin token. El piloto devuelve cohorte
+cerrada, `0/20`, duración 21 días y sin fecha de inicio; no se enviaron avisos.
 
 ## Corte de cobertura disponible
 
@@ -35,8 +53,12 @@ Fuente: [reconciliación Puebla](PUEBLA_PROVIDER_COVERAGE.md) y sus fixtures del
 - Linfolab: seis registros RAW completos, tres ubicaciones enlazadas según el corte.
 - DENUE: 489 registros fuente, 213 candidatos clínicos directos; 123 sin URL pública.
   Son leads del snapshot, no un censo actual ni 213 proveedores confirmados.
-- Cola: último preview remoto registrado en esta sesión reportó 7,028 pendientes
-  y cero elegibles adicionales para reproceso exacto; no es una tasa de fallo del paciente.
+- Cola: la consulta remota de sólo lectura del 18-sep-2026 reportó 7,028 filas
+  abiertas, pero agrupadas en 1,188 combinaciones proveedor+etiqueta de 8
+  proveedores. Salud Digna concentra 6,804 filas en 967 etiquetas; SEMIN 140,
+  Chopo 57 y el resto 27. El dashboard reportó 0 ambiguas, 7,028 sin
+  cobertura abierta y 946 `no_match` ya cerradas en historial. El preview exacto
+  no encontró coincidencias nuevas; no es una tasa de fallo del paciente.
 - El reporte reproducible de priorización por proveedor/etiqueta está en
   [puebla_normalization_backlog.sql](../database/reports/puebla_normalization_backlog.sql);
   agrupa esas filas para revisión sin publicar cambios.
@@ -100,28 +122,36 @@ y no autoriza acciones externas.
 
 ## Actualización y traspaso
 
-Validación documental y de implementación del 17-sep-2026: enlaces locales y anclas de la nueva entrada,
+Validación documental y de implementación del 18-sep-2026: enlaces locales y anclas de la nueva entrada,
 guías, decisiones y snapshot comprobados; `git diff --check` sin errores.
 `AGENTS.md` se mantiene por debajo de 150 líneas. El landing pasó sus pruebas de
 configuración, typecheck, auditoría npm, generación estática y revisión visual
 local; la suite Python raíz pasó `357` pruebas con el `pytest.ini` versionado. El
 símbolo de libro con P y líneas de orden se integró en las tres aplicaciones
 visuales y se regeneraron 29 derivados PNG; la validación comprobó sus dimensiones
-y ausencia de assets vacíos. El paciente pasó `flutter analyze`, 23 pruebas y `flutter build web`;
+y ausencia de assets vacíos. El paciente pasó `flutter analyze`, 25 pruebas y `flutter build web`;
 el Admin pasó 23 pruebas, typecheck y build con placeholders HTTPS. El build
 sin configuración continúa rechazando la publicación como medida fail-closed.
-Android debug permanece bloqueado por el conflicto preexistente entre
-`usesCleartextTraffic=true` del manifest debug y `false` del principal; el
-release exige la firma configurada y no se relajaron esas protecciones.
+También pasó un build debug Android con el package `com.pruevia.app`,
+`targetSdk 36` y los flags del piloto. El release exige la
+firma configurada y no se relajaron esas protecciones; no se subió ningún
+artefacto a Google Play.
 El Worker local, usando `.dev.vars` sin imprimir secretos, respondió `200` en health
 y resolvió una orden de dos estudios con sufijos explícitos de ayuno, conservando
 ambas notas y cobertura completa. No se ejecutaron despliegues ni se verificaron
 DNS/servicios públicos. La variante indexable de la landing se
 generó con destinos HTTPS de ejemplo y produjo sitemap/robots; los destinos reales
 siguen sin verificarse.
-El Worker actual también pasó `wrangler deploy --dry-run` (133.05 KiB sin subir),
-con 128 pruebas Vitest y validación de allowlist CORS exacta. La opción
-`ALLOWED_ORIGINS` no está configurada ni desplegada en remoto.
+El Worker actual fue desplegado como `pruevia-api-dev`, versión
+`1dae2f0f-655d-40f0-abab-3fbcedb4abe4`, después de pasar 139 pruebas Vitest y
+la validación de allowlist CORS exacta. `ALLOWED_ORIGINS` usa temporalmente el
+origen HTTPS del propio Worker; debe sustituirse por los dominios exactos cuando
+se publiquen los frontends DEV.
+El corte de cohorte y clics pasó 139 pruebas del Worker, 23 del Admin, 8 del
+landing, typecheck en las tres superficies, `flutter analyze` y 26 pruebas
+Flutter. La migración se ensayó primero en PostgreSQL 12 efímero, donde se
+detectó y corrigió un alias SQL incompatible; después se aplicó a DEV y su
+contrato remoto pasó `22/22`. Falta la revisión visual con sesiones reales.
 El corpus anonimizado de 64 consultas, medido contra el Worker HTTP local con
 UTF-8, obtuvo 7/7 resoluciones estrictas y 9/9 resoluciones esperadas incluyendo
 preparación, sin resoluciones inesperadas; 51 casos permanecen correctamente en

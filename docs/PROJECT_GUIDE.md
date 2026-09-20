@@ -77,9 +77,15 @@ en `types.ts` son referencia ejecutable, no se copiarán completas en esta guía
 | `POST /api/v1/resolve` | Resolución individual con `resolved`, `ambiguous` o `no_match`. |
 | `POST /api/v1/resolve-batch` | Receta/lista; estado del paquete y cobertura son campos distintos. |
 | `POST /api/v1/resolve-image` | Extrae texto y coordina resolución; conserva revisión y correcciones. |
+| `POST /api/v1/events/offer-click` | Registra sólo IDs validados de oferta/estudio/sucursal y tipo de salida cuando existe consentimiento; no acepta texto clínico. |
 | `GET /api/v1/search` y detalles de servicios/proveedores | Búsqueda y consulta de opciones. |
 | `/api/v1/admin/*` | Operación interna: sesión verificada, UUID autorizado y AAL2. |
 | `/api/v1/provider/*` | Sesión verificada, AAL2 y autorización por recurso. |
+
+Los agregados de clics separan interés de conversión: un clic no acredita cita,
+pago ni estudio realizado. El Admin puede comparar oferta publicada; el proveedor
+sólo recibe métricas agregadas dentro de su membresía activa. `anonymous_id` se
+usa para un conteo aproximado de visitantes únicos y nunca se devuelve a esos paneles.
 
 No cambiar nombres ni semántica del contrato sin actualizar consumidores y pruebas.
 `package_status` admite `ready`, `needs_clarification`, `partial`, `no_match`;

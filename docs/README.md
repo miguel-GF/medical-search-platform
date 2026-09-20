@@ -17,6 +17,7 @@ La conversación original no es lectura obligatoria para incorporarse.
 | [Opciones de dominio](DOMAIN_OPTIONS.md) | Investigación de disponibilidad, arquitectura de subdominios y verificación previa a compra. |
 | [Mantenimiento y discovery](CONTINUOUS_IMPROVEMENT.md) | Iniciativa, cadencias, actualización del código y crecimiento medido. |
 | [Entorno](ENVIRONMENT.md) | Variables, ejemplos y límites de exposición de credenciales. |
+| [Automatización de normalización](NORMALIZATION_AUTOMATION_RUNBOOK.md) | Cómo reducir la cola de etiquetas y configurar soporte por correo. |
 | [Flujo de reclamaciones](PROVIDER_CLAIM_WORKFLOW.md) | Solicitudes de proveedores, revisión asíncrona, documentos y privacidad. |
 
 ## Qué leer según la tarea

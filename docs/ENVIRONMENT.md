@@ -27,6 +27,7 @@ de secretos; usa un gestor de secretos o las variables protegidas de CI.
 | API Cloudflare Worker | `apps/api/.dev.vars.example` | Supabase (publishable/secret), entorno, timeout, CORS, OCR y administradores | `apps/api/.dev.vars` |
 | Admin Vue | `apps/admin/.env.example` | `VITE_API_URL`, `VITE_API_ALLOWED_HOSTS` (obligatoria en produccion), `VITE_SUPABASE_URL`, `VITE_SUPABASE_ALLOWED_HOSTS` (obligatoria en produccion), `VITE_SUPABASE_PUBLISHABLE_KEY` | `apps/admin/.env.local` |
 | Patient Flutter/PWA | `apps/patient/.env.example` | `API_BASE_URL` | Flutter usa `--dart-define` (no carga `.env` por sí solo) |
+| Landing Nuxt | `apps/landing/.env.example` | destinos públicos, `NUXT_PUBLIC_API_URL`, `NUXT_PUBLIC_SUPPORT_EMAIL`, gate de testers y datos revisados del aviso | `apps/landing/.env` |
 | OCR FastAPI | `apps/ocr-service/.env.example` | token, motor, límites y puerto | `apps/ocr-service/.env` |
 | Collectors Python | `collectors/.env.example` | DENUE, LOINC y DSN opcional de publicación | `collectors/.env` |
 | Correo de solicitudes de proveedores | `apps/document-scanner/.env.mail.example` | SMTP TLS, origen HTTPS del portal y Supabase secreto | gestor de secretos del job privado |
@@ -37,6 +38,13 @@ origenes no declarados antes de enviar texto o imagenes. El build web debe
 generar tambien `build/web/_headers` con
 `apps/patient/tool/render_web_headers.dart`; la CSP queda limitada a esos
 hosts y no a cualquier HTTPS.
+
+Para una compilación local del paciente con feedback visible, añadir
+`--dart-define=PRODUCT_FEEDBACK_ENABLED=true`. La variante cerrada de Android
+añade `--dart-define=PRUEVIA_CHANNEL=closed_android`; ambas son fail-closed si el
+Worker o el gate remoto no están activados. No poner datos legales inventados en
+el landing: `NUXT_PUBLIC_TESTER_INTAKE_ENABLED=true` sólo después de revisar
+responsable, domicilio, correo y versión del aviso.
 
 En el Worker, Wrangler toma los valores locales desde `.dev.vars` y los secretos
 de producción deben cargarse con `wrangler secret put`. No se deben trasladar

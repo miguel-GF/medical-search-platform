@@ -23,19 +23,20 @@ Ejecutar cada servicio en una terminal independiente:
 | `apps/admin` | `npm.cmd run dev -- --host 127.0.0.1 --port 5173 --strictPort` | Abrir `http://localhost:5173`; Auth, MFA y carga de datos. |
 | `apps/patient` | `flutter run -d web-server --web-port 8080 --dart-define=API_BASE_URL=http://localhost:8787` | Abrir `http://localhost:8080` y probar búsqueda. |
 
-El script API actual establece `ALLOWED_ORIGIN=http://localhost:5173`. El Worker
-acepta un solo origen configurado, no una lista separada por comas. Para probar
-paciente desde 8080, detener la instancia API identificada y arrancarla desde
-`apps/api` con el ejecutable instalado:
+El script API local acepta `ALLOWED_ORIGINS` para los tres frontends
+(`http://localhost:3000`, `http://localhost:5173` y `http://localhost:8080`).
+En producción deben sustituirse por orígenes HTTPS exactos revisados. Para una
+prueba aislada también puede usarse un único `ALLOWED_ORIGIN` compatible. Para
+probar paciente desde 8080, detener la instancia API identificada y arrancarla
+desde `apps/api` con el ejecutable instalado:
 
 ```powershell
 npm.cmd exec --offline -- wrangler dev --ip 127.0.0.1 --var APP_ENV:development --var ALLOWED_ORIGIN:http://localhost:8080
 ```
 
-En ese modo, Admin en 5173 no tiene el origen permitido. Probar ambos frontends
-simultáneamente contra la misma API exige resolver la configuración/arquitectura
-de orígenes; está registrado como pendiente. No inventar una lista que el parser
-no soporta ni sustituirla por un wildcard.
+En ese modo sólo Patient en 8080 tiene el origen permitido. Para probar varios
+frontends simultáneamente, declarar la lista exacta en el archivo local de
+variables; nunca sustituirla por un wildcard.
 
 No reiniciar servicios a ciegas: identificar PID/puerto y proceso de este proyecto.
 Cuando sea necesario iniciar un helper en segundo plano con `Start-Process`, usar
@@ -98,6 +99,15 @@ protecciones, secretos o ejecución estén configurados en GitHub.
 `APP_ENV=production`: el sufijo del nombre no rebaja los controles. Verificar
 cuenta, versión, origen y bindings del destino. `wrangler secret put` escribe
 configuración remota; no usarlo como diagnóstico.
+
+El Worker tiene un trigger horario para el reproceso seguro de normalización,
+pero permanece inactivo salvo que se configure explícitamente
+`NORMALIZATION_REPROCESS_ENABLED=true`,
+`NORMALIZATION_REPROCESS_ADMIN_USER_ID` y un límite entre 1 y 200. Ese proceso
+sólo llama al RPC de coincidencias exactas/aliases aprobados; no usa fuzzy ni IA.
+La primera activación requiere aprobación crítica, una ventana de monitoreo y
+revisión de los logs de auditoría. Para recuperar, volver a `false` y publicar
+la configuración corregida; no se borran decisiones ya auditadas.
 
 Para cambios críticos usar la [propuesta y aprobación](DECISIONS.md#cambios-críticos-y-aprobación)
 antes de ejecutarlos. Preparar recuperación según el recurso: versión previa del

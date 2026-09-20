@@ -219,6 +219,21 @@ select public.api_admin_reprocess_exact_normalizations(
 );
 ```
 
+Esto no significa revisar 7,028 pantallas una por una. La consulta de backlog
+agrupa por proveedor y etiqueta normalizada, de modo que una decisión sobre una
+etiqueta repetida puede resolver muchas filas. El camino automático seguro es:
+
+1. colectar, limpiar, deduplicar y agrupar las etiquetas sin publicar nada;
+2. aplicar por lote sólo nombres canónicos o aliases aprobados de forma exacta;
+3. separar ruido, duplicados y `no_match` con una decisión auditable;
+4. enviar a revisión humana únicamente conceptos nuevos o ambiguos que puedan
+   cambiar muestra, modalidad, anatomía, lateralidad, contraste o composición.
+
+La similitud fuzzy o una sugerencia de IA puede ordenar la cola, pero no aprueba
+una equivalencia clínica. Por eso la automatización reduce miles de filas a
+grupos y lotes repetibles, mientras la revisión humana protege los casos que sí
+pueden producir una oferta incorrecta.
+
 ## Sucursales públicas de Linfolab
 
 La página oficial muestra sedes como Gabriel Pastor, Zavaleta, Cholula, Plaza
