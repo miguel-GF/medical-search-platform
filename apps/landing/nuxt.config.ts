@@ -18,5 +18,5 @@ export default defineNuxtConfig({
       link: [{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
     },
   },
-  nitro: { prerender: { routes: ['/', '/privacidad', '/robots.txt', ...(publication.indexable ? ['/sitemap.xml'] : [])] } },
+  nitro: { prerender: { routes: ['/', '/privacidad', '/prueba-android', '/robots.txt', ...(publication.indexable ? ['/sitemap.xml'] : [])] } },
 });

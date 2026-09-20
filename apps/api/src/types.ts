@@ -13,6 +13,12 @@ export interface Env {
   ALLOWED_ORIGIN?: string;
   /** Comma-separated exact origins; takes precedence over ALLOWED_ORIGIN when set. */
   ALLOWED_ORIGINS?: string;
+  /** Safe exact normalization cron; remains disabled unless explicitly enabled. */
+  NORMALIZATION_REPROCESS_ENABLED?: string;
+  /** Supabase Auth user UUID recorded as the automated decision actor. */
+  NORMALIZATION_REPROCESS_ADMIN_USER_ID?: string;
+  /** Maximum exact/approved-alias rows per scheduled run. */
+  NORMALIZATION_REPROCESS_LIMIT?: string;
   PUBLIC_RATE_LIMITER?: RateLimitBinding;
   REVIEW_CAPTURE_RATE_LIMITER?: RateLimitBinding;
   OCR_RATE_LIMITER?: RateLimitBinding;

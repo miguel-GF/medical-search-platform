@@ -10,8 +10,13 @@ API_VERSION="v1"
 ALLOWED_ORIGIN="http://localhost:5173"
 # Optional exact comma-separated allowlist. When set, it takes precedence over
 # ALLOWED_ORIGIN (use this for local Admin + Patient development).
-# ALLOWED_ORIGINS="http://localhost:5173,http://localhost:8080"
+# ALLOWED_ORIGINS="http://localhost:3000,http://localhost:5173,http://localhost:8080"
 ADMIN_USER_IDS="<supabase-auth-user-uuid>"
+# Safe exact/approved-alias normalization cron. Keep false until the actor,
+# migration and rollback/monitoring window have been reviewed.
+NORMALIZATION_REPROCESS_ENABLED="false"
+NORMALIZATION_REPROCESS_ADMIN_USER_ID="<supabase-auth-user-uuid>"
+NORMALIZATION_REPROCESS_LIMIT="200"
 PROVIDER_DOCUMENTS_ENABLED="false"
 OCR_AI_MODEL="@cf/moondream/moondream3.1-9B-A2B"
 # Optional private FastAPI OCR service. When set, this takes precedence over Workers AI.

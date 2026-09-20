@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { createHandler } from '../src/app.js';
+import { createHandler, runScheduledNormalizationReprocess } from '../src/app.js';
 import { SupabaseConfigurationError, SupabaseTimeoutError } from '../src/supabase.js';
 import type { Env, RpcClient, SearchRow } from '../src/types.js';
 
@@ -63,6 +63,43 @@ describe('Pruevia API', () => {
   const authenticateUser = async (request: Request) => request.headers.get('authorization') === 'Bearer provider-token'
     ? { id: '00000000-0000-0000-0000-000000000098', aal: 'aal2' as const }
     : null;
+
+  it('keeps the scheduled exact reprocess disabled by default', async () => {
+    const call = vi.fn();
+    const result = await runScheduledNormalizationReprocess(env, { call: call as RpcClient['call'] }, 1_758_000_000_000);
+    expect(result).toEqual({ enabled: false, skipped: 'disabled' });
+    expect(call).not.toHaveBeenCalled();
+  });
+
+  it('runs only the bounded exact batch when explicitly enabled', async () => {
+    const call = vi.fn(async () => ({ processed: 12, remaining_eligible: 3 }));
+    const configured: Env = {
+      ...env,
+      NORMALIZATION_REPROCESS_ENABLED: 'true',
+      NORMALIZATION_REPROCESS_ADMIN_USER_ID: '00000000-0000-0000-0000-000000000099',
+      NORMALIZATION_REPROCESS_LIMIT: '500',
+    };
+    const result = await runScheduledNormalizationReprocess(configured, { call: call as RpcClient['call'] }, 1_758_000_000_000);
+    expect(result.enabled).toBe(true);
+    expect(result.request_id).toMatch(/^normalization-cron-.*Z$/);
+    expect(call).toHaveBeenCalledWith('api_admin_reprocess_exact_normalizations', {
+      p_reviewer_user_id: '00000000-0000-0000-0000-000000000099',
+      p_limit: 200,
+      p_apply: true,
+      p_request_id: result.request_id,
+    }, { admin: true });
+  });
+
+  it('fails closed when the scheduled actor is not a UUID', async () => {
+    const call = vi.fn();
+    const result = await runScheduledNormalizationReprocess({
+      ...env,
+      NORMALIZATION_REPROCESS_ENABLED: 'true',
+      NORMALIZATION_REPROCESS_ADMIN_USER_ID: 'not-an-id',
+    }, { call: call as RpcClient['call'] }, 1_758_000_000_000);
+    expect(result).toEqual({ enabled: false, skipped: 'invalid_actor' });
+    expect(call).not.toHaveBeenCalled();
+  });
 
   it('returns a grouped search response', async () => {
     const rpc = rpcWith([row, { ...row, price_type: 'member', price_key: 'blue_card', amount_minor: 22000 }]);
@@ -1248,5 +1285,199 @@ describe('Pruevia API', () => {
     }), env);
     expect(rejected.status).toBe(400);
     expect(rpc.call).toHaveBeenCalledTimes(1);
+  });
+
+  it('accepts only allowlisted feedback fields and never forwards a query', async () => {
+    const rpc = rpcWith({ accepted: true });
+    const handler = createHandler({ rpc });
+    const response = await handler(new Request('https://api.test/api/v1/feedback', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        experience: 'yes',
+        helpful: 'partly',
+        expected: 'yes',
+        reasons: ['missing_price'],
+        surface: 'android',
+        channel: 'public',
+        result_state: 'results',
+        result_count: 3,
+        app_version: '1.0.0+1',
+        query: 'must never cross the boundary',
+      }),
+    }), env);
+    expect(response.status).toBe(202);
+    expect(rpc.call).toHaveBeenCalledWith('api_submit_product_feedback', {
+      p_experience: 'yes',
+      p_helpful: 'partly',
+      p_expected: 'yes',
+      p_reasons: ['missing_price'],
+      p_surface: 'android',
+      p_channel: 'public',
+      p_result_state: 'results',
+      p_result_count: 3,
+      p_app_version: '1.0.0+1',
+      p_comment: null,
+      p_adult_confirmed: false,
+    });
+
+    const rejected = await handler(new Request('https://api.test/api/v1/feedback', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        experience: 'yes', helpful: 'yes', expected: 'yes', reasons: [],
+        surface: 'android', channel: 'public', result_state: 'results', result_count: 1,
+        comment: 'Public free text is forbidden', adult_confirmed: true,
+      }),
+    }), env);
+    expect(rejected.status).toBe(400);
+    expect(rpc.call).toHaveBeenCalledTimes(1);
+  });
+
+  it('validates adult pilot registration and gives duplicates a generic response', async () => {
+    const rpc = rpcWith({ accepted: true });
+    const handler = createHandler({ rpc });
+    const response = await handler(new Request('https://api.test/api/v1/tester-interest', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        play_email: ' Person@Example.test ',
+        municipality: 'San Andrés Cholula',
+        age_confirmed: true,
+        notice_accepted: true,
+        notice_version: 'android-testers-2026-09-v1',
+        android_version: 'Android 16',
+        device_model: 'Pixel test',
+        website: '',
+      }),
+    }), env);
+    expect(response.status).toBe(202);
+    expect(await response.json()).toEqual({ accepted: true });
+    expect(rpc.call).toHaveBeenCalledWith('api_submit_tester_interest', {
+      p_email: 'person@example.test',
+      p_municipality: 'San Andrés Cholula',
+      p_age_confirmed: true,
+      p_notice_version: 'android-testers-2026-09-v1',
+      p_android_version: 'Android 16',
+      p_device_model: 'Pixel test',
+    });
+
+    const minor = await handler(new Request('https://api.test/api/v1/tester-interest', {
+      method: 'POST', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ play_email: 'minor@example.test', municipality: 'Puebla', age_confirmed: false, notice_accepted: true, notice_version: 'android-testers-2026-09-v1' }),
+    }), env);
+    expect(minor.status).toBe(400);
+  });
+
+  it('protects research queues with Admin AAL2 and forwards audited changes', async () => {
+    const rpc = rpcWith({ items: [] });
+    const handler = createHandler({ rpc, authenticateAdmin });
+    const denied = await handler(new Request('https://api.test/api/v1/admin/research?kind=testers'), env);
+    expect(denied.status).toBe(401);
+
+    const listed = await handler(new Request('https://api.test/api/v1/admin/research?kind=testers&status=pending', {
+      headers: { authorization: 'Bearer user-token' },
+    }), env);
+    expect(listed.status).toBe(200);
+    expect(rpc.call).toHaveBeenCalledWith('api_admin_research', {
+      p_actor_user_id: '00000000-0000-0000-0000-000000000099',
+      p_action: 'list_testers',
+      p_id: null,
+      p_data: { status: 'pending', limit: 100 },
+    }, { admin: true });
+
+    const id = '00000000-0000-0000-0000-000000000918';
+    const updated = await handler(new Request(`https://api.test/api/v1/admin/research/testers/${id}/status`, {
+      method: 'POST',
+      headers: { authorization: 'Bearer user-token', 'content-type': 'application/json' },
+      body: JSON.stringify({ status: 'selected', note: 'Cubre un municipio del piloto.' }),
+    }), env);
+    expect(updated.status).toBe(200);
+    expect(rpc.call).toHaveBeenLastCalledWith('api_admin_research', {
+      p_actor_user_id: '00000000-0000-0000-0000-000000000099',
+      p_action: 'update_tester',
+      p_id: id,
+      p_data: { status: 'selected', note: 'Cubre un municipio del piloto.' },
+    }, { admin: true });
+  });
+
+  it('records only structured offer clicks without accepting query text', async () => {
+    const rpc = rpcWith({ accepted: true });
+    const handler = createHandler({ rpc });
+    const response = await handler(new Request('https://api.test/api/v1/events/offer-click', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        anonymous_id: '00000000-0000-0000-0000-000000000040',
+        offer_id: row.offer_id,
+        service_id: row.service_id,
+        provider_brand_id: row.provider_brand_id,
+        provider_location_id: null,
+        link_type: 'booking',
+        surface: 'pwa',
+      }),
+    }), env);
+    expect(response.status).toBe(202);
+    expect(rpc.call).toHaveBeenCalledWith('api_record_offer_click', {
+      p_anonymous_id: '00000000-0000-0000-0000-000000000040',
+      p_offer_id: row.offer_id,
+      p_catalog_item_id: row.service_id,
+      p_provider_brand_id: row.provider_brand_id,
+      p_provider_location_id: null,
+      p_link_type: 'booking',
+      p_surface: 'pwa',
+    });
+
+    const rejected = await handler(new Request('https://api.test/api/v1/events/offer-click', {
+      method: 'POST', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ query: 'dato médico', offer_id: row.offer_id }),
+    }), env);
+    expect(rejected.status).toBe(400);
+    expect(rpc.call).toHaveBeenCalledTimes(1);
+  });
+
+  it('protects cohort controls and global click metrics with Admin AAL2', async () => {
+    const rpc = rpcWith({ target_count: 20, active_count: 20, test_day: null });
+    const handler = createHandler({ rpc, authenticateAdmin });
+    const denied = await handler(new Request('https://api.test/api/v1/admin/research/cohort'), env);
+    expect(denied.status).toBe(401);
+
+    const summary = await handler(new Request('https://api.test/api/v1/admin/research/cohort', {
+      headers: { authorization: 'Bearer user-token' },
+    }), env);
+    expect(summary.status).toBe(200);
+    expect(rpc.call).toHaveBeenLastCalledWith('api_admin_pilot_cohort', {
+      p_actor_user_id: '00000000-0000-0000-0000-000000000099', p_action: 'summary',
+    }, { admin: true });
+
+    const started = await handler(new Request('https://api.test/api/v1/admin/research/cohort/action', {
+      method: 'POST',
+      headers: { authorization: 'Bearer user-token', 'content-type': 'application/json' },
+      body: JSON.stringify({ action: 'start_test' }),
+    }), env);
+    expect(started.status).toBe(200);
+    expect(rpc.call).toHaveBeenLastCalledWith('api_admin_pilot_cohort', {
+      p_actor_user_id: '00000000-0000-0000-0000-000000000099', p_action: 'start_test',
+    }, { admin: true });
+
+    const metrics = await handler(new Request('https://api.test/api/v1/admin/analytics/clicks?days=90', {
+      headers: { authorization: 'Bearer user-token' },
+    }), env);
+    expect(metrics.status).toBe(200);
+    expect(rpc.call).toHaveBeenLastCalledWith('api_admin_offer_click_metrics', { p_days: 90 }, { admin: true });
+  });
+
+  it('requests provider click metrics through the verified provider scope', async () => {
+    const rpc = rpcWith({ summary: { total_clicks: 4 } });
+    const handler = createHandler({ rpc, authenticateUser });
+    const response = await handler(new Request('https://api.test/api/v1/provider/analytics/clicks?days=30', {
+      headers: { authorization: 'Bearer provider-token' },
+    }), env);
+    expect(response.status).toBe(200);
+    expect(rpc.call).toHaveBeenCalledWith('api_server_provider_offer_click_metrics', {
+      p_actor_user_id: '00000000-0000-0000-0000-000000000098',
+      p_actor_aal: 'aal2',
+      p_days: 30,
+    }, { admin: true });
   });
 });

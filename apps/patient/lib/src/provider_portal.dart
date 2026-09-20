@@ -98,7 +98,7 @@ class _ProviderPortalState extends State<ProviderPortal>
       company = TextEditingController(),
       workEmail = TextEditingController(),
       message = TextEditingController();
-  Map<String, dynamic>? info, detail, target;
+  Map<String, dynamic>? info, detail, target, clickMetrics;
   List<dynamic> rows = [], targets = [], privacy = [];
   String error = '',
       notice = '',
@@ -288,6 +288,141 @@ class _ProviderPortalState extends State<ProviderPortal>
   Future<void> refresh() async {
     rows = (await call('?offset=${page * 50}'))['items'] as List;
     if (detail != null) detail = await call('/${detail!['id']}');
+    await refreshClickMetrics();
+  }
+
+  Future<void> refreshClickMetrics() async {
+    final session = client?.auth.currentSession;
+    if (session == null || !ready) return;
+    try {
+      clickMetrics = await api.providerCall(
+        '/api/v1/provider/analytics/clicks?days=30',
+        token: session.accessToken,
+      );
+    } on Object {
+      // A candidate without an approved membership cannot see commercial
+      // metrics yet. Keep the application workflow usable and fail closed.
+      clickMetrics = null;
+    }
+  }
+
+  Widget clickDashboard() {
+    final metrics = clickMetrics;
+    if (metrics == null) return const SizedBox.shrink();
+    final summary = Map<String, dynamic>.from(
+      metrics['summary'] as Map? ?? const {},
+    );
+    final services = (metrics['by_service'] as List? ?? const []).take(5);
+    final locations = (metrics['by_location'] as List? ?? const []).take(5);
+    Widget metric(String label, Object? value, IconData icon) => SizedBox(
+      width: 180,
+      child: Card(
+        color: Theme.of(context).colorScheme.primaryContainer,
+        child: Padding(
+          padding: const EdgeInsets.all(14),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(icon),
+              const SizedBox(height: 8),
+              Text(
+                '${value ?? 0}',
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+              Text(label),
+            ],
+          ),
+        ),
+      ),
+    );
+    Widget ranking(
+      String title,
+      Iterable<dynamic> entries,
+      String nameKey,
+    ) => Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(title, style: const TextStyle(fontWeight: FontWeight.w800)),
+            const SizedBox(height: 8),
+            if (entries.isEmpty) const Text('Todavía no hay clics.'),
+            ...entries.map(
+              (item) => ListTile(
+                dense: true,
+                contentPadding: EdgeInsets.zero,
+                title: Text('${item[nameKey]}'),
+                subtitle: nameKey == 'service_name'
+                    ? Text(
+                        '${item['location_name'] ?? item['provider_name'] ?? ''}',
+                      )
+                    : null,
+                trailing: Text(
+                  '${item['clicks'] ?? 0}',
+                  style: const TextStyle(fontWeight: FontWeight.w900),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Divider(height: 36),
+        Text(
+          'Interés en tus estudios',
+          style: Theme.of(
+            context,
+          ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w900),
+        ),
+        const Text(
+          'Últimos 30 días · datos agregados de tu marca o sucursal autorizada. No mostramos búsquedas, recetas ni datos personales.',
+        ),
+        const SizedBox(height: 12),
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: [
+            metric('Clics totales', summary['total_clicks'], Icons.ads_click),
+            metric(
+              'Visitantes aproximados',
+              summary['unique_visitors'],
+              Icons.people_outline,
+            ),
+            metric(
+              'Intentos de agenda',
+              summary['booking_clicks'],
+              Icons.calendar_month_outlined,
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+        LayoutBuilder(
+          builder: (context, constraints) {
+            final cards = [
+              ranking('Estudios con más clics', services, 'service_name'),
+              ranking('Sucursales con más clics', locations, 'location_name'),
+            ];
+            if (constraints.maxWidth < 680) {
+              return Column(children: cards);
+            }
+            return Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(child: cards[0]),
+                const SizedBox(width: 10),
+                Expanded(child: cards[1]),
+              ],
+            );
+          },
+        ),
+      ],
+    );
   }
 
   Future<void> open(String id) async {
@@ -523,6 +658,7 @@ class _ProviderPortalState extends State<ProviderPortal>
               field('Código del autenticador', totp, max: 6),
               button('Entrar', verifyMfa),
             ] else ...[
+              clickDashboard(),
               const Text(
                 'Mis solicitudes',
                 style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 
@@ -12,7 +14,7 @@ class _RecordingClient extends http.BaseClient {
     requests++;
     lastRequest = request;
     return http.StreamedResponse(
-      Stream<List<int>>.value(<int>[]),
+      Stream<List<int>>.value('{}'.codeUnits),
       202,
       headers: const {'content-type': 'application/json'},
     );
@@ -98,6 +100,45 @@ void main() {
     api.close();
   });
 
+  test(
+    'offer clicks send identifiers only when telemetry consent exists',
+    () async {
+      final client = _RecordingClient();
+      final api = PatientApiClient(baseUrl: 'https://api.test', client: client);
+
+      await api.recordOfferClick(
+        consentGiven: true,
+        anonymousId: '00000000-0000-0000-0000-000000000001',
+        offerId: '00000000-0000-0000-0000-000000000002',
+        serviceId: '00000000-0000-0000-0000-000000000003',
+        providerBrandId: '00000000-0000-0000-0000-000000000004',
+        providerLocationId: '00000000-0000-0000-0000-000000000005',
+        linkType: 'booking',
+        surface: 'pwa',
+      );
+
+      final request = client.lastRequest as http.Request;
+      expect(request.url.path, '/api/v1/events/offer-click');
+      final body = jsonDecode(request.body) as Map<String, dynamic>;
+      expect(body['service_id'], '00000000-0000-0000-0000-000000000003');
+      expect(body['link_type'], 'booking');
+      expect(body, isNot(contains('query')));
+      expect(body, isNot(contains('recipe')));
+
+      await api.recordOfferClick(
+        consentGiven: false,
+        anonymousId: '',
+        offerId: '00000000-0000-0000-0000-000000000002',
+        serviceId: '00000000-0000-0000-0000-000000000003',
+        providerBrandId: '00000000-0000-0000-0000-000000000004',
+        linkType: 'study',
+        surface: 'pwa',
+      );
+      expect(client.requests, 1);
+      api.close();
+    },
+  );
+
   test('never follows API redirects', () async {
     final client = _RecordingClient();
     final api = PatientApiClient(baseUrl: 'https://api.test', client: client);
@@ -111,6 +152,30 @@ void main() {
     expect(client.lastRequest, isA<http.Request>());
     expect(client.lastRequest!.followRedirects, isFalse);
     expect(client.lastRequest!.maxRedirects, 0);
+    api.close();
+  });
+
+  test('explicit feedback sends only the bounded product context', () async {
+    final client = _RecordingClient();
+    final api = PatientApiClient(baseUrl: 'https://api.test', client: client);
+
+    await api.submitFeedback(
+      experience: 'yes',
+      helpful: 'partly',
+      expected: 'yes',
+      reasons: const ['missing_price'],
+      surface: 'android',
+      channel: 'public',
+      resultState: 'results',
+      resultCount: 2,
+      appVersion: '1.0.0+1',
+    );
+
+    final request = client.lastRequest as http.Request;
+    expect(request.url.path, '/api/v1/feedback');
+    expect(request.body, contains('"helpful":"partly"'));
+    expect(request.body, isNot(contains('query')));
+    expect(request.followRedirects, isFalse);
     api.close();
   });
 
@@ -177,7 +242,13 @@ void main() {
     );
     expect(
       () => oversized.search('glucosa'),
-      throwsA(isA<PatientApiException>().having((error) => error.code, 'code', 'invalid_response')),
+      throwsA(
+        isA<PatientApiException>().having(
+          (error) => error.code,
+          'code',
+          'invalid_response',
+        ),
+      ),
     );
     oversized.close();
 
@@ -187,7 +258,13 @@ void main() {
     );
     expect(
       () => compressed.search('glucosa'),
-      throwsA(isA<PatientApiException>().having((error) => error.code, 'code', 'invalid_response')),
+      throwsA(
+        isA<PatientApiException>().having(
+          (error) => error.code,
+          'code',
+          'invalid_response',
+        ),
+      ),
     );
     compressed.close();
 
@@ -197,7 +274,13 @@ void main() {
     );
     expect(
       () => array.search('glucosa'),
-      throwsA(isA<PatientApiException>().having((error) => error.code, 'code', 'invalid_response')),
+      throwsA(
+        isA<PatientApiException>().having(
+          (error) => error.code,
+          'code',
+          'invalid_response',
+        ),
+      ),
     );
     array.close();
   });

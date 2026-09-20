@@ -5,8 +5,8 @@ plugins {
 }
 
 android {
-    namespace = "com.pruevia.pruevia_patient"
-    compileSdk = flutter.compileSdkVersion
+    namespace = "com.pruevia.app"
+    compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
@@ -15,12 +15,11 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.pruevia.pruevia_patient"
+        applicationId = "com.pruevia.app"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
+        targetSdk = 36
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }

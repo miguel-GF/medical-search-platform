@@ -47,6 +47,27 @@ const ANALYTICS_EVENTS = new Set([
 const ANALYTICS_METADATA_KEYS = new Set(['result_count', 'item_count', 'status', 'review_required', 'surface']);
 const ANALYTICS_STATUSES = new Set(['ready', 'partial', 'needs_clarification', 'no_match']);
 const ANALYTICS_SURFACES = new Set(['web', 'pwa', 'android', 'ios']);
+const OFFER_CLICK_TYPES = new Set(['booking', 'study', 'location', 'provider']);
+const FEEDBACK_CHOICES = new Set(['yes', 'partly', 'no']);
+const FEEDBACK_HELPFUL_CHOICES = new Set([...FEEDBACK_CHOICES, 'not_applicable']);
+const FEEDBACK_REASONS = new Set([
+  'repeated_information',
+  'missing_price',
+  'wrong_branch',
+  'unrelated_result',
+  'unclear_information',
+  'other',
+]);
+const FEEDBACK_RESULT_STATES = new Set(['results', 'no_match', 'ambiguous', 'manual']);
+const FEEDBACK_CHANNELS = new Set(['public', 'closed_android']);
+const PILOT_MUNICIPALITIES = new Set([
+  'Puebla',
+  'San Andrés Cholula',
+  'San Pedro Cholula',
+  'Cuautlancingo',
+  'Coronango',
+  'Amozoc',
+]);
 const AUTH_USER_MAX_RESPONSE_BYTES = 64 * 1024;
 const MAX_PUBLIC_PAYLOAD_DEPTH = 32;
 const MAX_PUBLIC_PAYLOAD_ENTRIES = 1_000;
@@ -104,6 +125,18 @@ export function createHandler(dependencies: Dependencies) {
       }
       if (url.pathname === '/api/v1/events' && request.method === 'POST') {
         return await analyticsEventResponse(request, dependencies.rpc, origin);
+      }
+      if (url.pathname === '/api/v1/events/offer-click' && request.method === 'POST') {
+        return await offerClickResponse(request, dependencies.rpc, origin);
+      }
+      if (url.pathname === '/api/v1/android-pilot' && request.method === 'GET') {
+        return json(await dependencies.rpc.call('api_android_pilot_info', {}), 200, origin);
+      }
+      if (url.pathname === '/api/v1/feedback' && request.method === 'POST') {
+        return await productFeedbackResponse(request, dependencies.rpc, origin);
+      }
+      if (url.pathname === '/api/v1/tester-interest' && request.method === 'POST') {
+        return await testerInterestResponse(request, dependencies.rpc, origin);
       }
       if (url.pathname === '/api/v1/services' && request.method === 'GET') {
         return json({ error: { code: 'route_requires_id', message: 'Use /api/v1/services/{id}' } }, 400, origin);
@@ -167,6 +200,42 @@ export function createHandler(dependencies: Dependencies) {
 
 export function createWorkerHandler(env: Env) {
   return createHandler({ rpc: new SupabaseRpcClient(env) });
+}
+
+export interface ScheduledNormalizationResult {
+  enabled: boolean;
+  skipped?: 'disabled' | 'invalid_actor';
+  request_id?: string;
+  result?: Record<string, unknown>;
+}
+
+/**
+ * Runs only the database's exact/approved-alias matcher. The feature is
+ * deliberately opt-in: installing a cron trigger must not mutate the catalog
+ * until an operator configures an explicit actor and enables it.
+ */
+export async function runScheduledNormalizationReprocess(
+  env: Env,
+  rpc: RpcClient = new SupabaseRpcClient(env),
+  scheduledTime = Date.now(),
+): Promise<ScheduledNormalizationResult> {
+  if (env.NORMALIZATION_REPROCESS_ENABLED !== 'true') {
+    return { enabled: false, skipped: 'disabled' };
+  }
+  const reviewerId = env.NORMALIZATION_REPROCESS_ADMIN_USER_ID?.trim() ?? '';
+  if (!isUuid(reviewerId)) {
+    console.error(JSON.stringify({ event: 'normalization_cron_skipped', reason: 'invalid_actor' }));
+    return { enabled: false, skipped: 'invalid_actor' };
+  }
+  const limit = parsePositiveInt(env.NORMALIZATION_REPROCESS_LIMIT, 200, 1, 200);
+  const requestId = `normalization-cron-${new Date(scheduledTime).toISOString()}`;
+  const result = await rpc.call<Record<string, unknown>>('api_admin_reprocess_exact_normalizations', {
+    p_reviewer_user_id: reviewerId,
+    p_limit: limit,
+    p_apply: true,
+    p_request_id: requestId,
+  }, { admin: true });
+  return { enabled: true, request_id: requestId, result };
 }
 
 async function searchResponse(request: Request, url: URL, rpc: RpcClient, env: Env, origin: string, requestId: string): Promise<Response> {
@@ -807,6 +876,125 @@ async function analyticsEventResponse(request: Request, rpc: RpcClient, origin: 
   }), 202, origin);
 }
 
+async function offerClickResponse(request: Request, rpc: RpcClient, origin: string): Promise<Response> {
+  const body = await readJsonObject(request, 4_096, origin);
+  if (body instanceof Response) return body;
+  if (
+    typeof body.anonymous_id !== 'string' || !isUuid(body.anonymous_id)
+    || typeof body.offer_id !== 'string' || !isUuid(body.offer_id)
+    || typeof body.service_id !== 'string' || !isUuid(body.service_id)
+    || typeof body.provider_brand_id !== 'string' || !isUuid(body.provider_brand_id)
+    || (body.provider_location_id !== null && body.provider_location_id !== undefined
+      && (typeof body.provider_location_id !== 'string' || !isUuid(body.provider_location_id)))
+    || typeof body.link_type !== 'string' || !OFFER_CLICK_TYPES.has(body.link_type)
+    || typeof body.surface !== 'string' || !ANALYTICS_SURFACES.has(body.surface)
+  ) {
+    return json({ error: { code: 'invalid_offer_click', message: 'offer click is invalid' } }, 400, origin);
+  }
+  const result = await rpc.call<Record<string, unknown>>('api_record_offer_click', {
+    p_anonymous_id: body.anonymous_id,
+    p_offer_id: body.offer_id,
+    p_catalog_item_id: body.service_id,
+    p_provider_brand_id: body.provider_brand_id,
+    p_provider_location_id: body.provider_location_id ?? null,
+    p_link_type: body.link_type,
+    p_surface: body.surface,
+  });
+  if (typeof result.error === 'string') {
+    return json({ error: { code: 'invalid_offer_click', message: 'offer click is invalid' } }, 400, origin);
+  }
+  return json({ accepted: true }, 202, origin);
+}
+
+async function productFeedbackResponse(request: Request, rpc: RpcClient, origin: string): Promise<Response> {
+  const body = await readJsonObject(request, 4_096, origin);
+  if (body instanceof Response) return body;
+  const reasons = Array.isArray(body.reasons) ? body.reasons : [];
+  const comment = typeof body.comment === 'string' ? body.comment.trim() : null;
+  const appVersion = typeof body.app_version === 'string' ? body.app_version.trim() : null;
+  if (
+    typeof body.experience !== 'string' || !FEEDBACK_CHOICES.has(body.experience)
+    || typeof body.helpful !== 'string' || !FEEDBACK_HELPFUL_CHOICES.has(body.helpful)
+    || typeof body.expected !== 'string' || !FEEDBACK_CHOICES.has(body.expected)
+    || reasons.length > 6 || reasons.some((reason) => typeof reason !== 'string' || !FEEDBACK_REASONS.has(reason))
+    || typeof body.surface !== 'string' || !ANALYTICS_SURFACES.has(body.surface)
+    || typeof body.channel !== 'string' || !FEEDBACK_CHANNELS.has(body.channel)
+    || typeof body.result_state !== 'string' || !FEEDBACK_RESULT_STATES.has(body.result_state)
+    || typeof body.result_count !== 'number' || !Number.isInteger(body.result_count)
+    || body.result_count < 0 || body.result_count > 1_000
+    || (appVersion !== null && appVersion.length > 40)
+    || (comment !== null && (comment.length < 1 || comment.length > 500))
+    || (comment !== null && (body.channel !== 'closed_android' || body.adult_confirmed !== true))
+  ) {
+    return json({ error: { code: 'invalid_feedback', message: 'feedback is invalid' } }, 400, origin);
+  }
+  // No query, service/provider identifier or free-form context is accepted.
+  // The explicit allowlist below is the complete persistence contract.
+  const result = await rpc.call<Record<string, unknown>>('api_submit_product_feedback', {
+    p_experience: body.experience,
+    p_helpful: body.helpful,
+    p_expected: body.expected,
+    p_reasons: reasons,
+    p_surface: body.surface,
+    p_channel: body.channel,
+    p_result_state: body.result_state,
+    p_result_count: body.result_count,
+    p_app_version: appVersion || null,
+    p_comment: comment || null,
+    p_adult_confirmed: body.adult_confirmed === true,
+  });
+  if (result.error === 'feedback_disabled') {
+    return json({ error: { code: 'feedback_disabled', message: 'feedback is not currently available' } }, 503, origin);
+  }
+  if (typeof result.error === 'string') {
+    return json({ error: { code: 'invalid_feedback', message: 'feedback is invalid' } }, 400, origin);
+  }
+  return json({ accepted: true }, 202, origin);
+}
+
+async function testerInterestResponse(request: Request, rpc: RpcClient, origin: string): Promise<Response> {
+  const body = await readJsonObject(request, 4_096, origin);
+  if (body instanceof Response) return body;
+  // A hidden honeypot absorbs simple form bots without retaining their input.
+  if (body.website !== undefined && body.website !== '') {
+    return json({ accepted: true }, 202, origin);
+  }
+  const email = typeof body.play_email === 'string' ? body.play_email.trim().toLowerCase() : '';
+  const municipality = typeof body.municipality === 'string' ? body.municipality.trim() : '';
+  const androidVersion = typeof body.android_version === 'string' ? body.android_version.trim() : null;
+  const deviceModel = typeof body.device_model === 'string' ? body.device_model.trim() : null;
+  const noticeVersion = typeof body.notice_version === 'string' ? body.notice_version.trim() : '';
+  if (
+    email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+    || !PILOT_MUNICIPALITIES.has(municipality)
+    || body.age_confirmed !== true || body.notice_accepted !== true
+    || noticeVersion.length < 3 || noticeVersion.length > 80
+    || (androidVersion !== null && androidVersion.length > 80)
+    || (deviceModel !== null && deviceModel.length > 120)
+  ) {
+    return json({ error: { code: 'invalid_tester_interest', message: 'tester interest is invalid' } }, 400, origin);
+  }
+  const result = await rpc.call<Record<string, unknown>>('api_submit_tester_interest', {
+    p_email: email,
+    p_municipality: municipality,
+    p_age_confirmed: true,
+    p_notice_version: noticeVersion,
+    p_android_version: androidVersion || null,
+    p_device_model: deviceModel || null,
+  });
+  if (result.error === 'tester_intake_disabled') {
+    return json({ error: { code: 'tester_intake_disabled', message: 'tester intake is not currently available' } }, 503, origin);
+  }
+  if (result.error === 'tester_intake_full') {
+    return json({ error: { code: 'tester_intake_full', message: 'tester cohort is complete' } }, 409, origin);
+  }
+  if (typeof result.error === 'string') {
+    return json({ error: { code: 'invalid_tester_interest', message: 'tester interest is invalid' } }, 400, origin);
+  }
+  // New and duplicate emails intentionally receive the same response.
+  return json({ accepted: true }, 202, origin);
+}
+
 function parseAnalyticsMetadata(value: unknown): Record<string, unknown> | null {
   if (value === undefined) return {};
   if (!isRecord(value)) return null;
@@ -1066,6 +1254,69 @@ async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClien
   }
   if (/^\/api\/v1\/admin\/provider-applications(?:\/|$)/.test(url.pathname)) {
     return applicationResponse(request, rpc, user, true, (body, status) => json(body, status, origin), req => readJsonObject(req, 16384, origin));
+  }
+  if (request.method === 'GET' && url.pathname === '/api/v1/admin/research/cohort') {
+    return json(await rpc.call('api_admin_pilot_cohort', {
+      p_actor_user_id: user.id,
+      p_action: 'summary',
+    }, { admin: true }), 200, origin);
+  }
+  if (request.method === 'POST' && url.pathname === '/api/v1/admin/research/cohort/action') {
+    const body = await readJsonObject(request, 4_096, origin);
+    if (body instanceof Response) return body;
+    if (typeof body.action !== 'string' || !['mark_invitations_released', 'start_test'].includes(body.action)) {
+      return json({ error: { code: 'invalid_body', message: 'cohort action is invalid' } }, 400, origin);
+    }
+    const result = await rpc.call<Record<string, unknown>>('api_admin_pilot_cohort', {
+      p_actor_user_id: user.id,
+      p_action: body.action,
+    }, { admin: true });
+    if (typeof result.error === 'string') {
+      return json({ error: { code: result.error, message: 'cohort is not ready for this action' } }, 409, origin);
+    }
+    return json(result, 200, origin);
+  }
+  if (request.method === 'GET' && url.pathname === '/api/v1/admin/analytics/clicks') {
+    return json(await rpc.call('api_admin_offer_click_metrics', {
+      p_days: parseBoundedInt(url.searchParams.get('days'), 30, 1, 365),
+    }, { admin: true }), 200, origin);
+  }
+  if (request.method === 'GET' && url.pathname === '/api/v1/admin/research') {
+    const kind = url.searchParams.get('kind');
+    const status = (url.searchParams.get('status') ?? '').trim();
+    if (kind !== 'feedback' && kind !== 'testers') {
+      return json({ error: { code: 'invalid_kind', message: 'kind must be feedback or testers' } }, 400, origin);
+    }
+    return json(await rpc.call('api_admin_research', {
+      p_actor_user_id: user.id,
+      p_action: kind === 'feedback' ? 'list_feedback' : 'list_testers',
+      p_id: null,
+      p_data: {
+        status,
+        limit: parseBoundedInt(url.searchParams.get('limit'), 100, 1, 200),
+      },
+    }, { admin: true }), 200, origin);
+  }
+  const researchMatch = url.pathname.match(/^\/api\/v1\/admin\/research\/(feedback|testers)\/([^/]+)\/status$/i);
+  if (researchMatch && request.method === 'POST') {
+    if (!isUuid(researchMatch[2])) {
+      return json({ error: { code: 'invalid_id', message: 'research record id must be a UUID' } }, 400, origin);
+    }
+    const body = await readJsonObject(request, 4_096, origin);
+    if (body instanceof Response) return body;
+    const allowedStatuses = researchMatch[1].toLowerCase() === 'feedback'
+      ? new Set(['new', 'reviewed', 'planned', 'resolved', 'dismissed'])
+      : new Set(['pending', 'selected', 'invited', 'active', 'completed', 'withdrawn', 'rejected']);
+    if (typeof body.status !== 'string' || !allowedStatuses.has(body.status)
+      || (body.note !== undefined && (typeof body.note !== 'string' || body.note.length > 1_000))) {
+      return json({ error: { code: 'invalid_body', message: 'status or note is invalid' } }, 400, origin);
+    }
+    return json(await rpc.call('api_admin_research', {
+      p_actor_user_id: user.id,
+      p_action: researchMatch[1].toLowerCase() === 'feedback' ? 'update_feedback' : 'update_tester',
+      p_id: researchMatch[2],
+      p_data: { status: body.status, note: typeof body.note === 'string' ? body.note.trim() : '' },
+    }, { admin: true }), 200, origin);
   }
   if (request.method === 'GET' && url.pathname === '/api/v1/admin/dashboard') {
     return json(await rpc.call('api_admin_dashboard', {}, { admin: true }), 200, origin);
@@ -1393,6 +1644,13 @@ async function providerResponse(
     return applicationResponse(request, rpc, user, false, (body, status) => json(body, status, origin), req => readJsonObject(req, 16384, origin));
   }
   const rpcOptions = { admin: true };
+
+  if (url.pathname === '/api/v1/provider/analytics/clicks' && request.method === 'GET') {
+    return json(await rpc.call('api_server_provider_offer_click_metrics', {
+      ...providerContext,
+      p_days: parseBoundedInt(url.searchParams.get('days'), 30, 1, 365),
+    }, rpcOptions), 200, origin);
+  }
 
   if (url.pathname === '/api/v1/provider/claims' && request.method === 'GET') {
     return json(await rpc.call('api_server_provider_my_claims', {
@@ -2013,7 +2271,9 @@ function operationForPath(path: string): string {
   if (path === '/api/v1/search' || path === '/api/v1/resolve') return 'individual_search';
   if (path === '/api/v1/resolve-batch') return 'package_search';
   if (path === '/api/v1/resolve-image') return 'recipe_ocr';
-  if (path === '/api/v1/events') return 'analytics';
+  if (path === '/api/v1/events' || path === '/api/v1/events/offer-click') return 'analytics';
+  if (path === '/api/v1/feedback') return 'feedback';
+  if (path === '/api/v1/tester-interest' || path === '/api/v1/android-pilot') return 'android_pilot';
   if (path.startsWith('/api/v1/admin/')) return 'admin';
   if (path.startsWith('/api/v1/provider/')) return 'provider';
   return 'api';
@@ -2085,10 +2345,13 @@ async function enforceRateLimit(request: Request, url: URL, env: Env, origin: st
 
 function rateLimitScope(path: string, method: string): 'public' | 'ocr' | 'admin' | 'provider' | null {
   if (path === '/api/v1/provider-intake') return 'public';
+  if (path === '/api/v1/android-pilot' && method === 'GET') return 'public';
   if (path === '/api/v1/resolve-image' && method === 'POST') return 'ocr';
   if (path === '/api/v1/search' && method === 'GET') return 'public';
   if (method === 'GET' && /^\/api\/v1\/(?:services|providers)\/[^/]+(?:\/(?:providers|services))?$/i.test(path)) return 'public';
-  if ((path === '/api/v1/resolve' || path === '/api/v1/resolve-batch' || path === '/api/v1/events') && method === 'POST') return 'public';
+  if ((path === '/api/v1/resolve' || path === '/api/v1/resolve-batch' || path === '/api/v1/events'
+    || path === '/api/v1/events/offer-click'
+    || path === '/api/v1/feedback' || path === '/api/v1/tester-interest') && method === 'POST') return 'public';
   if (path.startsWith('/api/v1/admin/')) return 'admin';
   if (path.startsWith('/api/v1/provider/')) return 'provider';
   return null;

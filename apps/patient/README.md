@@ -2,6 +2,21 @@
 
 Flutter Web/PWA, Android e iOS desde un solo codebase.
 
+La búsqueda pública no requiere cuenta y está dirigida a adultos para la
+declaración de Google Play; no se activa un bloqueo de menores. Un familiar puede
+usar la app para ayudar a otra persona. La prueba cerrada de Android sólo acepta
+testers de 18 años o más.
+
+## Usar la PWA antes de Android
+
+Publica el build web de release en un dominio HTTPS, comparte esa URL desde el
+landing y abrela desde Chrome/Edge/Safari. En Android, el usuario puede elegir
+**Instalar aplicación** o **Agregar a pantalla principal** desde el menú del
+navegador; en iPhone usa **Compartir → Agregar a pantalla de inicio**. Esto crea
+un acceso independiente mientras llega el APK, pero no equivale a tener soporte
+offline: Flutter ya no genera un service worker automáticamente, así que el
+cacheo offline requiere una implementación posterior.
+
 ## Ejecutar
 
 ```text
@@ -12,6 +27,18 @@ flutter run -d web-server --web-port 8080 --dart-define=API_BASE_URL=http://loca
 Los builds profile/release requieren tambien `API_ALLOWED_HOSTS` con el
 hostname exacto del Worker; esto evita enviar imagenes clinicas a un host
 arbitrario por una configuracion equivocada.
+
+El feedback estructurado permanece desactivado por defecto y se habilita para
+una compilación concreta con `--dart-define=PRODUCT_FEEDBACK_ENABLED=true`.
+Para la variante cerrada de Android se usa además
+`--dart-define=PRUEVIA_CHANNEL=closed_android`; esa variante permite un comentario
+opcional sólo después de confirmar 18 años. El feedback público no solicita texto
+libre ni incluye la búsqueda, receta, imagen, proveedor o estudio consultado.
+
+Los clics salientes a agenda, estudio, sucursal o sitio del proveedor también
+requieren ese consentimiento. Sólo se envían IDs de catálogo/oferta y el tipo de
+enlace; nunca el texto buscado o una receta. Admin recibe agregados globales y el
+portal de proveedor sólo agregados dentro de una membresía activa verificada.
 
 `API_BASE_URL` debe apuntar al Worker/API desplegado. La búsqueda pública no
 requiere autenticación. El botón **Acceso para proveedores** es secundario y

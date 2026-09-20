@@ -45,6 +45,9 @@
   --color-panel-shadow: #29413206;
   --color-map-shadow: #28443713;
   --color-closing-decoration: #ffffff08;
+  --color-error: #b42318;
+  --color-error-surface: #fff1f0;
+  --color-success-surface: #e7f5ed;
   --font-sans: "Segoe UI", Inter, system-ui, -apple-system, sans-serif;
   --radius-card: 22px;
   color-scheme: light;

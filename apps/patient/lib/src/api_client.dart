@@ -157,6 +157,62 @@ class PatientApiClient {
     }
   }
 
+  Future<void> recordOfferClick({
+    required bool consentGiven,
+    required String anonymousId,
+    required String offerId,
+    required String serviceId,
+    required String providerBrandId,
+    String? providerLocationId,
+    required String linkType,
+    required String surface,
+  }) async {
+    if (!consentGiven) return;
+    try {
+      await _post('/api/v1/events/offer-click', {
+        'anonymous_id': anonymousId,
+        'offer_id': offerId,
+        'service_id': serviceId,
+        'provider_brand_id': providerBrandId,
+        'provider_location_id': providerLocationId,
+        'link_type': linkType,
+        'surface': surface,
+      });
+    } on Object {
+      // Measurement must never delay or prevent opening the provider link.
+    }
+  }
+
+  Future<void> submitFeedback({
+    required String experience,
+    required String helpful,
+    required String expected,
+    required List<String> reasons,
+    required String surface,
+    required String channel,
+    required String resultState,
+    required int resultCount,
+    String? appVersion,
+    String? comment,
+    bool adultConfirmed = false,
+  }) async {
+    await _post('/api/v1/feedback', {
+      'experience': experience,
+      'helpful': helpful,
+      'expected': expected,
+      'reasons': reasons,
+      'surface': surface,
+      'channel': channel,
+      'result_state': resultState,
+      'result_count': resultCount,
+      if (appVersion != null && appVersion.isNotEmpty)
+        'app_version': appVersion,
+      if (comment != null && comment.trim().isNotEmpty)
+        'comment': comment.trim(),
+      'adult_confirmed': adultConfirmed,
+    });
+  }
+
   Future<JsonMap> _post(String path, JsonMap body) async {
     final response = await _request(() {
       final request = http.Request('POST', Uri.parse('$baseUrl$path'))
@@ -332,6 +388,10 @@ class PatientApiClient {
     'invalid_domain' => 'La búsqueda solicitada no es válida.',
     'not_found' => 'No encontramos esa información.',
     'route_requires_id' => 'Falta seleccionar un elemento.',
+    'feedback_disabled' =>
+      'Los comentarios todavía no están habilitados en esta versión.',
+    'invalid_feedback' =>
+      'Revisa tus respuestas antes de enviar el comentario.',
     'unauthorized' ||
     'mfa_required' => 'Necesitas autenticarte para realizar esta acción.',
     'forbidden' => 'No tienes permisos para realizar esta acción.',

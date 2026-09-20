@@ -129,6 +129,32 @@ export interface ExactReprocessResult {
   request_id: string | null;
 }
 
+export interface PilotCohort {
+  pilot_key: string;
+  target_count: number;
+  registered_count: number;
+  invited_count: number;
+  active_count: number;
+  completed_count: number;
+  test_duration_days: number;
+  invitations_released_at: string | null;
+  test_started_at: string | null;
+  test_ends_at: string | null;
+  test_day: number | null;
+  can_release_invitations: boolean;
+  can_start_test: boolean;
+}
+
+export interface ClickMetrics {
+  period_days: number;
+  generated_at: string;
+  summary: { total_clicks: number; unique_visitors: number; booking_clicks: number; services_with_clicks: number; locations_with_clicks: number };
+  daily: Array<{ day: string; clicks: number }>;
+  by_service: Array<{ service_id: string; service_name: string; provider_brand_id: string; provider_name: string; clicks: number; unique_visitors: number }>;
+  by_location: Array<{ location_id: string | null; location_name: string; provider_brand_id: string; provider_name: string; clicks: number; unique_visitors: number }>;
+  by_link_type: Array<{ link_type: string; clicks: number }>;
+}
+
 export class AdminApiError extends Error {
   constructor(
     message: string,
@@ -151,6 +177,11 @@ export interface AdminApi {
   reviewProviderChange(id:string,decision:string,reason:string):Promise<unknown>;
   providerDocument(id:string, action:'access'|'review', data?:Record<string,unknown>):Promise<Record<string,any>>;
   providerApplications(path?: string, data?: Record<string, unknown>): Promise<Record<string, any>>;
+  research(kind: 'feedback' | 'testers', status?: string): Promise<{ items: Record<string, any>[] }>;
+  updateResearch(kind: 'feedback' | 'testers', id: string, status: string, note?: string): Promise<Record<string, any>>;
+  pilotCohort(): Promise<PilotCohort>;
+  pilotCohortAction(action: 'mark_invitations_released' | 'start_test'): Promise<PilotCohort>;
+  clickMetrics(days?: number): Promise<ClickMetrics>;
   dashboard(): Promise<Dashboard>;
   normalizationQueue(status?: string, inputType?: string, cursor?: { before_created_at: string; before_id: string }): Promise<NormalizationRow[]>;
   normalizationDetail(id: string, includePayload?: boolean): Promise<NormalizationDetail | null>;
@@ -260,6 +291,11 @@ export function createAdminApi(baseUrl: string, accessToken: () => Promise<strin
     reviewProviderChange:(id,decision,reason)=>request(`/api/v1/admin/provider-change-requests/${encodeURIComponent(id)}/review`,{method:'POST',body:JSON.stringify({decision,reason})}),
     providerDocument: (id, action, data={}) => request<Record<string,any>>(`/api/v1/admin/provider-documents/${encodeURIComponent(id)}/${action}`,{method:'POST',body:JSON.stringify(data)}),
     providerApplications: (path = '', data) => request<Record<string, any>>(`/api/v1/admin/provider-applications${path}`, data ? { method: 'POST', body: JSON.stringify(data) } : undefined),
+    research: (kind, status = '') => request<{ items: Record<string, any>[] }>(`/api/v1/admin/research?kind=${encodeURIComponent(kind)}&status=${encodeURIComponent(status)}&limit=200`),
+    updateResearch: (kind, id, status, note = '') => request<Record<string, any>>(`/api/v1/admin/research/${encodeURIComponent(kind)}/${encodeURIComponent(id)}/status`, { method: 'POST', body: JSON.stringify({ status, note }), headers: mutationHeaders() }),
+    pilotCohort: () => request<PilotCohort>('/api/v1/admin/research/cohort'),
+    pilotCohortAction: (action) => request<PilotCohort>('/api/v1/admin/research/cohort/action', { method: 'POST', body: JSON.stringify({ action }), headers: mutationHeaders() }),
+    clickMetrics: (days = 30) => request<ClickMetrics>(`/api/v1/admin/analytics/clicks?days=${Math.min(365, Math.max(1, Math.trunc(days)))}`),
     dashboard: () => request<Dashboard>('/api/v1/admin/dashboard'),
     normalizationQueue: (status, inputType = '', cursor) => {
       const params = new URLSearchParams({ limit: '100' });

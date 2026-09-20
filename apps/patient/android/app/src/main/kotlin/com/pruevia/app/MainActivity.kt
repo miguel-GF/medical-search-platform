@@ -1,4 +1,4 @@
-package com.pruevia.pruevia_patient
+package com.pruevia.app
 
 import android.os.Bundle
 import android.view.WindowManager

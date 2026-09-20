@@ -2,11 +2,20 @@ name = "pruevia-api-dev"
 main = "src/index.ts"
 compatibility_date = "2026-08-25"
 
+# The handler is fail-closed unless NORMALIZATION_REPROCESS_ENABLED=true is
+# configured separately. The trigger never performs fuzzy/AI approvals.
+[triggers]
+crons = ["17 * * * *"]
+
 [vars]
 API_VERSION = "v1"
 APP_ENV = "production"
 PROVIDER_DOCUMENTS_ENABLED = "false"
 SUPABASE_TIMEOUT_MS = "5000"
+# Until an HTTPS DEV frontend exists, keep browser CORS restricted to the
+# Worker's own reviewed origin. Native Android and server smoke requests do not
+# send Origin; add real frontend origins explicitly when they are deployed.
+ALLOWED_ORIGINS = "https://pruevia-api-dev.miguel-gf-130.workers.dev"
 
 # Abuse controls. The namespace IDs must be unique within the Cloudflare
 # account; reserve/change them in production if the account already uses them.

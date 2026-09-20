@@ -11,7 +11,7 @@ select extensions.is(
    from pg_proc p
    join pg_namespace n on n.oid = p.pronamespace
    where n.nspname = 'public' and p.proname like 'api_admin_%'),
-  29,
+  32,
   'all internal admin RPCs are present in the expected surface'
 );
 
@@ -41,7 +41,7 @@ select extensions.is(
    join pg_namespace n on n.oid = p.pronamespace
    where n.nspname = 'public' and p.proname like 'api_admin_%'
      and has_function_privilege('service_role', p.oid, 'execute')),
-  29,
+  32,
   'service role can execute all admin RPCs'
 );
 
@@ -82,7 +82,7 @@ select extensions.is(
    from pg_proc p
    join pg_namespace n on n.oid = p.pronamespace
    where n.nspname in ('geo','core','catalog','health','supply','ingest','identity','audit',
-                       'ops','analytics','marketplace','sensitive','billing')
+                       'ops','analytics','marketplace','sensitive','billing','research')
      and p.prokind = 'f'
      and has_function_privilege('anon', p.oid, 'execute')),
   0,
@@ -93,7 +93,7 @@ select extensions.is(
    from pg_proc p
    join pg_namespace n on n.oid = p.pronamespace
    where n.nspname in ('geo','core','catalog','health','supply','ingest','identity','audit',
-                       'ops','analytics','marketplace','sensitive','billing')
+                       'ops','analytics','marketplace','sensitive','billing','research')
      and p.prokind = 'f'
      and has_function_privilege('authenticated', p.oid, 'execute')),
   0,
@@ -165,7 +165,9 @@ select extensions.is(
   (select count(*)::integer from pg_proc p join pg_namespace n on n.oid = p.pronamespace
    where n.nspname = 'public'
      and p.proname in ('api_search','api_resolve_search','api_resolve_package','api_resolve_ocr_package',
-                       'api_segment_package_text','api_record_analytics_event','api_service_detail','api_provider_detail')
+                       'api_segment_package_text','api_record_analytics_event','api_record_offer_click',
+                       'api_android_pilot_info','api_submit_product_feedback','api_submit_tester_interest',
+                       'api_service_detail','api_provider_detail')
      and has_function_privilege('anon', p.oid, 'execute')),
   0,
   'anonymous users cannot execute Worker-owned public RPCs directly'
@@ -174,7 +176,9 @@ select extensions.is(
   (select count(*)::integer from pg_proc p join pg_namespace n on n.oid = p.pronamespace
    where n.nspname = 'public'
      and p.proname in ('api_search','api_resolve_search','api_resolve_package','api_resolve_ocr_package',
-                       'api_segment_package_text','api_record_analytics_event','api_service_detail','api_provider_detail')
+                       'api_segment_package_text','api_record_analytics_event','api_record_offer_click',
+                       'api_android_pilot_info','api_submit_product_feedback','api_submit_tester_interest',
+                       'api_service_detail','api_provider_detail')
      and has_function_privilege('authenticated', p.oid, 'execute')),
   0,
   'authenticated users cannot execute Worker-owned public RPCs directly'
@@ -183,9 +187,11 @@ select extensions.is(
   (select count(*)::integer from pg_proc p join pg_namespace n on n.oid = p.pronamespace
    where n.nspname = 'public'
      and p.proname in ('api_search','api_resolve_search','api_resolve_package','api_resolve_ocr_package',
-                       'api_segment_package_text','api_record_analytics_event','api_service_detail','api_provider_detail')
+                       'api_segment_package_text','api_record_analytics_event','api_record_offer_click',
+                       'api_android_pilot_info','api_submit_product_feedback','api_submit_tester_interest',
+                       'api_service_detail','api_provider_detail')
      and has_function_privilege('service_role', p.oid, 'execute')),
-  8,
+  12,
   'only the Worker service role can execute all public API RPCs'
 );
 

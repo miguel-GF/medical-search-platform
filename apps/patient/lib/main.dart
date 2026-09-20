@@ -16,6 +16,19 @@ import 'src/picked_file_cleanup_stub.dart'
 import 'src/theme.dart';
 import 'src/provider_portal.dart';
 
+const bool _productFeedbackEnabled = bool.fromEnvironment(
+  'PRODUCT_FEEDBACK_ENABLED',
+  defaultValue: false,
+);
+const String _prueviaChannel = String.fromEnvironment(
+  'PRUEVIA_CHANNEL',
+  defaultValue: 'public',
+);
+const String _appVersion = String.fromEnvironment(
+  'APP_VERSION',
+  defaultValue: '1.0.0+1',
+);
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // A malformed remote payload must never leave patients with Flutter's red
@@ -237,6 +250,7 @@ class PatientShell extends StatefulWidget {
 
 class _PatientShellState extends State<PatientShell> {
   int _index = 0;
+  bool _feedbackPromptHandled = false;
   final _orderKey = GlobalKey<_OrderScreenState>();
   void _openOrder() => setState(() => _index = 1);
 
@@ -262,6 +276,31 @@ class _PatientShellState extends State<PatientShell> {
     ).push(MaterialPageRoute<void>(builder: (_) => const ProviderPortal()));
   }
 
+  Future<void> _openFeedback({
+    String resultState = 'manual',
+    int resultCount = 0,
+    bool prompted = false,
+  }) async {
+    if (!_productFeedbackEnabled) return;
+    if (prompted && !_feedbackPromptHandled) {
+      setState(() => _feedbackPromptHandled = true);
+    }
+    await showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      builder: (_) => FeedbackSheet(
+        api: widget.api,
+        resultState: resultState,
+        resultCount: resultCount,
+      ),
+    );
+  }
+
+  void _dismissFeedbackPrompt() {
+    if (!_feedbackPromptHandled) setState(() => _feedbackPromptHandled = true);
+  }
+
   @override
   Widget build(BuildContext context) {
     final pages = [
@@ -270,6 +309,13 @@ class _PatientShellState extends State<PatientShell> {
         preferences: widget.preferences,
         onOpenOrder: _openOrder,
         onOpenProviderAccess: _openProviderAccess,
+        showFeedbackInvite: _productFeedbackEnabled && !_feedbackPromptHandled,
+        onFeedback: (state, count) => _openFeedback(
+          resultState: state,
+          resultCount: count,
+          prompted: true,
+        ),
+        onDismissFeedback: _dismissFeedbackPrompt,
       ),
       OrderScreen(
         key: _orderKey,
@@ -281,6 +327,7 @@ class _PatientShellState extends State<PatientShell> {
         themeMode: widget.themeMode,
         onThemeChanged: widget.onThemeChanged,
         onConsentRevoked: widget.onConsentRevoked,
+        onFeedback: () => _openFeedback(),
       ),
     ];
     final wide = MediaQuery.sizeOf(context).width >= 900;
@@ -359,11 +406,17 @@ class HomeScreen extends StatefulWidget {
     required this.preferences,
     required this.onOpenOrder,
     required this.onOpenProviderAccess,
+    required this.showFeedbackInvite,
+    required this.onFeedback,
+    required this.onDismissFeedback,
   });
   final PatientApiClient api;
   final PatientPreferences preferences;
   final VoidCallback onOpenOrder;
   final VoidCallback onOpenProviderAccess;
+  final bool showFeedbackInvite;
+  final void Function(String resultState, int resultCount) onFeedback;
+  final VoidCallback onDismissFeedback;
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -508,7 +561,27 @@ class _HomeScreenState extends State<HomeScreen> {
               text:
                   'Prueba con el nombre completo o revisa la sección de receta para confirmar cada renglón.',
             ),
-          SearchResultsExplorer(services: _response!.services),
+          SearchResultsExplorer(
+            services: _response!.services,
+            api: widget.api,
+            preferences: widget.preferences,
+          ),
+          if (widget.showFeedbackInvite) ...[
+            const SizedBox(height: 16),
+            _FeedbackInvitation(
+              onSend: () => widget.onFeedback(
+                _response!.services.isEmpty
+                    ? 'no_match'
+                    : _response!.services.any(
+                        (service) => service.resolutionStatus == 'ambiguous',
+                      )
+                    ? 'ambiguous'
+                    : 'results',
+                _response!.services.length,
+              ),
+              onDismiss: widget.onDismissFeedback,
+            ),
+          ],
         ],
         if (_response == null && !_loading)
           const Padding(
@@ -1219,8 +1292,15 @@ class SolutionCard extends StatelessWidget {
 /// keeps the evidence grouped and uses a two-column layout on wide screens,
 /// with collapsible providers/branches on phones.
 class SearchResultsExplorer extends StatefulWidget {
-  const SearchResultsExplorer({super.key, required this.services});
+  const SearchResultsExplorer({
+    super.key,
+    required this.services,
+    this.api,
+    this.preferences,
+  });
   final List<SearchService> services;
+  final PatientApiClient? api;
+  final PatientPreferences? preferences;
 
   @override
   State<SearchResultsExplorer> createState() => _SearchResultsExplorerState();
@@ -1253,6 +1333,10 @@ class _SearchResultsExplorerState extends State<SearchResultsExplorer> {
           providerCount: groups.length,
           ambiguousCount: ambiguous,
         ),
+        if (widget.services.isNotEmpty) ...[
+          const SizedBox(height: 14),
+          _ServiceSummaries(services: widget.services),
+        ],
         if (groups.isNotEmpty) ...[
           const SizedBox(height: 14),
           LayoutBuilder(
@@ -1269,7 +1353,11 @@ class _SearchResultsExplorerState extends State<SearchResultsExplorer> {
                     ),
                     if (selected != null) ...[
                       const SizedBox(height: 12),
-                      _ProviderDetails(group: selected),
+                      _ProviderDetails(
+                        group: selected,
+                        api: widget.api,
+                        preferences: widget.preferences,
+                      ),
                     ],
                   ],
                 );
@@ -1293,7 +1381,11 @@ class _SearchResultsExplorerState extends State<SearchResultsExplorer> {
                             text:
                                 'Elige una empresa para ver sus sucursales, precios y fuentes.',
                           )
-                        : _ProviderDetails(group: selected),
+                        : _ProviderDetails(
+                            group: selected,
+                            api: widget.api,
+                            preferences: widget.preferences,
+                          ),
                   ),
                 ],
               );
@@ -1496,9 +1588,15 @@ class _ProviderPicker extends StatelessWidget {
 }
 
 class _ProviderDetails extends StatelessWidget {
-  const _ProviderDetails({required this.group});
+  const _ProviderDetails({
+    required this.group,
+    required this.api,
+    required this.preferences,
+  });
 
   final _ProviderGroup group;
+  final PatientApiClient? api;
+  final PatientPreferences? preferences;
 
   @override
   Widget build(BuildContext context) {
@@ -1547,16 +1645,25 @@ class _ProviderDetails extends StatelessWidget {
           ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800),
         ),
         const SizedBox(height: 8),
-        ...branches.map((branch) => _BranchCard(branch: branch)),
+        ...branches.map(
+          (branch) =>
+              _BranchCard(branch: branch, api: api, preferences: preferences),
+        ),
       ],
     );
   }
 }
 
 class _BranchCard extends StatelessWidget {
-  const _BranchCard({required this.branch});
+  const _BranchCard({
+    required this.branch,
+    required this.api,
+    required this.preferences,
+  });
 
   final _BranchGroup branch;
+  final PatientApiClient? api;
+  final PatientPreferences? preferences;
 
   @override
   Widget build(BuildContext context) => Card(
@@ -1574,7 +1681,13 @@ class _BranchCard extends StatelessWidget {
               '${branch.offers.length} coincidencia${branch.offers.length == 1 ? '' : 's'}',
             ),
           ),
-          ...branch.offers.map((entry) => _ProviderServiceTile(entry: entry)),
+          ...branch.offers.map(
+            (entry) => _ProviderServiceTile(
+              entry: entry,
+              api: api,
+              preferences: preferences,
+            ),
+          ),
         ],
       ),
     ),
@@ -1582,9 +1695,15 @@ class _BranchCard extends StatelessWidget {
 }
 
 class _ProviderServiceTile extends StatelessWidget {
-  const _ProviderServiceTile({required this.entry});
+  const _ProviderServiceTile({
+    required this.entry,
+    required this.api,
+    required this.preferences,
+  });
 
   final _ProviderServiceOffer entry;
+  final PatientApiClient? api;
+  final PatientPreferences? preferences;
 
   @override
   Widget build(BuildContext context) => Container(
@@ -1614,25 +1733,11 @@ class _ProviderServiceTile extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 8),
-        LayoutBuilder(
-          builder: (context, constraints) {
-            final description = _ServiceDescription(service: entry.service);
-            final pricing = _OfferPricing(offer: entry.offer);
-            if (constraints.maxWidth < 640) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [description, const SizedBox(height: 12), pricing],
-              );
-            }
-            return Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(child: description),
-                const SizedBox(width: 18),
-                SizedBox(width: 360, child: pricing),
-              ],
-            );
-          },
+        _OfferPricing(
+          offer: entry.offer,
+          serviceId: entry.service.id,
+          api: api,
+          preferences: preferences,
         ),
       ],
     ),
@@ -1670,6 +1775,56 @@ class _ServiceDescription extends StatelessWidget {
           ),
         ],
       ],
+    );
+  }
+}
+
+class _ServiceSummaries extends StatelessWidget {
+  const _ServiceSummaries({required this.services});
+
+  final List<SearchService> services;
+
+  @override
+  Widget build(BuildContext context) {
+    final unique = <String, SearchService>{};
+    for (final service in services) {
+      unique.putIfAbsent(service.id, () => service);
+    }
+    return Card(
+      margin: EdgeInsets.zero,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              unique.length == 1
+                  ? 'Sobre este estudio'
+                  : 'Sobre los estudios encontrados',
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800),
+            ),
+            const SizedBox(height: 10),
+            ...unique.values.map(
+              (service) => Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      service.displayName,
+                      style: const TextStyle(fontWeight: FontWeight.w700),
+                    ),
+                    const SizedBox(height: 4),
+                    _ServiceDescription(service: service),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -1749,7 +1904,9 @@ class ServiceCard extends StatelessWidget {
             const SizedBox(height: 14),
             if (service.offers.isEmpty)
               const Text('No hay una oferta comercial vigente para mostrar.'),
-            ...service.offers.map((offer) => _OfferRow(offer: offer)),
+            ...service.offers.map(
+              (offer) => _OfferRow(offer: offer, serviceId: service.id),
+            ),
           ],
         ),
       ),
@@ -1758,8 +1915,9 @@ class ServiceCard extends StatelessWidget {
 }
 
 class _OfferRow extends StatelessWidget {
-  const _OfferRow({required this.offer});
+  const _OfferRow({required this.offer, required this.serviceId});
   final SearchOffer offer;
+  final String serviceId;
   @override
   Widget build(BuildContext context) => SizedBox(
     width: double.infinity,
@@ -1775,7 +1933,7 @@ class _OfferRow extends StatelessWidget {
       child: LayoutBuilder(
         builder: (context, constraints) {
           final identity = _OfferIdentity(offer: offer);
-          final pricing = _OfferPricing(offer: offer);
+          final pricing = _OfferPricing(offer: offer, serviceId: serviceId);
           if (constraints.maxWidth < 520) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -1834,8 +1992,16 @@ class _OfferIdentity extends StatelessWidget {
 }
 
 class _OfferPricing extends StatelessWidget {
-  const _OfferPricing({required this.offer});
+  const _OfferPricing({
+    required this.offer,
+    required this.serviceId,
+    this.api,
+    this.preferences,
+  });
   final SearchOffer offer;
+  final String serviceId;
+  final PatientApiClient? api;
+  final PatientPreferences? preferences;
 
   @override
   Widget build(BuildContext context) {
@@ -1910,7 +2076,12 @@ class _OfferPricing extends StatelessWidget {
             ),
           ),
         if (_offerHasLink(offer))
-          _OfferLinks(offer: offer)
+          _OfferLinks(
+            offer: offer,
+            serviceId: serviceId,
+            api: api,
+            preferences: preferences,
+          )
         else
           Text(
             'Fuente no disponible',
@@ -1993,9 +2164,42 @@ bool _offerHasLink(SearchOffer offer) =>
     offer.bookingUrl != null;
 
 class _OfferLinks extends StatelessWidget {
-  const _OfferLinks({required this.offer});
+  const _OfferLinks({
+    required this.offer,
+    required this.serviceId,
+    this.api,
+    this.preferences,
+  });
 
   final SearchOffer offer;
+  final String serviceId;
+  final PatientApiClient? api;
+  final PatientPreferences? preferences;
+
+  void _trackAndOpen(String url, String linkType) {
+    final providerId = offer.providerId;
+    final telemetry = api;
+    final settings = preferences;
+    if (providerId != null && telemetry != null && settings != null) {
+      unawaited(
+        telemetry.recordOfferClick(
+          consentGiven: settings.consentGiven,
+          anonymousId: settings.consentGiven ? settings.anonymousId : '',
+          offerId: offer.id,
+          serviceId: serviceId,
+          providerBrandId: providerId,
+          providerLocationId: offer.locationId,
+          linkType: linkType,
+          surface: kIsWeb
+              ? 'pwa'
+              : defaultTargetPlatform == TargetPlatform.iOS
+              ? 'ios'
+              : 'android',
+        ),
+      );
+    }
+    unawaited(_open(url));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -2020,7 +2224,16 @@ class _OfferLinks extends StatelessWidget {
           };
     final links = <Widget>[
       TextButton.icon(
-        onPressed: () => _open(primaryUrl),
+        onPressed: () => _trackAndOpen(
+          primaryUrl,
+          offer.bookingUrl != null
+              ? 'booking'
+              : capability == 'study_only' || capability == 'study_and_location'
+              ? 'study'
+              : capability == 'location_only'
+              ? 'location'
+              : 'provider',
+        ),
         icon: const Icon(Icons.open_in_new, size: 16),
         label: Text(primaryLabel),
       ),
@@ -2028,7 +2241,7 @@ class _OfferLinks extends StatelessWidget {
     if (offer.studyUrl != null && offer.studyUrl != primaryUrl) {
       links.add(
         TextButton(
-          onPressed: () => _open(offer.studyUrl!),
+          onPressed: () => _trackAndOpen(offer.studyUrl!, 'study'),
           child: const Text('Ver estudio'),
         ),
       );
@@ -2036,7 +2249,7 @@ class _OfferLinks extends StatelessWidget {
     if (offer.locationUrl != null && offer.locationUrl != primaryUrl) {
       links.add(
         TextButton(
-          onPressed: () => _open(offer.locationUrl!),
+          onPressed: () => _trackAndOpen(offer.locationUrl!, 'location'),
           child: const Text('Ver sucursal'),
         ),
       );
@@ -2083,6 +2296,365 @@ String? _priceTypeLabel(String? value) => switch (value) {
   _ => value,
 };
 
+class _FeedbackInvitation extends StatelessWidget {
+  const _FeedbackInvitation({required this.onSend, required this.onDismiss});
+
+  final VoidCallback onSend;
+  final VoidCallback onDismiss;
+
+  @override
+  Widget build(BuildContext context) => Card(
+    color: Theme.of(context).colorScheme.primaryContainer,
+    child: Padding(
+      padding: const EdgeInsets.all(16),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(Icons.chat_bubble_outline),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  '¿Esto te ayudó?',
+                  style: TextStyle(fontWeight: FontWeight.w800),
+                ),
+                const SizedBox(height: 4),
+                const Text(
+                  'Son tres preguntas breves. No envíes nombres, recetas ni información médica.',
+                ),
+                const SizedBox(height: 10),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: [
+                    FilledButton(
+                      onPressed: onSend,
+                      child: const Text('Dar mi opinión'),
+                    ),
+                    TextButton(
+                      onPressed: onDismiss,
+                      child: const Text('Ahora no'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+class FeedbackSheet extends StatefulWidget {
+  const FeedbackSheet({
+    super.key,
+    required this.api,
+    this.resultState = 'manual',
+    this.resultCount = 0,
+  });
+
+  final PatientApiClient api;
+  final String resultState;
+  final int resultCount;
+
+  @override
+  State<FeedbackSheet> createState() => _FeedbackSheetState();
+}
+
+class _FeedbackSheetState extends State<FeedbackSheet> {
+  final _comment = TextEditingController();
+  String? _experience;
+  String? _helpful;
+  String? _expected;
+  final Set<String> _reasons = <String>{};
+  bool _adultConfirmed = false;
+  bool _sending = false;
+  bool _sent = false;
+  String? _error;
+
+  bool get _closedAndroid => _prueviaChannel == 'closed_android';
+  bool get _canSend =>
+      _experience != null &&
+      _helpful != null &&
+      _expected != null &&
+      (!_closedAndroid || _comment.text.trim().isEmpty || _adultConfirmed) &&
+      !_sending;
+
+  @override
+  void dispose() {
+    _comment.dispose();
+    super.dispose();
+  }
+
+  Future<void> _submit() async {
+    if (!_canSend) return;
+    setState(() {
+      _sending = true;
+      _error = null;
+    });
+    try {
+      await widget.api.submitFeedback(
+        experience: _experience!,
+        helpful: _helpful!,
+        expected: _expected!,
+        reasons: _reasons.toList(growable: false),
+        surface: _feedbackSurface(),
+        channel: _closedAndroid ? 'closed_android' : 'public',
+        resultState: widget.resultState,
+        resultCount: widget.resultCount,
+        appVersion: _appVersion,
+        comment: _closedAndroid ? _comment.text : null,
+        adultConfirmed: _adultConfirmed,
+      );
+      if (mounted) setState(() => _sent = true);
+    } on PatientApiException catch (error) {
+      if (mounted) setState(() => _error = error.message);
+    } catch (_) {
+      if (mounted) {
+        setState(
+          () =>
+              _error = 'No pudimos enviar tu comentario. Inténtalo nuevamente.',
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _sending = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_sent) {
+      return Padding(
+        padding: const EdgeInsets.fromLTRB(24, 20, 24, 32),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.check_circle_outline,
+              size: 46,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            const SizedBox(height: 12),
+            Text(
+              'Gracias por ayudarnos a mejorar',
+              style: Theme.of(
+                context,
+              ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800),
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              'Tu opinión se guardó sin tu búsqueda ni tus datos personales.',
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 18),
+            FilledButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cerrar'),
+            ),
+          ],
+        ),
+      );
+    }
+    return SingleChildScrollView(
+      padding: EdgeInsets.fromLTRB(
+        24,
+        8,
+        24,
+        28 + MediaQuery.viewInsetsOf(context).bottom,
+      ),
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 620),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Ayúdanos a mejorar Pruevia',
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+              const SizedBox(height: 6),
+              const Text(
+                'No guardaremos el estudio que buscaste. Evita compartir nombres, recetas, teléfonos o información médica.',
+              ),
+              const SizedBox(height: 20),
+              _FeedbackQuestion(
+                label: '¿Te gustó la experiencia?',
+                value: _experience,
+                options: const {
+                  'yes': 'Sí',
+                  'partly': 'Parcialmente',
+                  'no': 'No',
+                },
+                onChanged: (value) => setState(() => _experience = value),
+              ),
+              _FeedbackQuestion(
+                label: '¿Te ayudó a encontrar una opción?',
+                value: _helpful,
+                options: const {
+                  'yes': 'Sí',
+                  'partly': 'Parcialmente',
+                  'no': 'No',
+                  'not_applicable': 'No aplica',
+                },
+                onChanged: (value) => setState(() => _helpful = value),
+              ),
+              _FeedbackQuestion(
+                label: '¿Coincidió con lo que esperabas?',
+                value: _expected,
+                options: const {
+                  'yes': 'Sí',
+                  'partly': 'Parcialmente',
+                  'no': 'No',
+                },
+                onChanged: (value) => setState(() => _expected = value),
+              ),
+              const Text(
+                '¿Qué podríamos mejorar? (opcional)',
+                style: TextStyle(fontWeight: FontWeight.w700),
+              ),
+              const SizedBox(height: 8),
+              _FeedbackReasonChips(
+                selected: _reasons,
+                onChanged: () => setState(() {}),
+              ),
+              if (_closedAndroid) ...[
+                const SizedBox(height: 14),
+                TextField(
+                  controller: _comment,
+                  maxLength: 500,
+                  minLines: 3,
+                  maxLines: 5,
+                  onChanged: (_) => setState(() {}),
+                  decoration: const InputDecoration(
+                    labelText: 'Comentario opcional para la prueba cerrada',
+                    hintText:
+                        'Describe tu experiencia sin incluir datos médicos.',
+                    alignLabelWithHint: true,
+                  ),
+                ),
+                CheckboxListTile(
+                  contentPadding: EdgeInsets.zero,
+                  value: _adultConfirmed,
+                  onChanged: (value) =>
+                      setState(() => _adultConfirmed = value == true),
+                  title: const Text('Confirmo que tengo 18 años o más'),
+                  subtitle: const Text(
+                    'Es necesario para enviar texto libre en esta prueba cerrada.',
+                  ),
+                ),
+              ],
+              if (_error != null) ...[
+                const SizedBox(height: 10),
+                _ErrorBanner(message: _error!),
+              ],
+              const SizedBox(height: 18),
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton(
+                  onPressed: _canSend ? _submit : null,
+                  child: Text(_sending ? 'Enviando…' : 'Enviar comentarios'),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _FeedbackQuestion extends StatelessWidget {
+  const _FeedbackQuestion({
+    required this.label,
+    required this.value,
+    required this.options,
+    required this.onChanged,
+  });
+
+  final String label;
+  final String? value;
+  final Map<String, String> options;
+  final ValueChanged<String> onChanged;
+
+  @override
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsets.only(bottom: 18),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(label, style: const TextStyle(fontWeight: FontWeight.w700)),
+        const SizedBox(height: 8),
+        Wrap(
+          spacing: 7,
+          runSpacing: 7,
+          children: options.entries
+              .map(
+                (entry) => ChoiceChip(
+                  label: Text(entry.value),
+                  selected: value == entry.key,
+                  onSelected: (_) => onChanged(entry.key),
+                ),
+              )
+              .toList(growable: false),
+        ),
+      ],
+    ),
+  );
+}
+
+class _FeedbackReasonChips extends StatelessWidget {
+  const _FeedbackReasonChips({required this.selected, required this.onChanged});
+
+  final Set<String> selected;
+  final VoidCallback onChanged;
+
+  static const options = {
+    'repeated_information': 'Información repetida',
+    'missing_price': 'Falta precio',
+    'wrong_branch': 'Sucursal incorrecta',
+    'unrelated_result': 'Resultado no relacionado',
+    'unclear_information': 'Información poco clara',
+    'other': 'Otro',
+  };
+
+  @override
+  Widget build(BuildContext context) => Wrap(
+    spacing: 7,
+    runSpacing: 7,
+    children: options.entries
+        .map(
+          (entry) => FilterChip(
+            label: Text(entry.value),
+            selected: selected.contains(entry.key),
+            onSelected: (enabled) {
+              if (enabled) {
+                selected.add(entry.key);
+              } else {
+                selected.remove(entry.key);
+              }
+              onChanged();
+            },
+          ),
+        )
+        .toList(growable: false),
+  );
+}
+
+String _feedbackSurface() {
+  if (kIsWeb) return 'pwa';
+  return switch (defaultTargetPlatform) {
+    TargetPlatform.android => 'android',
+    TargetPlatform.iOS => 'ios',
+    _ => 'web',
+  };
+}
+
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({
     super.key,
@@ -2090,11 +2662,13 @@ class SettingsScreen extends StatelessWidget {
     required this.themeMode,
     required this.onThemeChanged,
     required this.onConsentRevoked,
+    required this.onFeedback,
   });
   final PatientPreferences preferences;
   final ThemeMode themeMode;
   final Future<void> Function(ThemeMode mode) onThemeChanged;
   final Future<void> Function() onConsentRevoked;
+  final VoidCallback onFeedback;
   @override
   Widget build(BuildContext context) => _PageFrame(
     child: Column(
@@ -2139,6 +2713,18 @@ class SettingsScreen extends StatelessWidget {
                   },
                 ),
               ),
+              if (_productFeedbackEnabled) ...[
+                const Divider(height: 1),
+                ListTile(
+                  leading: const Icon(Icons.chat_bubble_outline),
+                  onTap: onFeedback,
+                  title: const Text('Enviar comentarios'),
+                  subtitle: const Text(
+                    'Cuéntanos si Pruevia te ayudó, sin compartir datos médicos.',
+                  ),
+                  trailing: const Icon(Icons.chevron_right),
+                ),
+              ],
               const Divider(height: 1),
               const ListTile(
                 leading: Icon(Icons.shield_outlined),

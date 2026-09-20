@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:pruevia_patient/main.dart';
+import 'package:pruevia_patient/src/api_client.dart';
 import 'package:pruevia_patient/src/models.dart';
 
 void main() {
@@ -96,7 +97,33 @@ void main() {
     expect(find.text('En sucursal'), findsWidgets);
     expect(
       find.text('Mide las células presentes en una muestra de sangre.'),
-      findsWidgets,
+      findsOneWidget,
     );
+    expect(find.text('Sobre este estudio'), findsOneWidget);
   });
+
+  testWidgets(
+    'feedback asks structured questions without requesting medical text',
+    (tester) async {
+      final api = PatientApiClient(baseUrl: 'https://api.test');
+      addTearDown(api.close);
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: FeedbackSheet(
+              api: api,
+              resultState: 'results',
+              resultCount: 2,
+            ),
+          ),
+        ),
+      );
+
+      expect(find.text('¿Te gustó la experiencia?'), findsOneWidget);
+      expect(find.text('¿Te ayudó a encontrar una opción?'), findsOneWidget);
+      expect(find.text('¿Coincidió con lo que esperabas?'), findsOneWidget);
+      expect(find.textContaining('Evita compartir nombres'), findsOneWidget);
+      expect(find.byType(TextField), findsNothing);
+    },
+  );
 }

@@ -1,8 +1,12 @@
 <script setup lang="ts">
 const config = useRuntimeConfig();
 const patientUrl = String(config.public.patientUrl || '');
+const providerOrigin = String(config.public.providerUrl || patientUrl || '');
+const providerUrl = providerOrigin ? `${providerOrigin}/?provider=1` : '';
+const supportEmail = String(config.public.supportEmail || '');
 const ctaUrl = patientUrl || '#como-funciona';
 const ctaText = patientUrl ? 'Explorar la app' : 'Conoce cómo funciona';
+const shareStatus = ref('');
 const menuOpen = ref(false);
 const selected = ref('laboratorio');
 const examples = {
@@ -11,11 +15,29 @@ const examples = {
   receta: { name: 'Varios estudios, una búsqueda', category: 'Tu orden médica', detail: 'Distingue qué estudios están cubiertos y cuáles necesitan una aclaración.' },
 };
 const example = computed(() => examples[selected.value as keyof typeof examples]);
+async function shareApp() {
+  if (!patientUrl || typeof navigator === 'undefined') return;
+  try {
+    if (typeof navigator.share === 'function') {
+      await navigator.share({ title: 'Pruevia', text: 'Compara estudios médicos con Pruevia.', url: patientUrl });
+      return;
+    }
+    await navigator.clipboard.writeText(patientUrl);
+    shareStatus.value = 'Enlace copiado';
+    window.setTimeout(() => { shareStatus.value = ''; }, 2500);
+  } catch (error) {
+    if (error instanceof DOMException && error.name === 'AbortError') return;
+    shareStatus.value = 'Copia el enlace de la app desde el navegador';
+  }
+}
 const faqs = [
   { question: '¿Qué es Pruevia?', answer: 'Es una plataforma para identificar los estudios de tu orden médica y explorar opciones para realizarlos. Estamos construyendo nuestra cobertura inicial en Puebla.' },
   { question: '¿Puedo buscar varios estudios de una receta?', answer: 'La app permite revisar varios estudios y comparar la cobertura por sucursal. Cuando falta información o un estudio no está cubierto, lo indica para que puedas decidir tu siguiente paso.' },
   { question: '¿Los precios y estudios son iguales en todas las sucursales?', answer: 'No necesariamente. Los precios, condiciones y estudios pueden cambiar entre sucursales. Revisa la fuente y vigencia de cada opción y confirma con el proveedor antes de acudir. Si no hay un precio publicado, se indica que requiere cotización.' },
   { question: '¿Necesito crear una cuenta para buscar?', answer: 'La búsqueda de pacientes está pensada para usarse sin registro. El acceso administrativo y el de proveedores son espacios separados y protegidos.' },
+  { question: '¿Quién puede usar la app?', answer: 'Pruevia se declara dirigida a adultos en Google Play, pero la consulta pública no exige cuenta ni activa un bloqueo de edad. Un familiar puede usarla para ayudar a otra persona; la prueba cerrada de Android sí requiere tener 18 años o más.' },
+  { question: '¿Cómo uso Pruevia mientras llega Android?', answer: 'Puedes abrir la app web desde cualquier navegador. En Android, usa el menú del navegador y elige “Instalar aplicación” o “Agregar a pantalla principal”; en iPhone usa Compartir y “Agregar a inicio”.' },
+  { question: '¿Cómo entra un proveedor?', answer: 'El acceso de proveedores es independiente de la búsqueda pública y requiere cuenta, confirmación de correo y segundo factor. Usa el enlace de proveedores del landing cuando esté configurado.' },
   { question: '¿Pruevia interpreta mi receta o mis resultados?', answer: 'Pruevia ayuda a identificar los nombres de los estudios y a encontrar opciones. No sustituye a tu profesional de salud ni interpreta resultados. Si una indicación es ambigua, te pediremos que la aclares.' },
 ];
 const description = 'Entiende qué estudios necesitas y encuentra opciones para realizarlos. Conoce Pruevia, la plataforma de búsqueda de estudios médicos que comienza en Puebla.';
@@ -34,6 +56,9 @@ if (config.public.siteUrl) useHead({ link: [{ rel: 'canonical', href: String(con
           <a href="#como-funciona" @click="menuOpen = false">Cómo funciona</a>
           <a href="#puebla" @click="menuOpen = false">Comenzamos en Puebla</a>
           <a href="#preguntas" @click="menuOpen = false">Preguntas frecuentes</a>
+          <a v-if="patientUrl" :href="patientUrl" @click="menuOpen = false">Abrir app web</a>
+          <a v-if="providerUrl" :href="providerUrl" @click="menuOpen = false">Proveedores</a>
+          <NuxtLink to="/prueba-android" @click="menuOpen = false">Prueba Android</NuxtLink>
           <a class="button button-small" :href="ctaUrl" @click="menuOpen = false">{{ ctaText }} <span aria-hidden="true">↗</span></a>
         </nav>
       </div>
@@ -68,6 +93,13 @@ if (config.public.siteUrl) useHead({ link: [{ rel: 'canonical', href: String(con
 
       <section class="principles" aria-label="Lo que hace diferente a Pruevia"><div class="container principles-inner"><p>Información que te acompaña.</p><span><i aria-hidden="true">◎</i> Estudios con claridad</span><span><i aria-hidden="true">⌖</i> Opciones por ubicación</span><span><i aria-hidden="true">◇</i> Condiciones a la vista</span></div></section>
 
+      <section v-if="patientUrl || providerUrl || supportEmail" id="accesos" class="section container access-section" aria-labelledby="access-title">
+        <div class="access-grid">
+          <div><span class="eyebrow">ENTRA A PRUEVIA</span><h2 id="access-title">La búsqueda, donde la necesitas.</h2><p class="section-copy">Usa la app web sin crear una cuenta. En Android puedes instalarla desde el navegador como PWA mientras terminamos la aplicación de Google Play.</p></div>
+          <div class="access-card"><div class="access-actions"><a v-if="patientUrl" class="button" :href="patientUrl">Abrir app web <span aria-hidden="true">↗</span></a><button v-if="patientUrl" class="text-link link-button" type="button" @click="shareApp">Compartir app <span aria-hidden="true">↗</span></button><a v-if="providerUrl" class="text-link" :href="providerUrl">Acceso para proveedores <span aria-hidden="true">↗</span></a><a v-if="supportEmail" class="text-link" :href="`mailto:${supportEmail}`">Contactar soporte <span aria-hidden="true">✉</span></a></div><p class="access-note">En Android: menú del navegador → Instalar aplicación. En iPhone: Compartir → Agregar a pantalla de inicio.</p><p v-if="shareStatus" class="share-status" role="status">{{ shareStatus }}</p></div>
+        </div>
+      </section>
+
       <section id="como-funciona" class="section container">
         <div class="section-heading"><div><span class="eyebrow">DE LA ORDEN A LA DECISIÓN</span><h2>Una cosa menos<br>de qué preocuparte.</h2></div><p>No necesitas conocer todos los nombres médicos. Comienza con lo que tienes y avanza con información más clara.</p></div>
         <div class="steps">
@@ -90,8 +122,9 @@ if (config.public.siteUrl) useHead({ link: [{ rel: 'canonical', href: String(con
       <section id="preguntas" class="section faq-section container"><div><span class="eyebrow">RESOLVAMOS LAS DUDAS</span><h2>Más claridad,<br>desde el principio.</h2><p>Lo que conviene saber<br>antes de empezar.</p></div><div class="faq-list"><details v-for="faq in faqs" :key="faq.question"><summary>{{ faq.question }}<span aria-hidden="true">+</span></summary><p>{{ faq.answer }}</p></details></div></section>
 
       <section class="container closing-section"><div class="closing-card"><span class="eyebrow">TU SALUD MERECE CLARIDAD</span><h2>El siguiente paso<br>empieza por entender tus opciones.</h2><a class="button button-light" :href="ctaUrl">{{ ctaText }} <span aria-hidden="true">↗</span></a><p>Pruevia · Hecho para acompañar tu búsqueda.</p><span class="closing-decoration" aria-hidden="true">✳</span></div></section>
+      <section class="container tester-callout"><div><span class="eyebrow">PRÓXIMAMENTE EN ANDROID</span><h2>Ayúdanos a probar Pruevia.</h2><p>Estamos formando un grupo cerrado de personas adultas de Puebla y municipios cercanos.</p></div><NuxtLink class="button" to="/prueba-android">Conocer la prueba <span aria-hidden="true">↗</span></NuxtLink></section>
     </main>
 
-    <footer class="container site-footer"><div><NuxtLink to="/" class="brand"><BrandMark /><span>Pruevia.</span></NuxtLink><p>Tu próximo paso, más claro.</p></div><div class="footer-links"><a href="#como-funciona">Cómo funciona</a><NuxtLink to="/privacidad">Privacidad</NuxtLink><a href="#puebla">Puebla, México</a></div><div class="footer-bottom"><span>© {{ new Date().getFullYear() }} Pruevia</span><p>Pruevia no sustituye la orientación de un profesional de salud.</p></div></footer>
+    <footer class="container site-footer"><div><NuxtLink to="/" class="brand"><BrandMark /><span>Pruevia.</span></NuxtLink><p>Tu próximo paso, más claro.</p></div><div class="footer-links"><a href="#como-funciona">Cómo funciona</a><a v-if="patientUrl" :href="patientUrl">App web</a><a v-if="providerUrl" :href="providerUrl">Proveedores</a><NuxtLink to="/prueba-android">Prueba Android</NuxtLink><a v-if="supportEmail" :href="`mailto:${supportEmail}`">Soporte</a><NuxtLink to="/privacidad">Privacidad</NuxtLink><a href="#puebla">Puebla, México</a></div><div class="footer-bottom"><span>© {{ new Date().getFullYear() }} Pruevia</span><p>Pruevia no sustituye la orientación de un profesional de salud.</p></div></footer>
   </div>
 </template>
