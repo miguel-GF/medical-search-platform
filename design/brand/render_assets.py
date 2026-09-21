@@ -115,10 +115,33 @@ def render_icon(size: int, *, maskable: bool = False, rounded: bool = False) -> 
     return result
 
 
+def render_adaptive_foreground(size: int) -> Image.Image:
+    """Render the mark inside Android's 66/108 dp adaptive-icon safe zone."""
+    scale = 4
+    render_size = max(size * scale, 108)
+    image = Image.new("RGBA", (render_size, render_size), (0, 0, 0, 0))
+    mark_size = render_size * .78
+    offset = (render_size - mark_size) / 2
+    draw_mark(
+        image,
+        offset,
+        offset,
+        mark_size,
+        page_color=WHITE,
+        cutout_color=(0, 0, 0, 0),
+    )
+    return image.resize((size, size), Image.Resampling.LANCZOS)
+
+
 def save_icon(path: Path, size: int, *, maskable: bool = False, rounded: bool = False) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     image = render_icon(size, maskable=maskable, rounded=rounded)
     image.convert("RGBA" if rounded else "RGB").save(path, format="PNG", optimize=True)
+
+
+def save_adaptive_foreground(path: Path, size: int) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    render_adaptive_foreground(size).save(path, format="PNG", optimize=True)
 
 
 def render_splash(width: int, height: int, mark_size: int) -> Image.Image:
@@ -150,6 +173,10 @@ def main() -> None:
     }
     for density, size in android_sizes.items():
         save_icon(patient / "android" / "app" / "src" / "main" / "res" / f"mipmap-{density}" / "ic_launcher.png", size)
+        save_adaptive_foreground(
+            patient / "android" / "app" / "src" / "main" / "res" / f"drawable-{density}" / "ic_launcher_foreground.png",
+            round(size * 108 / 48),
+        )
     save_icon(patient / "android" / "app" / "src" / "main" / "res" / "drawable" / "launch_logo.png", 192)
 
     ios_icons: Iterable[tuple[str, int]] = (

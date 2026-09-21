@@ -20,6 +20,14 @@ const bool _productFeedbackEnabled = bool.fromEnvironment(
   'PRODUCT_FEEDBACK_ENABLED',
   defaultValue: false,
 );
+const bool _analyticsEnabled = bool.fromEnvironment(
+  'ANALYTICS_ENABLED',
+  defaultValue: false,
+);
+const bool _providerPortalEnabled = bool.fromEnvironment(
+  'PROVIDER_PORTAL_ENABLED',
+  defaultValue: false,
+);
 const String _prueviaChannel = String.fromEnvironment(
   'PRUEVIA_CHANNEL',
   defaultValue: 'public',
@@ -28,6 +36,42 @@ const String _appVersion = String.fromEnvironment(
   'APP_VERSION',
   defaultValue: '1.0.0+1',
 );
+const String _privacyPolicyUrl = String.fromEnvironment(
+  'PRIVACY_POLICY_URL',
+  defaultValue: '',
+);
+const String _supportEmail = String.fromEnvironment(
+  'SUPPORT_EMAIL',
+  defaultValue: '',
+);
+
+bool shouldOpenProviderPortal(Uri uri, {required bool enabled}) =>
+    enabled && uri.queryParameters['provider'] == '1';
+
+Uri? privacyPolicyUri(String value) {
+  final uri = Uri.tryParse(value.trim());
+  if (uri == null ||
+      uri.scheme != 'https' ||
+      uri.host.toLowerCase() != 'pruevia.com.mx' ||
+      uri.userInfo.isNotEmpty ||
+      (uri.port != 0 && uri.port != 443) ||
+      uri.path != '/privacidad' ||
+      uri.hasQuery ||
+      uri.hasFragment) {
+    return null;
+  }
+  return uri;
+}
+
+Uri? supportMailUri(String value) {
+  final email = value.trim().toLowerCase();
+  if (!RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$').hasMatch(email)) return null;
+  return Uri(scheme: 'mailto', path: email);
+}
+
+Future<void> _launchTrustedContact(Uri uri) async {
+  await launchUrl(uri, mode: LaunchMode.externalApplication);
+}
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -85,15 +129,24 @@ class _AppErrorFallback extends StatelessWidget {
 }
 
 class PatientApp extends StatefulWidget {
-  const PatientApp({super.key, required this.preferences});
+  const PatientApp({
+    super.key,
+    required this.preferences,
+    this.analyticsEnabled = _analyticsEnabled,
+    this.providerPortalEnabled = _providerPortalEnabled,
+  });
   final PatientPreferences preferences;
+  final bool analyticsEnabled;
+  final bool providerPortalEnabled;
   @override
   State<PatientApp> createState() => _PatientAppState();
 }
 
 class _PatientAppState extends State<PatientApp> {
   late ThemeMode _themeMode = widget.preferences.themeMode;
-  late final PatientApiClient _api = PatientApiClient();
+  late final PatientApiClient _api = PatientApiClient(
+    analyticsEnabled: widget.analyticsEnabled,
+  );
 
   @override
   void dispose() {
@@ -107,8 +160,9 @@ class _PatientAppState extends State<PatientApp> {
   }
 
   Future<void> _finishOnboarding(bool consent) async {
-    await widget.preferences.completeOnboarding(consent: consent);
-    if (consent) {
+    final effectiveConsent = widget.analyticsEnabled && consent;
+    await widget.preferences.completeOnboarding(consent: effectiveConsent);
+    if (effectiveConsent) {
       await _api.recordEvent(
         'consent_granted',
         consentGiven: true,
@@ -129,7 +183,11 @@ class _PatientAppState extends State<PatientApp> {
     theme: buildPrueviaTheme(Brightness.light),
     darkTheme: buildPrueviaTheme(Brightness.dark),
     themeMode: _themeMode,
-    home: Uri.base.queryParameters['provider'] == '1'
+    home:
+        shouldOpenProviderPortal(
+          Uri.base,
+          enabled: widget.providerPortalEnabled,
+        )
         ? const ProviderPortal()
         : widget.preferences.onboardingComplete
         ? PatientShell(
@@ -141,8 +199,11 @@ class _PatientAppState extends State<PatientApp> {
               await widget.preferences.revokeConsent();
               if (mounted) setState(() {});
             },
+            analyticsEnabled: widget.analyticsEnabled,
+            providerPortalEnabled: widget.providerPortalEnabled,
           )
         : ConsentScreen(
+            analyticsEnabled: widget.analyticsEnabled,
             onAccept: () => _finishOnboarding(true),
             onDecline: () => _finishOnboarding(false),
           ),
@@ -152,9 +213,11 @@ class _PatientAppState extends State<PatientApp> {
 class ConsentScreen extends StatelessWidget {
   const ConsentScreen({
     super.key,
+    this.analyticsEnabled = false,
     required this.onAccept,
     required this.onDecline,
   });
+  final bool analyticsEnabled;
   final Future<void> Function() onAccept;
   final Future<void> Function() onDecline;
 
@@ -190,17 +253,18 @@ class ConsentScreen extends StatelessWidget {
                       'Mostramos precio, fecha y fuente cuando están disponibles. Nunca inventamos un precio.',
                 ),
                 const SizedBox(height: 12),
-                const _InfoCard(
+                _InfoCard(
                   icon: Icons.lock_outline,
                   title: 'Privacidad desde el inicio',
-                  text:
-                      'La receta y las imágenes no se guardan. El uso anónimo sólo mide qué pantallas funcionan.',
+                  text: analyticsEnabled
+                      ? 'La receta y las imágenes no se guardan. Si aceptas, el uso anónimo sólo mide qué pantallas funcionan.'
+                      : 'La receta y las imágenes no se guardan. Esta versión no envía analítica de uso.',
                 ),
                 const SizedBox(height: 28),
                 SizedBox(
                   width: double.infinity,
                   child: FilledButton.icon(
-                    onPressed: onAccept,
+                    onPressed: analyticsEnabled ? onAccept : onDecline,
                     icon: const Icon(Icons.arrow_forward),
                     label: const Padding(
                       padding: EdgeInsets.symmetric(vertical: 4),
@@ -208,14 +272,16 @@ class ConsentScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 8),
-                SizedBox(
-                  width: double.infinity,
-                  child: TextButton(
-                    onPressed: onDecline,
-                    child: const Text('Continuar sin analítica'),
+                if (analyticsEnabled) ...[
+                  const SizedBox(height: 8),
+                  SizedBox(
+                    width: double.infinity,
+                    child: TextButton(
+                      onPressed: onDecline,
+                      child: const Text('Continuar sin analítica'),
+                    ),
                   ),
-                ),
+                ],
                 const SizedBox(height: 12),
                 Text(
                   'Puedes borrar tus preferencias del navegador en cualquier momento.',
@@ -238,12 +304,16 @@ class PatientShell extends StatefulWidget {
     required this.themeMode,
     required this.onThemeChanged,
     required this.onConsentRevoked,
+    required this.analyticsEnabled,
+    required this.providerPortalEnabled,
   });
   final PatientApiClient api;
   final PatientPreferences preferences;
   final ThemeMode themeMode;
   final Future<void> Function(ThemeMode mode) onThemeChanged;
   final Future<void> Function() onConsentRevoked;
+  final bool analyticsEnabled;
+  final bool providerPortalEnabled;
   @override
   State<PatientShell> createState() => _PatientShellState();
 }
@@ -308,7 +378,9 @@ class _PatientShellState extends State<PatientShell> {
         api: widget.api,
         preferences: widget.preferences,
         onOpenOrder: _openOrder,
-        onOpenProviderAccess: _openProviderAccess,
+        onOpenProviderAccess: widget.providerPortalEnabled
+            ? _openProviderAccess
+            : null,
         showFeedbackInvite: _productFeedbackEnabled && !_feedbackPromptHandled,
         onFeedback: (state, count) => _openFeedback(
           resultState: state,
@@ -328,6 +400,7 @@ class _PatientShellState extends State<PatientShell> {
         onThemeChanged: widget.onThemeChanged,
         onConsentRevoked: widget.onConsentRevoked,
         onFeedback: () => _openFeedback(),
+        analyticsEnabled: widget.analyticsEnabled,
       ),
     ];
     final wide = MediaQuery.sizeOf(context).width >= 900;
@@ -413,7 +486,7 @@ class HomeScreen extends StatefulWidget {
   final PatientApiClient api;
   final PatientPreferences preferences;
   final VoidCallback onOpenOrder;
-  final VoidCallback onOpenProviderAccess;
+  final VoidCallback? onOpenProviderAccess;
   final bool showFeedbackInvite;
   final void Function(String resultState, int resultCount) onFeedback;
   final VoidCallback onDismissFeedback;
@@ -488,14 +561,16 @@ class _HomeScreenState extends State<HomeScreen> {
           style: Theme.of(context).textTheme.bodyLarge,
         ),
         const SizedBox(height: 6),
-        Align(
-          alignment: Alignment.centerRight,
-          child: TextButton.icon(
-            onPressed: widget.onOpenProviderAccess,
-            icon: const Icon(Icons.business_center_outlined, size: 18),
-            label: const Text('Acceso para proveedores'),
+        if (widget.onOpenProviderAccess != null) ...[
+          Align(
+            alignment: Alignment.centerRight,
+            child: TextButton.icon(
+              onPressed: widget.onOpenProviderAccess,
+              icon: const Icon(Icons.business_center_outlined, size: 18),
+              label: const Text('Acceso para proveedores'),
+            ),
           ),
-        ),
+        ],
         const SizedBox(height: 24),
         LayoutBuilder(
           builder: (context, constraints) {
@@ -901,7 +976,11 @@ class _OrderScreenState extends State<OrderScreen> with WidgetsBindingObserver {
       }
     } finally {
       if (mounted && generation == _sensitiveGeneration) {
-        setState(() => _loading = false);
+        setState(() {
+          _selectedImage = null;
+          _mimeType = null;
+          _loading = false;
+        });
       }
     }
   }
@@ -2663,93 +2742,132 @@ class SettingsScreen extends StatelessWidget {
     required this.onThemeChanged,
     required this.onConsentRevoked,
     required this.onFeedback,
+    required this.analyticsEnabled,
+    this.privacyPolicyUrl = _privacyPolicyUrl,
+    this.supportEmail = _supportEmail,
   });
   final PatientPreferences preferences;
   final ThemeMode themeMode;
   final Future<void> Function(ThemeMode mode) onThemeChanged;
   final Future<void> Function() onConsentRevoked;
   final VoidCallback onFeedback;
+  final bool analyticsEnabled;
+  final String privacyPolicyUrl;
+  final String supportEmail;
   @override
-  Widget build(BuildContext context) => _PageFrame(
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const _Eyebrow('PRIVACIDAD Y PREFERENCIAS'),
-        Text(
-          'Ajustes',
-          style: Theme.of(
-            context,
-          ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w800),
-        ),
-        const SizedBox(height: 22),
-        Card(
-          child: Column(
-            children: [
-              ListTile(
-                title: const Text('Apariencia'),
-                subtitle: const Text(
-                  'Se aplica a la PWA y a futuras apps móviles',
-                ),
-                leading: const Icon(Icons.palette_outlined),
-                trailing: DropdownButton<ThemeMode>(
-                  value: themeMode,
-                  underline: const SizedBox(),
-                  items: const [
-                    DropdownMenuItem(
-                      value: ThemeMode.system,
-                      child: Text('Sistema'),
-                    ),
-                    DropdownMenuItem(
-                      value: ThemeMode.light,
-                      child: Text('Claro'),
-                    ),
-                    DropdownMenuItem(
-                      value: ThemeMode.dark,
-                      child: Text('Oscuro'),
-                    ),
-                  ],
-                  onChanged: (value) {
-                    if (value != null) onThemeChanged(value);
-                  },
-                ),
-              ),
-              if (_productFeedbackEnabled) ...[
-                const Divider(height: 1),
-                ListTile(
-                  leading: const Icon(Icons.chat_bubble_outline),
-                  onTap: onFeedback,
-                  title: const Text('Enviar comentarios'),
-                  subtitle: const Text(
-                    'Cuéntanos si Pruevia te ayudó, sin compartir datos médicos.',
-                  ),
-                  trailing: const Icon(Icons.chevron_right),
-                ),
-              ],
-              const Divider(height: 1),
-              const ListTile(
-                leading: Icon(Icons.shield_outlined),
-                title: Text('Datos sensibles'),
-                subtitle: Text(
-                  'Pruevia no guarda recetas, fotos OCR ni resultados en este dispositivo.',
-                ),
-              ),
-              const Divider(height: 1),
-              ListTile(
-                leading: const Icon(Icons.delete_outline),
-                onTap: preferences.consentGiven ? onConsentRevoked : null,
-                title: const Text('Consentimiento anónimo'),
-                subtitle: Text(
-                  preferences.consentGiven
-                      ? 'Activo para mejorar el producto sin guardar texto médico.'
-                      : 'No concedido.',
-                ),
-              ),
-            ],
+  Widget build(BuildContext context) {
+    final policyUri = privacyPolicyUri(privacyPolicyUrl);
+    final mailUri = supportMailUri(supportEmail);
+    return _PageFrame(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const _Eyebrow('PRIVACIDAD Y PREFERENCIAS'),
+          Text(
+            'Ajustes',
+            style: Theme.of(
+              context,
+            ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w800),
           ),
-        ),
-      ],
-    ),
-  );
+          const SizedBox(height: 22),
+          Card(
+            child: Column(
+              children: [
+                ListTile(
+                  title: const Text('Apariencia'),
+                  subtitle: const Text(
+                    'Se aplica a la PWA y a futuras apps móviles',
+                  ),
+                  leading: const Icon(Icons.palette_outlined),
+                  trailing: DropdownButton<ThemeMode>(
+                    value: themeMode,
+                    underline: const SizedBox(),
+                    items: const [
+                      DropdownMenuItem(
+                        value: ThemeMode.system,
+                        child: Text('Sistema'),
+                      ),
+                      DropdownMenuItem(
+                        value: ThemeMode.light,
+                        child: Text('Claro'),
+                      ),
+                      DropdownMenuItem(
+                        value: ThemeMode.dark,
+                        child: Text('Oscuro'),
+                      ),
+                    ],
+                    onChanged: (value) {
+                      if (value != null) onThemeChanged(value);
+                    },
+                  ),
+                ),
+                if (_productFeedbackEnabled) ...[
+                  const Divider(height: 1),
+                  ListTile(
+                    leading: const Icon(Icons.chat_bubble_outline),
+                    onTap: onFeedback,
+                    title: const Text('Enviar comentarios'),
+                    subtitle: const Text(
+                      'Cuéntanos si Pruevia te ayudó, sin compartir datos médicos.',
+                    ),
+                    trailing: const Icon(Icons.chevron_right),
+                  ),
+                ],
+                if (policyUri != null) ...[
+                  const Divider(height: 1),
+                  ListTile(
+                    leading: const Icon(Icons.policy_outlined),
+                    onTap: () => _launchTrustedContact(policyUri),
+                    title: const Text('Aviso de privacidad'),
+                    subtitle: const Text(
+                      'Consulta cómo protegemos y tratamos tu información.',
+                    ),
+                    trailing: const Icon(Icons.open_in_new),
+                  ),
+                ],
+                if (mailUri != null) ...[
+                  const Divider(height: 1),
+                  ListTile(
+                    leading: const Icon(Icons.support_agent_outlined),
+                    onTap: () => _launchTrustedContact(mailUri),
+                    title: const Text('Contactar soporte'),
+                    subtitle: Text(supportEmail.trim().toLowerCase()),
+                    trailing: const Icon(Icons.open_in_new),
+                  ),
+                ],
+                const Divider(height: 1),
+                const ListTile(
+                  leading: Icon(Icons.shield_outlined),
+                  title: Text('Datos sensibles'),
+                  subtitle: Text(
+                    'Pruevia no guarda recetas, fotos OCR ni resultados en este dispositivo.',
+                  ),
+                ),
+                const Divider(height: 1),
+                if (analyticsEnabled)
+                  ListTile(
+                    leading: const Icon(Icons.delete_outline),
+                    onTap: preferences.consentGiven ? onConsentRevoked : null,
+                    title: const Text('Consentimiento anónimo'),
+                    subtitle: Text(
+                      preferences.consentGiven
+                          ? 'Activo para mejorar el producto sin guardar texto médico.'
+                          : 'No concedido.',
+                    ),
+                  )
+                else
+                  const ListTile(
+                    leading: Icon(Icons.analytics_outlined),
+                    title: Text('Analítica de uso'),
+                    subtitle: Text('Desactivada en esta versión.'),
+                  ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class _PageFrame extends StatefulWidget {

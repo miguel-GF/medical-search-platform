@@ -1,10 +1,11 @@
 <script setup lang="ts">
 const config = useRuntimeConfig();
+const publication = config.public.publication;
 const municipalities = ['Puebla', 'San Andrés Cholula', 'San Pedro Cholula', 'Cuautlancingo', 'Coronango', 'Amozoc'];
 const form = reactive({ play_email: '', municipality: 'Puebla', android_version: '', device_model: '', age_confirmed: false, notice_accepted: false, website: '' });
-const checking = ref(Boolean(config.public.apiUrl));
+const checking = ref(Boolean(publication.apiUrl));
 const available = ref(false);
-const noticeVersion = ref(String(config.public.testerNoticeVersion));
+const noticeVersion = ref(String(publication.testerNoticeVersion));
 const pilotEndsAt = ref('');
 const phase = ref('closed');
 const registeredCount = ref(0);
@@ -20,18 +21,18 @@ useSeoMeta({
   title: 'Prueba cerrada Android · Pruevia',
   description: 'Conoce y solicita participar en la prueba cerrada de Pruevia para Android en Puebla y municipios cercanos.',
 });
-if (config.public.siteUrl) useHead({ link: [{ rel: 'canonical', href: `${config.public.siteUrl}/prueba-android` }] });
+if (publication.siteUrl) useHead({ link: [{ rel: 'canonical', href: `${publication.siteUrl}/prueba-android` }] });
 
 const progress = computed(() => Math.min(100, Math.round((registeredCount.value / Math.max(1, targetCount.value)) * 100)));
 const activeProgress = computed(() => Math.min(100, Math.round((activeCount.value / Math.max(1, targetCount.value)) * 100)));
 
 onMounted(async () => {
-  if (!config.public.apiUrl) return;
+  if (!publication.apiUrl) return;
   try {
-    const response = await fetch(`${config.public.apiUrl}/api/v1/android-pilot`, { cache: 'no-store', redirect: 'error' });
+    const response = await fetch(`${publication.apiUrl}/api/v1/android-pilot`, { cache: 'no-store', redirect: 'error' });
     if (!response.ok) throw new Error('pilot unavailable');
     const data = await response.json() as { enabled?: boolean; notice_version?: string; pilot_ends_at?: string | null; phase?: string; registered_count?: number; active_count?: number; target_count?: number; test_duration_days?: number; test_day?: number | null };
-    available.value = config.public.testerIntakeEnabled && data.enabled === true;
+    available.value = publication.testerIntakeEnabled && data.enabled === true;
     phase.value = typeof data.phase === 'string' ? data.phase : 'closed';
     registeredCount.value = Number.isInteger(data.registered_count) ? Number(data.registered_count) : 0;
     activeCount.value = Number.isInteger(data.active_count) ? Number(data.active_count) : 0;
@@ -50,11 +51,11 @@ onMounted(async () => {
 });
 
 async function submit() {
-  if (!available.value || submitting.value || !config.public.apiUrl) return;
+  if (!available.value || submitting.value || !publication.apiUrl) return;
   submitting.value = true;
   error.value = '';
   try {
-    const response = await fetch(`${config.public.apiUrl}/api/v1/tester-interest`, {
+    const response = await fetch(`${publication.apiUrl}/api/v1/tester-interest`, {
       method: 'POST',
       cache: 'no-store',
       redirect: 'error',
@@ -90,13 +91,13 @@ async function submit() {
           <template v-else-if="phase === 'testing'"><p><strong>Día {{ testDay }} de {{ testDurationDays }}</strong> · prueba real en curso.</p><div class="progress-track active" role="progressbar" :aria-valuenow="activeCount" aria-valuemin="0" :aria-valuemax="targetCount"><span :style="{ width: `${activeProgress}%` }" /></div></template>
           <p v-else-if="phase === 'completed'">La cohorte completó su periodo de prueba.</p>
           <p v-else>La convocatoria todavía no está abierta.</p>
-          <a v-if="config.public.patientUrl" class="web-pilot-link" :href="config.public.patientUrl">Mientras esperas, usa Pruevia desde la web <span aria-hidden="true">↗</span></a>
+          <a v-if="publication.patientUrl" class="web-pilot-link" :href="publication.patientUrl">Mientras esperas, usa Pruevia desde la web <span aria-hidden="true">↗</span></a>
         </section>
         <p v-if="pilotEndsAt" class="privacy-summary">Convocatoria abierta hasta el {{ pilotEndsAt }}.</p>
       </section>
 
       <section class="pilot-form-card" aria-labelledby="tester-form-title">
-        <template v-if="submitted"><span class="success-symbol" aria-hidden="true">✓</span><h2 id="tester-form-title">Solicitud recibida</h2><p>Ya formas parte de la lista. Cuando reunamos {{ targetCount }} personas enviaremos el mismo enlace de Google Play a la cohorte; los {{ testDurationDays }} días comenzarán cuando las {{ targetCount }} hayan activado el acceso.</p><a v-if="config.public.patientUrl" class="button" :href="config.public.patientUrl">Usar la app web mientras espero <span aria-hidden="true">↗</span></a></template>
+        <template v-if="submitted"><span class="success-symbol" aria-hidden="true">✓</span><h2 id="tester-form-title">Solicitud recibida</h2><p>Ya formas parte de la lista. Cuando reunamos {{ targetCount }} personas enviaremos el mismo enlace de Google Play a la cohorte; los {{ testDurationDays }} días comenzarán cuando las {{ targetCount }} hayan activado el acceso.</p><a v-if="publication.patientUrl" class="button" :href="publication.patientUrl">Usar la app web mientras espero <span aria-hidden="true">↗</span></a></template>
         <template v-else-if="checking"><h2 id="tester-form-title">Comprobando convocatoria…</h2><p>Estamos verificando si todavía hay lugares disponibles.</p></template>
         <form v-else @submit.prevent="submit">
           <h2 id="tester-form-title">Quiero participar</h2>
@@ -110,7 +111,7 @@ async function submit() {
             <label class="check-label"><input v-model="form.age_confirmed" type="checkbox" required><span>Confirmo que tengo 18 años o más.</span></label>
             <label class="check-label"><input v-model="form.notice_accepted" type="checkbox" required><span>Leí el <NuxtLink to="/privacidad">aviso de privacidad</NuxtLink> y acepto el tratamiento necesario para administrar el piloto.</span></label>
           </fieldset>
-          <p v-if="config.public.privacyEmail" class="privacy-summary">Puedes retirar tu solicitud escribiendo a {{ config.public.privacyEmail }}. El correo se eliminará en un máximo de 7 días después del retiro; los registros restantes se eliminarán o anonimizarán 90 días después de cerrar el piloto.</p>
+          <p v-if="publication.privacyEmail" class="privacy-summary">Puedes retirar tu solicitud escribiendo a {{ publication.privacyEmail }}. El correo se eliminará en un máximo de 7 días después del retiro; los registros restantes se eliminarán o anonimizarán 90 días después de cerrar el piloto.</p>
           <p v-if="error" class="form-error" role="alert">{{ error }}</p>
           <button class="button" type="submit" :disabled="!available || submitting">{{ !available ? 'Registro aún no disponible' : submitting ? 'Enviando…' : 'Solicitar participación' }} <span aria-hidden="true">↗</span></button>
         </form>

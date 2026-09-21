@@ -14,10 +14,13 @@ La conversación original no es lectura obligatoria para incorporarse.
 | [Estado y prioridades](CURRENT_STATE.md) | Capacidades y pendientes con evidencia fechada. |
 | [Decisiones](DECISIONS.md) | Autonomía, aprobación de cambios críticos y evolución de reglas. |
 | [ADR de liberación Puebla](ADR-002-RELEASE-PILOT-GATES.md) | Propuesta de puerta conjunta para datos, orígenes y publicación. |
+| [ADR de publicación pacientes primero](ADR-003-PATIENT-FIRST-PUBLICATION.md) | Propuesta crítica para conectar pruevia.com.mx, PWA/API y preparar Android sin abrir proveedores. |
 | [Opciones de dominio](DOMAIN_OPTIONS.md) | Investigación de disponibilidad, arquitectura de subdominios y verificación previa a compra. |
 | [Mantenimiento y discovery](CONTINUOUS_IMPROVEMENT.md) | Iniciativa, cadencias, actualización del código y crecimiento medido. |
 | [Entorno](ENVIRONMENT.md) | Variables, ejemplos y límites de exposición de credenciales. |
 | [Automatización de normalización](NORMALIZATION_AUTOMATION_RUNBOOK.md) | Cómo reducir la cola de etiquetas y configurar soporte por correo. |
+| [Estrategia de costo cero](ZERO_COST_PATIENT_FIRST_STRATEGY.md) | Propuesta pacientes primero: privacidad, PWA, comunidad, Android y sostenibilidad sin gasto mensual inicial. |
+| [Prueba cerrada Android](ANDROID_CLOSED_TEST_RUNBOOK.md) | Firma, ficha, Data Safety, declaración de salud, pista cerrada y evidencia de los 21 días. |
 | [Flujo de reclamaciones](PROVIDER_CLAIM_WORKFLOW.md) | Solicitudes de proveedores, revisión asíncrona, documentos y privacidad. |
 
 ## Qué leer según la tarea

@@ -28,30 +28,51 @@ function privacyEmail(value) {
 }
 
 export function publicationConfig(env) {
-  const siteUrl = publicUrl(env.NUXT_PUBLIC_SITE_URL);
-  const patientUrl = publicUrl(env.NUXT_PUBLIC_PATIENT_URL, { allowLoopback: true });
-  const providerUrl = publicUrl(env.NUXT_PUBLIC_PROVIDER_URL, { allowLoopback: true });
-  const apiUrl = publicApiUrl(env.NUXT_PUBLIC_API_URL);
-  const indexable = env.NUXT_PUBLIC_INDEXABLE === 'true';
-  const testerIntakeEnabled = env.NUXT_PUBLIC_TESTER_INTAKE_ENABLED === 'true';
-  const privacyController = String(env.NUXT_PUBLIC_PRIVACY_CONTROLLER || '').trim();
-  const privacyAddress = String(env.NUXT_PUBLIC_PRIVACY_ADDRESS || '').trim();
-  const privacyEmailAddress = privacyEmail(env.NUXT_PUBLIC_PRIVACY_EMAIL);
-  const supportEmail = privacyEmail(env.NUXT_PUBLIC_SUPPORT_EMAIL);
-  const testerNoticeVersion = String(env.NUXT_PUBLIC_TESTER_NOTICE_VERSION || 'android-testers-2026-09-v1').trim();
+  const siteUrl = publicUrl(env.PRUEVIA_SITE_URL);
+  const patientAppEnabled = env.PRUEVIA_PATIENT_APP_ENABLED === 'true';
+  const patientUrl = patientAppEnabled
+    ? publicUrl(env.PRUEVIA_PATIENT_URL, { allowLoopback: true })
+    : '';
+  const providerAccessEnabled = env.PRUEVIA_PROVIDER_ACCESS_ENABLED === 'true';
+  const configuredProviderUrl = providerAccessEnabled
+    ? publicUrl(env.PRUEVIA_PROVIDER_URL, { allowLoopback: true })
+    : '';
+  const providerUrl = providerAccessEnabled ? configuredProviderUrl : '';
+  const apiUrl = publicApiUrl(env.PRUEVIA_API_URL);
+  const indexable = env.PRUEVIA_INDEXABLE === 'true';
+  const testerIntakeEnabled = env.PRUEVIA_TESTER_INTAKE_ENABLED === 'true';
+  const privacyController = String(env.PRUEVIA_PRIVACY_CONTROLLER || '').trim();
+  const privacyAddress = String(env.PRUEVIA_PRIVACY_ADDRESS || '').trim();
+  const privacyEmailAddress = privacyEmail(env.PRUEVIA_PRIVACY_EMAIL);
+  const privacyReady = privacyController.length >= 3
+    && privacyAddress.length >= 10
+    && Boolean(privacyEmailAddress);
+  const supportEmail = privacyEmail(env.PRUEVIA_SUPPORT_EMAIL);
+  const testerNoticeVersion = String(env.PRUEVIA_TESTER_NOTICE_VERSION || 'android-testers-2026-09-v1').trim();
+  const patientTarget = patientUrl ? new URL(patientUrl) : null;
+  const patientLoopback = patientTarget?.protocol === 'http:'
+    && ['localhost', '127.0.0.1', '::1'].includes(patientTarget.hostname);
   if (siteUrl && new URL(siteUrl).pathname !== '/') {
     throw new Error('SITE_URL must be an origin');
   }
-  if (indexable && (!siteUrl || !patientUrl || new URL(patientUrl).protocol !== 'https:')) {
-    throw new Error('Indexing requires reviewed site and patient destinations');
+  if (indexable && !siteUrl) {
+    throw new Error('Indexing requires a reviewed site destination');
   }
-  if (testerIntakeEnabled && (!apiUrl || privacyController.length < 3 || privacyAddress.length < 10
-    || !privacyEmailAddress || testerNoticeVersion.length < 3)) {
+  if (patientAppEnabled && (!patientTarget
+    || (!patientLoopback && (patientTarget.protocol !== 'https:' || !privacyReady)))) {
+    throw new Error('Patient app release requires an HTTPS destination and complete privacy contact');
+  }
+  if (testerIntakeEnabled && (!apiUrl || !privacyReady || testerNoticeVersion.length < 3)) {
     throw new Error('Tester intake requires API, controller, address, privacy email and notice version');
+  }
+  if (providerAccessEnabled && !providerUrl) {
+    throw new Error('Provider access requires an explicit provider destination');
   }
   return {
     siteUrl,
+    patientAppEnabled,
     patientUrl,
+    providerAccessEnabled,
     providerUrl,
     apiUrl,
     indexable,
@@ -59,6 +80,7 @@ export function publicationConfig(env) {
     privacyController,
     privacyAddress,
     privacyEmail: privacyEmailAddress,
+    privacyReady,
     supportEmail,
     testerNoticeVersion,
   };

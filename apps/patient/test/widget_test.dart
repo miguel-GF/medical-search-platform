@@ -6,19 +6,84 @@ import 'package:pruevia_patient/src/api_client.dart';
 import 'package:pruevia_patient/src/models.dart';
 
 void main() {
-  testWidgets('consent screen explains traceability and privacy', (
+  test('provider route stays closed unless the release gate is enabled', () {
+    final uri = Uri.parse('https://app.pruevia.com.mx/?provider=1');
+    expect(shouldOpenProviderPortal(uri, enabled: false), isFalse);
+    expect(shouldOpenProviderPortal(uri, enabled: true), isTrue);
+  });
+
+  test('privacy and support destinations reject unsafe build values', () {
+    expect(
+      privacyPolicyUri('https://pruevia.com.mx/privacidad'),
+      Uri.parse('https://pruevia.com.mx/privacidad'),
+    );
+    for (final value in [
+      'http://pruevia.com.mx/privacidad',
+      'https://pruevia.com.mx/otra',
+      'https://pruevia.com.mx/privacidad?token=x',
+      'https://evil.example/privacidad',
+    ]) {
+      expect(privacyPolicyUri(value), isNull);
+    }
+    expect(
+      supportMailUri(' Soporte@Pruevia.com.mx '),
+      Uri.parse('mailto:soporte@pruevia.com.mx'),
+    );
+    expect(supportMailUri('not-an-email'), isNull);
+  });
+
+  testWidgets('onboarding explains traceability and disabled analytics', (
     tester,
   ) async {
+    var accepted = false;
+    var declined = false;
     await tester.pumpWidget(
       MaterialApp(
-        home: ConsentScreen(onAccept: () async {}, onDecline: () async {}),
+        home: ConsentScreen(
+          onAccept: () async => accepted = true,
+          onDecline: () async => declined = true,
+        ),
       ),
     );
 
     expect(find.text('Encuentra dónde hacer tus estudios'), findsOneWidget);
     expect(find.text('Información transparente'), findsOneWidget);
     expect(find.text('Privacidad desde el inicio'), findsOneWidget);
+    expect(
+      find.textContaining('Esta versión no envía analítica'),
+      findsOneWidget,
+    );
     expect(find.text('Continuar'), findsOneWidget);
+    expect(find.text('Continuar sin analítica'), findsNothing);
+
+    await tester.tap(find.text('Continuar'));
+    await tester.pump();
+    expect(accepted, isFalse);
+    expect(declined, isTrue);
+  });
+
+  testWidgets('analytics build offers explicit accept and decline paths', (
+    tester,
+  ) async {
+    var accepted = false;
+    var declined = false;
+    await tester.pumpWidget(
+      MaterialApp(
+        home: ConsentScreen(
+          analyticsEnabled: true,
+          onAccept: () async => accepted = true,
+          onDecline: () async => declined = true,
+        ),
+      ),
+    );
+
+    expect(find.textContaining('Si aceptas, el uso anónimo'), findsOneWidget);
+    expect(find.text('Continuar sin analítica'), findsOneWidget);
+
+    await tester.tap(find.text('Continuar'));
+    await tester.pump();
+    expect(accepted, isTrue);
+    expect(declined, isFalse);
   });
 
   testWidgets('provider access stays secondary and explains step-up security', (

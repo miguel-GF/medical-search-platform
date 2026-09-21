@@ -37,7 +37,7 @@ contenido legal/contacto.
    clínica revisada, alcance de sucursal, procedencia y prueba de vecino que debe
    quedar ambiguo/no encontrado. El lote se puede preparar en SQL/fixture, pero
    no se publica automáticamente.
-5. **Indexación:** mantener `NUXT_PUBLIC_INDEXABLE=false` durante preparación.
+5. **Indexación:** mantener `PRUEVIA_INDEXABLE=false` durante preparación.
    Activarlo sólo después de confirmar las URLs reales, destino del CTA, aviso
    legal/contacto y una revisión final del contenido; regenerar el sitio y
    comprobar sitemap, robots, headers y enlaces.

@@ -6,7 +6,9 @@ export default defineNuxtConfig({
   compatibilityDate: '2026-09-14',
   devtools: { enabled: false },
   css: ['~/assets/theme.css', '~/assets/main.css'],
-  runtimeConfig: { public: publication },
+  // Keep validated values nested so stale NUXT_PUBLIC_* variables cannot
+  // bypass publicationConfig by overriding similarly named runtime keys.
+  runtimeConfig: { public: { publication } },
   app: {
     head: {
       htmlAttrs: { lang: 'es-MX' },

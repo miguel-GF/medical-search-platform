@@ -7,6 +7,11 @@ import 'package:http/http.dart' as http;
 
 import 'models.dart';
 
+const bool _analyticsEnabledByBuild = bool.fromEnvironment(
+  'ANALYTICS_ENABLED',
+  defaultValue: false,
+);
+
 class PatientApiException implements Exception {
   const PatientApiException(
     this.statusCode,
@@ -39,20 +44,26 @@ class _ResponseEncodingException implements Exception {}
 class _ResponseLengthMismatchException implements Exception {}
 
 class PatientApiClient {
-  PatientApiClient({String? baseUrl, http.Client? client, Duration? timeout})
-    : baseUrl = _secureBaseUrl(
-        baseUrl ??
-            const String.fromEnvironment(
-              'API_BASE_URL',
-              defaultValue: 'http://localhost:8787',
-            ),
-      ),
-      _client = client ?? http.Client(),
-      timeout = timeout ?? const Duration(seconds: 15);
+  PatientApiClient({
+    String? baseUrl,
+    http.Client? client,
+    Duration? timeout,
+    bool? analyticsEnabled,
+  }) : baseUrl = _secureBaseUrl(
+         baseUrl ??
+             const String.fromEnvironment(
+               'API_BASE_URL',
+               defaultValue: 'http://localhost:8787',
+             ),
+       ),
+       _client = client ?? http.Client(),
+       timeout = timeout ?? const Duration(seconds: 15),
+       analyticsEnabled = analyticsEnabled ?? _analyticsEnabledByBuild;
 
   final String baseUrl;
   final http.Client _client;
   final Duration timeout;
+  final bool analyticsEnabled;
   Future<JsonMap> providerCall(
     String path, {
     String? token,
@@ -145,7 +156,7 @@ class PatientApiClient {
     required String anonymousId,
     Map<String, Object?> metadata = const {},
   }) async {
-    if (!consentGiven) return;
+    if (!analyticsEnabled || !consentGiven) return;
     try {
       await _post('/api/v1/events', {
         'event_name': eventName,
@@ -167,7 +178,7 @@ class PatientApiClient {
     required String linkType,
     required String surface,
   }) async {
-    if (!consentGiven) return;
+    if (!analyticsEnabled || !consentGiven) return;
     try {
       await _post('/api/v1/events/offer-click', {
         'anonymous_id': anonymousId,

@@ -5,23 +5,24 @@ import { publicationConfig, publicApiUrl, publicUrl } from '../shared/site.mjs';
 
 test('preview needs no destinations and cannot claim indexing', () => {
   assert.deepEqual(publicationConfig({}), {
-    siteUrl: '', patientUrl: '', providerUrl: '', apiUrl: '', indexable: false,
+    siteUrl: '', patientAppEnabled: false, patientUrl: '', providerAccessEnabled: false, providerUrl: '', apiUrl: '', indexable: false,
     testerIntakeEnabled: false, privacyController: '', privacyAddress: '', privacyEmail: '',
+    privacyReady: false,
     supportEmail: '',
     testerNoticeVersion: 'android-testers-2026-09-v1',
   });
-  assert.throws(() => publicationConfig({ NUXT_PUBLIC_INDEXABLE: 'true' }));
+  assert.throws(() => publicationConfig({ PRUEVIA_INDEXABLE: 'true' }));
 });
 test('tester intake fails closed without reviewed privacy and API settings', () => {
   assert.equal(publicApiUrl('http://127.0.0.1:8787'), 'http://127.0.0.1:8787');
   assert.throws(() => publicApiUrl('http://api.example.com'));
-  assert.throws(() => publicationConfig({ NUXT_PUBLIC_TESTER_INTAKE_ENABLED: 'true' }));
+  assert.throws(() => publicationConfig({ PRUEVIA_TESTER_INTAKE_ENABLED: 'true' }));
   const config = publicationConfig({
-    NUXT_PUBLIC_TESTER_INTAKE_ENABLED: 'true',
-    NUXT_PUBLIC_API_URL: 'https://api.example.com',
-    NUXT_PUBLIC_PRIVACY_CONTROLLER: 'Pruevia Responsable',
-    NUXT_PUBLIC_PRIVACY_ADDRESS: 'Domicilio revisado, Puebla',
-    NUXT_PUBLIC_PRIVACY_EMAIL: 'privacidad@example.com',
+    PRUEVIA_TESTER_INTAKE_ENABLED: 'true',
+    PRUEVIA_API_URL: 'https://api.example.com',
+    PRUEVIA_PRIVACY_CONTROLLER: 'Pruevia Responsable',
+    PRUEVIA_PRIVACY_ADDRESS: 'Domicilio revisado, Puebla',
+    PRUEVIA_PRIVACY_EMAIL: 'privacidad@example.com',
   });
   assert.equal(config.testerIntakeEnabled, true);
   assert.equal(config.apiUrl, 'https://api.example.com');
@@ -31,20 +32,39 @@ test('destinations reject unsafe protocols, credentials and tracking', () => {
 });
 test('local app destinations are allowed only on loopback during development', () => {
   const config = publicationConfig({
-    NUXT_PUBLIC_PATIENT_URL: 'http://127.0.0.1:8080',
-    NUXT_PUBLIC_PROVIDER_URL: 'http://localhost:8080',
-    NUXT_PUBLIC_SUPPORT_EMAIL: 'soporte@example.com',
+    PRUEVIA_PATIENT_APP_ENABLED: 'true',
+    PRUEVIA_PATIENT_URL: 'http://127.0.0.1:8080',
+    PRUEVIA_PRIVACY_CONTROLLER: 'Pruevia Responsable',
+    PRUEVIA_PRIVACY_ADDRESS: 'Domicilio revisado, Puebla',
+    PRUEVIA_PRIVACY_EMAIL: 'privacidad@example.com',
+    PRUEVIA_PROVIDER_ACCESS_ENABLED: 'true',
+    PRUEVIA_PROVIDER_URL: 'http://localhost:8080',
+    PRUEVIA_SUPPORT_EMAIL: 'soporte@example.com',
   });
   assert.equal(config.patientUrl, 'http://127.0.0.1:8080');
   assert.equal(config.providerUrl, 'http://localhost:8080');
   assert.equal(config.supportEmail, 'soporte@example.com');
-  assert.throws(() => publicationConfig({ NUXT_PUBLIC_PATIENT_URL: 'http://example.com' }));
-  assert.throws(() => publicationConfig({ NUXT_PUBLIC_SUPPORT_EMAIL: 'not-an-email' }));
+  assert.throws(() => publicationConfig({ PRUEVIA_PATIENT_APP_ENABLED: 'true', PRUEVIA_PATIENT_URL: 'http://example.com' }));
+  assert.throws(() => publicationConfig({ PRUEVIA_SUPPORT_EMAIL: 'not-an-email' }));
 });
-test('indexable build requires both configured destinations and a site origin', () => {
-  assert.throws(() => publicationConfig({ NUXT_PUBLIC_SITE_URL: 'https://example.com/path' }));
-  assert.throws(() => publicationConfig({ NUXT_PUBLIC_SITE_URL: 'https://example.com', NUXT_PUBLIC_INDEXABLE: 'true' }));
-  assert.equal(publicationConfig({ NUXT_PUBLIC_SITE_URL: 'https://example.com/', NUXT_PUBLIC_PATIENT_URL: 'https://app.example.com', NUXT_PUBLIC_INDEXABLE: 'true' }).siteUrl, 'https://example.com');
+test('provider access stays closed unless its explicit release gate is enabled', () => {
+  const closed = publicationConfig({ PRUEVIA_PROVIDER_URL: 'https://app.example.com' });
+  assert.equal(closed.providerAccessEnabled, false);
+  assert.equal(closed.providerUrl, '');
+  assert.throws(() => publicationConfig({ PRUEVIA_PROVIDER_ACCESS_ENABLED: 'true' }));
+});
+test('indexable landing requires its site origin and patient release requires privacy contact', () => {
+  assert.throws(() => publicationConfig({ PRUEVIA_SITE_URL: 'https://example.com/path' }));
+  assert.throws(() => publicationConfig({ PRUEVIA_INDEXABLE: 'true' }));
+  assert.equal(publicationConfig({ PRUEVIA_SITE_URL: 'https://example.com/', PRUEVIA_INDEXABLE: 'true' }).siteUrl, 'https://example.com');
+  assert.throws(() => publicationConfig({ PRUEVIA_PATIENT_APP_ENABLED: 'true', PRUEVIA_PATIENT_URL: 'https://app.example.com' }));
+  assert.equal(publicationConfig({
+    PRUEVIA_PATIENT_APP_ENABLED: 'true',
+    PRUEVIA_PATIENT_URL: 'https://app.example.com',
+    PRUEVIA_PRIVACY_CONTROLLER: 'Responsable Pruevia',
+    PRUEVIA_PRIVACY_ADDRESS: 'Domicilio revisado, Puebla',
+    PRUEVIA_PRIVACY_EMAIL: 'privacidad@example.com',
+  }).patientUrl, 'https://app.example.com');
 });
 
 test('integral privacy notice covers pilot data, purposes, Play transfer and ARCO', async () => {
@@ -57,7 +77,8 @@ test('integral privacy notice covers pilot data, purposes, Play transfer and ARC
     'Cómo ejercer tus derechos',
     'Cambios al aviso',
   ]) assert.match(notice, new RegExp(required));
-  assert.match(notice, /No solicitamos datos de salud ni datos personales sensibles/);
+  assert.match(notice, /Pueden revelar información de salud/);
+  assert.match(notice, /Este formulario de testers no solicita datos de salud/);
 });
 
 test('closed pilot still renders a disabled form preview', async () => {

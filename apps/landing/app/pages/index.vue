@@ -1,9 +1,10 @@
 <script setup lang="ts">
 const config = useRuntimeConfig();
-const patientUrl = String(config.public.patientUrl || '');
-const providerOrigin = String(config.public.providerUrl || patientUrl || '');
+const publication = config.public.publication;
+const patientUrl = String(publication.patientUrl || '');
+const providerOrigin = String(publication.providerUrl || '');
 const providerUrl = providerOrigin ? `${providerOrigin}/?provider=1` : '';
-const supportEmail = String(config.public.supportEmail || '');
+const supportEmail = String(publication.supportEmail || '');
 const ctaUrl = patientUrl || '#como-funciona';
 const ctaText = patientUrl ? 'Explorar la app' : 'Conoce cómo funciona';
 const shareStatus = ref('');
@@ -37,12 +38,12 @@ const faqs = [
   { question: '¿Necesito crear una cuenta para buscar?', answer: 'La búsqueda de pacientes está pensada para usarse sin registro. El acceso administrativo y el de proveedores son espacios separados y protegidos.' },
   { question: '¿Quién puede usar la app?', answer: 'Pruevia se declara dirigida a adultos en Google Play, pero la consulta pública no exige cuenta ni activa un bloqueo de edad. Un familiar puede usarla para ayudar a otra persona; la prueba cerrada de Android sí requiere tener 18 años o más.' },
   { question: '¿Cómo uso Pruevia mientras llega Android?', answer: 'Puedes abrir la app web desde cualquier navegador. En Android, usa el menú del navegador y elige “Instalar aplicación” o “Agregar a pantalla principal”; en iPhone usa Compartir y “Agregar a inicio”.' },
-  { question: '¿Cómo entra un proveedor?', answer: 'El acceso de proveedores es independiente de la búsqueda pública y requiere cuenta, confirmación de correo y segundo factor. Usa el enlace de proveedores del landing cuando esté configurado.' },
+  ...(providerUrl ? [{ question: '¿Cómo entra un proveedor?', answer: 'El acceso de proveedores es independiente de la búsqueda pública y requiere cuenta, confirmación de correo y segundo factor. Usa el enlace de proveedores del landing cuando esté configurado.' }] : []),
   { question: '¿Pruevia interpreta mi receta o mis resultados?', answer: 'Pruevia ayuda a identificar los nombres de los estudios y a encontrar opciones. No sustituye a tu profesional de salud ni interpreta resultados. Si una indicación es ambigua, te pediremos que la aclares.' },
 ];
 const description = 'Entiende qué estudios necesitas y encuentra opciones para realizarlos. Conoce Pruevia, la plataforma de búsqueda de estudios médicos que comienza en Puebla.';
 useSeoMeta({ title: 'Pruevia — Tu próximo paso, más claro', description, ogTitle: 'Tu próximo paso, más claro · Pruevia', ogDescription: description, ogType: 'website', ogLocale: 'es_MX', twitterCard: 'summary' });
-if (config.public.siteUrl) useHead({ link: [{ rel: 'canonical', href: String(config.public.siteUrl) }] });
+if (publication.siteUrl) useHead({ link: [{ rel: 'canonical', href: String(publication.siteUrl) }] });
 </script>
 
 <template>

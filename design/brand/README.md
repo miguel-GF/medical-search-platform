@@ -11,7 +11,8 @@ estudios. El nombre de la marca sigue siendo `Pruevia`.
 - `pruevia-symbol.svg`: versión monocromática sin contenedor; usa
   `currentColor` y conserva transparentes la `P` y las líneas.
 - `render_assets.py`: genera la versión compacta blanca sobre teal para favicon,
-  PWA, Android, iOS y splash del paciente.
+  PWA, Android, iOS y splash del paciente. En Android conserva el PNG heredado
+  y genera una capa adaptativa/monocromática dentro de la zona segura del sistema.
 
 Los PNG se regeneran desde la raíz con
 `python design/brand/render_assets.py`. Las propuestas P-ruta se conservan como

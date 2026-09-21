@@ -2,6 +2,11 @@
 
 Flutter Web/PWA, Android e iOS desde un solo codebase.
 
+El portal de proveedores falla cerrado mediante
+`--dart-define=PROVIDER_PORTAL_ENABLED=false` (valor predeterminado). Una build
+centrada en pacientes no muestra el acceso ni acepta `?provider=1`; habilitarlo
+es una liberación separada.
+
 La búsqueda pública no requiere cuenta y está dirigida a adultos para la
 declaración de Google Play; no se activa un bloqueo de menores. Un familiar puede
 usar la app para ayudar a otra persona. La prueba cerrada de Android sólo acepta
@@ -30,6 +35,12 @@ arbitrario por una configuracion equivocada.
 
 El feedback estructurado permanece desactivado por defecto y se habilita para
 una compilación concreta con `--dart-define=PRODUCT_FEEDBACK_ENABLED=true`.
+La analítica anónima y los clics salientes tienen un segundo gate de compilación,
+`--dart-define=ANALYTICS_ENABLED=true`; su valor predeterminado es `false` aunque
+exista una preferencia de consentimiento guardada.
+Las builds públicas deben incluir
+`--dart-define=PRIVACY_POLICY_URL=https://pruevia.com.mx/privacidad`; Ajustes sólo
+muestra soporte cuando `SUPPORT_EMAIL` contiene un correo válido y operativo.
 Para la variante cerrada de Android se usa además
 `--dart-define=PRUEVIA_CHANNEL=closed_android`; esa variante permite un comentario
 opcional sólo después de confirmar 18 años. El feedback público no solicita texto
@@ -41,10 +52,11 @@ enlace; nunca el texto buscado o una receta. Admin recibe agregados globales y e
 portal de proveedor sólo agregados dentro de una membresía activa verificada.
 
 `API_BASE_URL` debe apuntar al Worker/API desplegado. La búsqueda pública no
-requiere autenticación. El botón **Acceso para proveedores** es secundario y
-no convierte la pantalla inicial en un registro.
+requiere autenticación. El botón **Acceso para proveedores** sólo existe en
+compilaciones internas que habilitan explícitamente el portal.
 
-Para probar el portal de proveedores localmente usa `?provider=1` y declara los
+Para probar el portal de proveedores localmente añade
+`--dart-define=PROVIDER_PORTAL_ENABLED=true`, usa `?provider=1` y declara los
 valores públicos de Supabase y sus allowlists exactas (nunca la clave secreta):
 
 ```text

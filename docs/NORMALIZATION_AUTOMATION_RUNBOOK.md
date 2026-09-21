@@ -89,10 +89,10 @@ Pasos:
 1. Agregar el dominio a Cloudflare y verificar que sus DNS estén activos.
 2. En Email Routing, agregar y verificar la dirección de destino personal.
 3. Crear la regla `soporte@tudominio.com` → destino verificado.
-4. Configurar el landing con `NUXT_PUBLIC_SUPPORT_EMAIL`.
+4. Configurar el landing con `PRUEVIA_SUPPORT_EMAIL`.
 5. Si Pruevia debe enviar correos automáticos, contratar/configurar un servicio
    de envío separado; el reenvío de entrada no sustituye SMTP o una API de correo.
 
 No guardar contraseñas ni tokens en `apps/landing/.env` versionado. El valor de
-`NUXT_PUBLIC_SUPPORT_EMAIL` sí puede ser público porque sólo es una dirección de
+`PRUEVIA_SUPPORT_EMAIL` sí puede ser público porque sólo es una dirección de
 contacto.

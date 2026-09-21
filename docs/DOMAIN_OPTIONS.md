@@ -33,7 +33,7 @@ https://api.pruevia.<tld>/     Worker API
 
 La landing permanece independiente del API y no debe indexarse hasta configurar
 los destinos reales, revisar el aviso legal/contacto y activar explícitamente
-`NUXT_PUBLIC_INDEXABLE`. El Worker acepta actualmente el origen único heredado
+`PRUEVIA_INDEXABLE`. El Worker acepta actualmente el origen único heredado
 `ALLOWED_ORIGIN`; para `app` y `admin` distintos está preparada la opción
 `ALLOWED_ORIGINS`, que exige una lista exacta y HTTPS en producción. No se han
 creado DNS, rutas customizadas ni certificados en esta investigación.

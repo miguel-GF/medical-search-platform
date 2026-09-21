@@ -3,7 +3,7 @@ import { resolve } from 'node:path';
 import { publicApiUrl } from '../shared/site.mjs';
 
 const output = resolve('.output/public/_headers');
-const apiUrl = publicApiUrl(process.env.NUXT_PUBLIC_API_URL);
+const apiUrl = publicApiUrl(process.env.PRUEVIA_API_URL);
 const apiOrigin = apiUrl ? new URL(apiUrl).origin : '';
 const source = await readFile(output, 'utf8');
 const rendered = source.replace(

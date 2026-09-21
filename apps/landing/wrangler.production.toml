@@ -1,0 +1,13 @@
+name = "pruevia-landing"
+compatibility_date = "2026-09-20"
+workers_dev = false
+preview_urls = false
+
+[[routes]]
+pattern = "pruevia.com.mx"
+custom_domain = true
+
+[assets]
+directory = ".output/public"
+not_found_handling = "404-page"
+html_handling = "auto-trailing-slash"

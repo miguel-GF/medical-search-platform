@@ -1,0 +1,71 @@
+name = "pruevia-api"
+main = "src/index.ts"
+compatibility_date = "2026-09-20"
+workers_dev = false
+preview_urls = false
+
+[[routes]]
+pattern = "api.pruevia.com.mx"
+custom_domain = true
+
+# The scheduler remains fail-closed unless its three NORMALIZATION_* settings
+# are explicitly configured. Do not activate it as part of the public launch.
+[triggers]
+crons = ["17 * * * *"]
+
+[vars]
+API_VERSION = "v1"
+APP_ENV = "production"
+PROVIDER_DOCUMENTS_ENABLED = "false"
+SUPABASE_TIMEOUT_MS = "5000"
+ALLOWED_ORIGINS = "https://pruevia.com.mx,https://app.pruevia.com.mx"
+
+[[ratelimits]]
+name = "PUBLIC_RATE_LIMITER"
+namespace_id = "920001"
+
+  [ratelimits.simple]
+  limit = 60
+  period = 60
+
+[[ratelimits]]
+name = "REVIEW_CAPTURE_RATE_LIMITER"
+namespace_id = "920004"
+
+  [ratelimits.simple]
+  limit = 10
+  period = 60
+
+[[ratelimits]]
+name = "OCR_RATE_LIMITER"
+namespace_id = "920002"
+
+  [ratelimits.simple]
+  limit = 10
+  period = 60
+
+[[ratelimits]]
+name = "ADMIN_RATE_LIMITER"
+namespace_id = "920003"
+
+  [ratelimits.simple]
+  limit = 120
+  period = 60
+
+[[ratelimits]]
+name = "PROVIDER_RATE_LIMITER"
+namespace_id = "920005"
+
+  [ratelimits.simple]
+  limit = 60
+  period = 60
+
+[ai]
+binding = "AI"
+
+# Configure these with `wrangler secret put --config wrangler.production.toml`
+# only after confirming the production Supabase project and release approval:
+# SUPABASE_URL
+# SUPABASE_PUBLISHABLE_KEY
+# SUPABASE_SECRET_KEY
+# ADMIN_USER_IDS

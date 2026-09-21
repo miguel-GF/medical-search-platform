@@ -25,17 +25,25 @@ aviso legal integral para futuros registros, formularios o tratamiento de datos.
 
 ## Configuración y revisión previa a publicación
 
-`.env.example` documenta `NUXT_PUBLIC_SITE_URL`, `NUXT_PUBLIC_PATIENT_URL`,
-`NUXT_PUBLIC_PROVIDER_URL`, `NUXT_PUBLIC_SUPPORT_EMAIL`, `NUXT_PUBLIC_API_URL`,
-`NUXT_PUBLIC_INDEXABLE` y el gate de testers junto con los datos del aviso. Se
+`.env.example` documenta `PRUEVIA_SITE_URL`, el gate
+`PRUEVIA_PATIENT_APP_ENABLED`, `PRUEVIA_PATIENT_URL`, el gate
+`PRUEVIA_PROVIDER_ACCESS_ENABLED`, `PRUEVIA_PROVIDER_URL`,
+`PRUEVIA_SUPPORT_EMAIL`, `PRUEVIA_API_URL`, `PRUEVIA_INDEXABLE` y el gate de
+testers junto con los datos del aviso. Se
 toman al compilar; en hosting estático hay que regenerar
 para cambiar destinos. Sólo URLs HTTPS revisadas, sin credenciales, fragmentos
 ni parámetros. SITE_URL es un origen, no una subruta.
 
 Sin destinos, los CTA explican el producto dentro del sitio. `noindex` y robots
 impiden solicitar indexación del borrador, pero no son control de acceso. Con
-destinos comprobados, `INDEXABLE=true` requiere ambas URLs y genera sitemap.
-No asumir que `pruevia.com.mx` o `app.pruevia.com.mx` están comprados/publicados.
+el sitio comprobado, `INDEXABLE=true` genera sitemap.
+El acceso de proveedores falla cerrado. Definir una URL no basta para mostrarlo:
+también debe habilitarse explícitamente `PRUEVIA_PROVIDER_ACCESS_ENABLED=true`.
+La primera publicación centrada en pacientes debe conservarlo en `false`.
+La PWA usa el mismo patrón: su enlace sólo aparece con
+`PRUEVIA_PATIENT_APP_ENABLED=true`, una URL HTTPS y los tres datos de
+privacidad completos. Esto permite publicar primero un landing informativo sin
+abrir prematuramente el tratamiento de búsquedas u órdenes.
 
 Antes de publicación externa, presentar destino, configuración, contenido,
 implicaciones y resultados al usuario y esperar aprobación crítica. Comprobar
@@ -51,8 +59,8 @@ npm.cmd run generate
 ```
 
 Salida estática: `.output/public`, con home, privacidad, recursos y robots. El
-`sitemap.xml` sólo aparece cuando `NUXT_PUBLIC_INDEXABLE=true` y ambas URLs son
-destinos HTTPS revisados.
+`sitemap.xml` sólo aparece cuando `PRUEVIA_INDEXABLE=true` y el destino del sitio
+está revisado.
 `public/_headers` contiene headers para un host que soporte ese formato, como
 Cloudflare Pages. Verificar su aplicación real después del despliegue. CSP permite
 inline para hidratación Nuxt y limita `connect-src` al API configurado cuando el

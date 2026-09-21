@@ -27,7 +27,7 @@ de secretos; usa un gestor de secretos o las variables protegidas de CI.
 | API Cloudflare Worker | `apps/api/.dev.vars.example` | Supabase (publishable/secret), entorno, timeout, CORS, OCR y administradores | `apps/api/.dev.vars` |
 | Admin Vue | `apps/admin/.env.example` | `VITE_API_URL`, `VITE_API_ALLOWED_HOSTS` (obligatoria en produccion), `VITE_SUPABASE_URL`, `VITE_SUPABASE_ALLOWED_HOSTS` (obligatoria en produccion), `VITE_SUPABASE_PUBLISHABLE_KEY` | `apps/admin/.env.local` |
 | Patient Flutter/PWA | `apps/patient/.env.example` | `API_BASE_URL` | Flutter usa `--dart-define` (no carga `.env` por sí solo) |
-| Landing Nuxt | `apps/landing/.env.example` | destinos públicos, `NUXT_PUBLIC_API_URL`, `NUXT_PUBLIC_SUPPORT_EMAIL`, gate de testers y datos revisados del aviso | `apps/landing/.env` |
+| Landing Nuxt | `apps/landing/.env.example` | destinos públicos `PRUEVIA_*`, API, soporte, gates y datos revisados del aviso | `apps/landing/.env` |
 | OCR FastAPI | `apps/ocr-service/.env.example` | token, motor, límites y puerto | `apps/ocr-service/.env` |
 | Collectors Python | `collectors/.env.example` | DENUE, LOINC y DSN opcional de publicación | `collectors/.env` |
 | Correo de solicitudes de proveedores | `apps/document-scanner/.env.mail.example` | SMTP TLS, origen HTTPS del portal y Supabase secreto | gestor de secretos del job privado |
@@ -43,8 +43,16 @@ Para una compilación local del paciente con feedback visible, añadir
 `--dart-define=PRODUCT_FEEDBACK_ENABLED=true`. La variante cerrada de Android
 añade `--dart-define=PRUEVIA_CHANNEL=closed_android`; ambas son fail-closed si el
 Worker o el gate remoto no están activados. No poner datos legales inventados en
-el landing: `NUXT_PUBLIC_TESTER_INTAKE_ENABLED=true` sólo después de revisar
+el landing: `PRUEVIA_TESTER_INTAKE_ENABLED=true` sólo después de revisar
 responsable, domicilio, correo y versión del aviso.
+
+La analítica anónima y los clics tienen además el gate independiente
+`ANALYTICS_ENABLED`, desactivado por defecto. El portal de proveedores usa
+`PROVIDER_PORTAL_ENABLED`, también desactivado por defecto. En el landing,
+`PRUEVIA_PATIENT_APP_ENABLED` exige URL HTTPS y contacto de privacidad completo;
+`PRUEVIA_PROVIDER_ACCESS_ENABLED` es una liberación separada. Las entradas no
+usan el prefijo reservado `NUXT_PUBLIC_`: así Nuxt no puede sobreescribir el
+resultado validado del `runtimeConfig` después de aplicar los gates.
 
 En el Worker, Wrangler toma los valores locales desde `.dev.vars` y los secretos
 de producción deben cargarse con `wrangler secret put`. No se deben trasladar

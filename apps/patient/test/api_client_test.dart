@@ -88,7 +88,11 @@ void main() {
 
   test('telemetry is never sent without consent', () async {
     final client = _RecordingClient();
-    final api = PatientApiClient(baseUrl: 'https://api.test', client: client);
+    final api = PatientApiClient(
+      baseUrl: 'https://api.test',
+      client: client,
+      analyticsEnabled: true,
+    );
 
     await api.recordEvent(
       'search_completed',
@@ -100,11 +104,29 @@ void main() {
     api.close();
   });
 
+  test('release gate suppresses telemetry even when consent exists', () async {
+    final client = _RecordingClient();
+    final api = PatientApiClient(baseUrl: 'https://api.test', client: client);
+
+    await api.recordEvent(
+      'search_completed',
+      consentGiven: true,
+      anonymousId: '00000000-0000-0000-0000-000000000001',
+    );
+
+    expect(client.requests, 0);
+    api.close();
+  });
+
   test(
     'offer clicks send identifiers only when telemetry consent exists',
     () async {
       final client = _RecordingClient();
-      final api = PatientApiClient(baseUrl: 'https://api.test', client: client);
+      final api = PatientApiClient(
+        baseUrl: 'https://api.test',
+        client: client,
+        analyticsEnabled: true,
+      );
 
       await api.recordOfferClick(
         consentGiven: true,
@@ -141,7 +163,11 @@ void main() {
 
   test('never follows API redirects', () async {
     final client = _RecordingClient();
-    final api = PatientApiClient(baseUrl: 'https://api.test', client: client);
+    final api = PatientApiClient(
+      baseUrl: 'https://api.test',
+      client: client,
+      analyticsEnabled: true,
+    );
 
     await api.recordEvent(
       'search_completed',
