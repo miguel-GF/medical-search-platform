@@ -18,7 +18,7 @@ API_VERSION = "v1"
 APP_ENV = "production"
 PROVIDER_DOCUMENTS_ENABLED = "false"
 SUPABASE_TIMEOUT_MS = "5000"
-ALLOWED_ORIGINS = "https://pruevia.com.mx,https://app.pruevia.com.mx"
+ALLOWED_ORIGINS = "https://pruevia.com.mx,https://app.pruevia.com.mx,https://admin.pruevia.com.mx"
 
 [[ratelimits]]
 name = "PUBLIC_RATE_LIMITER"

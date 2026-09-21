@@ -1,9 +1,23 @@
 # ADR-003 — Publicación pacientes primero en pruevia.com.mx
 
-Estado: **propuesta crítica preparada; pendiente de aprobación explícita**.  
+Estado: **pacientes primero aprobado; Admin privado aprobado el 21-sep-2026 y pendiente de activación/verificación externa**.
 Fecha: 20-sep-2026.  
-Alcance: landing, PWA, API y preparación de prueba cerrada Android. No incluye
-Admin público, alta de proveedores ni apertura del portal de proveedores.
+Alcance: landing, PWA, API, Admin privado y preparación de prueba cerrada Android.
+No incluye alta de proveedores ni apertura del portal de proveedores.
+
+### Addendum 21-sep-2026 — Admin privado
+
+Se aprobó publicar `admin.pruevia.com.mx` sólo para el correo del operador
+aprobado, protegido por Cloudflare Access, sin enlace desde
+landing/PWA. La aplicación conserva Supabase Auth, `ADMIN_USER_IDS` y MFA
+TOTP/AAL2; esta barrera externa no sustituye esos controles. El API agrega el
+origen exacto del Admin a `ALLOWED_ORIGINS`. Proveedores, documentos,
+notificaciones e invitaciones siguen cerrados.
+
+La API se publicó el 21-sep-2026 como `pruevia-api`, versión
+`7c78e0bc-f538-45b1-8111-400a64dcd10a`. La comprobación real de `/health`, CORS
+de raíz/PWA/Admin y rechazo de un origen ajeno pasó. El Admin sigue pendiente
+únicamente de Access, su custom domain y la sesión real.
 
 ## Problema y evidencia
 
@@ -30,11 +44,12 @@ Safety, declaración de salud, política publicada ni un AAB aceptado por Play.
 | --- | --- | --- |
 | `https://pruevia.com.mx` | Landing estático y página informativa del piloto. | Sin enlace ni formulario de proveedor. |
 | `https://app.pruevia.com.mx` | PWA Flutter para búsqueda de pacientes. | `PROVIDER_PORTAL_ENABLED=false`; `?provider=1` no abre el portal. |
-| `https://api.pruevia.com.mx` | Worker público para búsqueda, feedback y estado del piloto. | Documentos cerrados; rutas protegidas conservan Auth/RLS, sin frontend publicado. |
+| `https://api.pruevia.com.mx` | Worker público para búsqueda, feedback y estado del piloto. | Documentos cerrados; rutas protegidas conservan Auth/RLS. CORS acepta también el Admin privado. |
+| `https://admin.pruevia.com.mx` | Operación interna de catálogo, evidencia, calidad y cohorte. | Cloudflare Access sólo para el operador aprobado; Supabase MFA y allowlist siguen siendo obligatorios. |
 
-No se publicarán `admin.pruevia.com.mx`, un subdominio de proveedores ni una
-convocatoria de proveedores. El código interno se conserva para una liberación
-posterior con otra aprobación.
+No se publicará un subdominio de proveedores ni una convocatoria de
+proveedores. El Admin sí se publicará como superficie privada, separada del
+tráfico paciente y sin enlaces públicos.
 
 Se usarán Workers con Static Assets en vez de Pages: Cloudflare crea DNS y TLS al
 desplegar cada Custom Domain, el landing se sirve como SSG y la PWA usa fallback
@@ -50,14 +65,16 @@ límites gratuitos de la cuenta.
    producción, porque contiene el catálogo vigente; el desarrollo posterior se
    ejecutará localmente. No se crea por anticipación otro servicio pagado.
 4. Publicar el Worker `pruevia-api` con secretos cargados fuera de Git y CORS
-   limitado a raíz y `app`.
-5. Publicar primero el landing sin enlace a la PWA; después de completar el aviso,
+   limitado a raíz, `app` y `admin`.
+5. Configurar Cloudflare Access para `admin.pruevia.com.mx` y publicar el
+   Admin sólo después de verificar la política Allow del operador.
+6. Publicar primero el landing sin enlace a la PWA; después de completar el aviso,
    publicar la PWA sin feedback ni analítica y comprobar TLS, headers, rechazo
    CORS, búsqueda, receta parcial y ausencia del portal.
-6. Activar indexación del landing sólo tras comprobar todos sus enlaces.
-7. Mantener cerrado el formulario Android hasta publicar responsable, domicilio,
+7. Activar indexación del landing sólo tras comprobar todos sus enlaces.
+8. Mantener cerrado el formulario Android hasta publicar responsable, domicilio,
    correo de privacidad y aviso integral revisado.
-8. Generar el AAB firmado y completar la ficha cerrada de Play en paralelo; no
+9. Generar el AAB firmado y completar la ficha cerrada de Play en paralelo; no
    iniciar Día 1 hasta reunir y activar las 20 personas según D-015.
 
 ## Impacto
@@ -66,8 +83,9 @@ límites gratuitos de la cuenta.
 - La raíz, la PWA y el API pasarán a estar expuestos públicamente con TLS.
 - El catálogo remoto actual se convierte en fuente productiva; sus cambios ya no
   deben tratarse como ensayos DEV.
-- El Admin seguirá local/no publicado. Los endpoints administrativos mantienen
-  autenticación y MFA, pero no se enlazan desde superficies públicas.
+- El Admin se publicará en un hostname separado, protegido por Access y sin
+  enlaces desde superficies públicas. Los endpoints mantienen autenticación,
+  allowlist y MFA.
 - Proveedores no podrán registrarse ni abrir su portal desde la build pública.
 - La prueba Android puede prepararse en paralelo, pero su recolección y envío de
   invitaciones dependen del aviso y contacto legítimos.
@@ -113,7 +131,7 @@ Después de aprobación, la publicación se acepta sólo si:
 - búsqueda y receta parcial funcionan contra `api.pruevia.com.mx`;
 - CSP, HSTS, `nosniff`, permisos y caché se observan en respuestas reales;
 - no hay formulario de testers activo sin los datos legales revisados;
-- no se publicó Admin ni se enviaron invitaciones;
+- Admin está protegido por Access, no aparece enlazado y no se enviaron invitaciones;
 - se registra versión de cada Worker y timestamp.
 
 Para Android, el script `scripts/build_closed_android.ps1` falla si no encuentra
