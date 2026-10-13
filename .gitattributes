@@ -1,0 +1,2 @@
+# Reviewed fixtures are pinned by byte hash; preserve historical LF/CRLF bytes.
+/database/data/*.json -text
