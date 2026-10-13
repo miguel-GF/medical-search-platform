@@ -1,13 +1,169 @@
 # Estado y prioridades de Pruevia
 
-Tipo: punto de continuidad. Revisado el 21-sep-2026 sobre el árbol local, el
-ledger remoto enlazado y los Workers DEV/producción. Las migraciones de
-feedback, cohorte y analítica de clics están aplicadas en DEV. El Worker de
-producción ya sirve `api.pruevia.com.mx` con scheduler fail-closed y CORS exacto;
-los frontends públicos aún no están publicados.
+Tipo: punto de continuidad. Actualizado el 13-oct-2026 para operación local y datos;
+el corte de publicación siguiente corresponde al 25-sep-2026 sobre el árbol local, el
+ledger Supabase y los Workers de producción. El proyecto enlazado se llama
+`pruevia-dev`, pero también es la base inicial de producción: las migraciones
+aplicadas allí afectan el catálogo público. Landing, PWA, API y Admin privado se
+habían publicado en sus dominios finales. Desde el 25-sep-2026 la API, la PWA y
+el Worker Admin están pausados; sólo el landing permanece activo. Proveedores,
+feedback, analítica y registro Android continúan cerrados.
 Los datos de septiembre citados abajo son cortes de evidencia, no contadores en vivo.
+Advertencia de entorno: el proyecto Supabase enlazado se llama `pruevia-dev`, pero
+la [decisión de publicación](ADR-003-PATIENT-FIRST-PUBLICATION.md) lo usa como
+base inicial de producción. Una escritura o migración allí afecta datos que
+podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
+
+**Operación local y datos (13-oct-2026):** con autorización expresa se reanudó
+la misma base productiva enlazada, encontrada `INACTIVE`; quedó `ACTIVE_HEALTHY`,
+PostgreSQL 17.6, ledger 112. API/Admin/Paciente corren en localhost
+8787/5173/8080 y respondieron `200`. Se cargó la descarga oficial DENUE Puebla
+del 20-may-2026: 13,747 establecimientos de salud, 217 municipios y 69,426
+observaciones, comprobados en la base tras 157 lotes. Es evidencia de identidad,
+no cobertura de estudios. Se investigaron y aprobaron 309 aliases exactos y 271
+conceptos ausentes, cerrando 2,286 filas del crawler; quedan 4,742 filas en 860 grupos.
+Se añadieron treinta marcas/instituciones en verificación y 65 sedes pendientes: Gubia, ROSMA,
+Robert Koch, CEDITSA, Cervantes, Biomédicos, Mexica, IB, CEEAD, Páez, GARDITEX,
+Betania, Hospital Angeles, MAC, Hospital Puebla, Beneficencia Española,
+IMSS-Bienestar, ISSSTE, Samalab, Omega, LAC, Hospital Independencia, Sanatorio Humboldt,
+Bio-Velab, Medic Scanner, Tlatlauquitepec, Unidad Hospitalaria La Paz, Hospital
+Guadalupe de Puebla, Hospital Vilaseca Esparza y Laboratorio Clínico de Tepeaca.
+Ahora hay 68 marcas y 152 ubicaciones registradas. Zacatlán
+se enlazó a IMSS-Bienestar existente, conservando íntegra esa marca. No hubo
+nuevas ofertas, capturas comerciales, migraciones ni despliegues de Workers.
+Un ejecutor local vigila cada cinco minutos la cola de lotes investigados fijados
+por hash; aplicó y verificó las revisiones 08–37, incluida la sustituta de 32.
+209 conceptos nuevos conservan muestra desconocida; dos conservan secreción
+mamaria o exudado uretral literales sin código específico. Sesenta tienen código
+de muestra. Veintinueve entradas de SEMIN conservan su suero explícito y 232
+entradas de Salud Digna la familia sangre en RAW/decisión.
+Cuatro entradas SEMIN conservan sangre total en su guard RAW: sirolimus, mercurio
+con su cadena original `Sngre`, Coombs directo y HLA-B27; las dos últimas registran
+sólo la familia sangre. Sin código de sangre total ni suero inferido.
+Una entrada TGO/AST de SEMIN continúa abierta por contradicción de muestra;
+también ocho entradas calcio sin forma y una testosterona sin fracción.
+Cuarenta filas de digoxina, valproato, carbamazepina, fenitoína y oxcarbazepina
+siguen abiertas por fracción libre/total o analito/metabolito sin precisar.
+Se conserva su RAW sin corregirlo por inferencia. T3 libre tiene concepto y
+decisiones guardados, pero un guard histórico sigue bloqueando su búsqueda;
+la corrección del contrato se prepara por separado sin activarla. Las revisiones
+14–16 resolvieron 61/61 consultas locales exactas; antiendomisio IgG devuelve
+`ambiguous` con un candidato IgA incompatible, registrado para corregir el
+filtro clínico antes de afirmar que todas las variantes están conservadas.
+El [diagnóstico y propuesta de inmunoglobulinas](proposals/20261011-antibody-variant-candidates.md)
+documenta la causa en v1–v6 y contiene diff exacto y recuperación preparados,
+sin ejecutar, para 25 componentes canónicos elegibles. Las revisiones 17–18 resolvieron 43/43 consultas
+exactas. Las revisiones 19–20 resolvieron 26/26 exactos; toxoplasma IgA
+incluye IgG incompatible bajo estado ambiguo. La revisión 21 cerró 66 filas y
+resolvió 17/17 consultas exactas; ciclosporina C2 selecciona el analito genérico
+sin representar el momento C2. La variante AFP-L3 selecciona
+erróneamente AFP genérica: el
+[diff y recuperación](proposals/20261011-afp-l3-candidate-conflict.md) están
+preparados, sin activar el cambio crítico. No se activó ningún cambio del resolver.
+El ejecutor se detuvo al encontrar un contexto histórico ya cerrado de PSA;
+se corrigió el guard del renderer para comprobar sólo crawler sin decisión final,
+se confirmó rollback de exactamente 83 filas y después commit/ledger del lote 18.
+El 11-oct se recuperaron los procesos detenidos: las tres apps respondieron `200`
+y se confirmó el PID/comando vivo de la cola. Se instaló un acceso de inicio de
+sesión Windows para el usuario actual; no se ha observado aún otro inicio de sesión.
+Las revisiones 22–23 cerraron 161 filas con veinte conceptos/aliases y
+resolvieron 40/40 consultas exactas. Treinta y dos filas permanecen abiertas
+por factor VIII antigénico, órdenes combinadas y APOE sin tipo de medición.
+Cromogranina B incluye A y troponina T incluye I bajo estado ambiguo;
+osteocalcina N-MID selecciona el analito genérico sin representar el fragmento.
+[Diagnóstico de variantes](proposals/20261011-laboratory-variant-candidates.md),
+sin activar cambios del resolver.
+Las revisiones 24–26 añadieron 22 conceptos y 24 aliases, cerraron 169 filas
+y resolvieron 46/46 consultas exactas locales. Siete conceptos conservan muestra
+explícita (tres heces, tres orina y uno suero); quince mantienen matriz exacta
+desconocida. CH50 conserva naturaleza funcional; C5 no elige actividad/concentración.
+Osmolaridad mantiene la denominación literal de la fuente: propiedad, método y
+equivalencia con osmolalidad no aprobados. SEMIN conserva suero/plasma/heces/orina
+por contexto; mercurio conserva `Sngre total con EDTA. Refrigerado` literalmente.
+Se corrigió y auditó una herencia accidental de atributo entre proveedores, sin
+repetir el lote ni modificar su destino. Renderer: atributos independientes por
+target y soporte de heces ya existentes. Resolver clínico sin cambios.
+Las revisiones 27–29 añadieron catorce conceptos y dieciséis aliases, cerraron
+128 filas y resolvieron 30/30 consultas exactas. IA-2 comparte sus dos etiquetas;
+Scl-70 conserva IgG explícita; GABA-B conserva suero y AChR conserva unión,
+bloqueo o modulación escritos. Trece conceptos mantienen matriz desconocida.
+Ocho AChR genéricos y ocho GAD sin isoforma siguen pendientes; MOG y aquaporina
+requieren investigación propia. Scl-70 IgM incluye IgG y GABA-A incluye GABA-B
+bajo estado ambiguo: diagnóstico guardado, sin activar el filtro clínico.
+El renderer respeta el límite existente de nota de alias de 1,000 caracteres:
+si el motivo completo excede ese espacio, la nota referencia la auditoría, que
+conserva íntegramente la razón investigada. Hashes, SQL, controles y ledger se
+revalidaron antes de reiniciar el ejecutor terminal; no se debilitó la restricción.
+Las revisiones 30–31 cerraron 109 filas con trece conceptos y quince aliases.
+Cinco aliases de proveedor conservan muestra/duración presentes sólo en preparación:
+17-KS, 5-HIAA, VMA y cortisol libre. Los nombres completos y aliases globales
+resolvieron 23/23 consultas públicas; los cinco contextualizados resolvieron 5/5
+en el resolver interno con proveedor. La ruta pública no acepta ese contexto y
+conserva `no_match` para esos títulos incompletos; no cambiar el contrato para
+forzar cobertura. VMA no elige adulto 24H o niño casual; renina conserva actividad,
+LDL/VLDL método desconocido y Coombs directo no se convierte a columna.
+Setenta y seis vecinos retienen sus UUID pendientes por variante, fracción o panel.
+Bio-Velab añadió tres sedes y Medic Scanner dos con discrepancias gubernamentales
+conservadas; Innovalab sigue retenido por domicilio incompatible.
+Se recuperaron las tres apps (HTTP 200) y la cola viva PID 13072. El arranque ahora
+detecta también `pythonw.exe`, evitando lanzar otro ejecutor sin ventana.
+Las revisiones 32 corregida/33 cerraron 138 filas con diecisiete conceptos y
+diecinueve aliases. Se preservan citologías, cultivo genérico, toxinas A+B
+conjuntas, antígenos frente a anticuerpos y reticulina/ASCA IgA/IgG escritos.
+33/33 consultas públicas completas/globales y 3/3 internas con proveedor
+resolvieron. Sesenta vecinos conservaron exactamente sus UUID pendientes.
+El ensayo inicial 32 se detuvo: el nombre nuevo de Giardia habilitaba un SEMIN
+no investigado. Ledger sin aplicar; se leyó ese contexto, se preservó el fixture
+original y una revisión sustituta de 74 filas pasó rollback/commit/ledger.
+El preparador reutilizable comprueba nombres canónicos nuevos además de aliases,
+sin retirar el guard de alcance. Tlatlauquitepec añadió tres sedes y La Paz una:
+5C/SN y Acatlán 24 frente a Reforma Sur 92 conservados, todas pending.
+Cola recuperada tras causa identificada y proceso anterior ausente: PID 2044,
+27 entradas fijadas por hash; sin cambios del resolver. HBe abreviado aún incluye
+superficie y anticuerpos bajo ambiguo; Cdiff PCR/B sola conserva candidatos
+toxinasA+B bajo no_match. No afirmar protección completa de variantes.
+La investigación sigue a cargo del
+agente: el ejecutor no decide casos nuevos por una puntuación ni aprueba borradores.
+El usuario delegó investigar y decidir equivalencias claras; conservar y escalar
+la ambigüedad real. Detalle, fuentes, límites y siguiente trabajo:
+[operación Puebla](PUEBLA_LOCAL_OPERATION_20261009.md), [D-021/D-022](DECISIONS.md).
+
+**Memoria y APIs, 13-oct local/UTC:** memoria shadow v2 recompilada contra
+37 revisiones: 309 aliases, 328 contextos proveedor/alias y 2,286 filas.
+El plan reconoce 2,283 históricos y conserva tres con campos desconocidos.
+Pendientes: 4,742 filas en 860 trabajos, 4,658 necesitan evidencia y 84 tienen
+campos no contemplados. No mide éxito en términos inéditos. El título literal
+de proveedor forma parte de la firma clínica; no se activó investigación
+automática inédita ni API comercial. API/Admin/Paciente HTTP 200 y cola PID 2044
+con comando vivo comprobados; treinta y una entradas explícitas fijadas por hash.
+El catálogo se puede reutilizar entre estados; cada fuente/sede/oferta conserva
+su contexto y evidencia comercial propios.
+[Implementación, alternativas, recibos y límites](proposals/20261011-normalization-memory-and-apis.md).
+
+**Último cierre, revisiones 34–37 e identidad 13 (13-oct, 13:01 UTC):** 221 filas,
+28 conceptos y 31 aliases nuevos; antígeno SARS-CoV-2 y lactato reutilizaron
+identidades existentes sin modificar sus metadatos. Cincuenta consultas públicas
+y once internas de proveedor resolvieron al ID esperado. Se conservan VIH/VPH
+sin definición, CA21.1/S100 sin diana/subtipo y clearance de dos muestras sin
+representación suficiente; no se completan con referencias externas. Inhibina A
+y SCC conservan suero literal; creatinina matutina no se convierte en 24 horas.
+El helper respeta el alcance por proveedor y conserva los ocho RAW Salud Digna
+de sangre oculta que carecen de definición, aunque el contexto SEMIN se resolvió.
+Guadalupe/Vilaseca conservan website NULL con incertidumbre explícita; Tepeaca
+conserva GET 403 y DOM público, sin atribuirle HTTP 200 ni propiedad legal.
+Triages completos: 828 brechas, 32 sugerencias, 860 retenciones por política y
+26 fuentes oficiales sin verificar. Sin ofertas, migraciones o cambios del resolver.
+Commits locales por sección autorizados por el usuario: herramientas y datos
+históricos ya guardados; las fixtures conservan bytes LF/CRLF mediante Git.
+
+**Pausa de producción (25-sep-2026):** aprobación explícita del usuario. El
+landing `pruevia.com.mx` permanece activo; `app.pruevia.com.mx` redirige al
+landing; todas las rutas de `api.pruevia.com.mx` responden `503`; Admin conserva
+Cloudflare Access y su Worker redirige después de autenticarse. No se tocaron
+Supabase ni sus datos. Las versiones, límites y recuperación están en
+[D-020](DECISIONS.md) y en el historial de despliegue de abajo.
 
 `Implementado` indica código presente; `verificado` exige evidencia de la prueba y
 su alcance; `desplegado` exige entorno y versión comprobados; `pendiente` necesita
@@ -16,17 +172,19 @@ trabajo; `bloqueado` necesita una condición externa identificada. No son sinón
 | Capacidad | Estado respaldado y evidencia | Límite / siguiente acción |
 | --- | --- | --- |
 | Búsqueda, resolución, paquetes y OCR | Implementados: [Worker](../apps/api/src/app.ts), [tipos](../apps/api/src/types.ts), [tests](../apps/api/tests). El resolver conserva sufijos explícitos como `en ayuno` en `preparation_note` sin inferencia clínica. | Revalidar el entorno de la prueba y medir recetas; tener rutas no prueba cobertura suficiente. |
-| Paciente Flutter Web/PWA | Implementado: [app](../apps/patient/lib/main.dart), [comandos](../apps/patient/README.md). La build pacientes primero compila contra `api.pruevia.com.mx` con proveedores, analítica y feedback cerrados; el acceso `?provider=1` también exige gate. Cuando la analítica está cerrada, el onboarding no pide consentimiento y Ajustes muestra el gate como desactivado. | El artefacto local pasó análisis, 29 pruebas y build web; aún no está publicado. La apertura de PWA exige contacto/aviso completo y aprobación de [ADR-003](ADR-003-PATIENT-FIRST-PUBLICATION.md). |
-| Feedback y prueba cerrada Android | Implementados en DEV: endpoints Worker, esquema aislado `research`, formulario de testers, feedback estructurado en Patient y cola/triage en Admin. La cohorte está cerrada y en `0/20`; al abrirla seguirá `registro → invitación simultánea → 20 activos → Día N/21`. No envía correos automáticamente ni inicia el reloj al registrarse. La prueba cubre Puebla, San Andrés Cholula, San Pedro Cholula, Cuautlancingo, Coronango y Amozoc. Las migraciones `20260918100000` y `20260919100000` están aplicadas; sus contratos remotos pasaron `22/22` cada uno. El usuario informó que Play Console ya fue pagado y existe un [runbook de pista cerrada](ANDROID_CLOSED_TEST_RUNBOOK.md). | Faltan nombre/domicilio autorizados, correo verificado, enlace real de Play y upload key. Las cuatro variables de firma no existen en este entorno; no se generó AAB ni se enviaron invitaciones. La audiencia es 18+ sin bloquear menores y el registro exige 18+. |
-| Clics hacia proveedores | Implementado y desplegado en DEV: evento estructurado por oferta/estudio/sucursal/acción, consentimiento de analítica del paciente, agregados globales en Admin y panel limitado por membresía en Proveedores. No se guardan consultas, recetas ni diagnósticos; los proveedores no reciben IDs anónimos ni datos de competidores. El contrato remoto pasó `22/22` y privilegios `30/30`; el tablero inicia en cero. | Falta validar visualmente ambos paneles con sesiones reales Admin/proveedor y publicar frontends HTTPS DEV. La prueba SQL acredita el aislamiento por membresía, no una sesión real de interfaz. |
-| Admin con temas, filtros y MFA | Implementado: [Admin](../apps/admin/src/App.vue), [filtros](../apps/admin/src/components/TableFilters.vue), [Auth](../apps/admin/src/auth.ts). El artefacto de producción y el custom domain `admin.pruevia.com.mx` quedaron preparados para una superficie privada exclusiva del operador. | Falta configurar/verificar Cloudflare Access, asociar DNS, publicar API/Admin y probar sesión real; ver [publicación privada](ADMIN_PRIVATE_PUBLICATION.md). |
+| Paciente Flutter Web/PWA | La versión funcional anterior era `303acaac-c5d0-4f39-a9ae-7e63ea1b5d31`. Desde el 25-sep el Worker `pruevia-patient` está en `928c5957-4457-470f-b765-cd96a86e87ea` y redirige todas las rutas a `https://pruevia.com.mx/`; no sirve Flutter, manifest ni assets. El shell previamente instalado puede persistir en caché del dispositivo, pero la API está pausada. | Al reanudar, restaurar la versión anterior. No se puede borrar remotamente el caché ya instalado; solicitudes nuevas de API siguen sin servicio. |
+| Normalización autónoma | Corte 12-oct: 244 aliases investigados, 213 nuevos conceptos y 1,818 decisiones exactas aplicadas bajo revisión delegada; cola 5,210 filas / 929 grupos. Catálogo: 402 conceptos activos. Incluye cuatro aliases limitados al proveedor radiográfico, con contexto RAW comprobado al aplicar. De los conceptos nuevos, 44 conservan muestra explícita y 169 reconocen sólo el analito con muestra desconocida; los atributos explícitos de cada fuente se conservan en RAW/decisión. Sin mappings LOINC ni métodos inferidos. T3 libre sigue bloqueado; 41/43 consultas de las revisiones 12–13, 61/61 de 14–16, 43/43 de 17–18 y 26/26 de 19–20 y 17/17 de 21 y 40/40 de 22–23 y 46/46 de 24–26 y 30/30 de 27–29 resolvieron el ID esperado. Antiendomisio IgG incluye IgA incompatible y toxoplasma IgA incluye IgG; AFP-L3 selecciona erróneamente AFP genérica; ciclosporina C2 devuelve el analito genérico sin representar el momento C2. Cuarenta filas de fármacos siguen abiertas por fracción/metabolito inciertos. Cromogranina B incluye A y troponina T incluye I bajo estado ambiguo; osteocalcina N-MID pierde especificidad de fragmento. Scl-70 IgM incluye IgG y GABA-A incluye GABA-B bajo ambiguo. Propuestas clínicas separadas, sin activar. Ejecutor local activo: cola explícita por hash, ledger remoto, rollback y commit acotado; revisiones 08–29 aplicadas y verificadas. Suite remota previa: 31 contratos / 531 aserciones; no se repitió en este corte. [Revisión, recibos y alcance](PUEBLA_LOCAL_OPERATION_20261009.md). | Investigar y encolar siguientes lotes; conservar diferencias clínicas y fuentes. El ejecutor necesita el equipo/proceso activos y no investiga términos nuevos. Cron remoto apagado; políticas comerciales continúan `review_required`. |
+| Feedback y prueba cerrada Android | Backend, esquema `research`, formulario y triage están implementados en el proyecto enlazado. Antes de la pausa, el registro de testers y feedback estaban desactivados y el API confirmaba cohorte cerrada `0/20`; hoy el API no está disponible. No se enviaron correos ni invitaciones ni inició el reloj. | Falta enlace real de Play, upload key, AAB, ficha/declaraciones y aprobación separada para abrir reclutamiento. Audiencia Android: 18+; la futura app pública no activa bloqueo de menores. |
+| Clics y captura de búsqueda | El registro de clics/proveedores sigue cerrado. La versión funcional anterior del API `c07c62a6-0c08-4226-a141-9f909e4445c8` tenía `PUBLIC_SEARCH_REVIEW_CAPTURE_ENABLED=false`; la versión de pausa actual `d8090ae6-dc38-4575-9cfe-0ced6b6826a9` devuelve `503`, por lo que la PWA no puede enviar nuevas búsquedas. Antes del kill switch, una consulta agregada read-only contó 11 filas históricas (8 `no_match`, 2 `ambiguous`, 1 ya resuelta); no se leyeron términos ni se borraron filas. | No borrar las 11 filas ni reactivar captura sin decisión explícita; antes de volver a operar, revisar que el aviso describa con precisión el periodo histórico. Ver D-019 y D-020. |
+| Admin con temas, filtros y MFA | El Worker anterior era `4b16c144-bca9-4518-91c7-514036130181`. Desde el 25-sep está en `62fe579e-55d7-4021-bb7b-3c0c915989a0`; tras Cloudflare Access redirige al landing y no sirve assets Admin. El acceso sigue protegido por Access. | Restaurar la versión anterior sólo con aprobación para reanudar la operación. La solicitud anónima aún responde `302` al login de Access porque el control se aplica antes del Worker. |
 | Documentos de proveedores | Configuración versionada cerrada por defecto; ver [cierre](../database/supabase/migrations/20260908100000_internal_document_freeze.sql) y [Worker](../apps/api/wrangler.toml). | No reabrir sólo cambiando una variable; necesita propuesta crítica y revisión coordinada. |
 | Reclamación de perfiles | Flujo local implementado: expediente privado, estados, revisión Admin, comprobación de contacto, outbox de correo, solicitudes de privacidad y control de revisión; [referencia](PROVIDER_CLAIM_WORKFLOW.md). Contrato SQL local pasó. | `provider_intake_settings.enabled` y documentos siguen cerrados; faltan responsable legal, aviso integral, SMTP y verificación del destino antes de abrir. No se aplicaron estas migraciones al proyecto remoto. |
-| Collectors | Adaptadores presentes para DENUE, Chopo, Ruiz, Salud Digna, SEMIN, Dr. Simi, Linfolab y genérico. [Entrypoints](../collectors/pyproject.toml). | Eficacia y frescura varían por fuente; ver [cobertura](PUEBLA_PROVIDER_COVERAGE.md). |
+| Collectors | Corte 12-oct: ZIP oficial DENUE, sin token; 13,747 registros / 69,426 observaciones capturadas en `ingest`, fuente aprobada por licencia, corrida `succeeded`. Incluye 1,249 laboratorios y 322 hospitales. Diez revisiones separadas enlazaron 53 sedes pendientes de veintitrés nuevas marcas/instituciones, conservando 53 observaciones derivadas; no crearon ofertas. La revisión 07 conservó íntegra IMSS-Bienestar al añadir Zacatlán; la 08 incorporó Samalab y Omega con tres sedes pending, manteniendo 709 A y SN originales. La 09 incorporó LAC con dos sedes pending (11271977/3320300), conservando SN y discrepancias web 82/mapa 28. La 10 añadió Independencia y Humboldt, conservando 209, interior 22223 y MIGUEL ALEMANA; sitio Humboldt sólo candidato estatal. Rollback/commit, observaciones y auditoría comprobados. [Cobertura](PUEBLA_PROVIDER_COVERAGE.md). | Reconciliar siguientes identidades y comprobar estudios/sedes; 61 marcas y 140 ubicaciones no equivalen a cobertura comercial. Se conservan discrepancias de domicilio/CP; no se completaron por inferencia. El cron mensual continúa desactivado; fuentes comerciales permanecen `review_required`. |
 | CI y despliegue DEV | Workflows presentes en [.github](../.github/workflows). | No se verificó aquí configuración de GitHub, ejecución reciente ni versión remota. |
-| Landing SEO | Implementado localmente en `apps/landing` con Nuxt 4, generación estática, privacidad, robots/sitemap condicionado y headers. La configuración pacientes primero aísla el build de `.env` locales, usa entradas validadas `PRUEVIA_*` y mantiene PWA, proveedores, soporte y testers cerrados. | El artefacto pasó 9 pruebas, typecheck, generación y revisión de marcadores prohibidos. Aún no está publicado; espera aprobación crítica. |
+| Landing SEO | Sigue publicado como `pruevia-landing`, versión `fdbd3693-c018-4ef6-a02c-ce77cd15a6ca`, y respondió `200` después de la pausa. Se ocultaron los enlaces a la app en el HTML, se mantuvo la llamada de explicación, privacidad y sitemap. | El formulario de testers permanece desactivado y la cohorte en `0/20`; revisar móvil real y Search Console. Indexación habilitada no garantiza aparición inmediata. |
 | Identidad visual | Implementada localmente: libro abierto con P y líneas de orden, favicon de landing/admin, marca inline en Vue/Flutter, iconos PWA, Android/iOS y splash del paciente; Android incluye recursos heredados, adaptativos y monocromáticos dentro de la zona segura; [fuentes y renderer](../design/brand/README.md). | La variante Android compiló en debug; no se publicaron aplicaciones e iOS no se compiló en este entorno Windows. Los iconos funcionales de ubicación se conservaron deliberadamente. |
-| Dominio Pruevia | `pruevia.com.mx` fue comprado según el usuario y sus nameservers Cloudflare se verificaron el 20-sep-2026. La propuesta usa raíz para landing, `app` para PWA, `api` para Worker y `admin` para operaciones privadas; proveedores permanecen cerrados. API ya tiene custom domain y health `200`; los dry-runs de API y Admin pasan. | La raíz, `app` y `admin` aún no tienen asociación pública verificada. Falta aplicar Access al Admin, publicar Admin y frontends, y completar verificación coordinada. |
+| Dominio Pruevia | Después de la pausa: landing `200`; `app` `302` a landing; API `503` tanto en `/health` como en una ruta de búsqueda; Admin anónimo `302` a Cloudflare Access. No se modificaron DNS ni políticas Access. | El API permanece fuera de servicio; no se verificó Admin con sesión autenticada del operador. |
+| Aviso de privacidad | `https://pruevia.com.mx/privacidad/` responde `200`; usa identidad y domicilio cargados desde variables locales ignoradas por Git. El contenido publicado debe revisarse desde el navegador antes de compartirlo; no copiar los valores personales a logs/docs. | El operador expresó preocupación previa por hacer público su domicilio. La página ya está publicada; si decide retirarlo, preparar una corrección explícita y volver a desplegar. |
 | Correo de contacto | Cloudflare Email Routing está activo para `pruevia.com.mx`; `contacto@pruevia.com.mx` reenvía a un destino privado verificado. El catch-all permanece desactivado con acción `drop`; los tres MX y los TXT SPF/DKIM se publicaron. | Falta enviar una prueba desde una cuenta distinta y confirmar recepción real antes de presentarlo como canal comprobado. No hay buzón saliente, notificaciones ni automatizaciones. |
 
 ## Estado del ledger remoto
@@ -36,8 +194,17 @@ La consulta `npx.cmd supabase@2.116.0 migration list --linked` del
 El 21-sep-2026 se publicó `pruevia-api` en producción con versión
 `7c78e0bc-f538-45b1-8111-400a64dcd10a`; `/health` respondió `200` mediante el
 custom domain y la prueba real aceptó raíz, PWA y Admin, rechazando un origen
-ajeno con `403`. El Admin no se abrió porque la sesión OAuth disponible no tiene
-`Access: Apps and Policies Write` para crear su barrera externa.
+ajeno con `403`. El 22-sep-2026 el operador creó manualmente la aplicación Access
+para `admin.pruevia.com.mx`, asociada a la política `Solo Miguel`, y se publicó
+`pruevia-admin`; la revisión actual de interfaz corresponde a la versión
+`fb7e18c8-5a2e-40df-8448-6ff172932597`. DNS público resolvió
+el custom domain y una petición anónima obtuvo `302` hacia Cloudflare Access antes
+de recibir assets. El operador completó después la sesión interactiva y mostró el
+Admin con datos del API; la primera carga presentó un aviso transitorio de conexión
+que se recuperó y no impidió la lectura. La PWA se publicó como `pruevia-patient`
+y su corrección CSP/explorador corresponde a `eb00d88e-598f-4955-a1ea-6f6570829d6e`; el landing indexable quedó como
+`pruevia-landing` versión `9562dd9e-f363-4bc1-b10a-65173a9f013c`. Las respuestas
+públicas comprobaron enlaces, aviso, headers, sitemap y el piloto cerrado.
 Los contratos remotos de feedback y cohorte/clics pasaron `22/22` cada uno, y
 el contrato de privilegios pasó `30/30`. El Worker `pruevia-api-dev` se publicó
 con versión `1dae2f0f-655d-40f0-abab-3fbcedb4abe4` y trigger `17 * * * *`.
@@ -47,6 +214,91 @@ escrituras automáticas. Mientras no exista un frontend HTTPS DEV,
 estado público del piloto responden `200`, un origen ajeno recibe `403` y las
 rutas Admin/proveedor responden `401` sin token. El piloto devuelve cohorte
 cerrada, `0/20`, duración 21 días y sin fecha de inicio; no se enviaron avisos.
+El 24-sep-2026 se aplicaron en `pruevia-dev` las cuatro migraciones aditivas
+preparadas para esta fase: grupos/cola de normalización, sugerencias ortográficas,
+reprocesamiento exacto para el crawler y sugerencias de abreviaturas como `BH`.
+El dry-run remoto confirmó `111/111` y ninguna migración pendiente. Los 30
+contratos SQL pasan `518/518` aserciones; el contrato final de privilegios se
+repitió dirigido después de actualizar su conteo a 35 RPC administrativas. La
+suite API local pasa `143/143`; el smoke PostgreSQL 12 y typecheck también pasan.
+Las RPC exactas sólo materializan evidencia ya elegible y reutilizan exactos o
+aliases aprobados; ninguna ejecución `apply` se hizo en esta liberación.
+
+Con autorización del usuario, el mismo día se publicaron los cuatro Workers:
+API `pruevia-api` `f412ae67-dab4-4200-97b1-edb5027a1fc0`, Patient
+`pruevia-patient` `303acaac-c5d0-4f39-a9ae-7e63ea1b5d31`, Admin privado
+`pruevia-admin` `4b16c144-bca9-4518-91c7-514036130181` y Landing
+`pruevia-landing` `d5cd3120-e60a-4a54-863e-2e0db4101e21`. El smoke de producción
+obtuvo `200` en landing, PWA, manifest, service worker y `/health`; Admin anónimo
+recibió `302` a Cloudflare Access. Chrome emulado contra producción verificó que
+el landing no desborda en 320/360/390/430 px y que la PWA Android muestra la
+acción nativa de instalación con manifest standalone y service worker activo.
+Esto no sustituye comprobar el teléfono real ni volver a abrir la sesión Admin
+autenticada después de este deploy.
+
+El Worker de producción mantiene `NORMALIZATION_REPROCESS_ENABLED=false`; el
+trigger horario no reprocesa. El preview remoto read-only del 25-sep devolvió
+7,028 pendientes, 0 elegibles, 0 materializados y 0 procesados. No se activó el
+cron de normalización ni se escribieron equivalencias u ofertas. El único
+collector fuente aprobado encontrado es el directorio oficial DENUE. Su tarea
+mensual está implementada como ruta del Worker API y la ingesta tiene una RPC
+interna acotada. La migración está aplicada y el Worker está desplegado; la
+captura sigue apagada (`DENUE_COLLECTION_ENABLED=false`) y requiere el token de
+API de INEGI como secreto Cloudflare. No recolecta contactos ni publica sedes.
+Las nueve fuentes comerciales de la cola continúan
+`review_required`. El piloto Android continúa cerrado en `0/20`, sin fecha de
+inicio ni notificaciones. Proveedores, feedback y analítica siguen cerrados en
+la publicación patient-first; Admin no está enlazado públicamente.
+
+El 25-sep-2026 se aplicó la migración aditiva `20260925100000` a la misma base
+productiva; una consulta read-only al ledger confirmó `112` migraciones y última
+`20260925100000`. El contrato DENUE pasó `13/13`; la suite completa quedó en
+`31` contratos, `531/531` aserciones. API: `148/148` y typecheck limpio; smoke
+PostgreSQL 12 pasó. Se desplegó `pruevia-api` versión
+`780589b1-6b62-4789-8f40-9c90d9f323fa`; `/health` respondió `200`, CORS al app
+permitido `204` y origen ajeno bloqueado `403`. El cron mensual está registrado,
+pero `DENUE_COLLECTION_ENABLED=false` y no existe aún el secreto
+`DENUE_API_TOKEN`: no hubo consulta externa ni captura DENUE. El cron de
+normalización sigue apagado; el preview de 7,028 filas/0 elegibles no cambió y
+no se modificaron equivalencias ni ofertas.
+
+El 25-sep-2026, tras autorización del usuario para los cambios necesarios en
+producción, se publicó `pruevia-api` versión
+`c07c62a6-0c08-4226-a141-9f909e4445c8`. El bundle pasó API `150/150`, typecheck
+y dry-run. Incluye el kill switch de captura pública de búsquedas, endpoints
+agrupados para Admin y sugerencias de escritura separadas de resultados. Se
+conservaron las banderas `PUBLIC_SEARCH_REVIEW_CAPTURE_ENABLED=false`,
+`NORMALIZATION_REPROCESS_ENABLED=false` y `DENUE_COLLECTION_ENABLED=false`.
+Verificación posterior: `/health` `200`, preflight CORS de la app `204` y origen
+ajeno `403`. En Chrome móvil, Patient cargó Flutter con service worker activo y
+acción nativa de instalación; el landing no desbordó horizontalmente en
+320/360/390/430 px. También pasaron `flutter analyze`, las 39 pruebas Patient,
+10 pruebas/typecheck del landing y `collectors/tests`. No se enviaron búsquedas ni
+se hizo una prueba en teléfono físico. Las 11 filas históricas de revisión no se
+borraron; revisar el aviso y resolver ese histórico antes de afirmar que nunca
+se guardaron consultas.
+
+Con autorización explícita del usuario del 25-sep-2026 para dejar sólo el landing
+activo, se sustituyeron temporalmente los Workers de API, Patient y Admin sin
+cambiar sus configuraciones normales ni tocar Supabase. API `pruevia-api` versión
+`d8090ae6-dc38-4575-9cfe-0ced6b6826a9` responde `503` en todas sus rutas y declara
+`crons = []`; Wrangler confirmó el despliegue de triggers. Patient
+`pruevia-patient` versión `928c5957-4457-470f-b765-cd96a86e87ea` redirige a la
+raíz del landing; Admin `pruevia-admin` versión
+`62fe579e-55d7-4021-bb7b-3c0c915989a0` hace lo mismo después de la capa Access.
+Landing `pruevia-landing` se actualizó a `fdbd3693-c018-4ef6-a02c-ce77cd15a6ca`:
+los CTA de la app ya no aparecen, la página sigue indexable y el sitemap continúa
+publicado. Pasaron sus 10 tests, typecheck, generación estática y dry-run.
+La verificación HTTP obtuvo landing `200`, app `302` a landing, API `/health` y
+`/v1/search` `503`, y Admin anónimo `302` a Access. No se verificó la redirección
+Admin con una sesión autenticada. Cloudflare advierte que retirar crons puede
+tardar hasta 15 minutos en propagarse; el API ya no tiene lógica programada y
+DENUE/normalización estaban desactivados. PWA instalada puede conservar su shell
+local; no conserva datos de búsqueda por su política de caché. Recuperación:
+restaurar versiones funcionales anteriores API `c07c62a6-0c08-4226-a141-9f909e4445c8`,
+Patient `303acaac-c5d0-4f39-a9ae-7e63ea1b5d31` y Admin
+`4b16c144-bca9-4518-91c7-514036130181`; Landing anterior
+`d5cd3120-e60a-4a54-863e-2e0db4101e21`; revalidar API y sus crons antes de reanudar.
 
 ## Corte de cobertura disponible
 
@@ -127,6 +379,13 @@ la cola está en [ADR-002](ADR-002-RELEASE-PILOT-GATES.md); permanece sin aproba
 y no autoriza acciones externas.
 
 ## Actualización y traspaso
+
+22-sep-2026: identidad y domicilio indicados por el operador permanecen en
+`apps/landing/.env`, excluido de Git, y se incorporaron al artefacto público del
+aviso junto con `contacto@pruevia.com.mx`. El perfil versionado conserva esos
+campos vacíos. Landing/PWA/Admin se publicaron y comprobaron en sus dominios;
+el landing está indexable. Proveedores, feedback, analítica y registro Android
+permanecen cerrados. Esta verificación técnica no sustituye revisión jurídica.
 
 Validación documental y de implementación del 18-sep-2026: enlaces locales y anclas de la nueva entrada,
 guías, decisiones y snapshot comprobados; `git diff --check` sin errores.

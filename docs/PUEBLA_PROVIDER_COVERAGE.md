@@ -3,6 +3,160 @@
 > Informe de cobertura con snapshots fechados; sus cantidades y cadencias recomendadas no demuestran estado actual ni jobs activos.
 > Entrada: [índice vigente](README.md). Estado: [CURRENT_STATE](CURRENT_STATE.md).
 
+## Corte vigente — 13-oct-2026
+
+La base productiva reanudada contiene una nueva descarga oficial DENUE de Puebla
+(metadatos 20-may-2026): **13,747 establecimientos de salud en 217 municipios**,
+incluidos 1,249 laboratorios y 322 hospitales. Se verificaron 69,426 observaciones
+de identidad/ubicación y la corrida completa en `ingest` tras 157 lotes. No
+crea ofertas ni garantiza un estudio por sede. La revisión separada de identidades
+añadió Gubia, ROSMA, Robert Koch, CEDITSA, Cervantes, Biomédicos, Mexica, IB, CEEAD
+y Páez, GARDITEX, Betania, Hospital Angeles, MAC, Hospital Puebla y Beneficencia
+Española, IMSS-Bienestar, ISSSTE, Samalab, Omega, LAC, Hospital Independencia,
+Sanatorio Humboldt, Bio-Velab, Medic Scanner, Tlatlauquitepec, Unidad Hospitalaria
+La Paz, Hospital Guadalupe de Puebla, Hospital Vilaseca Esparza y Laboratorio
+Clínico de Tepeaca: ahora hay **68 marcas y 152 ubicaciones**, incluidas 65 nuevas sedes `pending`
+sin ofertas. CEEAD y las cinco sedes hospitalarias de la revisión 05 conservan
+la clase gubernamental de hospital general;
+las discrepancias de domicilios se guardan sin completar números o vialidades.
+La revisión 06 añadió Norte y San Andrés Cholula (IMSS-Bienestar) y Tehuacán
+(ISSSTE), corroborados en una publicación federal del 14-may-2026. El directorio
+estatal aporta evidencia adicional de las dos primeras unidades; conserva CP
+discordantes y Osa Mayor/Menor en Cholula, sin cambiar el domicilio DENUE.
+La revisión 07 añadió Hospital General de Zacatlán (DENUE `3511000`) bajo
+IMSS-Bienestar existente, con nombre institucional explícito en una publicación
+estatal del 22-ene-2026. Se conservó íntegra la marca y `CALLE DEL ROBLE SN`,
+sin completar el exterior 7 del directorio estatal. Rollback, commit, observación
+y auditoría comprobados; cero ofertas y ninguna marca duplicada.
+La revisión 08 añadió Samalab (San Martín) y Omega (Puebla/San Martín):
+dos marcas verification_pending y tres sedes pending. Conservar la letra A de
+DENUE 3459594 (709A), el marcador SN de 8559305 y las discrepancias de
+asentamiento. La revisión 09 incorporó LAC y dos sedes pending: Tlanalapan 11271977 y
+San Lucas 3320300, corroboradas por el JSON público enlazado desde su directorio.
+Conservar exterior 16 y SN gubernamentales; la ficha San Lucas 82 y mapa 28
+son discrepancias, sin completar domicilio ni copiar coordenadas. LAC matriz
+3265780 sigue retenida por nombre genérico; Omega Tehuacán 213 sigue sin ID DENUE.
+Al cierre de la revisión 12 había 27 instituciones y 62 sedes nuevas bajo doce
+revisiones de identidad; la revisión 13 eleva esos totales a **30 instituciones
+y 65 sedes nuevas bajo trece revisiones**, todas sin ofertas nuevas.
+La revisión 10 incorporó Hospital Independencia (3428590, exterior 209) y
+Sanatorio Humboldt (3439799, exterior 2015, interior 22223, MIGUEL ALEMANA).
+Dos hospitales pending por sitio propio/directorio estatal y DENUE. Humboldt
+conserva dominio candidato estatal con sitio propio inaccesible, sin ownership
+probado. Independencia 209 no se atribuyó a Omega 213. Rollback/commit y dos
+auditorías/observaciones comprobados. Lab360 y Ebenezer siguen sin vínculo claro.
+La revisión 11 añadió Bio-Velab (3521626/3372257/3463507) y Medic Scanner
+(9425747/11824152): dos marcas en verificación y cinco sedes pendientes.
+Conservar `SN`, exterior `2C`, diferencia San Alfonso/16 de Septiembre y Medic
+Scanner `220A`/San Sebastián. Se verificaron sitio propio, RAW completo remoto,
+rollback/commit y cinco observaciones/auditorías, sin ofertas. Innovalab Tehuacán
+queda retenido por dirección primaria diferente; no atribuir un traslado.
+La revisión 12 añadió Tlatlauquitepec: Reforma89 (10241460), Zaragoza5C
+(3475545) y Cuetzalan AldamaSN (3492706), con directorio propio. Tres sedes
+adicionales se retuvieron por números distintos o sucursal indeterminada.
+Unidad Hospitalaria La Paz (6272351) conserva Acatlán24, corroborado por aviso
+propio enlazado y directorio estatal; ReformaSur92 del pie/contacto es discrepancia,
+sin traslado inferido. Dos marcas en verificación, cuatro ubicaciones pending,
+rollback/commit y cuatro auditorías/observaciones comprobadas, sin ofertas.
+La [revisión 13](../database/data/provider-identity-review-20261013-01.json),
+aplicada y verificada el **13-oct-2026 a las 12:56 UTC**, añadió tres instituciones
+`verification_pending` y tres sedes `pending`:
+
+| Institución | DENUE / clase | Evidencia y límites conservados |
+| --- | --- | --- |
+| Hospital Guadalupe de Puebla | `6378369` / `622111` | El [directorio estatal](https://ss.puebla.gob.mx/emergencias) identifica la institución en 13 Oriente 1617, Azcárate, CP 72501. Web institucional `NULL`, con `website_uncertainty` explícita: no atribuir el dominio ofrecido en venta ni fusionar con Hospital Puebla o Laboratorios Guadalupe. |
+| Hospital Vilaseca Esparza | `3441886` / `622111` | El mismo directorio confirma nombre, 12 Norte 1802 y Puebla; publica Xonaca / CP 72280. Se conservan BARRIO DE EL ALTO / CP 72290 del RAW. Web institucional `NULL`, con incertidumbre explícita; no atribuir dominio histórico inaccesible. |
+| Laboratorio Clínico de Tepeaca | `6421417` / `621511` | El [micrositio de marca alojado en MiADN](https://laboratorioclinicodetepeaca.miadn.mx/) publica Cuauhtémoc Sur 110, Centro, Tepeaca, CP 75200, concordantes con DENUE. Web candidata en verificación; hosting externo no acredita ownership legal. GET nativo **403**; Chrome normal renderizó el contenido público sin desafío. Se conserva hash del DOM y estado HTTP de red desconocido, sin afirmar HTTP 200 del navegador. |
+
+Se verificaron rollback y commit de exactamente tres marcas / tres sedes,
+tres observaciones y tres auditorías, RAW completo remoto y hashes coincidentes.
+Letras e interiores vacíos, domicilios, coordenadas y discrepancias gubernamentales
+quedaron conservados. Las dos webs `NULL` y sus límites permanecen también en
+las observaciones de identidad. Fuente estatal modificada 06-feb-2026 y leída
+con HTTP 200; el recibo 403 de Tepeaca no se convirtió en una captura HTTP 200.
+No hubo ofertas, migraciones ni cambios de política de fuentes; estos vínculos
+no acreditan estudios, precios, horarios, disponibilidad o permisos sanitarios.
+Recibos locales de aplicación y verificación:
+`collectors/artifacts/puebla-expansion-20261009/identity-review-13/`.
+
+No se infieren derechohabiencia, institución operadora de otros hospitales,
+estudios, precios ni disponibilidad de ese directorio.
+El filtro SCIAN 621/622 incluye consultorios y otras
+especialidades, no sólo centros diagnósticos; revisar nombres/clases y vigencia.
+
+La revisión delegada de 309 aliases exactos y 271 nuevos conceptos cerró 2,286 filas;
+faltan 4,742 en 860 grupos. Hay 460 conceptos activos; 209 nuevos conservan
+muestra desconocida y dos conservan muestra literal sin código específico.
+Los contextos explícitos por fuente se conservan; no son cobertura comercial.
+Las revisiones 30–31 añadieron trece conceptos/quince aliases y cerraron 109 filas.
+Veintitrés consultas públicas completas/globales y cinco internas con proveedor
+resolvieron; los cinco aliases que dependen de preparación permanecen de proveedor,
+sin inferir muestra/duración en búsqueda genérica. Los 76 vecinos ambiguos conservaron
+exactamente sus UUID pendientes. Memoria del corte31: 259 aliases/276 contextos, 912
+trabajos y 1,924 históricos reutilizables en el plan de 1,927; no cobertura nueva.
+Las revisiones 32 corregida/33 cerraron 138 filas, añadieron diecisiete conceptos
+y diecinueve aliases; 33/33 consultas públicas y 3/3 internas de proveedor
+resolvieron. El ensayo inicial 32 abortó por un SEMIN de Giardia adicional,
+sin aplicar: se investigó, preservó original y sustituyó revisión por 74 filas.
+El preparador ahora comprueba términos canónicos nuevos y conserva el mismo
+guard de alcance. Los sesenta vecinos ambiguos mantuvieron sus UUID pendientes.
+Memoria histórica del corte 33: 278 aliases/295 contextos, 2,062 históricos
+reutilizables de 2,065; 893 trabajos pendientes. La memoria del cierre 37 tiene
+309 aliases/328 contextos y 2,283 históricos reutilizables de 2,286; pendientes
+4,658 necesitan evidencia y 84 tienen campos desconocidos, en 860 trabajos.
+Las revisiones 34–37 cerraron 221 filas con 28 conceptos/31 aliases; 50 consultas
+públicas y once internas resolvieron al ID esperado. Sólo planificación e
+investigación trazable, sin tasa sobre casos nuevos ni nueva oferta comercial.
+T3 libre conserva un bloqueo histórico del resolver aunque su concepto/alias y
+ocho decisiones crawler están guardados; investigar la corrección del contrato
+clínico antes de activarla. Calcio sin forma y testosterona sin fracción siguen
+sin decisión, igual que TGO SEMIN con muestra contradictoria. Las 43 consultas
+exactas de los lotes 17–18 y las 26 de 19–20 resolvieron; AFP-L3 selecciona AFP genérica y
+antiendomisio IgG incluye IgA incompatible y toxoplasma IgA incluye IgG.
+Sus propuestas clínicas siguen
+sin activar; inmunoglobulinas ya tiene diff exacto y recuperación preparados
+para 25 componentes elegibles, sin ejecutar. Estos contadores no acreditan
+preservar todas las variantes.
+La revisión 21 resolvió 17/17 consultas exactas y cerró 66 filas; retuvo 40
+por fracción/metabolito inciertos. SEMIN sirolimus conserva sangre total en su
+guard RAW y topiramato suero sólo en su decisión. Ciclosporina C2 devuelve el
+analito genérico sin representar el momento C2: no afirmar todas las variantes.
+Las revisiones 22–23 cerraron 161 filas con veinte conceptos/aliases y
+resolvieron 40/40 consultas exactas. Treinta y dos filas permanecen abiertas
+por factor VIII antigénico, órdenes combinadas y APOE sin tipo de medición.
+Cromogranina B incluye A y troponina T incluye I bajo estado ambiguo;
+osteocalcina N-MID selecciona el analito genérico sin representar el fragmento.
+[Diagnóstico de variantes](proposals/20261011-laboratory-variant-candidates.md),
+sin activar cambios del resolver.
+Las revisiones 24–26 añadieron 22 conceptos y 24 aliases, cerraron 169 filas
+y resolvieron 46/46 consultas exactas locales. Siete conceptos conservan muestra
+explícita (tres heces, tres orina y uno suero); quince mantienen matriz exacta
+desconocida. CH50 conserva naturaleza funcional; C5 no elige actividad/concentración.
+Osmolaridad mantiene la denominación literal de la fuente: propiedad, método y
+equivalencia con osmolalidad no aprobados. SEMIN conserva suero/plasma/heces/orina
+por contexto; mercurio conserva `Sngre total con EDTA. Refrigerado` literalmente.
+Se corrigió y auditó una herencia accidental de atributo entre proveedores, sin
+repetir el lote ni modificar su destino. Renderer: atributos independientes por
+target y soporte de heces ya existentes. Resolver clínico sin cambios.
+Las revisiones 27–29 añadieron catorce conceptos y dieciséis aliases, cerraron
+128 filas y resolvieron 30/30 consultas exactas. IA-2 comparte sus dos etiquetas;
+Scl-70 conserva IgG explícita; GABA-B conserva suero y AChR conserva unión,
+bloqueo o modulación escritos. Trece conceptos mantienen matriz desconocida.
+Ocho AChR genéricos y ocho GAD sin isoforma siguen pendientes; MOG y aquaporina
+requieren investigación propia. Scl-70 IgM incluye IgG y GABA-A incluye GABA-B
+bajo estado ambiguo: diagnóstico guardado, sin activar el filtro clínico.
+El renderer respeta el límite existente de nota de alias de 1,000 caracteres:
+si el motivo completo excede ese espacio, la nota referencia la auditoría, que
+conserva íntegramente la razón investigada. Hashes, SQL, controles y ledger se
+revalidaron antes de reiniciar el ejecutor terminal; no se debilitó la restricción.
+Las fuentes comerciales
+siguen `review_required`. El siguiente
+trabajo usa laboratorios/hospitales como cartera, confirma dominios y sedes y
+obtiene evidencia de oferta. Fuentes, recibos, código reproducible, autorización
+y límites: [operación local Puebla](PUEBLA_LOCAL_OPERATION_20261009.md).
+
+## Antecedentes de las capturas por proveedor
+
 La cartera de proveedores se separa en dos niveles para no publicar datos sin
 verificación:
 

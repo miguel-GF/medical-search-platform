@@ -12,6 +12,7 @@ La conversación original no es lectura obligatoria para incorporarse.
 | [Guías de trabajo](WORK_GUIDE.md) | Procedimientos por tipo de cambio y traspaso. |
 | [Operación](OPERATIONS_GUIDE.md) | Directorios, comandos, comprobaciones y alcance de resultados. |
 | [Estado y prioridades](CURRENT_STATE.md) | Capacidades y pendientes con evidencia fechada. |
+| [Operación local y crecimiento Puebla, 9–11 oct](PUEBLA_LOCAL_OPERATION_20261009.md) | Reanudación Supabase, inventario estatal DENUE y equivalencias investigadas aplicadas. |
 | [Decisiones](DECISIONS.md) | Autonomía, aprobación de cambios críticos y evolución de reglas. |
 | [ADR de liberación Puebla](ADR-002-RELEASE-PILOT-GATES.md) | Propuesta de puerta conjunta para datos, orígenes y publicación. |
 | [ADR de publicación pacientes primero](ADR-003-PATIENT-FIRST-PUBLICATION.md) | Propuesta crítica para conectar pruevia.com.mx, PWA/API y preparar Android sin abrir proveedores. |
@@ -19,6 +20,8 @@ La conversación original no es lectura obligatoria para incorporarse.
 | [Mantenimiento y discovery](CONTINUOUS_IMPROVEMENT.md) | Iniciativa, cadencias, actualización del código y crecimiento medido. |
 | [Entorno](ENVIRONMENT.md) | Variables, ejemplos y límites de exposición de credenciales. |
 | [Automatización de normalización](NORMALIZATION_AUTOMATION_RUNBOOK.md) | Cómo reducir la cola de etiquetas y configurar soporte por correo. |
+| [ADR-004 de autonomía de normalización](ADR-004-NORMALIZATION-AUTONOMY.md) | Evidencia, algoritmo propuesto, límites clínicos y aprobación pendiente. |
+| [Memoria y alternativas API, 11-oct](proposals/20261011-normalization-memory-and-apis.md) | Herramientas locales de planificación/candidatos, investigación de servicios y reutilización entre estados; sin aprobación automática nueva. |
 | [Estrategia de costo cero](ZERO_COST_PATIENT_FIRST_STRATEGY.md) | Propuesta pacientes primero: privacidad, PWA, comunidad, Android y sostenibilidad sin gasto mensual inicial. |
 | [Prueba cerrada Android](ANDROID_CLOSED_TEST_RUNBOOK.md) | Firma, ficha, Data Safety, declaración de salud, pista cerrada y evidencia de los 21 días. |
 | [Flujo de reclamaciones](PROVIDER_CLAIM_WORKFLOW.md) | Solicitudes de proveedores, revisión asíncrona, documentos y privacidad. |
