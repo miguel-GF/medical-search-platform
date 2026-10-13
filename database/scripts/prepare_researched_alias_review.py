@@ -85,6 +85,14 @@ def prepare(client: httpx.Client, ref: str, *, definition: Path, snapshot: Path,
                  "select 1 from ingest.normalization_decisions nd where nd.normalization_run_id=nr.id "
                  "and nd.decision_type in ('automatic','manual','ambiguous','rejected','no_match')) "
                  "order by nr.normalized_input,nr.provider_brand_id,nr.id")
+    global_labels = {a['label'] for d in defs for a in d['aliases']
+                     if a.get('alias_scope', 'global') == 'global'}
+    provider_pairs = {(a['label'], t['provider_brand_id']) for d in defs
+                      for a in d['aliases'] for t in a['targets']}
+    outside_scope = [row for row in rows if row['normalized_input'] not in global_labels
+                     and (row['normalized_input'], row['provider_brand_id']) not in provider_pairs]
+    save(artifacts / 'provider-contexts-outside-scope-before.json', outside_scope)
+    rows = [row for row in rows if row not in outside_scope]
     if not rows or any(row['id'] not in originals or any(
             row[key] != originals[row['id']][key]
             for key in ['payload', 'provider_brand_id', 'normalized_input', 'raw_text']) for row in rows):
@@ -198,11 +206,16 @@ def prepare(client: httpx.Client, ref: str, *, definition: Path, snapshot: Path,
         raise ValueError('The remote ledger is already applied or inconsistent')
     # Primary canonical names are global exact terms too. Reading only alias
     # labels misses eligible records from another provider that use a new name.
-    name_rows = query(client, ref, 'with terms(raw) as (values ' + values + ") "
+    global_terms = sorted(global_labels | {d['canonical_name'] for d in defs})
+    global_values = ','.join('(' + q(term) + ')' for term in global_terms)
+    pair_conditions = ' or '.join('(' + 'nr.normalized_input=' + q(label)
+                                 + ' and nr.provider_brand_id=' + q(provider) + '::uuid)'
+                                 for label, provider in sorted(provider_pairs))
+    name_rows = query(client, ref, 'with terms(raw) as (values ' + global_values + ") "
                       "select nr.id,nr.provider_brand_id,nr.normalized_input,nr.raw_text,nr.status,rr.payload "
                       "from ingest.normalization_runs nr join ingest.raw_records rr on rr.id=nr.raw_record_id "
-                      "where nr.input_type='crawler' and nr.normalized_input in "
-                      "(select core.normalized_text(raw) from terms) "
+                      "where nr.input_type='crawler' and (nr.normalized_input in "
+                      "(select core.normalized_text(raw) from terms) or " + pair_conditions + ") "
                       "and nr.status in ('pending','ambiguous','no_match') and not exists("
                       "select 1 from ingest.normalization_decisions nd where nd.normalization_run_id=nr.id "
                       "and nd.decision_type in ('automatic','manual','ambiguous','rejected','no_match')) "
