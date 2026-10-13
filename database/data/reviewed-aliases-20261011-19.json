@@ -1,0 +1,146 @@
+{
+  "review_id": "pruevia:evidence-review:20261011:19",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras sin confirmación rutinaria; conservar ambigüedad clínica.",
+  "scope": "40 filas crawler Salud Digna por diana y variante explícitas. Sin pacientes/OCR, nuevas ofertas o cambios de funciones.",
+  "research_date": "2026-10-11",
+  "human_review": false,
+  "new_concepts": [
+    {
+      "item_id": "7f65cd45-4bdb-51f8-9c95-787fb3278d35",
+      "canonical_name": "Anticuerpos anti receptor de acetilcolina, de unión (fijadores)",
+      "component": "Acetylcholine receptor binding Ab",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/085902/acetylcholine-receptor-achr-binding-antibodies",
+      "reason": "Fijadores de receptor distingue unión de bloqueo/modulación. Diana receptor, no neurotransmisor libre. No clase IgG, subunidad muscular/embrionaria/ganglionar, panel, MuSK, resultado o método inferidos. Si producto requiere subunidad ausente, aclarar antes de selección. Sólo identidad de orden por diana, clase o función escritas; no equivalencia de resultados. Sin muestra, tiempo, propiedad, método, escala, unidad, LOINC, diagnóstico o tratamiento inferidos. No aprobar ofertas, precio o disponibilidad. Original y preparación conservados, sin validar recomendaciones farmacológicas.",
+      "specimen_uncertainty": "Muestra, matriz y duración no especificadas en SD; ayuno, indicación clínica y muestra de una referencia externa no acreditan suero o tiempo. Clase de inmunoglobulina desconocida cuando no está escrita; conservar función/diana sin completarlas por hábito."
+    },
+    {
+      "item_id": "ea795303-d5fc-50c7-b275-3ccfe696ee24",
+      "canonical_name": "Anticuerpos anti receptor de acetilcolina, moduladores",
+      "component": "Acetylcholine receptor modulating Ab",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/505225/acetylcholine-receptor-achr-modulating-antibodies-flow-cytometry",
+      "reason": "Dos etiquetas SD escriben modulación del receptor; truncamiento MODULA preserva función, sin completar RAW. Distintos de unión/bloqueo, MuSK, ganglionar alfa3 o panel. No transferir citometría, suero, IgG o reflex desde referencia. No afirmar subunidad o resultado específico. Sólo identidad de orden por diana, clase o función escritas; no equivalencia de resultados. Sin muestra, tiempo, propiedad, método, escala, unidad, LOINC, diagnóstico o tratamiento inferidos. No aprobar ofertas, precio o disponibilidad. Original y preparación conservados, sin validar recomendaciones farmacológicas.",
+      "specimen_uncertainty": "Muestra, matriz y duración no especificadas en SD; ayuno, indicación clínica y muestra de una referencia externa no acreditan suero o tiempo. Clase de inmunoglobulina desconocida cuando no está escrita; conservar función/diana sin completarlas por hábito."
+    },
+    {
+      "item_id": "55d1bfc9-c709-5b08-ac02-4585153bac0b",
+      "canonical_name": "Anticuerpos anti receptor de acetilcolina, bloqueadores",
+      "component": "Acetylcholine receptor blocking Ab",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/085926/acetylcholine-receptor-achr-blocking-antibodies",
+      "reason": "BLOQUEA explicita función bloqueadora, preservando truncamiento RAW. Distinto de unión/modulación, neurotransmisor, MuSK o panel. No subunidad muscular/ganglionar, método o clase inferidos; sin equivalencia de resultados. Sólo identidad de orden por diana, clase o función escritas; no equivalencia de resultados. Sin muestra, tiempo, propiedad, método, escala, unidad, LOINC, diagnóstico o tratamiento inferidos. No aprobar ofertas, precio o disponibilidad. Original y preparación conservados, sin validar recomendaciones farmacológicas.",
+      "specimen_uncertainty": "Muestra, matriz y duración no especificadas en SD; ayuno, indicación clínica y muestra de una referencia externa no acreditan suero o tiempo. Clase de inmunoglobulina desconocida cuando no está escrita; conservar función/diana sin completarlas por hábito."
+    },
+    {
+      "item_id": "006f8fc7-8a19-5e0c-b863-4e3113abb288",
+      "canonical_name": "Anticuerpos anti receptor de TSH",
+      "component": "Thyrotropin receptor Ab",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/010314/thyrotropin-receptor-antibody-serum",
+      "reason": "Diana receptor de TSH escrita; no hormonaTSH, TPO, tiroglobulina o panel. No escoger actividad estimulante/bloqueadora, TSI específico, técnicaTBII o isotipo. Orden genérica conserva ese límite antes de selección comercial específica. Sólo identidad de orden por diana, clase o función escritas; no equivalencia de resultados. Sin muestra, tiempo, propiedad, método, escala, unidad, LOINC, diagnóstico o tratamiento inferidos. No aprobar ofertas, precio o disponibilidad. Original y preparación conservados, sin validar recomendaciones farmacológicas.",
+      "specimen_uncertainty": "Muestra, matriz y duración no especificadas en SD; ayuno, indicación clínica y muestra de una referencia externa no acreditan suero o tiempo. Clase de inmunoglobulina desconocida cuando no está escrita; conservar función/diana sin completarlas por hábito."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "ac anti acetilcolina fijadores de receptores",
+      "item_id": "7f65cd45-4bdb-51f8-9c95-787fb3278d35",
+      "canonical_name": "Anticuerpos anti receptor de acetilcolina, de unión (fijadores)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "AC. ANTI-ACETILCOLINA (FIJADORES DE RECEPTORES)"
+      },
+      "evidence_url": "https://www.labcorp.com/tests/085902/acetylcholine-receptor-achr-binding-antibodies",
+      "reason": "Fijadores de receptor distingue unión de bloqueo/modulación. Diana receptor, no neurotransmisor libre. No clase IgG, subunidad muscular/embrionaria/ganglionar, panel, MuSK, resultado o método inferidos. Si producto requiere subunidad ausente, aclarar antes de selección. Sólo identidad de orden por diana, clase o función escritas; no equivalencia de resultados. Sin muestra, tiempo, propiedad, método, escala, unidad, LOINC, diagnóstico o tratamiento inferidos. No aprobar ofertas, precio o disponibilidad. Original y preparación conservados, sin validar recomendaciones farmacológicas."
+    },
+    {
+      "alias": "ac anti acetilcolina moduladores de receptores",
+      "item_id": "ea795303-d5fc-50c7-b275-3ccfe696ee24",
+      "canonical_name": "Anticuerpos anti receptor de acetilcolina, moduladores",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "Ac. anti-Acetilcolina (Moduladores de Receptores)"
+      },
+      "evidence_url": "https://www.labcorp.com/tests/505225/acetylcholine-receptor-achr-modulating-antibodies-flow-cytometry",
+      "reason": "Dos etiquetas SD escriben modulación del receptor; truncamiento MODULA preserva función, sin completar RAW. Distintos de unión/bloqueo, MuSK, ganglionar alfa3 o panel. No transferir citometría, suero, IgG o reflex desde referencia. No afirmar subunidad o resultado específico. Sólo identidad de orden por diana, clase o función escritas; no equivalencia de resultados. Sin muestra, tiempo, propiedad, método, escala, unidad, LOINC, diagnóstico o tratamiento inferidos. No aprobar ofertas, precio o disponibilidad. Original y preparación conservados, sin validar recomendaciones farmacológicas."
+    },
+    {
+      "alias": "anticuerpos anti receptor de acetilcolina modula",
+      "item_id": "ea795303-d5fc-50c7-b275-3ccfe696ee24",
+      "canonical_name": "Anticuerpos anti receptor de acetilcolina, moduladores",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": " ANTICUERPOS ANTI RECEPTOR DE ACETILCOLINA (MODULA"
+      },
+      "evidence_url": "https://www.labcorp.com/tests/505225/acetylcholine-receptor-achr-modulating-antibodies-flow-cytometry",
+      "reason": "Dos etiquetas SD escriben modulación del receptor; truncamiento MODULA preserva función, sin completar RAW. Distintos de unión/bloqueo, MuSK, ganglionar alfa3 o panel. No transferir citometría, suero, IgG o reflex desde referencia. No afirmar subunidad o resultado específico. Sólo identidad de orden por diana, clase o función escritas; no equivalencia de resultados. Sin muestra, tiempo, propiedad, método, escala, unidad, LOINC, diagnóstico o tratamiento inferidos. No aprobar ofertas, precio o disponibilidad. Original y preparación conservados, sin validar recomendaciones farmacológicas."
+    },
+    {
+      "alias": "anticuerpos anti receptor de acetilcolina bloquea",
+      "item_id": "55d1bfc9-c709-5b08-ac02-4585153bac0b",
+      "canonical_name": "Anticuerpos anti receptor de acetilcolina, bloqueadores",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS ANTI RECEPTOR DE ACETILCOLINA (BLOQUEA"
+      },
+      "evidence_url": "https://www.labcorp.com/tests/085926/acetylcholine-receptor-achr-blocking-antibodies",
+      "reason": "BLOQUEA explicita función bloqueadora, preservando truncamiento RAW. Distinto de unión/modulación, neurotransmisor, MuSK o panel. No subunidad muscular/ganglionar, método o clase inferidos; sin equivalencia de resultados. Sólo identidad de orden por diana, clase o función escritas; no equivalencia de resultados. Sin muestra, tiempo, propiedad, método, escala, unidad, LOINC, diagnóstico o tratamiento inferidos. No aprobar ofertas, precio o disponibilidad. Original y preparación conservados, sin validar recomendaciones farmacológicas."
+    },
+    {
+      "alias": "ac anti receptor de la tsh",
+      "item_id": "006f8fc7-8a19-5e0c-b863-4e3113abb288",
+      "canonical_name": "Anticuerpos anti receptor de TSH",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "AC. ANTI-RECEPTOR DE LA TSH"
+      },
+      "evidence_url": "https://www.labcorp.com/tests/010314/thyrotropin-receptor-antibody-serum",
+      "reason": "Diana receptor de TSH escrita; no hormonaTSH, TPO, tiroglobulina o panel. No escoger actividad estimulante/bloqueadora, TSI específico, técnicaTBII o isotipo. Orden genérica conserva ese límite antes de selección comercial específica. Sólo identidad de orden por diana, clase o función escritas; no equivalencia de resultados. Sin muestra, tiempo, propiedad, método, escala, unidad, LOINC, diagnóstico o tratamiento inferidos. No aprobar ofertas, precio o disponibilidad. Original y preparación conservados, sin validar recomendaciones farmacológicas."
+    }
+  ]
+}

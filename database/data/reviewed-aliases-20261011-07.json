@@ -1,0 +1,302 @@
+{
+  "review_id": "pruevia:evidence-review:20261011:07",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras sin confirmación rutinaria; conservar ambigüedad y diferencias clínicas.",
+  "scope": "80 filas crawler: diez identidades individuales; sin pacientes/OCR, ofertas o cambios de funciones.",
+  "research_date": "2026-10-11",
+  "human_review": false,
+  "new_concepts": [
+    {
+      "item_id": "1bb2528a-ea07-5a1c-bc53-8355748f30f2",
+      "canonical_name": "Anticuerpos IgA contra beta-2 glicoproteína",
+      "component": "Beta-2 glycoprotein Ab.IgA",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Salud Digna no especifica matriz: ayuno, biotina o toma de muestra no demuestran suero/sangre. system/time/specimen NULL. En revisión 18, el suero de tres registros SEMIN se conserva sólo en sus decisiones con guard exacto; no se transfiere a SD.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/86180",
+      "reason": "La orden explicita blanco beta-2 glicoproteína y clase IgA. La referencia distingue clases individuales. No se infiere ensayo específico de dominio I, método, panel antifosfolípido ni lupus anticoagulante. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "item_id": "5bb2bd40-7a13-5485-baa3-a53b7b2a22a8",
+      "canonical_name": "Anticuerpos IgG contra beta-2 glicoproteína",
+      "component": "Beta-2 glycoprotein Ab.IgG",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Salud Digna no especifica matriz: ayuno, biotina o toma de muestra no demuestran suero/sangre. system/time/specimen NULL. En revisión 18, el suero de tres registros SEMIN se conserva sólo en sus decisiones con guard exacto; no se transfiere a SD.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/62926",
+      "reason": "La orden explicita blanco beta-2 glicoproteína y clase IgG. La referencia distingue clases individuales. No se infiere ensayo específico de dominio I, método, panel antifosfolípido ni lupus anticoagulante. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "item_id": "23c6593f-5fd0-5905-aad8-ed1c5e6cc273",
+      "canonical_name": "Anticuerpos IgM contra beta-2 glicoproteína",
+      "component": "Beta-2 glycoprotein Ab.IgM",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Salud Digna no especifica matriz: ayuno, biotina o toma de muestra no demuestran suero/sangre. system/time/specimen NULL. En revisión 18, el suero de tres registros SEMIN se conserva sólo en sus decisiones con guard exacto; no se transfiere a SD.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/62926",
+      "reason": "La orden explicita blanco beta-2 glicoproteína y clase IgM. La referencia distingue clases individuales. No se infiere ensayo específico de dominio I, método, panel antifosfolípido ni lupus anticoagulante. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "item_id": "b22a1bbe-a1df-5953-86c4-77c77b869300",
+      "canonical_name": "Anticuerpos anticardiolipina IgA",
+      "component": "Cardiolipin Ab.IgA",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Salud Digna no especifica matriz: ayuno, biotina o toma de muestra no demuestran suero/sangre. system/time/specimen NULL. En revisión 18, el suero de tres registros SEMIN se conserva sólo en sus decisiones con guard exacto; no se transfiere a SD.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/800743",
+      "reason": "El RAW identifica anticardiolipinas IgA como orden individual; no anti-beta-2 glicoproteína, fosfolípidos genéricos o panel combinado. No se transfiere una interpretación diagnóstica de síndrome antifosfolípido. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "item_id": "0f67872a-b2a0-5ada-accf-2fe2e4d55c56",
+      "canonical_name": "Anticuerpos anticardiolipina IgG",
+      "component": "Cardiolipin Ab.IgG",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Salud Digna no especifica matriz: ayuno, biotina o toma de muestra no demuestran suero/sangre. system/time/specimen NULL. En revisión 18, el suero de tres registros SEMIN se conserva sólo en sus decisiones con guard exacto; no se transfiere a SD.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/82976",
+      "reason": "El RAW identifica anticardiolipinas IgG como orden individual; no anti-beta-2 glicoproteína, fosfolípidos genéricos o panel combinado. No se transfiere una interpretación diagnóstica de síndrome antifosfolípido. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "item_id": "a57fd3e7-e934-533c-82ab-93303afb51c3",
+      "canonical_name": "Anticuerpos anticardiolipina IgM",
+      "component": "Cardiolipin Ab.IgM",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Salud Digna no especifica matriz: ayuno, biotina o toma de muestra no demuestran suero/sangre. system/time/specimen NULL. En revisión 18, el suero de tres registros SEMIN se conserva sólo en sus decisiones con guard exacto; no se transfiere a SD.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/82976",
+      "reason": "El RAW identifica anticardiolipinas IgM como orden individual; no anti-beta-2 glicoproteína, fosfolípidos genéricos o panel combinado. No se transfiere una interpretación diagnóstica de síndrome antifosfolípido. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "item_id": "e0d63def-5270-5095-9aed-f47913e65187",
+      "canonical_name": "Anticuerpos antiperoxidasa tiroidea",
+      "component": "Thyroid peroxidase Ab",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Salud Digna no especifica matriz: ayuno, biotina o toma de muestra no demuestran suero/sangre. system/time/specimen NULL. En revisión 18, el suero de tres registros SEMIN se conserva sólo en sus decisiones con guard exacto; no se transfiere a SD.",
+      "evidence_url": "https://medlineplus.gov/lab-tests/thyroid-antibody-tests/",
+      "reason": "Peroxidasa tiroidea es el blanco de anti-TPO. No antitiroglobulina, anticuerpos contra receptor TSH ni perfil; la clase no está especificada. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "item_id": "a8be3f62-3d78-5825-8abb-851f31d55244",
+      "canonical_name": "Anticuerpos antipéptido cíclico citrulinado (CCP)",
+      "component": "Cyclic citrullinated peptide Ab",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Salud Digna no especifica matriz: ayuno, biotina o toma de muestra no demuestran suero/sangre. system/time/specimen NULL. En revisión 18, el suero de tres registros SEMIN se conserva sólo en sus decisiones con guard exacto; no se transfiere a SD.",
+      "evidence_url": "https://medlineplus.gov/lab-tests/ccp-antibody-test/",
+      "reason": "CCP corresponde a péptido cíclico citrulinado; no factor reumatoide ni panel. No se inventa clase IgG/IgA, generación CCP2/CCP3 o método. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "item_id": "8a298287-fc09-586e-bb9d-f2296f278068",
+      "canonical_name": "Anticuerpos anti-Smith (Sm)",
+      "component": "Smith Ab",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Salud Digna no especifica matriz: ayuno, biotina o toma de muestra no demuestran suero/sangre. system/time/specimen NULL. En revisión 18, el suero de tres registros SEMIN se conserva sólo en sus decisiones con guard exacto; no se transfiere a SD.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/81358",
+      "reason": "Smith/Sm es el blanco explícito. No se selecciona Sm/RNP combinado, U1-RNP o panel ENA. La referencia IgG sustenta el blanco, no autoriza añadir IgG a la orden sin clase. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "item_id": "64a613e5-6a65-5b5b-b956-0beb2f44fb94",
+      "canonical_name": "Anticuerpos antimúsculo liso",
+      "component": "Smooth muscle Ab",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Salud Digna no especifica matriz: ayuno, biotina o toma de muestra no demuestran suero/sangre. system/time/specimen NULL. En revisión 18, el suero de tres registros SEMIN se conserva sólo en sus decisiones con guard exacto; no se transfiere a SD.",
+      "evidence_url": "https://medlineplus.gov/lab-tests/smooth-muscle-antibody-sma-test/",
+      "reason": "Músculo liso identifica SMA/ASMA. No se convierte a F-actina específica, músculo estriado, screen con reflejo/título, clase o método no indicados. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "anticuerpos anti beta 2 glicoproteina iga",
+      "item_id": "1bb2528a-ea07-5a1c-bc53-8355748f30f2",
+      "canonical_name": "Anticuerpos IgA contra beta-2 glicoproteína",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS ANTI BETA 2 GLICOPROTEINA IGA"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/86180",
+      "reason": "La orden explicita blanco beta-2 glicoproteína y clase IgA. La referencia distingue clases individuales. No se infiere ensayo específico de dominio I, método, panel antifosfolípido ni lupus anticoagulante. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "alias": "anticuerpos anti beta 2 glicoproteina igg",
+      "item_id": "5bb2bd40-7a13-5485-baa3-a53b7b2a22a8",
+      "canonical_name": "Anticuerpos IgG contra beta-2 glicoproteína",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 8 - 12 HORAS. CENA LIGERA EN GRASAS. NO REALIZAR EJERCICIO O ACTIVIDAD FÍSICA INTENSA PREVIO A LA TOMA DE MUESTRA. NOTIFICAR SI CONSUME MEDICAMENTO "
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/62926",
+      "reason": "La orden explicita blanco beta-2 glicoproteína y clase IgG. La referencia distingue clases individuales. No se infiere ensayo específico de dominio I, método, panel antifosfolípido ni lupus anticoagulante. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "alias": "anticuerpos anti beta 2 glicoproteina igm",
+      "item_id": "23c6593f-5fd0-5905-aad8-ed1c5e6cc273",
+      "canonical_name": "Anticuerpos IgM contra beta-2 glicoproteína",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 8 HORAS"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/62926",
+      "reason": "La orden explicita blanco beta-2 glicoproteína y clase IgM. La referencia distingue clases individuales. No se infiere ensayo específico de dominio I, método, panel antifosfolípido ni lupus anticoagulante. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "alias": "anticuerpos anti cardiolipinas iga",
+      "item_id": "b22a1bbe-a1df-5953-86c4-77c77b869300",
+      "canonical_name": "Anticuerpos anticardiolipina IgA",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO MINIMO DE 4 HORAS."
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/800743",
+      "reason": "El RAW identifica anticardiolipinas IgA como orden individual; no anti-beta-2 glicoproteína, fosfolípidos genéricos o panel combinado. No se transfiere una interpretación diagnóstica de síndrome antifosfolípido. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "alias": "anticuerpos anti cardiolipinas igg",
+      "item_id": "0f67872a-b2a0-5ada-accf-2fe2e4d55c56",
+      "canonical_name": "Anticuerpos anticardiolipina IgG",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 4 HRS."
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/82976",
+      "reason": "El RAW identifica anticardiolipinas IgG como orden individual; no anti-beta-2 glicoproteína, fosfolípidos genéricos o panel combinado. No se transfiere una interpretación diagnóstica de síndrome antifosfolípido. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "alias": "anticuerpos anti cardiolipinas igm",
+      "item_id": "a57fd3e7-e934-533c-82ab-93303afb51c3",
+      "canonical_name": "Anticuerpos anticardiolipina IgM",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 4 HRS\r\n"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/82976",
+      "reason": "El RAW identifica anticardiolipinas IgM como orden individual; no anti-beta-2 glicoproteína, fosfolípidos genéricos o panel combinado. No se transfiere una interpretación diagnóstica de síndrome antifosfolípido. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "alias": "anticuerpos anti peroxidasa tiroidea",
+      "item_id": "e0d63def-5270-5095-9aed-f47913e65187",
+      "canonical_name": "Anticuerpos antiperoxidasa tiroidea",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno de 8-12 horas, no consumir biotina 8 horas antes de la toma de muestra.\r\n\r\n"
+      },
+      "evidence_url": "https://medlineplus.gov/lab-tests/thyroid-antibody-tests/",
+      "reason": "Peroxidasa tiroidea es el blanco de anti-TPO. No antitiroglobulina, anticuerpos contra receptor TSH ni perfil; la clase no está especificada. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "alias": "anticuerpos anti peptido ciclico citrulinado ccp",
+      "item_id": "a8be3f62-3d78-5825-8abb-851f31d55244",
+      "canonical_name": "Anticuerpos antipéptido cíclico citrulinado (CCP)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno de 8 -12 h."
+      },
+      "evidence_url": "https://medlineplus.gov/lab-tests/ccp-antibody-test/",
+      "reason": "CCP corresponde a péptido cíclico citrulinado; no factor reumatoide ni panel. No se inventa clase IgG/IgA, generación CCP2/CCP3 o método. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "alias": "anticuerpos anti smith sm",
+      "item_id": "8a298287-fc09-586e-bb9d-f2296f278068",
+      "canonical_name": "Anticuerpos anti-Smith (Sm)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno mínimo de 8 horas."
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/81358",
+      "reason": "Smith/Sm es el blanco explícito. No se selecciona Sm/RNP combinado, U1-RNP o panel ENA. La referencia IgG sustenta el blanco, no autoriza añadir IgG a la orden sin clase. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "alias": "anticuerpos anti musculo liso",
+      "item_id": "64a613e5-6a65-5b5b-b956-0beb2f44fb94",
+      "canonical_name": "Anticuerpos antimúsculo liso",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 4 HRS."
+      },
+      "evidence_url": "https://medlineplus.gov/lab-tests/smooth-muscle-antibody-sma-test/",
+      "reason": "Músculo liso identifica SMA/ASMA. No se convierte a F-actina específica, músculo estriado, screen con reflejo/título, clase o método no indicados. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261009:01",
+  "reviewed_by": "Codex; investigación delegada por el operador",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "source_key": "denue_puebla_bulk",
+  "scope": "Identidades candidatas de negocio/sede; sucursales pending, marcas verification_pending; sin ofertas, precios ni apertura comercial",
+  "providers": [
+    {
+      "provider_key": "laboratorios_gubia",
+      "name": "Laboratorios Gubia",
+      "slug": "laboratorios-gubia",
+      "website_url": "https://www.gubia.mx/",
+      "identity_evidence_url": "https://www.gubia.mx/inicio.aspx",
+      "identity_note": "Nombre GUBIA explícito en 19 registros diagnósticos DENUE de Puebla. El dominio oficial declara identidad y presencia regional; su domicilio corporativo en Nicolás Bravo 5, Zacatlán, concuerda con DENUE 3296851. No se presume vigencia o realización de estudios en cada sede. El .com observado en ese RAW no se reutiliza como sitio oficial.",
+      "denue_record_ids": ["8204974", "3296851", "8632736", "8627213", "10150509", "11181439", "10059171", "10496937", "8611788", "11308800", "8774413", "10036408", "7533089", "8428876", "8568974", "10447027", "8569192", "3505902", "9133754"]
+    },
+    {
+      "provider_key": "laboratorio_robert_koch_tlachichuca",
+      "name": "Laboratorio Robert Koch — Tlachichuca",
+      "slug": "laboratorio-robert-koch-tlachichuca",
+      "website_url": "https://laboratoriokoch.com/",
+      "identity_evidence_url": "https://laboratoriokoch.com/contacto/",
+      "identity_note": "Registro DENUE 9785253 identifica Robert Koch en 2 Norte, Centro, Tlachichuca y declara laboratoriokoch.com. La página oficial indexada confirma matriz allí; la petición directa actual devuelve 403 y no se eludió. No se incorporan otros establecimientos llamados Koch sin enlace de identidad suficiente, ni se afirma vigencia comercial.",
+      "denue_record_ids": ["9785253"]
+    },
+    {
+      "provider_key": "laboratorios_rosma",
+      "name": "Laboratorios ROSMA",
+      "slug": "laboratorios-rosma",
+      "website_url": "https://www.rosmalab.com/",
+      "identity_evidence_url": "https://www.rosmalab.com/",
+      "identity_note": "El sitio oficial vigente presenta ROSMA y domicilios Degollado 509 y Miguel Hidalgo 9, Cacaloxúchitl, que concuerdan con DENUE 3417475 y 3517218. Se preservan municipios DENUE Atlixco/Huaquechula; llamar región Atlixco no cambia el municipio. Tianguismanalco y la sede Axocopan anunciada quedan fuera de este enlace hasta investigar identidad/domicilio por separado.",
+      "denue_record_ids": ["3417475", "3517218"]
+    }
+  ]
+}

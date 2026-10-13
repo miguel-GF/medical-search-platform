@@ -1,0 +1,245 @@
+{
+  "review_id": "pruevia:evidence-review:20261012:02",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "scope": "51 filas crawler y atributos literales independientes por proveedor; sin pacientes/OCR, ofertas ni cambios de funciones.",
+  "research_date": "2026-10-12",
+  "human_review": false,
+  "new_concepts": [
+    {
+      "item_id": "cb0c5523-a561-5b30-a9fc-488a8c52c09c",
+      "canonical_name": "Colesterol HDL",
+      "component": "Cholesterol in HDL",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/001925/high-density-lipoprotein-cholesterol-hdl-c",
+      "reason": "Fracción HDL explícita y alta densidad equivalente por identidad de orden. No colesterol total, LDL, VLDL, apolipoproteína A1 o panel. SD sólo sangre familiar; SEMIN suero explícito propio. Canónico sin matriz, método o equivalencia analítica inferidos. Sólo identidad de orden y atributos escritos, sin equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados. Original y preparación conservados; no validar instrucciones farmacológicas ni inferir datos de pacientes. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Matriz exacta y duración desconocidas para la orden genérica. Los atributos explícitos de cada proveedor se conservan sólo en su contexto; ayuno y muestra de una referencia externa no completan el canónico."
+    },
+    {
+      "item_id": "274ff266-560a-541d-b644-10ae0bd19415",
+      "canonical_name": "Colesterol LDL",
+      "component": "Cholesterol in LDL",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/120295/low-density-lipoprotein-cholesterol-direct",
+      "reason": "Fracción LDL escrita. Referencia directa respalda identidad LDL-C, no el método local: directo/calculado desconocidos. No copiar suero, cálculo, LDL pequeñas/densas, número de partículas, apolipoproteínaB, HDL, VLDL o panel. SD conserva sólo sangre familiar explícita. Sólo identidad de orden y atributos escritos, sin equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados. Original y preparación conservados; no validar instrucciones farmacológicas ni inferir datos de pacientes. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Matriz exacta y duración desconocidas para la orden genérica. Los atributos explícitos de cada proveedor se conservan sólo en su contexto; ayuno y muestra de una referencia externa no completan el canónico."
+    },
+    {
+      "item_id": "afe37fc4-cc81-58f3-834c-dd3530885200",
+      "canonical_name": "Colesterol VLDL",
+      "component": "Cholesterol in VLDL",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/303756/lipid-panel",
+      "reason": "Fracción VLDL explícita. Fuente panel identifica VLDL-C como blanco; no importar el panel ni cálculo de la referencia. Directo/calculado y matriz exacta desconocidos. No LDL, remanentes, número de partículas o apolipoproteínaB. SD conserva sangre familiar explícita. Sólo identidad de orden y atributos escritos, sin equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados. Original y preparación conservados; no validar instrucciones farmacológicas ni inferir datos de pacientes. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Matriz exacta y duración desconocidas para la orden genérica. Los atributos explícitos de cada proveedor se conservan sólo en su contexto; ayuno y muestra de una referencia externa no completan el canónico."
+    },
+    {
+      "item_id": "6ce35392-a9e5-5448-86c4-9747a641149b",
+      "canonical_name": "Coombs directo (antiglobulina directa)",
+      "component": "Direct antiglobulin test",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://medlineplus.gov/ency/article/003344.htm",
+      "reason": "DAT directo explícito y distinto de IAT indirecto. No equiparar al canónico Coombs directo en columna; método columna/tubo, especificidadIgG/C3 o polispecificidad desconocidos. SEMIN Sangre Total con EDTA se conserva literal; atributo sólo familia sangre, sin código exacto inferido. SD no aporta muestra. Sólo identidad de orden y atributos escritos, sin equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados. Original y preparación conservados; no validar instrucciones farmacológicas ni inferir datos de pacientes. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Matriz exacta y duración desconocidas para la orden genérica. Los atributos explícitos de cada proveedor se conservan sólo en su contexto; ayuno y muestra de una referencia externa no completan el canónico."
+    },
+    {
+      "item_id": "778f4efe-2221-501b-93ef-140cab4de74a",
+      "canonical_name": "Coombs indirecto (antiglobulina indirecta)",
+      "component": "Indirect antiglobulin test",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://medlineplus.gov/ency/article/003344.htm",
+      "reason": "IAT indirecto explícito, distinto de DAT. No identificación/titulación específica de anticuerpos, prueba cruzada, IgG/C3, panel o método inferidos. SEMIN suero propio; SD sólo ayuno, no matriz. Mantener canónico genérico sin transmitir suero entre proveedores. Sólo identidad de orden y atributos escritos, sin equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados. Original y preparación conservados; no validar instrucciones farmacológicas ni inferir datos de pacientes. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Matriz exacta y duración desconocidas para la orden genérica. Los atributos explícitos de cada proveedor se conservan sólo en su contexto; ayuno y muestra de una referencia externa no completan el canónico."
+    },
+    {
+      "item_id": "c41cc149-c53f-5432-a183-6e8cfd642840",
+      "canonical_name": "Carboxihemoglobina",
+      "component": "Carboxyhemoglobin",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/007187/carbon-monoxide-whole-blood",
+      "reason": "CarboxihemoglobinaCOHb escrita. No metahemoglobina, carbaminohemoglobina, gasometría, monóxido exhalado o panel. No importar sangre total, arterial/venosa, método, porcentaje o límites de Labcorp. SD sólo ayuno: matriz exacta desconocida. Sólo identidad de orden y atributos escritos, sin equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados. Original y preparación conservados; no validar instrucciones farmacológicas ni inferir datos de pacientes. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Matriz exacta y duración desconocidas para la orden genérica. Los atributos explícitos de cada proveedor se conservan sólo en su contexto; ayuno y muestra de una referencia externa no completan el canónico."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "colesterol hdl",
+      "item_id": "cb0c5523-a561-5b30-a9fc-488a8c52c09c",
+      "canonical_name": "Colesterol HDL",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.labcorp.com/tests/001925/high-density-lipoprotein-cholesterol-hdl-c",
+      "reason": "Fracción HDL explícita y alta densidad equivalente por identidad de orden. No colesterol total, LDL, VLDL, apolipoproteína A1 o panel. SD sólo sangre familiar; SEMIN suero explícito propio. Canónico sin matriz, método o equivalencia analítica inferidos. Sólo identidad de orden y atributos escritos, sin equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados. Original y preparación conservados; no validar instrucciones farmacológicas ni inferir datos de pacientes. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno 8-12h. No realizar ejercicio físico intenso ni consumir alcohol 24 horas antes de la extracción de sangre. La mañana en la que se obtiene la muestra de sangre no fumar ni tomar bebidas que contengan cafeína. \r\n"
+      },
+      "source_attributes": {
+        "specimen_family": "blood"
+      }
+    },
+    {
+      "alias": "colesterol de alta densidad",
+      "item_id": "cb0c5523-a561-5b30-a9fc-488a8c52c09c",
+      "canonical_name": "Colesterol HDL",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.labcorp.com/tests/001925/high-density-lipoprotein-cholesterol-hdl-c",
+      "reason": "Fracción HDL explícita y alta densidad equivalente por identidad de orden. No colesterol total, LDL, VLDL, apolipoproteína A1 o panel. SD sólo sangre familiar; SEMIN suero explícito propio. Canónico sin matriz, método o equivalencia analítica inferidos. Sólo identidad de orden y atributos escritos, sin equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados. Original y preparación conservados; no validar instrucciones farmacológicas ni inferir datos de pacientes. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "Suero / Tubo de tapon rojo o dorado"
+      },
+      "source_attributes": {
+        "specimen_code": "serum"
+      }
+    },
+    {
+      "alias": "colesterol ldl",
+      "item_id": "274ff266-560a-541d-b644-10ae0bd19415",
+      "canonical_name": "Colesterol LDL",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.labcorp.com/tests/120295/low-density-lipoprotein-cholesterol-direct",
+      "reason": "Fracción LDL escrita. Referencia directa respalda identidad LDL-C, no el método local: directo/calculado desconocidos. No copiar suero, cálculo, LDL pequeñas/densas, número de partículas, apolipoproteínaB, HDL, VLDL o panel. SD conserva sólo sangre familiar explícita. Sólo identidad de orden y atributos escritos, sin equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados. Original y preparación conservados; no validar instrucciones farmacológicas ni inferir datos de pacientes. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno 8-12h. No realizar ejercicio físico intenso ni consumir alcohol 24 horas antes de la extracción de sangre. La mañana en la que se obtiene la muestra de sangre no fumar ni tomar bebidas que contengan cafeína. "
+      },
+      "source_attributes": {
+        "specimen_family": "blood"
+      }
+    },
+    {
+      "alias": "colesterol vldl",
+      "item_id": "afe37fc4-cc81-58f3-834c-dd3530885200",
+      "canonical_name": "Colesterol VLDL",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.labcorp.com/tests/303756/lipid-panel",
+      "reason": "Fracción VLDL explícita. Fuente panel identifica VLDL-C como blanco; no importar el panel ni cálculo de la referencia. Directo/calculado y matriz exacta desconocidos. No LDL, remanentes, número de partículas o apolipoproteínaB. SD conserva sangre familiar explícita. Sólo identidad de orden y atributos escritos, sin equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados. Original y preparación conservados; no validar instrucciones farmacológicas ni inferir datos de pacientes. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno 8-12h. No realizar ejercicio físico intenso ni consumir alcohol 24 horas antes de la extracción de sangre. La mañana en la que se obtiene la muestra de sangre no fumar ni tomar bebidas que contengan cafeína. "
+      },
+      "source_attributes": {
+        "specimen_family": "blood"
+      }
+    },
+    {
+      "alias": "coombs directo",
+      "item_id": "6ce35392-a9e5-5448-86c4-9747a641149b",
+      "canonical_name": "Coombs directo (antiglobulina directa)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://medlineplus.gov/ency/article/003344.htm",
+      "reason": "DAT directo explícito y distinto de IAT indirecto. No equiparar al canónico Coombs directo en columna; método columna/tubo, especificidadIgG/C3 o polispecificidad desconocidos. SEMIN Sangre Total con EDTA se conserva literal; atributo sólo familia sangre, sin código exacto inferido. SD no aporta muestra. Sólo identidad de orden y atributos escritos, sin equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados. Original y preparación conservados; no validar instrucciones farmacológicas ni inferir datos de pacientes. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "COOMBS DIRECTO"
+      },
+      "additional_targets": [
+        {
+          "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+          "expected_rows": 1,
+          "raw_guard": {
+            "path": [
+              "sample_type"
+            ],
+            "value": "Sangre Total con EDTA"
+          },
+          "source_attributes": {
+            "specimen_family": "blood"
+          }
+        }
+      ]
+    },
+    {
+      "alias": "coombs indirecto",
+      "item_id": "778f4efe-2221-501b-93ef-140cab4de74a",
+      "canonical_name": "Coombs indirecto (antiglobulina indirecta)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://medlineplus.gov/ency/article/003344.htm",
+      "reason": "IAT indirecto explícito, distinto de DAT. No identificación/titulación específica de anticuerpos, prueba cruzada, IgG/C3, panel o método inferidos. SEMIN suero propio; SD sólo ayuno, no matriz. Mantener canónico genérico sin transmitir suero entre proveedores. Sólo identidad de orden y atributos escritos, sin equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados. Original y preparación conservados; no validar instrucciones farmacológicas ni inferir datos de pacientes. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "COOMBS INDIRECTO"
+      },
+      "additional_targets": [
+        {
+          "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+          "expected_rows": 1,
+          "raw_guard": {
+            "path": [
+              "sample_type"
+            ],
+            "value": "Suero / Tubo de tapon rojo o dorado."
+          },
+          "source_attributes": {
+            "specimen_code": "serum"
+          }
+        }
+      ]
+    },
+    {
+      "alias": "carboxihemoglobina",
+      "item_id": "c41cc149-c53f-5432-a183-6e8cfd642840",
+      "canonical_name": "Carboxihemoglobina",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.labcorp.com/tests/007187/carbon-monoxide-whole-blood",
+      "reason": "CarboxihemoglobinaCOHb escrita. No metahemoglobina, carbaminohemoglobina, gasometría, monóxido exhalado o panel. No importar sangre total, arterial/venosa, método, porcentaje o límites de Labcorp. SD sólo ayuno: matriz exacta desconocida. Sólo identidad de orden y atributos escritos, sin equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados. Original y preparación conservados; no validar instrucciones farmacológicas ni inferir datos de pacientes. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "CARBOXIHEMOGLOBINA"
+      }
+    }
+  ]
+}

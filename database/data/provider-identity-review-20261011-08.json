@@ -1,0 +1,39 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261011:08",
+  "reviewed_by": "Codex; investigación delegada por el operador",
+  "authorization": "D-021/D-022: identidades candidatas pending investigadas sobre la misma base autorizada, sin confirmación rutinaria.",
+  "research_date": "2026-10-11",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "Dos nuevas instituciones en verificación y dos hospitales pending, corroborados por sitio propio o directorio estatal primario. Humboldt conserva dominio candidato sin ownership demostrado, interior 22223 y MIGUEL ALEMANA. Independencia209 no es Omega213. Sin ofertas, precios, captura comercial, migración o acceso inferidos.",
+  "providers": [
+    {
+      "provider_key": "hospital_independencia_tehuacan",
+      "name": "Hospital Independencia — Tehuacán",
+      "slug": "hospital-independencia-tehuacan",
+      "website_url": "https://hospitalindependencia.mx/",
+      "identity_evidence_url": "https://hospitalindependencia.mx/",
+      "identity_activity_codes": [
+        "622111"
+      ],
+      "denue_record_ids": [
+        "3428590"
+      ],
+      "identity_note": "El sitio institucional de Hospital Independencia identifica expresamente la institución de Tehuacán y publica Independencia Poniente 209, Centro, CP 75700. DENUE 3428590 registra CLINICA INDEPENDENCIA en la misma vialidad, exterior 209, asentamiento Centro y CP 75700. Coinciden institución y sede; el sitio describe su evolución de clínica a hospital. Se conservan nombre gubernamental de ubicación, exterior 209, letras e interiores vacíos, coordenadas y SCIAN 622111. No atribuir este registro a Omega Tehuacán, cuyo sitio declara el exterior distinto 213. Marca verification_pending y hospital pending. El enlace de historia del sitio apunta a localhost y no se siguió ni se usó como prueba. No acredita estudios, precios, disponibilidad, horarios, titularidad legal o permiso comercial."
+    },
+    {
+      "provider_key": "sanatorio_humboldt_puebla",
+      "name": "Sanatorio Humboldt de Puebla",
+      "slug": "sanatorio-humboldt-puebla",
+      "website_url": "https://sanatoriohumboldt.com.mx/",
+      "identity_evidence_url": "https://ss.puebla.gob.mx/emergencias",
+      "identity_activity_codes": [
+        "622111"
+      ],
+      "denue_record_ids": [
+        "3439799"
+      ],
+      "identity_note": "El directorio primario de la Secretaría de Salud de Puebla, Emergencias, modificado 06-feb-2026 y leído actualmente, enumera Sanatorio Humboldt entre unidades médicas particulares y declara Privada 28 Norte 2015, Miguel Alemán V., CP 72370, Puebla. DENUE 3439799 registra SANATORIO HUMBOLDT DE PUEBLA en Privada 28 Norte, exterior 2015, CP 72370. Se conservan literalmente el interior gubernamental 22223, asentamiento MIGUEL ALEMANA, letras vacías y coordenadas; no se corrigen por la abreviación estatal. El dominio sanatoriohumboldt.com.mx se conserva únicamente como sitio candidato referido en esa fuente estatal: la lectura web recibió HTTP 403 y Chrome normal mostró un desafío, sin contenido institucional propio corroborado y sin prueba de ownership o vigencia comercial. No se evadió el control ni se visitaron portales privados. El dominio DENUE WWW.SANHUMBOLDT.COM.MX permanece en RAW, sin afirmar que esté vigente. Marca verification_pending y hospital pending; evidencia principal estatal. No agregar diagnóstico, tomografía o estacionamiento por nombre, domicilio o coordenadas compartidas. La clase hospitalaria no acredita oferta, permisos, estudios, disponibilidad o acceso."
+    }
+  ]
+}

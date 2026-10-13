@@ -1,0 +1,20 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261011:01",
+  "reviewed_by": "Codex; investigación delegada por el operador",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "source_key": "denue_puebla_bulk",
+  "research_date": "2026-10-11",
+  "authorization": "D-021 y D-022: investigar identidades y alimentar Puebla sobre la misma base autorizada",
+  "scope": "Identidad candidata de Laboratorio Mexica: sólo dos establecimientos DENUE en Chignahuapan y Tetela de Ocampo, ambos pending. Se conservan las direcciones gubernamentales, sin completar números, publicar horarios, afirmar permisos ni crear ofertas.",
+  "providers": [
+    {
+      "provider_key": "laboratorio_mexica_sierra_norte",
+      "name": "Laboratorio Mexica",
+      "slug": "laboratorio-mexica",
+      "website_url": "https://laboratoriomexica.mx/",
+      "identity_evidence_url": "https://laboratoriomexica.mx/sucursal-chignahuapan/",
+      "identity_note": "El sitio oficial identifica expresamente sus sedes Chignahuapan y Tetela de Ocampo, coincidiendo con los dos únicos registros diagnósticos DENUE del nombre Mexica en Puebla. Chignahuapan: DENUE 8612162 registra Segunda Calle de Abasolo s/n; el sitio declara Guillermo Prieto s/n esquina con Abasolo. Se conserva la vialidad DENUE y se registra la diferencia de referencia de esquina, sin afirmar equivalencia postal completa. Tetela: DENUE 12272393 registra 2 Sur s/n, Centro, CP 73640; https://laboratoriomexica.mx/sucursal-tetela-de-ocampo/ declara 2 Sur 2-22, Centro, CP 73640. No se completa ni sustituye el número DENUE. Ambas sedes permanecen pending, con marca verification_pending. No se usan descuentos, perfiles, horarios ni resultados del sitio como oferta o acreditación clínica.",
+      "denue_record_ids": ["8612162", "12272393"]
+    }
+  ]
+}

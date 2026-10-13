@@ -1,0 +1,381 @@
+{
+  "review_id": "pruevia:evidence-review:20261011:03",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras sin confirmación rutinaria; conservar diferencias clínicas y ambigüedad real.",
+  "scope": "Revisión terminológica delegada de 84 entradas crawler existentes: 80 Salud Digna y cuatro SEMIN. Diez órdenes por analito; siete contextos SD conservan familia sangre y cuatro SEMIN suero. Calcio sin forma permanece pendiente. Sin pacientes/OCR, ofertas ni equivalencias de resultados.",
+  "research_date": "2026-10-11",
+  "human_review": false,
+  "new_concepts": [
+    {
+      "item_id": "f0d598a6-1889-5e45-8296-00ea0d1ce18f",
+      "canonical_name": "Cloro (cloruro)",
+      "component": "Chloride",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El RAW de Salud Digna no especifica matriz exacta. La familia sangre, cuando consta literalmente en Preparacion, se conserva por entrada y no se convierte en suero/plasma/sangre total. El suero explícito de SEMIN tampoco se transfiere al concepto genérico. Specimen_code, system y time_aspect permanecen NULL.",
+      "evidence_url": "https://medlineplus.gov/lab-tests/chloride-blood-test/",
+      "reason": "En el contexto de química clínica CLORO CL identifica cloruro. Se conserva como orden individual; no es cloro ambiental, clorocatecol, cloruro en sudor, orina ni panel de electrolitos. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma/sangre total, duración de recolección, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. Los atributos explícitos de cada fuente se conservan por entrada en RAW/decisión y no se transfieren a otras fuentes."
+    },
+    {
+      "item_id": "a1339fdc-0c03-5b79-9d49-887b0d196f8a",
+      "canonical_name": "Potasio",
+      "component": "Potassium",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El RAW de Salud Digna no especifica matriz exacta. La familia sangre, cuando consta literalmente en Preparacion, se conserva por entrada y no se convierte en suero/plasma/sangre total. El suero explícito de SEMIN tampoco se transfiere al concepto genérico. Specimen_code, system y time_aspect permanecen NULL.",
+      "evidence_url": "https://medlineplus.gov/lab-tests/potassium-blood-test/",
+      "reason": "Potasio y su símbolo K identifican el mismo electrolito como orden individual. No es un panel de electrolitos, anticuerpo contra canales de potasio ni recolección urinaria. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma/sangre total, duración de recolección, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. Los atributos explícitos de cada fuente se conservan por entrada en RAW/decisión y no se transfieren a otras fuentes."
+    },
+    {
+      "item_id": "8fbf49e1-bbb7-53aa-876b-8a52dc5f4ac9",
+      "canonical_name": "Sodio",
+      "component": "Sodium",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El RAW de Salud Digna no especifica matriz exacta. La familia sangre, cuando consta literalmente en Preparacion, se conserva por entrada y no se convierte en suero/plasma/sangre total. El suero explícito de SEMIN tampoco se transfiere al concepto genérico. Specimen_code, system y time_aspect permanecen NULL.",
+      "evidence_url": "https://medlineplus.gov/lab-tests/sodium-blood-test/",
+      "reason": "Sodio y su símbolo Na identifican el mismo electrolito como orden individual. No se añade un panel ni se traslada a sodio en orina ocasional o de 24 horas. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma/sangre total, duración de recolección, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. Los atributos explícitos de cada fuente se conservan por entrada en RAW/decisión y no se transfieren a otras fuentes."
+    },
+    {
+      "item_id": "319e7e24-d1ea-5ba0-aaeb-1d9a3bd132c3",
+      "canonical_name": "Fósforo",
+      "component": "Phosphorus",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El RAW de Salud Digna no especifica matriz exacta. La familia sangre, cuando consta literalmente en Preparacion, se conserva por entrada y no se convierte en suero/plasma/sangre total. El suero explícito de SEMIN tampoco se transfiere al concepto genérico. Specimen_code, system y time_aspect permanecen NULL.",
+      "evidence_url": "https://medlineplus.gov/lab-tests/phosphate-in-blood/",
+      "reason": "La referencia NIH identifica la prueba de fósforo como determinación de fosfato. Se reconoce sólo esta orden por analito; no se aprueba equivalencia de métodos, unidades ni fosfatasas y no se selecciona fósforo urinario de 24 horas. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma/sangre total, duración de recolección, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. Los atributos explícitos de cada fuente se conservan por entrada en RAW/decisión y no se transfieren a otras fuentes."
+    },
+    {
+      "item_id": "92b0be59-d170-51b0-94aa-2525da946349",
+      "canonical_name": "Magnesio",
+      "component": "Magnesium",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El RAW de Salud Digna no especifica matriz exacta. La familia sangre, cuando consta literalmente en Preparacion, se conserva por entrada y no se convierte en suero/plasma/sangre total. El suero explícito de SEMIN tampoco se transfiere al concepto genérico. Specimen_code, system y time_aspect permanecen NULL.",
+      "evidence_url": "https://medlineplus.gov/lab-tests/magnesium-blood-test/",
+      "reason": "Identifica magnesio como orden individual. No magnesio eritrocitario, carga de magnesio, panel de electrolitos ni magnesio en orina ocasional o de 24 horas. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma/sangre total, duración de recolección, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. Los atributos explícitos de cada fuente se conservan por entrada en RAW/decisión y no se transfieren a otras fuentes."
+    },
+    {
+      "item_id": "a7a3a496-bb74-5476-b432-1f7e30847154",
+      "canonical_name": "Urea",
+      "component": "Urea",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El RAW de Salud Digna no especifica matriz exacta. La familia sangre, cuando consta literalmente en Preparacion, se conserva por entrada y no se convierte en suero/plasma/sangre total. El suero explícito de SEMIN tampoco se transfiere al concepto genérico. Specimen_code, system y time_aspect permanecen NULL.",
+      "evidence_url": "https://www.mayoclinic.org/tests-procedures/blood-urea-nitrogen/about/pac-20384821",
+      "reason": "La referencia de Mayo distingue que algunas determinaciones reportan urea en vez de nitrógeno ureico. La orden fuente dice UREA y se conserva independiente de BUN/nitrógeno ureico, sin convertir resultados, equiparar valores ni inferir fórmula, propiedad o unidades. No se identifica con urea urinaria de 24 horas. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma/sangre total, duración de recolección, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. Los atributos explícitos de cada fuente se conservan por entrada en RAW/decisión y no se transfieren a otras fuentes."
+    },
+    {
+      "item_id": "6c468fa5-7f6c-52a5-985e-cf017aa3034b",
+      "canonical_name": "Nitrógeno ureico (BUN)",
+      "component": "Urea nitrogen",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El RAW de Salud Digna no especifica matriz exacta. La familia sangre, cuando consta literalmente en Preparacion, se conserva por entrada y no se convierte en suero/plasma/sangre total. El suero explícito de SEMIN tampoco se transfiere al concepto genérico. Specimen_code, system y time_aspect permanecen NULL.",
+      "evidence_url": "https://medlineplus.gov/lab-tests/bun-blood-urea-nitrogen/",
+      "reason": "BUN identifica nitrógeno ureico sanguíneo; la familia sangre explícita se conserva por entrada. Se mantiene separado de urea, sin convertir resultados, equiparar valores ni añadir relación BUN/creatinina, filtrado glomerular o panel renal. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma/sangre total, duración de recolección, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. Los atributos explícitos de cada fuente se conservan por entrada en RAW/decisión y no se transfieren a otras fuentes."
+    },
+    {
+      "item_id": "710802a7-d876-5abb-ad96-ecca6f32e505",
+      "canonical_name": "Homocisteína",
+      "component": "Homocysteine",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El RAW de Salud Digna no especifica matriz exacta. La familia sangre, cuando consta literalmente en Preparacion, se conserva por entrada y no se convierte en suero/plasma/sangre total. El suero explícito de SEMIN tampoco se transfiere al concepto genérico. Specimen_code, system y time_aspect permanecen NULL.",
+      "evidence_url": "https://medlineplus.gov/lab-tests/homocysteine-test/",
+      "reason": "Identifica homocisteína como orden individual. No cisteína, cistatina C, metionina, aminoácidos en panel ni análisis genético MTHFR. No se añade una forma libre o una fracción analítica ausente del nombre fuente. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma/sangre total, duración de recolección, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. Los atributos explícitos de cada fuente se conservan por entrada en RAW/decisión y no se transfieren a otras fuentes."
+    },
+    {
+      "item_id": "ccb07d45-346f-5f74-b8c8-0d8594e971cc",
+      "canonical_name": "Fructosamina",
+      "component": "Fructosamine",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El RAW de Salud Digna no especifica matriz exacta. La familia sangre, cuando consta literalmente en Preparacion, se conserva por entrada y no se convierte en suero/plasma/sangre total. El suero explícito de SEMIN tampoco se transfiere al concepto genérico. Specimen_code, system y time_aspect permanecen NULL.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/81610",
+      "reason": "La ficha primaria Mayo identifica fructosamina como una determinación propia. No fructosa, glucosa, hemoglobina glicada HbA1c, albúmina glicada aislada ni panel. La muestra suero de Mayo no se transfiere al RAW de Salud Digna. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma/sangre total, duración de recolección, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. Los atributos explícitos de cada fuente se conservan por entrada en RAW/decisión y no se transfieren a otras fuentes."
+    },
+    {
+      "item_id": "b103a7f9-ea35-532b-9078-7a6a081c58a7",
+      "canonical_name": "Lipoproteína(a)",
+      "component": "Lipoprotein(a)",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El RAW de Salud Digna no especifica matriz exacta. La familia sangre, cuando consta literalmente en Preparacion, se conserva por entrada y no se convierte en suero/plasma/sangre total. El suero explícito de SEMIN tampoco se transfiere al concepto genérico. Specimen_code, system y time_aspect permanecen NULL.",
+      "evidence_url": "https://medlineplus.gov/lab-tests/lipoprotein-a-blood-test/",
+      "reason": "El contexto de laboratorio y el nombre lipoproteína A identifican lipoproteína(a), descrita por NIH como Lp(a). No apolipoproteína A-I, apolipoproteína A-II, HDL, LDL, electroforesis de lipoproteínas ni perfil lipídico. No se añaden tamaño de isoforma, método o unidades. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma/sangre total, duración de recolección, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. Los atributos explícitos de cada fuente se conservan por entrada en RAW/decisión y no se transfieren a otras fuentes."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "cloro cl",
+      "item_id": "f0d598a6-1889-5e45-8296-00ea0d1ce18f",
+      "canonical_name": "Cloro (cloruro)",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno 8-12h. No realizar ejercicio físico intenso ni consumir alcohol 24 horas antes de la extracción de sangre. La mañana en la que se obtiene la muestra de sangre no fumar ni tomar bebidas que contengan cafeína. "
+      },
+      "source_attributes": {
+        "specimen_family": "blood"
+      },
+      "evidence_url": "https://medlineplus.gov/lab-tests/chloride-blood-test/",
+      "reason": "En el contexto de química clínica CLORO CL identifica cloruro. Se conserva como orden individual; no es cloro ambiental, clorocatecol, cloruro en sudor, orina ni panel de electrolitos. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma/sangre total, duración de recolección, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. Los atributos explícitos de cada fuente se conservan por entrada en RAW/decisión y no se transfieren a otras fuentes."
+    },
+    {
+      "alias": "cloro",
+      "item_id": "f0d598a6-1889-5e45-8296-00ea0d1ce18f",
+      "canonical_name": "Cloro (cloruro)",
+      "service_type": "lab_test",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "Suero / Tubo de tapon rojo o dorado"
+      },
+      "source_attributes": {
+        "specimen_code": "serum"
+      },
+      "evidence_url": "https://medlineplus.gov/lab-tests/chloride-blood-test/",
+      "reason": "En el contexto de química clínica CLORO CL identifica cloruro. Se conserva como orden individual; no es cloro ambiental, clorocatecol, cloruro en sudor, orina ni panel de electrolitos. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma/sangre total, duración de recolección, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. Los atributos explícitos de cada fuente se conservan por entrada en RAW/decisión y no se transfieren a otras fuentes."
+    },
+    {
+      "alias": "potasio k",
+      "item_id": "a1339fdc-0c03-5b79-9d49-887b0d196f8a",
+      "canonical_name": "Potasio",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO  8 - 12 HORAS. No realizar ejercicio físico intenso ni consumir alcohol 24 horas antes de la extracción de sangre. La mañana en la que se obtiene la muestra de sangre no fumar ni tomar bebidas que contengan cafeína.\r\n"
+      },
+      "source_attributes": {
+        "specimen_family": "blood"
+      },
+      "evidence_url": "https://medlineplus.gov/lab-tests/potassium-blood-test/",
+      "reason": "Potasio y su símbolo K identifican el mismo electrolito como orden individual. No es un panel de electrolitos, anticuerpo contra canales de potasio ni recolección urinaria. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma/sangre total, duración de recolección, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. Los atributos explícitos de cada fuente se conservan por entrada en RAW/decisión y no se transfieren a otras fuentes."
+    },
+    {
+      "alias": "potasio",
+      "item_id": "a1339fdc-0c03-5b79-9d49-887b0d196f8a",
+      "canonical_name": "Potasio",
+      "service_type": "lab_test",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "Suero / Tubo de tapon rojo o dorado"
+      },
+      "source_attributes": {
+        "specimen_code": "serum"
+      },
+      "evidence_url": "https://medlineplus.gov/lab-tests/potassium-blood-test/",
+      "reason": "Potasio y su símbolo K identifican el mismo electrolito como orden individual. No es un panel de electrolitos, anticuerpo contra canales de potasio ni recolección urinaria. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma/sangre total, duración de recolección, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. Los atributos explícitos de cada fuente se conservan por entrada en RAW/decisión y no se transfieren a otras fuentes."
+    },
+    {
+      "alias": "sodio na",
+      "item_id": "8fbf49e1-bbb7-53aa-876b-8a52dc5f4ac9",
+      "canonical_name": "Sodio",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO  8 - 12 HORAS.\r\nNo realizar ejercicio físico intenso ni consumir alcohol 24 horas antes de la extracción de sangre. La mañana en la que se obtiene la muestra de sangre no fumar ni tomar bebidas que contengan cafeína."
+      },
+      "source_attributes": {
+        "specimen_family": "blood"
+      },
+      "evidence_url": "https://medlineplus.gov/lab-tests/sodium-blood-test/",
+      "reason": "Sodio y su símbolo Na identifican el mismo electrolito como orden individual. No se añade un panel ni se traslada a sodio en orina ocasional o de 24 horas. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma/sangre total, duración de recolección, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. Los atributos explícitos de cada fuente se conservan por entrada en RAW/decisión y no se transfieren a otras fuentes."
+    },
+    {
+      "alias": "fosforo",
+      "item_id": "319e7e24-d1ea-5ba0-aaeb-1d9a3bd132c3",
+      "canonical_name": "Fósforo",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno de 8-12 h. No realizar ejercicio físico intenso ni consumir alcohol 24 horas antes de la extracción de sangre. La mañana en la que se obtiene la muestra de sangre no fumar ni tomar bebidas que contengan cafeína."
+      },
+      "source_attributes": {
+        "specimen_family": "blood"
+      },
+      "evidence_url": "https://medlineplus.gov/lab-tests/phosphate-in-blood/",
+      "reason": "La referencia NIH identifica la prueba de fósforo como determinación de fosfato. Se reconoce sólo esta orden por analito; no se aprueba equivalencia de métodos, unidades ni fosfatasas y no se selecciona fósforo urinario de 24 horas. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma/sangre total, duración de recolección, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. Los atributos explícitos de cada fuente se conservan por entrada en RAW/decisión y no se transfieren a otras fuentes.",
+      "additional_targets": [
+        {
+          "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+          "expected_rows": 1,
+          "raw_guard": {
+            "path": [
+              "sample_type"
+            ],
+            "value": "Suero / Tubo de tapon rojo o dorado"
+          },
+          "source_attributes": {
+            "specimen_code": "serum"
+          }
+        }
+      ]
+    },
+    {
+      "alias": "magnesio",
+      "item_id": "92b0be59-d170-51b0-94aa-2525da946349",
+      "canonical_name": "Magnesio",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 8-12 HRS.  No realizar ejercicio físico intenso ni consumir alcohol 24 horas antes de la extracción de sangre. La mañana en la que se obtiene la muestra de sangre no fumar ni tomar bebidas que contengan cafeína."
+      },
+      "source_attributes": {
+        "specimen_family": "blood"
+      },
+      "evidence_url": "https://medlineplus.gov/lab-tests/magnesium-blood-test/",
+      "reason": "Identifica magnesio como orden individual. No magnesio eritrocitario, carga de magnesio, panel de electrolitos ni magnesio en orina ocasional o de 24 horas. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma/sangre total, duración de recolección, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. Los atributos explícitos de cada fuente se conservan por entrada en RAW/decisión y no se transfieren a otras fuentes.",
+      "additional_targets": [
+        {
+          "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+          "expected_rows": 1,
+          "raw_guard": {
+            "path": [
+              "sample_type"
+            ],
+            "value": "Suero / Tubo de tapon rojo o dorado"
+          },
+          "source_attributes": {
+            "specimen_code": "serum"
+          }
+        }
+      ]
+    },
+    {
+      "alias": "urea",
+      "item_id": "a7a3a496-bb74-5476-b432-1f7e30847154",
+      "canonical_name": "Urea",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO  8 - 12 HORAS. \r\nNo realizar ejercicio físico intenso ni consumir alcohol 24 horas antes de la extracción de sangre. La mañana en la que se obtiene la muestra de sangre no fumar ni tomar bebidas que contengan cafeína."
+      },
+      "source_attributes": {
+        "specimen_family": "blood"
+      },
+      "evidence_url": "https://www.mayoclinic.org/tests-procedures/blood-urea-nitrogen/about/pac-20384821",
+      "reason": "La referencia de Mayo distingue que algunas determinaciones reportan urea en vez de nitrógeno ureico. La orden fuente dice UREA y se conserva independiente de BUN/nitrógeno ureico, sin convertir resultados, equiparar valores ni inferir fórmula, propiedad o unidades. No se identifica con urea urinaria de 24 horas. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma/sangre total, duración de recolección, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. Los atributos explícitos de cada fuente se conservan por entrada en RAW/decisión y no se transfieren a otras fuentes."
+    },
+    {
+      "alias": "nitrogeno ureico bun",
+      "item_id": "6c468fa5-7f6c-52a5-985e-cf017aa3034b",
+      "canonical_name": "Nitrógeno ureico (BUN)",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno 8-12h. No realizar ejercicio físico intenso ni consumir alcohol 24 horas antes de la extracción de sangre. La mañana en la que se obtiene la muestra de sangre no fumar ni tomar bebidas que contengan cafeína. "
+      },
+      "source_attributes": {
+        "specimen_family": "blood"
+      },
+      "evidence_url": "https://medlineplus.gov/lab-tests/bun-blood-urea-nitrogen/",
+      "reason": "BUN identifica nitrógeno ureico sanguíneo; la familia sangre explícita se conserva por entrada. Se mantiene separado de urea, sin convertir resultados, equiparar valores ni añadir relación BUN/creatinina, filtrado glomerular o panel renal. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma/sangre total, duración de recolección, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. Los atributos explícitos de cada fuente se conservan por entrada en RAW/decisión y no se transfieren a otras fuentes."
+    },
+    {
+      "alias": "homocisteina",
+      "item_id": "710802a7-d876-5abb-ad96-ecca6f32e505",
+      "canonical_name": "Homocisteína",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 8 A 12 HORAS."
+      },
+      "evidence_url": "https://medlineplus.gov/lab-tests/homocysteine-test/",
+      "reason": "Identifica homocisteína como orden individual. No cisteína, cistatina C, metionina, aminoácidos en panel ni análisis genético MTHFR. No se añade una forma libre o una fracción analítica ausente del nombre fuente. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma/sangre total, duración de recolección, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. Los atributos explícitos de cada fuente se conservan por entrada en RAW/decisión y no se transfieren a otras fuentes."
+    },
+    {
+      "alias": "fructosamina",
+      "item_id": "ccb07d45-346f-5f74-b8c8-0d8594e971cc",
+      "canonical_name": "Fructosamina",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO MINIMO 8 HORAS"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/81610",
+      "reason": "La ficha primaria Mayo identifica fructosamina como una determinación propia. No fructosa, glucosa, hemoglobina glicada HbA1c, albúmina glicada aislada ni panel. La muestra suero de Mayo no se transfiere al RAW de Salud Digna. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma/sangre total, duración de recolección, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. Los atributos explícitos de cada fuente se conservan por entrada en RAW/decisión y no se transfieren a otras fuentes."
+    },
+    {
+      "alias": "lipoproteina a",
+      "item_id": "b103a7f9-ea35-532b-9078-7a6a081c58a7",
+      "canonical_name": "Lipoproteína(a)",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 12 HRS."
+      },
+      "evidence_url": "https://medlineplus.gov/lab-tests/lipoprotein-a-blood-test/",
+      "reason": "El contexto de laboratorio y el nombre lipoproteína A identifican lipoproteína(a), descrita por NIH como Lp(a). No apolipoproteína A-I, apolipoproteína A-II, HDL, LDL, electroforesis de lipoproteínas ni perfil lipídico. No se añaden tamaño de isoforma, método o unidades. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma/sangre total, duración de recolección, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. Los atributos explícitos de cada fuente se conservan por entrada en RAW/decisión y no se transfieren a otras fuentes."
+    }
+  ]
+}

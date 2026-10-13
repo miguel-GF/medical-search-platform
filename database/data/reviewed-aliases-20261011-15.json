@@ -1,0 +1,369 @@
+{
+  "review_id": "pruevia:evidence-review:20261011:15",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras sin confirmación rutinaria; conservar ambigüedad clínica.",
+  "scope": "83 filas crawler, identidad de órdenes y atributos escritos; sin pacientes/OCR, ofertas o cambios de funciones.",
+  "research_date": "2026-10-11",
+  "human_review": false,
+  "new_concepts": [
+    {
+      "item_id": "e4d72772-cc3e-5ce6-a728-db28b4cf4c8e",
+      "canonical_name": "Calprotectina fecal",
+      "component": "Calprotectin",
+      "specimen_code": "stool",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/63016",
+      "reason": "Calprotectina y muestra fecal expresas; no lactoferrina, sangre, panel ni diagnóstico. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas."
+    },
+    {
+      "item_id": "48b5335c-9a56-5bcb-9a3e-348b5756d353",
+      "canonical_name": "Antígeno de Helicobacter pylori en heces",
+      "component": "Helicobacter pylori Ag",
+      "specimen_code": "stool",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://www.labcorp.com/tests/180764/helicobacter-pylori-stool-antigen",
+      "reason": "Antígeno fecal explícito; no anticuerpos, aliento, cultivo, PCR, biopsia ni panel. No importar todos los synonyms externos. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas."
+    },
+    {
+      "item_id": "0eec7c57-cd15-537d-a74f-a5af2839e4ec",
+      "canonical_name": "Azúcares reductores en heces",
+      "component": "Reducing substances",
+      "specimen_code": "stool",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/3002514",
+      "reason": "Clase de sustancias reductoras fecales; no azúcar individual, cromatografía, pH o composición de panel. No validar instrucciones farmacológicas/dietarias RAW. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas."
+    },
+    {
+      "item_id": "49dd1f45-5e81-5ec3-9eb2-251e787f8eec",
+      "canonical_name": "Arsénico en sangre",
+      "component": "Arsenic",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/007245/arsenic-whole-blood",
+      "reason": "As individual, familia sangre explícita; matriz exacta desconocida. No especiación, orina, panel o sangre total inferida. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "specimen_uncertainty": "Matriz exacta y duración no especificadas en el canónico. Familia sangre cuando está escrita pertenece al contexto fuente; no equivale a sangre total, suero o plasma. Las muestras de otra fuente o referencia no completan ésta."
+    },
+    {
+      "item_id": "c94f6648-60f0-51ce-99af-2ea24bba94a7",
+      "canonical_name": "Cadmio en sangre",
+      "component": "Cadmium",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/085340/cadmium-whole-blood",
+      "reason": "Cd individual, familia sangre explícita; matriz exacta desconocida. No orina, relación creatinina ni panel. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "specimen_uncertainty": "Matriz exacta y duración no especificadas en el canónico. Familia sangre cuando está escrita pertenece al contexto fuente; no equivale a sangre total, suero o plasma. Las muestras de otra fuente o referencia no completan ésta."
+    },
+    {
+      "item_id": "a4b42728-78c4-52dd-8103-d794e20f6607",
+      "canonical_name": "Cromo en sangre",
+      "component": "Chromium",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/65601",
+      "reason": "Cr individual, familia sangre explícita; matriz exacta desconocida. No cromogranina, cobalto, implante, CrIII/VI o panel. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "specimen_uncertainty": "Matriz exacta y duración no especificadas en el canónico. Familia sangre cuando está escrita pertenece al contexto fuente; no equivale a sangre total, suero o plasma. Las muestras de otra fuente o referencia no completan ésta."
+    },
+    {
+      "item_id": "790a5c04-b4b0-5ae5-84df-3465c4770453",
+      "canonical_name": "Mercurio en sangre",
+      "component": "Mercury",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/085324/mercury-whole-blood",
+      "reason": "Hg individual, familia sangre SD explícita; matriz exacta desconocida. SEMIN escribe literalmente Sngre total con EDTA. Refrigerado: conservar guard original y explicación tipográfica, sin código de sangre total ni atribuir su muestra a SD. No especies químicas, orina o panel. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "specimen_uncertainty": "Matriz exacta y duración no especificadas en el canónico. Familia sangre cuando está escrita pertenece al contexto fuente; no equivale a sangre total, suero o plasma. Las muestras de otra fuente o referencia no completan ésta."
+    },
+    {
+      "item_id": "8a343b2c-d7ee-5339-bb34-8dfb1ace343c",
+      "canonical_name": "Plomo en sangre",
+      "component": "Lead",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/007625/lead-whole-blood-adult",
+      "reason": "Pb individual, familia sangre explícita; matriz exacta desconocida. No protoporfirina de zinc, orina, panel, venosa/capilar ni edad inferida. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "specimen_uncertainty": "Matriz exacta y duración no especificadas en el canónico. Familia sangre cuando está escrita pertenece al contexto fuente; no equivale a sangre total, suero o plasma. Las muestras de otra fuente o referencia no completan ésta."
+    },
+    {
+      "item_id": "22dd1caa-d026-50fd-b08f-3883b5d521cb",
+      "canonical_name": "Osmolaridad sérica",
+      "component": "Osmotic concentration",
+      "specimen_code": "serum",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://www.labcorp.com/tests/002071/osmolality",
+      "reason": "Sólo identidad literal de orden fuente con suero explícito. Osmolaridad y osmolalidad difieren técnicamente: no añadir osmolalidad como alias ni aprobar equivalencia de resultados. Cantidad por masa/volumen, medida/calculada, propiedad, método y unidad requieren proveedor; NULL. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas."
+    },
+    {
+      "item_id": "ae5de574-f9ac-5241-ad09-505226ee5a99",
+      "canonical_name": "Osmolaridad urinaria",
+      "component": "Osmotic concentration",
+      "specimen_code": "urine",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/41236",
+      "reason": "Sólo identidad literal de orden fuente con orina explícita. No alias osmolalidad ni equivalencia de resultados, cantidad por masa/volumen o método; sin tiempo de recolección. Diferencia sérica preservada. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "calprotectina fecal",
+      "item_id": "e4d72772-cc3e-5ce6-a728-db28b4cf4c8e",
+      "canonical_name": "Calprotectina fecal",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/63016",
+      "reason": "Calprotectina y muestra fecal expresas; no lactoferrina, sangre, panel ni diagnóstico. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "CALPROTECTINA FECAL"
+      },
+      "source_attributes": {
+        "specimen_code": "stool"
+      }
+    },
+    {
+      "alias": "antigeno de helicobacter pylori en heces",
+      "item_id": "48b5335c-9a56-5bcb-9a3e-348b5756d353",
+      "canonical_name": "Antígeno de Helicobacter pylori en heces",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.labcorp.com/tests/180764/helicobacter-pylori-stool-antigen",
+      "reason": "Antígeno fecal explícito; no anticuerpos, aliento, cultivo, PCR, biopsia ni panel. No importar todos los synonyms externos. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTIGENO DE HELICOBACTER PYLORI EN HECES"
+      },
+      "source_attributes": {
+        "specimen_code": "stool"
+      },
+      "additional_targets": [
+        {
+          "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+          "expected_rows": 1,
+          "raw_guard": {
+            "path": [
+              "sample_type"
+            ],
+            "value": "10 g Heces Recientes. Refrigerado"
+          },
+          "source_attributes": {
+            "specimen_code": "stool"
+          }
+        }
+      ]
+    },
+    {
+      "alias": "azucares reductores en heces",
+      "item_id": "0eec7c57-cd15-537d-a74f-a5af2839e4ec",
+      "canonical_name": "Azúcares reductores en heces",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/3002514",
+      "reason": "Clase de sustancias reductoras fecales; no azúcar individual, cromatografía, pH o composición de panel. No validar instrucciones farmacológicas/dietarias RAW. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "AZUCARES REDUCTORES EN HECES"
+      },
+      "source_attributes": {
+        "specimen_code": "stool"
+      }
+    },
+    {
+      "alias": "arsenico en sangre",
+      "item_id": "49dd1f45-5e81-5ec3-9eb2-251e787f8eec",
+      "canonical_name": "Arsénico en sangre",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.labcorp.com/tests/007245/arsenic-whole-blood",
+      "reason": "As individual, familia sangre explícita; matriz exacta desconocida. No especiación, orina, panel o sangre total inferida. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ARSENICO EN SANGRE"
+      },
+      "source_attributes": {
+        "specimen_family": "blood"
+      }
+    },
+    {
+      "alias": "cadmio en sangre",
+      "item_id": "c94f6648-60f0-51ce-99af-2ea24bba94a7",
+      "canonical_name": "Cadmio en sangre",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.labcorp.com/tests/085340/cadmium-whole-blood",
+      "reason": "Cd individual, familia sangre explícita; matriz exacta desconocida. No orina, relación creatinina ni panel. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "CADMIO EN SANGRE"
+      },
+      "source_attributes": {
+        "specimen_family": "blood"
+      }
+    },
+    {
+      "alias": "cromo en sangre",
+      "item_id": "a4b42728-78c4-52dd-8103-d794e20f6607",
+      "canonical_name": "Cromo en sangre",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/65601",
+      "reason": "Cr individual, familia sangre explícita; matriz exacta desconocida. No cromogranina, cobalto, implante, CrIII/VI o panel. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "CROMO EN SANGRE"
+      },
+      "source_attributes": {
+        "specimen_family": "blood"
+      }
+    },
+    {
+      "alias": "mercurio en sangre",
+      "item_id": "790a5c04-b4b0-5ae5-84df-3465c4770453",
+      "canonical_name": "Mercurio en sangre",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.labcorp.com/tests/085324/mercury-whole-blood",
+      "reason": "Hg individual, familia sangre SD explícita; matriz exacta desconocida. SEMIN escribe literalmente Sngre total con EDTA. Refrigerado: conservar guard original y explicación tipográfica, sin código de sangre total ni atribuir su muestra a SD. No especies químicas, orina o panel. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "MERCURIO EN SANGRE"
+      },
+      "source_attributes": {
+        "specimen_family": "blood"
+      },
+      "additional_targets": [
+        {
+          "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+          "expected_rows": 1,
+          "raw_guard": {
+            "path": [
+              "sample_type"
+            ],
+            "value": "Sngre total con EDTA. Refrigerado"
+          }
+        }
+      ]
+    },
+    {
+      "alias": "plomo en sangre",
+      "item_id": "8a343b2c-d7ee-5339-bb34-8dfb1ace343c",
+      "canonical_name": "Plomo en sangre",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.labcorp.com/tests/007625/lead-whole-blood-adult",
+      "reason": "Pb individual, familia sangre explícita; matriz exacta desconocida. No protoporfirina de zinc, orina, panel, venosa/capilar ni edad inferida. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "PLOMO EN SANGRE"
+      },
+      "source_attributes": {
+        "specimen_family": "blood"
+      }
+    },
+    {
+      "alias": "osmolaridad serica",
+      "item_id": "22dd1caa-d026-50fd-b08f-3883b5d521cb",
+      "canonical_name": "Osmolaridad sérica",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.labcorp.com/tests/002071/osmolality",
+      "reason": "Sólo identidad literal de orden fuente con suero explícito. Osmolaridad y osmolalidad difieren técnicamente: no añadir osmolalidad como alias ni aprobar equivalencia de resultados. Cantidad por masa/volumen, medida/calculada, propiedad, método y unidad requieren proveedor; NULL. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "OSMOLARIDAD SERICA"
+      },
+      "source_attributes": {
+        "specimen_code": "serum"
+      }
+    },
+    {
+      "alias": "osmolaridad urinaria",
+      "item_id": "ae5de574-f9ac-5241-ad09-505226ee5a99",
+      "canonical_name": "Osmolaridad urinaria",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/41236",
+      "reason": "Sólo identidad literal de orden fuente con orina explícita. No alias osmolalidad ni equivalencia de resultados, cantidad por masa/volumen o método; sin tiempo de recolección. Diferencia sérica preservada. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "OSMOLARIDAD URINARIA"
+      },
+      "source_attributes": {
+        "specimen_code": "urine"
+      },
+      "additional_targets": [
+        {
+          "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+          "expected_rows": 1,
+          "raw_guard": {
+            "path": [
+              "sample_type"
+            ],
+            "value": "20 ml Orina. Alicuota Refrigerada"
+          },
+          "source_attributes": {
+            "specimen_code": "urine"
+          }
+        }
+      ]
+    }
+  ]
+}

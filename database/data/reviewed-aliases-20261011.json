@@ -1,0 +1,357 @@
+{
+  "review_id": "pruevia:evidence-review:20261011:01",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras sin confirmación rutinaria; conservar diferencias clínicas y ambigüedad real.",
+  "scope": "Revisión terminológica delegada de 82 entradas crawler existentes (80 Salud Digna, dos SEMIN), sin pacientes/OCR, ofertas o equivalencias de resultados. Identidad de diez órdenes por analito con muestra exacta no especificada; atributos explícitos de cada fuente conservados por decisión.",
+  "research_date": "2026-10-11",
+  "human_review": false,
+  "new_concepts": [
+    {
+      "item_id": "89e9c17a-0ced-57cf-8319-7c3c4fb6c7db",
+      "canonical_name": "Ácido úrico",
+      "component": "Urate",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El RAW de Salud Digna no identifica suero, plasma ni sangre total. Cuando menciona extracción de sangre, esa familia se conserva sólo por entrada; no se transfiere el suero de SEMIN ni de la referencia. Specimen_code, system y duración permanecen NULL.",
+      "evidence_url": "https://medlineplus.gov/lab-tests/uric-acid-test/",
+      "reason": "Identifica ácido úrico/urato; no ácido hipúrico, metilhipúrico, uricosuria ni recolección urinaria de 24 horas. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma, duración de recolección, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC. La muestra explícita de cada fuente se conserva por entrada en RAW/decisión y no se transfiere a otras fuentes."
+    },
+    {
+      "item_id": "217cd597-da6b-53e2-aa6e-108ea4e93934",
+      "canonical_name": "Aspartato aminotransferasa (AST/TGO)",
+      "component": "Aspartate aminotransferase",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El RAW de Salud Digna no identifica suero, plasma ni sangre total. Cuando menciona extracción de sangre, esa familia se conserva sólo por entrada; no se transfiere el suero de SEMIN ni de la referencia. Specimen_code, system y duración permanecen NULL.",
+      "evidence_url": "https://medlineplus.gov/spanish/pruebas-de-laboratorio/prueba-de-ast/",
+      "reason": "La transaminasa glutámico oxalacética TGO identifica AST; no ALT/TGP, relación AST/ALT ni panel hepático. La referencia terminológica no autoriza trasladar su muestra a la fuente. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma, duración de recolección, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC. La muestra explícita de cada fuente se conserva por entrada en RAW/decisión y no se transfiere a otras fuentes."
+    },
+    {
+      "item_id": "c412ce8e-0a96-55f1-b2bf-4ac490cdeff6",
+      "canonical_name": "Alanina aminotransferasa (ALT/TGP)",
+      "component": "Alanine aminotransferase",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El RAW de Salud Digna no identifica suero, plasma ni sangre total. Cuando menciona extracción de sangre, esa familia se conserva sólo por entrada; no se transfiere el suero de SEMIN ni de la referencia. Specimen_code, system y duración permanecen NULL.",
+      "evidence_url": "https://medlineplus.gov/spanish/pruebas-de-laboratorio/prueba-de-sangre-de-alt/",
+      "reason": "La transaminasa glutámico pirúvica TGP identifica ALT; no AST/TGO, relación AST/ALT ni panel hepático. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma, duración de recolección, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC. La muestra explícita de cada fuente se conserva por entrada en RAW/decisión y no se transfiere a otras fuentes."
+    },
+    {
+      "item_id": "c85f9219-f105-5865-85a8-094e65409e8e",
+      "canonical_name": "Fosfatasa alcalina (ALP)",
+      "component": "Alkaline phosphatase",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El RAW de Salud Digna no identifica suero, plasma ni sangre total. Cuando menciona extracción de sangre, esa familia se conserva sólo por entrada; no se transfiere el suero de SEMIN ni de la referencia. Specimen_code, system y duración permanecen NULL.",
+      "evidence_url": "https://medlineplus.gov/lab-tests/alkaline-phosphatase/",
+      "reason": "Identifica fosfatasa alcalina general; no fosfatasa ácida, fracción ósea específica ni panel de isoenzimas. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma, duración de recolección, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC. La muestra explícita de cada fuente se conserva por entrada en RAW/decisión y no se transfiere a otras fuentes."
+    },
+    {
+      "item_id": "b1c45cd0-ac60-5b46-9032-a24c02ff9f9d",
+      "canonical_name": "Gammaglutamil transferasa (GGT)",
+      "component": "Gamma glutamyl transferase",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El RAW de Salud Digna no identifica suero, plasma ni sangre total. Cuando menciona extracción de sangre, esa familia se conserva sólo por entrada; no se transfiere el suero de SEMIN ni de la referencia. Specimen_code, system y duración permanecen NULL.",
+      "evidence_url": "https://medlineplus.gov/lab-tests/gamma-glutamyl-transferase-ggt-test/",
+      "reason": "Gammaglutamil transpeptidasa y gamma-glutamil transferasa identifican GGT; no fosfatasa alcalina, AST, ALT ni panel hepático. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma, duración de recolección, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC. La muestra explícita de cada fuente se conserva por entrada en RAW/decisión y no se transfiere a otras fuentes."
+    },
+    {
+      "item_id": "199fb584-7e96-5eab-bb40-aa7c16e4e2b2",
+      "canonical_name": "Lactato deshidrogenasa (LDH)",
+      "component": "Lactate dehydrogenase",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El RAW de Salud Digna no identifica suero, plasma ni sangre total. Cuando menciona extracción de sangre, esa familia se conserva sólo por entrada; no se transfiere el suero de SEMIN ni de la referencia. Specimen_code, system y duración permanecen NULL.",
+      "evidence_url": "https://medlineplus.gov/lab-tests/lactate-dehydrogenase-ldh-test/",
+      "reason": "Deshidrogenasa láctica identifica LDH; no lactato, isoenzimas de LDH ni análisis de líquido pleural/cefalorraquídeo. No se añade un fluido ausente de la orden. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma, duración de recolección, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC. La muestra explícita de cada fuente se conserva por entrada en RAW/decisión y no se transfiere a otras fuentes."
+    },
+    {
+      "item_id": "bd809424-ae9f-5815-b772-3584b82ea05b",
+      "canonical_name": "Bilirrubina total",
+      "component": "Bilirubin.total",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El RAW de Salud Digna no identifica suero, plasma ni sangre total. Cuando menciona extracción de sangre, esa familia se conserva sólo por entrada; no se transfiere el suero de SEMIN ni de la referencia. Specimen_code, system y duración permanecen NULL.",
+      "evidence_url": "https://medlineplus.gov/ency/article/003479.htm",
+      "reason": "La palabra total es explícita; se conserva como orden individual, distinta de bilirrubina directa, indirecta o panel de fracciones. No se calculan ni añaden componentes. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma, duración de recolección, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC. La muestra explícita de cada fuente se conserva por entrada en RAW/decisión y no se transfiere a otras fuentes."
+    },
+    {
+      "item_id": "f8eef6c5-d0c2-51b1-8225-ad4a3ba4cd8c",
+      "canonical_name": "Bilirrubina directa",
+      "component": "Bilirubin.direct",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El RAW de Salud Digna no identifica suero, plasma ni sangre total. Cuando menciona extracción de sangre, esa familia se conserva sólo por entrada; no se transfiere el suero de SEMIN ni de la referencia. Specimen_code, system y duración permanecen NULL.",
+      "evidence_url": "https://medlineplus.gov/ency/article/003479.htm",
+      "reason": "La fracción directa es explícita y se conserva; no se convierte en total, indirecta ni panel. No se aprueba equivalencia analítica de métodos de bilirrubina conjugada. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma, duración de recolección, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC. La muestra explícita de cada fuente se conserva por entrada en RAW/decisión y no se transfiere a otras fuentes."
+    },
+    {
+      "item_id": "e6b0564c-8bb0-5059-858e-8d84243872fd",
+      "canonical_name": "Triglicéridos",
+      "component": "Triglyceride",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El RAW de Salud Digna no identifica suero, plasma ni sangre total. Cuando menciona extracción de sangre, esa familia se conserva sólo por entrada; no se transfiere el suero de SEMIN ni de la referencia. Specimen_code, system y duración permanecen NULL.",
+      "evidence_url": "https://medlineplus.gov/lab-tests/triglycerides-test/",
+      "reason": "Identifica triglicéridos como orden individual; no colesterol, lipoproteínas, perfil de lípidos ni panel de química sanguínea. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma, duración de recolección, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC. La muestra explícita de cada fuente se conserva por entrada en RAW/decisión y no se transfiere a otras fuentes."
+    },
+    {
+      "item_id": "c9a2bf06-0010-5ccf-8ca5-44119e261faf",
+      "canonical_name": "Cistatina C",
+      "component": "Cystatin C",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El RAW de Salud Digna no identifica suero, plasma ni sangre total. Cuando menciona extracción de sangre, esa familia se conserva sólo por entrada; no se transfiere el suero de SEMIN ni de la referencia. Specimen_code, system y duración permanecen NULL.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/614154",
+      "reason": "La ficha de referencia separa el resultado de Cystatin C y eGFR; se usa sólo para identificar el analito cistatina C. No se añaden filtrado glomerular estimado, creatinina, ecuación, suero ni panel renal a la orden fuente. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma, duración de recolección, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC. La muestra explícita de cada fuente se conserva por entrada en RAW/decisión y no se transfiere a otras fuentes."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "acido urico",
+      "item_id": "89e9c17a-0ced-57cf-8319-7c3c4fb6c7db",
+      "canonical_name": "Ácido úrico",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno de 8-12 h. No realizar ejercicio físico intenso ni consumir alcohol 24 horas antes de la extracción de sangre. La mañana en la que se obtiene la muestra de sangre no fumar ni tomar bebidas que contengan cafeína."
+      },
+      "evidence_url": "https://medlineplus.gov/lab-tests/uric-acid-test/",
+      "reason": "Identifica ácido úrico/urato; no ácido hipúrico, metilhipúrico, uricosuria ni recolección urinaria de 24 horas. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma, duración de recolección, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC. La muestra explícita de cada fuente se conserva por entrada en RAW/decisión y no se transfiere a otras fuentes.",
+      "source_attributes": {
+        "specimen_family": "blood"
+      }
+    },
+    {
+      "alias": "transaminasa glutamico oxalacetica tgo",
+      "item_id": "217cd597-da6b-53e2-aa6e-108ea4e93934",
+      "canonical_name": "Aspartato aminotransferasa (AST/TGO)",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno 8-12h. No realizar ejercicio físico intenso ni consumir alcohol 24 horas antes de la extracción de sangre. La mañana en la que se obtiene la muestra de sangre no fumar ni tomar bebidas que contengan cafeína. "
+      },
+      "evidence_url": "https://medlineplus.gov/spanish/pruebas-de-laboratorio/prueba-de-ast/",
+      "reason": "La transaminasa glutámico oxalacética TGO identifica AST; no ALT/TGP, relación AST/ALT ni panel hepático. La referencia terminológica no autoriza trasladar su muestra a la fuente. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma, duración de recolección, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC. La muestra explícita de cada fuente se conserva por entrada en RAW/decisión y no se transfiere a otras fuentes.",
+      "source_attributes": {
+        "specimen_family": "blood"
+      }
+    },
+    {
+      "alias": "transaminasa glutamico piruvica tgp",
+      "item_id": "c412ce8e-0a96-55f1-b2bf-4ac490cdeff6",
+      "canonical_name": "Alanina aminotransferasa (ALT/TGP)",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno 8-12h. No realizar ejercicio físico intenso ni consumir alcohol 24 horas antes de la extracción de sangre. La mañana en la que se obtiene la muestra de sangre no fumar ni tomar bebidas que contengan cafeína. "
+      },
+      "evidence_url": "https://medlineplus.gov/spanish/pruebas-de-laboratorio/prueba-de-sangre-de-alt/",
+      "reason": "La transaminasa glutámico pirúvica TGP identifica ALT; no AST/TGO, relación AST/ALT ni panel hepático. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma, duración de recolección, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC. La muestra explícita de cada fuente se conserva por entrada en RAW/decisión y no se transfiere a otras fuentes.",
+      "source_attributes": {
+        "specimen_family": "blood"
+      }
+    },
+    {
+      "alias": "fosfatasa alcalina alp",
+      "item_id": "c85f9219-f105-5865-85a8-094e65409e8e",
+      "canonical_name": "Fosfatasa alcalina (ALP)",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno de 8-12 h. No realizar ejercicio físico intenso ni consumir alcohol 24 horas antes de la extracción de sangre. La mañana en la que se obtiene la muestra de sangre no fumar ni tomar bebidas que contengan cafeína."
+      },
+      "evidence_url": "https://medlineplus.gov/lab-tests/alkaline-phosphatase/",
+      "reason": "Identifica fosfatasa alcalina general; no fosfatasa ácida, fracción ósea específica ni panel de isoenzimas. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma, duración de recolección, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC. La muestra explícita de cada fuente se conserva por entrada en RAW/decisión y no se transfiere a otras fuentes.",
+      "source_attributes": {
+        "specimen_family": "blood"
+      }
+    },
+    {
+      "alias": "fosfatasa alcalina",
+      "item_id": "c85f9219-f105-5865-85a8-094e65409e8e",
+      "canonical_name": "Fosfatasa alcalina (ALP)",
+      "service_type": "lab_test",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "Suero / Tubo de tapon rojo o dorado"
+      },
+      "source_attributes": {
+        "specimen_code": "serum"
+      },
+      "evidence_url": "https://medlineplus.gov/lab-tests/alkaline-phosphatase/",
+      "reason": "Identifica fosfatasa alcalina general; no fosfatasa ácida, fracción ósea específica ni panel de isoenzimas. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma, duración de recolección, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC. La muestra explícita de cada fuente se conserva por entrada en RAW/decisión y no se transfiere a otras fuentes."
+    },
+    {
+      "alias": "gammaglutamil transpeptidasa ggt",
+      "item_id": "b1c45cd0-ac60-5b46-9032-a24c02ff9f9d",
+      "canonical_name": "Gammaglutamil transferasa (GGT)",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno de 8-12 h. No realizar ejercicio físico intenso ni consumir alcohol 24 horas antes de la extracción de sangre. La mañana en la que se obtiene la muestra de sangre no fumar ni tomar bebidas que contengan cafeína."
+      },
+      "evidence_url": "https://medlineplus.gov/lab-tests/gamma-glutamyl-transferase-ggt-test/",
+      "reason": "Gammaglutamil transpeptidasa y gamma-glutamil transferasa identifican GGT; no fosfatasa alcalina, AST, ALT ni panel hepático. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma, duración de recolección, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC. La muestra explícita de cada fuente se conserva por entrada en RAW/decisión y no se transfiere a otras fuentes.",
+      "source_attributes": {
+        "specimen_family": "blood"
+      }
+    },
+    {
+      "alias": "gamma glutamil transpeptidasa",
+      "item_id": "b1c45cd0-ac60-5b46-9032-a24c02ff9f9d",
+      "canonical_name": "Gammaglutamil transferasa (GGT)",
+      "service_type": "lab_test",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "Suero / Tubo de tapon rojo o dorado"
+      },
+      "source_attributes": {
+        "specimen_code": "serum"
+      },
+      "evidence_url": "https://medlineplus.gov/lab-tests/gamma-glutamyl-transferase-ggt-test/",
+      "reason": "Gammaglutamil transpeptidasa y gamma-glutamil transferasa identifican GGT; no fosfatasa alcalina, AST, ALT ni panel hepático. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma, duración de recolección, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC. La muestra explícita de cada fuente se conserva por entrada en RAW/decisión y no se transfiere a otras fuentes."
+    },
+    {
+      "alias": "deshidrogenasa lactica ldh",
+      "item_id": "199fb584-7e96-5eab-bb40-aa7c16e4e2b2",
+      "canonical_name": "Lactato deshidrogenasa (LDH)",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno de 8-12 h. No realizar ejercicio físico intenso ni consumir alcohol 24 horas antes de la extracción de sangre. La mañana en la que se obtiene la muestra de sangre no fumar ni tomar bebidas que contengan cafeína."
+      },
+      "evidence_url": "https://medlineplus.gov/lab-tests/lactate-dehydrogenase-ldh-test/",
+      "reason": "Deshidrogenasa láctica identifica LDH; no lactato, isoenzimas de LDH ni análisis de líquido pleural/cefalorraquídeo. No se añade un fluido ausente de la orden. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma, duración de recolección, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC. La muestra explícita de cada fuente se conserva por entrada en RAW/decisión y no se transfiere a otras fuentes.",
+      "source_attributes": {
+        "specimen_family": "blood"
+      }
+    },
+    {
+      "alias": "bilirrubinas total",
+      "item_id": "bd809424-ae9f-5815-b772-3584b82ea05b",
+      "canonical_name": "Bilirrubina total",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno 8-12h. No realizar ejercicio físico intenso ni consumir alcohol 24 horas antes de la extracción de sangre. La mañana en la que se obtiene la muestra de sangre no fumar ni tomar bebidas que contengan cafeína."
+      },
+      "evidence_url": "https://medlineplus.gov/ency/article/003479.htm",
+      "reason": "La palabra total es explícita; se conserva como orden individual, distinta de bilirrubina directa, indirecta o panel de fracciones. No se calculan ni añaden componentes. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma, duración de recolección, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC. La muestra explícita de cada fuente se conserva por entrada en RAW/decisión y no se transfiere a otras fuentes.",
+      "source_attributes": {
+        "specimen_family": "blood"
+      }
+    },
+    {
+      "alias": "bilirrubinas directa",
+      "item_id": "f8eef6c5-d0c2-51b1-8225-ad4a3ba4cd8c",
+      "canonical_name": "Bilirrubina directa",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno 8-12h. No realizar ejercicio físico intenso ni consumir alcohol 24 horas antes de la extracción de sangre. La mañana en la que se obtiene la muestra de sangre no fumar ni tomar bebidas que contengan cafeína."
+      },
+      "evidence_url": "https://medlineplus.gov/ency/article/003479.htm",
+      "reason": "La fracción directa es explícita y se conserva; no se convierte en total, indirecta ni panel. No se aprueba equivalencia analítica de métodos de bilirrubina conjugada. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma, duración de recolección, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC. La muestra explícita de cada fuente se conserva por entrada en RAW/decisión y no se transfiere a otras fuentes.",
+      "source_attributes": {
+        "specimen_family": "blood"
+      }
+    },
+    {
+      "alias": "trigliceridos",
+      "item_id": "e6b0564c-8bb0-5059-858e-8d84243872fd",
+      "canonical_name": "Triglicéridos",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO  8 - 12 HORAS.\r\nNo realizar ejercicio físico intenso ni consumir alcohol 24 horas antes de la extracción de sangre. La mañana en la que se obtiene la muestra de sangre no fumar ni tomar bebidas que contengan cafeína.\r\n"
+      },
+      "evidence_url": "https://medlineplus.gov/lab-tests/triglycerides-test/",
+      "reason": "Identifica triglicéridos como orden individual; no colesterol, lipoproteínas, perfil de lípidos ni panel de química sanguínea. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma, duración de recolección, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC. La muestra explícita de cada fuente se conserva por entrada en RAW/decisión y no se transfiere a otras fuentes.",
+      "source_attributes": {
+        "specimen_family": "blood"
+      }
+    },
+    {
+      "alias": "cistatina c",
+      "item_id": "c9a2bf06-0010-5ccf-8ca5-44119e261faf",
+      "canonical_name": "Cistatina C",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 8 A 12 HORAS."
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/614154",
+      "reason": "La ficha de referencia separa el resultado de Cystatin C y eGFR; se usa sólo para identificar el analito cistatina C. No se añaden filtrado glomerular estimado, creatinina, ecuación, suero ni panel renal a la orden fuente. Sólo se reconoce identidad de la orden por analito. No se infieren suero/plasma, duración de recolección, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC. La muestra explícita de cada fuente se conserva por entrada en RAW/decisión y no se transfiere a otras fuentes."
+    }
+  ]
+}

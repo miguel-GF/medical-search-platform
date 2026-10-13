@@ -1,0 +1,71 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261011:03",
+  "reviewed_by": "Codex; investigación delegada por el operador",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "source_key": "denue_puebla_bulk",
+  "research_date": "2026-10-11",
+  "authorization": "D-021 y D-022: investigar identidades y alimentar Puebla sobre la misma base autorizada; trabajo paralelo solicitado por el operador",
+  "scope": "Seis marcas candidatas y seis establecimientos DENUE: un gabinete diagnóstico SCIAN 621511 y cinco hospitales generales privados SCIAN 622111. Identidad pendiente respaldada por fuente gubernamental y página oficial vigente; conserva todos los domicilios originales, las diferencias documentadas, RAW y hash. No crea ofertas, precios, horarios, certificaciones ni equivalencias clínicas. La clase hospitalaria no acredita estudios ni requisitos de acceso para pacientes.",
+  "providers": [
+    {
+      "provider_key": "garditex_gabinete_radiodiagnostico_texmelucan",
+      "name": "GARDITEX — Gabinete de Radiodiagnóstico Texmelucan",
+      "slug": "garditex-radiodiagnostico-texmelucan",
+      "website_url": "https://garditex.com/",
+      "identity_evidence_url": "https://garditex.com/contacto/",
+      "identity_note": "El sitio oficial garditex.com identifica expresamente la organización como Gabinete de Radiodiagnóstico Texmelucan SA de CV; su página de contacto publica Libertad Norte 211, Centro, San Martín Texmelucan, CP 74000. DENUE 3264716, Gabinete de Radiodiagnóstico Texmelucan, coincide en nombre institucional, vialidad, exterior, colonia, municipio y código postal. Se enlaza únicamente ese establecimiento actual con ubicación pending. Los otros registros que se llaman GARDITEX, DENUE 11444808 Libertad Norte 303, 10027510 Vicente Guerrero 52 y 7536469 Santa Anita 306, no se incorporan porque la página actual no corrobora sus sedes específicas; ni siquiera el dominio atribuido al primero justifica afirmar que es la ubicación actual publicada. No se accedió a enlaces de resultados de laboratorio o radiología ni se incorporaron modalidades, convenios u ofertas desde el sitio.",
+      "identity_activity_codes": ["621511"],
+      "denue_record_ids": ["3264716"]
+    },
+    {
+      "provider_key": "christus_muguerza_betania_puebla",
+      "name": "CHRISTUS MUGUERZA — Hospital Betania",
+      "slug": "christus-muguerza-hospital-betania",
+      "website_url": "https://www.christusmuguerza.com.mx/",
+      "identity_evidence_url": "https://www.christusmuguerza.com.mx/hospital-betania/",
+      "identity_note": "La página oficial específica Hospital Betania publica avenida 11 Oriente 1826, Azcárate, CP 72501, Puebla. DENUE 6377334 identifica CHRISTUS MUGUERZA Hospital Betania y atribuye el dominio christusmuguerza.com.mx; coincide en vialidad, colonia, código postal y municipio, pero el exterior gubernamental es 1828. Se conserva 1828 y se registra la discrepancia, sin completar ni corregir dirección o afirmar equivalencia postal completa. El segundo registro Hospital Betania, DENUE 6768594, en 20 Sur 701, no se incorpora por nombre o cercanía sin evidencia primaria específica que pruebe esa sede. Marca verification_pending y hospital pending, conservando SCIAN 622111. Las promociones, precios, rankings y permisos mencionados por la página no se publican ni validan como hechos clínicos o sanitarios.",
+      "identity_activity_codes": ["622111"],
+      "denue_record_ids": ["6377334"]
+    },
+    {
+      "provider_key": "hospital_angeles_puebla",
+      "name": "Hospital Angeles Puebla",
+      "slug": "hospital-angeles-puebla",
+      "website_url": "https://hospitalangeles.com/",
+      "identity_evidence_url": "https://hospitalangeles.com/puebla",
+      "identity_note": "La página oficial específica Hospital Angeles Puebla publica avenida Kepler 2143, Reserva Territorial Atlixcáyotl, CP 72190, Puebla. DENUE 6272674 identifica Hospital Angeles Puebla y atribuye hospitalangeles.com; coincide en exterior 2143, municipio y código postal, con asentamiento gubernamental Reserva Territorial. La vialidad DENUE es Acuario y el sitio Kepler: se conserva Acuario sin normalizar por inferencia ni afirmar equivalencia postal completa. La identidad de institución, dominio y sede Puebla está corroborada; hospital y marca siguen pending/verification_pending. SCIAN 622111 se conserva. No se atribuyen estudios del catálogo general de la cadena a esta ubicación ni se validan certificaciones u horarios con esta revisión.",
+      "identity_activity_codes": ["622111"],
+      "denue_record_ids": ["6272674"]
+    },
+    {
+      "provider_key": "hospitales_mac_puebla",
+      "name": "Hospital MAC Puebla",
+      "slug": "hospital-mac-puebla",
+      "website_url": "https://hospitalesmac.com/",
+      "identity_evidence_url": "https://hospitalesmac.com/hospitales/hospital/puebla",
+      "identity_note": "La página oficial específica Hospital MAC Puebla publica Periférico Ecológico 3507, Reserva Territorial Atlixcáyotl, Tlaxcalancingo, CP 72820. DENUE 9278020, Hospitales MAC Puebla, atribuye hospitalesmac.com y coincide en vialidad, exterior, región Tlaxcalancingo y municipio San Andrés Cholula. DENUE conserva asentamiento Tlaxcalancingo y CP 72810: se registra la discrepancia de colonia/código postal frente a la web sin sustituirla. Identidad candidata pending bajo la clasificación gubernamental SCIAN 622111 de hospital general privado. No se infieren estudios desde equipamiento, clase hospitalaria o listado de áreas clínicas; no se accedió a portales de resultados ni directorios personales.",
+      "identity_activity_codes": ["622111"],
+      "denue_record_ids": ["9278020"]
+    },
+    {
+      "provider_key": "hospital_puebla",
+      "name": "Hospital Puebla",
+      "slug": "hospital-puebla",
+      "website_url": "https://hospitalpuebla.com.mx/",
+      "identity_evidence_url": "https://hospitalpuebla.com.mx/es/pacientes-internacionales-contacto",
+      "identity_note": "El sitio oficial vigente de Hospital Puebla declara Privada de las Ramblas 4, Desarrollo Atlixcáyotl, CP 72197, Puebla. El HTML principal actual es un shell de aplicación; el asset público enlazado /assets/index-DJoLDRek.js contiene el domicilio institucional y el módulo público /assets/ContactoPage-DdoofJWd.js el mismo domicilio completo de la página de contacto, ambos descargados con HTTP 200 el 11-oct-2026 y hash conservado. No se llamó a APIs privadas, formularios ni cuentas. DENUE 6378398, Hospital Puebla, atribuye hospitalpuebla.com.mx y coincide en exterior 4, Desarrollo Atlixcáyotl, código postal y municipio. La vialidad gubernamental es literalmente NINGUNO: se conserva y no se reemplaza con De las Ramblas. Se registra como hospital pending y marca verification_pending con SCIAN 622111; sin ofertas, acceso confirmado, precios, horarios, permisos ni estudios inferidos.",
+      "identity_activity_codes": ["622111"],
+      "denue_record_ids": ["6378398"]
+    },
+    {
+      "provider_key": "beneficencia_espanola_puebla",
+      "name": "Hospital de la Beneficencia Española de Puebla",
+      "slug": "beneficencia-espanola-puebla",
+      "website_url": "https://maternidad.beneficenciaespanola.com.mx/",
+      "identity_evidence_url": "https://maternidad.beneficenciaespanola.com.mx/",
+      "identity_note": "La página institucional pública de la unidad de maternidad se identifica como Hospital de la Beneficencia Española y declara 19 Norte 1001, Jesús García, CP 72090, Puebla; GET directo HTTP 200 el 11-oct-2026, con snapshot y hash. DENUE 10470110 identifica Sociedad Española de Beneficencia de Puebla en 19 Norte, Jesús García, CP 72090, Puebla: coincide la institución y referencia territorial, pero el exterior DENUE es 1012 y el dominio observado tiene errata beneficenciaepanola.com.mx. Se enlaza únicamente la identidad hospitalaria candidata de esa institución, conservando 1012 y el origen gubernamental completo; no se afirma que 1001/1012 son el mismo acceso postal, ni se modifica el número o se crea una sucursal nueva desde la página. Marca verification_pending y hospital pending con SCIAN 622111. La identidad no confirma servicios, paquetes, composición de tamices, honorarios o permisos sanitarios; esos datos no se incorporan.",
+      "identity_activity_codes": ["622111"],
+      "denue_record_ids": ["10470110"]
+    }
+  ]
+}

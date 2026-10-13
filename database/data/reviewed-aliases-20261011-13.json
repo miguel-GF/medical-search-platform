@@ -1,0 +1,317 @@
+{
+  "review_id": "pruevia:evidence-review:20261011:13",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras sin confirmación rutinaria; conservar ambigüedad clínica.",
+  "scope": "81 filas crawler: 80 Salud Digna y una SEMIN; diez órdenes individuales por analito/variante y diez aliases. Sin pacientes/OCR, ofertas nuevas o cambios de funciones.",
+  "research_date": "2026-10-11",
+  "human_review": false,
+  "new_concepts": [
+    {
+      "item_id": "d6338cba-73bc-50ca-bc80-13c0b1f8fd57",
+      "canonical_name": "Apolipoproteína A1",
+      "component": "Apolipoprotein A1",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Concepto global por identidad del analito/variante, specimen/system/time_aspect NULL. Ayuno, nombre de la proteína o matriz de una referencia externa no prueban la muestra local. Familia sangre SD proteínas totales y suero SEMIN fosfatasa ácida total son atributos exclusivos de sus decisiones.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/607591",
+      "reason": "Apolipoproteína A1 explícita e individual; no A2, B ni panel A1+B/relación. El plural comercial no acredita composición de panel. No importar aliases de otros analitos presentes en listas de referencia. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    },
+    {
+      "item_id": "fb2b6e98-e3e1-51df-bb60-e5269e7fd946",
+      "canonical_name": "Apolipoproteína B",
+      "component": "Apolipoprotein B",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Concepto global por identidad del analito/variante, specimen/system/time_aspect NULL. Ayuno, nombre de la proteína o matriz de una referencia externa no prueban la muestra local. Familia sangre SD proteínas totales y suero SEMIN fosfatasa ácida total son atributos exclusivos de sus decisiones.",
+      "evidence_url": "https://www.labcorp.com/tests/167015/apolipoprotein-b",
+      "reason": "Apolipoproteína B individual, sin isoforma específica declarada. No inferir B100/B48, gen APOB, A1+B ni una relación. La identidad general de orden no aprueba fracciones o métodos no escritos en RAW. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    },
+    {
+      "item_id": "25975a23-6f9f-5d9b-a60f-46f4a0a62358",
+      "canonical_name": "Actividad del factor VIII de coagulación",
+      "component": "Coagulation factor VIII activity",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Concepto global por identidad del analito/variante, specimen/system/time_aspect NULL. Ayuno, nombre de la proteína o matriz de una referencia externa no prueban la muestra local. Familia sangre SD proteínas totales y suero SEMIN fosfatasa ácida total son atributos exclusivos de sus decisiones.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/9070",
+      "reason": "Actividad del factor VIII explícita; no antígeno de FVIII/VWF, inhibidor Bethesda, proteína relacionada o panel von Willebrand. No importar método coagulométrico/cromogénico o matriz de la referencia. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    },
+    {
+      "item_id": "5dba8e5b-4453-528b-9142-e8ca882eef1d",
+      "canonical_name": "Fosfatasa alcalina ósea",
+      "component": "Alkaline phosphatase.bone",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Concepto global por identidad del analito/variante, specimen/system/time_aspect NULL. Ayuno, nombre de la proteína o matriz de una referencia externa no prueban la muestra local. Familia sangre SD proteínas totales y suero SEMIN fosfatasa ácida total son atributos exclusivos de sus decisiones.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/82985",
+      "reason": "Fracción ósea explícita de fosfatasa alcalina; concepto separado de fosfatasa alcalina total existente, isoenzimas hepáticas o perfil de isoenzimas. No inferir técnica de separación o método de la fracción. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    },
+    {
+      "item_id": "b0e42017-56a0-5335-9481-6af961177c6b",
+      "canonical_name": "Fosfatasa ácida total",
+      "component": "Acid phosphatase.total",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Concepto global por identidad del analito/variante, specimen/system/time_aspect NULL. Ayuno, nombre de la proteína o matriz de una referencia externa no prueban la muestra local. Familia sangre SD proteínas totales y suero SEMIN fosfatasa ácida total son atributos exclusivos de sus decisiones.",
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/0020544",
+      "reason": "Fosfatasa ácida total individual; no fracción prostática ni combinación total+prostática. SEMIN declara suero sólo para su entrada; SD no acredita matriz. No transferir ese dato al concepto global. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    },
+    {
+      "item_id": "361e5702-3b7e-55c9-8d01-687d09727447",
+      "canonical_name": "Proteína C reactiva cuantitativa",
+      "component": "C reactive protein",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Concepto global por identidad del analito/variante, specimen/system/time_aspect NULL. Ayuno, nombre de la proteína o matriz de una referencia externa no prueban la muestra local. Familia sangre SD proteínas totales y suero SEMIN fosfatasa ácida total son atributos exclusivos de sus decisiones.",
+      "evidence_url": "https://www.labcorp.com/tests/006627/c-reactive-protein-crp-quantitative",
+      "reason": "Proteína C reactiva cuantitativa explícita; concepto individual separado de PCR ultrasensible/cualitativa. No confundir PCR como proteína con reacción en cadena de polimerasa ni inferir método, propiedad, escala, unidades o umbral analítico. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    },
+    {
+      "item_id": "8a5a85cd-59c1-5986-a6dc-2f9300ce8cc4",
+      "canonical_name": "Proteína C reactiva ultrasensible",
+      "component": "C reactive protein.high sensitivity",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Concepto global por identidad del analito/variante, specimen/system/time_aspect NULL. Ayuno, nombre de la proteína o matriz de una referencia externa no prueban la muestra local. Familia sangre SD proteínas totales y suero SEMIN fosfatasa ácida total son atributos exclusivos de sus decisiones.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/606909",
+      "reason": "Variante ultrasensible explícita de proteína C reactiva, separada de PCR cuantitativa convencional/cualitativa. Alta sensibilidad se conserva en nombre/componente; no importar metodología instrumental, límites, indicaciones o evaluación de riesgo de la referencia. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    },
+    {
+      "item_id": "87e579b8-e6cc-5fa7-9590-c5229cd00cbf",
+      "canonical_name": "Proteína plasmática A asociada al embarazo (PAPP-A)",
+      "component": "Pregnancy associated plasma protein A",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Concepto global por identidad del analito/variante, specimen/system/time_aspect NULL. Ayuno, nombre de la proteína o matriz de una referencia externa no prueban la muestra local. Familia sangre SD proteínas totales y suero SEMIN fosfatasa ácida total son atributos exclusivos de sus decisiones.",
+      "evidence_url": "https://womenshealth.labcorp.com/term/papp",
+      "reason": "PAPP-A individual identificado por su nombre expandido. Plasmática forma parte del nombre de la proteína y no demuestra matriz. No convertir a cribado combinado con hCG/NT, algoritmo de riesgo, PAPP-A2 o gen PAPPA. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    },
+    {
+      "item_id": "72d6a536-67e2-5284-8cea-f83fb37c72a6",
+      "canonical_name": "Proteína epididimal humana 4 (HE4)",
+      "component": "Human epididymis protein 4",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Concepto global por identidad del analito/variante, specimen/system/time_aspect NULL. Ayuno, nombre de la proteína o matriz de una referencia externa no prueban la muestra local. Familia sangre SD proteínas totales y suero SEMIN fosfatasa ácida total son atributos exclusivos de sus decisiones.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/62137",
+      "reason": "HE4 identifica proteína epididimal humana 4 individual; no HE1, CA125, ROMA o panel. La instrucción local 'no encontrarse bajo terapia' queda sólo como evidencia de la fuente, sin validar suspensión de tratamientos. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    },
+    {
+      "item_id": "94e3f28f-bdb6-52b9-ac52-8baf93766e69",
+      "canonical_name": "Dímero D",
+      "component": "Fibrin D-dimer",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Concepto global por identidad del analito/variante, specimen/system/time_aspect NULL. Ayuno, nombre de la proteína o matriz de una referencia externa no prueban la muestra local. Familia sangre SD proteínas totales y suero SEMIN fosfatasa ácida total son atributos exclusivos de sus decisiones.",
+      "evidence_url": "https://medlineplus.gov/lab-tests/d-dimer-test/",
+      "reason": "Dímero D como orden individual; no productos generales de degradación de fibrina, panel de coagulación ni diagnóstico de trombosis. No inferir cuantitativo/cualitativo, FEU/DDU, unidades, cutoff o método ausentes del RAW. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "apolipoproteinas a1",
+      "item_id": "d6338cba-73bc-50ca-bc80-13c0b1f8fd57",
+      "canonical_name": "Apolipoproteína A1",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 12 HRS."
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/607591",
+      "reason": "Apolipoproteína A1 explícita e individual; no A2, B ni panel A1+B/relación. El plural comercial no acredita composición de panel. No importar aliases de otros analitos presentes en listas de referencia. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    },
+    {
+      "alias": "apolipoproteinas b",
+      "item_id": "fb2b6e98-e3e1-51df-bb60-e5269e7fd946",
+      "canonical_name": "Apolipoproteína B",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 12 HRS."
+      },
+      "evidence_url": "https://www.labcorp.com/tests/167015/apolipoprotein-b",
+      "reason": "Apolipoproteína B individual, sin isoforma específica declarada. No inferir B100/B48, gen APOB, A1+B ni una relación. La identidad general de orden no aprueba fracciones o métodos no escritos en RAW. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    },
+    {
+      "alias": "factor viii de coagulacion actividad",
+      "item_id": "25975a23-6f9f-5d9b-a60f-46f4a0a62358",
+      "canonical_name": "Actividad del factor VIII de coagulación",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": ""
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/9070",
+      "reason": "Actividad del factor VIII explícita; no antígeno de FVIII/VWF, inhibidor Bethesda, proteína relacionada o panel von Willebrand. No importar método coagulométrico/cromogénico o matriz de la referencia. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    },
+    {
+      "alias": "fosfatasa alcalina fraccion osea",
+      "item_id": "5dba8e5b-4453-528b-9142-e8ca882eef1d",
+      "canonical_name": "Fosfatasa alcalina ósea",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 8 HRS."
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/82985",
+      "reason": "Fracción ósea explícita de fosfatasa alcalina; concepto separado de fosfatasa alcalina total existente, isoenzimas hepáticas o perfil de isoenzimas. No inferir técnica de separación o método de la fracción. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    },
+    {
+      "alias": "fosfatasa acida total",
+      "item_id": "b0e42017-56a0-5335-9481-6af961177c6b",
+      "canonical_name": "Fosfatasa ácida total",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 4 HRS."
+      },
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/0020544",
+      "reason": "Fosfatasa ácida total individual; no fracción prostática ni combinación total+prostática. SEMIN declara suero sólo para su entrada; SD no acredita matriz. No transferir ese dato al concepto global. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos.",
+      "additional_targets": [
+        {
+          "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+          "expected_rows": 1,
+          "raw_guard": {
+            "path": [
+              "sample_type"
+            ],
+            "value": "2 ml Suero. Refrigerado"
+          },
+          "source_attributes": {
+            "specimen_code": "serum"
+          }
+        }
+      ]
+    },
+    {
+      "alias": "proteina c reactiva cuantitativa",
+      "item_id": "361e5702-3b7e-55c9-8d01-687d09727447",
+      "canonical_name": "Proteína C reactiva cuantitativa",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 8-12 HORAS "
+      },
+      "evidence_url": "https://www.labcorp.com/tests/006627/c-reactive-protein-crp-quantitative",
+      "reason": "Proteína C reactiva cuantitativa explícita; concepto individual separado de PCR ultrasensible/cualitativa. No confundir PCR como proteína con reacción en cadena de polimerasa ni inferir método, propiedad, escala, unidades o umbral analítico. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    },
+    {
+      "alias": "proteina c reactiva ultrasensible",
+      "item_id": "8a5a85cd-59c1-5986-a6dc-2f9300ce8cc4",
+      "canonical_name": "Proteína C reactiva ultrasensible",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 8-12 HORAS "
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/606909",
+      "reason": "Variante ultrasensible explícita de proteína C reactiva, separada de PCR cuantitativa convencional/cualitativa. Alta sensibilidad se conserva en nombre/componente; no importar metodología instrumental, límites, indicaciones o evaluación de riesgo de la referencia. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    },
+    {
+      "alias": "proteina a plasmatica asociada al embarazo",
+      "item_id": "87e579b8-e6cc-5fa7-9590-c5229cd00cbf",
+      "canonical_name": "Proteína plasmática A asociada al embarazo (PAPP-A)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "* AYUNO MINIMO DE 4 HRS     \r\n*TOMA DE MUESTRA ANTES DE LAS 10 DE LA MAÑANA\r\n*NO DEBERA REALIZAR EJERCICIO, NI NINGUNA ACTIVIDAD QUE GENERE ESTRÉS ANTES DE LA TOMA DE MUESTRA\r\n"
+      },
+      "evidence_url": "https://womenshealth.labcorp.com/term/papp",
+      "reason": "PAPP-A individual identificado por su nombre expandido. Plasmática forma parte del nombre de la proteína y no demuestra matriz. No convertir a cribado combinado con hCG/NT, algoritmo de riesgo, PAPP-A2 o gen PAPPA. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    },
+    {
+      "alias": "proteina epididimal antigeno he4",
+      "item_id": "72d6a536-67e2-5284-8cea-f83fb37c72a6",
+      "canonical_name": "Proteína epididimal humana 4 (HE4)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "- AYUNO DE 8 HRS.\r\n- NO ENCONTRARSE BAJO TERAPIA 7 DÍAS ANTES DEL ESTUDIO."
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/62137",
+      "reason": "HE4 identifica proteína epididimal humana 4 individual; no HE1, CA125, ROMA o panel. La instrucción local 'no encontrarse bajo terapia' queda sólo como evidencia de la fuente, sin validar suspensión de tratamientos. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    },
+    {
+      "alias": "dimero d",
+      "item_id": "94e3f28f-bdb6-52b9-ac52-8baf93766e69",
+      "canonical_name": "Dímero D",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO 8-12 HORAS."
+      },
+      "evidence_url": "https://medlineplus.gov/lab-tests/d-dimer-test/",
+      "reason": "Dímero D como orden individual; no productos generales de degradación de fibrina, panel de coagulación ni diagnóstico de trombosis. No inferir cuantitativo/cualitativo, FEU/DDU, unidades, cutoff o método ausentes del RAW. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    }
+  ]
+}

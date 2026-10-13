@@ -1,0 +1,319 @@
+{
+  "review_id": "pruevia:evidence-review:20261011:04",
+  "reviewed_by": "Codex, investigación terminológica delegada",
+  "authorization": "D-021/D-022: investigar primarias y decidir identidades claras de órdenes sin confirmación rutinaria; mantener diferencias clínicas y ambigüedad real.",
+  "scope": "Diez órdenes individuales de autoanticuerpos por antígeno/familia, once aliases y 83 filas crawler (82 Salud Digna y una Chopo). Antiendomisio conserva IgA explícita; no se infieren matriz, técnica, otros isotipos, subfracciones, paneles ni equivalencias de resultados. Sin pacientes/OCR, ofertas ni mappings LOINC.",
+  "research_date": "2026-10-11",
+  "human_review": false,
+  "new_concepts": [
+    {
+      "item_id": "2ca579ea-fd7d-5d8e-bc16-77dfd34e30a0",
+      "canonical_name": "Anticuerpos anti-SSA/Ro",
+      "component": "SSA/Ro antibody",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Ni el nombre ni los campos RAW de la fuente identifican la matriz. No se transfiere el suero de fuentes de referencia; specimen_code, system y duración permanecen NULL.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/81360",
+      "reason": "SSA/Ro designa la familia de autoanticuerpos Ro; no SSB/La ni panel ENA. El RAW no identifica Ro52, Ro60, ambos como componentes separados, isotipo ni método. Se reconoce únicamente la familia de la orden; no se convierte en anti-Ro52, anti-Ro60 o panel de ambos por la composición de la referencia. Sólo se reconoce identidad de la orden por antígeno/familia y el isotipo cuando está explícito. No se infieren muestra, duración, método, propiedad, escala, unidad, preparación, oferta, disponibilidad ni mapping LOINC; no se aprueba equivalencia de resultados clínicos. Conserva atributos y originales de cada fuente."
+    },
+    {
+      "item_id": "04d23812-5db6-53a1-bacd-fc07bb9166a4",
+      "canonical_name": "Anticuerpos anti-SSB/La",
+      "component": "SSB/La antibody",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Ni el nombre ni los campos RAW de la fuente identifican la matriz. No se transfiere el suero de fuentes de referencia; specimen_code, system y duración permanecen NULL.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/800227",
+      "reason": "SSB y La identifican el mismo antígeno de esta orden; no SSA/Ro ni panel ENA. No se trasladan IgG, método multiplex o suero de la referencia al nombre genérico sin isotipo/matriz explícitos. Sólo se reconoce identidad de la orden por antígeno/familia y el isotipo cuando está explícito. No se infieren muestra, duración, método, propiedad, escala, unidad, preparación, oferta, disponibilidad ni mapping LOINC; no se aprueba equivalencia de resultados clínicos. Conserva atributos y originales de cada fuente."
+    },
+    {
+      "item_id": "6e1868dc-eebe-5086-b6eb-2fb1320c093a",
+      "canonical_name": "Anticuerpos anti-21-hidroxilasa",
+      "component": "21-Hydroxylase antibody",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Ni el nombre ni los campos RAW de la fuente identifican la matriz. No se transfiere el suero de fuentes de referencia; specimen_code, system y duración permanecen NULL.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/607788",
+      "reason": "Identifica autoanticuerpos frente a 21-hidroxilasa; no actividad enzimática, genética CYP21A2, 17-hidroxilasa, esteroides ni panel suprarrenal. El método ELISA de la referencia no está probado para la fuente. Sólo se reconoce identidad de la orden por antígeno/familia y el isotipo cuando está explícito. No se infieren muestra, duración, método, propiedad, escala, unidad, preparación, oferta, disponibilidad ni mapping LOINC; no se aprueba equivalencia de resultados clínicos. Conserva atributos y originales de cada fuente."
+    },
+    {
+      "item_id": "506929db-e2fc-5997-949c-fa3dc2077c8e",
+      "canonical_name": "Anticuerpos anti-ADN de doble cadena (dsDNA)",
+      "component": "DNA.double stranded antibody",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Ni el nombre ni los campos RAW de la fuente identifican la matriz. No se transfiere el suero de fuentes de referencia; specimen_code, system y duración permanecen NULL.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/620810",
+      "reason": "DNA nativo con doble cadena explícita identifica anti-dsDNA; no ADN monocatenario, ANA genérico, nucleosomas ni panel. No se infieren IgG, Crithidia luciliae, ELISA, inmunofluorescencia, título ni afinidad; las distintas técnicas no se aprueban como equivalentes en resultados. Sólo se reconoce identidad de la orden por antígeno/familia y el isotipo cuando está explícito. No se infieren muestra, duración, método, propiedad, escala, unidad, preparación, oferta, disponibilidad ni mapping LOINC; no se aprueba equivalencia de resultados clínicos. Conserva atributos y originales de cada fuente."
+    },
+    {
+      "item_id": "836647ed-a373-5fc3-badf-486ede36000e",
+      "canonical_name": "Anticuerpos anticentrómero",
+      "component": "Centromere antibody",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Ni el nombre ni los campos RAW de la fuente identifican la matriz. No se transfiere el suero de fuentes de referencia; specimen_code, system y duración permanecen NULL.",
+      "evidence_url": "https://www.southtees.nhs.uk/services/pathology/tests/anti-centromere-antibody/",
+      "reason": "Identifica la familia de autoanticuerpos anticentrómero; no ANA genérico, Scl-70 ni panel esclerodermia. El RAW no identifica CENP-A/B/C, isotipo ni técnica. La referencia explica varias proteínas: no se elige CENP-B ni se afirma composición de panel. Sólo se reconoce identidad de la orden por antígeno/familia y el isotipo cuando está explícito. No se infieren muestra, duración, método, propiedad, escala, unidad, preparación, oferta, disponibilidad ni mapping LOINC; no se aprueba equivalencia de resultados clínicos. Conserva atributos y originales de cada fuente."
+    },
+    {
+      "item_id": "acd5b4eb-8d9d-5e17-88b8-8f7eaa568138",
+      "canonical_name": "Anticuerpos antiendomisio IgA",
+      "component": "Endomysium IgA antibody",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Ni el nombre ni los campos RAW de la fuente identifican la matriz. No se transfiere el suero de fuentes de referencia; specimen_code, system y duración permanecen NULL.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/9360",
+      "reason": "Endomisiales y antiendomisio identifican autoanticuerpos frente a endomisio. Conserva IgA explícita en Salud Digna y Chopo; no antiendomisio IgG, IgA total, transglutaminasa IgA, gliadina ni panel celíaco. No se traslada inmunofluorescencia o reflex de títulos de la referencia. La clasificación Infectología del RAW Chopo no cambia el antígeno explícito ni autoriza una etiología infecciosa. Sólo se reconoce identidad de la orden por antígeno/familia y el isotipo cuando está explícito. No se infieren muestra, duración, método, propiedad, escala, unidad, preparación, oferta, disponibilidad ni mapping LOINC; no se aprueba equivalencia de resultados clínicos. Conserva atributos y originales de cada fuente."
+    },
+    {
+      "item_id": "553066f0-9c8e-50eb-8822-d11ec0ce7955",
+      "canonical_name": "Anticuerpos anti-factor intrínseco",
+      "component": "Intrinsic factor antibody",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Ni el nombre ni los campos RAW de la fuente identifican la matriz. No se transfiere el suero de fuentes de referencia; specimen_code, system y duración permanecen NULL.",
+      "evidence_url": "https://www.southtees.nhs.uk/services/pathology/tests/intrinsic-factor-antibodies/",
+      "reason": "Identifica la familia de autoanticuerpos frente a factor intrínseco; no concentración de factor, vitamina B12, células parietales ni panel anemia. Hay variantes bloqueantes y de unión: el RAW no indica cuál, y el canónico general no escoge tipo 1/2, blocking/binding ni presume que incluye ambos. Sólo se reconoce identidad de la orden por antígeno/familia y el isotipo cuando está explícito. No se infieren muestra, duración, método, propiedad, escala, unidad, preparación, oferta, disponibilidad ni mapping LOINC; no se aprueba equivalencia de resultados clínicos. Conserva atributos y originales de cada fuente."
+    },
+    {
+      "item_id": "135fc9b5-ee31-581e-b99f-9f0b80961ace",
+      "canonical_name": "Anticuerpos antihistona",
+      "component": "Histone antibody",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Ni el nombre ni los campos RAW de la fuente identifican la matriz. No se transfiere el suero de fuentes de referencia; specimen_code, system y duración permanecen NULL.",
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/0050860",
+      "reason": "Identifica autoanticuerpos antihistona; no Histoplasma capsulatum, histamina, ANA genérico, nucleosomas, genética/modificaciones de histonas ni panel. No se asignan una subunidad H1/H2A/H2B/H3/H4, IgG o método ELISA por lo que contiene la referencia. Sólo se reconoce identidad de la orden por antígeno/familia y el isotipo cuando está explícito. No se infieren muestra, duración, método, propiedad, escala, unidad, preparación, oferta, disponibilidad ni mapping LOINC; no se aprueba equivalencia de resultados clínicos. Conserva atributos y originales de cada fuente."
+    },
+    {
+      "item_id": "2a97ea3f-4fc0-59e0-a18d-891b56d8453b",
+      "canonical_name": "Anticuerpos anti-membrana basal glomerular",
+      "component": "Glomerular basement membrane antibody",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Ni el nombre ni los campos RAW de la fuente identifican la matriz. No se transfiere el suero de fuentes de referencia; specimen_code, system y duración permanecen NULL.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/8106",
+      "reason": "Glumerular es una variante ortográfica de glomerular dentro de la etiqueta completa de anticuerpos anti-membrana basal: identifica anti-GBM. Se conserva literalmente el RAW original. No ANCA, anticuerpos de membrana basal cutánea, biopsia renal ni panel vasculitis. No se infieren IgG, dominio NC1/colágeno IV alfa3, método o diagnóstico. Sólo se reconoce identidad de la orden por antígeno/familia y el isotipo cuando está explícito. No se infieren muestra, duración, método, propiedad, escala, unidad, preparación, oferta, disponibilidad ni mapping LOINC; no se aprueba equivalencia de resultados clínicos. Conserva atributos y originales de cada fuente."
+    },
+    {
+      "item_id": "af02ffea-34ed-5386-a81a-0263df696a5b",
+      "canonical_name": "Anticuerpos antimitocondriales",
+      "component": "Mitochondrial antibody",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Ni el nombre ni los campos RAW de la fuente identifican la matriz. No se transfiere el suero de fuentes de referencia; specimen_code, system y duración permanecen NULL.",
+      "evidence_url": "https://www.southtees.nhs.uk/services/pathology/tests/anti-mitochondrial-antibody-ama/",
+      "reason": "Identifica la familia AMA de autoanticuerpos antimitocondriales; no ADN mitocondrial/genética, microsomales hepatorrenales ni panel hepático. La referencia distingue especificidades M1-M9: no se escoge M2, PDC-E2, IgG/IgM ni técnica ausentes de la fuente, ni se afirma que un producto incluya todas esas especificidades. Sólo se reconoce identidad de la orden por antígeno/familia y el isotipo cuando está explícito. No se infieren muestra, duración, método, propiedad, escala, unidad, preparación, oferta, disponibilidad ni mapping LOINC; no se aprueba equivalencia de resultados clínicos. Conserva atributos y originales de cada fuente."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "anticuerpos anti ssa ro",
+      "item_id": "2ca579ea-fd7d-5d8e-bc16-77dfd34e30a0",
+      "canonical_name": "Anticuerpos anti-SSA/Ro",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 9,
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/81360",
+      "reason": "SSA/Ro designa la familia de autoanticuerpos Ro; no SSB/La ni panel ENA. El RAW no identifica Ro52, Ro60, ambos como componentes separados, isotipo ni método. Se reconoce únicamente la familia de la orden; no se convierte en anti-Ro52, anti-Ro60 o panel de ambos por la composición de la referencia. Sólo se reconoce identidad de la orden por antígeno/familia y el isotipo cuando está explícito. No se infieren muestra, duración, método, propiedad, escala, unidad, preparación, oferta, disponibilidad ni mapping LOINC; no se aprueba equivalencia de resultados clínicos. Conserva atributos y originales de cada fuente.",
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS ANTI SSA (RO)"
+      }
+    },
+    {
+      "alias": "anticuerpos anti ssb la",
+      "item_id": "04d23812-5db6-53a1-bacd-fc07bb9166a4",
+      "canonical_name": "Anticuerpos anti-SSB/La",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 9,
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/800227",
+      "reason": "SSB y La identifican el mismo antígeno de esta orden; no SSA/Ro ni panel ENA. No se trasladan IgG, método multiplex o suero de la referencia al nombre genérico sin isotipo/matriz explícitos. Sólo se reconoce identidad de la orden por antígeno/familia y el isotipo cuando está explícito. No se infieren muestra, duración, método, propiedad, escala, unidad, preparación, oferta, disponibilidad ni mapping LOINC; no se aprueba equivalencia de resultados clínicos. Conserva atributos y originales de cada fuente.",
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS ANTI SSB (LA)"
+      }
+    },
+    {
+      "alias": "anticuerpos anti 21 hidroxilasa",
+      "item_id": "6e1868dc-eebe-5086-b6eb-2fb1320c093a",
+      "canonical_name": "Anticuerpos anti-21-hidroxilasa",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/607788",
+      "reason": "Identifica autoanticuerpos frente a 21-hidroxilasa; no actividad enzimática, genética CYP21A2, 17-hidroxilasa, esteroides ni panel suprarrenal. El método ELISA de la referencia no está probado para la fuente. Sólo se reconoce identidad de la orden por antígeno/familia y el isotipo cuando está explícito. No se infieren muestra, duración, método, propiedad, escala, unidad, preparación, oferta, disponibilidad ni mapping LOINC; no se aprueba equivalencia de resultados clínicos. Conserva atributos y originales de cada fuente.",
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS ANTI 21 HIDROXILASA"
+      }
+    },
+    {
+      "alias": "anticuerpos anti dna nativo de doble cadena",
+      "item_id": "506929db-e2fc-5997-949c-fa3dc2077c8e",
+      "canonical_name": "Anticuerpos anti-ADN de doble cadena (dsDNA)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/620810",
+      "reason": "DNA nativo con doble cadena explícita identifica anti-dsDNA; no ADN monocatenario, ANA genérico, nucleosomas ni panel. No se infieren IgG, Crithidia luciliae, ELISA, inmunofluorescencia, título ni afinidad; las distintas técnicas no se aprueban como equivalentes en resultados. Sólo se reconoce identidad de la orden por antígeno/familia y el isotipo cuando está explícito. No se infieren muestra, duración, método, propiedad, escala, unidad, preparación, oferta, disponibilidad ni mapping LOINC; no se aprueba equivalencia de resultados clínicos. Conserva atributos y originales de cada fuente.",
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS ANTI DNA NATIVO (DE DOBLE CADENA)"
+      }
+    },
+    {
+      "alias": "anticuerpos anti centromero",
+      "item_id": "836647ed-a373-5fc3-badf-486ede36000e",
+      "canonical_name": "Anticuerpos anticentrómero",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "evidence_url": "https://www.southtees.nhs.uk/services/pathology/tests/anti-centromere-antibody/",
+      "reason": "Identifica la familia de autoanticuerpos anticentrómero; no ANA genérico, Scl-70 ni panel esclerodermia. El RAW no identifica CENP-A/B/C, isotipo ni técnica. La referencia explica varias proteínas: no se elige CENP-B ni se afirma composición de panel. Sólo se reconoce identidad de la orden por antígeno/familia y el isotipo cuando está explícito. No se infieren muestra, duración, método, propiedad, escala, unidad, preparación, oferta, disponibilidad ni mapping LOINC; no se aprueba equivalencia de resultados clínicos. Conserva atributos y originales de cada fuente.",
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS ANTI CENTROMERO"
+      }
+    },
+    {
+      "alias": "anticuerpos anti endomisiales iga",
+      "item_id": "acd5b4eb-8d9d-5e17-88b8-8f7eaa568138",
+      "canonical_name": "Anticuerpos antiendomisio IgA",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/9360",
+      "reason": "Endomisiales y antiendomisio identifican autoanticuerpos frente a endomisio. Conserva IgA explícita en Salud Digna y Chopo; no antiendomisio IgG, IgA total, transglutaminasa IgA, gliadina ni panel celíaco. No se traslada inmunofluorescencia o reflex de títulos de la referencia. La clasificación Infectología del RAW Chopo no cambia el antígeno explícito ni autoriza una etiología infecciosa. Sólo se reconoce identidad de la orden por antígeno/familia y el isotipo cuando está explícito. No se infieren muestra, duración, método, propiedad, escala, unidad, preparación, oferta, disponibilidad ni mapping LOINC; no se aprueba equivalencia de resultados clínicos. Conserva atributos y originales de cada fuente.",
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS ANTI ENDOMISIALES IGA"
+      }
+    },
+    {
+      "alias": "ac iga anti endomisio",
+      "item_id": "acd5b4eb-8d9d-5e17-88b8-8f7eaa568138",
+      "canonical_name": "Anticuerpos antiendomisio IgA",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "edad5c4c-9cb7-5098-bb6d-4d9f58907cbc",
+      "expected_rows": 1,
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/9360",
+      "reason": "Endomisiales y antiendomisio identifican autoanticuerpos frente a endomisio. Conserva IgA explícita en Salud Digna y Chopo; no antiendomisio IgG, IgA total, transglutaminasa IgA, gliadina ni panel celíaco. No se traslada inmunofluorescencia o reflex de títulos de la referencia. La clasificación Infectología del RAW Chopo no cambia el antígeno explícito ni autoriza una etiología infecciosa. Sólo se reconoce identidad de la orden por antígeno/familia y el isotipo cuando está explícito. No se infieren muestra, duración, método, propiedad, escala, unidad, preparación, oferta, disponibilidad ni mapping LOINC; no se aprueba equivalencia de resultados clínicos. Conserva atributos y originales de cada fuente.",
+      "raw_guard": {
+        "path": [
+          "provider_display_name"
+        ],
+        "value": "AC IgA ANTI-ENDOMISIO"
+      }
+    },
+    {
+      "alias": "anticuerpos anti factor intrinseco",
+      "item_id": "553066f0-9c8e-50eb-8822-d11ec0ce7955",
+      "canonical_name": "Anticuerpos anti-factor intrínseco",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "evidence_url": "https://www.southtees.nhs.uk/services/pathology/tests/intrinsic-factor-antibodies/",
+      "reason": "Identifica la familia de autoanticuerpos frente a factor intrínseco; no concentración de factor, vitamina B12, células parietales ni panel anemia. Hay variantes bloqueantes y de unión: el RAW no indica cuál, y el canónico general no escoge tipo 1/2, blocking/binding ni presume que incluye ambos. Sólo se reconoce identidad de la orden por antígeno/familia y el isotipo cuando está explícito. No se infieren muestra, duración, método, propiedad, escala, unidad, preparación, oferta, disponibilidad ni mapping LOINC; no se aprueba equivalencia de resultados clínicos. Conserva atributos y originales de cada fuente.",
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS ANTI FACTOR INTRINSECO"
+      }
+    },
+    {
+      "alias": "anticuerpos anti histona",
+      "item_id": "135fc9b5-ee31-581e-b99f-9f0b80961ace",
+      "canonical_name": "Anticuerpos antihistona",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/0050860",
+      "reason": "Identifica autoanticuerpos antihistona; no Histoplasma capsulatum, histamina, ANA genérico, nucleosomas, genética/modificaciones de histonas ni panel. No se asignan una subunidad H1/H2A/H2B/H3/H4, IgG o método ELISA por lo que contiene la referencia. Sólo se reconoce identidad de la orden por antígeno/familia y el isotipo cuando está explícito. No se infieren muestra, duración, método, propiedad, escala, unidad, preparación, oferta, disponibilidad ni mapping LOINC; no se aprueba equivalencia de resultados clínicos. Conserva atributos y originales de cada fuente.",
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS ANTI HISTONA"
+      }
+    },
+    {
+      "alias": "anticuerpos anti membrana basal glumerular",
+      "item_id": "2a97ea3f-4fc0-59e0-a18d-891b56d8453b",
+      "canonical_name": "Anticuerpos anti-membrana basal glomerular",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/8106",
+      "reason": "Glumerular es una variante ortográfica de glomerular dentro de la etiqueta completa de anticuerpos anti-membrana basal: identifica anti-GBM. Se conserva literalmente el RAW original. No ANCA, anticuerpos de membrana basal cutánea, biopsia renal ni panel vasculitis. No se infieren IgG, dominio NC1/colágeno IV alfa3, método o diagnóstico. Sólo se reconoce identidad de la orden por antígeno/familia y el isotipo cuando está explícito. No se infieren muestra, duración, método, propiedad, escala, unidad, preparación, oferta, disponibilidad ni mapping LOINC; no se aprueba equivalencia de resultados clínicos. Conserva atributos y originales de cada fuente.",
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS ANTI MEMBRANA BASAL GLUMERULAR"
+      }
+    },
+    {
+      "alias": "anticuerpos anti mitocondriales",
+      "item_id": "af02ffea-34ed-5386-a81a-0263df696a5b",
+      "canonical_name": "Anticuerpos antimitocondriales",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "evidence_url": "https://www.southtees.nhs.uk/services/pathology/tests/anti-mitochondrial-antibody-ama/",
+      "reason": "Identifica la familia AMA de autoanticuerpos antimitocondriales; no ADN mitocondrial/genética, microsomales hepatorrenales ni panel hepático. La referencia distingue especificidades M1-M9: no se escoge M2, PDC-E2, IgG/IgM ni técnica ausentes de la fuente, ni se afirma que un producto incluya todas esas especificidades. Sólo se reconoce identidad de la orden por antígeno/familia y el isotipo cuando está explícito. No se infieren muestra, duración, método, propiedad, escala, unidad, preparación, oferta, disponibilidad ni mapping LOINC; no se aprueba equivalencia de resultados clínicos. Conserva atributos y originales de cada fuente.",
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS ANTI MITOCONDRIALES"
+      }
+    }
+  ]
+}

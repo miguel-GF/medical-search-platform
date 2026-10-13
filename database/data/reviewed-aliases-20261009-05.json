@@ -1,0 +1,272 @@
+{
+  "review_id": "pruevia:evidence-review:20261009:05",
+  "reviewed_by": "Codex, investigación terminológica delegada",
+  "authorization": "D-021 y D-022: investigar y decidir casos claros sobre la misma base autorizada",
+  "scope": "Diez órdenes urinarias de analito individual, con recolección 24H o muestra ocasional explícita. Sólo 80 filas históricas del crawler; sin ofertas, preparación prescrita, interpretación ni mappings LOINC aprobados.",
+  "research_date": "2026-10-09",
+  "human_review": false,
+  "new_concepts": [
+    {
+      "item_id": "bb132127-b9ed-5725-86fd-1bdd88e8e34b",
+      "canonical_name": "Calcio en orina de 24 horas",
+      "component": "Calcium",
+      "specimen_code": "urine",
+      "time_aspect": "24H",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/616180",
+      "reason": "Identidad del analito individual y de la muestra urinaria explícita. Se conserva recolección de 24 horas. No sustituye otra duración, suero/plasma, cociente con creatinina, excreción fraccional ni panel; método, propiedad, escala y unidad no inferidos."
+    },
+    {
+      "item_id": "b456c793-eefc-56b7-b3d6-51311c3aa0da",
+      "canonical_name": "Cloruro en orina de 24 horas",
+      "component": "Chloride",
+      "specimen_code": "urine",
+      "time_aspect": "24H",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/616180",
+      "reason": "Identidad del analito individual y de la muestra urinaria explícita. Se conserva recolección de 24 horas. No sustituye otra duración, suero/plasma, cociente con creatinina, excreción fraccional ni panel; método, propiedad, escala y unidad no inferidos. En la orden clínica de electrolitos, cloro denomina cloruro (Chloride); no cloro molecular."
+    },
+    {
+      "item_id": "de502159-bb0e-5b5e-ab5a-bc663cf9ed9c",
+      "canonical_name": "Cloruro en orina ocasional",
+      "component": "Chloride",
+      "specimen_code": "urine",
+      "time_aspect": "Pt",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/610607",
+      "reason": "Identidad del analito individual y de la muestra urinaria explícita. Se conserva muestra ocasional/puntual. No sustituye otra duración, suero/plasma, cociente con creatinina, excreción fraccional ni panel; método, propiedad, escala y unidad no inferidos. En la orden clínica de electrolitos, cloro denomina cloruro (Chloride); no cloro molecular."
+    },
+    {
+      "item_id": "c1eebd27-328e-5fe9-bef2-7bc2c5f3d442",
+      "canonical_name": "Fósforo en orina de 24 horas",
+      "component": "Phosphorus",
+      "specimen_code": "urine",
+      "time_aspect": "24H",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/616180",
+      "reason": "Identidad del analito individual y de la muestra urinaria explícita. Se conserva recolección de 24 horas. No sustituye otra duración, suero/plasma, cociente con creatinina, excreción fraccional ni panel; método, propiedad, escala y unidad no inferidos."
+    },
+    {
+      "item_id": "966675ad-3928-52bc-b877-aad5bf592873",
+      "canonical_name": "Magnesio en orina de 24 horas",
+      "component": "Magnesium",
+      "specimen_code": "urine",
+      "time_aspect": "24H",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/610768",
+      "reason": "Identidad del analito individual y de la muestra urinaria explícita. Se conserva recolección de 24 horas. No sustituye otra duración, suero/plasma, cociente con creatinina, excreción fraccional ni panel; método, propiedad, escala y unidad no inferidos."
+    },
+    {
+      "item_id": "f843b65f-f945-5a1f-a13d-5bb56148acd7",
+      "canonical_name": "Magnesio en orina ocasional",
+      "component": "Magnesium",
+      "specimen_code": "urine",
+      "time_aspect": "Pt",
+      "evidence_url": "https://mlabs.umich.edu/tests/magnesium-urine",
+      "reason": "Identidad del analito individual y de la muestra urinaria explícita. Se conserva muestra ocasional/puntual. No sustituye otra duración, suero/plasma, cociente con creatinina, excreción fraccional ni panel; método, propiedad, escala y unidad no inferidos."
+    },
+    {
+      "item_id": "d1f52602-750b-57b2-b099-7b308f608a03",
+      "canonical_name": "Potasio en orina de 24 horas",
+      "component": "Potassium",
+      "specimen_code": "urine",
+      "time_aspect": "24H",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/616180",
+      "reason": "Identidad del analito individual y de la muestra urinaria explícita. Se conserva recolección de 24 horas. No sustituye otra duración, suero/plasma, cociente con creatinina, excreción fraccional ni panel; método, propiedad, escala y unidad no inferidos."
+    },
+    {
+      "item_id": "ca268369-7df6-5e02-bf4e-ebfc0f041b01",
+      "canonical_name": "Potasio en orina ocasional",
+      "component": "Potassium",
+      "specimen_code": "urine",
+      "time_aspect": "Pt",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/610696",
+      "reason": "Identidad del analito individual y de la muestra urinaria explícita. Se conserva muestra ocasional/puntual. No sustituye otra duración, suero/plasma, cociente con creatinina, excreción fraccional ni panel; método, propiedad, escala y unidad no inferidos."
+    },
+    {
+      "item_id": "9af48b01-1684-5df3-8558-a892a432282e",
+      "canonical_name": "Sodio en orina de 24 horas",
+      "component": "Sodium",
+      "specimen_code": "urine",
+      "time_aspect": "24H",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/616180",
+      "reason": "Identidad del analito individual y de la muestra urinaria explícita. Se conserva recolección de 24 horas. No sustituye otra duración, suero/plasma, cociente con creatinina, excreción fraccional ni panel; método, propiedad, escala y unidad no inferidos."
+    },
+    {
+      "item_id": "b6711162-6e1a-5a71-a680-ea190eafd120",
+      "canonical_name": "Sodio en orina ocasional",
+      "component": "Sodium",
+      "specimen_code": "urine",
+      "time_aspect": "Pt",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/610785",
+      "reason": "Identidad del analito individual y de la muestra urinaria explícita. Se conserva muestra ocasional/puntual. No sustituye otra duración, suero/plasma, cociente con creatinina, excreción fraccional ni panel; método, propiedad, escala y unidad no inferidos."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "calcio en orina de 24 hrs",
+      "item_id": "bb132127-b9ed-5725-86fd-1bdd88e8e34b",
+      "canonical_name": "Calcio en orina de 24 horas",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/616180",
+      "reason": "Identidad del analito individual y de la muestra urinaria explícita. Se conserva recolección de 24 horas. No sustituye otra duración, suero/plasma, cociente con creatinina, excreción fraccional ni panel; método, propiedad, escala y unidad no inferidos."
+    },
+    {
+      "alias": "cloro en orina 24 hrs",
+      "item_id": "b456c793-eefc-56b7-b3d6-51311c3aa0da",
+      "canonical_name": "Cloruro en orina de 24 horas",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/616180",
+      "reason": "Identidad del analito individual y de la muestra urinaria explícita. Se conserva recolección de 24 horas. No sustituye otra duración, suero/plasma, cociente con creatinina, excreción fraccional ni panel; método, propiedad, escala y unidad no inferidos. En la orden clínica de electrolitos, cloro denomina cloruro (Chloride); no cloro molecular."
+    },
+    {
+      "alias": "cloro en orina ocasional",
+      "item_id": "de502159-bb0e-5b5e-ab5a-bc663cf9ed9c",
+      "canonical_name": "Cloruro en orina ocasional",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/610607",
+      "reason": "Identidad del analito individual y de la muestra urinaria explícita. Se conserva muestra ocasional/puntual. No sustituye otra duración, suero/plasma, cociente con creatinina, excreción fraccional ni panel; método, propiedad, escala y unidad no inferidos. En la orden clínica de electrolitos, cloro denomina cloruro (Chloride); no cloro molecular."
+    },
+    {
+      "alias": "fosforo en orina 24 hrs",
+      "item_id": "c1eebd27-328e-5fe9-bef2-7bc2c5f3d442",
+      "canonical_name": "Fósforo en orina de 24 horas",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/616180",
+      "reason": "Identidad del analito individual y de la muestra urinaria explícita. Se conserva recolección de 24 horas. No sustituye otra duración, suero/plasma, cociente con creatinina, excreción fraccional ni panel; método, propiedad, escala y unidad no inferidos."
+    },
+    {
+      "alias": "magnesio en orina de 24 horas",
+      "item_id": "966675ad-3928-52bc-b877-aad5bf592873",
+      "canonical_name": "Magnesio en orina de 24 horas",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/610768",
+      "reason": "Identidad del analito individual y de la muestra urinaria explícita. Se conserva recolección de 24 horas. No sustituye otra duración, suero/plasma, cociente con creatinina, excreción fraccional ni panel; método, propiedad, escala y unidad no inferidos."
+    },
+    {
+      "alias": "magnesio en orina ocasional",
+      "item_id": "f843b65f-f945-5a1f-a13d-5bb56148acd7",
+      "canonical_name": "Magnesio en orina ocasional",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://mlabs.umich.edu/tests/magnesium-urine",
+      "reason": "Identidad del analito individual y de la muestra urinaria explícita. Se conserva muestra ocasional/puntual. No sustituye otra duración, suero/plasma, cociente con creatinina, excreción fraccional ni panel; método, propiedad, escala y unidad no inferidos."
+    },
+    {
+      "alias": "potasio en orina de 24 horas",
+      "item_id": "d1f52602-750b-57b2-b099-7b308f608a03",
+      "canonical_name": "Potasio en orina de 24 horas",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/616180",
+      "reason": "Identidad del analito individual y de la muestra urinaria explícita. Se conserva recolección de 24 horas. No sustituye otra duración, suero/plasma, cociente con creatinina, excreción fraccional ni panel; método, propiedad, escala y unidad no inferidos."
+    },
+    {
+      "alias": "potasio en orina ocasional",
+      "item_id": "ca268369-7df6-5e02-bf4e-ebfc0f041b01",
+      "canonical_name": "Potasio en orina ocasional",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/610696",
+      "reason": "Identidad del analito individual y de la muestra urinaria explícita. Se conserva muestra ocasional/puntual. No sustituye otra duración, suero/plasma, cociente con creatinina, excreción fraccional ni panel; método, propiedad, escala y unidad no inferidos."
+    },
+    {
+      "alias": "sodio en orina de 24 horas",
+      "item_id": "9af48b01-1684-5df3-8558-a892a432282e",
+      "canonical_name": "Sodio en orina de 24 horas",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/616180",
+      "reason": "Identidad del analito individual y de la muestra urinaria explícita. Se conserva recolección de 24 horas. No sustituye otra duración, suero/plasma, cociente con creatinina, excreción fraccional ni panel; método, propiedad, escala y unidad no inferidos."
+    },
+    {
+      "alias": "sodio en orina ocasional",
+      "item_id": "b6711162-6e1a-5a71-a680-ea190eafd120",
+      "canonical_name": "Sodio en orina ocasional",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/610785",
+      "reason": "Identidad del analito individual y de la muestra urinaria explícita. Se conserva muestra ocasional/puntual. No sustituye otra duración, suero/plasma, cociente con creatinina, excreción fraccional ni panel; método, propiedad, escala y unidad no inferidos."
+    }
+  ]
+}

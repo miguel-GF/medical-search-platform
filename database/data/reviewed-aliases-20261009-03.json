@@ -1,0 +1,21 @@
+{
+  "review_id": "pruevia:evidence-review:20261009:03",
+  "reviewed_at": "2026-10-09",
+  "reviewed_by": "Codex; investigación delegada por el operador",
+  "authorization": "Sesión 2026-10-09: investigar términos y decidir equivalencias claras; escalar ambigüedad",
+  "scope": "Variante de separación de palabras del analito 17-alfa-hidroxiprogesterona; no nuevo método, muestra, panel ni oferta",
+  "aliases": [
+    {
+      "alias": "17 alfa hidroxi progesterona",
+      "item_id": "0ee4eaf1-36d7-5e43-8322-0c2a20c96fd9",
+      "canonical_name": "17 ALFA-HIDROXIPROG.",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "alias_scope": "global",
+      "raw_guard": {"path": ["raw_study", "Estudio"], "value": "LABORATORIO"},
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/9231",
+      "reason": "Variante ortográfica separada de 17-alfa-hidroxiprogesterona, cuya nomenclatura fue contrastada en revisión 02. Se conservan 17-alfa y el analito completo. No equivale a progesterona, 17-hidroxicorticosteroides, prueba de estimulación ni el concepto específico en lactantes; no se infiere muestra desde ayuno."
+    }
+  ]
+}

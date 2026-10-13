@@ -1,0 +1,40 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261011:06",
+  "reviewed_by": "Codex; investigación delegada por el operador",
+  "authorization": "D-021/D-022: investigar identidades y alimentar Puebla en la misma base autorizada, sin confirmación rutinaria.",
+  "research_date": "2026-10-11",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "Dos nuevas instituciones en verificación y tres sedes pending corroboradas por fuentes primarias/DENUE. Sin oferta, precio, disponibilidad o permiso comercial inferidos. LAC permanece fuera del lote por enlace físico incierto.",
+  "providers": [
+    {
+      "provider_key": "laboratorio_medico_samalab",
+      "name": "Laboratorio Médico Samalab",
+      "slug": "samalab",
+      "website_url": "https://www.lmsamalab.com.mx/",
+      "identity_evidence_url": "https://www.lmsamalab.com.mx/sucursal-san-martin-texmelucan-2/",
+      "identity_activity_codes": [
+        "621511"
+      ],
+      "denue_record_ids": [
+        "11090755"
+      ],
+      "identity_note": "Sitio institucional de Samalab y su directorio vigente identifican la sede de San Martín Texmelucan, Libertad 311, Centro. DENUE 11090755 identifica LABORATORIO MEDICO SAMALAB, Libertad Norte 311, San Martín Texmelucan, CP 74010. Coinciden nombre, municipio, vialidad y exterior. Conservar NORTE, asentamiento y CP gubernamentales; no sustituirlos por Centro ni completar domicilio desde la web. Evidencia institucional leída el 11-oct-2026; registro DENUE oficial del 20-may-2026, SCIAN 621511. Marca verification_pending y sede pending. No acredita estudios, precios, disponibilidad, titularidad legal o permiso comercial."
+    },
+    {
+      "provider_key": "omega_imagen_lab",
+      "name": "Omega Imagen y Lab",
+      "slug": "omega-imagen-lab",
+      "website_url": "https://omegalaboratorio.com.mx/",
+      "identity_evidence_url": "https://omegalaboratorio.com.mx/contacto.html",
+      "identity_activity_codes": [
+        "621511"
+      ],
+      "denue_record_ids": [
+        "8559305",
+        "3459594"
+      ],
+      "identity_note": "Directorio institucional de Omega identifica matriz Puebla y sede San Martín Texmelucan, leídas el 11-oct-2026. DENUE 3459594 OMEGA IMAGEN Y LABORATORIO registra 24 Sur, exterior 709 y letra A, Azcárate, CP 72501. La introducción web coincide en 709A y la tarjeta abrevia 709: conservar la letra A gubernamental, sin borrarla por esa abreviación. DENUE 8559305 OMEGA IMAGEN LABORATORIOS coincide en carretera federal México-Puebla, San Cristóbal, CP 74120; conserva exterior vacío y marcador SN en letra_ext. La web menciona km 71+070 y La Joya: no completar kilómetro ni sustituir asentamiento gubernamental. No incorporar Tehuacán sin registro físico corroborado ni fusionar Alfa y Omega por nombre. Fuente DENUE del 20-may-2026, SCIAN 621511. Marca verification_pending y sedes pending. No acredita oferta, precio, disponibilidad, titularidad legal o permiso comercial."
+    }
+  ]
+}

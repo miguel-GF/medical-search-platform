@@ -1,0 +1,328 @@
+{
+  "review_id": "pruevia:evidence-review:20261013:01",
+  "research_date": "2026-10-13",
+  "scope": "74 contextos crawler SD/SEMIN: nueve órdenes investigadas, ampliación de Giardia SEMIN con heces explícitas. Once aliases, tres de proveedor. Sustituye ensayo32 sin aplicar, preservando el guard de alcance. Sin pacientes/OCR, ofertas, precios o funciones modificadas.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "ab6e364c94b55304c716f8b4fe4deb256da0c5485d06df84c03f350f219cc878",
+  "research_snapshot_sha256": "8cb8ece6b4f20642da92a74e7ee982d144831f91f61f7044c614fa3ed155f877",
+  "definition_sha256": "1abb1cf9893cb74b2a2f125c80d68716b0fd50456767096d7fcf38e4a77c64dc",
+  "new_concepts": [
+    {
+      "item_id": "5ebfd0e6-83bf-5c66-81dc-66dbae0030bf",
+      "canonical_name": "Citología exfoliativa de orina",
+      "component": "Exfoliative cytology of urine",
+      "specimen_code": "urine",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://www.labcorp.com/tests/009068/urine-cytology",
+      "reason": "Citología celular en orina explícita, distinta de uroanálisis, cultivo, FISH, lavado vesical o biopsia. La edad de muestra máxima de dos horas no es duración de recolección; no 24H ni cateterización inferidas. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos."
+    },
+    {
+      "item_id": "f55800d8-375b-529e-88bd-1541ff5f1332",
+      "canonical_name": "Citología exfoliativa de secreción de mama",
+      "component": "Exfoliative cytology of breast secretion",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://pathology.royalcornwallhospitals.nhs.uk/viewTest.php?ID=643",
+      "reason": "Citología de secreción de mama literal. La referencia institucional respalda citología de secreciones; no convertir la muestra local a tejido, biopsia, leche, aspiración o pezón más específico, ni añadir lateralidad o preparación de laminillas externa. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "La fuente especifica secreción de mama; se conserva sitio/muestra literal en nombre, componente y guardas. No hay código específico admitido para esta secreción. No se sustituye por tejido ni se infiere lateralidad."
+    },
+    {
+      "item_id": "9e5ccb5f-830a-5e70-95a3-c630ee2b615e",
+      "canonical_name": "Citología de moco fecal",
+      "component": "Fecal mucus cytology",
+      "specimen_code": "stool",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://cus.uanl.mx/citologia-en-moco-fecal/",
+      "reason": "Citología de moco fecal explícita, heces propias en SD y SEMIN. SD tiene preparación de parásitos y SEMIN descripción de celularidad/posible presencia parasitaria: conservar ambas sin obligar un panel parasitológico, conteo exclusivo de leucocitos, sangre oculta, calprotectina o serie. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos."
+    },
+    {
+      "item_id": "6493809d-578c-5e9e-a7b1-ffb52accd0ba",
+      "canonical_name": "Coprocultivo (cultivo bacteriano de heces)",
+      "component": "Bacterial stool culture",
+      "specimen_code": "stool",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://www.labcorp.com/tests/008144/stool-culture",
+      "reason": "Coprocultivo como orden genérica de cultivo bacteriano de heces, no panel de microorganismos confirmado. No importar Salmonella/Shigella/Campylobacter/E.coli, toxina Shiga, antibiograma, susceptibilidad, PCR o reflejos externos. Copro y preparación prueban heces, sin tiempo de colección inferido. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos."
+    },
+    {
+      "item_id": "cdea5fe2-9639-5b49-9738-c524b37c4642",
+      "canonical_name": "Clostridium difficile, toxinas A y B en heces",
+      "component": "Clostridioides difficile toxin A+B",
+      "specimen_code": "stool",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://www.labcorp.com/tests/086207/clostridioides-difficile-toxins-a-and-b-eia",
+      "reason": "Toxinas A y B escritas conjuntamente: una orden conjunta, sin B sola, GDH, gen/PCR/NAAT, cultivo o reflejo inferidos. Heces explícitas en preparación SD, no en título; alias del proveedor y canónico con muestra explícita. No transferir EIA ni composición operativa de referencia. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos."
+    },
+    {
+      "item_id": "874e535e-0539-5430-9691-2507a7724740",
+      "canonical_name": "Antígeno de Giardia lamblia en heces",
+      "component": "Giardia lamblia Ag",
+      "specimen_code": "stool",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/80231",
+      "reason": "Antígeno de Giardia lamblia escrito, distinto de DNA/PCR o examen microscópico. Heces explícitas en preparación SD; alias del proveedor y canónico completo, sin añadir ELISA, otros parásitos, panel, antígeno específico, preservante o interpretación. SEMIN nombra antígeno en heces y sample_type lo confirma de forma independiente; no transferirle preparación SD. Sala Sang no representa muestra y duración administrativa ocho minutos no es tiempo de colección. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos."
+    },
+    {
+      "item_id": "4369096a-4387-595b-a0c5-c1a53d210c84",
+      "canonical_name": "Antígeno galactomanano de Aspergillus en suero",
+      "component": "Aspergillus galactomannan Ag",
+      "specimen_code": "serum",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://www.labcorp.com/tests/183805/aspergillus-galactomannan-antigen-detection-bronchoalveolar-lavage-or-serum",
+      "reason": "Galactomanano como antígeno Aspergillus, con SUERO explícito en preparación SD; alias limitado al proveedor. No BAL/LCR, fumigatus específico, anticuerpo, cultivo, PCR, beta-D-glucano, Platelia/EIA, índice o diagnóstico. Conservar grafía original ASPERGILUS en RAW. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos."
+    },
+    {
+      "item_id": "4dc09a38-731a-5887-a434-abcffe0b608e",
+      "canonical_name": "Antígeno e de hepatitis B",
+      "component": "Hepatitis B virus e Ag",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/603557",
+      "reason": "Antígeno e de hepatitisB escrito, distinto de anti-HBe, superficie/core o DNA. No añadir suero por referencia o ayuno/biotina, ni ECLIA, cuantificación, escala, algoritmo/reflejo o panel. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "La fuente no especifica muestra. Ayuno/biotina no prueban sangre, suero o plasma."
+    },
+    {
+      "item_id": "dcb710ec-6bb2-5d97-ae3a-631a5bfa227a",
+      "canonical_name": "Antígeno de superficie de hepatitis B",
+      "component": "Hepatitis B virus surface Ag",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://mlabs.umich.edu/tests/hepatitis-b-surface-antigen",
+      "reason": "Antígeno superficie/Australia explícito, sin anti-HBs, HBe/core o DNA. Australia como nombre de superficie corroborado por MLabs. No suero/plasma, neutralización, confirmación, cuantificación, reflejo o escala inferidos. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "La fuente no especifica muestra. Ayuno/biotina no prueban sangre, suero o plasma."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "citologia exfoliativa de orina",
+      "item_id": "5ebfd0e6-83bf-5c66-81dc-66dbae0030bf",
+      "canonical_name": "Citología exfoliativa de orina",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.labcorp.com/tests/009068/urine-cytology",
+      "reason": "Citología celular en orina explícita, distinta de uroanálisis, cultivo, FISH, lavado vesical o biopsia. La edad de muestra máxima de dos horas no es duración de recolección; no 24H ni cateterización inferidas. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "CITOLOGIA EXFOLIATIVA DE ORINA"
+      },
+      "source_attributes": {
+        "specimen_code": "urine"
+      }
+    },
+    {
+      "alias": "citologia exfoliativa de secrecion de mama",
+      "item_id": "f55800d8-375b-529e-88bd-1541ff5f1332",
+      "canonical_name": "Citología exfoliativa de secreción de mama",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://pathology.royalcornwallhospitals.nhs.uk/viewTest.php?ID=643",
+      "reason": "Citología de secreción de mama literal. La referencia institucional respalda citología de secreciones; no convertir la muestra local a tejido, biopsia, leche, aspiración o pezón más específico, ni añadir lateralidad o preparación de laminillas externa. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "CITOLOGIA EXFOLIATIVA DE SECRECION DE MAMA"
+      }
+    },
+    {
+      "alias": "citologia de moco fecal",
+      "item_id": "9e5ccb5f-830a-5e70-95a3-c630ee2b615e",
+      "canonical_name": "Citología de moco fecal",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://cus.uanl.mx/citologia-en-moco-fecal/",
+      "reason": "Citología de moco fecal explícita, heces propias en SD y SEMIN. SD tiene preparación de parásitos y SEMIN descripción de celularidad/posible presencia parasitaria: conservar ambas sin obligar un panel parasitológico, conteo exclusivo de leucocitos, sangre oculta, calprotectina o serie. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "Heces / Frasco de plastico"
+      },
+      "source_attributes": {
+        "specimen_code": "stool"
+      }
+    },
+    {
+      "alias": "citologia moco fecal",
+      "item_id": "9e5ccb5f-830a-5e70-95a3-c630ee2b615e",
+      "canonical_name": "Citología de moco fecal",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://cus.uanl.mx/citologia-en-moco-fecal/",
+      "reason": "Citología de moco fecal explícita, heces propias en SD y SEMIN. SD tiene preparación de parásitos y SEMIN descripción de celularidad/posible presencia parasitaria: conservar ambas sin obligar un panel parasitológico, conteo exclusivo de leucocitos, sangre oculta, calprotectina o serie. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Muestra reciente de heces. Ciertos medicamentos como antibióticos, antiácidos, aceite mineral, y los antidiarreicos no absorbibles, pueden interferir con la recuperación de los parásitos, por lo que la recolección debe posponerse de 5 a 10 días después de la administración."
+      },
+      "source_attributes": {
+        "specimen_code": "stool"
+      }
+    },
+    {
+      "alias": "coprocultivo",
+      "item_id": "6493809d-578c-5e9e-a7b1-ffb52accd0ba",
+      "canonical_name": "Coprocultivo (cultivo bacteriano de heces)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.labcorp.com/tests/008144/stool-culture",
+      "reason": "Coprocultivo como orden genérica de cultivo bacteriano de heces, no panel de microorganismos confirmado. No importar Salmonella/Shigella/Campylobacter/E.coli, toxina Shiga, antibiograma, susceptibilidad, PCR o reflejos externos. Copro y preparación prueban heces, sin tiempo de colección inferido. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "-RECOLECTAR UNA MUESTRA DE HECES EN RECIPIENTE ESTÉRIL LA CUAL NO DEBE ESTAR EN CONTACTO CON AGUA U ORINA. \r\n-REALICE LA TOMA ANTES DE INICIAR CUALQUIER TRATAMIENTO CON ANTIBIÓTICOS. SI YA ESTÁ EN TRATAMIENTO: ESPERE 5 A 7 DÍAS DESPUÉS DE TERMINAR ANTIBIÓTICOS. SI SU MÉDICO INDICÓ EL ESTUDIO MIENTRAS USA ESTOS MEDICAMENTOS, PRESENTE SU ORDEN MÉDICA QUE AUTORICE LA REALIZACIÓN DEL CULTIVO (INDISPENSABLE) Y NOTIFIQUE AL LABORATORIO QUÉ ANTIBIÓTICO ESTÁ UTILIZANDO. RECUERDE: EL USO DE ANTIBIÓTICOS PUEDE AFECTAR LOS RESULTADOS DEL CULTIVO, GENERANDO FALSOS NEGATIVOS.\r\n-LA MUESTRA NO DEBE TENER MÁS DE 2 HORAS DE HABER SIDO RECOLECTADA AL MOMENTO DE HACER LA ENTREGA.\r\n"
+      },
+      "source_attributes": {
+        "specimen_code": "stool"
+      }
+    },
+    {
+      "alias": "clostridium difficile toxina a y b",
+      "item_id": "cdea5fe2-9639-5b49-9738-c524b37c4642",
+      "canonical_name": "Clostridium difficile, toxinas A y B en heces",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.labcorp.com/tests/086207/clostridioides-difficile-toxins-a-and-b-eia",
+      "reason": "Toxinas A y B escritas conjuntamente: una orden conjunta, sin B sola, GDH, gen/PCR/NAAT, cultivo o reflejo inferidos. Heces explícitas en preparación SD, no en título; alias del proveedor y canónico con muestra explícita. No transferir EIA ni composición operativa de referencia. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "MUESTRA RECIENTE DE HECES EN FRASCO ESTÉRIL."
+      },
+      "source_attributes": {
+        "specimen_code": "stool"
+      }
+    },
+    {
+      "alias": "antigeno de giardia lamblia",
+      "item_id": "874e535e-0539-5430-9691-2507a7724740",
+      "canonical_name": "Antígeno de Giardia lamblia en heces",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/80231",
+      "reason": "Antígeno de Giardia lamblia escrito, distinto de DNA/PCR o examen microscópico. Heces explícitas en preparación SD; alias del proveedor y canónico completo, sin añadir ELISA, otros parásitos, panel, antígeno específico, preservante o interpretación. SEMIN nombra antígeno en heces y sample_type lo confirma de forma independiente; no transferirle preparación SD. Sala Sang no representa muestra y duración administrativa ocho minutos no es tiempo de colección. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "MUESTRA DE HECES. SIN INGERIR ANTI-­PARASITARIOS 7 DIAS ANTES DE LA RECOLECCIÓN DE LA MUESTRA. RECOLECTAR EN FRASCO ESTÉRIL."
+      },
+      "source_attributes": {
+        "specimen_code": "stool"
+      }
+    },
+    {
+      "alias": "antigeno de giardia lamblia en heces",
+      "item_id": "874e535e-0539-5430-9691-2507a7724740",
+      "canonical_name": "Antígeno de Giardia lamblia en heces",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/80231",
+      "reason": "Antígeno de Giardia lamblia escrito, distinto de DNA/PCR o examen microscópico. Heces explícitas en preparación SD; alias del proveedor y canónico completo, sin añadir ELISA, otros parásitos, panel, antígeno específico, preservante o interpretación. SEMIN nombra antígeno en heces y sample_type lo confirma de forma independiente; no transferirle preparación SD. Sala Sang no representa muestra y duración administrativa ocho minutos no es tiempo de colección. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "10 g Heces Recientes. Refrigerado"
+      },
+      "source_attributes": {
+        "specimen_code": "stool"
+      }
+    },
+    {
+      "alias": "antigeno de aspergilus galactomanano",
+      "item_id": "4369096a-4387-595b-a0c5-c1a53d210c84",
+      "canonical_name": "Antígeno galactomanano de Aspergillus en suero",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.labcorp.com/tests/183805/aspergillus-galactomannan-antigen-detection-bronchoalveolar-lavage-or-serum",
+      "reason": "Galactomanano como antígeno Aspergillus, con SUERO explícito en preparación SD; alias limitado al proveedor. No BAL/LCR, fumigatus específico, anticuerpo, cultivo, PCR, beta-D-glucano, Platelia/EIA, índice o diagnóstico. Conservar grafía original ASPERGILUS en RAW. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO MÍNIMO DE 4 HORAS. LA MUESTRA DE SUERO SE ENVÍA EN TUBO PRIMARIO SIN TRASVASE."
+      },
+      "source_attributes": {
+        "specimen_code": "serum"
+      }
+    },
+    {
+      "alias": "antigeno e de hepatitis b agehb",
+      "item_id": "4dc09a38-731a-5887-a434-abcffe0b608e",
+      "canonical_name": "Antígeno e de hepatitis B",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/603557",
+      "reason": "Antígeno e de hepatitisB escrito, distinto de anti-HBe, superficie/core o DNA. No añadir suero por referencia o ayuno/biotina, ni ECLIA, cuantificación, escala, algoritmo/reflejo o panel. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTIGENO E DE HEPATITIS B (AGEHB)"
+      }
+    },
+    {
+      "alias": "antigeno s de superficie hepatitis b australia",
+      "item_id": "dcb710ec-6bb2-5d97-ae3a-631a5bfa227a",
+      "canonical_name": "Antígeno de superficie de hepatitis B",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://mlabs.umich.edu/tests/hepatitis-b-surface-antigen",
+      "reason": "Antígeno superficie/Australia explícito, sin anti-HBs, HBe/core o DNA. Australia como nombre de superficie corroborado por MLabs. No suero/plasma, neutralización, confirmación, cuantificación, reflejo o escala inferidos. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTIGENO -S- DE SUPERFICIE HEPATITIS B -AUSTRALIA-"
+      }
+    }
+  ]
+}

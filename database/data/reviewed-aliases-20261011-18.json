@@ -1,0 +1,159 @@
+{
+  "review_id": "pruevia:evidence-review:20261011:18",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras sin confirmación rutinaria; conservar ambigüedad clínica.",
+  "scope": "40 filas crawler Salud Digna por diana y variante explícitas. Sin pacientes/OCR, nuevas ofertas o cambios de funciones.",
+  "research_date": "2026-10-11",
+  "human_review": false,
+  "new_concepts": [
+    {
+      "item_id": "479e186d-5d09-5250-b0a6-60cd52acf93a",
+      "canonical_name": "Anticuerpos antinucleosoma",
+      "component": "Nucleosome Ab",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/012580/antichromatin-antibodies",
+      "reason": "Nucleosoma intacto como diana literal; no ADN aislado, antihistonas, ANA ni panel. Referencia de identidad, sin alias anticromatina automático o equivalencia analítica; no importar LOINC63300-8. Sólo identidad de orden por diana, clase o función escritas; no equivalencia de resultados. Sin muestra, tiempo, propiedad, método, escala, unidad, LOINC, diagnóstico o tratamiento inferidos. No aprobar ofertas, precio o disponibilidad. Original y preparación conservados, sin validar recomendaciones farmacológicas.",
+      "specimen_uncertainty": "Muestra, matriz y duración no especificadas en SD; ayuno, indicación clínica y muestra de una referencia externa no acreditan suero o tiempo. Clase de inmunoglobulina desconocida cuando no está escrita; conservar función/diana sin completarlas por hábito."
+    },
+    {
+      "item_id": "479f6f1a-d38d-5d72-9c24-0fa249f63016",
+      "canonical_name": "Anticuerpos antimúsculo esquelético estriado",
+      "component": "Striated muscle Ab",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/160184/striational-antibodies",
+      "reason": "Orden de anticuerpos estriados, distinta del canónico antimúsculo liso64a613e5-6a65-5b5b-b956-0beb2f44fb94. No anti-F-actina, antititina individual, AChR, MuSK o diagnóstico. No crear panel con antígenos de referencia ni copiar IgG, suero o IFA. Sólo identidad de orden por diana, clase o función escritas; no equivalencia de resultados. Sin muestra, tiempo, propiedad, método, escala, unidad, LOINC, diagnóstico o tratamiento inferidos. No aprobar ofertas, precio o disponibilidad. Original y preparación conservados, sin validar recomendaciones farmacológicas.",
+      "specimen_uncertainty": "Muestra, matriz y duración no especificadas en SD; ayuno, indicación clínica y muestra de una referencia externa no acreditan suero o tiempo. Clase de inmunoglobulina desconocida cuando no está escrita; conservar función/diana sin completarlas por hábito."
+    },
+    {
+      "item_id": "62892250-2d8f-510f-ba01-02213e016121",
+      "canonical_name": "Anticuerpos anticélulas parietales",
+      "component": "Parietal cell Ab",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/006486/antiparietal-cell-antibody-apca",
+      "reason": "Anticuerpos a células parietales gástricas. Distintos de factor intrínseco, panel B12 o diagnóstico. Clase omitida: no añadir IgG desde MayoPCAB83728; matriz/método no escritos. Sólo identidad de orden por diana, clase o función escritas; no equivalencia de resultados. Sin muestra, tiempo, propiedad, método, escala, unidad, LOINC, diagnóstico o tratamiento inferidos. No aprobar ofertas, precio o disponibilidad. Original y preparación conservados, sin validar recomendaciones farmacológicas.",
+      "specimen_uncertainty": "Muestra, matriz y duración no especificadas en SD; ayuno, indicación clínica y muestra de una referencia externa no acreditan suero o tiempo. Clase de inmunoglobulina desconocida cuando no está escrita; conservar función/diana sin completarlas por hábito."
+    },
+    {
+      "item_id": "b883b440-8207-5719-bcfa-e4e09a79759c",
+      "canonical_name": "Anticuerpos contra receptor GABA-B en suero",
+      "component": "GABA-B receptor Ab",
+      "specimen_code": "serum",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/3001270",
+      "reason": "Receptor tipo B y SUERO explícitos en SD, sin clase IgG escrita. No GABA-A, neurotransmisor, GAD, AMPA/NMDA, LCR, panel encefalitis o reflex. No importar CBA-IFA/título de ARUP. Sólo identidad de orden por diana, clase o función escritas; no equivalencia de resultados. Sin muestra, tiempo, propiedad, método, escala, unidad, LOINC, diagnóstico o tratamiento inferidos. No aprobar ofertas, precio o disponibilidad. Original y preparación conservados, sin validar recomendaciones farmacológicas."
+    },
+    {
+      "item_id": "8d0b5d4f-3bca-5717-8e9c-7aeac21ecb76",
+      "canonical_name": "Anticuerpos contra receptor de fosfolipasa A2 (PLA2R)",
+      "component": "Phospholipase A2 receptor Ab",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/141330/phospholipase-a2-receptor-autoantibodies-igg",
+      "reason": "Orden contra receptor PLA2R como diana, sin actividad de enzima fosfolipasaA2, Lp-PLA2, THSD7A, proteína/biopsia o diagnóstico. No copiar IgG, suero, ELISA o escala cualitativa/semiquantitativa de la referencia. Sólo identidad de orden por diana, clase o función escritas; no equivalencia de resultados. Sin muestra, tiempo, propiedad, método, escala, unidad, LOINC, diagnóstico o tratamiento inferidos. No aprobar ofertas, precio o disponibilidad. Original y preparación conservados, sin validar recomendaciones farmacológicas.",
+      "specimen_uncertainty": "Muestra, matriz y duración no especificadas en SD; ayuno, indicación clínica y muestra de una referencia externa no acreditan suero o tiempo. Clase de inmunoglobulina desconocida cuando no está escrita; conservar función/diana sin completarlas por hábito."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "anticuerpos anti nucleosoma",
+      "item_id": "479e186d-5d09-5250-b0a6-60cd52acf93a",
+      "canonical_name": "Anticuerpos antinucleosoma",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS ANTI NUCLEOSOMA"
+      },
+      "evidence_url": "https://www.labcorp.com/tests/012580/antichromatin-antibodies",
+      "reason": "Nucleosoma intacto como diana literal; no ADN aislado, antihistonas, ANA ni panel. Referencia de identidad, sin alias anticromatina automático o equivalencia analítica; no importar LOINC63300-8. Sólo identidad de orden por diana, clase o función escritas; no equivalencia de resultados. Sin muestra, tiempo, propiedad, método, escala, unidad, LOINC, diagnóstico o tratamiento inferidos. No aprobar ofertas, precio o disponibilidad. Original y preparación conservados, sin validar recomendaciones farmacológicas."
+    },
+    {
+      "alias": "anticuerpos anti musculo esqueletico estriado",
+      "item_id": "479f6f1a-d38d-5d72-9c24-0fa249f63016",
+      "canonical_name": "Anticuerpos antimúsculo esquelético estriado",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS ANTI MUSCULO ESQUELETICO (ESTRIADO)"
+      },
+      "evidence_url": "https://www.labcorp.com/tests/160184/striational-antibodies",
+      "reason": "Orden de anticuerpos estriados, distinta del canónico antimúsculo liso64a613e5-6a65-5b5b-b956-0beb2f44fb94. No anti-F-actina, antititina individual, AChR, MuSK o diagnóstico. No crear panel con antígenos de referencia ni copiar IgG, suero o IFA. Sólo identidad de orden por diana, clase o función escritas; no equivalencia de resultados. Sin muestra, tiempo, propiedad, método, escala, unidad, LOINC, diagnóstico o tratamiento inferidos. No aprobar ofertas, precio o disponibilidad. Original y preparación conservados, sin validar recomendaciones farmacológicas."
+    },
+    {
+      "alias": "anticuerpos anti celulas parietales",
+      "item_id": "62892250-2d8f-510f-ba01-02213e016121",
+      "canonical_name": "Anticuerpos anticélulas parietales",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS ANTI CELULAS PARIETALES"
+      },
+      "evidence_url": "https://www.labcorp.com/tests/006486/antiparietal-cell-antibody-apca",
+      "reason": "Anticuerpos a células parietales gástricas. Distintos de factor intrínseco, panel B12 o diagnóstico. Clase omitida: no añadir IgG desde MayoPCAB83728; matriz/método no escritos. Sólo identidad de orden por diana, clase o función escritas; no equivalencia de resultados. Sin muestra, tiempo, propiedad, método, escala, unidad, LOINC, diagnóstico o tratamiento inferidos. No aprobar ofertas, precio o disponibilidad. Original y preparación conservados, sin validar recomendaciones farmacológicas."
+    },
+    {
+      "alias": "anti receptor gaba b suero",
+      "item_id": "b883b440-8207-5719-bcfa-e4e09a79759c",
+      "canonical_name": "Anticuerpos contra receptor GABA-B en suero",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "Anti-Receptor GABA (B), SUERO"
+      },
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/3001270",
+      "reason": "Receptor tipo B y SUERO explícitos en SD, sin clase IgG escrita. No GABA-A, neurotransmisor, GAD, AMPA/NMDA, LCR, panel encefalitis o reflex. No importar CBA-IFA/título de ARUP. Sólo identidad de orden por diana, clase o función escritas; no equivalencia de resultados. Sin muestra, tiempo, propiedad, método, escala, unidad, LOINC, diagnóstico o tratamiento inferidos. No aprobar ofertas, precio o disponibilidad. Original y preparación conservados, sin validar recomendaciones farmacológicas.",
+      "source_attributes": {
+        "specimen_code": "serum"
+      }
+    },
+    {
+      "alias": "anticuerpos contra receptores de fosfolipasa a2",
+      "item_id": "8d0b5d4f-3bca-5717-8e9c-7aeac21ecb76",
+      "canonical_name": "Anticuerpos contra receptor de fosfolipasa A2 (PLA2R)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS CONTRA RECEPTORES DE FOSFOLIPASA A2"
+      },
+      "evidence_url": "https://www.labcorp.com/tests/141330/phospholipase-a2-receptor-autoantibodies-igg",
+      "reason": "Orden contra receptor PLA2R como diana, sin actividad de enzima fosfolipasaA2, Lp-PLA2, THSD7A, proteína/biopsia o diagnóstico. No copiar IgG, suero, ELISA o escala cualitativa/semiquantitativa de la referencia. Sólo identidad de orden por diana, clase o función escritas; no equivalencia de resultados. Sin muestra, tiempo, propiedad, método, escala, unidad, LOINC, diagnóstico o tratamiento inferidos. No aprobar ofertas, precio o disponibilidad. Original y preparación conservados, sin validar recomendaciones farmacológicas."
+    }
+  ]
+}

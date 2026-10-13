@@ -1,0 +1,288 @@
+{
+  "review_id": "pruevia:evidence-review:20261011:09",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras sin confirmación rutinaria; conservar ambigüedad clínica.",
+  "scope": "73 filas crawler; 9 identidades serológicas individuales. Sin pacientes/OCR, nuevas ofertas o cambios de funciones.",
+  "research_date": "2026-10-11",
+  "human_review": false,
+  "new_concepts": [
+    {
+      "item_id": "5fdd6a01-f811-55f7-a7aa-33d58764038a",
+      "canonical_name": "Anticuerpos IgG contra cápside de Epstein-Barr (VCA)",
+      "component": "Epstein Barr virus capsid Ab.IgG",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "SD no especifica matriz. Ayuno/biotina/toma de muestra no prueban sangre/suero. Muestra/system/duración NULL; el suero SEMIN varicela IgG permanece sólo en metadata de su decisión.",
+      "evidence_url": "https://www.cdc.gov/epstein-barr/php/laboratories/index.html",
+      "reason": "VCA identifica antígeno de cápside y la orden explicita IgG. No EBNA, EA, IgM, heterófilos o DNA. Sólo identidad de orden individual; muestra, duración, método, propiedad, escala, unidades y LOINC no se infieren. No se aprueban resultados, infección actual/pasada, inmunidad, recomendaciones clínicas, precio, disponibilidad ni ofertas. Original y preparación conservados en RAW/decisión."
+    },
+    {
+      "item_id": "e70f2206-1113-56ff-aa56-8762e41b91f6",
+      "canonical_name": "Anticuerpos IgM contra cápside de Epstein-Barr (VCA)",
+      "component": "Epstein Barr virus capsid Ab.IgM",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "SD no especifica matriz. Ayuno/biotina/toma de muestra no prueban sangre/suero. Muestra/system/duración NULL; el suero SEMIN varicela IgG permanece sólo en metadata de su decisión.",
+      "evidence_url": "https://www.cdc.gov/epstein-barr/php/laboratories/index.html",
+      "reason": "VCA identifica antígeno de cápside y la orden explicita IgM. No EBNA, EA, IgG, heterófilos o DNA. Sólo identidad de orden individual; muestra, duración, método, propiedad, escala, unidades y LOINC no se infieren. No se aprueban resultados, infección actual/pasada, inmunidad, recomendaciones clínicas, precio, disponibilidad ni ofertas. Original y preparación conservados en RAW/decisión."
+    },
+    {
+      "item_id": "f953cfa9-30e9-576a-b5eb-0085532da90d",
+      "canonical_name": "Anticuerpos IgG contra antígeno nuclear de Epstein-Barr (EBNA)",
+      "component": "Epstein Barr virus nuclear Ab.IgG",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "SD no especifica matriz. Ayuno/biotina/toma de muestra no prueban sangre/suero. Muestra/system/duración NULL; el suero SEMIN varicela IgG permanece sólo en metadata de su decisión.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/621373",
+      "reason": "EBNA identifica antígeno nuclear y clase IgG explícita. El perfil de referencia identifica EBNA IgG como resultado separado; no se importa su perfil ni se infiere EBNA-1, método o matriz. Sólo identidad de orden individual; muestra, duración, método, propiedad, escala, unidades y LOINC no se infieren. No se aprueban resultados, infección actual/pasada, inmunidad, recomendaciones clínicas, precio, disponibilidad ni ofertas. Original y preparación conservados en RAW/decisión."
+    },
+    {
+      "item_id": "ed211477-f480-5dd7-8ac0-226b32f2f68b",
+      "canonical_name": "Anticuerpos IgG contra antígeno temprano de Epstein-Barr (EA)",
+      "component": "Epstein Barr virus early Ab.IgG",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "SD no especifica matriz. Ayuno/biotina/toma de muestra no prueban sangre/suero. Muestra/system/duración NULL; el suero SEMIN varicela IgG permanece sólo en metadata de su decisión.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/621374",
+      "reason": "EA identifica antígeno temprano y clase IgG. No cápside, nuclear, heterófilos, DNA, perfil ni subfracción difusa/restringida no declarada. Sólo identidad de orden individual; muestra, duración, método, propiedad, escala, unidades y LOINC no se infieren. No se aprueban resultados, infección actual/pasada, inmunidad, recomendaciones clínicas, precio, disponibilidad ni ofertas. Original y preparación conservados en RAW/decisión."
+    },
+    {
+      "item_id": "4b5fe594-ecf2-58f2-8a8e-e98fe59cac7b",
+      "canonical_name": "Anticuerpos antivaricela IgG",
+      "component": "Varicella zoster virus Ab.IgG",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "SD no especifica matriz. Ayuno/biotina/toma de muestra no prueban sangre/suero. Muestra/system/duración NULL; el suero SEMIN varicela IgG permanece sólo en metadata de su decisión.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/34944",
+      "reason": "Varicela corresponde a varicela-zóster (VZV), distinta de herpes simplex HSV1/HSV2. La clase IgG es explícita; no se sustituye por IgM, PCR o cultivo. Sólo identidad de orden individual; muestra, duración, método, propiedad, escala, unidades y LOINC no se infieren. No se aprueban resultados, infección actual/pasada, inmunidad, recomendaciones clínicas, precio, disponibilidad ni ofertas. Original y preparación conservados en RAW/decisión."
+    },
+    {
+      "item_id": "d953fc29-7f35-5049-b7e5-30350fa5e573",
+      "canonical_name": "Anticuerpos IgG contra herpes simplex tipo 1 (HSV-1)",
+      "component": "Herpes simplex virus 1 Ab.IgG",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "SD no especifica matriz. Ayuno/biotina/toma de muestra no prueban sangre/suero. Muestra/system/duración NULL; el suero SEMIN varicela IgG permanece sólo en metadata de su decisión.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/84429",
+      "reason": "HSV tipo I explicita herpes simplex tipo 1 y clase IgG. I es la grafía romana del tipo en esta etiqueta; no se generaliza I/1 a otros términos. La referencia distingue resultados tipo 1 y tipo 2; no se importa orden conjunta, glicoproteína específica o método. Sólo identidad de orden individual; muestra, duración, método, propiedad, escala, unidades y LOINC no se infieren. No se aprueban resultados, infección actual/pasada, inmunidad, recomendaciones clínicas, precio, disponibilidad ni ofertas. Original y preparación conservados en RAW/decisión."
+    },
+    {
+      "item_id": "0ebe6b5e-baa6-5d8f-aa98-389fc3a421df",
+      "canonical_name": "Anticuerpos IgG contra herpes simplex tipo 2 (HSV-2)",
+      "component": "Herpes simplex virus 2 Ab.IgG",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "SD no especifica matriz. Ayuno/biotina/toma de muestra no prueban sangre/suero. Muestra/system/duración NULL; el suero SEMIN varicela IgG permanece sólo en metadata de su decisión.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/84429",
+      "reason": "HSV tipo II explicita herpes simplex tipo 2 y clase IgG. II es la grafía romana del tipo en esta etiqueta; no se generaliza a otros términos. No tipo 1, VZV, IgM, PCR ni orden conjunta. Sólo identidad de orden individual; muestra, duración, método, propiedad, escala, unidades y LOINC no se infieren. No se aprueban resultados, infección actual/pasada, inmunidad, recomendaciones clínicas, precio, disponibilidad ni ofertas. Original y preparación conservados en RAW/decisión."
+    },
+    {
+      "item_id": "ec39ca88-e1a5-5c8b-b145-ebe12f3c0859",
+      "canonical_name": "Anticuerpos antirubéola IgG",
+      "component": "Rubella virus Ab.IgG",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "SD no especifica matriz. Ayuno/biotina/toma de muestra no prueban sangre/suero. Muestra/system/duración NULL; el suero SEMIN varicela IgG permanece sólo en metadata de su decisión.",
+      "evidence_url": "https://www.cdc.gov/rubella/php/laboratories/serology-testing.html",
+      "reason": "Rubéola en la etiqueta española corresponde a Rubella, confirmado por MedlinePlus español /spanish/rubella.html; no se traduce el término inglés rubeola (sarampión) a esta identidad. Clase IgG explícita, distinta de IgM y avidez. Sólo identidad de orden individual; muestra, duración, método, propiedad, escala, unidades y LOINC no se infieren. No se aprueban resultados, infección actual/pasada, inmunidad, recomendaciones clínicas, precio, disponibilidad ni ofertas. Original y preparación conservados en RAW/decisión."
+    },
+    {
+      "item_id": "9768e11f-4774-5391-9d1d-b2a94dbd77e0",
+      "canonical_name": "Anticuerpos antirubéola IgM",
+      "component": "Rubella virus Ab.IgM",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "SD no especifica matriz. Ayuno/biotina/toma de muestra no prueban sangre/suero. Muestra/system/duración NULL; el suero SEMIN varicela IgG permanece sólo en metadata de su decisión.",
+      "evidence_url": "https://www.cdc.gov/rubella/php/laboratories/serology-testing.html",
+      "reason": "Rubéola en español corresponde a Rubella, no al inglés rubeola/sarampión. IgM es explícito. No IgG, avidez, RNA, panel prenatal o indicación de screening por identificar la orden. Sólo identidad de orden individual; muestra, duración, método, propiedad, escala, unidades y LOINC no se infieren. No se aprueban resultados, infección actual/pasada, inmunidad, recomendaciones clínicas, precio, disponibilidad ni ofertas. Original y preparación conservados en RAW/decisión."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "ac anti ag capside epstein barr vca igg",
+      "item_id": "5fdd6a01-f811-55f7-a7aa-33d58764038a",
+      "canonical_name": "Anticuerpos IgG contra cápside de Epstein-Barr (VCA)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 4 HRS."
+      },
+      "evidence_url": "https://www.cdc.gov/epstein-barr/php/laboratories/index.html",
+      "reason": "VCA identifica antígeno de cápside y la orden explicita IgG. No EBNA, EA, IgM, heterófilos o DNA. Sólo identidad de orden individual; muestra, duración, método, propiedad, escala, unidades y LOINC no se infieren. No se aprueban resultados, infección actual/pasada, inmunidad, recomendaciones clínicas, precio, disponibilidad ni ofertas. Original y preparación conservados en RAW/decisión."
+    },
+    {
+      "alias": "ac anti ag capside epstein barr vca igm",
+      "item_id": "e70f2206-1113-56ff-aa56-8762e41b91f6",
+      "canonical_name": "Anticuerpos IgM contra cápside de Epstein-Barr (VCA)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 4 HRS."
+      },
+      "evidence_url": "https://www.cdc.gov/epstein-barr/php/laboratories/index.html",
+      "reason": "VCA identifica antígeno de cápside y la orden explicita IgM. No EBNA, EA, IgG, heterófilos o DNA. Sólo identidad de orden individual; muestra, duración, método, propiedad, escala, unidades y LOINC no se infieren. No se aprueban resultados, infección actual/pasada, inmunidad, recomendaciones clínicas, precio, disponibilidad ni ofertas. Original y preparación conservados en RAW/decisión."
+    },
+    {
+      "alias": "ac anti ag nuclear epstein barr ebna igg",
+      "item_id": "f953cfa9-30e9-576a-b5eb-0085532da90d",
+      "canonical_name": "Anticuerpos IgG contra antígeno nuclear de Epstein-Barr (EBNA)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 4 HRS."
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/621373",
+      "reason": "EBNA identifica antígeno nuclear y clase IgG explícita. El perfil de referencia identifica EBNA IgG como resultado separado; no se importa su perfil ni se infiere EBNA-1, método o matriz. Sólo identidad de orden individual; muestra, duración, método, propiedad, escala, unidades y LOINC no se infieren. No se aprueban resultados, infección actual/pasada, inmunidad, recomendaciones clínicas, precio, disponibilidad ni ofertas. Original y preparación conservados en RAW/decisión."
+    },
+    {
+      "alias": "ac anti ag temprano epstein barr ebv ea igg",
+      "item_id": "ed211477-f480-5dd7-8ac0-226b32f2f68b",
+      "canonical_name": "Anticuerpos IgG contra antígeno temprano de Epstein-Barr (EA)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "AC. ANTI-AG TEMPRANO EPSTEIN BARR (EBV-EA) IGG"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/621374",
+      "reason": "EA identifica antígeno temprano y clase IgG. No cápside, nuclear, heterófilos, DNA, perfil ni subfracción difusa/restringida no declarada. Sólo identidad de orden individual; muestra, duración, método, propiedad, escala, unidades y LOINC no se infieren. No se aprueban resultados, infección actual/pasada, inmunidad, recomendaciones clínicas, precio, disponibilidad ni ofertas. Original y preparación conservados en RAW/decisión."
+    },
+    {
+      "alias": "ac anti varicela igg",
+      "item_id": "4b5fe594-ecf2-58f2-8a8e-e98fe59cac7b",
+      "canonical_name": "Anticuerpos antivaricela IgG",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 4 HRS."
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/34944",
+      "reason": "Varicela corresponde a varicela-zóster (VZV), distinta de herpes simplex HSV1/HSV2. La clase IgG es explícita; no se sustituye por IgM, PCR o cultivo. Sólo identidad de orden individual; muestra, duración, método, propiedad, escala, unidades y LOINC no se infieren. No se aprueban resultados, infección actual/pasada, inmunidad, recomendaciones clínicas, precio, disponibilidad ni ofertas. Original y preparación conservados en RAW/decisión.",
+      "additional_targets": [
+        {
+          "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+          "expected_rows": 1,
+          "raw_guard": {
+            "path": [
+              "sample_type"
+            ],
+            "value": "2 ml Suero. Refrigerado"
+          },
+          "source_attributes": {
+            "specimen_code": "serum"
+          }
+        }
+      ]
+    },
+    {
+      "alias": "ac anti virus herpes hsv tipo i igg",
+      "item_id": "d953fc29-7f35-5049-b7e5-30350fa5e573",
+      "canonical_name": "Anticuerpos IgG contra herpes simplex tipo 1 (HSV-1)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 4 HRS."
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/84429",
+      "reason": "HSV tipo I explicita herpes simplex tipo 1 y clase IgG. I es la grafía romana del tipo en esta etiqueta; no se generaliza I/1 a otros términos. La referencia distingue resultados tipo 1 y tipo 2; no se importa orden conjunta, glicoproteína específica o método. Sólo identidad de orden individual; muestra, duración, método, propiedad, escala, unidades y LOINC no se infieren. No se aprueban resultados, infección actual/pasada, inmunidad, recomendaciones clínicas, precio, disponibilidad ni ofertas. Original y preparación conservados en RAW/decisión."
+    },
+    {
+      "alias": "ac anti virus herpes hsv tipo ii igg",
+      "item_id": "0ebe6b5e-baa6-5d8f-aa98-389fc3a421df",
+      "canonical_name": "Anticuerpos IgG contra herpes simplex tipo 2 (HSV-2)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 4 HRS."
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/84429",
+      "reason": "HSV tipo II explicita herpes simplex tipo 2 y clase IgG. II es la grafía romana del tipo en esta etiqueta; no se generaliza a otros términos. No tipo 1, VZV, IgM, PCR ni orden conjunta. Sólo identidad de orden individual; muestra, duración, método, propiedad, escala, unidades y LOINC no se infieren. No se aprueban resultados, infección actual/pasada, inmunidad, recomendaciones clínicas, precio, disponibilidad ni ofertas. Original y preparación conservados en RAW/decisión."
+    },
+    {
+      "alias": "anticuerpos anti rubeola igg",
+      "item_id": "ec39ca88-e1a5-5c8b-b145-ebe12f3c0859",
+      "canonical_name": "Anticuerpos antirubéola IgG",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno de 8-12 horas, no consumir biotina 8 horas antes de la toma de muestra."
+      },
+      "evidence_url": "https://www.cdc.gov/rubella/php/laboratories/serology-testing.html",
+      "reason": "Rubéola en la etiqueta española corresponde a Rubella, confirmado por MedlinePlus español /spanish/rubella.html; no se traduce el término inglés rubeola (sarampión) a esta identidad. Clase IgG explícita, distinta de IgM y avidez. Sólo identidad de orden individual; muestra, duración, método, propiedad, escala, unidades y LOINC no se infieren. No se aprueban resultados, infección actual/pasada, inmunidad, recomendaciones clínicas, precio, disponibilidad ni ofertas. Original y preparación conservados en RAW/decisión."
+    },
+    {
+      "alias": "anticuerpos anti rubeola igm",
+      "item_id": "9768e11f-4774-5391-9d1d-b2a94dbd77e0",
+      "canonical_name": "Anticuerpos antirubéola IgM",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno de 8-12 horas, no consumir biotina 8 horas antes de la toma de muestra."
+      },
+      "evidence_url": "https://www.cdc.gov/rubella/php/laboratories/serology-testing.html",
+      "reason": "Rubéola en español corresponde a Rubella, no al inglés rubeola/sarampión. IgM es explícito. No IgG, avidez, RNA, panel prenatal o indicación de screening por identificar la orden. Sólo identidad de orden individual; muestra, duración, método, propiedad, escala, unidades y LOINC no se infieren. No se aprueban resultados, infección actual/pasada, inmunidad, recomendaciones clínicas, precio, disponibilidad ni ofertas. Original y preparación conservados en RAW/decisión."
+    }
+  ]
+}

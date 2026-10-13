@@ -1,0 +1,132 @@
+{
+  "review_id": "pruevia:evidence-review:20261009:04",
+  "reviewed_by": "Codex, investigación terminológica delegada",
+  "authorization": "D-021: investigar y decidir equivalencias claras con evidencia; operación local sobre la misma base autorizada por D-022",
+  "scope": "Seis órdenes de laboratorio con analito y muestra explícitos. Nuevos conceptos independientes del proveedor; sólo 48 filas históricas del crawler. No interpreta resultados, no publica ofertas ni aprueba mappings LOINC.",
+  "research_date": "2026-10-09",
+  "human_review": false,
+  "new_concepts": [
+    {
+      "item_id": "5dccd13f-d41b-5e9c-9373-f0daa8c67e15",
+      "canonical_name": "Paracetamol en suero",
+      "component": "Acetaminophen",
+      "specimen_code": "serum",
+      "time_aspect": null,
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/37030",
+      "reason": "Orden del analito acetaminofén/paracetamol en suero explícito. MedlinePlus confirma sinónimos y Tylenol: https://medlineplus.gov/lab-tests/acetaminophen-level/ . No incluye fármacos combinados, ventana de extracción, método, escala ni unidad inferidos."
+    },
+    {
+      "item_id": "4a8d8fe8-809d-537d-9b4b-0aad27ab225c",
+      "canonical_name": "Ácido láctico en plasma",
+      "component": "Lactate",
+      "specimen_code": "plasma",
+      "time_aspect": null,
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/601685",
+      "reason": "Orden de lactato/ácido láctico con plasma explícito. No equivale a lactato deshidrogenasa, panel lactato/piruvato ni solicitud específica de D-lactato. No impone origen venoso/arterial, método, estereoisómero, escala o unidad."
+    },
+    {
+      "item_id": "fec16ef4-4e7e-5fd3-8d69-3d9ab8924e94",
+      "canonical_name": "Ácido úrico en orina de 24 horas",
+      "component": "Urate",
+      "specimen_code": "urine",
+      "time_aspect": "24H",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/614044",
+      "reason": "Analito ácido úrico y recolección urinaria de 24 horas explícitos. La preparación RAW confirma recolección durante 24 horas. No equivale a orina ocasional, cociente con creatinina, saturación ni cristales; no fija propiedad, unidad o método del resultado."
+    },
+    {
+      "item_id": "f8a7cd1e-bf37-585b-b5ca-35263ae1141a",
+      "canonical_name": "Ácido úrico en orina ocasional",
+      "component": "Urate",
+      "specimen_code": "urine",
+      "time_aspect": "Pt",
+      "evidence_url": "https://uchicagomedlabs.testcatalog.org/show/RUR-1",
+      "reason": "Orden de ácido úrico en orina ocasional/random explícita. Se conserva muestra puntual; no se transforma en recolección de 24 horas, cociente ácido úrico/creatinina ni microscopía de cristales. No fija método o unidad."
+    },
+    {
+      "item_id": "7035f963-83d3-52db-93af-e3fe97835551",
+      "canonical_name": "Etanol en orina",
+      "component": "Ethanol",
+      "specimen_code": "urine",
+      "time_aspect": null,
+      "evidence_url": "https://loinc.org/5645-7",
+      "reason": "Alcohol etílico es etanol; la muestra orina está explícita. El término LOINC acredita analito y matriz, no un mapping exacto del proveedor: faltan escala, unidad y método. No equivale a EtG/EtS, otros alcoholes, panel de volátiles ni cadena de custodia."
+    },
+    {
+      "item_id": "a5af4d6d-7e10-534f-b0de-9c55ccd27496",
+      "canonical_name": "Etanol en suero",
+      "component": "Ethanol",
+      "specimen_code": "serum",
+      "time_aspect": null,
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/0090120",
+      "reason": "Alcohol etílico/etanol con muestra suero explícita. La referencia también acepta plasma pero este concepto conserva únicamente suero. No afirma método, escala, unidad, panel de volátiles o cadena de custodia."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "acetaminofen en suero paracetamol tylenol",
+      "item_id": "5dccd13f-d41b-5e9c-9373-f0daa8c67e15",
+      "canonical_name": "Paracetamol en suero",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {"path": ["raw_study", "Estudio"], "value": "LABORATORIO"},
+      "evidence_url": "https://medlineplus.gov/lab-tests/acetaminophen-level/",
+      "reason": "Acetaminofén y paracetamol identifican el mismo analito; Tylenol es la referencia comercial parentética, no otro componente. Conserva suero explícito; no aprueba preparación, método ni disponibilidad."
+    },
+    {
+      "alias": "acido lactico en plasma lactato",
+      "item_id": "4a8d8fe8-809d-537d-9b4b-0aad27ab225c",
+      "canonical_name": "Ácido láctico en plasma",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {"path": ["raw_study", "Estudio"], "value": "LABORATORIO"},
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/601685",
+      "reason": "Lactato es la denominación analítica del ácido láctico; conserva plasma. No lo sustituye por lactato deshidrogenasa, D-lactato o panel lactato/piruvato."
+    },
+    {
+      "alias": "acido urico en orina de 24 horas",
+      "item_id": "fec16ef4-4e7e-5fd3-8d69-3d9ab8924e94",
+      "canonical_name": "Ácido úrico en orina de 24 horas",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {"path": ["raw_study", "Estudio"], "value": "LABORATORIO"},
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/614044",
+      "reason": "Identidad exacta de analito, orina y 24 horas. Conserva recolección; sin cocientes o paneles añadidos."
+    },
+    {
+      "alias": "acido urico orina ocasional",
+      "item_id": "f8a7cd1e-bf37-585b-b5ca-35263ae1141a",
+      "canonical_name": "Ácido úrico en orina ocasional",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {"path": ["raw_study", "Estudio"], "value": "LABORATORIO"},
+      "evidence_url": "https://uchicagomedlabs.testcatalog.org/show/RUR-1",
+      "reason": "Orden simple de ácido úrico en muestra urinaria ocasional; no es cociente con creatinina, microscopía ni recolección de 24 horas."
+    },
+    {
+      "alias": "alcohol etilico en orina",
+      "item_id": "7035f963-83d3-52db-93af-e3fe97835551",
+      "canonical_name": "Etanol en orina",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {"path": ["raw_study", "Estudio"], "value": "LABORATORIO"},
+      "evidence_url": "https://loinc.org/5645-7",
+      "reason": "Etanol y alcohol etílico son el mismo compuesto; conserva orina y analito directo, sin metabolitos ni método/escala inferidos."
+    },
+    {
+      "alias": "alcohol etilico en suero",
+      "item_id": "a5af4d6d-7e10-534f-b0de-9c55ccd27496",
+      "canonical_name": "Etanol en suero",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {"path": ["raw_study", "Estudio"], "value": "LABORATORIO"},
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/0090120",
+      "reason": "Alias de alcohol etílico/etanol preservando muestra suero; no expande a sangre completa/plasma ni aprueba cadena de custodia o un método específico."
+    }
+  ]
+}

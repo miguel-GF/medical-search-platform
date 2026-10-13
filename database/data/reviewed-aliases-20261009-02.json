@@ -1,0 +1,81 @@
+{
+  "review_id": "pruevia:evidence-review:20261009:02",
+  "reviewed_at": "2026-10-09",
+  "reviewed_by": "Codex; investigación delegada por el operador",
+  "authorization": "Sesión 2026-10-09: investigar términos y decidir equivalencias claras; escalar ambigüedad",
+  "scope": "Dos equivalencias de analito y cuatro aliases radiográficos limitados al proveedor y al contexto RAW explícito; sin nueva oferta, precio, muestra ni técnica inferida",
+  "aliases": [
+    {
+      "alias": "3 metoxi 4 hidroxifenilglicol",
+      "item_id": "1d6473cc-06d8-5ad2-a3b9-904c7e980469",
+      "canonical_name": "3 Metoxi 4 Hidroxifeniletilenglicol",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "alias_scope": "global",
+      "raw_guard": {"path": ["raw_study", "Estudio"], "value": "LABORATORIO"},
+      "evidence_url": "https://pubchem.ncbi.nlm.nih.gov/compound/Methoxyhydroxyphenylglycol",
+      "reason": "PubChem CID 10805 identifica los nombres phenylglycol y phenylethyleneglycol del mismo compuesto MHPG. Se conservan posiciones 3-metoxi/4-hidroxi. No equivale al aldehído, sulfato conjugado o DHPG, ni establece sangre/orina/LCR o fracción libre/total."
+    },
+    {
+      "alias": "17 alfa hidroxiprogesterona",
+      "item_id": "0ee4eaf1-36d7-5e43-8322-0c2a20c96fd9",
+      "canonical_name": "17 ALFA-HIDROXIPROG.",
+      "service_type": "lab_test",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "alias_scope": "global",
+      "raw_guard": {"path": ["sample_type"], "value": "2 ml Suero. Refrigerado"},
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/9231",
+      "reason": "Expansión de HIDROXIPROG. conservando 17-alfa; Mayo identifica 17 Alphahydroxyprogesterone como nombre del mismo analito. El RAW declara suero. No se seleccionó el concepto específico en lactantes ni se agregó estimulación con ACTH o un panel suprarrenal."
+    },
+    {
+      "alias": "abdomen ap de pie",
+      "item_id": "b53fc6f3-4d51-5a8a-b919-cec0ddbbc66a",
+      "canonical_name": "RAYOS X ABDOMEN AP DE PIE-1",
+      "service_type": "imaging",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 7,
+      "alias_scope": "provider",
+      "raw_guard": {"path": ["raw_study", "Estudio"], "value": "RAYOS X"},
+      "evidence_url": "https://www.radiologyinfo.org/es/info/abdominrad",
+      "reason": "El RAW declara RAYOS X; ambos nombres conservan abdomen, AP y posición de pie. Alias limitado a Salud Digna: no se infiere modalidad desde la frase aislada ni se agrega decúbito o contraste."
+    },
+    {
+      "alias": "abdomen de pie y decubito",
+      "item_id": "22258a25-fb19-549a-a729-ddf198e8d266",
+      "canonical_name": "RAYOS X ABDOMEN DE PIE Y DECUBITO-2",
+      "service_type": "imaging",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 7,
+      "alias_scope": "provider",
+      "raw_guard": {"path": ["raw_study", "Estudio"], "value": "RAYOS X"},
+      "evidence_url": "https://www.radiologyinfo.org/es/info/abdominrad",
+      "reason": "El RAW declara RAYOS X; ambos nombres conservan abdomen y ambas posiciones, de pie y decúbito. Alias limitado al proveedor; no sustituye la toma sólo de pie ni añade otra posición o técnica."
+    },
+    {
+      "alias": "antebrazo ap comparativo",
+      "item_id": "c08b8d35-b72e-5be5-a489-49b562099785",
+      "canonical_name": "RAYOS X ANTEBRAZO AP COMPARATIVOS - 1",
+      "service_type": "imaging",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 7,
+      "alias_scope": "provider",
+      "raw_guard": {"path": ["raw_study", "Estudio"], "value": "RAYOS X"},
+      "evidence_url": "https://www.ncbi.nlm.nih.gov/books/NBK574580/",
+      "reason": "El RAW declara RAYOS X; anatomía antebrazo, proyección AP y carácter comparativo coinciden. Comparativo/comparativos es variación gramatical conservando la comparación. No añade lateral ni sustituye por un antebrazo unilateral."
+    },
+    {
+      "alias": "antebrazo ap y lateral",
+      "item_id": "279605a8-a918-5e77-ba6e-d929de66d39a",
+      "canonical_name": "RAYOS X ANTEBRAZO AP Y LATERAL - 2",
+      "service_type": "imaging",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 7,
+      "alias_scope": "provider",
+      "raw_guard": {"path": ["raw_study", "Estudio"], "value": "RAYOS X"},
+      "evidence_url": "https://www.ncbi.nlm.nih.gov/books/NBK574580/",
+      "reason": "El RAW declara RAYOS X; conserva antebrazo y ambas proyecciones AP y lateral. La fuente clínica distingue esas vistas radiográficas. No agrega comparativo ni decide izquierda/derecha ausente."
+    }
+  ]
+}

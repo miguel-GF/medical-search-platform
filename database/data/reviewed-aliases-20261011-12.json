@@ -1,0 +1,305 @@
+{
+  "review_id": "pruevia:evidence-review:20261011:12",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras sin confirmación rutinaria; conservar ambigüedad clínica.",
+  "scope": "80 filas crawler: 80 Salud Digna; diez órdenes individuales por analito/variante y diez aliases. Sin pacientes/OCR, ofertas nuevas o cambios de funciones.",
+  "research_date": "2026-10-11",
+  "human_review": false,
+  "new_concepts": [
+    {
+      "item_id": "59226a26-3894-5ab1-986d-616fef5bf73b",
+      "canonical_name": "Calcitonina",
+      "component": "Calcitonin",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Concepto global por identidad del analito/variante, specimen/system/time_aspect NULL. Ayuno, nombre de la proteína o matriz de una referencia externa no prueban la muestra local. Familia sangre SD proteínas totales y suero SEMIN fosfatasa ácida total son atributos exclusivos de sus decisiones.",
+      "evidence_url": "https://medlineplus.gov/lab-tests/calcitonin-test/",
+      "reason": "Calcitonina como analito individual; no procalcitonina, estimulación con calcio/pentagastrina o panel. No importar protocolo de estimulación ni indicación clínica. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    },
+    {
+      "item_id": "42859d1e-22af-5018-94d2-aab7a119aa05",
+      "canonical_name": "Procalcitonina",
+      "component": "Procalcitonin",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Concepto global por identidad del analito/variante, specimen/system/time_aspect NULL. Ayuno, nombre de la proteína o matriz de una referencia externa no prueban la muestra local. Familia sangre SD proteínas totales y suero SEMIN fosfatasa ácida total son atributos exclusivos de sus decisiones.",
+      "evidence_url": "https://medlineplus.gov/lab-tests/procalcitonin-test/",
+      "reason": "Procalcitonina como analito individual; no calcitonina ni panel de sepsis. La identidad no aprueba algoritmo clínico, diagnóstico de infección ni interpretación de resultados. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    },
+    {
+      "item_id": "e9525625-33ca-5a5c-b522-b2629b87433d",
+      "canonical_name": "Cromogranina A",
+      "component": "Chromogranin A",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Concepto global por identidad del analito/variante, specimen/system/time_aspect NULL. Ayuno, nombre de la proteína o matriz de una referencia externa no prueban la muestra local. Familia sangre SD proteínas totales y suero SEMIN fosfatasa ácida total son atributos exclusivos de sus decisiones.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/34641",
+      "reason": "Cromogranina A explícita; no cromogranina B, inmunohistoquímica tisular o panel neuroendocrino. Conservar la letra A; no adoptar la muestra, método ni suspensión de medicamentos de la referencia. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    },
+    {
+      "item_id": "dd4d01b6-4750-5d61-87da-a9fcc7129fba",
+      "canonical_name": "Gastrina",
+      "component": "Gastrin",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Concepto global por identidad del analito/variante, specimen/system/time_aspect NULL. Ayuno, nombre de la proteína o matriz de una referencia externa no prueban la muestra local. Familia sangre SD proteínas totales y suero SEMIN fosfatasa ácida total son atributos exclusivos de sus decisiones.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/8512",
+      "reason": "Gastrina como orden individual; no progastrina, péptido liberador de gastrina, panel o prueba de estimulación con secretina. Ayuno local no acredita muestra ni protocolo de estimulación. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    },
+    {
+      "item_id": "5ebd776e-0834-5ecc-bfb3-1a8ee3912497",
+      "canonical_name": "Osteocalcina",
+      "component": "Osteocalcin",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Concepto global por identidad del analito/variante, specimen/system/time_aspect NULL. Ayuno, nombre de la proteína o matriz de una referencia externa no prueban la muestra local. Familia sangre SD proteínas totales y suero SEMIN fosfatasa ácida total son atributos exclusivos de sus decisiones.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/80579",
+      "reason": "Identidad general de osteocalcina individual. La referencia describe un ensayo intacto/N-MID; el RAW local no acredita intacta, N-MID, descarboxilada o fragmento específico. No trasladar composición del ensayo ni equivalencia de resultados. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    },
+    {
+      "item_id": "e19531b6-b456-5a3d-8b43-81d69786e90d",
+      "canonical_name": "Mioglobina",
+      "component": "Myoglobin",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Concepto global por identidad del analito/variante, specimen/system/time_aspect NULL. Ayuno, nombre de la proteína o matriz de una referencia externa no prueban la muestra local. Familia sangre SD proteínas totales y suero SEMIN fosfatasa ácida total son atributos exclusivos de sus decisiones.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/621090",
+      "reason": "Mioglobina individual; no hemoglobina, troponina ni panel de marcadores cardíacos. La referencia sérica acredita el analito, no la matriz de la fuente local. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    },
+    {
+      "item_id": "7aacb89d-f6b9-5ad5-a939-0693a88660ea",
+      "canonical_name": "Troponina I",
+      "component": "Troponin I",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Concepto global por identidad del analito/variante, specimen/system/time_aspect NULL. Ayuno, nombre de la proteína o matriz de una referencia externa no prueban la muestra local. Familia sangre SD proteínas totales y suero SEMIN fosfatasa ácida total son atributos exclusivos de sus decisiones.",
+      "evidence_url": "https://medlineplus.gov/lab-tests/troponin-test/",
+      "reason": "Troponina I explícita; no troponina T ni panel. No inferir alta sensibilidad o generación del ensayo desde el nombre. La preparación local sobre biotina queda como evidencia original, sin validarla como recomendación. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    },
+    {
+      "item_id": "029949c3-aa49-5099-adb0-fde9c15a8052",
+      "canonical_name": "Receptor soluble de transferrina",
+      "component": "Transferrin receptor.soluble",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Concepto global por identidad del analito/variante, specimen/system/time_aspect NULL. Ayuno, nombre de la proteína o matriz de una referencia externa no prueban la muestra local. Familia sangre SD proteínas totales y suero SEMIN fosfatasa ácida total son atributos exclusivos de sus decisiones.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/623578",
+      "reason": "Receptor soluble de transferrina individual; no transferrina, índice sTfR/ferritina o panel. La referencia advierte diferencias entre ensayos; la identidad de orden no aprueba intercambiar resultados ni importar muestra. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    },
+    {
+      "item_id": "73eb638f-8a42-538c-bc07-c997c7dde24e",
+      "canonical_name": "Enzima convertidora de angiotensina (ACE)",
+      "component": "Angiotensin converting enzyme",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Concepto global por identidad del analito/variante, specimen/system/time_aspect NULL. Ayuno, nombre de la proteína o matriz de una referencia externa no prueban la muestra local. Familia sangre SD proteínas totales y suero SEMIN fosfatasa ácida total son atributos exclusivos de sus decisiones.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/603622",
+      "reason": "Enzima convertidora de angiotensina individual; no angiotensina I/II, ACE2 o genotipificación del gen ACE. La instrucción local sobre medicamentos se conserva literalmente en RAW/guard, sin aprobar suspensión o intervalos terapéuticos. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    },
+    {
+      "item_id": "15e6311e-391a-54b8-a99c-836fec51ac27",
+      "canonical_name": "Proteínas totales",
+      "component": "Protein.total",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Concepto global por identidad del analito/variante, specimen/system/time_aspect NULL. Ayuno, nombre de la proteína o matriz de una referencia externa no prueban la muestra local. Familia sangre SD proteínas totales y suero SEMIN fosfatasa ácida total son atributos exclusivos de sus decisiones.",
+      "evidence_url": "https://medlineplus.gov/lab-tests/total-protein-and-albumin-globulin-a-g-ratio/",
+      "reason": "Proteínas totales como orden individual; no albúmina, electroforesis, relación A/G o panel combinado. El RAW menciona extracción/muestra de sangre; conservar únicamente specimen_family=blood por esas ocho decisiones, sin elegir suero/plasma/sangre total. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "calcitonina",
+      "item_id": "59226a26-3894-5ab1-986d-616fef5bf73b",
+      "canonical_name": "Calcitonina",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 8 HRS. "
+      },
+      "evidence_url": "https://medlineplus.gov/lab-tests/calcitonin-test/",
+      "reason": "Calcitonina como analito individual; no procalcitonina, estimulación con calcio/pentagastrina o panel. No importar protocolo de estimulación ni indicación clínica. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    },
+    {
+      "alias": "procalcitonina",
+      "item_id": "42859d1e-22af-5018-94d2-aab7a119aa05",
+      "canonical_name": "Procalcitonina",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno mínimo 4h."
+      },
+      "evidence_url": "https://medlineplus.gov/lab-tests/procalcitonin-test/",
+      "reason": "Procalcitonina como analito individual; no calcitonina ni panel de sepsis. La identidad no aprueba algoritmo clínico, diagnóstico de infección ni interpretación de resultados. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    },
+    {
+      "alias": "cromogranina a",
+      "item_id": "e9525625-33ca-5a5c-b522-b2629b87433d",
+      "canonical_name": "Cromogranina A",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO MÍNIMO DE 4 HORAS."
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/34641",
+      "reason": "Cromogranina A explícita; no cromogranina B, inmunohistoquímica tisular o panel neuroendocrino. Conservar la letra A; no adoptar la muestra, método ni suspensión de medicamentos de la referencia. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    },
+    {
+      "alias": "gastrina",
+      "item_id": "dd4d01b6-4750-5d61-87da-a9fcc7129fba",
+      "canonical_name": "Gastrina",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 12 HRS. "
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/8512",
+      "reason": "Gastrina como orden individual; no progastrina, péptido liberador de gastrina, panel o prueba de estimulación con secretina. Ayuno local no acredita muestra ni protocolo de estimulación. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    },
+    {
+      "alias": "osteocalcina",
+      "item_id": "5ebd776e-0834-5ecc-bfb3-1a8ee3912497",
+      "canonical_name": "Osteocalcina",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 8 HRS."
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/80579",
+      "reason": "Identidad general de osteocalcina individual. La referencia describe un ensayo intacto/N-MID; el RAW local no acredita intacta, N-MID, descarboxilada o fragmento específico. No trasladar composición del ensayo ni equivalencia de resultados. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    },
+    {
+      "alias": "mioglobina",
+      "item_id": "e19531b6-b456-5a3d-8b43-81d69786e90d",
+      "canonical_name": "Mioglobina",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 8 HRS."
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/621090",
+      "reason": "Mioglobina individual; no hemoglobina, troponina ni panel de marcadores cardíacos. La referencia sérica acredita el analito, no la matriz de la fuente local. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    },
+    {
+      "alias": "troponina i",
+      "item_id": "7aacb89d-f6b9-5ad5-a939-0693a88660ea",
+      "canonical_name": "Troponina I",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO MINÍMO DE 4 HORAS. NO CONSUMIR BIOTINA 8 HORAS ANTES DE LA TOMA DE MUESTRA. EN CASO DE MEDICACIÓN, SEGUIR LAS INDICACIONES DE SU MÉDICO TRATANTE. "
+      },
+      "evidence_url": "https://medlineplus.gov/lab-tests/troponin-test/",
+      "reason": "Troponina I explícita; no troponina T ni panel. No inferir alta sensibilidad o generación del ensayo desde el nombre. La preparación local sobre biotina queda como evidencia original, sin validarla como recomendación. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    },
+    {
+      "alias": "receptor de transferrina soluble",
+      "item_id": "029949c3-aa49-5099-adb0-fde9c15a8052",
+      "canonical_name": "Receptor soluble de transferrina",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": ""
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/623578",
+      "reason": "Receptor soluble de transferrina individual; no transferrina, índice sTfR/ferritina o panel. La referencia advierte diferencias entre ensayos; la identidad de orden no aprueba intercambiar resultados ni importar muestra. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    },
+    {
+      "alias": "enzima convertidora de angiotensina",
+      "item_id": "73eb638f-8a42-538c-bc07-c997c7dde24e",
+      "canonical_name": "Enzima convertidora de angiotensina (ACE)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "NO SE REQUIERE AYUNO.  \r\nSUSPENDER MEDICAMENTOS COMO: CAPTOPRIL, ENALAPRIL O  EQUINOPRIL 12 HORAS ANTES DE LA TOMA DE MUESTRA.\r\n"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/603622",
+      "reason": "Enzima convertidora de angiotensina individual; no angiotensina I/II, ACE2 o genotipificación del gen ACE. La instrucción local sobre medicamentos se conserva literalmente en RAW/guard, sin aprobar suspensión o intervalos terapéuticos. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos."
+    },
+    {
+      "alias": "proteinas totales",
+      "item_id": "15e6311e-391a-54b8-a99c-836fec51ac27",
+      "canonical_name": "Proteínas totales",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO  8 - 12 HORAS. No realizar ejercicio físico intenso ni consumir alcohol 24 horas antes de la extracción de sangre. La mañana en la que se obtiene la muestra de sangre no fumar ni tomar bebidas que contengan cafeína."
+      },
+      "evidence_url": "https://medlineplus.gov/lab-tests/total-protein-and-albumin-globulin-a-g-ratio/",
+      "reason": "Proteínas totales como orden individual; no albúmina, electroforesis, relación A/G o panel combinado. El RAW menciona extracción/muestra de sangre; conservar únicamente specimen_family=blood por esas ocho decisiones, sin elegir suero/plasma/sangre total. Sólo identidad de orden individual y variante escrita: no equivalencia de resultados, muestra, método, propiedad, escala, unidades, LOINC, interpretación, diagnóstico o tratamiento inferidos. No se aprueban precio, disponibilidad u ofertas. Original y preparación conservados en RAW/decisión; no validar instrucciones sobre medicamentos.",
+      "source_attributes": {
+        "specimen_family": "blood"
+      }
+    }
+  ]
+}

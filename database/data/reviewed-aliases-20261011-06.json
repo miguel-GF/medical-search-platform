@@ -1,0 +1,292 @@
+{
+  "review_id": "pruevia:evidence-review:20261011:06",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "authorization": "D-021/D-022: investigación con fuentes primarias e identidades claras, sin confirmación rutinaria; preservar diferencias clínicas.",
+  "scope": "80 entradas crawler Salud Digna: diez identidades individuales de anticuerpos HAV/HBV/HCV/CMV, preservando blancos y clases. Sin pacientes/OCR, paneles ni ofertas.",
+  "research_date": "2026-10-11",
+  "human_review": false,
+  "new_concepts": [
+    {
+      "item_id": "46fedcd5-c03a-5667-bb35-2697ad2d4524",
+      "canonical_name": "Anticuerpos IgG contra hepatitis A",
+      "component": "Hepatitis A virus Ab.IgG",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Las ochenta entradas fuente no especifican matriz. La preparación sólo menciona toma de muestra; no equivale a suero/plasma/sangre. Muestra, system y time_aspect permanecen NULL; no se traslada la matriz de CDC/Mayo.",
+      "evidence_url": "https://www.cdc.gov/hepatitis-a/hcp/diagnosis-testing/index.html",
+      "reason": "El RAW explicita IgG contra HAV; CDC distingue IgG, IgM y anticuerpos totales. No se une a IgM, total, RNA ni perfil viral. Se reconoce sólo identidad de la orden individual y se conserva blanco/clase/fracción explícitos. No se infieren matriz, método, propiedad, escala, unidades, LOINC, diagnóstico, oferta, precio o disponibilidad. Preparación original se conserva por RAW con guard literal, sin transferir la muestra de la referencia."
+    },
+    {
+      "item_id": "9328522f-acd3-5c17-ba87-3c4a005a678f",
+      "canonical_name": "Anticuerpos IgM contra hepatitis A",
+      "component": "Hepatitis A virus Ab.IgM",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Las ochenta entradas fuente no especifican matriz. La preparación sólo menciona toma de muestra; no equivale a suero/plasma/sangre. Muestra, system y time_aspect permanecen NULL; no se traslada la matriz de CDC/Mayo.",
+      "evidence_url": "https://www.cdc.gov/hepatitis-a/hcp/diagnosis-testing/index.html",
+      "reason": "El RAW explicita IgM/HAV-M; CDC distingue IgM contra HAV de IgG y total. No se interpreta infección ni se incorpora RNA o panel. Se reconoce sólo identidad de la orden individual y se conserva blanco/clase/fracción explícitos. No se infieren matriz, método, propiedad, escala, unidades, LOINC, diagnóstico, oferta, precio o disponibilidad. Preparación original se conserva por RAW con guard literal, sin transferir la muestra de la referencia."
+    },
+    {
+      "item_id": "d0a28877-27f3-54ef-b612-24d217361d63",
+      "canonical_name": "Anticuerpos totales contra hepatitis A",
+      "component": "Hepatitis A virus Ab.total",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Las ochenta entradas fuente no especifican matriz. La preparación sólo menciona toma de muestra; no equivale a suero/plasma/sangre. Muestra, system y time_aspect permanecen NULL; no se traslada la matriz de CDC/Mayo.",
+      "evidence_url": "https://www.cdc.gov/hepatitis-a/hcp/diagnosis-testing/index.html",
+      "reason": "El RAW explicita anticuerpos totales anti-HAV; CDC describe total como IgM e IgG detectados conjuntamente. Es una orden propia, no se sustituye por IgG o IgM aisladas ni se descompone en dos órdenes. Se reconoce sólo identidad de la orden individual y se conserva blanco/clase/fracción explícitos. No se infieren matriz, método, propiedad, escala, unidades, LOINC, diagnóstico, oferta, precio o disponibilidad. Preparación original se conserva por RAW con guard literal, sin transferir la muestra de la referencia."
+    },
+    {
+      "item_id": "1d56211c-b98a-5b2f-a2f5-c68b4cbbb7d6",
+      "canonical_name": "Anticuerpos IgM contra core de hepatitis B",
+      "component": "Hepatitis B virus core Ab.IgM",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Las ochenta entradas fuente no especifican matriz. La preparación sólo menciona toma de muestra; no equivale a suero/plasma/sangre. Muestra, system y time_aspect permanecen NULL; no se traslada la matriz de CDC/Mayo.",
+      "evidence_url": "https://www.cdc.gov/hepatitis-b/hcp/diagnosis-testing/index.html",
+      "reason": "Anticuerpos anti core IgM identifica IgM anti-HBc. Se conserva el blanco core y la clase IgM; no es antígeno core, anticuerpo total, anti-HBe o anti-HBs. Se reconoce sólo identidad de la orden individual y se conserva blanco/clase/fracción explícitos. No se infieren matriz, método, propiedad, escala, unidades, LOINC, diagnóstico, oferta, precio o disponibilidad. Preparación original se conserva por RAW con guard literal, sin transferir la muestra de la referencia."
+    },
+    {
+      "item_id": "e7581c3e-baed-5e79-a080-675b3cba75fc",
+      "canonical_name": "Anticuerpos totales contra core de hepatitis B",
+      "component": "Hepatitis B virus core Ab.total",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Las ochenta entradas fuente no especifican matriz. La preparación sólo menciona toma de muestra; no equivale a suero/plasma/sangre. Muestra, system y time_aspect permanecen NULL; no se traslada la matriz de CDC/Mayo.",
+      "evidence_url": "https://www.cdc.gov/hepatitis-b/hcp/diagnosis-testing/index.html",
+      "reason": "El RAW dice anticuerpos totales contra core; CDC distingue total anti-HBc de IgM anti-HBc. No se reemplaza por IgM aislada ni por otros blancos de HBV; no se crea panel. Se reconoce sólo identidad de la orden individual y se conserva blanco/clase/fracción explícitos. No se infieren matriz, método, propiedad, escala, unidades, LOINC, diagnóstico, oferta, precio o disponibilidad. Preparación original se conserva por RAW con guard literal, sin transferir la muestra de la referencia."
+    },
+    {
+      "item_id": "cb4f532e-7972-57e5-9f48-20469a665b7d",
+      "canonical_name": "Anticuerpos contra antígeno e de hepatitis B",
+      "component": "Hepatitis B virus e Ab",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Las ochenta entradas fuente no especifican matriz. La preparación sólo menciona toma de muestra; no equivale a suero/plasma/sangre. Muestra, system y time_aspect permanecen NULL; no se traslada la matriz de CDC/Mayo.",
+      "evidence_url": "https://www.cdc.gov/hepatitis/php/surveillance-guidance/appendices.html",
+      "reason": "ANTICUERPOS ANTI AG E y HBEAC identifica anti-HBe, distinto del antígeno HBeAg, anti-HBc y anti-HBs. La clase de inmunoglobulina no está especificada y no se inventa. Se reconoce sólo identidad de la orden individual y se conserva blanco/clase/fracción explícitos. No se infieren matriz, método, propiedad, escala, unidades, LOINC, diagnóstico, oferta, precio o disponibilidad. Preparación original se conserva por RAW con guard literal, sin transferir la muestra de la referencia."
+    },
+    {
+      "item_id": "a16d546a-64d8-5ba9-8d8a-21e2e39a8e54",
+      "canonical_name": "Anticuerpos contra antígeno de superficie de hepatitis B",
+      "component": "Hepatitis B virus surface Ab",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Las ochenta entradas fuente no especifican matriz. La preparación sólo menciona toma de muestra; no equivale a suero/plasma/sangre. Muestra, system y time_aspect permanecen NULL; no se traslada la matriz de CDC/Mayo.",
+      "evidence_url": "https://www.cdc.gov/hepatitis-b/hcp/diagnosis-testing/index.html",
+      "reason": "ANTICUERPOS ANTI AG S y HBSAC identifica anti-HBs. El prefijo anticuerpos distingue la orden del antígeno de superficie HBsAg; no se infiere inmunoglobulina, título cuantitativo o panel. Se reconoce sólo identidad de la orden individual y se conserva blanco/clase/fracción explícitos. No se infieren matriz, método, propiedad, escala, unidades, LOINC, diagnóstico, oferta, precio o disponibilidad. Preparación original se conserva por RAW con guard literal, sin transferir la muestra de la referencia."
+    },
+    {
+      "item_id": "a4b7818f-25e1-547d-aca4-bf922377a855",
+      "canonical_name": "Anticuerpos totales contra hepatitis C",
+      "component": "Hepatitis C virus Ab.total",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Las ochenta entradas fuente no especifican matriz. La preparación sólo menciona toma de muestra; no equivale a suero/plasma/sangre. Muestra, system y time_aspect permanecen NULL; no se traslada la matriz de CDC/Mayo.",
+      "evidence_url": "https://www.cdc.gov/hepatitis-c/hcp/diagnosis-testing/index.html",
+      "reason": "El RAW explicita anticuerpos totales contra HCV; CDC separa anti-HCV de RNA/NAT. Se conserva total sin inferir clases, RNA reflejo, carga viral, confirmación o panel. No interpreta un resultado reactivo como infección activa. Se reconoce sólo identidad de la orden individual y se conserva blanco/clase/fracción explícitos. No se infieren matriz, método, propiedad, escala, unidades, LOINC, diagnóstico, oferta, precio o disponibilidad. Preparación original se conserva por RAW con guard literal, sin transferir la muestra de la referencia."
+    },
+    {
+      "item_id": "06dc5e67-2e01-598e-809b-c08fb7bfbd15",
+      "canonical_name": "Anticuerpos IgG contra citomegalovirus",
+      "component": "Cytomegalovirus Ab.IgG",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Las ochenta entradas fuente no especifican matriz. La preparación sólo menciona toma de muestra; no equivale a suero/plasma/sangre. Muestra, system y time_aspect permanecen NULL; no se traslada la matriz de CDC/Mayo.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/621833",
+      "reason": "El RAW especifica anti-CMV IgG; la referencia Mayo distingue su resultado individual GCMV del resultado MCMV IgM. Sólo sustenta esa identidad, no composición conjunta, avidez IgG, antígeno o PCR. Se reconoce sólo identidad de la orden individual y se conserva blanco/clase/fracción explícitos. No se infieren matriz, método, propiedad, escala, unidades, LOINC, diagnóstico, oferta, precio o disponibilidad. Preparación original se conserva por RAW con guard literal, sin transferir la muestra de la referencia."
+    },
+    {
+      "item_id": "3b7e95aa-75d3-5d67-8a48-3ffc1ba39bc8",
+      "canonical_name": "Anticuerpos IgM contra citomegalovirus",
+      "component": "Cytomegalovirus Ab.IgM",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Las ochenta entradas fuente no especifican matriz. La preparación sólo menciona toma de muestra; no equivale a suero/plasma/sangre. Muestra, system y time_aspect permanecen NULL; no se traslada la matriz de CDC/Mayo.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/621833",
+      "reason": "El RAW especifica anti-CMV IgM; Mayo separa resultado MCMV de GCMV IgG. No se crea la prueba combinada de la referencia, no avidez IgG, antígeno o PCR. Se reconoce sólo identidad de la orden individual y se conserva blanco/clase/fracción explícitos. No se infieren matriz, método, propiedad, escala, unidades, LOINC, diagnóstico, oferta, precio o disponibilidad. Preparación original se conserva por RAW con guard literal, sin transferir la muestra de la referencia."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "anticuerpos anti hepatitis a igg",
+      "item_id": "46fedcd5-c03a-5667-bb35-2697ad2d4524",
+      "canonical_name": "Anticuerpos IgG contra hepatitis A",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 8-12 H. NO CONSUMIR BIOTINA 8 HORAS ANTES DE LA TOMA DE MUESTRA.  "
+      },
+      "evidence_url": "https://www.cdc.gov/hepatitis-a/hcp/diagnosis-testing/index.html",
+      "reason": "El RAW explicita IgG contra HAV; CDC distingue IgG, IgM y anticuerpos totales. No se une a IgM, total, RNA ni perfil viral. Se reconoce sólo identidad de la orden individual y se conserva blanco/clase/fracción explícitos. No se infieren matriz, método, propiedad, escala, unidades, LOINC, diagnóstico, oferta, precio o disponibilidad. Preparación original se conserva por RAW con guard literal, sin transferir la muestra de la referencia."
+    },
+    {
+      "alias": "anticuerpos anti hepatitis a igm hav m",
+      "item_id": "9328522f-acd3-5c17-ba87-3c4a005a678f",
+      "canonical_name": "Anticuerpos IgM contra hepatitis A",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno de 8-12 horas, no consumir biotina 8 horas antes de la toma de muestra."
+      },
+      "evidence_url": "https://www.cdc.gov/hepatitis-a/hcp/diagnosis-testing/index.html",
+      "reason": "El RAW explicita IgM/HAV-M; CDC distingue IgM contra HAV de IgG y total. No se interpreta infección ni se incorpora RNA o panel. Se reconoce sólo identidad de la orden individual y se conserva blanco/clase/fracción explícitos. No se infieren matriz, método, propiedad, escala, unidades, LOINC, diagnóstico, oferta, precio o disponibilidad. Preparación original se conserva por RAW con guard literal, sin transferir la muestra de la referencia."
+    },
+    {
+      "alias": "anticuerpos anti hepatitis a total",
+      "item_id": "d0a28877-27f3-54ef-b612-24d217361d63",
+      "canonical_name": "Anticuerpos totales contra hepatitis A",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno de 8-12 horas, no consumir biotina 8 horas antes de la toma de muestra."
+      },
+      "evidence_url": "https://www.cdc.gov/hepatitis-a/hcp/diagnosis-testing/index.html",
+      "reason": "El RAW explicita anticuerpos totales anti-HAV; CDC describe total como IgM e IgG detectados conjuntamente. Es una orden propia, no se sustituye por IgG o IgM aisladas ni se descompone en dos órdenes. Se reconoce sólo identidad de la orden individual y se conserva blanco/clase/fracción explícitos. No se infieren matriz, método, propiedad, escala, unidades, LOINC, diagnóstico, oferta, precio o disponibilidad. Preparación original se conserva por RAW con guard literal, sin transferir la muestra de la referencia."
+    },
+    {
+      "alias": "anticuerpos anti ag core hepatitis b igm",
+      "item_id": "1d56211c-b98a-5b2f-a2f5-c68b4cbbb7d6",
+      "canonical_name": "Anticuerpos IgM contra core de hepatitis B",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno de 8-12 horas, no consumir biotina 8 horas antes de la toma de muestra."
+      },
+      "evidence_url": "https://www.cdc.gov/hepatitis-b/hcp/diagnosis-testing/index.html",
+      "reason": "Anticuerpos anti core IgM identifica IgM anti-HBc. Se conserva el blanco core y la clase IgM; no es antígeno core, anticuerpo total, anti-HBe o anti-HBs. Se reconoce sólo identidad de la orden individual y se conserva blanco/clase/fracción explícitos. No se infieren matriz, método, propiedad, escala, unidades, LOINC, diagnóstico, oferta, precio o disponibilidad. Preparación original se conserva por RAW con guard literal, sin transferir la muestra de la referencia."
+    },
+    {
+      "alias": "anticuerpos anti ag core hepatitis b totales",
+      "item_id": "e7581c3e-baed-5e79-a080-675b3cba75fc",
+      "canonical_name": "Anticuerpos totales contra core de hepatitis B",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno de 8-12 horas, no consumir biotina 8 horas antes de la toma de muestra."
+      },
+      "evidence_url": "https://www.cdc.gov/hepatitis-b/hcp/diagnosis-testing/index.html",
+      "reason": "El RAW dice anticuerpos totales contra core; CDC distingue total anti-HBc de IgM anti-HBc. No se reemplaza por IgM aislada ni por otros blancos de HBV; no se crea panel. Se reconoce sólo identidad de la orden individual y se conserva blanco/clase/fracción explícitos. No se infieren matriz, método, propiedad, escala, unidades, LOINC, diagnóstico, oferta, precio o disponibilidad. Preparación original se conserva por RAW con guard literal, sin transferir la muestra de la referencia."
+    },
+    {
+      "alias": "anticuerpos anti ag e hepatitis b hbeac",
+      "item_id": "cb4f532e-7972-57e5-9f48-20469a665b7d",
+      "canonical_name": "Anticuerpos contra antígeno e de hepatitis B",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno de 8-12 horas, no consumir biotina 8 horas antes de la toma de muestra."
+      },
+      "evidence_url": "https://www.cdc.gov/hepatitis/php/surveillance-guidance/appendices.html",
+      "reason": "ANTICUERPOS ANTI AG E y HBEAC identifica anti-HBe, distinto del antígeno HBeAg, anti-HBc y anti-HBs. La clase de inmunoglobulina no está especificada y no se inventa. Se reconoce sólo identidad de la orden individual y se conserva blanco/clase/fracción explícitos. No se infieren matriz, método, propiedad, escala, unidades, LOINC, diagnóstico, oferta, precio o disponibilidad. Preparación original se conserva por RAW con guard literal, sin transferir la muestra de la referencia."
+    },
+    {
+      "alias": "anticuerpos anti ag s hepatitis b hbsac",
+      "item_id": "a16d546a-64d8-5ba9-8d8a-21e2e39a8e54",
+      "canonical_name": "Anticuerpos contra antígeno de superficie de hepatitis B",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno de 8-12 horas, no consumir biotina 8 horas antes de la toma de muestra."
+      },
+      "evidence_url": "https://www.cdc.gov/hepatitis-b/hcp/diagnosis-testing/index.html",
+      "reason": "ANTICUERPOS ANTI AG S y HBSAC identifica anti-HBs. El prefijo anticuerpos distingue la orden del antígeno de superficie HBsAg; no se infiere inmunoglobulina, título cuantitativo o panel. Se reconoce sólo identidad de la orden individual y se conserva blanco/clase/fracción explícitos. No se infieren matriz, método, propiedad, escala, unidades, LOINC, diagnóstico, oferta, precio o disponibilidad. Preparación original se conserva por RAW con guard literal, sin transferir la muestra de la referencia."
+    },
+    {
+      "alias": "anticuerpos anti hepatitis c total",
+      "item_id": "a4b7818f-25e1-547d-aca4-bf922377a855",
+      "canonical_name": "Anticuerpos totales contra hepatitis C",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno de 8-12 horas, no consumir biotina 8 horas antes de la toma de muestra."
+      },
+      "evidence_url": "https://www.cdc.gov/hepatitis-c/hcp/diagnosis-testing/index.html",
+      "reason": "El RAW explicita anticuerpos totales contra HCV; CDC separa anti-HCV de RNA/NAT. Se conserva total sin inferir clases, RNA reflejo, carga viral, confirmación o panel. No interpreta un resultado reactivo como infección activa. Se reconoce sólo identidad de la orden individual y se conserva blanco/clase/fracción explícitos. No se infieren matriz, método, propiedad, escala, unidades, LOINC, diagnóstico, oferta, precio o disponibilidad. Preparación original se conserva por RAW con guard literal, sin transferir la muestra de la referencia."
+    },
+    {
+      "alias": "anticuerpos anti citomegalovirus igg",
+      "item_id": "06dc5e67-2e01-598e-809b-c08fb7bfbd15",
+      "canonical_name": "Anticuerpos IgG contra citomegalovirus",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno de 8-12 horas, no consumir biotina 8 horas antes de la toma de muestra."
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/621833",
+      "reason": "El RAW especifica anti-CMV IgG; la referencia Mayo distingue su resultado individual GCMV del resultado MCMV IgM. Sólo sustenta esa identidad, no composición conjunta, avidez IgG, antígeno o PCR. Se reconoce sólo identidad de la orden individual y se conserva blanco/clase/fracción explícitos. No se infieren matriz, método, propiedad, escala, unidades, LOINC, diagnóstico, oferta, precio o disponibilidad. Preparación original se conserva por RAW con guard literal, sin transferir la muestra de la referencia."
+    },
+    {
+      "alias": "anticuerpos anti citomegalovirus igm",
+      "item_id": "3b7e95aa-75d3-5d67-8a48-3ffc1ba39bc8",
+      "canonical_name": "Anticuerpos IgM contra citomegalovirus",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno de 8-12 horas, no consumir biotina 8 horas antes de la toma de muestra."
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/621833",
+      "reason": "El RAW especifica anti-CMV IgM; Mayo separa resultado MCMV de GCMV IgG. No se crea la prueba combinada de la referencia, no avidez IgG, antígeno o PCR. Se reconoce sólo identidad de la orden individual y se conserva blanco/clase/fracción explícitos. No se infieren matriz, método, propiedad, escala, unidades, LOINC, diagnóstico, oferta, precio o disponibilidad. Preparación original se conserva por RAW con guard literal, sin transferir la muestra de la referencia."
+    }
+  ]
+}

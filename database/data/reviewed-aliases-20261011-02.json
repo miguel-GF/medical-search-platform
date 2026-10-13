@@ -1,0 +1,337 @@
+{
+  "review_id": "pruevia:evidence-review:20261011:02",
+  "reviewed_by": "Codex, investigación terminológica delegada",
+  "authorization": "D-021/D-022: investigación y decisión de identidades claras sobre la misma base productiva autorizada, sin confirmación rutinaria; conservar ambigüedad clínica real.",
+  "scope": "Diez órdenes por analito con matriz desconocida; once aliases y 82 filas crawler (80 Salud Digna y dos SEMIN). Dos contextos de SEMIN conservan suero explícito. Sin pacientes/OCR, ofertas, equivalencias de resultados ni mappings LOINC.",
+  "research_date": "2026-10-11",
+  "human_review": false,
+  "new_concepts": [
+    {
+      "item_id": "f62bf25d-f7d7-5460-bac6-8a123adbe6c8",
+      "canonical_name": "Estradiol",
+      "component": "Estradiol",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El nombre y las preparaciones RAW de Salud Digna no especifican matriz exacta. No se transfiere suero/plasma de la referencia ni suero de SEMIN. Specimen_code, system y duración permanecen NULL; las instrucciones de toma explícitas se conservan por entrada.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/81816",
+      "reason": "Estradiol es E2; no estrona E1, estriol E3, estrógenos totales ni panel. No se atribuye sensibilidad elevada o espectrometría de la referencia a la fuente. Sólo se reconoce identidad de la orden por analito. No se infieren muestra, método, propiedad, escala, unidad, duración, preparación ni mapping LOINC. Los atributos explícitos de cada fuente permanecen en RAW/decisión; no se aprueban equivalencias de resultados, ofertas, precios ni disponibilidad."
+    },
+    {
+      "item_id": "e13a3b6d-1320-5254-ae73-9fc73045ec5e",
+      "canonical_name": "Cortisol",
+      "component": "Cortisol",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El nombre y las preparaciones RAW de Salud Digna no especifican matriz exacta. No se transfiere suero/plasma de la referencia ni suero de SEMIN. Specimen_code, system y duración permanecen NULL; las instrucciones de toma explícitas se conservan por entrada.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/8545",
+      "reason": "Identifica cortisol; no cortisona, 11-desoxicortisol, 21-desoxicortisol, cortisol salival, cortisol urinario libre, duración de 24 horas ni protocolo de estimulación o supresión. Sólo se reconoce identidad de la orden por analito. No se infieren muestra, método, propiedad, escala, unidad, duración, preparación ni mapping LOINC. Los atributos explícitos de cada fuente permanecen en RAW/decisión; no se aprueban equivalencias de resultados, ofertas, precios ni disponibilidad."
+    },
+    {
+      "item_id": "6080d425-1bd3-593a-9736-5acf2020fd55",
+      "canonical_name": "Dehidroepiandrosterona (DHEA)",
+      "component": "Dehydroepiandrosterone",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El nombre y las preparaciones RAW de Salud Digna no especifican matriz exacta. No se transfiere suero/plasma de la referencia ni suero de SEMIN. Specimen_code, system y duración permanecen NULL; las instrucciones de toma explícitas se conservan por entrada.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/81405",
+      "reason": "Identifica DHEA no sulfatada; no DHEA-S, androstenediona, dihidrotestosterona ni panel de andrógenos. La utilidad clínica descrita conjuntamente no aprueba equivalencia entre DHEA y DHEA-S. Sólo se reconoce identidad de la orden por analito. No se infieren muestra, método, propiedad, escala, unidad, duración, preparación ni mapping LOINC. Los atributos explícitos de cada fuente permanecen en RAW/decisión; no se aprueban equivalencias de resultados, ofertas, precios ni disponibilidad."
+    },
+    {
+      "item_id": "3401214d-6561-520d-a72a-a4cc75479217",
+      "canonical_name": "Sulfato de dehidroepiandrosterona (DHEA-S)",
+      "component": "Dehydroepiandrosterone sulfate",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El nombre y las preparaciones RAW de Salud Digna no especifican matriz exacta. No se transfiere suero/plasma de la referencia ni suero de SEMIN. Specimen_code, system y duración permanecen NULL; las instrucciones de toma explícitas se conservan por entrada.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/113594",
+      "reason": "La etiqueta explicita sulfato DHEAS; no DHEA no sulfatada, metabolitos hidroxilados ni panel de andrógenos. La relación metabólica entre DHEA y DHEA-S no los convierte en el mismo analito. Sólo se reconoce identidad de la orden por analito. No se infieren muestra, método, propiedad, escala, unidad, duración, preparación ni mapping LOINC. Los atributos explícitos de cada fuente permanecen en RAW/decisión; no se aprueban equivalencias de resultados, ofertas, precios ni disponibilidad."
+    },
+    {
+      "item_id": "a9e82251-b0d8-524e-8264-a203c51e2b57",
+      "canonical_name": "Testosterona libre",
+      "component": "Testosterone.free",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El nombre y las preparaciones RAW de Salud Digna no especifican matriz exacta. No se transfiere suero/plasma de la referencia ni suero de SEMIN. Specimen_code, system y duración permanecen NULL; las instrucciones de toma explícitas se conservan por entrada.",
+      "evidence_url": "https://medlineplus.gov/lab-tests/testosterone-levels-test/",
+      "reason": "La fracción libre está explícita; no testosterona total, biodisponible, índice de andrógenos libres ni panel libre+total. No se infiere diálisis, cálculo o método directo. Sólo se reconoce identidad de la orden por analito. No se infieren muestra, método, propiedad, escala, unidad, duración, preparación ni mapping LOINC. Los atributos explícitos de cada fuente permanecen en RAW/decisión; no se aprueban equivalencias de resultados, ofertas, precios ni disponibilidad."
+    },
+    {
+      "item_id": "a44c8b61-ce80-5707-bb75-4c824a0f711c",
+      "canonical_name": "Testosterona total",
+      "component": "Testosterone.total",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El nombre y las preparaciones RAW de Salud Digna no especifican matriz exacta. No se transfiere suero/plasma de la referencia ni suero de SEMIN. Specimen_code, system y duración permanecen NULL; las instrucciones de toma explícitas se conservan por entrada.",
+      "evidence_url": "https://medlineplus.gov/lab-tests/testosterone-levels-test/",
+      "reason": "La fracción total está explícita; no testosterona libre, biodisponible, índice de andrógenos libres ni panel libre+total. TESTOSTERONA sin fracción de SEMIN permanece abierta: frecuencia o coexistencia de otro producto libre no prueban total. Sólo se reconoce identidad de la orden por analito. No se infieren muestra, método, propiedad, escala, unidad, duración, preparación ni mapping LOINC. Los atributos explícitos de cada fuente permanecen en RAW/decisión; no se aprueban equivalencias de resultados, ofertas, precios ni disponibilidad."
+    },
+    {
+      "item_id": "ee4001a7-229d-5b99-bbbf-9c44aca29fe8",
+      "canonical_name": "Triyodotironina libre (T3 libre)",
+      "component": "Triiodothyronine.free",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El nombre y las preparaciones RAW de Salud Digna no especifican matriz exacta. No se transfiere suero/plasma de la referencia ni suero de SEMIN. Specimen_code, system y duración permanecen NULL; las instrucciones de toma explícitas se conservan por entrada.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/621815",
+      "reason": "T3 libre identifica la fracción no unida de triyodotironina; no T3 total, T3 reversa, captación de T3 ni perfil tiroideo. No se cambia T3 existente, cuyo componente no explicita fracción libre. Sólo se reconoce identidad de la orden por analito. No se infieren muestra, método, propiedad, escala, unidad, duración, preparación ni mapping LOINC. Los atributos explícitos de cada fuente permanecen en RAW/decisión; no se aprueban equivalencias de resultados, ofertas, precios ni disponibilidad."
+    },
+    {
+      "item_id": "695ba0ff-11b7-55b8-b160-d22fde01b9e5",
+      "canonical_name": "Triyodotironina reversa (T3 reversa)",
+      "component": "Triiodothyronine.reverse",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El nombre y las preparaciones RAW de Salud Digna no especifican matriz exacta. No se transfiere suero/plasma de la referencia ni suero de SEMIN. Specimen_code, system y duración permanecen NULL; las instrucciones de toma explícitas se conservan por entrada.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/9405",
+      "reason": "Identifica T3 reversa/rT3; no T3 total, T3 libre, captación de T3, T4 ni perfil tiroideo. La ficha RT3 reconoce identidad aunque su disponibilidad externa cambie; no se publica disponibilidad de Mayo o Puebla. Sólo se reconoce identidad de la orden por analito. No se infieren muestra, método, propiedad, escala, unidad, duración, preparación ni mapping LOINC. Los atributos explícitos de cada fuente permanecen en RAW/decisión; no se aprueban equivalencias de resultados, ofertas, precios ni disponibilidad."
+    },
+    {
+      "item_id": "050b3b52-8cec-5a50-9912-3fedadec5358",
+      "canonical_name": "Tiroxina total (T4 total)",
+      "component": "Thyroxine.total",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El nombre y las preparaciones RAW de Salud Digna no especifican matriz exacta. No se transfiere suero/plasma de la referencia ni suero de SEMIN. Specimen_code, system y duración permanecen NULL; las instrucciones de toma explícitas se conservan por entrada.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/800095",
+      "reason": "T4 total identifica tiroxina total; no T4 libre existente, índice de tiroxina libre, panel T4total+libre ni perfil tiroideo. Sólo se reconoce identidad de la orden por analito. No se infieren muestra, método, propiedad, escala, unidad, duración, preparación ni mapping LOINC. Los atributos explícitos de cada fuente permanecen en RAW/decisión; no se aprueban equivalencias de resultados, ofertas, precios ni disponibilidad."
+    },
+    {
+      "item_id": "bc07dcc0-dc9a-5390-9587-426d7345a0e1",
+      "canonical_name": "Hormona adrenocorticotrófica (ACTH)",
+      "component": "Corticotropin",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El nombre y las preparaciones RAW de Salud Digna no especifican matriz exacta. No se transfiere suero/plasma de la referencia ni suero de SEMIN. Specimen_code, system y duración permanecen NULL; las instrucciones de toma explícitas se conservan por entrada.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/800208",
+      "reason": "La etiqueta identifica ACTH/corticotropina; no hormona liberadora CRH, cortisol, cosintropina administrada ni prueba de estimulación. La ventana matutina explícita del proveedor se conserva íntegra en RAW y en su guard, sin trasladar instrucciones de toma al canónico ni inventar duración de recolección. Sólo se reconoce identidad de la orden por analito. No se infieren muestra, método, propiedad, escala, unidad, duración, preparación ni mapping LOINC. Los atributos explícitos de cada fuente permanecen en RAW/decisión; no se aprueban equivalencias de resultados, ofertas, precios ni disponibilidad."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "estradiol",
+      "item_id": "f62bf25d-f7d7-5460-bac6-8a123adbe6c8",
+      "canonical_name": "Estradiol",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/81816",
+      "reason": "Estradiol es E2; no estrona E1, estriol E3, estrógenos totales ni panel. No se atribuye sensibilidad elevada o espectrometría de la referencia a la fuente. Sólo se reconoce identidad de la orden por analito. No se infieren muestra, método, propiedad, escala, unidad, duración, preparación ni mapping LOINC. Los atributos explícitos de cada fuente permanecen en RAW/decisión; no se aprueban equivalencias de resultados, ofertas, precios ni disponibilidad.",
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO MÍNIMO DE 4 HORAS. NO CONSUMIR BIOTINA 8 HORAS ANTES DE LA TOMA DE MUESTRA. EN CASO DE MEDICACIÓN, SEGUIR LAS INDICACIONES DE SU MÉDICO TRATANTE.\r\n"
+      }
+    },
+    {
+      "alias": "estradiol e2",
+      "item_id": "f62bf25d-f7d7-5460-bac6-8a123adbe6c8",
+      "canonical_name": "Estradiol",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/81816",
+      "reason": "Estradiol es E2; no estrona E1, estriol E3, estrógenos totales ni panel. No se atribuye sensibilidad elevada o espectrometría de la referencia a la fuente. Sólo se reconoce identidad de la orden por analito. No se infieren muestra, método, propiedad, escala, unidad, duración, preparación ni mapping LOINC. Los atributos explícitos de cada fuente permanecen en RAW/decisión; no se aprueban equivalencias de resultados, ofertas, precios ni disponibilidad.",
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "Suero / Tubo de tapon rojo o dorado"
+      },
+      "source_attributes": {
+        "specimen_code": "serum"
+      }
+    },
+    {
+      "alias": "cortisol",
+      "item_id": "e13a3b6d-1320-5254-ae73-9fc73045ec5e",
+      "canonical_name": "Cortisol",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/8545",
+      "reason": "Identifica cortisol; no cortisona, 11-desoxicortisol, 21-desoxicortisol, cortisol salival, cortisol urinario libre, duración de 24 horas ni protocolo de estimulación o supresión. Sólo se reconoce identidad de la orden por analito. No se infieren muestra, método, propiedad, escala, unidad, duración, preparación ni mapping LOINC. Los atributos explícitos de cada fuente permanecen en RAW/decisión; no se aprueban equivalencias de resultados, ofertas, precios ni disponibilidad.",
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 4 HRS. NO CONSUMIR BIOTINA 8 HORAS ANTES DE LA TOMA DE MUESTRA. "
+      }
+    },
+    {
+      "alias": "dehidroepiandrosterona dhea",
+      "item_id": "6080d425-1bd3-593a-9736-5acf2020fd55",
+      "canonical_name": "Dehidroepiandrosterona (DHEA)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/81405",
+      "reason": "Identifica DHEA no sulfatada; no DHEA-S, androstenediona, dihidrotestosterona ni panel de andrógenos. La utilidad clínica descrita conjuntamente no aprueba equivalencia entre DHEA y DHEA-S. Sólo se reconoce identidad de la orden por analito. No se infieren muestra, método, propiedad, escala, unidad, duración, preparación ni mapping LOINC. Los atributos explícitos de cada fuente permanecen en RAW/decisión; no se aprueban equivalencias de resultados, ofertas, precios ni disponibilidad.",
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 4 HRS."
+      }
+    },
+    {
+      "alias": "dehidroepiandrosterona sulfato dheas",
+      "item_id": "3401214d-6561-520d-a72a-a4cc75479217",
+      "canonical_name": "Sulfato de dehidroepiandrosterona (DHEA-S)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/113594",
+      "reason": "La etiqueta explicita sulfato DHEAS; no DHEA no sulfatada, metabolitos hidroxilados ni panel de andrógenos. La relación metabólica entre DHEA y DHEA-S no los convierte en el mismo analito. Sólo se reconoce identidad de la orden por analito. No se infieren muestra, método, propiedad, escala, unidad, duración, preparación ni mapping LOINC. Los atributos explícitos de cada fuente permanecen en RAW/decisión; no se aprueban equivalencias de resultados, ofertas, precios ni disponibilidad.",
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 4 HRS. NO CONSUMIR BIOTINA 8 HORAS ANTES DE LA TOMA DE MUESTRA. EN CASO DE MEDICACIÓN, SEGUIR LAS INDICACIONES DE SU MÉDICO TRATANTE."
+      }
+    },
+    {
+      "alias": "testosterona libre",
+      "item_id": "a9e82251-b0d8-524e-8264-a203c51e2b57",
+      "canonical_name": "Testosterona libre",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "evidence_url": "https://medlineplus.gov/lab-tests/testosterone-levels-test/",
+      "reason": "La fracción libre está explícita; no testosterona total, biodisponible, índice de andrógenos libres ni panel libre+total. No se infiere diálisis, cálculo o método directo. Sólo se reconoce identidad de la orden por analito. No se infieren muestra, método, propiedad, escala, unidad, duración, preparación ni mapping LOINC. Los atributos explícitos de cada fuente permanecen en RAW/decisión; no se aprueban equivalencias de resultados, ofertas, precios ni disponibilidad.",
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 8 A 12 HORAS. NO ESTAR BAJO TRATAMIENTO CON NANDROLONA."
+      },
+      "additional_targets": [
+        {
+          "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+          "expected_rows": 1,
+          "raw_guard": {
+            "path": [
+              "sample_type"
+            ],
+            "value": "Suero / Tubo de tapon rojo o dorado"
+          },
+          "source_attributes": {
+            "specimen_code": "serum"
+          }
+        }
+      ]
+    },
+    {
+      "alias": "testosterona total",
+      "item_id": "a44c8b61-ce80-5707-bb75-4c824a0f711c",
+      "canonical_name": "Testosterona total",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "evidence_url": "https://medlineplus.gov/lab-tests/testosterone-levels-test/",
+      "reason": "La fracción total está explícita; no testosterona libre, biodisponible, índice de andrógenos libres ni panel libre+total. TESTOSTERONA sin fracción de SEMIN permanece abierta: frecuencia o coexistencia de otro producto libre no prueban total. Sólo se reconoce identidad de la orden por analito. No se infieren muestra, método, propiedad, escala, unidad, duración, preparación ni mapping LOINC. Los atributos explícitos de cada fuente permanecen en RAW/decisión; no se aprueban equivalencias de resultados, ofertas, precios ni disponibilidad.",
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 8 A 12 HORAS. NO CONSUMIR BIOTINA 8 HORAS ANTES DE LA TOMA DE MUESTRA. "
+      }
+    },
+    {
+      "alias": "t3 libre",
+      "item_id": "ee4001a7-229d-5b99-bbbf-9c44aca29fe8",
+      "canonical_name": "Triyodotironina libre (T3 libre)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/621815",
+      "reason": "T3 libre identifica la fracción no unida de triyodotironina; no T3 total, T3 reversa, captación de T3 ni perfil tiroideo. No se cambia T3 existente, cuyo componente no explicita fracción libre. Sólo se reconoce identidad de la orden por analito. No se infieren muestra, método, propiedad, escala, unidad, duración, preparación ni mapping LOINC. Los atributos explícitos de cada fuente permanecen en RAW/decisión; no se aprueban equivalencias de resultados, ofertas, precios ni disponibilidad.",
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO 8-12 HORAS. NO CONSUMIR BIOTINA 8 HORAS ANTES DE LA TOMA DE MUESTRA. EN CASO DE MEDICACIÓN, SEGUIR LAS INDICACIONES DE SU MÉDICO TRATANTE. \r\n"
+      }
+    },
+    {
+      "alias": "t3 reversa",
+      "item_id": "695ba0ff-11b7-55b8-b160-d22fde01b9e5",
+      "canonical_name": "Triyodotironina reversa (T3 reversa)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/9405",
+      "reason": "Identifica T3 reversa/rT3; no T3 total, T3 libre, captación de T3, T4 ni perfil tiroideo. La ficha RT3 reconoce identidad aunque su disponibilidad externa cambie; no se publica disponibilidad de Mayo o Puebla. Sólo se reconoce identidad de la orden por analito. No se infieren muestra, método, propiedad, escala, unidad, duración, preparación ni mapping LOINC. Los atributos explícitos de cada fuente permanecen en RAW/decisión; no se aprueban equivalencias de resultados, ofertas, precios ni disponibilidad.",
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 8 HRS."
+      }
+    },
+    {
+      "alias": "t4 total",
+      "item_id": "050b3b52-8cec-5a50-9912-3fedadec5358",
+      "canonical_name": "Tiroxina total (T4 total)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/800095",
+      "reason": "T4 total identifica tiroxina total; no T4 libre existente, índice de tiroxina libre, panel T4total+libre ni perfil tiroideo. Sólo se reconoce identidad de la orden por analito. No se infieren muestra, método, propiedad, escala, unidad, duración, preparación ni mapping LOINC. Los atributos explícitos de cada fuente permanecen en RAW/decisión; no se aprueban equivalencias de resultados, ofertas, precios ni disponibilidad.",
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO 8-12 HORAS. NO CONSUMIR BIOTINA 8 HORAS ANTES DE LA TOMA DE MUESTRA. EN CASO DE MEDICACIÓN, SEGUIR LAS INDICACIONES DE SU MÉDICO TRATANTE. "
+      }
+    },
+    {
+      "alias": "hormona adrenocorticotrofica",
+      "item_id": "bc07dcc0-dc9a-5390-9587-426d7345a0e1",
+      "canonical_name": "Hormona adrenocorticotrófica (ACTH)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/800208",
+      "reason": "La etiqueta identifica ACTH/corticotropina; no hormona liberadora CRH, cortisol, cosintropina administrada ni prueba de estimulación. La ventana matutina explícita del proveedor se conserva íntegra en RAW y en su guard, sin trasladar instrucciones de toma al canónico ni inventar duración de recolección. Sólo se reconoce identidad de la orden por analito. No se infieren muestra, método, propiedad, escala, unidad, duración, preparación ni mapping LOINC. Los atributos explícitos de cada fuente permanecen en RAW/decisión; no se aprueban equivalencias de resultados, ofertas, precios ni disponibilidad.",
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 8 - 12 HORAS.\r\n\r\n\r\nLA MUESTRA DEBE TOMARSE ENTRE LAS 7:00 Y 10:00 DE LA MAÑANA.\r\n\r\n"
+      }
+    }
+  ]
+}

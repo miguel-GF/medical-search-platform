@@ -1,0 +1,69 @@
+{
+  "review_id": "pruevia:evidence-review:20261009:01",
+  "reviewed_at": "2026-10-09",
+  "reviewed_by": "Codex; investigación delegada por el operador",
+  "authorization": "Sesión 2026-10-09: investigar términos y decidir equivalencias claras; escalar ambigüedad",
+  "scope": "Equivalencia terminológica exacta; no certifica muestra, técnica, oferta, precio ni disponibilidad",
+  "aliases": [
+    {
+      "alias": "anticuerpos anti mycoplasma pneumoniae igg",
+      "item_id": "831441e7-9e66-5b4e-8032-b5911b6875ea",
+      "canonical_name": "AC Mycoplasma pneumoniae IgG (L)",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/802228",
+      "reason": "Mismo organismo y anticuerpo IgG; expansión de AC a anticuerpos. IgM y el panel IgG+IgM son conceptos distintos. La ficha externa acredita el nombre del analito, no una oferta local."
+    },
+    {
+      "alias": "anticuerpos anti mycoplasma pneumoniae igm",
+      "item_id": "04e00006-ec41-5a94-987c-c1de64c3c258",
+      "canonical_name": "AC Mycoplasma pneumoniae IgM (L)",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/48318",
+      "reason": "Mismo organismo y anticuerpo IgM; expansión de AC a anticuerpos. No sustituye IgG ni el panel combinado. La ficha externa acredita el nombre del analito, no una oferta local."
+    },
+    {
+      "alias": "anticuerpos anti tiroglobulina",
+      "item_id": "55bf636e-7149-5574-8bcb-d7e51974aaae",
+      "canonical_name": "AC ANTI TIROGLOBULINA",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "evidence_url": "https://medlineplus.gov/spanish/pruebas-de-laboratorio/prueba-de-anticuerpos-antitiroideos/",
+      "reason": "Expansión de AC conservando el blanco tiroglobulina. No equivale a tiroglobulina, anti-TPO, TRAb ni un panel de anticuerpos antitiroideos."
+    },
+    {
+      "alias": "dihidrotestosterona dht",
+      "item_id": "3e080173-1b5f-503c-a324-bd65cf092031",
+      "canonical_name": "5 alfa dihidrotestosterona",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/81479",
+      "reason": "La fuente enumera DHT y 5-alpha-dihydrotestosterone como nombres del mismo analito. No transfiere muestra, método, preparación ni rangos del laboratorio externo."
+    },
+    {
+      "alias": "hormona estimulante de la tiroides",
+      "item_id": "00000000-0000-0000-0000-000000001111",
+      "canonical_name": "TSH",
+      "service_type": "lab_test",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "evidence_url": "https://medlineplus.gov/spanish/ency/article/003684.htm",
+      "reason": "Nombre completo explícito de TSH; el RAW corresponde a análisis de laboratorio y declara suero. No agrega T3/T4, anticuerpos ni prueba de estimulación."
+    },
+    {
+      "alias": "ultrasonido abdomen superior",
+      "item_id": "b3ec7d1e-9e20-55ec-9bfc-d72c0836c7dd",
+      "canonical_name": "ULTRASONIDO ABDOMINAL SUPERIOR",
+      "service_type": "imaging",
+      "provider_brand_id": "73ff9590-89a5-5042-b48d-ab7bdc27898a",
+      "expected_rows": 1,
+      "evidence_url": "https://www.radiologyinfo.org/es/info/abdominus",
+      "reason": "Variación gramatical abdomen/abdominal conservando modalidad ultrasonido y región superior explícitas en ambos nombres. No amplía a abdomen completo, inferior, pelvis, Doppler ni contraste."
+    }
+  ]
+}

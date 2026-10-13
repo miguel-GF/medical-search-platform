@@ -1,0 +1,36 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261009:02",
+  "reviewed_by": "Codex; investigación delegada por el operador",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "source_key": "denue_puebla_bulk",
+  "scope": "Tres identidades regionales candidatas: sólo cuatro sedes DENUE, todas pending. Sin ofertas, precios, horarios publicados, declaración de permisos/acreditación ni apertura comercial.",
+  "providers": [
+    {
+      "provider_key": "ceditsa_laboratorios",
+      "name": "CEDITSA Laboratorios",
+      "slug": "ceditsa-laboratorios",
+      "website_url": "https://ceditsa.com.mx/",
+      "identity_evidence_url": "https://ceditsa.com.mx/sucursales/",
+      "identity_note": "El sitio oficial confirma CEDITSA en 10 Oriente 108, Tehuacán, y Tabasco 5, Tlacotepec de Benito Juárez, coincidiendo con DENUE 6271803 y 9106247. Se conserva la fuente gubernamental de dirección. DENUE 3401693 (10 Oriente 103) no se fusiona con el 108; DENUE 6272691 Ajalpan tiene dirección diferente de la actual publicada y queda sin enlazar. Altepexi requiere verificar identidad del nombre completo antes de enlazar. No equivale a CEDIC ni acredita estudios por sede.",
+      "denue_record_ids": ["6271803", "9106247"]
+    },
+    {
+      "provider_key": "laboratorio_clinico_cervantes_tehuacan",
+      "name": "Laboratorio Clínico Cervantes — Tehuacán",
+      "slug": "laboratorio-clinico-cervantes-tehuacan",
+      "website_url": "https://laboratorioclinicocervantes.com/",
+      "identity_evidence_url": "https://laboratorioclinicocervantes.com/",
+      "identity_note": "Nombre, municipio y domicilio 2 Poniente 427, Ignacio Zaragoza, Tehuacán, del sitio oficial coinciden con DENUE 9873311. El otro Cervantes DENUE 11078196 en 11 Sur 1535 no se vincula sin evidencia de sucursal compartida. No se copian resultados ni se aprueban los permisos/calidad que afirma el proveedor.",
+      "denue_record_ids": ["9873311"]
+    },
+    {
+      "provider_key": "biomedicos_group_atlixco",
+      "name": "Biomedicos Group — Atlixco",
+      "slug": "biomedicos-group-atlixco",
+      "website_url": "https://www.biomedicos.mx/",
+      "identity_evidence_url": "https://www.biomedicos.mx/",
+      "identity_note": "DENUE 3424260 declara nombre Biomedicos y dominio biomedicos.mx; el sitio actual confirma la marca y matriz en Atlixco, número 1161, Prado Sur, CP 74260. Existe discrepancia de vialidad: DENUE Miguel Negrete y sitio Av. Encino. Se registra una identidad candidata pending conservando literalmente el domicilio DENUE; no se afirma dirección vigente ni se interpreta como traslado comprobado. Las sedes de banco de sangre y laboratorios que enumera el sitio no se añaden sin identidad y alcance separados.",
+      "denue_record_ids": ["3424260"]
+    }
+  ]
+}

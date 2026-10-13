@@ -1,0 +1,40 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261011:04",
+  "reviewed_by": "Codex; investigación delegada por el operador",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "source_key": "denue_puebla_bulk",
+  "research_date": "2026-10-11",
+  "authorization": "D-021 y D-022: investigar identidades y alimentar Puebla sobre la misma base autorizada, sin confirmación rutinaria.",
+  "scope": "Dos instituciones públicas distintas y tres hospitales generales SCIAN622112, conservando RAW y domicilios DENUE, pending/verification_pending. No confirma derechohabiencia, requisitos de acceso, estudios, disponibilidad, horarios u ofertas. IMSS-Bienestar no se fusiona con IMSS ordinario o ISSSTE.",
+  "providers": [
+    {
+      "provider_key": "imss_bienestar",
+      "name": "IMSS-Bienestar",
+      "slug": "imss-bienestar",
+      "website_url": "https://www.imssbienestar.gob.mx/",
+      "identity_evidence_url": "https://www.gob.mx/salud/es/articulos/recomendaciones-de-salud-durante-los-eventos-del-mundial-en-mexico-2026?idiom=es",
+      "identity_activity_codes": [
+        "622112"
+      ],
+      "denue_record_ids": [
+        "3254170",
+        "3339593"
+      ],
+      "identity_note": "La Secretaría de Salud federal publicó el 14-may-2026 el padrón de hospitales designados para eventos mundialistas, con cinco unidades Puebla expresamente bajo IMSS-Bienestar, separadas de IMSS ordinario y de ISSSTE. Se incorporan sólo dos hospitales generales cuya identidad territorial se corroboró también mediante el directorio público actual ss.puebla.gob.mx y sus recursos GET enlazados, sin sesión, datos de pacientes ni controles eludidos. Norte DENUE3254170: 88 Poniente, Infonavit San Pedro, Puebla72200 coincide con nombre, vialidad, colonia y CP del padrón federal; el directorio estatal unidad9 PLSSA015230 publica 88Poniente y9Norte, CP72430 y coordenadas próximas: se conserva DENUE72200 y se registra conflicto de CP, sin completar datos. Cholula DENUE3339593: Hospital General San Andrés Cholula, Periférico Ecológico, Tlaxcalancingo72820; directorio estatal unidad1 PLSSA008425 identifica Hospital General de Cholula, Osa Mayor2 lateral de Periférico, Ciudad Judicial72810, coordenadas próximas; el padrón federal dice Osa Menor2 y72810. Nombre/sede/municipio y ubicación territorial corroboran identidad candidata; calle, exterior ausente y72820 gubernamentales se conservan íntegros, sin afirmar equivalencia postal completa ni corregir OsaMayor/Menor. Estas referencias sustentan identidad/afiliación candidata, no titularidad legal verificada. El prefijo PLSSA del CLUES no se usa por sí solo para decidir operador vigente. No se importan flags genéricos de laboratorio/radiología, camas, personal, horarios ni acceso clínico del directorio."
+    },
+    {
+      "provider_key": "issste",
+      "name": "ISSSTE",
+      "slug": "issste",
+      "website_url": "https://www.gob.mx/issste",
+      "identity_evidence_url": "https://www.gob.mx/salud/es/articulos/recomendaciones-de-salud-durante-los-eventos-del-mundial-en-mexico-2026?idiom=es",
+      "identity_activity_codes": [
+        "622112"
+      ],
+      "denue_record_ids": [
+        "3258609"
+      ],
+      "identity_note": "El padrón federal vigente de 14-may-2026 distingue tres clínicas hospital ISSSTE en Puebla. Clínica Hospital Tehuacán aparece en Manuel Pereyra Mejia1009, Cerritos, CP75730. DENUE3258609 identifica Clínica Hospital ISSSTE en Doctor Manuel Pereyra Mejia1009, Cerritos, Tehuacán, CP75731 y dominioISSSTE.GOB.MX. Institución, municipio, vialidad/exterior y colonia corroboran identidad candidata; se conserva CP75731 y se documenta diferencia75730, sin sustituir domicilio, completar contactos o asumir equivalencia postal completa. No se fusiona con ISSSTEP, IMSS o IMSS-Bienestar. Huauchinango queda fuera por calles/CP diferentes y Teziutlán sin establecimiento DENUE hospitalario inequívoco en este corte. Todo pending/verification_pending; la pertenencia institucional no afirma acceso universal, derechohabiencia, estudios, ofertas, tarifas o cobertura."
+    }
+  ]
+}

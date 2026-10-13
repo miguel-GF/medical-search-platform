@@ -1,0 +1,360 @@
+{
+  "review_id": "pruevia:evidence-review:20261009:09",
+  "reviewed_by": "Codex, investigación terminológica delegada",
+  "authorization": "D-021 y D-022: investigar y decidir casos claros sobre la misma base autorizada",
+  "scope": "Diez identidades de órdenes por analito, doce aliases y 84 filas del crawler. Muestra desconocida en Salud Digna; suero explícito de SEMIN conservado por entrada. Sin equivalencias de resultados, ofertas ni mappings LOINC.",
+  "research_date": "2026-10-09",
+  "human_review": false,
+  "new_concepts": [
+    {
+      "item_id": "fb5a5188-089a-548b-ae1d-2f2f2fea2156",
+      "canonical_name": "Ceruloplasmina",
+      "component": "Ceruloplasmin",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "La etiqueta y el RAW de Salud Digna no especifican muestra. Se registra identidad de la orden por analito: specimen_code, system y duración permanecen NULL. El suero del catálogo de referencia no acredita la muestra del proveedor. Cualquier atributo explícito de SEMIN se conserva en el RAW y en la decisión de esa entrada, sin convertirlo en atributo de todas las órdenes.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/614504",
+      "reason": "Identifica ceruloplasmina; no cobre total, cobre libre ni perfil de enfermedad de Wilson. Sólo se reconoce la identidad de la orden por analito. No se infieren muestra global, método, propiedad, escala, unidad, preparación o disponibilidad; no se aprueba mapping LOINC ni equivalencia entre resultados."
+    },
+    {
+      "item_id": "971b31f4-9900-5b7c-9d74-d90edbbdb140",
+      "canonical_name": "Ferritina",
+      "component": "Ferritin",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "La etiqueta y el RAW de Salud Digna no especifican muestra. Se registra identidad de la orden por analito: specimen_code, system y duración permanecen NULL. El suero del catálogo de referencia no acredita la muestra del proveedor. Cualquier atributo explícito de SEMIN se conserva en el RAW y en la decisión de esa entrada, sin convertirlo en atributo de todas las órdenes.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/619953",
+      "reason": "Identifica ferritina; no hierro, transferrina, capacidad de fijación ni perfil férrico. Sólo se reconoce la identidad de la orden por analito. No se infieren muestra global, método, propiedad, escala, unidad, preparación o disponibilidad; no se aprueba mapping LOINC ni equivalencia entre resultados."
+    },
+    {
+      "item_id": "ad15510d-09be-5b8b-974f-79502c648aae",
+      "canonical_name": "Haptoglobina",
+      "component": "Haptoglobin",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "La etiqueta y el RAW de Salud Digna no especifican muestra. Se registra identidad de la orden por analito: specimen_code, system y duración permanecen NULL. El suero del catálogo de referencia no acredita la muestra del proveedor. Cualquier atributo explícito de SEMIN se conserva en el RAW y en la decisión de esa entrada, sin convertirlo en atributo de todas las órdenes.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/9168",
+      "reason": "Identifica haptoglobina; no fenotipo, genotipo ni panel de hemólisis. Sólo se reconoce la identidad de la orden por analito. No se infieren muestra global, método, propiedad, escala, unidad, preparación o disponibilidad; no se aprueba mapping LOINC ni equivalencia entre resultados."
+    },
+    {
+      "item_id": "d9d2e393-5736-5a05-9636-b28d020dd3cd",
+      "canonical_name": "Hormona foliculoestimulante (FSH)",
+      "component": "Follitropin",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "La etiqueta y el RAW de Salud Digna no especifican muestra. Se registra identidad de la orden por analito: specimen_code, system y duración permanecen NULL. El suero del catálogo de referencia no acredita la muestra del proveedor. Cualquier atributo explícito de SEMIN se conserva en el RAW y en la decisión de esa entrada, sin convertirlo en atributo de todas las órdenes.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/602753",
+      "reason": "La sigla FSH explícita desambigua la errata folico estimulante y corresponde a hormona foliculoestimulante; no folato, LH ni perfil hormonal. Sólo se reconoce la identidad de la orden por analito. No se infieren muestra global, método, propiedad, escala, unidad, preparación o disponibilidad; no se aprueba mapping LOINC ni equivalencia entre resultados."
+    },
+    {
+      "item_id": "f96d94b5-9b8a-5b5d-9193-d1b67a76cfaa",
+      "canonical_name": "Hormona luteinizante (LH)",
+      "component": "Lutropin",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "La etiqueta y el RAW de Salud Digna no especifican muestra. Se registra identidad de la orden por analito: specimen_code, system y duración permanecen NULL. El suero del catálogo de referencia no acredita la muestra del proveedor. Cualquier atributo explícito de SEMIN se conserva en el RAW y en la decisión de esa entrada, sin convertirlo en atributo de todas las órdenes.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/602762",
+      "reason": "Nombre y sigla LH identifican hormona luteinizante; no FSH ni perfil hormonal. Sólo se reconoce la identidad de la orden por analito. No se infieren muestra global, método, propiedad, escala, unidad, preparación o disponibilidad; no se aprueba mapping LOINC ni equivalencia entre resultados."
+    },
+    {
+      "item_id": "e0616a68-ba6d-589f-86a7-91de74ad0c65",
+      "canonical_name": "Inmunoglobulina A (IgA)",
+      "component": "Immunoglobulin A",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "La etiqueta y el RAW de Salud Digna no especifican muestra. Se registra identidad de la orden por analito: specimen_code, system y duración permanecen NULL. El suero del catálogo de referencia no acredita la muestra del proveedor. Cualquier atributo explícito de SEMIN se conserva en el RAW y en la decisión de esa entrada, sin convertirlo en atributo de todas las órdenes.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/800052",
+      "reason": "El nombre identifica la clase IgA individual; no IgA específica de patógeno, IgA secretora, subclases, cadenas ligeras ni panel IgG/IgA/IgM. Sólo se reconoce la identidad de la orden por analito. No se infieren muestra global, método, propiedad, escala, unidad, preparación o disponibilidad; no se aprueba mapping LOINC ni equivalencia entre resultados."
+    },
+    {
+      "item_id": "f8a706fb-6fe1-5430-a763-f1434481c5e7",
+      "canonical_name": "Inmunoglobulina M (IgM)",
+      "component": "Immunoglobulin M",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "La etiqueta y el RAW de Salud Digna no especifican muestra. Se registra identidad de la orden por analito: specimen_code, system y duración permanecen NULL. El suero del catálogo de referencia no acredita la muestra del proveedor. Cualquier atributo explícito de SEMIN se conserva en el RAW y en la decisión de esa entrada, sin convertirlo en atributo de todas las órdenes.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/800054",
+      "reason": "El nombre identifica la clase IgM individual; no IgM específica de patógeno ni panel IgG/IgA/IgM. Sólo se reconoce la identidad de la orden por analito. No se infieren muestra global, método, propiedad, escala, unidad, preparación o disponibilidad; no se aprueba mapping LOINC ni equivalencia entre resultados."
+    },
+    {
+      "item_id": "1e9e9bdb-271e-54b0-b366-5f113e095d6b",
+      "canonical_name": "Progesterona",
+      "component": "Progesterone",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "La etiqueta y el RAW de Salud Digna no especifican muestra. Se registra identidad de la orden por analito: specimen_code, system y duración permanecen NULL. El suero del catálogo de referencia no acredita la muestra del proveedor. Cualquier atributo explícito de SEMIN se conserva en el RAW y en la decisión de esa entrada, sin convertirlo en atributo de todas las órdenes.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/8141",
+      "reason": "Identifica progesterona; no 17-hidroxiprogesterona, metabolitos urinarios ni perfil hormonal. Sólo se reconoce la identidad de la orden por analito. No se infieren muestra global, método, propiedad, escala, unidad, preparación o disponibilidad; no se aprueba mapping LOINC ni equivalencia entre resultados."
+    },
+    {
+      "item_id": "91ee47d2-c065-5716-af32-e9a82b8c041e",
+      "canonical_name": "Prolactina",
+      "component": "Prolactin",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "La etiqueta y el RAW de Salud Digna no especifican muestra. Se registra identidad de la orden por analito: specimen_code, system y duración permanecen NULL. El suero del catálogo de referencia no acredita la muestra del proveedor. Cualquier atributo explícito de SEMIN se conserva en el RAW y en la decisión de esa entrada, sin convertirlo en atributo de todas las órdenes.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/85670",
+      "reason": "Identifica prolactina; no macroprolactina, prolactina monomérica ni panel hormonal. Sólo se reconoce la identidad de la orden por analito. No se infieren muestra global, método, propiedad, escala, unidad, preparación o disponibilidad; no se aprueba mapping LOINC ni equivalencia entre resultados."
+    },
+    {
+      "item_id": "15316ddc-f8e4-5954-b4f3-acb4fb36b91f",
+      "canonical_name": "Transferrina",
+      "component": "Transferrin",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "La etiqueta y el RAW de Salud Digna no especifican muestra. Se registra identidad de la orden por analito: specimen_code, system y duración permanecen NULL. El suero del catálogo de referencia no acredita la muestra del proveedor. Cualquier atributo explícito de SEMIN se conserva en el RAW y en la decisión de esa entrada, sin convertirlo en atributo de todas las órdenes.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/34623",
+      "reason": "Identifica transferrina; no receptor soluble, saturación, capacidad de fijación, transferrina deficiente en carbohidratos ni perfil férrico. Sólo se reconoce la identidad de la orden por analito. No se infieren muestra global, método, propiedad, escala, unidad, preparación o disponibilidad; no se aprueba mapping LOINC ni equivalencia entre resultados."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "ceruloplasmina",
+      "item_id": "fb5a5188-089a-548b-ae1d-2f2f2fea2156",
+      "canonical_name": "Ceruloplasmina",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/614504",
+      "reason": "Identifica ceruloplasmina; no cobre total, cobre libre ni perfil de enfermedad de Wilson. Sólo se reconoce la identidad de la orden por analito. No se infieren muestra global, método, propiedad, escala, unidad, preparación o disponibilidad; no se aprueba mapping LOINC ni equivalencia entre resultados."
+    },
+    {
+      "alias": "ferritina",
+      "item_id": "971b31f4-9900-5b7c-9d74-d90edbbdb140",
+      "canonical_name": "Ferritina",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/619953",
+      "reason": "Identifica ferritina; no hierro, transferrina, capacidad de fijación ni perfil férrico. Sólo se reconoce la identidad de la orden por analito. No se infieren muestra global, método, propiedad, escala, unidad, preparación o disponibilidad; no se aprueba mapping LOINC ni equivalencia entre resultados."
+    },
+    {
+      "alias": "haptoglobina",
+      "item_id": "ad15510d-09be-5b8b-974f-79502c648aae",
+      "canonical_name": "Haptoglobina",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/9168",
+      "reason": "Identifica haptoglobina; no fenotipo, genotipo ni panel de hemólisis. Sólo se reconoce la identidad de la orden por analito. No se infieren muestra global, método, propiedad, escala, unidad, preparación o disponibilidad; no se aprueba mapping LOINC ni equivalencia entre resultados."
+    },
+    {
+      "alias": "hormona folico estimulante fsh",
+      "item_id": "d9d2e393-5736-5a05-9636-b28d020dd3cd",
+      "canonical_name": "Hormona foliculoestimulante (FSH)",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/602753",
+      "reason": "La sigla FSH explícita desambigua la errata folico estimulante y corresponde a hormona foliculoestimulante; no folato, LH ni perfil hormonal. Sólo se reconoce la identidad de la orden por analito. No se infieren muestra global, método, propiedad, escala, unidad, preparación o disponibilidad; no se aprueba mapping LOINC ni equivalencia entre resultados."
+    },
+    {
+      "alias": "hormona luteinizante lh",
+      "item_id": "f96d94b5-9b8a-5b5d-9193-d1b67a76cfaa",
+      "canonical_name": "Hormona luteinizante (LH)",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/602762",
+      "reason": "Nombre y sigla LH identifican hormona luteinizante; no FSH ni perfil hormonal. Sólo se reconoce la identidad de la orden por analito. No se infieren muestra global, método, propiedad, escala, unidad, preparación o disponibilidad; no se aprueba mapping LOINC ni equivalencia entre resultados."
+    },
+    {
+      "alias": "inmunoglobulinas iga",
+      "item_id": "e0616a68-ba6d-589f-86a7-91de74ad0c65",
+      "canonical_name": "Inmunoglobulina A (IgA)",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/800052",
+      "reason": "El nombre identifica la clase IgA individual; no IgA específica de patógeno, IgA secretora, subclases, cadenas ligeras ni panel IgG/IgA/IgM. Sólo se reconoce la identidad de la orden por analito. No se infieren muestra global, método, propiedad, escala, unidad, preparación o disponibilidad; no se aprueba mapping LOINC ni equivalencia entre resultados."
+    },
+    {
+      "alias": "inmunoglobulina iga",
+      "item_id": "e0616a68-ba6d-589f-86a7-91de74ad0c65",
+      "canonical_name": "Inmunoglobulina A (IgA)",
+      "service_type": "lab_test",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "2 ml Suero. Refrigerado"
+      },
+      "source_attributes": {
+        "specimen_code": "serum"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/800052",
+      "reason": "El nombre identifica la clase IgA individual; no IgA específica de patógeno, IgA secretora, subclases, cadenas ligeras ni panel IgG/IgA/IgM. Conserva el suero de la captura SEMIN en reviewed_source_attributes de su decisión. Sólo se reconoce la identidad de la orden por analito. No se infieren muestra global, método, propiedad, escala, unidad, preparación o disponibilidad; no se aprueba mapping LOINC ni equivalencia entre resultados."
+    },
+    {
+      "alias": "inmunoglobulinas igm",
+      "item_id": "f8a706fb-6fe1-5430-a763-f1434481c5e7",
+      "canonical_name": "Inmunoglobulina M (IgM)",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/800054",
+      "reason": "El nombre identifica la clase IgM individual; no IgM específica de patógeno ni panel IgG/IgA/IgM. Sólo se reconoce la identidad de la orden por analito. No se infieren muestra global, método, propiedad, escala, unidad, preparación o disponibilidad; no se aprueba mapping LOINC ni equivalencia entre resultados."
+    },
+    {
+      "alias": "inmunoglobulina igm",
+      "item_id": "f8a706fb-6fe1-5430-a763-f1434481c5e7",
+      "canonical_name": "Inmunoglobulina M (IgM)",
+      "service_type": "lab_test",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "2 ml Suero. Refrigerado"
+      },
+      "source_attributes": {
+        "specimen_code": "serum"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/800054",
+      "reason": "El nombre identifica la clase IgM individual; no IgM específica de patógeno ni panel IgG/IgA/IgM. Conserva el suero de la captura SEMIN en reviewed_source_attributes de su decisión. Sólo se reconoce la identidad de la orden por analito. No se infieren muestra global, método, propiedad, escala, unidad, preparación o disponibilidad; no se aprueba mapping LOINC ni equivalencia entre resultados."
+    },
+    {
+      "alias": "progesterona",
+      "item_id": "1e9e9bdb-271e-54b0-b366-5f113e095d6b",
+      "canonical_name": "Progesterona",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/8141",
+      "reason": "Identifica progesterona; no 17-hidroxiprogesterona, metabolitos urinarios ni perfil hormonal. Sólo se reconoce la identidad de la orden por analito. No se infieren muestra global, método, propiedad, escala, unidad, preparación o disponibilidad; no se aprueba mapping LOINC ni equivalencia entre resultados.",
+      "additional_targets": [
+        {
+          "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+          "expected_rows": 1,
+          "raw_guard": {
+            "path": [
+              "sample_type"
+            ],
+            "value": "Suero / Tubo de tapon rojo o dorado"
+          },
+          "source_attributes": {
+            "specimen_code": "serum"
+          }
+        }
+      ]
+    },
+    {
+      "alias": "prolactina",
+      "item_id": "91ee47d2-c065-5716-af32-e9a82b8c041e",
+      "canonical_name": "Prolactina",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/85670",
+      "reason": "Identifica prolactina; no macroprolactina, prolactina monomérica ni panel hormonal. Sólo se reconoce la identidad de la orden por analito. No se infieren muestra global, método, propiedad, escala, unidad, preparación o disponibilidad; no se aprueba mapping LOINC ni equivalencia entre resultados.",
+      "additional_targets": [
+        {
+          "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+          "expected_rows": 1,
+          "raw_guard": {
+            "path": [
+              "sample_type"
+            ],
+            "value": "Suero / Tubo de tapon rojo o dorado"
+          },
+          "source_attributes": {
+            "specimen_code": "serum"
+          }
+        }
+      ]
+    },
+    {
+      "alias": "transferrina",
+      "item_id": "15316ddc-f8e4-5954-b4f3-acb4fb36b91f",
+      "canonical_name": "Transferrina",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/34623",
+      "reason": "Identifica transferrina; no receptor soluble, saturación, capacidad de fijación, transferrina deficiente en carbohidratos ni perfil férrico. Sólo se reconoce la identidad de la orden por analito. No se infieren muestra global, método, propiedad, escala, unidad, preparación o disponibilidad; no se aprueba mapping LOINC ni equivalencia entre resultados."
+    }
+  ]
+}

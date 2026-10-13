@@ -1,0 +1,247 @@
+{
+  "review_id": "pruevia:evidence-review:20261012:04",
+  "research_date": "2026-10-12",
+  "scope": "64 contextos crawler Salud Digna: ANA, ANCA, reticulinaIgA/IgG, ASCAIgA/IgG, MOG e islotes. Matriz desconocida, clases escritas conservadas;16antiestreptolisinas quedan fuera sin diana local. Sin pacientes/OCR, ofertas ni funciones modificadas.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "8c9e31605e12d60bfcd6788946094282e2685248bba5f3dc792b43d3900a578c",
+  "research_snapshot_sha256": "465233ebdb5915fba88551afd792d88034d02e46687a54e600639fc2504b066b",
+  "definition_sha256": "64456d9e17f733f98b077bef61a248356575c813b992d9ad3f5a64a468e6b943",
+  "new_concepts": [
+    {
+      "item_id": "d79bd812-5393-550a-b3ae-ba07c42551fe",
+      "canonical_name": "Anticuerpos antinucleares (ANA)",
+      "component": "Nuclear antibody",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://medlineplus.gov/lab-tests/ana-antinuclear-antibody-test/",
+      "reason": "El nombre completo identifica familia de anticuerpos antinucleares ANA. No panel ENA, anti-dsDNA, anticentrómero, Scl-70 u otra diana concreta. No se elige IgG, HEp-2, inmunofluorescencia, ELISA, título, patrón, reflex o composición de panel ausentes. Otros nombres de una referencia no son aliases aprobados de todos esos productos. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Ningún campo RAW identifica matriz; ayuno no prueba sangre o suero. No trasladar muestra de la referencia."
+    },
+    {
+      "item_id": "530e65b9-c785-5fc8-b093-8f3a59314c0b",
+      "canonical_name": "Anticuerpos anticitoplasma de neutrófilos (ANCA)",
+      "component": "Neutrophil cytoplasmic antibody",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://medlineplus.gov/lab-tests/antineutrophil-cytoplasmic-antibodies-anca-test/",
+      "reason": "La etiqueta explícita ANCA identifica familia anticitoplasma de neutrófilos. No elegir MPO, PR3, cANCA/pANCA, patrón atípico, IgG, método, título o panel vasculitis. No afirma que el producto detecte todos los antígenos o incluya determinaciones independientes MPO/PR3. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Ningún campo RAW identifica matriz; ayuno no prueba sangre o suero. No trasladar muestra de la referencia."
+    },
+    {
+      "item_id": "adeac560-0a44-5217-8fed-f073a8d7fc9e",
+      "canonical_name": "Anticuerpos antirreticulina IgA",
+      "component": "Reticulin IgA antibody",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://pubmed.ncbi.nlm.nih.gov/342356/",
+      "reason": "Reticulina e IgA están explícitos. La investigación primaria distingue anticuerpos reticulina IgA e IgG; se conserva cada clase sin trasladar técnica histórica. No antiendomisio IgA, transglutaminasa, gliadina, reticulocitos, histotinción de reticulina ni panel celíaco. No elegir subtipo R1/R2 o título. La parte oficial LOINC sirve sólo como nomenclatura: no se agrega mapping, método, matriz o resultado. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Nombre sin matriz y preparación vacía. Suero de referencias externas no demuestra muestra local."
+    },
+    {
+      "item_id": "d419b44d-6735-5158-9e19-3827eea490ad",
+      "canonical_name": "Anticuerpos antirreticulina IgG",
+      "component": "Reticulin IgG antibody",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://pubmed.ncbi.nlm.nih.gov/342356/",
+      "reason": "Reticulina e IgG están explícitos y son distintos de reticulina IgA. No antiendomisio, transglutaminasa, gliadina, reticulocitos, histotinción de reticulina o panel celíaco. No elegir subtipo R1/R2, IgG1 u otra subclase, título ni método. La parte oficial LOINC confirma la nomenclatura de la diana/clase, sin aprobar mapping o atributos del resultado. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Nombre sin matriz y preparación vacía. Suero de referencias externas no demuestra muestra local."
+    },
+    {
+      "item_id": "466d09de-b4fb-591b-bdc5-aa0be01bd4e4",
+      "canonical_name": "Anticuerpos anti-Saccharomyces cerevisiae IgA (ASCA)",
+      "component": "Saccharomyces cerevisiae IgA antibody",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/610002",
+      "reason": "ASCA designa anticuerpos contra Saccharomyces cerevisiae; la etiqueta especifica IgA. No ASCA IgG, Candida, antígeno/cultivo de levaduras, ANCA, enfermedad de Crohn como diagnóstico ni panel IBD/celíaco. No trasladar ELISA, cuantificación, unidades o composición del perfil de referencia. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW sólo informa ayuno/preparación, sin matriz. No trasladar suero o técnica de la referencia Mayo."
+    },
+    {
+      "item_id": "c300bf7f-8b66-5322-83eb-8b5ceb1af83f",
+      "canonical_name": "Anticuerpos anti-Saccharomyces cerevisiae IgG (ASCA)",
+      "component": "Saccharomyces cerevisiae IgG antibody",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/610003",
+      "reason": "La etiqueta identifica anticuerpos contra Saccharomyces cerevisiae y conserva IgG explícita, distinta de IgA. No cultivo/antígeno de levadura, Candida, ANCA, diagnóstico o panel IBD/celíaco. No inferir subclase, método, unidades o equivalencia de resultados con otra técnica. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW sólo informa ayuno/preparación, sin matriz. No trasladar suero o técnica de la referencia Mayo."
+    },
+    {
+      "item_id": "6620d628-be01-5a62-a7c9-3b63426210d9",
+      "canonical_name": "Anticuerpos anti-MOG",
+      "component": "Myelin oligodendrocyte glycoprotein antibody",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/65563",
+      "reason": "MOG explícito identifica la glicoproteína de mielina de oligodendrocito como diana de anticuerpos pese a errores/truncación de su expansión. Se conserva el RAW sin completarlo. No proteína básica de mielina, MAG, AQP4, diagnóstico MOGAD/NMOSD, genética ni panel desmielinizante. No copiar IgG, IgG1, FACS, célula viva/fija, título o matriz de la referencia MOGFS. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Ni etiqueta ni preparación SIN PREPARACION identifican matriz. No trasladar suero/LCR de otra fuente."
+    },
+    {
+      "item_id": "073ad2e3-9462-5cf0-a187-03f80a141019",
+      "canonical_name": "Anticuerpos contra islotes de Langerhans",
+      "component": "Pancreatic islet cell antibody",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/0050138",
+      "reason": "El nombre completo identifica familia de anticuerpos contra islotes pancreáticos de Langerhans. No escoger IA-2/ICA512, GAD65, ZnT8, insulina, IgG, inmunofluorescencia, título/reflex o panel de diabetes. La referencia es un producto ICA IgG específico: apoya la diana, no esos atributos ausentes ni composición total de la familia. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW indica sólo AYUNO DE 6 HRS., sin matriz o isotipo. No trasladar suero/IgG de ARUP."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "anticuerpos anti nucleares ana",
+      "item_id": "d79bd812-5393-550a-b3ae-ba07c42551fe",
+      "canonical_name": "Anticuerpos antinucleares (ANA)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://medlineplus.gov/lab-tests/ana-antinuclear-antibody-test/",
+      "reason": "El nombre completo identifica familia de anticuerpos antinucleares ANA. No panel ENA, anti-dsDNA, anticentrómero, Scl-70 u otra diana concreta. No se elige IgG, HEp-2, inmunofluorescencia, ELISA, título, patrón, reflex o composición de panel ausentes. Otros nombres de una referencia no son aliases aprobados de todos esos productos. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS ANTI NUCLEARES ANA"
+      }
+    },
+    {
+      "alias": "anticuerpos anti citoplasma de neutrofilo anca",
+      "item_id": "530e65b9-c785-5fc8-b093-8f3a59314c0b",
+      "canonical_name": "Anticuerpos anticitoplasma de neutrófilos (ANCA)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://medlineplus.gov/lab-tests/antineutrophil-cytoplasmic-antibodies-anca-test/",
+      "reason": "La etiqueta explícita ANCA identifica familia anticitoplasma de neutrófilos. No elegir MPO, PR3, cANCA/pANCA, patrón atípico, IgG, método, título o panel vasculitis. No afirma que el producto detecte todos los antígenos o incluya determinaciones independientes MPO/PR3. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS ANTI CITOPLASMA DE NEUTROFILO -ANCA- "
+      }
+    },
+    {
+      "alias": "anticuerpos reticulina iga",
+      "item_id": "adeac560-0a44-5217-8fed-f073a8d7fc9e",
+      "canonical_name": "Anticuerpos antirreticulina IgA",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://pubmed.ncbi.nlm.nih.gov/342356/",
+      "reason": "Reticulina e IgA están explícitos. La investigación primaria distingue anticuerpos reticulina IgA e IgG; se conserva cada clase sin trasladar técnica histórica. No antiendomisio IgA, transglutaminasa, gliadina, reticulocitos, histotinción de reticulina ni panel celíaco. No elegir subtipo R1/R2 o título. La parte oficial LOINC sirve sólo como nomenclatura: no se agrega mapping, método, matriz o resultado. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS RETICULINA IGA"
+      }
+    },
+    {
+      "alias": "anticuerpos reticulina igg",
+      "item_id": "d419b44d-6735-5158-9e19-3827eea490ad",
+      "canonical_name": "Anticuerpos antirreticulina IgG",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://pubmed.ncbi.nlm.nih.gov/342356/",
+      "reason": "Reticulina e IgG están explícitos y son distintos de reticulina IgA. No antiendomisio, transglutaminasa, gliadina, reticulocitos, histotinción de reticulina o panel celíaco. No elegir subtipo R1/R2, IgG1 u otra subclase, título ni método. La parte oficial LOINC confirma la nomenclatura de la diana/clase, sin aprobar mapping o atributos del resultado. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS RETICULINA IGG"
+      }
+    },
+    {
+      "alias": "anticuerpos anti saccharomyces cerevisiae iga",
+      "item_id": "466d09de-b4fb-591b-bdc5-aa0be01bd4e4",
+      "canonical_name": "Anticuerpos anti-Saccharomyces cerevisiae IgA (ASCA)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/610002",
+      "reason": "ASCA designa anticuerpos contra Saccharomyces cerevisiae; la etiqueta especifica IgA. No ASCA IgG, Candida, antígeno/cultivo de levaduras, ANCA, enfermedad de Crohn como diagnóstico ni panel IBD/celíaco. No trasladar ELISA, cuantificación, unidades o composición del perfil de referencia. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS ANTI SACCHAROMYCES CEREVISIAE IGA"
+      }
+    },
+    {
+      "alias": "anticuerpos anti saccharomyces cerevisiae igg",
+      "item_id": "c300bf7f-8b66-5322-83eb-8b5ceb1af83f",
+      "canonical_name": "Anticuerpos anti-Saccharomyces cerevisiae IgG (ASCA)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/610003",
+      "reason": "La etiqueta identifica anticuerpos contra Saccharomyces cerevisiae y conserva IgG explícita, distinta de IgA. No cultivo/antígeno de levadura, Candida, ANCA, diagnóstico o panel IBD/celíaco. No inferir subclase, método, unidades o equivalencia de resultados con otra técnica. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS ANTI SACCHAROMYCES CEREVISIAE IGG"
+      }
+    },
+    {
+      "alias": "anticuerpos mog mielina oligdendrocito glicoprote",
+      "item_id": "6620d628-be01-5a62-a7c9-3b63426210d9",
+      "canonical_name": "Anticuerpos anti-MOG",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/65563",
+      "reason": "MOG explícito identifica la glicoproteína de mielina de oligodendrocito como diana de anticuerpos pese a errores/truncación de su expansión. Se conserva el RAW sin completarlo. No proteína básica de mielina, MAG, AQP4, diagnóstico MOGAD/NMOSD, genética ni panel desmielinizante. No copiar IgG, IgG1, FACS, célula viva/fija, título o matriz de la referencia MOGFS. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS MOG (MIELINA OLIGDENDROCITO GLICOPROTE"
+      }
+    },
+    {
+      "alias": "anticuerpos anti islotes de langerhans",
+      "item_id": "073ad2e3-9462-5cf0-a187-03f80a141019",
+      "canonical_name": "Anticuerpos contra islotes de Langerhans",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/0050138",
+      "reason": "El nombre completo identifica familia de anticuerpos contra islotes pancreáticos de Langerhans. No escoger IA-2/ICA512, GAD65, ZnT8, insulina, IgG, inmunofluorescencia, título/reflex o panel de diabetes. La referencia es un producto ICA IgG específico: apoya la diana, no esos atributos ausentes ni composición total de la familia. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS ANTI ISLOTES DE LANGERHANS"
+      }
+    }
+  ]
+}

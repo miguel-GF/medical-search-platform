@@ -1,0 +1,362 @@
+{
+  "review_id": "pruevia:evidence-review:20261011:08",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras sin confirmación rutinaria; conservar ambigüedad y diferencias clínicas.",
+  "scope": "83 filas crawler: diez identidades individuales; sin pacientes/OCR, ofertas o cambios de funciones.",
+  "research_date": "2026-10-11",
+  "human_review": false,
+  "new_concepts": [
+    {
+      "item_id": "4c0a6be9-12b9-5f25-ac02-d476daee48ea",
+      "canonical_name": "Alfa-fetoproteína (AFP)",
+      "component": "Alpha-fetoprotein",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Salud Digna no especifica matriz: ayuno, biotina o toma de muestra no demuestran suero/sangre. system/time/specimen NULL. En revisión 18, el suero de tres registros SEMIN se conserva sólo en sus decisiones con guard exacto; no se transfiere a SD.",
+      "evidence_url": "https://medlineplus.gov/lab-tests/alpha-fetoprotein-afp-tumor-marker-test/",
+      "reason": "AFP es alfa-fetoproteína. La orden no indica AFP-L3, porcentaje AFP-L3, líquido amniótico, triple/cuádruple marcador o perfil prenatal; no se infieren. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "item_id": "1b1f51ea-1923-5be4-aba9-948e10b744c2",
+      "canonical_name": "Alfa-1 antitripsina",
+      "component": "Alpha-1 antitrypsin",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Salud Digna no especifica matriz: ayuno, biotina o toma de muestra no demuestran suero/sangre. system/time/specimen NULL. En revisión 18, el suero de tres registros SEMIN se conserva sólo en sus decisiones con guard exacto; no se transfiere a SD.",
+      "evidence_url": "https://medlineplus.gov/lab-tests/alpha-1-antitrypsin-testing/",
+      "reason": "La grafía ALFA I ANTITRIPSINA corresponde a alfa-1 antitripsina/AAT: I es la grafía romana del número 1 en este nombre explícito. Se conserva RAW literal; no se extiende la corrección I/1 a otros términos ni se infiere genotipo, fenotipo, secuenciación o aclaramiento fecal. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "item_id": "31a7f26e-4cc5-53e3-8d82-32ede9c53689",
+      "canonical_name": "Antígeno carcinoembrionario (CEA)",
+      "component": "Carcinoembryonic antigen",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Salud Digna no especifica matriz: ayuno, biotina o toma de muestra no demuestran suero/sangre. system/time/specimen NULL. En revisión 18, el suero de tres registros SEMIN se conserva sólo en sus decisiones con guard exacto; no se transfiere a SD.",
+      "evidence_url": "https://medlineplus.gov/lab-tests/cea-test/",
+      "reason": "CEA identifica antígeno carcinoembrionario. No se infieren matriz corporal específica, diagnóstico, órgano de toma o panel; no acredita cáncer por sí solo. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "item_id": "a3b5e4c8-2aa2-5b7b-a0ed-4b4767315b1f",
+      "canonical_name": "Antígeno CA 125",
+      "component": "Cancer antigen 125",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Salud Digna no especifica matriz: ayuno, biotina o toma de muestra no demuestran suero/sangre. system/time/specimen NULL. En revisión 18, el suero de tres registros SEMIN se conserva sólo en sus decisiones con guard exacto; no se transfiere a SD.",
+      "evidence_url": "https://medlineplus.gov/ency/article/007217.htm",
+      "reason": "CA 125 es el analito explícito; OVARIO es una anotación de uso comercial, no prueba de muestra ovárica, diagnóstico, sitio anatómico de toma o perfil. No se añaden HE4, ROMA u otros marcadores. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "item_id": "1d0969d7-4d0d-5c56-884f-7f0c988fa3b4",
+      "canonical_name": "Antígeno CA 15-3",
+      "component": "Cancer antigen 15-3",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Salud Digna no especifica matriz: ayuno, biotina o toma de muestra no demuestran suero/sangre. system/time/specimen NULL. En revisión 18, el suero de tres registros SEMIN se conserva sólo en sus decisiones con guard exacto; no se transfiere a SD.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/81607",
+      "reason": "CA 15-3 identifica el marcador explícito. MAMA no demuestra muestra mamaria. Se mantiene distinto de CA 27.29 aunque compartan asociación con MUC1; no se declara equivalencia de resultados o método. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "item_id": "1966667a-839a-5677-9349-83a839f56c30",
+      "canonical_name": "Antígeno CA 19-9",
+      "component": "Carbohydrate antigen 19-9",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Salud Digna no especifica matriz: ayuno, biotina o toma de muestra no demuestran suero/sangre. system/time/specimen NULL. En revisión 18, el suero de tres registros SEMIN se conserva sólo en sus decisiones con guard exacto; no se transfiere a SD.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/800100",
+      "reason": "CA 19-9 identifica el analito; PANCREAS Y COLON no especifica matriz ni sitio de toma. No se agrega CEA, perfil o diagnóstico por la anotación comercial. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "item_id": "67287843-d484-5107-8835-5971914355c3",
+      "canonical_name": "Antígeno CA 27.29",
+      "component": "Cancer antigen 27.29",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Salud Digna no especifica matriz: ayuno, biotina o toma de muestra no demuestran suero/sangre. system/time/specimen NULL. En revisión 18, el suero de tres registros SEMIN se conserva sólo en sus decisiones con guard exacto; no se transfiere a SD.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/606583",
+      "reason": "CA 27-29 es la grafía de CA 27.29. MAMA es anotación comercial; no implica muestra mamaria. Se conserva separado de CA 15-3 y no se equiparan sus resultados. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "item_id": "f9b5f57a-fd2b-5517-b4d6-cdff3d082248",
+      "canonical_name": "Antígeno prostático específico total (PSA)",
+      "component": "Prostate specific antigen.total",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Salud Digna no especifica matriz: ayuno, biotina o toma de muestra no demuestran suero/sangre. system/time/specimen NULL. En revisión 18, el suero de tres registros SEMIN se conserva sólo en sus decisiones con guard exacto; no se transfiere a SD.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/81944",
+      "reason": "El RAW indica PSA total, distinto de PSA libre y cociente libre/total. La referencia tiene resultados TPSA y FPSA distintos; no se importa su orden conjunta, algoritmo de reflejo o variante ultrasensible. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "item_id": "bece47c9-0198-5628-90e9-11a935b87374",
+      "canonical_name": "Antígeno prostático específico libre (PSA)",
+      "component": "Prostate specific antigen.free",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Salud Digna no especifica matriz: ayuno, biotina o toma de muestra no demuestran suero/sangre. system/time/specimen NULL. En revisión 18, el suero de tres registros SEMIN se conserva sólo en sus decisiones con guard exacto; no se transfiere a SD.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/81944",
+      "reason": "LIBRE y PSA L explicitan la fracción libre. Se distingue de total, cociente libre/total y orden conjunta; no se infiere ultrasensibilidad o reflejo. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "item_id": "7fec3b14-262f-5949-8cfd-d9fb982ca81d",
+      "canonical_name": "Ácidos biliares totales",
+      "component": "Bile acids.total",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Salud Digna no especifica matriz: ayuno, biotina o toma de muestra no demuestran suero/sangre. system/time/specimen NULL. En revisión 18, el suero de tres registros SEMIN se conserva sólo en sus decisiones con guard exacto; no se transfiere a SD.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/84689",
+      "reason": "Totales es explícito; no se infiere análisis fraccionado, ácidos fecales de 48 horas, perfil de trastornos peroxisomales o metabolismo congénito. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "alfa fetoproteina afp",
+      "item_id": "4c0a6be9-12b9-5f25-ac02-d476daee48ea",
+      "canonical_name": "Alfa-fetoproteína (AFP)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno de 8 -12 h. En pacientes en tratamiento con altas dosis de biotina (> 5 mg/día), no recoger la muestra antes de transcurridas como mínimo 8 horas tras la última administración."
+      },
+      "evidence_url": "https://medlineplus.gov/lab-tests/alpha-fetoprotein-afp-tumor-marker-test/",
+      "reason": "AFP es alfa-fetoproteína. La orden no indica AFP-L3, porcentaje AFP-L3, líquido amniótico, triple/cuádruple marcador o perfil prenatal; no se infieren. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "alias": "alfa i antitripsina",
+      "item_id": "1b1f51ea-1923-5be4-aba9-948e10b744c2",
+      "canonical_name": "Alfa-1 antitripsina",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 4 HRS."
+      },
+      "evidence_url": "https://medlineplus.gov/lab-tests/alpha-1-antitrypsin-testing/",
+      "reason": "La grafía ALFA I ANTITRIPSINA corresponde a alfa-1 antitripsina/AAT: I es la grafía romana del número 1 en este nombre explícito. Se conserva RAW literal; no se extiende la corrección I/1 a otros términos ni se infiere genotipo, fenotipo, secuenciación o aclaramiento fecal. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "alias": "antigeno carcinoembrionario cea",
+      "item_id": "31a7f26e-4cc5-53e3-8d82-32ede9c53689",
+      "canonical_name": "Antígeno carcinoembrionario (CEA)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno de 8-12 horas, no consumir biotina 8 horas antes de la toma de muestra.\r\n"
+      },
+      "evidence_url": "https://medlineplus.gov/lab-tests/cea-test/",
+      "reason": "CEA identifica antígeno carcinoembrionario. No se infieren matriz corporal específica, diagnóstico, órgano de toma o panel; no acredita cáncer por sí solo. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "alias": "antigeno ca 125 ovario",
+      "item_id": "a3b5e4c8-2aa2-5b7b-a0ed-4b4767315b1f",
+      "canonical_name": "Antígeno CA 125",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno de 8-12 horas, no consumir biotina 8 horas antes de la toma de muestra.\r\n"
+      },
+      "evidence_url": "https://medlineplus.gov/ency/article/007217.htm",
+      "reason": "CA 125 es el analito explícito; OVARIO es una anotación de uso comercial, no prueba de muestra ovárica, diagnóstico, sitio anatómico de toma o perfil. No se añaden HE4, ROMA u otros marcadores. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "alias": "antigeno ca 15 3 mama",
+      "item_id": "1d0969d7-4d0d-5c56-884f-7f0c988fa3b4",
+      "canonical_name": "Antígeno CA 15-3",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno de 8-12 horas, no consumir biotina 8 horas antes de la toma de muestra.\r\n"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/81607",
+      "reason": "CA 15-3 identifica el marcador explícito. MAMA no demuestra muestra mamaria. Se mantiene distinto de CA 27.29 aunque compartan asociación con MUC1; no se declara equivalencia de resultados o método. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "alias": "antigeno ca 19 9 pancreas y colon",
+      "item_id": "1966667a-839a-5677-9349-83a839f56c30",
+      "canonical_name": "Antígeno CA 19-9",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno de 8-12 horas, no consumir biotina 8 horas antes de la toma de muestra.\r\n"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/800100",
+      "reason": "CA 19-9 identifica el analito; PANCREAS Y COLON no especifica matriz ni sitio de toma. No se agrega CEA, perfil o diagnóstico por la anotación comercial. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "alias": "antigeno ca 27 29 mama",
+      "item_id": "67287843-d484-5107-8835-5971914355c3",
+      "canonical_name": "Antígeno CA 27.29",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO MÍNIMO DE 4 HORAS.\r\n"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/606583",
+      "reason": "CA 27-29 es la grafía de CA 27.29. MAMA es anotación comercial; no implica muestra mamaria. Se conserva separado de CA 15-3 y no se equiparan sus resultados. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "alias": "antigeno prostatico especifico total psa",
+      "item_id": "f9b5f57a-fd2b-5517-b4d6-cdff3d082248",
+      "canonical_name": "Antígeno prostático específico total (PSA)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno mínimo de 4 h. Abstinencia sexual de 3 días, sin manipulación prostática previa (no tacto rectal), no haber realizado USG transrectal 3 días antes. .NO CONSUMIR BIOTINA 8 HORAS ANTES DE LA TOMA DE MUESTRA. \r\n"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/81944",
+      "reason": "El RAW indica PSA total, distinto de PSA libre y cociente libre/total. La referencia tiene resultados TPSA y FPSA distintos; no se importa su orden conjunta, algoritmo de reflejo o variante ultrasensible. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "alias": "antigeno especifico de prostata libre psa l",
+      "item_id": "bece47c9-0198-5628-90e9-11a935b87374",
+      "canonical_name": "Antígeno prostático específico libre (PSA)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO MÍNIMO DE 4 HORAS. ABSTINENCIA SEXUAL MÍNIMA DE 3 DIAS. \r\nSIN MANIPULACIÓN PROSTÁTICA (NO TACTO RECTAL). No consumir biotina 8 horas antes de la toma de muestra.\r\n\r\n"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/81944",
+      "reason": "LIBRE y PSA L explicitan la fracción libre. Se distingue de total, cociente libre/total y orden conjunta; no se infiere ultrasensibilidad o reflejo. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "alias": "acidos biliares totales",
+      "item_id": "7fec3b14-262f-5949-8cfd-d9fb982ca81d",
+      "canonical_name": "Ácidos biliares totales",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 6 HORAS.\r\n"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/84689",
+      "reason": "Totales es explícito; no se infiere análisis fraccionado, ácidos fecales de 48 horas, perfil de trastornos peroxisomales o metabolismo congénito. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad."
+    },
+    {
+      "alias": "antigeno carcinoembrionario",
+      "item_id": "31a7f26e-4cc5-53e3-8d82-32ede9c53689",
+      "canonical_name": "Antígeno carcinoembrionario (CEA)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "Suero / Tubo de tapon rojo o dorado"
+      },
+      "source_attributes": {
+        "specimen_code": "serum"
+      },
+      "evidence_url": "https://medlineplus.gov/lab-tests/cea-test/",
+      "reason": "CEA identifica antígeno carcinoembrionario. No se infieren matriz corporal específica, diagnóstico, órgano de toma o panel; no acredita cáncer por sí solo. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad. SEMIN explicita suero; se conserva exclusivamente en metadata de esta fuente. Su afirmación comercial de establecer diagnóstico no se acepta ni se publica."
+    },
+    {
+      "alias": "antigeno ca 125",
+      "item_id": "a3b5e4c8-2aa2-5b7b-a0ed-4b4767315b1f",
+      "canonical_name": "Antígeno CA 125",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "Suero / Tubo de tapon rojo o dorado"
+      },
+      "source_attributes": {
+        "specimen_code": "serum"
+      },
+      "evidence_url": "https://medlineplus.gov/ency/article/007217.htm",
+      "reason": "CA 125 es el analito explícito; OVARIO es una anotación de uso comercial, no prueba de muestra ovárica, diagnóstico, sitio anatómico de toma o perfil. No se añaden HE4, ROMA u otros marcadores. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad. SEMIN explicita suero; se conserva exclusivamente en metadata de esta fuente. Su afirmación comercial de establecer diagnóstico no se acepta ni se publica."
+    },
+    {
+      "alias": "antigeno ca 19 9",
+      "item_id": "1966667a-839a-5677-9349-83a839f56c30",
+      "canonical_name": "Antígeno CA 19-9",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "Suero / Tubo de tapon rojo o dorado"
+      },
+      "source_attributes": {
+        "specimen_code": "serum"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/800100",
+      "reason": "CA 19-9 identifica el analito; PANCREAS Y COLON no especifica matriz ni sitio de toma. No se agrega CEA, perfil o diagnóstico por la anotación comercial. Sólo identidad de la orden; matriz, método, propiedad, escala, unidades, LOINC y duración no se infieren. Se conserva la preparación y todo contexto original por RAW/decisión. No se aprueban resultados clínicos, diagnóstico, ofertas, precios o disponibilidad. SEMIN explicita suero; se conserva exclusivamente en metadata de esta fuente. Su afirmación comercial de establecer diagnóstico no se acepta ni se publica."
+    }
+  ]
+}

@@ -1,0 +1,292 @@
+{
+  "review_id": "pruevia:evidence-review:20261011:05",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras sin confirmación rutinaria; conservar diferencias clínicas y ambigüedad real.",
+  "scope": "Revisión terminológica delegada de 80 entradas crawler existentes Salud Digna, diez órdenes de vitaminas/nutrición con muestra no especificada. Conserva las dos formas hidroxi de vitamina D separadas, las denominaciones explícitas y la incertidumbre de fracciones ausentes. Sin pacientes/OCR, ofertas ni equivalencias de resultados.",
+  "research_date": "2026-10-11",
+  "human_review": false,
+  "new_concepts": [
+    {
+      "item_id": "ac22dee6-5d68-5bad-b15d-bdeb381b9c77",
+      "canonical_name": "Vitamina A (retinol)",
+      "component": "Retinol",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Ninguna de las ocho entradas Salud Digna especifica suero, plasma, sangre total, eritrocitos u orina. El ayuno o la toma de muestra no prueban una matriz exacta ni la familia sangre. No se transfieren matrices desde las referencias. Specimen_code, system y time_aspect permanecen NULL.",
+      "evidence_url": "https://ods.od.nih.gov/factsheets/VitaminA-HealthProfessional/",
+      "reason": "La orden nombra retinol explícitamente; NIH identifica retinol entre las formas de vitamina A. Se conserva retinol y no se amplía a carotenoides, beta-caroteno, retinal, ácido retinoico, ésteres de retinilo o un panel nutricional. Sólo se reconoce la identidad terminológica de la orden existente, no equivalencia analítica de resultados. No se infieren muestra, duración de recolección, fracciones ausentes, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. El original y sus instrucciones se conservan en RAW; no se adoptan como recomendaciones médicas."
+    },
+    {
+      "item_id": "03fdc43a-af1f-5f6c-9087-9743e5a19db9",
+      "canonical_name": "Vitamina B1 (tiamina)",
+      "component": "Thiamine",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Ninguna de las ocho entradas Salud Digna especifica suero, plasma, sangre total, eritrocitos u orina. El ayuno o la toma de muestra no prueban una matriz exacta ni la familia sangre. No se transfieren matrices desde las referencias. Specimen_code, system y time_aspect permanecen NULL.",
+      "evidence_url": "https://ods.od.nih.gov/factsheets/Thiamin-HealthProfessional/",
+      "reason": "NIH identifica tiamina como vitamina B1. El RAW no define libre, total, monofosfato, difosfato/pirofosfato ni actividad de transquetolasa. Se conserva la orden por vitamina/tiamina sin elegir ninguna de esas fracciones, derivados o métodos y sin inferir eritrocitos. Sólo se reconoce la identidad terminológica de la orden existente, no equivalencia analítica de resultados. No se infieren muestra, duración de recolección, fracciones ausentes, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. El original y sus instrucciones se conservan en RAW; no se adoptan como recomendaciones médicas."
+    },
+    {
+      "item_id": "08d90b5e-b7f3-5dce-8925-be6c2e7fe0a2",
+      "canonical_name": "Vitamina B12 (cobalamina)",
+      "component": "Cobalamin",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Ninguna de las ocho entradas Salud Digna especifica suero, plasma, sangre total, eritrocitos u orina. El ayuno o la toma de muestra no prueban una matriz exacta ni la familia sangre. No se transfieren matrices desde las referencias. Specimen_code, system y time_aspect permanecen NULL.",
+      "evidence_url": "https://ods.od.nih.gov/factsheets/VitaminB12-HealthProfessional/",
+      "reason": "NIH llama cobalaminas a los compuestos con actividad de vitamina B12. Se reconoce la orden de B12/cobalamina, sin elegir metilcobalamina, cianocobalamina, hidroxocobalamina, adenosilcobalamina, holotranscobalamina o vitamina B12 activa. No se añaden ácido metilmalónico, homocisteína ni panel de anemia. Sólo se reconoce la identidad terminológica de la orden existente, no equivalencia analítica de resultados. No se infieren muestra, duración de recolección, fracciones ausentes, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. El original y sus instrucciones se conservan en RAW; no se adoptan como recomendaciones médicas."
+    },
+    {
+      "item_id": "dc2213e9-e554-5040-ab2b-163830f9f0ef",
+      "canonical_name": "Vitamina B3 (niacina)",
+      "component": "Niacin",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Ninguna de las ocho entradas Salud Digna especifica suero, plasma, sangre total, eritrocitos u orina. El ayuno o la toma de muestra no prueban una matriz exacta ni la familia sangre. No se transfieren matrices desde las referencias. Specimen_code, system y time_aspect permanecen NULL.",
+      "evidence_url": "https://ods.od.nih.gov/factsheets/Niacin-HealthProfessional/",
+      "reason": "NIH identifica niacina como vitamina B3 y explica que abarca diversas formas. Se reconoce la orden por niacina con fracción no especificada; no se decide ácido nicotínico frente a nicotinamida, no se suman fracciones y no se añaden NAD/NADP, metabolitos urinarios ni un panel. Sólo se reconoce la identidad terminológica de la orden existente, no equivalencia analítica de resultados. No se infieren muestra, duración de recolección, fracciones ausentes, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. El original y sus instrucciones se conservan en RAW; no se adoptan como recomendaciones médicas."
+    },
+    {
+      "item_id": "f385eb16-b40d-5fab-8015-fff69481cb84",
+      "canonical_name": "Vitamina B6 (piridoxina)",
+      "component": "Pyridoxine",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Ninguna de las ocho entradas Salud Digna especifica suero, plasma, sangre total, eritrocitos u orina. El ayuno o la toma de muestra no prueban una matriz exacta ni la familia sangre. No se transfieren matrices desde las referencias. Specimen_code, system y time_aspect permanecen NULL.",
+      "evidence_url": "https://ods.od.nih.gov/factsheets/VitaminB6-HealthProfessional/",
+      "reason": "La orden fuente dice piridoxina; NIH la distingue como un vitámero de B6 frente a piridoxal, piridoxamina y sus ésteres fosfato. Se conserva la denominación de esta orden. No se reemplaza piridoxina por piridoxal-5-fosfato/PLP, PMP, ácido piridóxico, un panel de vitámeros ni una definición de B6 total. Sólo se reconoce la identidad terminológica de la orden existente, no equivalencia analítica de resultados. No se infieren muestra, duración de recolección, fracciones ausentes, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. El original y sus instrucciones se conservan en RAW; no se adoptan como recomendaciones médicas."
+    },
+    {
+      "item_id": "b670b661-bd53-5e7e-b7b3-8c0473994117",
+      "canonical_name": "Vitamina C (ácido ascórbico)",
+      "component": "Ascorbate",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Ninguna de las ocho entradas Salud Digna especifica suero, plasma, sangre total, eritrocitos u orina. El ayuno o la toma de muestra no prueban una matriz exacta ni la familia sangre. No se transfieren matrices desde las referencias. Specimen_code, system y time_aspect permanecen NULL.",
+      "evidence_url": "https://medlineplus.gov/ency/article/002404.htm",
+      "reason": "NIH identifica vitamina C como ácido ascórbico. Se reconoce la denominación explícita de esta orden; no ácido úrico, dehidroascórbico aislado, otros ácidos, panel de vitaminas ni medición eritrocitaria. No se añaden forma total/libre o procedimiento de conversión ausentes del RAW. Sólo se reconoce la identidad terminológica de la orden existente, no equivalencia analítica de resultados. No se infieren muestra, duración de recolección, fracciones ausentes, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. El original y sus instrucciones se conservan en RAW; no se adoptan como recomendaciones médicas."
+    },
+    {
+      "item_id": "34f23445-1b6c-564a-bf33-e29ffc0f7882",
+      "canonical_name": "Vitamina D 25-hidroxi",
+      "component": "25-Hydroxyvitamin D",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Ninguna de las ocho entradas Salud Digna especifica suero, plasma, sangre total, eritrocitos u orina. El ayuno o la toma de muestra no prueban una matriz exacta ni la familia sangre. No se transfieren matrices desde las referencias. Specimen_code, system y time_aspect permanecen NULL.",
+      "evidence_url": "https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/",
+      "reason": "NIH diferencia la forma 25-hidroxi de la forma 1,25-dihidroxi. Se conserva el metabolito 25-hidroxi explícito sin convertirlo en 1,25-dihidroxi. El RAW no dice total, D2, D3 ni fracciones: no se añade total, una suma D2+D3, un panel de fracciones o equivalencia a una determinación con total expreso. Sólo se reconoce la identidad terminológica de la orden existente, no equivalencia analítica de resultados. No se infieren muestra, duración de recolección, fracciones ausentes, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. El original y sus instrucciones se conservan en RAW; no se adoptan como recomendaciones médicas."
+    },
+    {
+      "item_id": "cf99ed1d-737f-52d1-81d8-1fc6d5500b04",
+      "canonical_name": "Vitamina D 1,25-dihidroxi",
+      "component": "1,25-Dihydroxyvitamin D",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Ninguna de las ocho entradas Salud Digna especifica suero, plasma, sangre total, eritrocitos u orina. El ayuno o la toma de muestra no prueban una matriz exacta ni la familia sangre. No se transfieren matrices desde las referencias. Specimen_code, system y time_aspect permanecen NULL.",
+      "evidence_url": "https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/",
+      "reason": "NIH distingue el metabolito 1,25-dihidroxi del 25-hidroxi. La posición y doble hidroxilación explícitas se conservan. No se sustituye por 25-hidroxi, no se selecciona D2/D3, una fracción única o una suma total y no se traslada la composición de otra prueba de vitamina D. Sólo se reconoce la identidad terminológica de la orden existente, no equivalencia analítica de resultados. No se infieren muestra, duración de recolección, fracciones ausentes, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. El original y sus instrucciones se conservan en RAW; no se adoptan como recomendaciones médicas."
+    },
+    {
+      "item_id": "a2cd70e2-d142-50ef-8dae-2057feeb3254",
+      "canonical_name": "Vitamina E (tocoferol)",
+      "component": "Tocopherol",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Ninguna de las ocho entradas Salud Digna especifica suero, plasma, sangre total, eritrocitos u orina. El ayuno o la toma de muestra no prueban una matriz exacta ni la familia sangre. No se transfieren matrices desde las referencias. Specimen_code, system y time_aspect permanecen NULL.",
+      "evidence_url": "https://ods.od.nih.gov/factsheets/VitaminE-HealthProfessional/",
+      "reason": "El RAW especifica tocoferol sin fracción. NIH distingue varias formas de tocoferol y tocotrienol. Se reconoce esta orden conservando su fracción desconocida, sin elegir alfa/beta/gamma/delta, asumir alfa por prevalencia, sumar fracciones o añadir tocotrienoles y un panel de vitamina E. Sólo se reconoce la identidad terminológica de la orden existente, no equivalencia analítica de resultados. No se infieren muestra, duración de recolección, fracciones ausentes, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. El original y sus instrucciones se conservan en RAW; no se adoptan como recomendaciones médicas."
+    },
+    {
+      "item_id": "c15a0794-653e-5225-a574-06b914918948",
+      "canonical_name": "Folatos (ácido fólico)",
+      "component": "Folate",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Ninguna de las ocho entradas Salud Digna especifica suero, plasma, sangre total, eritrocitos u orina. El ayuno o la toma de muestra no prueban una matriz exacta ni la familia sangre. No se transfieren matrices desde las referencias. Specimen_code, system y time_aspect permanecen NULL.",
+      "evidence_url": "https://medlineplus.gov/ency/article/003686.htm",
+      "reason": "NIH presenta la prueba de ácido fólico con el nombre alternativo prueba de folato. Se reconoce la denominación conjunta explícita del RAW; no se infiere folato eritrocitario, suero/plasma, una fracción de metiltetrahidrofolato, MTHFR, vitamina B12 ni un panel de anemia. La muestra de la referencia no se transfiere. Sólo se reconoce la identidad terminológica de la orden existente, no equivalencia analítica de resultados. No se infieren muestra, duración de recolección, fracciones ausentes, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. El original y sus instrucciones se conservan en RAW; no se adoptan como recomendaciones médicas."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "vitamina a retinol",
+      "item_id": "ac22dee6-5d68-5bad-b15d-bdeb381b9c77",
+      "canonical_name": "Vitamina A (retinol)",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "VITAMINA A (RETINOL)"
+      },
+      "evidence_url": "https://ods.od.nih.gov/factsheets/VitaminA-HealthProfessional/",
+      "reason": "La orden nombra retinol explícitamente; NIH identifica retinol entre las formas de vitamina A. Se conserva retinol y no se amplía a carotenoides, beta-caroteno, retinal, ácido retinoico, ésteres de retinilo o un panel nutricional. Sólo se reconoce la identidad terminológica de la orden existente, no equivalencia analítica de resultados. No se infieren muestra, duración de recolección, fracciones ausentes, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. El original y sus instrucciones se conservan en RAW; no se adoptan como recomendaciones médicas."
+    },
+    {
+      "alias": "vitamina b1 tiamina",
+      "item_id": "03fdc43a-af1f-5f6c-9087-9743e5a19db9",
+      "canonical_name": "Vitamina B1 (tiamina)",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 8 HRS."
+      },
+      "evidence_url": "https://ods.od.nih.gov/factsheets/Thiamin-HealthProfessional/",
+      "reason": "NIH identifica tiamina como vitamina B1. El RAW no define libre, total, monofosfato, difosfato/pirofosfato ni actividad de transquetolasa. Se conserva la orden por vitamina/tiamina sin elegir ninguna de esas fracciones, derivados o métodos y sin inferir eritrocitos. Sólo se reconoce la identidad terminológica de la orden existente, no equivalencia analítica de resultados. No se infieren muestra, duración de recolección, fracciones ausentes, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. El original y sus instrucciones se conservan en RAW; no se adoptan como recomendaciones médicas."
+    },
+    {
+      "alias": "vitamina b12 cobalamina",
+      "item_id": "08d90b5e-b7f3-5dce-8925-be6c2e7fe0a2",
+      "canonical_name": "Vitamina B12 (cobalamina)",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO 8-12 HORAS. NO CONSUMIR BIOTINA 8 HORAS ANTES DE LA TOMA DE MUESTRA. "
+      },
+      "evidence_url": "https://ods.od.nih.gov/factsheets/VitaminB12-HealthProfessional/",
+      "reason": "NIH llama cobalaminas a los compuestos con actividad de vitamina B12. Se reconoce la orden de B12/cobalamina, sin elegir metilcobalamina, cianocobalamina, hidroxocobalamina, adenosilcobalamina, holotranscobalamina o vitamina B12 activa. No se añaden ácido metilmalónico, homocisteína ni panel de anemia. Sólo se reconoce la identidad terminológica de la orden existente, no equivalencia analítica de resultados. No se infieren muestra, duración de recolección, fracciones ausentes, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. El original y sus instrucciones se conservan en RAW; no se adoptan como recomendaciones médicas."
+    },
+    {
+      "alias": "vitamina b3 niacina",
+      "item_id": "dc2213e9-e554-5040-ab2b-163830f9f0ef",
+      "canonical_name": "Vitamina B3 (niacina)",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO MÍNIMO DE 8 HORAS."
+      },
+      "evidence_url": "https://ods.od.nih.gov/factsheets/Niacin-HealthProfessional/",
+      "reason": "NIH identifica niacina como vitamina B3 y explica que abarca diversas formas. Se reconoce la orden por niacina con fracción no especificada; no se decide ácido nicotínico frente a nicotinamida, no se suman fracciones y no se añaden NAD/NADP, metabolitos urinarios ni un panel. Sólo se reconoce la identidad terminológica de la orden existente, no equivalencia analítica de resultados. No se infieren muestra, duración de recolección, fracciones ausentes, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. El original y sus instrucciones se conservan en RAW; no se adoptan como recomendaciones médicas."
+    },
+    {
+      "alias": "vitamina b6 piridoxina",
+      "item_id": "f385eb16-b40d-5fab-8015-fff69481cb84",
+      "canonical_name": "Vitamina B6 (piridoxina)",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 8 HORAS."
+      },
+      "evidence_url": "https://ods.od.nih.gov/factsheets/VitaminB6-HealthProfessional/",
+      "reason": "La orden fuente dice piridoxina; NIH la distingue como un vitámero de B6 frente a piridoxal, piridoxamina y sus ésteres fosfato. Se conserva la denominación de esta orden. No se reemplaza piridoxina por piridoxal-5-fosfato/PLP, PMP, ácido piridóxico, un panel de vitámeros ni una definición de B6 total. Sólo se reconoce la identidad terminológica de la orden existente, no equivalencia analítica de resultados. No se infieren muestra, duración de recolección, fracciones ausentes, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. El original y sus instrucciones se conservan en RAW; no se adoptan como recomendaciones médicas."
+    },
+    {
+      "alias": "vitamina c acido ascorbico",
+      "item_id": "b670b661-bd53-5e7e-b7b3-8c0473994117",
+      "canonical_name": "Vitamina C (ácido ascórbico)",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 8 HRS."
+      },
+      "evidence_url": "https://medlineplus.gov/ency/article/002404.htm",
+      "reason": "NIH identifica vitamina C como ácido ascórbico. Se reconoce la denominación explícita de esta orden; no ácido úrico, dehidroascórbico aislado, otros ácidos, panel de vitaminas ni medición eritrocitaria. No se añaden forma total/libre o procedimiento de conversión ausentes del RAW. Sólo se reconoce la identidad terminológica de la orden existente, no equivalencia analítica de resultados. No se infieren muestra, duración de recolección, fracciones ausentes, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. El original y sus instrucciones se conservan en RAW; no se adoptan como recomendaciones médicas."
+    },
+    {
+      "alias": "vitamina d 25 hidroxi",
+      "item_id": "34f23445-1b6c-564a-bf33-e29ffc0f7882",
+      "canonical_name": "Vitamina D 25-hidroxi",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 8-12 HORAS. NO CONSUMIR BIOTINA 8 HORAS ANTES DE LA TOMA DE MUESTRA.  "
+      },
+      "evidence_url": "https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/",
+      "reason": "NIH diferencia la forma 25-hidroxi de la forma 1,25-dihidroxi. Se conserva el metabolito 25-hidroxi explícito sin convertirlo en 1,25-dihidroxi. El RAW no dice total, D2, D3 ni fracciones: no se añade total, una suma D2+D3, un panel de fracciones o equivalencia a una determinación con total expreso. Sólo se reconoce la identidad terminológica de la orden existente, no equivalencia analítica de resultados. No se infieren muestra, duración de recolección, fracciones ausentes, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. El original y sus instrucciones se conservan en RAW; no se adoptan como recomendaciones médicas."
+    },
+    {
+      "alias": "vitamina d 1 25 dihidroxi",
+      "item_id": "cf99ed1d-737f-52d1-81d8-1fc6d5500b04",
+      "canonical_name": "Vitamina D 1,25-dihidroxi",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 8 HRS."
+      },
+      "evidence_url": "https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/",
+      "reason": "NIH distingue el metabolito 1,25-dihidroxi del 25-hidroxi. La posición y doble hidroxilación explícitas se conservan. No se sustituye por 25-hidroxi, no se selecciona D2/D3, una fracción única o una suma total y no se traslada la composición de otra prueba de vitamina D. Sólo se reconoce la identidad terminológica de la orden existente, no equivalencia analítica de resultados. No se infieren muestra, duración de recolección, fracciones ausentes, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. El original y sus instrucciones se conservan en RAW; no se adoptan como recomendaciones médicas."
+    },
+    {
+      "alias": "vitamina e tocoferol",
+      "item_id": "a2cd70e2-d142-50ef-8dae-2057feeb3254",
+      "canonical_name": "Vitamina E (tocoferol)",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 8 HRS."
+      },
+      "evidence_url": "https://ods.od.nih.gov/factsheets/VitaminE-HealthProfessional/",
+      "reason": "El RAW especifica tocoferol sin fracción. NIH distingue varias formas de tocoferol y tocotrienol. Se reconoce esta orden conservando su fracción desconocida, sin elegir alfa/beta/gamma/delta, asumir alfa por prevalencia, sumar fracciones o añadir tocotrienoles y un panel de vitamina E. Sólo se reconoce la identidad terminológica de la orden existente, no equivalencia analítica de resultados. No se infieren muestra, duración de recolección, fracciones ausentes, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. El original y sus instrucciones se conservan en RAW; no se adoptan como recomendaciones médicas."
+    },
+    {
+      "alias": "folatos acido folico",
+      "item_id": "c15a0794-653e-5225-a574-06b914918948",
+      "canonical_name": "Folatos (ácido fólico)",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 8 - 12 HORAS.\r\n\r\nEN PACIENTES EN TRATAMIENTO CON ALTAS DOSIS DE BIOTINA (> 5 MG/DÍA), NO RECOGER LA MUESTRA ANTES DE TRANSCURRIDAS COMO MÍNIMO 8 HORAS TRAS LA ÚLTIMA ADMINISTRACIÓN."
+      },
+      "evidence_url": "https://medlineplus.gov/ency/article/003686.htm",
+      "reason": "NIH presenta la prueba de ácido fólico con el nombre alternativo prueba de folato. Se reconoce la denominación conjunta explícita del RAW; no se infiere folato eritrocitario, suero/plasma, una fracción de metiltetrahidrofolato, MTHFR, vitamina B12 ni un panel de anemia. La muestra de la referencia no se transfiere. Sólo se reconoce la identidad terminológica de la orden existente, no equivalencia analítica de resultados. No se infieren muestra, duración de recolección, fracciones ausentes, método, propiedad, escala, unidades, preparación, disponibilidad ni mapping LOINC. El original y sus instrucciones se conservan en RAW; no se adoptan como recomendaciones médicas."
+    }
+  ]
+}

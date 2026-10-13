@@ -1,0 +1,245 @@
+{
+  "review_id": "pruevia:evidence-review:20261012:01",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "scope": "58 filas crawler y atributos literales independientes por proveedor; sin pacientes/OCR, ofertas ni cambios de funciones.",
+  "research_date": "2026-10-12",
+  "human_review": false,
+  "new_concepts": [
+    {
+      "item_id": "c2fbffae-6ceb-5653-bbcf-73fd9d65051c",
+      "canonical_name": "17-cetoesteroides en orina de 24 horas",
+      "component": "17-Ketosteroids",
+      "specimen_code": "urine",
+      "time_aspect": "24H",
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/0080650",
+      "reason": "17-KS como orden colectiva definida, no DHEA ni otra molécula aislada. Orina y 24 horas explícitas en preparación SD y muestra SEMIN; no completar el final truncado Ali. Título genérico sin matriz/duración: alias limitado al proveedor; no trasladar ese contexto a otra fuente. Sólo identidad de orden y atributos escritos, sin equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados. Original y preparación conservados; no validar instrucciones farmacológicas ni inferir datos de pacientes. Sin ofertas, precio o disponibilidad nuevos."
+    },
+    {
+      "item_id": "f8401a1b-b6b4-5cc2-a1f0-9b7cd2e5ebc5",
+      "canonical_name": "17-hidroxicorticoesteroides",
+      "component": "17-Hydroxycorticosteroids",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/0070490",
+      "reason": "Familia 17-OH-CS escrita, distinta de 17-hidroxiprogesterona, 17-KS y cortisol libre. No importar el alias externo Cortisol Free Urine de ARUP: no acredita esa equivalencia. Ayuno no demuestra matriz o duración; no copiar orina de la referencia. Sólo identidad de orden y atributos escritos, sin equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados. Original y preparación conservados; no validar instrucciones farmacológicas ni inferir datos de pacientes. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Matriz exacta y duración desconocidas para la orden genérica. Los atributos explícitos de cada proveedor se conservan sólo en su contexto; ayuno y muestra de una referencia externa no completan el canónico."
+    },
+    {
+      "item_id": "9dddf0ff-81b7-510b-b674-b3151a1ad436",
+      "canonical_name": "Ácido 5-hidroxiindolacético (5-HIAA) en orina de 24 horas",
+      "component": "5-Hydroxyindoleacetic acid",
+      "specimen_code": "urine",
+      "time_aspect": "24H",
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/9248",
+      "reason": "5-HIAA es el metabolito nombrado, no serotonina, VMA, HVA o panel. Orina y 24H explícitas en preparación SD; etiqueta sin esas dimensiones limitada al proveedor. No trasladar condiciones de dieta/medicamentos como indicaciones clínicas nuevas. Sólo identidad de orden y atributos escritos, sin equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados. Original y preparación conservados; no validar instrucciones farmacológicas ni inferir datos de pacientes. Sin ofertas, precio o disponibilidad nuevos."
+    },
+    {
+      "item_id": "8fe5f6e9-7405-569a-b7b3-e99905eb6004",
+      "canonical_name": "Ácido vanilmandélico (VMA/AVM) en orina",
+      "component": "Vanillylmandelic acid",
+      "specimen_code": "urine",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/9454",
+      "reason": "VMA/AVM explícito, no HVA, metanefrinas o panel. Preparación SD tiene adulto24H y niño casual: ambos orina, sin tiempo único ni edad inferida. Mayo60274 distingue producto aleatorio. Alias sin muestra limitado al proveedor. Conservar instrucciones completas sin corregir su texto de metanefrinas. Sólo identidad de orden y atributos escritos, sin equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados. Original y preparación conservados; no validar instrucciones farmacológicas ni inferir datos de pacientes. Sin ofertas, precio o disponibilidad nuevos."
+    },
+    {
+      "item_id": "995880c3-2b37-5e42-9c26-c8f24329f681",
+      "canonical_name": "Actividad de renina",
+      "component": "Renin.activity",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/8060",
+      "reason": "Actividad escrita, distinta de concentración directa, prorenina o relación aldosterona/renina. No copiar plasma de Mayo; SD no escribe muestra. La palabra cuantificación, renina activada o renina genérica de vecinos no demuestra actividad y no se incluye. Sólo identidad de orden y atributos escritos, sin equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados. Original y preparación conservados; no validar instrucciones farmacológicas ni inferir datos de pacientes. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Matriz exacta y duración desconocidas para la orden genérica. Los atributos explícitos de cada proveedor se conservan sólo en su contexto; ayuno y muestra de una referencia externa no completan el canónico."
+    },
+    {
+      "item_id": "b6c43799-e81d-5ae4-80db-efb4706cc75f",
+      "canonical_name": "Adrenalina (epinefrina) en orina",
+      "component": "Epinephrine",
+      "specimen_code": "urine",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://specialtytesting.labcorp.com/tests/500520/catecholamines-fractionated-urine-includes-creatinine",
+      "reason": "Adrenalina/epinefrina y orina explícitas. Referencia sólo identifica el analito en orina; no aprueba el panel que lo contiene ni importa norepinefrina, dopamina, creatinina, fracción libre o conjugada. Preparación vacía: no duración24H inferida. Sólo identidad de orden y atributos escritos, sin equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados. Original y preparación conservados; no validar instrucciones farmacológicas ni inferir datos de pacientes. Sin ofertas, precio o disponibilidad nuevos."
+    },
+    {
+      "item_id": "10d47af1-ac73-50e4-816e-2cb66f7d6f1a",
+      "canonical_name": "Cortisol libre en orina de 24 horas",
+      "component": "Cortisol.free",
+      "specimen_code": "urine",
+      "time_aspect": "24H",
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/8546",
+      "reason": "Libre y orina escritas en título SD; 24H explícitas en preparación de las nueve filas. No reutilizar cortisol genérico ni cortisona, saliva, cortisol total o panel. Alias que omite duración limitado al proveedor; concepto completo compartido sin inferir tiempo para otra fuente. Sólo identidad de orden y atributos escritos, sin equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados. Original y preparación conservados; no validar instrucciones farmacológicas ni inferir datos de pacientes. Sin ofertas, precio o disponibilidad nuevos."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "17 cetoesteroides",
+      "item_id": "c2fbffae-6ceb-5653-bbcf-73fd9d65051c",
+      "canonical_name": "17-cetoesteroides en orina de 24 horas",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/0080650",
+      "reason": "17-KS como orden colectiva definida, no DHEA ni otra molécula aislada. Orina y 24 horas explícitas en preparación SD y muestra SEMIN; no completar el final truncado Ali. Título genérico sin matriz/duración: alias limitado al proveedor; no trasladar ese contexto a otra fuente. Sólo identidad de orden y atributos escritos, sin equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados. Original y preparación conservados; no validar instrucciones farmacológicas ni inferir datos de pacientes. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "RECOLECTAR ORINA DURANTE 24 HORAS.\r\nEN UN RECIPIENTE ESTÉRIL DEPOSITAR LAS MUESTRAS DE ORINA DE LA SIGUIENTE MANERA: \r\n• DESECHAR LA PRIMERA MICCIÓN  DE LA MAÑANA Y ANOTAR LA HORA DE ÉSTA. \r\n• RECOLECTAR TODAS LAS MUESTRAS DE ORINA HASTA EL DÍA SIGUIENTE A LA MISMA HORA DE LA PRIMERA ORINA DESECHADA. \r\n• MANTENER REFRIGERADA LA MUESTRA DURANTE TODA LA RECOLECCIÓN.\r\n\r\n\r\n\r\n\r\n\r\n"
+      },
+      "source_attributes": {
+        "specimen_code": "urine"
+      }
+    },
+    {
+      "alias": "17 cetoesteroides",
+      "item_id": "c2fbffae-6ceb-5653-bbcf-73fd9d65051c",
+      "canonical_name": "17-cetoesteroides en orina de 24 horas",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/0080650",
+      "reason": "17-KS como orden colectiva definida, no DHEA ni otra molécula aislada. Orina y 24 horas explícitas en preparación SD y muestra SEMIN; no completar el final truncado Ali. Título genérico sin matriz/duración: alias limitado al proveedor; no trasladar ese contexto a otra fuente. Sólo identidad de orden y atributos escritos, sin equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados. Original y preparación conservados; no validar instrucciones farmacológicas ni inferir datos de pacientes. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "100 ml Orina de 24 horas, anotar volumen. Ali"
+      },
+      "source_attributes": {
+        "specimen_code": "urine"
+      }
+    },
+    {
+      "alias": "17 hidroxi cortico esteroides",
+      "item_id": "f8401a1b-b6b4-5cc2-a1f0-9b7cd2e5ebc5",
+      "canonical_name": "17-hidroxicorticoesteroides",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/0070490",
+      "reason": "Familia 17-OH-CS escrita, distinta de 17-hidroxiprogesterona, 17-KS y cortisol libre. No importar el alias externo Cortisol Free Urine de ARUP: no acredita esa equivalencia. Ayuno no demuestra matriz o duración; no copiar orina de la referencia. Sólo identidad de orden y atributos escritos, sin equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados. Original y preparación conservados; no validar instrucciones farmacológicas ni inferir datos de pacientes. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "17 HIDROXI CORTICO ESTEROIDES"
+      }
+    },
+    {
+      "alias": "acido 5 hidroxi indol acetico catabolito serotonina",
+      "item_id": "9dddf0ff-81b7-510b-b674-b3151a1ad436",
+      "canonical_name": "Ácido 5-hidroxiindolacético (5-HIAA) en orina de 24 horas",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/9248",
+      "reason": "5-HIAA es el metabolito nombrado, no serotonina, VMA, HVA o panel. Orina y 24H explícitas en preparación SD; etiqueta sin esas dimensiones limitada al proveedor. No trasladar condiciones de dieta/medicamentos como indicaciones clínicas nuevas. Sólo identidad de orden y atributos escritos, sin equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados. Original y preparación conservados; no validar instrucciones farmacológicas ni inferir datos de pacientes. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "RECOLECTAR ORINA DE 24 HRS.\r\nAL MENOS 48 HRS ANTES DE INICIAR LA RECOLECCIÓN DE MUESTRA, Y DURANTE LA MISMA, EVITAR LA INGESTA DE PLÁTANO, AGUACATE, CHOCOLATE, CIRUELA, TOMATE, PIÑA, NUEZ, Y A CRITERIO DEL MÉDICO, EVITAR LA ADMINISTRACIÓN DE ACETAMINOFEN, SALICILATOS, JARABE PARA LA TOS (QUE CONTENGA GUAYACOLATO DE GLICEROL), NAPROXEN, METOCARBAMOL, IMIPRAMINE, ISONIACIDA, METILDOPA Y FENOTIAZINAS."
+      },
+      "source_attributes": {
+        "specimen_code": "urine"
+      }
+    },
+    {
+      "alias": "acido vanilmandelico avm",
+      "item_id": "8fe5f6e9-7405-569a-b7b3-e99905eb6004",
+      "canonical_name": "Ácido vanilmandélico (VMA/AVM) en orina",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/9454",
+      "reason": "VMA/AVM explícito, no HVA, metanefrinas o panel. Preparación SD tiene adulto24H y niño casual: ambos orina, sin tiempo único ni edad inferida. Mayo60274 distingue producto aleatorio. Alias sin muestra limitado al proveedor. Conservar instrucciones completas sin corregir su texto de metanefrinas. Sólo identidad de orden y atributos escritos, sin equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados. Original y preparación conservados; no validar instrucciones farmacológicas ni inferir datos de pacientes. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "ADULTO  • Recolectar muestra de orina durante 24 horas.  Pasos para la recolección: 1. Orinar por la mañana al levantarse y anotar exactamente la hora. (esta muestra no se recolecta). \r\n2. Recolectar las posteriores muestras de orina (mañana, tarde y noche). 3. Durante la recolección conservar el frasco en refrigeración (2 - 8 °C), o sumergido el recipiente en hielo. \r\n4. Al día siguiente, exactamente a la misma hora en que la orina fue desechada el día anterior, se recoge la última muestra.  Nota importante: en caso de olvidar recolectar parcial o totalmente alguna muestra, deberá iniciarse nuevamente la recolección de la muestra.  NIÑOS:  • Recoger una muestra de orina en un recipiente estéril (no será necesario recolectar la orina de 24 horas). Tanto para adultos como niños Es muy importante que se realice la siguiente DIETA antes de la toma de muestra: - Durante la semana anterior a la toma de muestra debe evitarse la ingesta de alimentos que contengan capsaicina (contenida en pimientos picantes, guindillas, pero también presente en algunos cosméticos y fármacos), curry y derivados de los mismos. - Si se va a realizar un análisis de metanefrinas, debe detenerse la administración de fármacos que contengan amoxicilina al menos 72 horas (3 días) antes de empezar la recogida de la muestra de orina. - Desde dos días antes a la obtención de la muestra no puede ingerir vino tinto, frutos secos, berenjenas, tomates, aguacates, naranjas, kiwis, piña, papaya, ciruelas, dátiles, plá"
+      },
+      "source_attributes": {
+        "specimen_code": "urine"
+      }
+    },
+    {
+      "alias": "actividad de renina",
+      "item_id": "995880c3-2b37-5e42-9c26-c8f24329f681",
+      "canonical_name": "Actividad de renina",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/8060",
+      "reason": "Actividad escrita, distinta de concentración directa, prorenina o relación aldosterona/renina. No copiar plasma de Mayo; SD no escribe muestra. La palabra cuantificación, renina activada o renina genérica de vecinos no demuestra actividad y no se incluye. Sólo identidad de orden y atributos escritos, sin equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados. Original y preparación conservados; no validar instrucciones farmacológicas ni inferir datos de pacientes. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ACTIVIDAD DE RENINA"
+      }
+    },
+    {
+      "alias": "adrenalina en orina",
+      "item_id": "b6c43799-e81d-5ae4-80db-efb4706cc75f",
+      "canonical_name": "Adrenalina (epinefrina) en orina",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://specialtytesting.labcorp.com/tests/500520/catecholamines-fractionated-urine-includes-creatinine",
+      "reason": "Adrenalina/epinefrina y orina explícitas. Referencia sólo identifica el analito en orina; no aprueba el panel que lo contiene ni importa norepinefrina, dopamina, creatinina, fracción libre o conjugada. Preparación vacía: no duración24H inferida. Sólo identidad de orden y atributos escritos, sin equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados. Original y preparación conservados; no validar instrucciones farmacológicas ni inferir datos de pacientes. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ADRENALINA EN ORINA"
+      },
+      "source_attributes": {
+        "specimen_code": "urine"
+      }
+    },
+    {
+      "alias": "cortisol libre en orina",
+      "item_id": "10d47af1-ac73-50e4-816e-2cb66f7d6f1a",
+      "canonical_name": "Cortisol libre en orina de 24 horas",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/8546",
+      "reason": "Libre y orina escritas en título SD; 24H explícitas en preparación de las nueve filas. No reutilizar cortisol genérico ni cortisona, saliva, cortisol total o panel. Alias que omite duración limitado al proveedor; concepto completo compartido sin inferir tiempo para otra fuente. Sólo identidad de orden y atributos escritos, sin equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados. Original y preparación conservados; no validar instrucciones farmacológicas ni inferir datos de pacientes. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 9,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "RECOLECTAR ORINA DURANTE 24 HORAS.\r\n\r\nEN UN RECIPIENTE ESTÉRIL DEPOSITAR LAS MUESTRAS DE ORINA DE LA SIGUIENTE MANERA: \r\n• DESECHAR LA PRIMERA MICCIÓN  DE LA MAÑANA Y ANOTAR LA HORA DE ÉSTA. \r\n• RECOLECTAR TODAS LAS MUESTRAS DE ORINA HASTA EL DÍA SIGUIENTE A LA MISMA HORA DE LA PRIMERA ORINA DESECHADA. \r\n• MANTENER REFRIGERADA LA MUESTRA DURANTE TODA LA RECOLECCIÓN.\r\n"
+      },
+      "source_attributes": {
+        "specimen_code": "urine"
+      }
+    }
+  ]
+}

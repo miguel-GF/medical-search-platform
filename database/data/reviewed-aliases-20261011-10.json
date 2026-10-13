@@ -1,0 +1,128 @@
+{
+  "review_id": "pruevia:evidence-review:20261011:10",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras sin confirmación rutinaria; conservar ambigüedad clínica.",
+  "scope": "32 filas crawler; 4 identidades serológicas individuales. Sin pacientes/OCR, nuevas ofertas o cambios de funciones.",
+  "research_date": "2026-10-11",
+  "human_review": false,
+  "new_concepts": [
+    {
+      "item_id": "919c062b-2f4c-50e8-adcb-580ed29236ac",
+      "canonical_name": "Anticuerpos antiparvovirus B19 IgG",
+      "component": "Parvovirus B19 Ab.IgG",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "SD no especifica matriz. Ayuno/biotina/toma de muestra no prueban sangre/suero. Muestra/system/duración NULL; el suero SEMIN varicela IgG permanece sólo en metadata de su decisión.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/48395",
+      "reason": "Parvovirus B19 y clase IgG explícitos. La referencia distingue PARVG/PARVM, no disponibles por separado allí; sólo sustenta identidades, no disponibilidad ni composición comercial. No IgM, PCR o panel. Sólo identidad de orden individual; muestra, duración, método, propiedad, escala, unidades y LOINC no se infieren. No se aprueban resultados, infección actual/pasada, inmunidad, recomendaciones clínicas, precio, disponibilidad ni ofertas. Original y preparación conservados en RAW/decisión."
+    },
+    {
+      "item_id": "f1ea2da4-4397-5a75-a965-fea4fd8e7b21",
+      "canonical_name": "Anticuerpos antiparvovirus B19 IgM",
+      "component": "Parvovirus B19 Ab.IgM",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "SD no especifica matriz. Ayuno/biotina/toma de muestra no prueban sangre/suero. Muestra/system/duración NULL; el suero SEMIN varicela IgG permanece sólo en metadata de su decisión.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/48395",
+      "reason": "Parvovirus B19 y clase IgM explícitos. No IgG, PCR o perfil conjunto de referencia; no se infiere método o disponibilidad individual. Sólo identidad de orden individual; muestra, duración, método, propiedad, escala, unidades y LOINC no se infieren. No se aprueban resultados, infección actual/pasada, inmunidad, recomendaciones clínicas, precio, disponibilidad ni ofertas. Original y preparación conservados en RAW/decisión."
+    },
+    {
+      "item_id": "d6a57042-fd36-5115-b38c-4b370ea0e48f",
+      "canonical_name": "Anticuerpos anti-Toxoplasma IgG",
+      "component": "Toxoplasma Ab.IgG",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "SD no especifica matriz. Ayuno/biotina/toma de muestra no prueban sangre/suero. Muestra/system/duración NULL; el suero SEMIN varicela IgG permanece sólo en metadata de su decisión.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/802127",
+      "reason": "Toxoplasma y clase IgG explícitos. La referencia diferencia resultados IgG/IgM; no se sustituye IgA, avidez, DNA o TORCH ni se importa perfil conjunto. Sólo identidad de orden individual; muestra, duración, método, propiedad, escala, unidades y LOINC no se infieren. No se aprueban resultados, infección actual/pasada, inmunidad, recomendaciones clínicas, precio, disponibilidad ni ofertas. Original y preparación conservados en RAW/decisión."
+    },
+    {
+      "item_id": "0f04af9f-5cd0-5fc3-87db-340437cbc8a8",
+      "canonical_name": "Anticuerpos anti-Toxoplasma IgM",
+      "component": "Toxoplasma Ab.IgM",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "SD no especifica matriz. Ayuno/biotina/toma de muestra no prueban sangre/suero. Muestra/system/duración NULL; el suero SEMIN varicela IgG permanece sólo en metadata de su decisión.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/802127",
+      "reason": "Toxoplasma y clase IgM explícitos. No IgG, IgA, avidez, DNA o TORCH; la identidad de orden no confirma infección ni interpreta un resultado. Sólo identidad de orden individual; muestra, duración, método, propiedad, escala, unidades y LOINC no se infieren. No se aprueban resultados, infección actual/pasada, inmunidad, recomendaciones clínicas, precio, disponibilidad ni ofertas. Original y preparación conservados en RAW/decisión."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "anticuerpos anti parvovirus b19 igg",
+      "item_id": "919c062b-2f4c-50e8-adcb-580ed29236ac",
+      "canonical_name": "Anticuerpos antiparvovirus B19 IgG",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 4 HORAS."
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/48395",
+      "reason": "Parvovirus B19 y clase IgG explícitos. La referencia distingue PARVG/PARVM, no disponibles por separado allí; sólo sustenta identidades, no disponibilidad ni composición comercial. No IgM, PCR o panel. Sólo identidad de orden individual; muestra, duración, método, propiedad, escala, unidades y LOINC no se infieren. No se aprueban resultados, infección actual/pasada, inmunidad, recomendaciones clínicas, precio, disponibilidad ni ofertas. Original y preparación conservados en RAW/decisión."
+    },
+    {
+      "alias": "anticuerpos anti parvovirus b19 igm",
+      "item_id": "f1ea2da4-4397-5a75-a965-fea4fd8e7b21",
+      "canonical_name": "Anticuerpos antiparvovirus B19 IgM",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 4 HORAS."
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/48395",
+      "reason": "Parvovirus B19 y clase IgM explícitos. No IgG, PCR o perfil conjunto de referencia; no se infiere método o disponibilidad individual. Sólo identidad de orden individual; muestra, duración, método, propiedad, escala, unidades y LOINC no se infieren. No se aprueban resultados, infección actual/pasada, inmunidad, recomendaciones clínicas, precio, disponibilidad ni ofertas. Original y preparación conservados en RAW/decisión."
+    },
+    {
+      "alias": "anticuerpos anti toxoplasma igg",
+      "item_id": "d6a57042-fd36-5115-b38c-4b370ea0e48f",
+      "canonical_name": "Anticuerpos anti-Toxoplasma IgG",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno de 8-12 horas, no consumir biotina 8 horas antes de la toma de muestra."
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/802127",
+      "reason": "Toxoplasma y clase IgG explícitos. La referencia diferencia resultados IgG/IgM; no se sustituye IgA, avidez, DNA o TORCH ni se importa perfil conjunto. Sólo identidad de orden individual; muestra, duración, método, propiedad, escala, unidades y LOINC no se infieren. No se aprueban resultados, infección actual/pasada, inmunidad, recomendaciones clínicas, precio, disponibilidad ni ofertas. Original y preparación conservados en RAW/decisión."
+    },
+    {
+      "alias": "anticuerpos anti toxoplasma igm",
+      "item_id": "0f04af9f-5cd0-5fc3-87db-340437cbc8a8",
+      "canonical_name": "Anticuerpos anti-Toxoplasma IgM",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno de 8-12 horas, no consumir biotina 8 horas antes de la toma de muestra."
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/802127",
+      "reason": "Toxoplasma y clase IgM explícitos. No IgG, IgA, avidez, DNA o TORCH; la identidad de orden no confirma infección ni interpreta un resultado. Sólo identidad de orden individual; muestra, duración, método, propiedad, escala, unidades y LOINC no se infieren. No se aprueban resultados, infección actual/pasada, inmunidad, recomendaciones clínicas, precio, disponibilidad ni ofertas. Original y preparación conservados en RAW/decisión."
+    }
+  ]
+}

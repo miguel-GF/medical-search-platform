@@ -1,0 +1,42 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261012:01",
+  "reviewed_by": "Codex; investigación delegada por el operador",
+  "authorization": "D-021/D-022: identidades candidatas pending investigadas, sin confirmación rutinaria.",
+  "research_date": "2026-10-12",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "Dos instituciones nuevas en verificación y cinco sedes pending: Bio-Velab3 y Medic Scanner2. Domicilios gubernamentales completos y discrepancias propias conservados; sin oferta, precio, captura comercial, migración, titularidad o disponibilidad inferidos.",
+  "providers": [
+    {
+      "provider_key": "bio_velab_diagnostico_puebla",
+      "name": "Bio-Velab Diagnóstico",
+      "slug": "bio-velab-diagnostico-puebla",
+      "website_url": "https://www.biovelab.com/",
+      "identity_evidence_url": "https://www.biovelab.com/",
+      "identity_activity_codes": [
+        "621511"
+      ],
+      "denue_record_ids": [
+        "3521626",
+        "3372257",
+        "3463507"
+      ],
+      "identity_note": "El sitio propio Bio Velab Diagnóstico enumera matriz, sucursal 16 de Septiembre y sucursal Zapata bajo la misma marca; lectura pública actual HTTP 200 registrada en primary-receipts.json. DENUE 3521626 atribuye expresamente WWW.BIOVELAB.COM y registra 105 PONIENTE, ARBOLEDAS DE LOMA BELLA, CP 72474: conservar numero_ext vacío y letra_ext SN aunque la matriz oficial publique 120-1, sin completar exterior o interior. DENUE 3372257 registra BIO VELAB DIAGNOSTICO en PROLONGACION 16 DE SEPTIEMBRE, numero_ext 2 y letra_ext C, SEGUNDA AMPLIACION GUADALUPE HIDALGO, CP 72490; el sitio nombra la sucursal 16 de Septiembre, pero declara San Alfonso 2, local C, en el mismo asentamiento. La diferencia de vialidad queda explícita: conservar la vialidad gubernamental y C como letra exterior, sin moverla a interior ni afirmar identidad postal completa. DENUE 3463507 registra LABORATORIO BIO VELAB DIAGNOSTICO en LAGUNA TAMIAHUA 6, LAGULENA, CP 72580; la sucursal Zapata propia declara Tamiahua 6, Lagulena. Conservar el prefijo LAGUNA, letras e interiores originales, coordenadas y hashes RAW de las tres sedes. Marca verification_pending y tres ubicaciones pending. Esta evidencia acredita candidatos de identidad y afiliación de sucursales con las discrepancias indicadas; no acredita estudios, precios, disponibilidad, horarios, certificaciones, titularidad legal o permiso de captura comercial."
+    },
+    {
+      "provider_key": "medic_scanner_puebla",
+      "name": "Medic Scanner",
+      "slug": "medic-scanner-puebla",
+      "website_url": "https://medic-scanner.com/",
+      "identity_evidence_url": "https://medic-scanner.com/nuestras-sucursales/",
+      "identity_activity_codes": [
+        "621511"
+      ],
+      "denue_record_ids": [
+        "9425747",
+        "11824152"
+      ],
+      "identity_note": "Las páginas propias https://medic-scanner.com/quienes-somos/ y https://medic-scanner.com/nuestras-sucursales/ identifican Medic Scanner y enumeran sus sedes; ambas lecturas públicas actuales respondieron HTTP 200, con capturas y SHA256 en primary-receipts.json. El dominio institucional actual medic-scanner.com es una hipótesis nueva corroborada por esas páginas, diferente de WWW.MEDICSCANNER.COM.MX observado históricamente en DENUE; conservar este último en RAW sin afirmar su vigencia. DENUE 9425747 registra MEDICSCANNER en AVENIDA 11 PONIENTE, numero_ext 903, letra_ext vacía, SAN SEBASTIAN, CP 75480, Tecamachalco. La matriz oficial declara 11 Poniente 903, Tecamachalco, pero usa San Antonio: conservar SAN SEBASTIAN y registrar la discrepancia de asentamiento. DENUE 11824152 registra CENTRO DE DIAGNOSTICO MEDIC SCANNER en AVENIDA REFORMA, numero_ext 220, letra_ext A, YEHUALTEPEC, CP 75670. El directorio propio declara toma de muestra Yehualtepec en Reforma 220; conservar 220A gubernamental, sin borrar la letra A porque la ficha abreviada la omita. Conservar interiores vacíos, coordenadas y hashes RAW de ambas sedes. Marca verification_pending y dos ubicaciones pending. No enlazar Tlacotepec o Zozutla con registros genéricos por domicilio o coordenadas. La mención de toma de muestra no acredita procesamiento, estudios, modalidades, ofertas, precios, disponibilidad, permisos, titularidad legal o autorización de captura comercial."
+    }
+  ]
+}

@@ -1,0 +1,350 @@
+{
+  "review_id": "pruevia:evidence-review:20261009:10",
+  "reviewed_by": "Codex, investigación terminológica delegada",
+  "authorization": "D-021 y D-022: investigar y decidir casos claros sobre la misma base autorizada",
+  "scope": "Diez identidades de órdenes por analito, once aliases y 83 filas del crawler. Sangre explícita en 24 entradas de Salud Digna y suero en tres de SEMIN, conservados por entrada; suero/plasma desconocidos en las definiciones generales. Sin ofertas, equivalencias de resultados ni mappings LOINC.",
+  "research_date": "2026-10-09",
+  "human_review": false,
+  "new_concepts": [
+    {
+      "item_id": "76df6387-c939-50dd-813a-a2b1f56bb231",
+      "canonical_name": "Albúmina",
+      "component": "Albumin",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El RAW de Salud Digna menciona extracción de sangre, sin identificar suero/plasma. Esa familia explícita queda en su RAW/decisión; el concepto general no atribuye suero, plasma o sangre total. Se registra identidad de la orden por analito con specimen_code, system y duración NULL.",
+      "evidence_url": "https://medlineplus.gov/lab-tests/albumin-blood-test/",
+      "reason": "Identifica albúmina; no prealbúmina, relación albúmina/globulina, microalbuminuria ni recolección urinaria de 24 horas. El RAW explicita extracción de sangre, sin distinguir suero/plasma. Sólo se reconoce la identidad de la orden por analito. No se infieren suero/plasma, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC; los atributos explícitos de cada fuente se conservan en RAW y decisión."
+    },
+    {
+      "item_id": "b5f1154a-6a8c-5254-ab0d-48e2a9b7adba",
+      "canonical_name": "Amilasa",
+      "component": "Amylase",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El RAW de Salud Digna menciona extracción de sangre, sin identificar suero/plasma. Esa familia explícita queda en su RAW/decisión; el concepto general no atribuye suero, plasma o sangre total. Se registra identidad de la orden por analito con specimen_code, system y duración NULL.",
+      "evidence_url": "https://medlineplus.gov/lab-tests/amylase-test/",
+      "reason": "Identifica amilasa; no lipasa, isoenzimas, amilasa pancreática específica ni recolección urinaria. El RAW de Salud Digna menciona sangre, sin distinguir suero/plasma. El canónico existente AMILASA EN SUERO conserva su identidad más específica; esta orden genérica no aprueba equivalencia analítica con él. Sólo se reconoce la identidad de la orden por analito. No se infieren suero/plasma, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC; los atributos explícitos de cada fuente se conservan en RAW y decisión."
+    },
+    {
+      "item_id": "ad21f4c8-bacc-5013-8a85-666a7d0abd12",
+      "canonical_name": "Lipasa",
+      "component": "Lipase",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El RAW de Salud Digna menciona extracción de sangre, sin identificar suero/plasma. Esa familia explícita queda en su RAW/decisión; el concepto general no atribuye suero, plasma o sangre total. Se registra identidad de la orden por analito con specimen_code, system y duración NULL.",
+      "evidence_url": "https://medlineplus.gov/lab-tests/lipase-tests/",
+      "reason": "Identifica lipasa; no amilasa, panel pancreático ni lipoproteína lipasa. El RAW explicita extracción de sangre, sin distinguir suero/plasma. Sólo se reconoce la identidad de la orden por analito. No se infieren suero/plasma, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC; los atributos explícitos de cada fuente se conservan en RAW y decisión."
+    },
+    {
+      "item_id": "19117bbc-ab16-5a85-87a2-b558d35de5c9",
+      "canonical_name": "Androstenediona",
+      "component": "Androstenedione",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El nombre y el RAW de Salud Digna no especifican muestra; no se transfiere la muestra del catálogo de referencia ni la de SEMIN. Se registra identidad de la orden por analito con specimen_code, system y duración NULL.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/9709",
+      "reason": "Identifica androstenediona; no androsterona, androstanediol, DHEA, DHEA-S ni panel de andrógenos. Sólo se reconoce la identidad de la orden por analito. No se infieren suero/plasma, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC; los atributos explícitos de cada fuente se conservan en RAW y decisión."
+    },
+    {
+      "item_id": "ed716cf2-e96a-5379-845e-b95c83a2929b",
+      "canonical_name": "Inmunoglobulina E (IgE)",
+      "component": "Immunoglobulin E",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El nombre y el RAW de Salud Digna no especifican muestra; no se transfiere la muestra del catálogo de referencia ni la de SEMIN. Se registra identidad de la orden por analito con specimen_code, system y duración NULL.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/8159",
+      "reason": "Identifica la clase IgE general; no IgE específica de un alérgeno ni un perfil de alergias. Conserva las advertencias de preparación del proveedor en el RAW, sin convertirlas en instrucciones médicas propias. Sólo se reconoce la identidad de la orden por analito. No se infieren suero/plasma, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC; los atributos explícitos de cada fuente se conservan en RAW y decisión."
+    },
+    {
+      "item_id": "d68c8d28-d6a4-5a9a-b72e-10165662b126",
+      "canonical_name": "Inmunoglobulina G (IgG)",
+      "component": "Immunoglobulin G",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El nombre y el RAW de Salud Digna no especifican muestra; no se transfiere la muestra del catálogo de referencia ni la de SEMIN. Se registra identidad de la orden por analito con specimen_code, system y duración NULL.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/8160",
+      "reason": "Identifica la clase IgG individual; no anticuerpos contra un patógeno, subclases IgG1/2/3/4, cadenas ligeras ni el panel IgG/IgA/IgM. Se usa la ficha IGG individual y no la ficha IMMG combinada. Sólo se reconoce la identidad de la orden por analito. No se infieren suero/plasma, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC; los atributos explícitos de cada fuente se conservan en RAW y decisión."
+    },
+    {
+      "item_id": "30034ded-d7c5-5020-bd7e-7794c4cd7c12",
+      "canonical_name": "Péptido C",
+      "component": "C peptide",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El nombre y el RAW de Salud Digna no especifican muestra; no se transfiere la muestra del catálogo de referencia ni la de SEMIN. Se registra identidad de la orden por analito con specimen_code, system y duración NULL.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/8804",
+      "reason": "Identifica péptido C; no insulina, proinsulina, anticuerpos antiinsulina ni prueba de estimulación/supresión. No prescribe ayuno ni momento de toma. Sólo se reconoce la identidad de la orden por analito. No se infieren suero/plasma, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC; los atributos explícitos de cada fuente se conservan en RAW y decisión."
+    },
+    {
+      "item_id": "dc463e1a-cf4a-5364-ad70-620184659919",
+      "canonical_name": "Prealbúmina (transtiretina)",
+      "component": "Transthyretin",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El nombre y el RAW de Salud Digna no especifican muestra; no se transfiere la muestra del catálogo de referencia ni la de SEMIN. Se registra identidad de la orden por analito con specimen_code, system y duración NULL.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/9005",
+      "reason": "Prealbúmina y transtiretina designan la misma proteína. No albúmina, electroforesis, función de unión a tiroxina, genotipo TTR ni panel nutricional. Sólo se reconoce la identidad de la orden por analito. No se infieren suero/plasma, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC; los atributos explícitos de cada fuente se conservan en RAW y decisión."
+    },
+    {
+      "item_id": "51bc5b26-ef1a-58a1-a145-c2f1e6b33171",
+      "canonical_name": "Complemento C3",
+      "component": "Complement C3",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El nombre y el RAW de Salud Digna no especifican muestra; no se transfiere la muestra del catálogo de referencia ni la de SEMIN. Se registra identidad de la orden por analito con specimen_code, system y duración NULL.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/8174",
+      "reason": "Identifica el componente C3; no C3a/C3b, actividad hemolítica CH50, C4, C5 ni panel de complemento. Sólo se reconoce la identidad de la orden por analito. No se infieren suero/plasma, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC; los atributos explícitos de cada fuente se conservan en RAW y decisión."
+    },
+    {
+      "item_id": "e55a3d8e-87b5-5f0f-a7d5-75f5322141c5",
+      "canonical_name": "Complemento C4",
+      "component": "Complement C4",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "El nombre y el RAW de Salud Digna no especifican muestra; no se transfiere la muestra del catálogo de referencia ni la de SEMIN. Se registra identidad de la orden por analito con specimen_code, system y duración NULL.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/800020",
+      "reason": "Identifica el componente C4; no C4a/C4b, actividad hemolítica CH50, C3, C5 ni panel de complemento. Sólo se reconoce la identidad de la orden por analito. No se infieren suero/plasma, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC; los atributos explícitos de cada fuente se conservan en RAW y decisión."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "albumina",
+      "item_id": "76df6387-c939-50dd-813a-a2b1f56bb231",
+      "canonical_name": "Albúmina",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno 8-12h. No realizar ejercicio físico intenso ni consumir alcohol 24 horas antes de la extracción de sangre. La mañana en la que se obtiene la muestra de sangre no fumar ni tomar bebidas que contengan cafeína. "
+      },
+      "evidence_url": "https://medlineplus.gov/lab-tests/albumin-blood-test/",
+      "reason": "Identifica albúmina; no prealbúmina, relación albúmina/globulina, microalbuminuria ni recolección urinaria de 24 horas. El RAW explicita extracción de sangre, sin distinguir suero/plasma. Sólo se reconoce la identidad de la orden por analito. No se infieren suero/plasma, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC; los atributos explícitos de cada fuente se conservan en RAW y decisión.",
+      "source_attributes": {
+        "specimen_family": "blood"
+      }
+    },
+    {
+      "alias": "amilasa",
+      "item_id": "b5f1154a-6a8c-5254-ab0d-48e2a9b7adba",
+      "canonical_name": "Amilasa",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno de 8-12 h. No realizar ejercicio físico intenso ni consumir alcohol 24 horas antes de la extracción de sangre. La mañana en la que se obtiene la muestra de sangre no fumar ni tomar bebidas que contengan cafeína."
+      },
+      "evidence_url": "https://medlineplus.gov/lab-tests/amylase-test/",
+      "reason": "Identifica amilasa; no lipasa, isoenzimas, amilasa pancreática específica ni recolección urinaria. El RAW de Salud Digna menciona sangre, sin distinguir suero/plasma. El canónico existente AMILASA EN SUERO conserva su identidad más específica; esta orden genérica no aprueba equivalencia analítica con él. Sólo se reconoce la identidad de la orden por analito. No se infieren suero/plasma, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC; los atributos explícitos de cada fuente se conservan en RAW y decisión.",
+      "source_attributes": {
+        "specimen_family": "blood"
+      },
+      "additional_targets": [
+        {
+          "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+          "expected_rows": 1,
+          "raw_guard": {
+            "path": [
+              "sample_type"
+            ],
+            "value": "Suero / Tubo de tapon rojo o dorado"
+          },
+          "source_attributes": {
+            "specimen_code": "serum"
+          }
+        }
+      ]
+    },
+    {
+      "alias": "lipasa",
+      "item_id": "ad21f4c8-bacc-5013-8a85-666a7d0abd12",
+      "canonical_name": "Lipasa",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno de 8-12 h. No realizar ejercicio físico intenso ni consumir alcohol 24 horas antes de la extracción de sangre. La mañana en la que se obtiene la muestra de sangre no fumar ni tomar bebidas que contengan cafeína."
+      },
+      "evidence_url": "https://medlineplus.gov/lab-tests/lipase-tests/",
+      "reason": "Identifica lipasa; no amilasa, panel pancreático ni lipoproteína lipasa. El RAW explicita extracción de sangre, sin distinguir suero/plasma. Sólo se reconoce la identidad de la orden por analito. No se infieren suero/plasma, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC; los atributos explícitos de cada fuente se conservan en RAW y decisión.",
+      "source_attributes": {
+        "specimen_family": "blood"
+      }
+    },
+    {
+      "alias": "androstenediona",
+      "item_id": "19117bbc-ab16-5a85-87a2-b558d35de5c9",
+      "canonical_name": "Androstenediona",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/9709",
+      "reason": "Identifica androstenediona; no androsterona, androstanediol, DHEA, DHEA-S ni panel de andrógenos. Sólo se reconoce la identidad de la orden por analito. No se infieren suero/plasma, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC; los atributos explícitos de cada fuente se conservan en RAW y decisión.",
+      "additional_targets": [
+        {
+          "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+          "expected_rows": 1,
+          "raw_guard": {
+            "path": [
+              "sample_type"
+            ],
+            "value": "2 ml Suero. Refrigerado"
+          },
+          "source_attributes": {
+            "specimen_code": "serum"
+          }
+        }
+      ]
+    },
+    {
+      "alias": "inmunoglobulinas ige",
+      "item_id": "ed716cf2-e96a-5379-845e-b95c83a2929b",
+      "canonical_name": "Inmunoglobulina E (IgE)",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/8159",
+      "reason": "Identifica la clase IgE general; no IgE específica de un alérgeno ni un perfil de alergias. Conserva las advertencias de preparación del proveedor en el RAW, sin convertirlas en instrucciones médicas propias. Sólo se reconoce la identidad de la orden por analito. No se infieren suero/plasma, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC; los atributos explícitos de cada fuente se conservan en RAW y decisión."
+    },
+    {
+      "alias": "inmunoglobulina ige",
+      "item_id": "ed716cf2-e96a-5379-845e-b95c83a2929b",
+      "canonical_name": "Inmunoglobulina E (IgE)",
+      "service_type": "lab_test",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "2 ml Suero. Refrigerado"
+      },
+      "source_attributes": {
+        "specimen_code": "serum"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/8159",
+      "reason": "Identifica la clase IgE general; no IgE específica de un alérgeno ni un perfil de alergias. Conserva las advertencias de preparación del proveedor en el RAW, sin convertirlas en instrucciones médicas propias. El suero de SEMIN se conserva en su decisión, sin atribuirlo a Salud Digna. Sólo se reconoce la identidad de la orden por analito. No se infieren suero/plasma, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC; los atributos explícitos de cada fuente se conservan en RAW y decisión."
+    },
+    {
+      "alias": "inmunoglobulinas igg",
+      "item_id": "d68c8d28-d6a4-5a9a-b72e-10165662b126",
+      "canonical_name": "Inmunoglobulina G (IgG)",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/8160",
+      "reason": "Identifica la clase IgG individual; no anticuerpos contra un patógeno, subclases IgG1/2/3/4, cadenas ligeras ni el panel IgG/IgA/IgM. Se usa la ficha IGG individual y no la ficha IMMG combinada. Sólo se reconoce la identidad de la orden por analito. No se infieren suero/plasma, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC; los atributos explícitos de cada fuente se conservan en RAW y decisión."
+    },
+    {
+      "alias": "peptido c",
+      "item_id": "30034ded-d7c5-5020-bd7e-7794c4cd7c12",
+      "canonical_name": "Péptido C",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/8804",
+      "reason": "Identifica péptido C; no insulina, proinsulina, anticuerpos antiinsulina ni prueba de estimulación/supresión. No prescribe ayuno ni momento de toma. Sólo se reconoce la identidad de la orden por analito. No se infieren suero/plasma, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC; los atributos explícitos de cada fuente se conservan en RAW y decisión."
+    },
+    {
+      "alias": "prealbumina transtiretina",
+      "item_id": "dc463e1a-cf4a-5364-ad70-620184659919",
+      "canonical_name": "Prealbúmina (transtiretina)",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/9005",
+      "reason": "Prealbúmina y transtiretina designan la misma proteína. No albúmina, electroforesis, función de unión a tiroxina, genotipo TTR ni panel nutricional. Sólo se reconoce la identidad de la orden por analito. No se infieren suero/plasma, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC; los atributos explícitos de cada fuente se conservan en RAW y decisión."
+    },
+    {
+      "alias": "c3 componente de complemento",
+      "item_id": "51bc5b26-ef1a-58a1-a145-c2f1e6b33171",
+      "canonical_name": "Complemento C3",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/8174",
+      "reason": "Identifica el componente C3; no C3a/C3b, actividad hemolítica CH50, C4, C5 ni panel de complemento. Sólo se reconoce la identidad de la orden por analito. No se infieren suero/plasma, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC; los atributos explícitos de cada fuente se conservan en RAW y decisión."
+    },
+    {
+      "alias": "c4 componente de complemento",
+      "item_id": "e55a3d8e-87b5-5f0f-a7d5-75f5322141c5",
+      "canonical_name": "Complemento C4",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/800020",
+      "reason": "Identifica el componente C4; no C4a/C4b, actividad hemolítica CH50, C3, C5 ni panel de complemento. Sólo se reconoce la identidad de la orden por analito. No se infieren suero/plasma, método, propiedad, escala, unidad, preparación, disponibilidad ni mapping LOINC; los atributos explícitos de cada fuente se conservan en RAW y decisión."
+    }
+  ]
+}

@@ -1,0 +1,372 @@
+{
+  "review_id": "pruevia:evidence-review:20261011:14",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras sin confirmación rutinaria; conservar ambigüedad clínica.",
+  "scope": "84 filas crawler, identidad de órdenes y atributos escritos; sin pacientes/OCR, ofertas o cambios de funciones.",
+  "research_date": "2026-10-11",
+  "human_review": false,
+  "new_concepts": [
+    {
+      "item_id": "0c19bcc6-4e19-5500-85d2-7e2770f0366b",
+      "canonical_name": "Eritropoyetina",
+      "component": "Erythropoietin",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/80173",
+      "reason": "EPO proteica; no receptor, anticuerpos, fármaco o genética. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "specimen_uncertainty": "Matriz exacta y duración no especificadas en el canónico. Familia sangre cuando está escrita pertenece al contexto fuente; no equivale a sangre total, suero o plasma. Las muestras de otra fuente o referencia no completan ésta."
+    },
+    {
+      "item_id": "44a29078-75b8-59f9-a9be-49bd70190e0f",
+      "canonical_name": "Globulina fijadora de hormonas sexuales (SHBG)",
+      "component": "Sex hormone binding globulin",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/623084",
+      "reason": "Proteína transportadora SHBG; no testosterona, TBG/CBG, globulinas totales ni panel. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "specimen_uncertainty": "Matriz exacta y duración no especificadas en el canónico. Familia sangre cuando está escrita pertenece al contexto fuente; no equivale a sangre total, suero o plasma. Las muestras de otra fuente o referencia no completan ésta."
+    },
+    {
+      "item_id": "cd8b04ad-9334-5641-9ca2-7caac96efcd1",
+      "canonical_name": "Glucagón",
+      "component": "Glucagon",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/9358",
+      "reason": "Glucagón individual; no GLP-1/2, proglucagón, fragmento, estimulación ni medicamento. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "specimen_uncertainty": "Matriz exacta y duración no especificadas en el canónico. Familia sangre cuando está escrita pertenece al contexto fuente; no equivale a sangre total, suero o plasma. Las muestras de otra fuente o referencia no completan ésta."
+    },
+    {
+      "item_id": "93f2b0ae-21f3-5e87-85b3-a9ccb607ee49",
+      "canonical_name": "Enolasa neuronal específica (NSE)",
+      "component": "Neuron specific enolase",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/80913",
+      "reason": "NSE; corrección textual neurona/neuronal trazada, sin cambiar RAW. No enolasa genérica, inmunotinción, LCR o panel. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "specimen_uncertainty": "Matriz exacta y duración no especificadas en el canónico. Familia sangre cuando está escrita pertenece al contexto fuente; no equivale a sangre total, suero o plasma. Las muestras de otra fuente o referencia no completan ésta."
+    },
+    {
+      "item_id": "1ea0d432-0558-5873-abaa-0158243c5539",
+      "canonical_name": "Complemento C5",
+      "component": "Complement C5",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/9266",
+      "reason": "Identidad C5 únicamente; actividad o concentración no especificadas. No C5a/C5b, C5 libre, CH50 ni otros componentes. Referencia funcional distinta: https://www.mayocliniclabs.com/test-catalog/Overview/83392. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "specimen_uncertainty": "Matriz exacta y duración no especificadas en el canónico. Familia sangre cuando está escrita pertenece al contexto fuente; no equivale a sangre total, suero o plasma. Las muestras de otra fuente o referencia no completan ésta."
+    },
+    {
+      "item_id": "517bfdab-6d28-5e3a-83c4-1f042505b7e5",
+      "canonical_name": "Complemento hemolítico total (CH50)",
+      "component": "Complement.total hemolytic activity (CH50)",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/8167",
+      "reason": "Conservar orden funcional CH50/vía clásica; no panel C3/C4, AH50 ni actividad de componente individual. Sin método/plataforma inferidos. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "specimen_uncertainty": "Matriz exacta y duración no especificadas en el canónico. Familia sangre cuando está escrita pertenece al contexto fuente; no equivale a sangre total, suero o plasma. Las muestras de otra fuente o referencia no completan ésta."
+    },
+    {
+      "item_id": "12fc37a6-6db5-54c3-9a8b-5350dbb0f43b",
+      "canonical_name": "Inmunoglobulina D (IgD)",
+      "component": "Immunoglobulin D",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/9272",
+      "reason": "IgD conserva clase D; no IgA/G/M/E, anticuerpos específicos, inmunofijación, monoclonalidad ni panel. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "specimen_uncertainty": "Matriz exacta y duración no especificadas en el canónico. Familia sangre cuando está escrita pertenece al contexto fuente; no equivale a sangre total, suero o plasma. Las muestras de otra fuente o referencia no completan ésta."
+    },
+    {
+      "item_id": "8ea4a025-3a79-538c-b170-d6de13aa2fe0",
+      "canonical_name": "Selenio",
+      "component": "Selenium",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/9765",
+      "reason": "Elemento selenio individual; no selenoproteínas, suplemento, especie química o panel. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "specimen_uncertainty": "Matriz exacta y duración no especificadas en el canónico. Familia sangre cuando está escrita pertenece al contexto fuente; no equivale a sangre total, suero o plasma. Las muestras de otra fuente o referencia no completan ésta."
+    },
+    {
+      "item_id": "f01cb8b6-2ad3-5e2c-ae6a-dfa3f5979bd5",
+      "canonical_name": "Aluminio",
+      "component": "Aluminum",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/8373",
+      "reason": "Orden Al con muestra desconocida, distinta del canónico previo ALUMINIO EN SUERO 9573db54-3a32-5e7d-bb43-bd5d9a8837de. No elegir suero, orina, creatinina, deferoxamina o panel. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "specimen_uncertainty": "Matriz exacta y duración no especificadas en el canónico. Familia sangre cuando está escrita pertenece al contexto fuente; no equivale a sangre total, suero o plasma. Las muestras de otra fuente o referencia no completan ésta."
+    },
+    {
+      "item_id": "efe1b5a2-2515-530e-9af5-843a640b4e22",
+      "canonical_name": "Manganeso",
+      "component": "Manganese",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/8413",
+      "reason": "Mn individual, matriz no especificada; no magnesio ni orina, eritrocitos/plasma, relación creatinina o panel. Sangre total referencia https://www.mayocliniclabs.com/test-catalog/Overview/89120 no completa RAW. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "specimen_uncertainty": "Matriz exacta y duración no especificadas en el canónico. Familia sangre cuando está escrita pertenece al contexto fuente; no equivale a sangre total, suero o plasma. Las muestras de otra fuente o referencia no completan ésta."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "eritropoyetina",
+      "item_id": "0c19bcc6-4e19-5500-85d2-7e2770f0366b",
+      "canonical_name": "Eritropoyetina",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/80173",
+      "reason": "EPO proteica; no receptor, anticuerpos, fármaco o genética. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ERITROPOYETINA"
+      },
+      "additional_targets": [
+        {
+          "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+          "expected_rows": 1,
+          "raw_guard": {
+            "path": [
+              "sample_type"
+            ],
+            "value": "2 ml Suero. Refrigerado"
+          },
+          "source_attributes": {
+            "specimen_code": "serum"
+          }
+        }
+      ]
+    },
+    {
+      "alias": "globulina fijadora de hormonas sexuales",
+      "item_id": "44a29078-75b8-59f9-a9be-49bd70190e0f",
+      "canonical_name": "Globulina fijadora de hormonas sexuales (SHBG)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/623084",
+      "reason": "Proteína transportadora SHBG; no testosterona, TBG/CBG, globulinas totales ni panel. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "GLOBULINA FIJADORA DE HORMONAS SEXUALES"
+      }
+    },
+    {
+      "alias": "globulina fijadora de hormonas sexuales shbg",
+      "item_id": "44a29078-75b8-59f9-a9be-49bd70190e0f",
+      "canonical_name": "Globulina fijadora de hormonas sexuales (SHBG)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/623084",
+      "reason": "Proteína transportadora SHBG; no testosterona, TBG/CBG, globulinas totales ni panel. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "2 ml Suero. Refrigerado"
+      },
+      "source_attributes": {
+        "specimen_code": "serum"
+      }
+    },
+    {
+      "alias": "glucagon",
+      "item_id": "cd8b04ad-9334-5641-9ca2-7caac96efcd1",
+      "canonical_name": "Glucagón",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/9358",
+      "reason": "Glucagón individual; no GLP-1/2, proglucagón, fragmento, estimulación ni medicamento. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "GLUCAGON"
+      },
+      "additional_targets": [
+        {
+          "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+          "expected_rows": 1,
+          "raw_guard": {
+            "path": [
+              "sample_type"
+            ],
+            "value": "3 ml Plasma con EDTA. Congelado"
+          },
+          "source_attributes": {
+            "specimen_code": "plasma"
+          }
+        }
+      ]
+    },
+    {
+      "alias": "enolasa neurona especifica",
+      "item_id": "93f2b0ae-21f3-5e87-85b3-a9ccb607ee49",
+      "canonical_name": "Enolasa neuronal específica (NSE)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/80913",
+      "reason": "NSE; corrección textual neurona/neuronal trazada, sin cambiar RAW. No enolasa genérica, inmunotinción, LCR o panel. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ENOLASA NEURONA ESPECIFICA"
+      }
+    },
+    {
+      "alias": "c5 componente de complemento",
+      "item_id": "1ea0d432-0558-5873-abaa-0158243c5539",
+      "canonical_name": "Complemento C5",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/9266",
+      "reason": "Identidad C5 únicamente; actividad o concentración no especificadas. No C5a/C5b, C5 libre, CH50 ni otros componentes. Referencia funcional distinta: https://www.mayocliniclabs.com/test-catalog/Overview/83392. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "C5 COMPONENTE DE COMPLEMENTO"
+      }
+    },
+    {
+      "alias": "complemento hemolitico al 50",
+      "item_id": "517bfdab-6d28-5e3a-83c4-1f042505b7e5",
+      "canonical_name": "Complemento hemolítico total (CH50)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/8167",
+      "reason": "Conservar orden funcional CH50/vía clásica; no panel C3/C4, AH50 ni actividad de componente individual. Sin método/plataforma inferidos. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "COMPLEMENTO HEMOLITICO AL 50 %"
+      }
+    },
+    {
+      "alias": "inmunoglobulina d igd",
+      "item_id": "12fc37a6-6db5-54c3-9a8b-5350dbb0f43b",
+      "canonical_name": "Inmunoglobulina D (IgD)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/9272",
+      "reason": "IgD conserva clase D; no IgA/G/M/E, anticuerpos específicos, inmunofijación, monoclonalidad ni panel. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "INMUNOGLOBULINA D (IGD)"
+      }
+    },
+    {
+      "alias": "inmunoglobulina igd",
+      "item_id": "12fc37a6-6db5-54c3-9a8b-5350dbb0f43b",
+      "canonical_name": "Inmunoglobulina D (IgD)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/9272",
+      "reason": "IgD conserva clase D; no IgA/G/M/E, anticuerpos específicos, inmunofijación, monoclonalidad ni panel. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "2 ml Suero. Refrigerado"
+      },
+      "source_attributes": {
+        "specimen_code": "serum"
+      }
+    },
+    {
+      "alias": "selenio",
+      "item_id": "8ea4a025-3a79-538c-b170-d6de13aa2fe0",
+      "canonical_name": "Selenio",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/9765",
+      "reason": "Elemento selenio individual; no selenoproteínas, suplemento, especie química o panel. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "SELENIO"
+      }
+    },
+    {
+      "alias": "aluminio",
+      "item_id": "f01cb8b6-2ad3-5e2c-ae6a-dfa3f5979bd5",
+      "canonical_name": "Aluminio",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/8373",
+      "reason": "Orden Al con muestra desconocida, distinta del canónico previo ALUMINIO EN SUERO 9573db54-3a32-5e7d-bb43-bd5d9a8837de. No elegir suero, orina, creatinina, deferoxamina o panel. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ALUMINIO"
+      }
+    },
+    {
+      "alias": "manganeso",
+      "item_id": "efe1b5a2-2515-530e-9af5-843a640b4e22",
+      "canonical_name": "Manganeso",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/8413",
+      "reason": "Mn individual, matriz no especificada; no magnesio ni orina, eritrocitos/plasma, relación creatinina o panel. Sangre total referencia https://www.mayocliniclabs.com/test-catalog/Overview/89120 no completa RAW. Sólo reconocimiento de identidad de orden y atributos escritos, no equivalencia de resultados. Método/propiedad/escala/unidad/LOINC desconocidos; sin diagnóstico, tratamiento, ofertas, precio o disponibilidad aprobados. Preparación, original y muestra de cada fuente conservados sin validar indicaciones medicamentosas.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "MANGANESO"
+      }
+    }
+  ]
+}

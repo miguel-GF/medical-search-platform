@@ -1,0 +1,271 @@
+{
+  "review_id": "pruevia:evidence-review:20261009:07",
+  "reviewed_by": "Codex, investigación terminológica delegada",
+  "authorization": "D-021 y D-022: investigar y decidir casos claros sobre la misma base autorizada",
+  "scope": "Diez conceptos con muestra/duración explícitas; 73 filas históricas del crawler. Sin ofertas, resultados, preparación prescrita, métodos o mappings LOINC aprobados.",
+  "research_date": "2026-10-09",
+  "human_review": false,
+  "new_concepts": [
+    {
+      "item_id": "fbdcc445-8253-5542-8e36-0cdd7284ea66",
+      "canonical_name": "Calcio en orina ocasional",
+      "component": "Calcium",
+      "specimen_code": "urine",
+      "time_aspect": "Pt",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/610591",
+      "reason": "Identidad del analito y muestra explícitos; conserva la duración indicada. Método, propiedad, escala y unidades permanecen sin inferencia. La referencia CALC5 acredita el componente, no el cociente calcio/creatinina ni su disponibilidad individual."
+    },
+    {
+      "item_id": "1a8e5a9e-7de3-587f-90ab-330dc3693e78",
+      "canonical_name": "Proteínas en orina ocasional",
+      "component": "Protein",
+      "specimen_code": "urine",
+      "time_aspect": "Pt",
+      "evidence_url": "https://loinc.org/2888-6",
+      "reason": "Identidad del analito y muestra explícitos; conserva la duración indicada. Método, propiedad, escala y unidades permanecen sin inferencia. Conserva la orden de proteínas urinarias; no agrega cociente, electroforesis, albúmina, tira reactiva ni cuantificación no especificada. LOINC sólo respalda analito y matriz, sin aprobar ese mapping."
+    },
+    {
+      "item_id": "c73ca1b9-ccef-53b5-8d40-8a20dad76dd6",
+      "canonical_name": "Proteínas en orina de 24 horas",
+      "component": "Protein",
+      "specimen_code": "urine",
+      "time_aspect": "24H",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/614002",
+      "reason": "Identidad del analito y muestra explícitos; conserva la duración indicada. Método, propiedad, escala y unidades permanecen sin inferencia. No sustituye por albúmina, electroforesis ni cociente proteína/creatinina."
+    },
+    {
+      "item_id": "efb8f3c5-0a51-5952-baaa-22b6180dd3dc",
+      "canonical_name": "Albúmina en orina de 24 horas",
+      "component": "Albumin",
+      "specimen_code": "urine",
+      "time_aspect": "24H",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/606718",
+      "reason": "Identidad del analito y muestra explícitos; conserva la duración indicada. Método, propiedad, escala y unidades permanecen sin inferencia. Microalbuminuria designa la medición de albúmina urinaria. No agrega cociente albúmina/creatinina ni sustituye por proteínas totales."
+    },
+    {
+      "item_id": "8200271e-fadd-5c9e-bb11-f0b054338f2d",
+      "canonical_name": "Beta-2 microglobulina en suero",
+      "component": "Beta-2-Microglobulin",
+      "specimen_code": "serum",
+      "time_aspect": null,
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/9234",
+      "reason": "Identidad del analito y muestra explícitos; conserva la duración indicada. Método, propiedad, escala y unidades permanecen sin inferencia. La descripción RAW explicita beta-2 microglobulina y suero; no es beta-2 glicoproteína, orina ni líquido cefalorraquídeo."
+    },
+    {
+      "item_id": "0c36260b-a517-5d0b-b8ca-e5b0860b0716",
+      "canonical_name": "Beta-2 microglobulina en orina de 24 horas",
+      "component": "Beta-2-Microglobulin",
+      "specimen_code": "urine",
+      "time_aspect": "24H",
+      "evidence_url": "https://medlineplus.gov/lab-tests/beta-2-microglobulin-b2m-tumor-marker-test/",
+      "reason": "Identidad del analito y muestra explícitos; conserva la duración indicada. Método, propiedad, escala y unidades permanecen sin inferencia. MedlinePlus describe la muestra de 24 horas y LOINC 10873-8 acredita analito/matriz/tiempo, sin aprobar el mapping ni inferir propiedad/unidad. La referencia ARUP 0080432 es ocasional y no se usa como equivalencia a 24 horas."
+    },
+    {
+      "item_id": "20bca245-c61e-59b7-8d95-69eae24247ca",
+      "canonical_name": "Clonazepam en suero",
+      "component": "Clonazepam",
+      "specimen_code": "serum",
+      "time_aspect": null,
+      "evidence_url": "https://www.labcorp.com/tests/071712/clonazepam",
+      "reason": "Identidad del analito y muestra explícitos; conserva la duración indicada. Método, propiedad, escala y unidades permanecen sin inferencia. Identifica el fármaco padre; no lo sustituye por 7-aminoclonazepam ni un panel de benzodiacepinas. No prescribe el momento de toma ni adopta preparación del proveedor."
+    },
+    {
+      "item_id": "29ae0d06-2e13-542f-8cdb-94d97976a161",
+      "canonical_name": "Estrona en suero",
+      "component": "Estrone",
+      "specimen_code": "serum",
+      "time_aspect": null,
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/81418",
+      "reason": "Identidad del analito y muestra explícitos; conserva la duración indicada. Método, propiedad, escala y unidades permanecen sin inferencia. Estrona E1 no equivale a estradiol E2, estriol E3, sulfato de estrona ni estrógenos totales."
+    },
+    {
+      "item_id": "59a2c712-043c-5c35-ae65-f3a54daea384",
+      "canonical_name": "Noradrenalina en orina de 24 horas",
+      "component": "Norepinephrine",
+      "specimen_code": "urine",
+      "time_aspect": "24H",
+      "evidence_url": "https://www.labcorp.com/tests/004176/catecholamines-fractionated-urinary-free-24-hour-urine",
+      "reason": "Identidad del analito y muestra explícitos; conserva la duración indicada. Método, propiedad, escala y unidades permanecen sin inferencia. Se usa la referencia del componente norepinefrina, no el perfil completo ni metanefrinas. No infiere fracción libre/conjugada, propiedad o unidad."
+    },
+    {
+      "item_id": "ceffe6ce-8a10-5028-b528-82582400ce9c",
+      "canonical_name": "Adrenalina en orina de 24 horas",
+      "component": "Epinephrine",
+      "specimen_code": "urine",
+      "time_aspect": "24H",
+      "evidence_url": "https://www.labcorp.com/tests/004176/catecholamines-fractionated-urinary-free-24-hour-urine",
+      "reason": "Identidad del analito y muestra explícitos; conserva la duración indicada. Método, propiedad, escala y unidades permanecen sin inferencia. Nombre original y sample_type de SEMIN identifican analito y duración. Se usa el componente epinefrina, no el perfil completo ni metanefrinas. No infiere fracción libre/conjugada, propiedad o unidad."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "calcio en orina al azar",
+      "item_id": "fbdcc445-8253-5542-8e36-0cdd7284ea66",
+      "canonical_name": "Calcio en orina ocasional",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/610591",
+      "reason": "Identidad del analito y muestra explícitos; conserva la duración indicada. Método, propiedad, escala y unidades permanecen sin inferencia. La referencia CALC5 acredita el componente, no el cociente calcio/creatinina ni su disponibilidad individual."
+    },
+    {
+      "alias": "proteinas en orina al azar",
+      "item_id": "1a8e5a9e-7de3-587f-90ab-330dc3693e78",
+      "canonical_name": "Proteínas en orina ocasional",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://loinc.org/2888-6",
+      "reason": "Identidad del analito y muestra explícitos; conserva la duración indicada. Método, propiedad, escala y unidades permanecen sin inferencia. Conserva la orden de proteínas urinarias; no agrega cociente, electroforesis, albúmina, tira reactiva ni cuantificación no especificada. LOINC sólo respalda analito y matriz, sin aprobar ese mapping."
+    },
+    {
+      "alias": "proteinas en orina de 24 horas",
+      "item_id": "c73ca1b9-ccef-53b5-8d40-8a20dad76dd6",
+      "canonical_name": "Proteínas en orina de 24 horas",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/614002",
+      "reason": "Identidad del analito y muestra explícitos; conserva la duración indicada. Método, propiedad, escala y unidades permanecen sin inferencia. No sustituye por albúmina, electroforesis ni cociente proteína/creatinina."
+    },
+    {
+      "alias": "microalbuminuria en orina de 24hrs",
+      "item_id": "efb8f3c5-0a51-5952-baaa-22b6180dd3dc",
+      "canonical_name": "Albúmina en orina de 24 horas",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/606718",
+      "reason": "Identidad del analito y muestra explícitos; conserva la duración indicada. Método, propiedad, escala y unidades permanecen sin inferencia. Microalbuminuria designa la medición de albúmina urinaria. No agrega cociente albúmina/creatinina ni sustituye por proteínas totales."
+    },
+    {
+      "alias": "microglobulina beta 2 microglobulina en suero",
+      "item_id": "8200271e-fadd-5c9e-bb11-f0b054338f2d",
+      "canonical_name": "Beta-2 microglobulina en suero",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/9234",
+      "reason": "Identidad del analito y muestra explícitos; conserva la duración indicada. Método, propiedad, escala y unidades permanecen sin inferencia. La descripción RAW explicita beta-2 microglobulina y suero; no es beta-2 glicoproteína, orina ni líquido cefalorraquídeo."
+    },
+    {
+      "alias": "beta 2 microglobulina en orina de 24 horas",
+      "item_id": "0c36260b-a517-5d0b-b8ca-e5b0860b0716",
+      "canonical_name": "Beta-2 microglobulina en orina de 24 horas",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://medlineplus.gov/lab-tests/beta-2-microglobulin-b2m-tumor-marker-test/",
+      "reason": "Identidad del analito y muestra explícitos; conserva la duración indicada. Método, propiedad, escala y unidades permanecen sin inferencia. MedlinePlus describe la muestra de 24 horas y LOINC 10873-8 acredita analito/matriz/tiempo, sin aprobar el mapping ni inferir propiedad/unidad. La referencia ARUP 0080432 es ocasional y no se usa como equivalencia a 24 horas."
+    },
+    {
+      "alias": "clonazepam en suero rivotril",
+      "item_id": "20bca245-c61e-59b7-8d95-69eae24247ca",
+      "canonical_name": "Clonazepam en suero",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.labcorp.com/tests/071712/clonazepam",
+      "reason": "Identidad del analito y muestra explícitos; conserva la duración indicada. Método, propiedad, escala y unidades permanecen sin inferencia. Identifica el fármaco padre; no lo sustituye por 7-aminoclonazepam ni un panel de benzodiacepinas. No prescribe el momento de toma ni adopta preparación del proveedor."
+    },
+    {
+      "alias": "estrona suero",
+      "item_id": "29ae0d06-2e13-542f-8cdb-94d97976a161",
+      "canonical_name": "Estrona en suero",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/81418",
+      "reason": "Identidad del analito y muestra explícitos; conserva la duración indicada. Método, propiedad, escala y unidades permanecen sin inferencia. Estrona E1 no equivale a estradiol E2, estriol E3, sulfato de estrona ni estrógenos totales."
+    },
+    {
+      "alias": "noradrenalina en orina de 24 horas",
+      "item_id": "59a2c712-043c-5c35-ae65-f3a54daea384",
+      "canonical_name": "Noradrenalina en orina de 24 horas",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.labcorp.com/tests/004176/catecholamines-fractionated-urinary-free-24-hour-urine",
+      "reason": "Identidad del analito y muestra explícitos; conserva la duración indicada. Método, propiedad, escala y unidades permanecen sin inferencia. Se usa la referencia del componente norepinefrina, no el perfil completo ni metanefrinas. No infiere fracción libre/conjugada, propiedad o unidad."
+    },
+    {
+      "alias": "adrenalina en orina de 24 horas",
+      "item_id": "ceffe6ce-8a10-5028-b528-82582400ce9c",
+      "canonical_name": "Adrenalina en orina de 24 horas",
+      "service_type": "lab_test",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "100 ml Orina de 24 horas. Ali"
+      },
+      "evidence_url": "https://www.labcorp.com/tests/004176/catecholamines-fractionated-urinary-free-24-hour-urine",
+      "reason": "Identidad del analito y muestra explícitos; conserva la duración indicada. Método, propiedad, escala y unidades permanecen sin inferencia. Nombre original y sample_type de SEMIN identifican analito y duración. Se usa el componente epinefrina, no el perfil completo ni metanefrinas. No infiere fracción libre/conjugada, propiedad o unidad."
+    }
+  ]
+}

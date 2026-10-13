@@ -1,0 +1,276 @@
+{
+  "review_id": "pruevia:evidence-review:20261011:11",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras sin confirmación rutinaria; conservar ambigüedad clínica.",
+  "scope": "66 filas crawler: 64 Salud Digna y dos SEMIN; ocho órdenes individuales por analito y nueve aliases. Sin pacientes/OCR, ofertas nuevas o cambios de funciones.",
+  "research_date": "2026-10-11",
+  "human_review": false,
+  "new_concepts": [
+    {
+      "item_id": "850af085-2f39-5cd5-b2ef-2962bc3789ea",
+      "canonical_name": "Ciclosporina",
+      "component": "Cyclosporine",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "SD no declara matriz; ni ayuno ni tiempo respecto a dosis prueban sangre/suero. Concepto global por analito, muestra/system/time_aspect NULL. SEMIN sirolimus declara sangre total sólo en su RAW/guard y SEMIN topiramato suero sólo en su decisión; no trasladar esos datos a SD o al concepto.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/35143",
+      "reason": "Identidad individual de ciclosporina. No tacrolimus, sirolimus, metabolitos o perfil. La preparación local antes de la última dosis se conserva literalmente, sin corregirla ni afirmar valle/C2. No importar muestra o método de la referencia. Sólo identidad de orden por analito: no equivalencia de resultados, concentración libre/total, método, propiedad, escala, unidades, LOINC, toxicidad, dosis o tratamiento. No se aprueban precio, disponibilidad ni ofertas. Muestra/system/time_aspect NULL; ayuno y momento de dosis no prueban matriz. Original y preparación conservados en RAW/decisión."
+    },
+    {
+      "item_id": "8eaf59be-edcd-59bc-bff8-b188783aad88",
+      "canonical_name": "Fenobarbital",
+      "component": "Phenobarbital",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "SD no declara matriz; ni ayuno ni tiempo respecto a dosis prueban sangre/suero. Concepto global por analito, muestra/system/time_aspect NULL. SEMIN sirolimus declara sangre total sólo en su RAW/guard y SEMIN topiramato suero sólo en su decisión; no trasladar esos datos a SD o al concepto.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/37049",
+      "reason": "Identidad individual de fenobarbital, no primidona, fenitoína o panel de barbitúricos. La preparación local cuatro horas después de la dosis se conserva; no equivalencia de valle ni recomendaciones de toma. Sólo identidad de orden por analito: no equivalencia de resultados, concentración libre/total, método, propiedad, escala, unidades, LOINC, toxicidad, dosis o tratamiento. No se aprueban precio, disponibilidad ni ofertas. Muestra/system/time_aspect NULL; ayuno y momento de dosis no prueban matriz. Original y preparación conservados en RAW/decisión."
+    },
+    {
+      "item_id": "8bebc101-42d1-5445-a246-15f77b57bec5",
+      "canonical_name": "Lamotrigina",
+      "component": "Lamotrigine",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "SD no declara matriz; ni ayuno ni tiempo respecto a dosis prueban sangre/suero. Concepto global por analito, muestra/system/time_aspect NULL. SEMIN sirolimus declara sangre total sólo en su RAW/guard y SEMIN topiramato suero sólo en su decisión; no trasladar esos datos a SD o al concepto.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/80999",
+      "reason": "Identidad individual de lamotrigina, no otro anticonvulsivo o metabolito. La instrucción temporal local queda en RAW/guard, no en time_aspect ni como recomendación clínica. Sólo identidad de orden por analito: no equivalencia de resultados, concentración libre/total, método, propiedad, escala, unidades, LOINC, toxicidad, dosis o tratamiento. No se aprueban precio, disponibilidad ni ofertas. Muestra/system/time_aspect NULL; ayuno y momento de dosis no prueban matriz. Original y preparación conservados en RAW/decisión."
+    },
+    {
+      "item_id": "2c1eab70-862b-5db4-a0f2-32c08fdb6b43",
+      "canonical_name": "Levetiracetam",
+      "component": "Levetiracetam",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "SD no declara matriz; ni ayuno ni tiempo respecto a dosis prueban sangre/suero. Concepto global por analito, muestra/system/time_aspect NULL. SEMIN sirolimus declara sangre total sólo en su RAW/guard y SEMIN topiramato suero sólo en su decisión; no trasladar esos datos a SD o al concepto.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/83140",
+      "reason": "Identidad individual de levetiracetam, no brivaracetam ni otros anticonvulsivos. Ayuno explícito no acredita suero o plasma. Sólo identidad de orden por analito: no equivalencia de resultados, concentración libre/total, método, propiedad, escala, unidades, LOINC, toxicidad, dosis o tratamiento. No se aprueban precio, disponibilidad ni ofertas. Muestra/system/time_aspect NULL; ayuno y momento de dosis no prueban matriz. Original y preparación conservados en RAW/decisión."
+    },
+    {
+      "item_id": "578e4438-56ac-5983-8522-add293e22d84",
+      "canonical_name": "Litio",
+      "component": "Lithium",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "SD no declara matriz; ni ayuno ni tiempo respecto a dosis prueban sangre/suero. Concepto global por analito, muestra/system/time_aspect NULL. SEMIN sirolimus declara sangre total sólo en su RAW/guard y SEMIN topiramato suero sólo en su decisión; no trasladar esos datos a SD o al concepto.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/37046",
+      "reason": "Identidad individual de litio en contexto RAW de estudio de laboratorio; no receta de medicamento o compra de sales. No se infiere momento valle o matriz. Sólo identidad de orden por analito: no equivalencia de resultados, concentración libre/total, método, propiedad, escala, unidades, LOINC, toxicidad, dosis o tratamiento. No se aprueban precio, disponibilidad ni ofertas. Muestra/system/time_aspect NULL; ayuno y momento de dosis no prueban matriz. Original y preparación conservados en RAW/decisión."
+    },
+    {
+      "item_id": "db558b7b-f2cc-5718-8007-a61eee8a0d33",
+      "canonical_name": "Sirolimus (rapamicina)",
+      "component": "Sirolimus",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "SD no declara matriz; ni ayuno ni tiempo respecto a dosis prueban sangre/suero. Concepto global por analito, muestra/system/time_aspect NULL. SEMIN sirolimus declara sangre total sólo en su RAW/guard y SEMIN topiramato suero sólo en su decisión; no trasladar esos datos a SD o al concepto.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/35144",
+      "reason": "La referencia primaria declara Rapamune/Rapamycin como aliases de sirolimus; ambos aparecen juntos en RAW. No ciclosporina, tacrolimus, metabolitos o pruebas genéticas. La muestra de sangre total SEMIN pertenece sólo a su contexto, no al concepto global. Sólo identidad de orden por analito: no equivalencia de resultados, concentración libre/total, método, propiedad, escala, unidades, LOINC, toxicidad, dosis o tratamiento. No se aprueban precio, disponibilidad ni ofertas. Muestra/system/time_aspect NULL; ayuno y momento de dosis no prueban matriz. Original y preparación conservados en RAW/decisión."
+    },
+    {
+      "item_id": "87aaa6dd-c7b8-5197-ae24-095f4cfe86db",
+      "canonical_name": "Tacrolimus",
+      "component": "Tacrolimus",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "SD no declara matriz; ni ayuno ni tiempo respecto a dosis prueban sangre/suero. Concepto global por analito, muestra/system/time_aspect NULL. SEMIN sirolimus declara sangre total sólo en su RAW/guard y SEMIN topiramato suero sólo en su decisión; no trasladar esos datos a SD o al concepto.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/35145",
+      "reason": "Identidad individual de tacrolimus. No ciclosporina, sirolimus, metabolitos, pico o farmacogenética CYP3A5. La preparación local antes de dosis matutina se conserva sin normalizar a un resultado valle. Sólo identidad de orden por analito: no equivalencia de resultados, concentración libre/total, método, propiedad, escala, unidades, LOINC, toxicidad, dosis o tratamiento. No se aprueban precio, disponibilidad ni ofertas. Muestra/system/time_aspect NULL; ayuno y momento de dosis no prueban matriz. Original y preparación conservados en RAW/decisión."
+    },
+    {
+      "item_id": "01bb4bc5-9b8b-5406-adae-5a4acbf9ec5d",
+      "canonical_name": "Topiramato",
+      "component": "Topiramate",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "SD no declara matriz; ni ayuno ni tiempo respecto a dosis prueban sangre/suero. Concepto global por analito, muestra/system/time_aspect NULL. SEMIN sirolimus declara sangre total sólo en su RAW/guard y SEMIN topiramato suero sólo en su decisión; no trasladar esos datos a SD o al concepto.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/81546",
+      "reason": "Identidad individual de topiramato, no metabolito o panel anticonvulsivo. La fuente SD admite dos momentos de toma; no elegir uno ni importar intervalos de la referencia. Suero explícito SEMIN pertenece sólo a su decisión. Sólo identidad de orden por analito: no equivalencia de resultados, concentración libre/total, método, propiedad, escala, unidades, LOINC, toxicidad, dosis o tratamiento. No se aprueban precio, disponibilidad ni ofertas. Muestra/system/time_aspect NULL; ayuno y momento de dosis no prueban matriz. Original y preparación conservados en RAW/decisión."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "ciclosporina",
+      "item_id": "850af085-2f39-5cd5-b2ef-2962bc3789ea",
+      "canonical_name": "Ciclosporina",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 4 HRS. \r\nTIEMPO ÓPTIMO DE RECOLECCIÓN: 1 HR. ANTES DE LA ÚLTIMA DOSIS."
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/35143",
+      "reason": "Identidad individual de ciclosporina. No tacrolimus, sirolimus, metabolitos o perfil. La preparación local antes de la última dosis se conserva literalmente, sin corregirla ni afirmar valle/C2. No importar muestra o método de la referencia. Sólo identidad de orden por analito: no equivalencia de resultados, concentración libre/total, método, propiedad, escala, unidades, LOINC, toxicidad, dosis o tratamiento. No se aprueban precio, disponibilidad ni ofertas. Muestra/system/time_aspect NULL; ayuno y momento de dosis no prueban matriz. Original y preparación conservados en RAW/decisión."
+    },
+    {
+      "alias": "fenobarbital",
+      "item_id": "8eaf59be-edcd-59bc-bff8-b188783aad88",
+      "canonical_name": "Fenobarbital",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO MINIMO DE 4 HRS. TOMA DE MUESTRA 4 HRS DESPUES DE LA ULTIMA DOSIS\r\n"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/37049",
+      "reason": "Identidad individual de fenobarbital, no primidona, fenitoína o panel de barbitúricos. La preparación local cuatro horas después de la dosis se conserva; no equivalencia de valle ni recomendaciones de toma. Sólo identidad de orden por analito: no equivalencia de resultados, concentración libre/total, método, propiedad, escala, unidades, LOINC, toxicidad, dosis o tratamiento. No se aprueban precio, disponibilidad ni ofertas. Muestra/system/time_aspect NULL; ayuno y momento de dosis no prueban matriz. Original y preparación conservados en RAW/decisión."
+    },
+    {
+      "alias": "lamotrigina",
+      "item_id": "8bebc101-42d1-5445-a246-15f77b57bec5",
+      "canonical_name": "Lamotrigina",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 4 HRS. \r\nEL TIEMPO OPTIMO PARA LA TOMA DE MUESTRA ES 1 HRA. ANTES DE LA SIGUIENTE DOSIS."
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/80999",
+      "reason": "Identidad individual de lamotrigina, no otro anticonvulsivo o metabolito. La instrucción temporal local queda en RAW/guard, no en time_aspect ni como recomendación clínica. Sólo identidad de orden por analito: no equivalencia de resultados, concentración libre/total, método, propiedad, escala, unidades, LOINC, toxicidad, dosis o tratamiento. No se aprueban precio, disponibilidad ni ofertas. Muestra/system/time_aspect NULL; ayuno y momento de dosis no prueban matriz. Original y preparación conservados en RAW/decisión."
+    },
+    {
+      "alias": "levetiracetam",
+      "item_id": "2c1eab70-862b-5db4-a0f2-32c08fdb6b43",
+      "canonical_name": "Levetiracetam",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 8 HRS."
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/83140",
+      "reason": "Identidad individual de levetiracetam, no brivaracetam ni otros anticonvulsivos. Ayuno explícito no acredita suero o plasma. Sólo identidad de orden por analito: no equivalencia de resultados, concentración libre/total, método, propiedad, escala, unidades, LOINC, toxicidad, dosis o tratamiento. No se aprueban precio, disponibilidad ni ofertas. Muestra/system/time_aspect NULL; ayuno y momento de dosis no prueban matriz. Original y preparación conservados en RAW/decisión."
+    },
+    {
+      "alias": "litio",
+      "item_id": "578e4438-56ac-5983-8522-add293e22d84",
+      "canonical_name": "Litio",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 4 HRS."
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/37046",
+      "reason": "Identidad individual de litio en contexto RAW de estudio de laboratorio; no receta de medicamento o compra de sales. No se infiere momento valle o matriz. Sólo identidad de orden por analito: no equivalencia de resultados, concentración libre/total, método, propiedad, escala, unidades, LOINC, toxicidad, dosis o tratamiento. No se aprueban precio, disponibilidad ni ofertas. Muestra/system/time_aspect NULL; ayuno y momento de dosis no prueban matriz. Original y preparación conservados en RAW/decisión."
+    },
+    {
+      "alias": "rapamune sirolimus rapamicina",
+      "item_id": "db558b7b-f2cc-5718-8007-a61eee8a0d33",
+      "canonical_name": "Sirolimus (rapamicina)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO 8 HRS. ACUDIR A LABORATORIO 1 HR. ANTES DE LA SIGUIENTE DOSIS."
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/35144",
+      "reason": "La referencia primaria declara Rapamune/Rapamycin como aliases de sirolimus; ambos aparecen juntos en RAW. No ciclosporina, tacrolimus, metabolitos o pruebas genéticas. La muestra de sangre total SEMIN pertenece sólo a su contexto, no al concepto global. Sólo identidad de orden por analito: no equivalencia de resultados, concentración libre/total, método, propiedad, escala, unidades, LOINC, toxicidad, dosis o tratamiento. No se aprueban precio, disponibilidad ni ofertas. Muestra/system/time_aspect NULL; ayuno y momento de dosis no prueban matriz. Original y preparación conservados en RAW/decisión."
+    },
+    {
+      "alias": "sirolimus rapamicina",
+      "item_id": "db558b7b-f2cc-5718-8007-a61eee8a0d33",
+      "canonical_name": "Sirolimus (rapamicina)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "4 ml Sangre Total. Refrigerado"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/35144",
+      "reason": "SEMIN identifica sirolimus/rapamicina y declara 4 ml Sangre Total. Refrigerado; muestra explícita guardada en RAW y metadata reviewed_raw_guard, no trasladada al concepto global o SD. No declarar suero ni inferir EDTA. La referencia primaria declara Rapamune/Rapamycin como aliases de sirolimus; ambos aparecen juntos en RAW. No ciclosporina, tacrolimus, metabolitos o pruebas genéticas. La muestra de sangre total SEMIN pertenece sólo a su contexto, no al concepto global. Sólo identidad de orden por analito: no equivalencia de resultados, concentración libre/total, método, propiedad, escala, unidades, LOINC, toxicidad, dosis o tratamiento. No se aprueban precio, disponibilidad ni ofertas. Muestra/system/time_aspect NULL; ayuno y momento de dosis no prueban matriz. Original y preparación conservados en RAW/decisión."
+    },
+    {
+      "alias": "tacrolimus",
+      "item_id": "87aaa6dd-c7b8-5197-ae24-095f4cfe86db",
+      "canonical_name": "Tacrolimus",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 6 HRS. \r\nTOMA IDEAL DE LA MUESTRA: 1 HR. ANTES DE LA DOSIS MATUTINA."
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/35145",
+      "reason": "Identidad individual de tacrolimus. No ciclosporina, sirolimus, metabolitos, pico o farmacogenética CYP3A5. La preparación local antes de dosis matutina se conserva sin normalizar a un resultado valle. Sólo identidad de orden por analito: no equivalencia de resultados, concentración libre/total, método, propiedad, escala, unidades, LOINC, toxicidad, dosis o tratamiento. No se aprueban precio, disponibilidad ni ofertas. Muestra/system/time_aspect NULL; ayuno y momento de dosis no prueban matriz. Original y preparación conservados en RAW/decisión."
+    },
+    {
+      "alias": "topiramato",
+      "item_id": "01bb4bc5-9b8b-5406-adae-5a4acbf9ec5d",
+      "canonical_name": "Topiramato",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO DE 8 HRS. TIEMPO OPTIMO DE RECOLECCION DE LA MUESTRA: 2 A 4 HRS. POSTERIORES A LA ULTIMA DOSIS O 1 HR. ANTES DE LA SIGUIENTE DOSIS. "
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/81546",
+      "reason": "Identidad individual de topiramato, no metabolito o panel anticonvulsivo. La fuente SD admite dos momentos de toma; no elegir uno ni importar intervalos de la referencia. Suero explícito SEMIN pertenece sólo a su decisión. Sólo identidad de orden por analito: no equivalencia de resultados, concentración libre/total, método, propiedad, escala, unidades, LOINC, toxicidad, dosis o tratamiento. No se aprueban precio, disponibilidad ni ofertas. Muestra/system/time_aspect NULL; ayuno y momento de dosis no prueban matriz. Original y preparación conservados en RAW/decisión.",
+      "additional_targets": [
+        {
+          "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+          "expected_rows": 1,
+          "raw_guard": {
+            "path": [
+              "sample_type"
+            ],
+            "value": "4 ml de Suero Refrigerado"
+          },
+          "source_attributes": {
+            "specimen_code": "serum"
+          }
+        }
+      ]
+    }
+  ]
+}

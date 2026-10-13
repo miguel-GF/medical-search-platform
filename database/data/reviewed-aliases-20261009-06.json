@@ -1,0 +1,272 @@
+{
+  "review_id": "pruevia:evidence-review:20261009:06",
+  "reviewed_by": "Codex, investigación terminológica delegada",
+  "authorization": "D-021 y D-022: investigar y decidir casos claros sobre la misma base autorizada",
+  "scope": "Diez órdenes de analito individual con suero/orina y duración explícitos. Sólo 80 filas históricas del crawler; sin ofertas, preparación prescrita, interpretación ni mappings LOINC aprobados.",
+  "research_date": "2026-10-09",
+  "human_review": false,
+  "new_concepts": [
+    {
+      "item_id": "7a74c397-c927-5b87-8677-ccad45d8a0d0",
+      "canonical_name": "Citrato en orina de 24 horas",
+      "component": "Citrate",
+      "specimen_code": "urine",
+      "time_aspect": "24H",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/616180",
+      "reason": "Identidad del analito individual y muestra orina explícitos. Conserva recolección de 24 horas. No transforma la orden en panel, cociente con creatinina, otra muestra o duración; método, propiedad, escala y unidad no inferidos."
+    },
+    {
+      "item_id": "d6ee1c07-8bf7-58d2-9d82-00c9ef2af535",
+      "canonical_name": "Citrato en orina ocasional",
+      "component": "Citrate",
+      "specimen_code": "urine",
+      "time_aspect": "Pt",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/606637",
+      "reason": "Identidad del analito individual y muestra orina explícitos. Conserva muestra ocasional/puntual. No transforma la orden en panel, cociente con creatinina, otra muestra o duración; método, propiedad, escala y unidad no inferidos. La referencia acredita el componente urinario, no el panel/cociente que lo contiene ni la disponibilidad individual en otro proveedor."
+    },
+    {
+      "item_id": "9329eeb9-9c15-5a4d-b5de-bfcb7cb94cc2",
+      "canonical_name": "Oxalato en orina de 24 horas",
+      "component": "Oxalate",
+      "specimen_code": "urine",
+      "time_aspect": "24H",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/616180",
+      "reason": "Identidad del analito individual y muestra orina explícitos. Conserva recolección de 24 horas. No transforma la orden en panel, cociente con creatinina, otra muestra o duración; método, propiedad, escala y unidad no inferidos."
+    },
+    {
+      "item_id": "1b1dd2ba-e17c-5cf8-93c7-e131b688622e",
+      "canonical_name": "Oxalato en orina ocasional",
+      "component": "Oxalate",
+      "specimen_code": "urine",
+      "time_aspect": "Pt",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/606748",
+      "reason": "Identidad del analito individual y muestra orina explícitos. Conserva muestra ocasional/puntual. No transforma la orden en panel, cociente con creatinina, otra muestra o duración; método, propiedad, escala y unidad no inferidos. La referencia acredita el componente urinario, no el panel/cociente que lo contiene ni la disponibilidad individual en otro proveedor."
+    },
+    {
+      "item_id": "a0b718c8-63f1-573b-ac41-982c7f2a3233",
+      "canonical_name": "Cobre en orina de 24 horas",
+      "component": "Copper",
+      "specimen_code": "urine",
+      "time_aspect": "24H",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/8590",
+      "reason": "Identidad del analito individual y muestra orina explícitos. Conserva recolección de 24 horas. No transforma la orden en panel, cociente con creatinina, otra muestra o duración; método, propiedad, escala y unidad no inferidos."
+    },
+    {
+      "item_id": "72cd0960-d7c9-5603-b97f-472c039adced",
+      "canonical_name": "Cobre en suero",
+      "component": "Copper",
+      "specimen_code": "serum",
+      "time_aspect": null,
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/616155",
+      "reason": "Identidad del analito individual y muestra suero explícitos. No transforma la orden en panel, cociente con creatinina, otra muestra o duración; método, propiedad, escala y unidad no inferidos. No se atribuye cobre libre/lábil ni ceruloplasmina."
+    },
+    {
+      "item_id": "2d663c0d-a45f-53e0-a9dd-c61d5d01c33a",
+      "canonical_name": "Creatinina en orina de 24 horas",
+      "component": "Creatinine",
+      "specimen_code": "urine",
+      "time_aspect": "24H",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/616180",
+      "reason": "Identidad del analito individual y muestra orina explícitos. Conserva recolección de 24 horas. No transforma la orden en panel, cociente con creatinina, otra muestra o duración; método, propiedad, escala y unidad no inferidos. No es depuración de creatinina ni creatinina en suero/plasma; el concepto sérico existente 00000000-0000-0000-0000-000000001110 se conserva."
+    },
+    {
+      "item_id": "9d34ad9d-c69b-5e2c-8d52-f2df65e6c1dc",
+      "canonical_name": "Hierro en suero",
+      "component": "Iron",
+      "specimen_code": "serum",
+      "time_aspect": null,
+      "evidence_url": "https://www.labcorp.com/tests/001339/iron",
+      "reason": "Identidad del analito individual y muestra suero explícitos. No transforma la orden en panel, cociente con creatinina, otra muestra o duración; método, propiedad, escala y unidad no inferidos. No se sustituye por ferritina, TIBC ni saturación de transferrina."
+    },
+    {
+      "item_id": "c0bef439-0609-52a3-93f4-9b69753ca747",
+      "canonical_name": "Lisozima en suero",
+      "component": "Lysozyme",
+      "specimen_code": "serum",
+      "time_aspect": null,
+      "evidence_url": "https://www.labcorp.com/tests/080713/lysozyme",
+      "reason": "Identidad del analito individual y muestra suero explícitos. No transforma la orden en panel, cociente con creatinina, otra muestra o duración; método, propiedad, escala y unidad no inferidos."
+    },
+    {
+      "item_id": "c87a97cd-5136-5179-8c04-9b87ca342a12",
+      "canonical_name": "Zinc en suero",
+      "component": "Zinc",
+      "specimen_code": "serum",
+      "time_aspect": null,
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/7735",
+      "reason": "Identidad del analito individual y muestra suero explícitos. No transforma la orden en panel, cociente con creatinina, otra muestra o duración; método, propiedad, escala y unidad no inferidos."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "citrato en orina de 24 hrs",
+      "item_id": "7a74c397-c927-5b87-8677-ccad45d8a0d0",
+      "canonical_name": "Citrato en orina de 24 horas",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/616180",
+      "reason": "Identidad del analito individual y muestra orina explícitos. Conserva recolección de 24 horas. No transforma la orden en panel, cociente con creatinina, otra muestra o duración; método, propiedad, escala y unidad no inferidos."
+    },
+    {
+      "alias": "citrato en orina ocasional",
+      "item_id": "d6ee1c07-8bf7-58d2-9d82-00c9ef2af535",
+      "canonical_name": "Citrato en orina ocasional",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/606637",
+      "reason": "Identidad del analito individual y muestra orina explícitos. Conserva muestra ocasional/puntual. No transforma la orden en panel, cociente con creatinina, otra muestra o duración; método, propiedad, escala y unidad no inferidos. La referencia acredita el componente urinario, no el panel/cociente que lo contiene ni la disponibilidad individual en otro proveedor."
+    },
+    {
+      "alias": "oxalato en orina de 24 horas",
+      "item_id": "9329eeb9-9c15-5a4d-b5de-bfcb7cb94cc2",
+      "canonical_name": "Oxalato en orina de 24 horas",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/616180",
+      "reason": "Identidad del analito individual y muestra orina explícitos. Conserva recolección de 24 horas. No transforma la orden en panel, cociente con creatinina, otra muestra o duración; método, propiedad, escala y unidad no inferidos."
+    },
+    {
+      "alias": "oxalato en orina ocasional",
+      "item_id": "1b1dd2ba-e17c-5cf8-93c7-e131b688622e",
+      "canonical_name": "Oxalato en orina ocasional",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/606748",
+      "reason": "Identidad del analito individual y muestra orina explícitos. Conserva muestra ocasional/puntual. No transforma la orden en panel, cociente con creatinina, otra muestra o duración; método, propiedad, escala y unidad no inferidos. La referencia acredita el componente urinario, no el panel/cociente que lo contiene ni la disponibilidad individual en otro proveedor."
+    },
+    {
+      "alias": "cobre en orina de 24 horas",
+      "item_id": "a0b718c8-63f1-573b-ac41-982c7f2a3233",
+      "canonical_name": "Cobre en orina de 24 horas",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/8590",
+      "reason": "Identidad del analito individual y muestra orina explícitos. Conserva recolección de 24 horas. No transforma la orden en panel, cociente con creatinina, otra muestra o duración; método, propiedad, escala y unidad no inferidos."
+    },
+    {
+      "alias": "cobre en suero",
+      "item_id": "72cd0960-d7c9-5603-b97f-472c039adced",
+      "canonical_name": "Cobre en suero",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/616155",
+      "reason": "Identidad del analito individual y muestra suero explícitos. No transforma la orden en panel, cociente con creatinina, otra muestra o duración; método, propiedad, escala y unidad no inferidos. No se atribuye cobre libre/lábil ni ceruloplasmina."
+    },
+    {
+      "alias": "creatinina en orina 24 hrs",
+      "item_id": "2d663c0d-a45f-53e0-a9dd-c61d5d01c33a",
+      "canonical_name": "Creatinina en orina de 24 horas",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/616180",
+      "reason": "Identidad del analito individual y muestra orina explícitos. Conserva recolección de 24 horas. No transforma la orden en panel, cociente con creatinina, otra muestra o duración; método, propiedad, escala y unidad no inferidos. No es depuración de creatinina ni creatinina en suero/plasma; el concepto sérico existente 00000000-0000-0000-0000-000000001110 se conserva."
+    },
+    {
+      "alias": "hierro en suero",
+      "item_id": "9d34ad9d-c69b-5e2c-8d52-f2df65e6c1dc",
+      "canonical_name": "Hierro en suero",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.labcorp.com/tests/001339/iron",
+      "reason": "Identidad del analito individual y muestra suero explícitos. No transforma la orden en panel, cociente con creatinina, otra muestra o duración; método, propiedad, escala y unidad no inferidos. No se sustituye por ferritina, TIBC ni saturación de transferrina."
+    },
+    {
+      "alias": "lisozima en suero",
+      "item_id": "c0bef439-0609-52a3-93f4-9b69753ca747",
+      "canonical_name": "Lisozima en suero",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.labcorp.com/tests/080713/lysozyme",
+      "reason": "Identidad del analito individual y muestra suero explícitos. No transforma la orden en panel, cociente con creatinina, otra muestra o duración; método, propiedad, escala y unidad no inferidos."
+    },
+    {
+      "alias": "zinc en suero",
+      "item_id": "c87a97cd-5136-5179-8c04-9b87ca342a12",
+      "canonical_name": "Zinc en suero",
+      "service_type": "lab_test",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Estudio"
+        ],
+        "value": "LABORATORIO"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/7735",
+      "reason": "Identidad del analito individual y muestra suero explícitos. No transforma la orden en panel, cociente con creatinina, otra muestra o duración; método, propiedad, escala y unidad no inferidos."
+    }
+  ]
+}

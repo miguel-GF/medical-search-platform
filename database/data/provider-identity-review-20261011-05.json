@@ -1,0 +1,34 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261011:05",
+  "reviewed_by": "Codex; investigación delegada por el operador",
+  "authorization": "D-021/D-022: investigar identidades y alimentar Puebla en la misma base autorizada, sin confirmación rutinaria.",
+  "research_date": "2026-10-11",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "Una sede hospitalaria pendiente, sin crear, modificar o duplicar IMSS-Bienestar. No afirma ofertas, derechohabiencia, acceso, disponibilidad, precio o titularidad legal verificada.",
+  "providers": [
+    {
+      "provider_key": "imss_bienestar",
+      "name": "IMSS-Bienestar",
+      "slug": "imss-bienestar",
+      "website_url": "https://www.imssbienestar.gob.mx/",
+      "identity_evidence_url": "https://www.puebla.gob.mx/index.php/noticias/item/22235-gobierno-de-puebla-contribuye-a-salvar-vidas-con-traslado-aereo-de-higado-a-ciudad-de-mexico",
+      "identity_activity_codes": [
+        "622112"
+      ],
+      "denue_record_ids": [
+        "3511000"
+      ],
+      "existing_brand": {
+        "id": "75b4ec89-77d2-555c-a1ee-a06ba483b699",
+        "name": "IMSS-Bienestar",
+        "normalized_name": "imss bienestar",
+        "slug": "imss-bienestar",
+        "website_url": "https://www.imssbienestar.gob.mx/",
+        "status": "active",
+        "verification_status": "verification_pending"
+      },
+      "identity_note": "La publicación del Gobierno de Puebla de 22-ene-2026 identifica expresamente Hospital General de Zacatlán del IMSS-Bienestar, lectura pública nativa HTTP200 observada 11-oct-2026. Se conserva sólo frase institucional, fecha y hash, no narrativa de pacientes. El directorio estatal público actualizado16-dic-2025, unidad11/CLUES PLSSA015551, identifica Hospital General de Zacatlán, Roble7/San Bartolo/CP73310 y coordenadas concordantes. DENUE3511000: Hospital General Zacatlán, SCIAN622112, Del Roble sin exterior/San Bartolo/CP73310. Institución/sede y ubicación territorial corroboradas; conservar exterior ausente DENUE, sin inferir7 ni corregir vialidad. Vincular exclusivamente a la marca IMSS-Bienestar75b4ec89-77d2-555c-a1ee-a06ba483b699 ya existente, con nombre/nombre normalizado/slug/sitio/estado/verificación exactos protegidos y fila completa inalterada. El prefijo CLUES no decide afiliación. No importar personal, contactos, horarios, servicios o acceso clínico. IMSS-Bienestar no se fusiona con IMSS ordinario/ISSSTE/ISSSTEP. Ubicación pending, marca sigue verification_pending."
+    }
+  ]
+}

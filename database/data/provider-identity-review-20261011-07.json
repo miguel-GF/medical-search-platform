@@ -1,0 +1,26 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261011:07",
+  "reviewed_by": "Codex; investigación delegada por el operador",
+  "authorization": "D-021/D-022: investigar identidades y alimentar Puebla en la misma base autorizada, sin confirmación rutinaria.",
+  "research_date": "2026-10-11",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "Una nueva institución en verificación y dos sedes pending corroboradas con directorio primario y DENUE; discrepancias de domicilio conservadas. Sin oferta, precio, disponibilidad o permiso comercial inferidos. Omega Tehuacán y LAC matriz fuera por enlace DENUE incierto.",
+  "providers": [
+    {
+      "provider_key": "laboratorios_analisis_clinicos_lac",
+      "name": "Laboratorios de Análisis Clínicos LAC",
+      "slug": "laboratorios-lac",
+      "website_url": "https://labolac.com/",
+      "identity_evidence_url": "https://labolac.com/json/sucursales.json",
+      "identity_activity_codes": [
+        "621511"
+      ],
+      "denue_record_ids": [
+        "11271977",
+        "3320300"
+      ],
+      "identity_note": "Directorio público institucional pages/sucursales.html enlaza js/sucursales.js y JSON sucursales.json, leídos en Chrome normal con perfil aislado, sin cookies/credenciales o evasión, 11-oct-2026. DENUE 11271977 identifica TOMA DE MUESTRA DE LABORATORIOS DE ANALISIS CLINICOS LAC, localidad San Rafael Tlanalapan, Avenida Central San Rafael 16, CP 74122; coincide operador nombrado, localidad, vialidad Central y exterior16 de la ficha. Conservar vialidad/asentamiento gubernamentales sin añadir esquina. DENUE 3320300 identifica LABORATORIO DE ANALISIS CLINICOS LAC, localidad San Lucas el Grande, Carretera Federal México Puebla, exterior vacío/letra SN, CP74135. La ficha institucional usa Carretera Nacional82 y su enlace de mapa28: conservar ambas discrepancias en evidencia, no corregir carretera ni SN gubernamentales ni copiar coordenadas del mapa. La identidad por operador explícito y localidad queda pending con domicilio aún por verificar. DENUE del20-may-2026, SCIAN621511. No enlazar matriz3265780 de nombre genérico por dirección compartida. Una toma de muestra no prueba procesamiento o realización de ningún estudio. Marca verification_pending y sedes pending; no oferta, precio, disponibilidad, titularidad legal o permiso comercial aprobados."
+    }
+  ]
+}

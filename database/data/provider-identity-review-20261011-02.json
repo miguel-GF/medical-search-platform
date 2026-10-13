@@ -1,0 +1,39 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261011:02",
+  "reviewed_by": "Codex; investigación delegada por el operador",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "source_key": "denue_puebla_bulk",
+  "research_date": "2026-10-11",
+  "authorization": "D-021 y D-022: investigar identidades y alimentar Puebla sobre la misma base autorizada; trabajo paralelo solicitado por el operador",
+  "scope": "Tres marcas nuevas y ocho establecimientos DENUE: siete de diagnóstico SCIAN 621511 y una matriz CEEAD clasificada por DENUE como hospital general privado SCIAN 622111. El sitio público vigente y la evidencia gubernamental respaldan la identidad candidata; todas las sedes permanecen pending y las marcas verification_pending. Se conservan completos los domicilios originales, incluso sus discrepancias. No crea ofertas, precios, horarios ni equivalencias clínicas. La clase hospitalaria gubernamental no acredita por sí sola servicios diagnósticos ni habilitación sanitaria.",
+  "providers": [
+    {
+      "provider_key": "ib_laboratorios_medicos_imagen_puebla",
+      "name": "IB Laboratorios Médicos e Imagen",
+      "slug": "ib-laboratorios-medicos-imagen",
+      "website_url": "https://iblaboratorios.com.mx/",
+      "identity_evidence_url": "https://iblaboratorios.com.mx/sucursales/",
+      "identity_note": "El sitio oficial identifica por separado las sucursales Huejotzingo, San Pedro Cholula y San Andrés Cholula; los tres establecimientos DENUE consignan expresamente el dominio iblaboratorios.com.mx. Huejotzingo, DENUE 3326473: coinciden Comonfort 202F, Segundo Barrio, CP 74160 y municipio. San Pedro, DENUE 9719873: coinciden 2 Norte 803 y letra exterior 133, Centro y CP 72760; el título del sitio dice San Pedro Cholula, pero el cuerpo del domicilio menciona San Andrés Cholula. Se conserva el municipio y número literal DENUE, sin corregir esa contradicción ni insertar un guion en el número concatenado por el renderer. San Andrés, DENUE 11747173: coinciden el nombre, dominio, sucursal, número 602 interior 3 y CP 72810; DENUE dice Manuel Ávila Camacho / Centro y el sitio Maximino A. Camacho / Santiago Xicotenco, San Bernardino Tlaxcalancingo. Se registra la discrepancia de vialidad y asentamiento y no se declara identidad postal completa ni se sustituye la dirección gubernamental. La página https://iblaboratorios.com.mx/contacto/ también enumera ambos municipios. Los iframes de mapas tienen centros de vista, que no se usan como coordenadas de un establecimiento. Las tres sedes son vínculos de identidad pending; no acreditan cobertura, modalidades concretas o resultados clínicos. Matriz y San Lorenzo Almecatla no se enlazan sin un ID DENUE específico corroborado.",
+      "denue_record_ids": ["3326473", "9719873", "11747173"]
+    },
+    {
+      "provider_key": "ceead_centro_diagnostico_texmelucan",
+      "name": "CEEAD — Centro de Diagnóstico Texmelucan",
+      "slug": "ceead-centro-diagnostico-texmelucan",
+      "website_url": "https://cdttexmelucan.com/",
+      "identity_evidence_url": "https://cdttexmelucan.com/contacto/",
+      "identity_note": "La página oficial CEEAD enumera matriz Libertad Norte 306, San Martín Texmelucan, sucursal San Lucas, Francisco I. Madero 22, San Lucas El Grande, El Verde, y sucursal San Cristóbal, Iturbide 55, San Cristóbal Tepetlaxco, Texmelucan. DENUE 9955322 identifica Laboratorio de Análisis Clínicos CEEAD, Francisco I Madero s/n, localidad y asentamiento San Lucas el Grande, municipio San Salvador el Verde; coinciden marca, vialidad y localidad, pero no se incorpora el número 22 de la web. DENUE 10827014 identifica Laboratorio Clínico CEEAD, Iturbide s/n, municipio San Martín Texmelucan, CP 74120; la localidad DENUE es San Martín Texmelucan de Labastida y asentamiento Centro, mientras la página especifica San Cristóbal Tepetlaxco. Se conserva y registra esta diferencia de granularidad territorial, sin rellenar número ni modificar asentamiento. DENUE 3323894, Centro de Diagnóstico Texmelucan, coincide con la matriz en Libertad Norte 306, Centro, San Martín Texmelucan; https://cdttexmelucan.com/aviso-de-privacidad/ también identifica a Centro de Diagnóstico Texmelucan, S.A. de C.V., como CEEAD y declara ese domicilio exacto. La matriz conserva su clasificación gubernamental SCIAN 622111 de hospital general privado y se materializa como hospital pending; no se transforma en laboratorio ni se infiere autorización o cobertura clínica desde esa clase. Las tres ubicaciones siguen pending bajo la misma marca. No se incorpora la sucursal San Simón, Tlahuapan o San Salvador el Verde por parecido de nombre sin corroboración específica de sede. No se heredan estudios ni horarios desde el sitio.",
+      "identity_activity_codes": ["621511", "622111"],
+      "denue_record_ids": ["9955322", "10827014", "3323894"]
+    },
+    {
+      "provider_key": "paez_laboratorio_imagen_puebla",
+      "name": "Páez Laboratorios e Imagen",
+      "slug": "paez-laboratorios-imagen",
+      "website_url": "https://paezlaboratorios.com/",
+      "identity_evidence_url": "https://paezlaboratorios.com/contacto/",
+      "identity_note": "El sitio oficial enumera matriz 27 Poniente 1119, CP 72410, Puebla, y sucursal Lomas de Angelópolis, Blvd. de los Reyes 6431-6 Torre Natyvo, San Andrés Cholula. DENUE 8150259, Páez Laboratorios, coincide en vialidad, exterior, código postal y municipio de la matriz; DENUE registra colonia Chulavista y el sitio Volcanes. Se conserva Chulavista y se registra la diferencia, sin atribuir una corrección cartográfica. DENUE 10613366, Páez Laboratorio Imagen, consigna el dominio paezlaboratorios.com, número 6431, localidad San Bernardino Tlaxcalancingo y municipio San Andrés Cholula; la vialidad gubernamental es literalmente NINGUNO y no incluye el interior 6. Se conserva esa dirección incompleta y no se reemplaza con De los Reyes ni se añade el interior. La identidad de marca, número y región respalda el vínculo candidato, sin acreditar dirección postal completa. Ambas ubicaciones pending; sin oferta, precio, horario, certificación ni inferencia clínica. No se accedió al portal de resultados enlazado en la página.",
+      "denue_record_ids": ["8150259", "10613366"]
+    }
+  ]
+}

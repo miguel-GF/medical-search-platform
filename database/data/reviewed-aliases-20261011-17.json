@@ -1,0 +1,181 @@
+{
+  "review_id": "pruevia:evidence-review:20261011:17",
+  "reviewed_by": "Codex, investigación clínica delegada por el operador",
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras sin confirmación rutinaria; conservar ambigüedad clínica y atributos explícitos.",
+  "scope": "Cinco órdenes individuales de anticuerpos, seis aliases y 48 filas crawler Salud Digna (ocho por etiqueta). Dos etiquetas anti-IA2 corresponden a un concepto; IgG sólo en Scl-70 explícito. Muestra, duración, método y otras clases desconocidos; sin paneles, resultados equivalentes, pacientes/OCR, ofertas ni cambios de funciones.",
+  "research_date": "2026-10-11",
+  "human_review": false,
+  "new_concepts": [
+    {
+      "item_id": "69200eef-bb54-50c1-90a8-bf60381adedf",
+      "canonical_name": "Anticuerpos anti-IA-2",
+      "component": "IA-2 antibody",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Ni nombre ni campos RAW de estas ocho entradas identifican muestra o familia sanguínea. Ayuno y el suero de referencias externas no prueban matriz local. Specimen_code, system y duración/time_aspect permanecen NULL; sólo se reconoce identidad de la orden.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/75939",
+      "reason": "IA-2 identifica el antígeno tirosina fosfatasa/ICA512: ambos nombres escritos son órdenes anti-IA-2 individuales. La segunda etiqueta conserva IA2 completo aunque su indicación diabetes mellitus insulino depend esté truncada; no se reconstruye el sufijo ni se interpreta como diagnóstico o panel. No GAD, insulina, ZnT8, ICA por inmunofluorescencia, IA-2beta/phogrin, actividad de fosfatasa o genética PTPRN. La advertencia RAW sobre gammagrafías no acredita radioinmunoensayo; no se elige técnica ni IgG ausente. Sólo identidad de orden individual por antígeno y variante escrita; sin equivalencia de resultados, muestra, duración, método, propiedad, escala, unidades o LOINC inferidos. Conserva isotipo sólo si está explícito: IgG en Scl-70; no se añade a los otros anticuerpos. Sin interpretación, diagnóstico, tratamiento, pacientes/OCR, precio, disponibilidad u ofertas. Original y preparación se conservan en RAW/decisión."
+    },
+    {
+      "item_id": "4a40d8d7-4ad3-57fb-8354-dc31e6cd0256",
+      "canonical_name": "Anticuerpos anti-transportador de zinc 8 (ZnT8)",
+      "component": "Zinc transporter 8 antibody",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Ni nombre ni campos RAW de estas ocho entradas identifican muestra o familia sanguínea. Ayuno y el suero de referencias externas no prueban matriz local. Specimen_code, system y duración/time_aspect permanecen NULL; sólo se reconoce identidad de la orden.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/75969",
+      "reason": "Zn T8 y ZnT8 identifican la proteína transportadora de zinc 8 como antígeno explícito de esta orden. No concentración de zinc, otros transportadores, GAD/IA2/insulina, genética SLC30A8 ni panel diabetes. No se eligen isotipo, epítopo o variantes de ZnT8 omitidos. Se usa la página Mayo vigente 75969; la antigua 64926 devuelve resultados de búsqueda y no se usa como evidencia del producto actual. Sólo identidad de orden individual por antígeno y variante escrita; sin equivalencia de resultados, muestra, duración, método, propiedad, escala, unidades o LOINC inferidos. Conserva isotipo sólo si está explícito: IgG en Scl-70; no se añade a los otros anticuerpos. Sin interpretación, diagnóstico, tratamiento, pacientes/OCR, precio, disponibilidad u ofertas. Original y preparación se conservan en RAW/decisión."
+    },
+    {
+      "item_id": "fec0a9ac-b1e1-5f06-aedb-fa8d1411578e",
+      "canonical_name": "Anticuerpos anti-Scl-70 IgG",
+      "component": "Scl-70 IgG antibody",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Ni nombre ni campos RAW de estas ocho entradas identifican muestra o familia sanguínea. Ayuno y el suero de referencias externas no prueban matriz local. Specimen_code, system y duración/time_aspect permanecen NULL; sólo se reconoce identidad de la orden.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/80178",
+      "reason": "La etiqueta completa especifica Scl-70/topoisomerasa I como antígeno e IgG como clase. Conserva ambas características escritas: no anticentrómero, RNA polimerasa III, ANA/ENA genérico, otras clases ni panel esclerodermia. La palabra escleroderma no convierte la orden en diagnóstico. No se seleccionan multiplex, inmunodifusión, ELISA u otras técnicas ni se aprueban resultados equivalentes entre ellas. Sólo identidad de orden individual por antígeno y variante escrita; sin equivalencia de resultados, muestra, duración, método, propiedad, escala, unidades o LOINC inferidos. Conserva isotipo sólo si está explícito: IgG en Scl-70; no se añade a los otros anticuerpos. Sin interpretación, diagnóstico, tratamiento, pacientes/OCR, precio, disponibilidad u ofertas. Original y preparación se conservan en RAW/decisión."
+    },
+    {
+      "item_id": "ffa2c74c-4a00-581a-bc9f-653cb7e44ef8",
+      "canonical_name": "Anticuerpos anti-DNasa B",
+      "component": "Deoxyribonuclease B antibody",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Ni nombre ni campos RAW de estas ocho entradas identifican muestra o familia sanguínea. Ayuno y el suero de referencias externas no prueban matriz local. Specimen_code, system y duración/time_aspect permanecen NULL; sólo se reconoce identidad de la orden.",
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/0050220",
+      "reason": "Antidesoxirribonucleasa B identifica anticuerpos anti-DNase B en la orden completa. No anti-ADN de doble cadena, enzima/actividad DNasa B, antiestreptolisina O, cultivo estreptocócico, PCR bacteriana ni panel. Las referencias denominan título o usan técnicas concretas, pero el RAW no permite asignar título, clase inmunoglobulina o método ni inferir infección o diagnóstico. Sólo identidad de orden individual por antígeno y variante escrita; sin equivalencia de resultados, muestra, duración, método, propiedad, escala, unidades o LOINC inferidos. Conserva isotipo sólo si está explícito: IgG en Scl-70; no se añade a los otros anticuerpos. Sin interpretación, diagnóstico, tratamiento, pacientes/OCR, precio, disponibilidad u ofertas. Original y preparación se conservan en RAW/decisión."
+    },
+    {
+      "item_id": "65b6131e-cce6-585a-8dba-56a60e9dd4b3",
+      "canonical_name": "Anticuerpos heterófilos (Paul–Bunnell)",
+      "component": "Heterophile antibody.Paul Bunnell",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "Ni nombre ni campos RAW de estas ocho entradas identifican muestra o familia sanguínea. Ayuno y el suero de referencias externas no prueban matriz local. Specimen_code, system y duración/time_aspect permanecen NULL; sólo se reconoce identidad de la orden.",
+      "evidence_url": "https://pubmed.ncbi.nlm.nih.gov/2831918/",
+      "reason": "La orden nombra anticuerpos heterófilos Paul-Bunnell; se conserva esa denominación histórica explícita. La investigación primaria compara heterófilos con anticuerpos específicos VCA-IgM y respalda que son órdenes distintas, sin trasladar título, sensibilidad, técnica o interpretación. No EBV VCA-IgM/IgG, EBNA/EA, EBV PCR, HAMA, estudio inespecífico de interferencias o panel EBV. No inferir IgM, aglutinación real, absorción diferencial o equivalencia entre todas las pruebas heterófilas/Monospot. Sólo identidad de orden individual por antígeno y variante escrita; sin equivalencia de resultados, muestra, duración, método, propiedad, escala, unidades o LOINC inferidos. Conserva isotipo sólo si está explícito: IgG en Scl-70; no se añade a los otros anticuerpos. Sin interpretación, diagnóstico, tratamiento, pacientes/OCR, precio, disponibilidad u ofertas. Original y preparación se conservan en RAW/decisión."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "anticuerpos anti tirosina fosfatasa anti ia2",
+      "item_id": "69200eef-bb54-50c1-90a8-bf60381adedf",
+      "canonical_name": "Anticuerpos anti-IA-2",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS ANTI-TIROSINA FOSFATASA (ANTI IA2)"
+      },
+      "source_attributes": {},
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/75939",
+      "reason": "IA-2 identifica el antígeno tirosina fosfatasa/ICA512: ambos nombres escritos son órdenes anti-IA-2 individuales. La segunda etiqueta conserva IA2 completo aunque su indicación diabetes mellitus insulino depend esté truncada; no se reconstruye el sufijo ni se interpreta como diagnóstico o panel. No GAD, insulina, ZnT8, ICA por inmunofluorescencia, IA-2beta/phogrin, actividad de fosfatasa o genética PTPRN. La advertencia RAW sobre gammagrafías no acredita radioinmunoensayo; no se elige técnica ni IgG ausente. Sólo identidad de orden individual por antígeno y variante escrita; sin equivalencia de resultados, muestra, duración, método, propiedad, escala, unidades o LOINC inferidos. Conserva isotipo sólo si está explícito: IgG en Scl-70; no se añade a los otros anticuerpos. Sin interpretación, diagnóstico, tratamiento, pacientes/OCR, precio, disponibilidad u ofertas. Original y preparación se conservan en RAW/decisión."
+    },
+    {
+      "alias": "anticuerpos ia2 diabetes mellitus insulino depend",
+      "item_id": "69200eef-bb54-50c1-90a8-bf60381adedf",
+      "canonical_name": "Anticuerpos anti-IA-2",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS IA2 (DIABETES MELLITUS INSULINO DEPEND"
+      },
+      "source_attributes": {},
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/75939",
+      "reason": "IA-2 identifica el antígeno tirosina fosfatasa/ICA512: ambos nombres escritos son órdenes anti-IA-2 individuales. La segunda etiqueta conserva IA2 completo aunque su indicación diabetes mellitus insulino depend esté truncada; no se reconstruye el sufijo ni se interpreta como diagnóstico o panel. No GAD, insulina, ZnT8, ICA por inmunofluorescencia, IA-2beta/phogrin, actividad de fosfatasa o genética PTPRN. La advertencia RAW sobre gammagrafías no acredita radioinmunoensayo; no se elige técnica ni IgG ausente. Sólo identidad de orden individual por antígeno y variante escrita; sin equivalencia de resultados, muestra, duración, método, propiedad, escala, unidades o LOINC inferidos. Conserva isotipo sólo si está explícito: IgG en Scl-70; no se añade a los otros anticuerpos. Sin interpretación, diagnóstico, tratamiento, pacientes/OCR, precio, disponibilidad u ofertas. Original y preparación se conservan en RAW/decisión."
+    },
+    {
+      "alias": "anticuerpos anti transportador de zinc zn t8",
+      "item_id": "4a40d8d7-4ad3-57fb-8354-dc31e6cd0256",
+      "canonical_name": "Anticuerpos anti-transportador de zinc 8 (ZnT8)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS ANTI-TRANSPORTADOR DE ZINC (Zn T8)"
+      },
+      "source_attributes": {},
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/75969",
+      "reason": "Zn T8 y ZnT8 identifican la proteína transportadora de zinc 8 como antígeno explícito de esta orden. No concentración de zinc, otros transportadores, GAD/IA2/insulina, genética SLC30A8 ni panel diabetes. No se eligen isotipo, epítopo o variantes de ZnT8 omitidos. Se usa la página Mayo vigente 75969; la antigua 64926 devuelve resultados de búsqueda y no se usa como evidencia del producto actual. Sólo identidad de orden individual por antígeno y variante escrita; sin equivalencia de resultados, muestra, duración, método, propiedad, escala, unidades o LOINC inferidos. Conserva isotipo sólo si está explícito: IgG en Scl-70; no se añade a los otros anticuerpos. Sin interpretación, diagnóstico, tratamiento, pacientes/OCR, precio, disponibilidad u ofertas. Original y preparación se conservan en RAW/decisión."
+    },
+    {
+      "alias": "ac anti escleroderma scl 70 igg",
+      "item_id": "fec0a9ac-b1e1-5f06-aedb-fa8d1411578e",
+      "canonical_name": "Anticuerpos anti-Scl-70 IgG",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "AC. ANTI-ESCLERODERMA (SCL-70) IGG"
+      },
+      "source_attributes": {},
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/80178",
+      "reason": "La etiqueta completa especifica Scl-70/topoisomerasa I como antígeno e IgG como clase. Conserva ambas características escritas: no anticentrómero, RNA polimerasa III, ANA/ENA genérico, otras clases ni panel esclerodermia. La palabra escleroderma no convierte la orden en diagnóstico. No se seleccionan multiplex, inmunodifusión, ELISA u otras técnicas ni se aprueban resultados equivalentes entre ellas. Sólo identidad de orden individual por antígeno y variante escrita; sin equivalencia de resultados, muestra, duración, método, propiedad, escala, unidades o LOINC inferidos. Conserva isotipo sólo si está explícito: IgG en Scl-70; no se añade a los otros anticuerpos. Sin interpretación, diagnóstico, tratamiento, pacientes/OCR, precio, disponibilidad u ofertas. Original y preparación se conservan en RAW/decisión."
+    },
+    {
+      "alias": "ac antidesoxirribonucleasa b",
+      "item_id": "ffa2c74c-4a00-581a-bc9f-653cb7e44ef8",
+      "canonical_name": "Anticuerpos anti-DNasa B",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "Ac. Antidesoxirribonucleasa B"
+      },
+      "source_attributes": {},
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/0050220",
+      "reason": "Antidesoxirribonucleasa B identifica anticuerpos anti-DNase B en la orden completa. No anti-ADN de doble cadena, enzima/actividad DNasa B, antiestreptolisina O, cultivo estreptocócico, PCR bacteriana ni panel. Las referencias denominan título o usan técnicas concretas, pero el RAW no permite asignar título, clase inmunoglobulina o método ni inferir infección o diagnóstico. Sólo identidad de orden individual por antígeno y variante escrita; sin equivalencia de resultados, muestra, duración, método, propiedad, escala, unidades o LOINC inferidos. Conserva isotipo sólo si está explícito: IgG en Scl-70; no se añade a los otros anticuerpos. Sin interpretación, diagnóstico, tratamiento, pacientes/OCR, precio, disponibilidad u ofertas. Original y preparación se conservan en RAW/decisión."
+    },
+    {
+      "alias": "ac heterofilos paul bunnell",
+      "item_id": "65b6131e-cce6-585a-8dba-56a60e9dd4b3",
+      "canonical_name": "Anticuerpos heterófilos (Paul–Bunnell)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "AC. HETEROFILOS (PAUL BUNNELL)"
+      },
+      "source_attributes": {},
+      "evidence_url": "https://pubmed.ncbi.nlm.nih.gov/2831918/",
+      "reason": "La orden nombra anticuerpos heterófilos Paul-Bunnell; se conserva esa denominación histórica explícita. La investigación primaria compara heterófilos con anticuerpos específicos VCA-IgM y respalda que son órdenes distintas, sin trasladar título, sensibilidad, técnica o interpretación. No EBV VCA-IgM/IgG, EBNA/EA, EBV PCR, HAMA, estudio inespecífico de interferencias o panel EBV. No inferir IgM, aglutinación real, absorción diferencial o equivalencia entre todas las pruebas heterófilas/Monospot. Sólo identidad de orden individual por antígeno y variante escrita; sin equivalencia de resultados, muestra, duración, método, propiedad, escala, unidades o LOINC inferidos. Conserva isotipo sólo si está explícito: IgG en Scl-70; no se añade a los otros anticuerpos. Sin interpretación, diagnóstico, tratamiento, pacientes/OCR, precio, disponibilidad u ofertas. Original y preparación se conservan en RAW/decisión."
+    }
+  ]
+}

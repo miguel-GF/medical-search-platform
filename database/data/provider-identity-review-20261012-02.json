@@ -1,0 +1,41 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261012:02",
+  "reviewed_by": "Codex; investigación delegada por el operador",
+  "authorization": "D-021/D-022: identidades candidatas pending investigadas, sin confirmación rutinaria.",
+  "research_date": "2026-10-12",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "Dos instituciones nuevas en verificación y cuatro sedes pending: Tlatlauquitepec3 y Unidad Hospitalaria La Paz1. Exterior5C/SN y domicilio Acatlán24 conservados, sin inferir traslado por ReformaSur92. Sin ofertas, precios, captura comercial, migración o disponibilidad.",
+  "providers": [
+    {
+      "provider_key": "laboratorios_clinicos_tlatlauquitepec",
+      "name": "Laboratorios Clínicos Tlatlauquitepec",
+      "slug": "laboratorios-clinicos-tlatlauquitepec",
+      "website_url": "https://laboratoriostlatlauquitepec.com/",
+      "identity_evidence_url": "https://laboratoriostlatlauquitepec.com/contacto",
+      "identity_activity_codes": [
+        "621511"
+      ],
+      "denue_record_ids": [
+        "10241460",
+        "3475545",
+        "3492706"
+      ],
+      "identity_note": "El sitio propio Laboratorio Clínico Tlatlauquitepec y su directorio público de contacto, leídos actualmente con HTTP 200, enumeran sedes de la misma institución en distintos municipios. DENUE 10241460 registra LABORATORIO CLINICO TLATLAUQUITEPEC en REFORMA 89, Centro, CP 73900, Tlatlauquitepec; el directorio identifica expresamente Tlatlauquitepec Reforma en Av. Reforma 89. DENUE 3475545 registra LABORATORIO DE ANALISIS TLATLAUQUITEPEC en 12 DE OCTUBRE, numero_ext 5 y letra_ext C, Centro, CP 73700, Zaragoza; el sitio identifica Zaragoza en 12 de Octubre 5-C. Conservar C como letra exterior y los interiores vacíos. DENUE 3492706 registra LABORATORIO CLINICO TLATLAUQUITEPEC en ALDAMA, numero_ext vacío y letra_ext SN, Centro, CP 73560, Cuetzalan del Progreso; el directorio declara Cuetzalan Centro Radiológico de la Sierra en Aldama s/n, como sede de esta institución. Conservar SN y el nombre gubernamental de ubicación, sin cambiarlo por la etiqueta de sucursal del sitio. El sitio no publica CP o colonias para estas tres fichas; conservar los gubernamentales sin atribuirles corroboración postal completa. Conservar todas las vialidades, exteriores, letras, interiores, coordenadas y hashes RAW de la corrida licenciada. Marca verification_pending y tres ubicaciones pending. Excluir Zacapoaxtla 3288832 por exterior SN y dos ubicaciones oficiales en la misma vialidad; excluir 3474173 por Ambrosio L. del Castillo 5, interior B, frente a 8 oficial, y 3492530 por Hermenegildo Galeana 7 frente a 5 oficial. No completar números ni inferir traslados. Identidad y afiliación de sedes no acreditan estudios, imagenología, procesamiento, ofertas, precios, horarios, disponibilidad, certificaciones, titularidad legal o permiso de captura comercial."
+    },
+    {
+      "provider_key": "unidad_hospitalaria_la_paz_puebla",
+      "name": "Unidad Hospitalaria La Paz",
+      "slug": "unidad-hospitalaria-la-paz-puebla",
+      "website_url": "https://www.hospitallapaz.com.mx/",
+      "identity_evidence_url": "https://www.hospitallapaz.com.mx/_files/ugd/fcd534_52e3d66713b84684a19453d7486a22cf.pdf",
+      "identity_activity_codes": [
+        "622111"
+      ],
+      "denue_record_ids": [
+        "6272351"
+      ],
+      "identity_note": "El sitio propio actual Hospital La Paz enlaza públicamente un aviso de privacidad que identifica Unidad Hospitalaria La Paz S.A. de C.V., domicilio Acatlán 24, Puebla, CP 72160 y portal www.hospitallapaz.com.mx. El PDF y la página institucional respondieron HTTP 200; capturas, URLs y SHA256 registrados en primary-receipts.json. El aviso lleva 2020 en su título de documento, sin fecha nueva de modificación acreditada; sigue enlazado actualmente y la fuente estatal https://ss.puebla.gob.mx/emergencias, modificada 06-feb-2026 y leída con HTTP 200, corrobora Unidad Hospitalaria La Paz en Acatlán 24, colonia La Paz, CP 72160. DENUE 6272351 registra UNIDAD HOSPITALARIA LA PAZ, SCIAN 622111, CALLE ACATLÁN, numero_ext 24, letras e interiores vacíos, LA PAZ, CP 72160, Puebla. El pie de página y contacto propios publican Av. Reforma Sur 92, La Paz, CP 72160; conservar esa discrepancia de dirección como limitación pendiente, sin inferir traslado, otro acceso, domicilio equivalente ni sede adicional. El dominio observado gubernamental WWW.HOSPITALLAPAZ es incompleto y permanece literal en RAW; el dominio completo se atribuye mediante el aviso propio actualmente enlazado. Conservar dirección gubernamental, campos exteriores e interiores, coordenadas y hash RAW; marca verification_pending y un hospital pending. La clase hospitalaria y el contenido institucional no acreditan ofertas, estudios, precios, disponibilidad, horarios, permisos sanitarios, titularidad legal verificada o autorización de captura comercial."
+    }
+  ]
+}
