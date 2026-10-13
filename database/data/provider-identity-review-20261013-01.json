@@ -1,0 +1,55 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261013:01",
+  "reviewed_by": "Codex; investigación delegada por el operador",
+  "authorization": "D-021/D-022: identidades candidatas pending investigadas, sin confirmación rutinaria.",
+  "research_date": "2026-10-13",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "Tres instituciones nuevas en verificación y tres sedes pending: Hospital Guadalupe de Puebla, Hospital Vilaseca Esparza y Laboratorio Clínico de Tepeaca. Dos websites NULL con incertidumbre explícita; Vilaseca conserva Barrio del Alto y CP 72290 frente a Xonaca/72280 estatal. Tepeaca conserva micrositio candidato y DOM público, sin convertir 403 nativo a HTTP 200. Sin ofertas, precios, captura comercial, migración o disponibilidad.",
+  "providers": [
+    {
+      "provider_key": "hospital_guadalupe_de_puebla",
+      "name": "Hospital Guadalupe de Puebla",
+      "slug": "hospital-guadalupe-de-puebla",
+      "website_url": null,
+      "identity_evidence_url": "https://ss.puebla.gob.mx/emergencias",
+      "identity_activity_codes": [
+        "622111"
+      ],
+      "denue_record_ids": [
+        "6378369"
+      ],
+      "identity_note": "El directorio oficial de emergencias de la Secretaría de Salud de Puebla, modificado 06-feb-2026 y consultado actualmente con HTTP 200 el 13-oct-2026, identifica Hospital Guadalupe de Puebla y declara 13 Oriente 1617, colonia Azcárate, CP 72501, Puebla. DENUE 6378369 registra HOSPITAL GUADALUPE DE PUEBLA, SCIAN 622111, AVENIDA 13 ORIENTE, numero_ext 1617, letras e interiores vacíos, AZCARATE, CP 72501, Puebla; coinciden institución y sede. Conservar todos los campos de domicilio, coordenadas y hash RAW de la corrida licenciada. No hay sitio institucional propio corroborado: website_url permanece null, sin usar la página estatal como web del proveedor. El dominio hospitalguadalupepuebla.com descubierto en la cartera anterior ofrecía comprar el sitio, incluía teléfonos de relleno y un formulario de oferta por el dominio; se descartó como evidencia de ownership y no se repitió esa visita. No confundir esta institución con Hospital Puebla ya registrado ni con Laboratorios Guadalupe, ni fusionarlas por el término Puebla o Guadalupe. La fuente estatal no demuestra afiliación corporativa, titularidad legal o control de dominio. Marca verification_pending y un hospital pending. Identidad gubernamental y clase hospitalaria no acreditan estudios, ofertas, precios, disponibilidad, horarios, permisos sanitarios o autorización de captura comercial.",
+      "website_uncertainty": "No hay sitio institucional propio acreditado. La evidencia específica de institución y sede es estatal; el dominio comercial encontrado previamente estaba ofrecido en venta y no demuestra ownership. Conservar website_url NULL sin usar el directorio como web del hospital."
+    },
+    {
+      "provider_key": "hospital_vilaseca_esparza_puebla",
+      "name": "Hospital Vilaseca Esparza",
+      "slug": "hospital-vilaseca-esparza-puebla",
+      "website_url": null,
+      "identity_evidence_url": "https://ss.puebla.gob.mx/emergencias",
+      "identity_activity_codes": [
+        "622111"
+      ],
+      "denue_record_ids": [
+        "3441886"
+      ],
+      "identity_note": "El directorio oficial de emergencias de la Secretaría de Salud de Puebla, modificado 06-feb-2026 y consultado actualmente con HTTP 200 el 13-oct-2026, enumera Hospital Vilaseca Esparza en 12 Norte 1802, Puebla. DENUE 3441886 registra HOSPITAL VILASECA ESPARZA, SCIAN 622111, CALLE 12 NORTE, numero_ext 1802, letras e interiores vacíos, BARRIO DE EL ALTO, CP 72290, Puebla. Coinciden institución, municipio, vialidad y exterior. La fuente estatal usa Xonaca y CP 72280: conservar BARRIO DE EL ALTO y CP 72290 del RAW y registrar ambas discrepancias, sin corregirlas por la fuente web ni afirmar equivalencia postal completa. Conservar coordenadas y hash RAW de la corrida licenciada. No hay web institucional propia acreditada: website_url permanece null y no se sustituye por la página estatal. El dominio hospitalvilaseca.com.mx fue una pista histórica que respondió ConnectError en la cartera anterior y no se repitió el mismo intento. No se incorporan siglas jurídicas, afiliación corporativa, propiedad o servicios procedentes de fuentes secundarias. Marca verification_pending y un hospital pending. La identidad y la clase hospitalaria no acreditan estudios, ofertas, precios, disponibilidad, horarios, permisos sanitarios o autorización de captura comercial.",
+      "website_uncertainty": "No hay sitio institucional propio acreditado. El dominio histórico candidato no pudo consultarse y no se atribuye por fuentes secundarias. Conservar website_url NULL; la fuente estatal sólo demuestra identidad candidata y sede con discrepancia de colonia y CP."
+    },
+    {
+      "provider_key": "laboratorio_clinico_de_tepeaca",
+      "name": "Laboratorio Clínico de Tepeaca",
+      "slug": "laboratorio-clinico-de-tepeaca",
+      "website_url": "https://laboratorioclinicodetepeaca.miadn.mx/",
+      "identity_evidence_url": "https://laboratorioclinicodetepeaca.miadn.mx/",
+      "identity_activity_codes": [
+        "621511"
+      ],
+      "denue_record_ids": [
+        "6421417"
+      ],
+      "identity_note": "El micrositio público de presentación Laboratorio Clínico de Tepeaca, alojado en MiADN/Sección Amarilla, identifica expresamente la institución y publica Boulevard Cuauhtémoc Sur 110, Centro, Tepeaca, CP 75200. Es una página individual con presentación en voz institucional y datos de la marca, distinta de una ficha de directorio; el hosting externo no acredita control legal del dominio, propiedad o vigencia comercial verificados. El lector web accedió al contenido el 13-oct-2026. El GET nativo recibió HTTP 403; una lectura ordinaria de Chrome con perfil nuevo, sin credenciales, alteración TLS o resolución de desafíos, renderizó la misma página institucional y domicilio, sin desafío observado. Se conserva el DOM serializado con su SHA256 en primary-receipts.json; ese hash no es un cuerpo de HTTP 200 ni el estado de red del navegador. DENUE 6421417 registra LABORATORIO CLINICO DE TEPEACA, SCIAN 621511, BOULEVARD CUAUHTEMOC SUR, numero_ext 110, letras e interiores vacíos, CENTRO, CP 75200, Tepeaca. Coinciden nombre específico y domicilio; conservar todos los campos, coordenadas y hash RAW. DENUE no atribuye dominio; el micrositio se conserva como web candidata verification_pending. El dominio alternativo labclintepeaca.com.mx descubierto como pista no fue acreditado propio ni sustituye a la fuente accesible. Marca verification_pending y una ubicación pending. No se siguieron mapas, formularios, enlaces de contacto o resultados. No se incorporan estudios, imagenología, precios, horarios, disponibilidad, permisos sanitarios ni autorización de captura comercial."
+    }
+  ]
+}

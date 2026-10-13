@@ -1,0 +1,238 @@
+{
+  "review_id": "pruevia:evidence-review:20261013:03",
+  "research_date": "2026-10-13",
+  "scope": "Revisión 35: identidades claras investigadas y originales preservados.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "f8d2225537cc96ecfa7da24df4eb2ad58bf5ec408ec55e95f0d984bfc195dc56",
+  "research_snapshot_sha256": "a0a70a32390f7614e57196e626f3a9779bcc0d47955e99fd0620e641bd853c42",
+  "definition_sha256": "a07754245decb8ad69c7a2d1336d4887e0a76344e193c7d4d31738cf7a61865a",
+  "new_concepts": [
+    {
+      "item_id": "f2b92491-5adc-54ae-8ba2-478c4d62dcf3",
+      "canonical_name": "Carga viral de hepatitis C por PCR",
+      "component": "Hepatitis C virus viral load (PCR)",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/550080/hepatitis-c-virus-hcv-quantitative-real-time-pcr-nongraphical",
+      "reason": "Carga viral + PCR escritos definen cuantificación molecular individual HCV. No añadir genotipo, anticuerpos, antígeno, reflex, región del gen, unidad, plataforma ni muestra de referencia. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Muestra no especificada en RAW. No se deduce de ayuno, sitio de aseo, sexo o referencias externas."
+    },
+    {
+      "item_id": "d44a127d-2b1f-5d2a-a193-983e846bca05",
+      "canonical_name": "Carga viral de hepatitis B por PCR",
+      "component": "Hepatitis B virus viral load (PCR)",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/551610/hepatitis-b-virus-hbv-quantitative-dna-real-time-pcr-nongraphical",
+      "reason": "Carga viral + PCR escritos definen cuantificación molecular individual HBV, distinta de HBsAg/HBeAg y anticuerpos. No importar genotipo, resistencia, RNA, formato gráfico, unidad, plataforma ni muestra. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Muestra no especificada en RAW. No se deduce de ayuno, sitio de aseo, sexo o referencias externas."
+    },
+    {
+      "item_id": "8e1b3724-6184-5983-a99b-301894dcd44e",
+      "canonical_name": "Carga viral de Epstein-Barr por PCR",
+      "component": "Epstein Barr virus viral load (PCR)",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/138230/epstein-barr-virus-ebv-quantitative-pcr",
+      "reason": "Carga viral EBV por PCR explícita. Separada de detección cualitativa y anticuerpos VCA/EA/EBNA. No copiar plasma EDTA, gen diana, DNA assay-specific, tiempo real, unidad ni rango de cuantificación. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Muestra no especificada en RAW. No se deduce de ayuno, sitio de aseo, sexo o referencias externas."
+    },
+    {
+      "item_id": "ca632f0f-2be4-5957-b693-488775dd5d18",
+      "canonical_name": "Carga viral de citomegalovirus por PCR",
+      "component": "Cytomegalovirus viral load (PCR)",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/139149/cytomegalovirus-cmv-quantitative-plasma-pcr",
+      "reason": "Carga viral CMV por PCR explícita, distinta de serología/cultivo/detección cualitativa. No copiar matriz plasma, DNA assay-specific, tiempo real, unidad ni rango de cuantificación. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Muestra no especificada en RAW. No se deduce de ayuno, sitio de aseo, sexo o referencias externas."
+    },
+    {
+      "item_id": "051b15ad-a000-55bf-8823-a4f979b92139",
+      "canonical_name": "Detección de Mycobacterium tuberculosis por PCR en orina",
+      "component": "Mycobacterium tuberculosis molecular detection (PCR)",
+      "specimen_code": "urine",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://microbiology.testcatalog.org/show/MTBRP",
+      "reason": "PCR de detección y orina están en RAW. Conservar blanco literal M. tuberculosis sin prometer discriminación de especies del complejo, genes katG/IS6110, resistencia, cultivo o baciloscopía. No convertir en IGRA, PPD o carga bacteriana. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos."
+    },
+    {
+      "item_id": "05858403-2475-5b0e-b4c2-6d8a2546d5bf",
+      "canonical_name": "Chlamydia trachomatis por PCR, hombre, exudado uretral",
+      "component": "Chlamydia trachomatis molecular testing (PCR), male urethral exudate",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://hollandhospital.testcatalog.org/show/CTU",
+      "reason": "Blanco individual y PCR/hombre explícitos. Preparacion declara exudado uretral: conservarlo literalmente, sin sustituir por urine/swab/cérvix ni importar matriz externa. No añadir NG/perfil sexual, cultivo, serotipo, cuantitación ni método de referencia. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "La fuente declara exudado uretral en hombre; se conserva literal. No hay código específico para exudado uretral y no se sustituye por hisopo ni orina."
+    },
+    {
+      "item_id": "b0ccdd85-fb19-5dd5-b121-5e8a2da5330f",
+      "canonical_name": "Neisseria gonorrhoeae por PCR cualitativa, hombre",
+      "component": "Neisseria gonorrhoeae qualitative molecular detection (PCR), male",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.pathologylab.org/clinical-testing.aspx?id=1775",
+      "reason": "Blanco individual, PCR cualitativa y hombre explícitos. Preparación no precisa muestra; no inferir uretral, orina, swab por no-orinar/aseo genital ni transferir muestra Chlamydia. No sumar perfil CT/NG/cultivo/antibiograma. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Muestra no especificada en RAW. No se deduce de ayuno, sitio de aseo, sexo o referencias externas."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "pcr para hepatitis c carga viral",
+      "item_id": "f2b92491-5adc-54ae-8ba2-478c4d62dcf3",
+      "canonical_name": "Carga viral de hepatitis C por PCR",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.labcorp.com/tests/550080/hepatitis-c-virus-hcv-quantitative-real-time-pcr-nongraphical",
+      "reason": "Carga viral + PCR escritos definen cuantificación molecular individual HCV. No añadir genotipo, anticuerpos, antígeno, reflex, región del gen, unidad, plataforma ni muestra de referencia. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "PCR PARA HEPATITIS C (CARGA VIRAL)"
+      }
+    },
+    {
+      "alias": "pcr hepatitis b carga viral",
+      "item_id": "d44a127d-2b1f-5d2a-a193-983e846bca05",
+      "canonical_name": "Carga viral de hepatitis B por PCR",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.labcorp.com/tests/551610/hepatitis-b-virus-hbv-quantitative-dna-real-time-pcr-nongraphical",
+      "reason": "Carga viral + PCR escritos definen cuantificación molecular individual HBV, distinta de HBsAg/HBeAg y anticuerpos. No importar genotipo, resistencia, RNA, formato gráfico, unidad, plataforma ni muestra. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "PCR HEPATITIS B CARGA VIRAL"
+      }
+    },
+    {
+      "alias": "pcr carga viral epstein barr virus",
+      "item_id": "8e1b3724-6184-5983-a99b-301894dcd44e",
+      "canonical_name": "Carga viral de Epstein-Barr por PCR",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.labcorp.com/tests/138230/epstein-barr-virus-ebv-quantitative-pcr",
+      "reason": "Carga viral EBV por PCR explícita. Separada de detección cualitativa y anticuerpos VCA/EA/EBNA. No copiar plasma EDTA, gen diana, DNA assay-specific, tiempo real, unidad ni rango de cuantificación. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "PCR CARGA VIRAL EPSTEIN BARR VIRUS"
+      }
+    },
+    {
+      "alias": "pcr para cmv carga viral",
+      "item_id": "ca632f0f-2be4-5957-b693-488775dd5d18",
+      "canonical_name": "Carga viral de citomegalovirus por PCR",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.labcorp.com/tests/139149/cytomegalovirus-cmv-quantitative-plasma-pcr",
+      "reason": "Carga viral CMV por PCR explícita, distinta de serología/cultivo/detección cualitativa. No copiar matriz plasma, DNA assay-specific, tiempo real, unidad ni rango de cuantificación. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "PCR PARA CMV (CARGA VIRAL)"
+      }
+    },
+    {
+      "alias": "pcr m tuberculosis deteccion orina",
+      "item_id": "051b15ad-a000-55bf-8823-a4f979b92139",
+      "canonical_name": "Detección de Mycobacterium tuberculosis por PCR en orina",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://microbiology.testcatalog.org/show/MTBRP",
+      "reason": "PCR de detección y orina están en RAW. Conservar blanco literal M. tuberculosis sin prometer discriminación de especies del complejo, genes katG/IS6110, resistencia, cultivo o baciloscopía. No convertir en IGRA, PPD o carga bacteriana. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "PCR M. TUBERCULOSIS DETECCION ORINA"
+      },
+      "source_attributes": {
+        "specimen_code": "urine"
+      }
+    },
+    {
+      "alias": "chlamydia trachomatis pcr hombre",
+      "item_id": "05858403-2475-5b0e-b4c2-6d8a2546d5bf",
+      "canonical_name": "Chlamydia trachomatis por PCR, hombre, exudado uretral",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://hollandhospital.testcatalog.org/show/CTU",
+      "reason": "Blanco individual y PCR/hombre explícitos. Preparacion declara exudado uretral: conservarlo literalmente, sin sustituir por urine/swab/cérvix ni importar matriz externa. No añadir NG/perfil sexual, cultivo, serotipo, cuantitación ni método de referencia. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Exudado uretral: el paciente no debe orinar por lo menos una hora antes de la toma de muestra, sin actividad sexual por lo menos 3 días antes de la toma de muestra, sin tratamiento antimicrobiano por lo menos 15 días antes de la toma de la muestra, estricto aseo de genitales con agua y jabón neutro. \r\n"
+      }
+    },
+    {
+      "alias": "neisseria gonorrhoeae por pcr cualitativa hombre",
+      "item_id": "b0ccdd85-fb19-5dd5-b121-5e8a2da5330f",
+      "canonical_name": "Neisseria gonorrhoeae por PCR cualitativa, hombre",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.pathologylab.org/clinical-testing.aspx?id=1775",
+      "reason": "Blanco individual, PCR cualitativa y hombre explícitos. Preparación no precisa muestra; no inferir uretral, orina, swab por no-orinar/aseo genital ni transferir muestra Chlamydia. No sumar perfil CT/NG/cultivo/antibiograma. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "NEISSERIA GONORRHOEAE POR PCR CUALITATIVA (HOMBRE)"
+      }
+    },
+    {
+      "alias": "antigeno de sars cov 2 covid 19",
+      "item_id": "d2969c40-c066-570c-8907-d8e32541c2e6",
+      "canonical_name": "PRUEBA RÁPIDA ANTÍGENO SARS-COV-2 (COVID-19)",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://salud-digna.com/CONSENTIMIENTO-INFORMADO-Y-AUTORIZACI%C3%93N-ANTIGENO-DE-SARS-COV-2-%28COVID-19%29.pdf",
+      "reason": "Documento oficial en blanco, título coincide con el estudio y describe inmunoensayo cromatográfico rápido para antígeno SARS-CoV-2. Reutilizar canónico rápido general d2969c40; no canónico nasal específico. Matriz estructurada sigue NULL pues RAW no la define. No importar hisopo/nasofaríngeo, tiempo de entrega, plataforma, performance ni recomendaciones antiguas del PDF. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 7,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTIGENO DE SARS-COV-2 (COVID - 19)"
+      }
+    }
+  ]
+}

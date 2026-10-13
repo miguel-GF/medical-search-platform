@@ -1,0 +1,269 @@
+{
+  "review_id": "pruevia:evidence-review:20261013:05",
+  "research_date": "2026-10-13",
+  "scope": "Revisión 37: ocho identidades claras y nueve aliases, 65 filas investigadas; SCC sérico con alias exclusivo SD, beta-hCG libre, pTau217, CA72-4, antígeno HLA-B27 y Candida albicans IgA/IgG/IgM separados. No cubre CA21.1, S100 ni beta-hCG SEMIN sin fracción libre. Sólo identidad de orden y atributos explícitos; sin método, propiedad, LOINC o resultados inferidos.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "41e2c235c6dabe9a0430258afd3e1c5dd3d96b7a4f47f8dd25739393062d52e1",
+  "research_snapshot_sha256": "d30fb4d4dc6231456d345217fc295cc5f32b0530e2a78636a0297376e240ef30",
+  "definition_sha256": "6fb0aebca299baf15369ab6a77282ef01880afb2dba8e027abaeb266058df1cb",
+  "new_concepts": [
+    {
+      "item_id": "37653ec5-6f5e-5154-bf07-dfd7d46e5f00",
+      "canonical_name": "Antígeno de carcinoma de células escamosas (SCC) en suero",
+      "component": "Squamous cell carcinoma Ag",
+      "specimen_code": "serum",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/610033",
+      "reason": "El título SD identifica SCC y su Preparacion escribe SUERO. Se conserva orden sérica con alias exclusivo SD; no se escoge isoforma SCCA1, SCCA2 ni composición total desde Mayo. Vecinos incompatibles conservados: SCCA1 aislado; SCCA2 aislado; SCC en matriz desconocida; CYFRA21-1; Diagnóstico histológico de carcinoma. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos."
+    },
+    {
+      "item_id": "4e3cadbb-f551-54ef-9b31-a4b3918e807b",
+      "canonical_name": "Antígeno CA 72-4",
+      "component": "Cancer antigen 72-4",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://diagnostics.roche.com/global/en/products/lab/elecsys-ca-72-4-cps-000450.html",
+      "reason": "El número completo 72-4 identifica el marcador individual. La mención comercial Colon se conserva en RAW; no constituye anatomía de la muestra ni diagnóstico ni modifica el analito. Vecinos incompatibles conservados: CA 19-9; CA 125; CA 27.29; Panel de marcadores tumorales. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW SD no especifica matriz. La matriz de referencias no se transfiere a la orden; HLA-B27 SEMIN sólo conserva familia sangre por entrada."
+    },
+    {
+      "item_id": "8f83fd38-c15b-5c95-908c-a03384e2dc4e",
+      "canonical_name": "Subunidad beta libre de gonadotropina coriónica humana (β-hCG libre)",
+      "component": "Choriogonadotropin.beta.free",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://diagnostics.roche.com/global/en/products/lab/elecsys-free-betahcg-cps-000470.html",
+      "reason": "El RAW nombra BETA HCG LIBRE: se conserva la subunidad beta y la fracción libre. No se une a hCG total, beta-hCG sin fracción, hCG intacta o panel prenatal. Vecinos incompatibles conservados: hCG intacta; hCG total; Beta-hCG sin fracción libre explícita; Subunidad alfa libre; Panel combinado PAPP-A/hCG. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW SD no especifica matriz. La matriz de referencias no se transfiere a la orden; HLA-B27 SEMIN sólo conserva familia sangre por entrada."
+    },
+    {
+      "item_id": "87e6991b-2dd5-51bb-9ead-7c398ba37cb4",
+      "canonical_name": "Proteína tau fosforilada en 217 (p-tau217)",
+      "component": "Tau protein.phosphorylated 217",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/621635",
+      "reason": "Fosforilada y 217 están escritos: se preserva el sitio de fosforilación. La preparación vacía no permite elegir plasma, LCR, método o cociente. Vecinos incompatibles conservados: Tau total; p-tau181; p-tau231; Cociente p-tau217/beta-amiloide; Porcentaje p-tau217. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW SD no especifica matriz. La matriz de referencias no se transfiere a la orden; HLA-B27 SEMIN sólo conserva familia sangre por entrada."
+    },
+    {
+      "item_id": "7870d4a4-05cb-5d85-a434-910cb0f297e8",
+      "canonical_name": "Antígeno HLA-B27",
+      "component": "HLA-B27 Ag",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/9648",
+      "reason": "Ambos títulos solicitan antígeno HLA-B27. El ensayo de referencia prueba que hay una orden de antígeno distinta de la selección automática de genotipo por PCR. No se copia citometría de flujo, genotipificación, alelo B*27 específico ni técnica. Vecinos incompatibles conservados: Genotipo HLA-B*27 por PCR; Subtipificación HLA-B27; Anticuerpos anti-HLA; Panel de histocompatibilidad. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW SD no especifica matriz. La matriz de referencias no se transfiere a la orden; HLA-B27 SEMIN sólo conserva familia sangre por entrada."
+    },
+    {
+      "item_id": "8b28649d-32b7-5cbf-95b8-267e663225af",
+      "canonical_name": "Anticuerpos contra Candida albicans IgA",
+      "component": "Candida albicans Ab.IgA",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://wardelab.com/test/candida-albicans-antibodies-igg-iga-igm/",
+      "reason": "El RAW nombra especie Candida albicans e isotipo IgA de forma individual. La referencia primaria documenta los tres resultados separados; no se sustituye por panel, antígeno, cultivo, PCR o IgE. Vecinos incompatibles conservados: Anticuerpos Candida sin isotipo; Panel IgA+IgG+IgM; Candida albicans IgE; Antígeno o cultivo de Candida; Candida spp. sin especie definida. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW SD no especifica matriz. La matriz de referencias no se transfiere a la orden; HLA-B27 SEMIN sólo conserva familia sangre por entrada."
+    },
+    {
+      "item_id": "d17ef391-b891-5168-8699-fece1ee30135",
+      "canonical_name": "Anticuerpos contra Candida albicans IgG",
+      "component": "Candida albicans Ab.IgG",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://wardelab.com/test/candida-albicans-antibodies-igg-iga-igm/",
+      "reason": "El RAW nombra especie Candida albicans e isotipo IgG de forma individual. La referencia primaria documenta los tres resultados separados; no se sustituye por panel, antígeno, cultivo, PCR o IgE. Vecinos incompatibles conservados: Anticuerpos Candida sin isotipo; Panel IgA+IgG+IgM; Candida albicans IgE; Antígeno o cultivo de Candida; Candida spp. sin especie definida. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW SD no especifica matriz. La matriz de referencias no se transfiere a la orden; HLA-B27 SEMIN sólo conserva familia sangre por entrada."
+    },
+    {
+      "item_id": "09510c0b-b8ef-537a-bdf7-cd21de30679b",
+      "canonical_name": "Anticuerpos contra Candida albicans IgM",
+      "component": "Candida albicans Ab.IgM",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://wardelab.com/test/candida-albicans-antibodies-igg-iga-igm/",
+      "reason": "El RAW nombra especie Candida albicans e isotipo IgM de forma individual. La referencia primaria documenta los tres resultados separados; no se sustituye por panel, antígeno, cultivo, PCR o IgE. Vecinos incompatibles conservados: Anticuerpos Candida sin isotipo; Panel IgA+IgG+IgM; Candida albicans IgE; Antígeno o cultivo de Candida; Candida spp. sin especie definida. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW SD no especifica matriz. La matriz de referencias no se transfiere a la orden; HLA-B27 SEMIN sólo conserva familia sangre por entrada."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "antigeno scc carcinoma de celulas escamosas",
+      "item_id": "37653ec5-6f5e-5154-bf07-dfd7d46e5f00",
+      "canonical_name": "Antígeno de carcinoma de células escamosas (SCC) en suero",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/610033",
+      "reason": "El título SD identifica SCC y su Preparacion escribe SUERO. Se conserva orden sérica con alias exclusivo SD; no se escoge isoforma SCCA1, SCCA2 ni composición total desde Mayo. Vecinos incompatibles conservados: SCCA1 aislado; SCCA2 aislado; SCC en matriz desconocida; CYFRA21-1; Diagnóstico histológico de carcinoma. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "AYUNO MINIMO DE 8 HORAS; ENVIAR SUERO EN CONGELACIÓN SIN HEMÓLISIS, ICTERICIA NI LIPEMIA."
+      },
+      "source_attributes": {
+        "specimen_code": "serum"
+      }
+    },
+    {
+      "alias": "ca 72 4 colon",
+      "item_id": "4e3cadbb-f551-54ef-9b31-a4b3918e807b",
+      "canonical_name": "Antígeno CA 72-4",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://diagnostics.roche.com/global/en/products/lab/elecsys-ca-72-4-cps-000450.html",
+      "reason": "El número completo 72-4 identifica el marcador individual. La mención comercial Colon se conserva en RAW; no constituye anatomía de la muestra ni diagnóstico ni modifica el analito. Vecinos incompatibles conservados: CA 19-9; CA 125; CA 27.29; Panel de marcadores tumorales. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "CA 72-4 (Colon)"
+      }
+    },
+    {
+      "alias": "beta hcg libre",
+      "item_id": "8f83fd38-c15b-5c95-908c-a03384e2dc4e",
+      "canonical_name": "Subunidad beta libre de gonadotropina coriónica humana (β-hCG libre)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://diagnostics.roche.com/global/en/products/lab/elecsys-free-betahcg-cps-000470.html",
+      "reason": "El RAW nombra BETA HCG LIBRE: se conserva la subunidad beta y la fracción libre. No se une a hCG total, beta-hCG sin fracción, hCG intacta o panel prenatal. Vecinos incompatibles conservados: hCG intacta; hCG total; Beta-hCG sin fracción libre explícita; Subunidad alfa libre; Panel combinado PAPP-A/hCG. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "BETA HCG LIBRE"
+      }
+    },
+    {
+      "alias": "proteina tau fosforilada 217",
+      "item_id": "87e6991b-2dd5-51bb-9ead-7c398ba37cb4",
+      "canonical_name": "Proteína tau fosforilada en 217 (p-tau217)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/621635",
+      "reason": "Fosforilada y 217 están escritos: se preserva el sitio de fosforilación. La preparación vacía no permite elegir plasma, LCR, método o cociente. Vecinos incompatibles conservados: Tau total; p-tau181; p-tau231; Cociente p-tau217/beta-amiloide; Porcentaje p-tau217. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "Proteina TAU fosforilada 217"
+      }
+    },
+    {
+      "alias": "antigeno hla b 27",
+      "item_id": "7870d4a4-05cb-5d85-a434-910cb0f297e8",
+      "canonical_name": "Antígeno HLA-B27",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/9648",
+      "reason": "Ambos títulos solicitan antígeno HLA-B27. El ensayo de referencia prueba que hay una orden de antígeno distinta de la selección automática de genotipo por PCR. No se copia citometría de flujo, genotipificación, alelo B*27 específico ni técnica. Vecinos incompatibles conservados: Genotipo HLA-B*27 por PCR; Subtipificación HLA-B27; Anticuerpos anti-HLA; Panel de histocompatibilidad. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "4 ml Sangre Total con EDTA. Temperatura Ambiente"
+      },
+      "source_attributes": {
+        "specimen_family": "blood"
+      }
+    },
+    {
+      "alias": "antigeno hla b27",
+      "item_id": "7870d4a4-05cb-5d85-a434-910cb0f297e8",
+      "canonical_name": "Antígeno HLA-B27",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/9648",
+      "reason": "Ambos títulos solicitan antígeno HLA-B27. El ensayo de referencia prueba que hay una orden de antígeno distinta de la selección automática de genotipo por PCR. No se copia citometría de flujo, genotipificación, alelo B*27 específico ni técnica. Vecinos incompatibles conservados: Genotipo HLA-B*27 por PCR; Subtipificación HLA-B27; Anticuerpos anti-HLA; Panel de histocompatibilidad. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTIGENO HLA B27"
+      }
+    },
+    {
+      "alias": "candida albicans anticuerpos iga",
+      "item_id": "8b28649d-32b7-5cbf-95b8-267e663225af",
+      "canonical_name": "Anticuerpos contra Candida albicans IgA",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://wardelab.com/test/candida-albicans-antibodies-igg-iga-igm/",
+      "reason": "El RAW nombra especie Candida albicans e isotipo IgA de forma individual. La referencia primaria documenta los tres resultados separados; no se sustituye por panel, antígeno, cultivo, PCR o IgE. Vecinos incompatibles conservados: Anticuerpos Candida sin isotipo; Panel IgA+IgG+IgM; Candida albicans IgE; Antígeno o cultivo de Candida; Candida spp. sin especie definida. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "CANDIDA ALBICANS ANTICUERPOS IgA"
+      }
+    },
+    {
+      "alias": "candida albicans anticuerpos igg",
+      "item_id": "d17ef391-b891-5168-8699-fece1ee30135",
+      "canonical_name": "Anticuerpos contra Candida albicans IgG",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://wardelab.com/test/candida-albicans-antibodies-igg-iga-igm/",
+      "reason": "El RAW nombra especie Candida albicans e isotipo IgG de forma individual. La referencia primaria documenta los tres resultados separados; no se sustituye por panel, antígeno, cultivo, PCR o IgE. Vecinos incompatibles conservados: Anticuerpos Candida sin isotipo; Panel IgA+IgG+IgM; Candida albicans IgE; Antígeno o cultivo de Candida; Candida spp. sin especie definida. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "CANDIDA ALBICANS ANTICUERPOS IgG"
+      }
+    },
+    {
+      "alias": "candida albicans anticuerpos igm",
+      "item_id": "09510c0b-b8ef-537a-bdf7-cd21de30679b",
+      "canonical_name": "Anticuerpos contra Candida albicans IgM",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://wardelab.com/test/candida-albicans-antibodies-igg-iga-igm/",
+      "reason": "El RAW nombra especie Candida albicans e isotipo IgM de forma individual. La referencia primaria documenta los tres resultados separados; no se sustituye por panel, antígeno, cultivo, PCR o IgE. Vecinos incompatibles conservados: Anticuerpos Candida sin isotipo; Panel IgA+IgG+IgM; Candida albicans IgE; Antígeno o cultivo de Candida; Candida spp. sin especie definida. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "CANDIDA ALBICANS ANTICUERPOS IgM"
+      }
+    }
+  ]
+}

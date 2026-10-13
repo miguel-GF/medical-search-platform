@@ -1,0 +1,186 @@
+{
+  "review_id": "pruevia:evidence-review:20261013:04",
+  "research_date": "2026-10-13",
+  "scope": "Revisión36: 34 filas de identidad clara (5 conceptos nuevos y lactato plasmático existente). Mantener 33 filas retenidas por variante clínica o muestras combinadas. Sólo identidad de orden, guardas exactas y atributos explícitos, sin pacientes ni ofertas.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "317959ca737b55a6a32bcc6bcbb92d30ed9b0f61ddf55d331580e4b0073e31dd",
+  "research_snapshot_sha256": "d30fb4d4dc6231456d345217fc295cc5f32b0530e2a78636a0297376e240ef30",
+  "definition_sha256": "50dc077ec217a0d01fee8e856b74e6e31a2f0b0b73166734c6e9b1e0be447e13",
+  "new_concepts": [
+    {
+      "item_id": "1f7c734f-4314-5bcd-b27e-351a9b090009",
+      "canonical_name": "Bilirrubina indirecta",
+      "component": "Bilirubin.indirect",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayoclinic.org/tests-procedures/bilirubin/about/pac-20393041",
+      "reason": "La descripción BILIRRUBINAS INDIRECTA identifica la variante indirecta y la preparación declara sangre. No intercambiar con directa/total ni copiar el método calculado de otra fuente o del catálogo histórico. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Matriz exacta y momento desconocidos en RAW. La familia sangre se conserva sólo donde está escrita; no completar suero/plasma por ayuno ni por una ficha externa."
+    },
+    {
+      "item_id": "685b224e-6e29-5c3e-848a-368e3f6a1e61",
+      "canonical_name": "Reticulocitos",
+      "component": "Reticulocytes",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/005280/reticulocyte-count",
+      "reason": "RETICULOCITOS identifica la orden celular individual. No agregar conteo absoluto, porcentaje, fracción inmadura, RET-He, anticuerpos antirreticulina, muestra o método externos. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Matriz exacta y momento desconocidos en RAW. La familia sangre se conserva sólo donde está escrita; no completar suero/plasma por ayuno ni por una ficha externa."
+    },
+    {
+      "item_id": "070781f6-e7b1-5807-a5d2-a915ccaa96a3",
+      "canonical_name": "Creatinina en primera orina matutina",
+      "component": "Creatinine",
+      "specimen_code": "urine",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/610603",
+      "reason": "La preparación especifica PRIMERA ORINA MATUTINA: preservar ese momento en el nombre, sin codificarlo como Pt/24H o random. La fuente primaria sustenta creatinina urinaria, no importa su condición random. Distinta del canónico sérico y del canónico en orina de 24 horas. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos."
+    },
+    {
+      "item_id": "4d1b3031-4c3b-5179-a6d5-dd5a013f8935",
+      "canonical_name": "Creatina quinasa (CK/CPK)",
+      "component": "Creatine kinase",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://medlineplus.gov/lab-tests/creatine-kinase/",
+      "reason": "CPK es denominación de creatina quinasa CK. La orden local no declara total, actividad, masa o isoenzima específica: preservar identidad de analito sin completar esas propiedades, ni fusionarla con CK-MB. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Matriz exacta y momento desconocidos en RAW. La familia sangre se conserva sólo donde está escrita; no completar suero/plasma por ayuno ni por una ficha externa."
+    },
+    {
+      "item_id": "6d100f9c-cc20-5ee6-94c4-7f72739a2821",
+      "canonical_name": "Detección cualitativa de hemoglobina humana en heces",
+      "component": "Human hemoglobin [Presence]",
+      "specimen_code": "stool",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://medlineplus.gov/lab-tests/fecal-occult-blood-test-fobt/",
+      "reason": "SEMIN declara literalmente deteccion cualitativa de hemoglobina humana y Heces / Frasco de plastico. La detección cualitativa es parte escrita de la orden; método, escala codificada y plataforma no se importan. No deducir FIT/inmunoquímica; alias restringido a este proveedor. El mismo rótulo de Salud Digna carece de blanco/método y queda retenido. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "bilirrubinas indirecta",
+      "item_id": "1f7c734f-4314-5bcd-b27e-351a9b090009",
+      "canonical_name": "Bilirrubina indirecta",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.mayoclinic.org/tests-procedures/bilirubin/about/pac-20393041",
+      "reason": "La descripción BILIRRUBINAS INDIRECTA identifica la variante indirecta y la preparación declara sangre. No intercambiar con directa/total ni copiar el método calculado de otra fuente o del catálogo histórico. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno 8-12h. No realizar ejercicio físico intenso ni consumir alcohol 24 horas antes de la extracción de sangre. La mañana en la que se obtiene la muestra de sangre no fumar ni tomar bebidas que contengan cafeína."
+      },
+      "source_attributes": {
+        "specimen_family": "blood"
+      }
+    },
+    {
+      "alias": "reticulocitos",
+      "item_id": "685b224e-6e29-5c3e-848a-368e3f6a1e61",
+      "canonical_name": "Reticulocitos",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.labcorp.com/tests/005280/reticulocyte-count",
+      "reason": "RETICULOCITOS identifica la orden celular individual. No agregar conteo absoluto, porcentaje, fracción inmadura, RET-He, anticuerpos antirreticulina, muestra o método externos. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "RETICULOCITOS"
+      }
+    },
+    {
+      "alias": "creatinina en orina",
+      "item_id": "070781f6-e7b1-5807-a5d2-a915ccaa96a3",
+      "canonical_name": "Creatinina en primera orina matutina",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/610603",
+      "reason": "La preparación especifica PRIMERA ORINA MATUTINA: preservar ese momento en el nombre, sin codificarlo como Pt/24H o random. La fuente primaria sustenta creatinina urinaria, no importa su condición random. Distinta del canónico sérico y del canónico en orina de 24 horas. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "- RECOLECTAR EN UN RECIPIENTE PARA ORINA NUEVO, LA PRIMERA ORINA MATUTINA Y PRESENTARSE EN EL LABORATORIO.\r\n\r\n\r\n\r\n\r\n"
+      },
+      "source_attributes": {
+        "specimen_code": "urine"
+      }
+    },
+    {
+      "alias": "creatinin fosfoquinasa cpk",
+      "item_id": "4d1b3031-4c3b-5179-a6d5-dd5a013f8935",
+      "canonical_name": "Creatina quinasa (CK/CPK)",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://medlineplus.gov/lab-tests/creatine-kinase/",
+      "reason": "CPK es denominación de creatina quinasa CK. La orden local no declara total, actividad, masa o isoenzima específica: preservar identidad de analito sin completar esas propiedades, ni fusionarla con CK-MB. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "CREATININ FOSFOQUINASA CPK"
+      }
+    },
+    {
+      "alias": "sangre oculta en heces",
+      "item_id": "6d100f9c-cc20-5ee6-94c4-7f72739a2821",
+      "canonical_name": "Detección cualitativa de hemoglobina humana en heces",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://medlineplus.gov/lab-tests/fecal-occult-blood-test-fobt/",
+      "reason": "SEMIN declara literalmente deteccion cualitativa de hemoglobina humana y Heces / Frasco de plastico. La detección cualitativa es parte escrita de la orden; método, escala codificada y plataforma no se importan. No deducir FIT/inmunoquímica; alias restringido a este proveedor. El mismo rótulo de Salud Digna carece de blanco/método y queda retenido. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "Heces / Frasco de plastico"
+      },
+      "source_attributes": {
+        "specimen_code": "stool"
+      }
+    },
+    {
+      "alias": "acido lactico lactato",
+      "item_id": "4a8d8fe8-809d-537d-9b4b-0aad27ab225c",
+      "canonical_name": "Ácido láctico en plasma",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/601685",
+      "reason": "Ácido láctico/lactato y 2 ml Plasma. Congelado escritos corresponden al canónico existente Lactate/Plasma con tiempo NULL. Reutilizar su ID y nombre exacto sin mutar definición. No inferir L/D-lactato ni deshidrogenasa láctica; no copiar conservación ni matriz externa como atributos nuevos. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "2 ml Plasma. Congelado"
+      },
+      "source_attributes": {
+        "specimen_code": "plasma"
+      }
+    }
+  ]
+}

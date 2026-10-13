@@ -1,0 +1,278 @@
+{
+  "review_id": "pruevia:evidence-review:20261013:02",
+  "research_date": "2026-10-13",
+  "scope": "Revisión 34: identidades claras investigadas y originales preservados.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "6e686921190d00d13b2c1fcac25c3d17027339424499df6d558f4ebaf0624cdb",
+  "research_snapshot_sha256": "a0a70a32390f7614e57196e626f3a9779bcc0d47955e99fd0620e641bd853c42",
+  "definition_sha256": "0a8465d599e91dc9161ca31791ff235da2f775ee8d3ef1ac3f2a55f828e5af20",
+  "new_concepts": [
+    {
+      "item_id": "a057233f-b7b5-597a-a397-600f7a072f4a",
+      "canonical_name": "Hormona antimülleriana (AMH)",
+      "component": "Mullerian inhibiting substance",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/608824",
+      "reason": "El nombre completo identifica AMH individual. No se selecciona un perfil de reserva ovárica, inhibina o una evaluación diagnóstica. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "La orden canónica no fija matriz. Las muestras explícitas de SEMIN se conservan sólo por entrada; SD no especifica matriz. No se hereda la muestra del ensayo de referencia."
+    },
+    {
+      "item_id": "c69c995b-656e-5cde-a7cc-becadb5f9c9d",
+      "canonical_name": "Hormona del crecimiento (GH)",
+      "component": "Somatotropin",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/8688",
+      "reason": "Orden individual de hormona del crecimiento; el RAW no define curva, estímulo, supresión ni número de determinaciones. No se añade basal al nombre ni Pt al tiempo. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "La orden canónica no fija matriz. Las muestras explícitas de SEMIN se conservan sólo por entrada; SD no especifica matriz. No se hereda la muestra del ensayo de referencia."
+    },
+    {
+      "item_id": "f7f767fb-120b-5e58-b6ee-7a3dba769892",
+      "canonical_name": "Aldosterona",
+      "component": "Aldosterone",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/0070015",
+      "reason": "Diana aldosterona individual. El título y la preparación SD no precisan matriz, postura ni cociente con renina. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "La orden canónica no fija matriz. Las muestras explícitas de SEMIN se conservan sólo por entrada; SD no especifica matriz. No se hereda la muestra del ensayo de referencia."
+    },
+    {
+      "item_id": "dd5c35ec-7a48-5372-9428-78fc1815f19a",
+      "canonical_name": "Serotonina",
+      "component": "Serotonin",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/84373",
+      "reason": "Diana serotonina individual. La preparación sólo especifica ayuno y restricción de medicamentos; no identifica suero, sangre total, plasma u orina. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "La orden canónica no fija matriz. Las muestras explícitas de SEMIN se conservan sólo por entrada; SD no especifica matriz. No se hereda la muestra del ensayo de referencia."
+    },
+    {
+      "item_id": "ccc8312a-3bc6-5c1d-bf9c-8bcb8e090949",
+      "canonical_name": "Vasopresina (hormona antidiurética)",
+      "component": "Vasopressin",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/010447/antidiuretic-hormone-adh-plasma",
+      "reason": "El título une explícitamente vasopresina y hormona antidiurética; la fuente primaria confirma ambos nombres para AVP. No equivale a copeptina ni a un protocolo de estimulación. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "La orden canónica no fija matriz. Las muestras explícitas de SEMIN se conservan sólo por entrada; SD no especifica matriz. No se hereda la muestra del ensayo de referencia."
+    },
+    {
+      "item_id": "b4e3b88c-961e-509d-9ff2-3efe733c8bb9",
+      "canonical_name": "Proteína transportadora del factor de crecimiento similar a la insulina 3 (IGFBP-3)",
+      "component": "Insulin-like growth factor binding protein 3",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/83300",
+      "reason": "La denominación completa y BP-3 identifican la proteína transportadora 3; VIANTO documenta la misma grafía comercial GFBP-3 como IGF-BP3. Es una interpretación de nomenclatura documentada, no una coincidencia fuzzy. Se conserva el RAW literal y se propone sólo alias SD; no es IGF-1 ni un panel IGF-1+IGFBP-3. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "La orden canónica no fija matriz. Las muestras explícitas de SEMIN se conservan sólo por entrada; SD no especifica matriz. No se hereda la muestra del ensayo de referencia."
+    },
+    {
+      "item_id": "9db7342b-84b0-5779-8887-e5c9adbe0c9a",
+      "canonical_name": "Inhibina A en suero",
+      "component": "Inhibin A",
+      "specimen_code": "serum",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/81049",
+      "reason": "El título y la descripción SEMIN nombran inhibina A. La letra A es parte de la diana; no se transforma en B, inhibina genérica ni panel A+B. Decisión del coordinador: esta orden sólo tiene SEMIN con suero literal; canónico en suero y alias restringido a ese proveedor. No fija suero para una futura orden genérica de otro proveedor. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos."
+    },
+    {
+      "item_id": "c2add784-4e01-5331-b4f9-bda0afe86b83",
+      "canonical_name": "Inhibina B",
+      "component": "Inhibin B",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/88722",
+      "reason": "La letra B del RAW identifica inhibina B individual, distinta de inhibina A y del panel A+B. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "La orden canónica no fija matriz. Las muestras explícitas de SEMIN se conservan sólo por entrada; SD no especifica matriz. No se hereda la muestra del ensayo de referencia."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "hormona anti mulleriana",
+      "item_id": "a057233f-b7b5-597a-a397-600f7a072f4a",
+      "canonical_name": "Hormona antimülleriana (AMH)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/608824",
+      "reason": "El nombre completo identifica AMH individual. No se selecciona un perfil de reserva ovárica, inhibina o una evaluación diagnóstica. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "HORMONA ANTI MULLERIANA"
+      },
+      "additional_targets": [
+        {
+          "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+          "expected_rows": 1,
+          "raw_guard": {
+            "path": [
+              "sample_type"
+            ],
+            "value": "2 ml Suero. Refrigerado"
+          },
+          "source_attributes": {
+            "specimen_code": "serum"
+          }
+        }
+      ]
+    },
+    {
+      "alias": "hormona del crecimiento",
+      "item_id": "c69c995b-656e-5cde-a7cc-becadb5f9c9d",
+      "canonical_name": "Hormona del crecimiento (GH)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/8688",
+      "reason": "Orden individual de hormona del crecimiento; el RAW no define curva, estímulo, supresión ni número de determinaciones. No se añade basal al nombre ni Pt al tiempo. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "HORMONA DEL CRECIMIENTO"
+      },
+      "additional_targets": [
+        {
+          "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+          "expected_rows": 1,
+          "raw_guard": {
+            "path": [
+              "sample_type"
+            ],
+            "value": "2 ml Suero. Refrigerado"
+          },
+          "source_attributes": {
+            "specimen_code": "serum"
+          }
+        }
+      ]
+    },
+    {
+      "alias": "aldosterona",
+      "item_id": "f7f767fb-120b-5e58-b6ee-7a3dba769892",
+      "canonical_name": "Aldosterona",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/0070015",
+      "reason": "Diana aldosterona individual. El título y la preparación SD no precisan matriz, postura ni cociente con renina. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ALDOSTERONA"
+      }
+    },
+    {
+      "alias": "serotonina",
+      "item_id": "dd5c35ec-7a48-5372-9428-78fc1815f19a",
+      "canonical_name": "Serotonina",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/84373",
+      "reason": "Diana serotonina individual. La preparación sólo especifica ayuno y restricción de medicamentos; no identifica suero, sangre total, plasma u orina. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "SEROTONINA"
+      }
+    },
+    {
+      "alias": "vasopresina hormona antidiuretica",
+      "item_id": "ccc8312a-3bc6-5c1d-bf9c-8bcb8e090949",
+      "canonical_name": "Vasopresina (hormona antidiurética)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.labcorp.com/tests/010447/antidiuretic-hormone-adh-plasma",
+      "reason": "El título une explícitamente vasopresina y hormona antidiurética; la fuente primaria confirma ambos nombres para AVP. No equivale a copeptina ni a un protocolo de estimulación. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "VASOPRESINA (HORMONA ANTIDIURETICA)"
+      }
+    },
+    {
+      "alias": "igf unida a proteina 3 gfbp 3",
+      "item_id": "b4e3b88c-961e-509d-9ff2-3efe733c8bb9",
+      "canonical_name": "Proteína transportadora del factor de crecimiento similar a la insulina 3 (IGFBP-3)",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/83300",
+      "reason": "La denominación completa y BP-3 identifican la proteína transportadora 3; VIANTO documenta la misma grafía comercial GFBP-3 como IGF-BP3. Es una interpretación de nomenclatura documentada, no una coincidencia fuzzy. Se conserva el RAW literal y se propone sólo alias SD; no es IGF-1 ni un panel IGF-1+IGFBP-3. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "IGF UNIDA A PROTEINA 3 (GFBP-3)"
+      }
+    },
+    {
+      "alias": "inhibina a",
+      "item_id": "9db7342b-84b0-5779-8887-e5c9adbe0c9a",
+      "canonical_name": "Inhibina A en suero",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/81049",
+      "reason": "El título y la descripción SEMIN nombran inhibina A. La letra A es parte de la diana; no se transforma en B, inhibina genérica ni panel A+B. Decisión del coordinador: esta orden sólo tiene SEMIN con suero literal; canónico en suero y alias restringido a ese proveedor. No fija suero para una futura orden genérica de otro proveedor. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "2 ml Suero. Refrigerado"
+      },
+      "source_attributes": {
+        "specimen_code": "serum"
+      }
+    },
+    {
+      "alias": "inhibina b",
+      "item_id": "c2add784-4e01-5331-b4f9-bda0afe86b83",
+      "canonical_name": "Inhibina B",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/88722",
+      "reason": "La letra B del RAW identifica inhibina B individual, distinta de inhibina A y del panel A+B. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "INHIBINA B"
+      }
+    }
+  ]
+}
