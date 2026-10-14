@@ -89,6 +89,18 @@ def query(client: httpx.Client, ref: str, sql: str) -> list[dict]:
     return rows
 
 
+def read_ledger(client: httpx.Client, ref: str, sql: str) -> list[dict]:
+    """Retry only the generated read-only ledger after a transport interruption."""
+    for attempt in range(3):
+        try:
+            return query(client, ref, sql)
+        except (httpx.RemoteProtocolError, httpx.ConnectError, httpx.ReadTimeout):
+            if attempt == 2:
+                raise
+            time.sleep(attempt + 1)
+    raise RuntimeError('Ledger observation did not finish')
+
+
 def load_queue(path: Path, ref: str) -> list[dict]:
     queue = json.loads(inside(ROOT / path, ROOT).read_text(encoding="utf-8"))
     if (queue.get("version") != 1 or queue.get("project_ref") != ref
@@ -185,7 +197,7 @@ select jsonb_build_object(
       and ev.metadata->>'evidence_url'=e.url and ev.metadata->>'reason'=e.reason))
 ) as ledger;
 """
-    data = query(client, ref, sql)[0]["ledger"]
+    data = read_ledger(client, ref, sql)[0]["ledger"]
     counts = {"alias_audits": len(review["aliases"]), "concept_audits": len(review.get("new_concepts", [])),
               "valid_concepts": len(review.get("new_concepts", [])),
               "decisions": expected_rows(review), "valid_aliases": len(review["aliases"])}
@@ -252,17 +264,39 @@ def main() -> int:
                     print(json.dumps({"status": "stopped", "reason": "local_stop_marker"}), flush=True)
                     return 0
                 results = []
+                connection_wait = False
                 for queued in load_queue(args.queue, ref):
                     if (ARTIFACTS / "STOP").exists():
                         raise StopRequested()
                     review = queued["review"]
                     status.update(status="scanning", active_review=review["review_id"], updated_at=now(), next_scan_at=None)
                     save(ARTIFACTS / "status.json", status)
-                    state = ledger(client, ref, review)
+                    try:
+                        state = ledger(client, ref, review)
+                    except (httpx.RemoteProtocolError, httpx.ConnectError, httpx.ReadTimeout) as error:
+                        if not args.watch:
+                            raise
+                        # This catch covers the read-only ledger only. A transport
+                        # failure from execute() still stops for outcome inspection.
+                        status.update(status="waiting_for_connection", error_type=type(error).__name__,
+                                      last_rpc="read_only_ledger", updated_at=now(),
+                                      next_scan_at=datetime.fromtimestamp(
+                                          time.time() + args.interval_seconds, timezone.utc).isoformat())
+                        save(ARTIFACTS / "status.json", status)
+                        print(json.dumps({"status":"waiting_for_connection",
+                                          "error_type":type(error).__name__,
+                                          "transaction_submitted":False}), flush=True)
+                        connection_wait = True
+                        break
                     if state == "not_applied" and args.execute_reviewed:
                         results.append(execute(client, ref, queued))
                     else:
                         results.append({"review_id": review["review_id"], "status": state})
+                if connection_wait:
+                    time.sleep(args.interval_seconds)
+                    continue
+                status.pop("error_type", None)
+                status.pop("last_rpc", None)
                 next_scan = datetime.fromtimestamp(time.time() + args.interval_seconds, timezone.utc).isoformat() if args.watch else None
                 status.update(status="watching" if args.watch else "completed", reviews=results,
                               active_review=None, updated_at=now(), next_scan_at=next_scan)

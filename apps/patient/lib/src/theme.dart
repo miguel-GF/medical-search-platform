@@ -37,6 +37,7 @@ ThemeData buildPrueviaTheme(Brightness brightness) {
         ? const Color(0xFF0B1220)
         : PrueviaColors.canvas,
     fontFamily: 'Inter',
+    fontFamilyFallback: const ['Roboto'],
     textTheme: Typography.material2021().black.apply(
       bodyColor: text,
       displayColor: text,

@@ -3,10 +3,10 @@
 Tipo: procedimientos vigentes contrastados con scripts/configuración el 14-sep-2026.
 No es un registro de ejecución ni una autorización de despliegue.
 
-Última observación local: **13-oct-2026, 13:00 UTC**. API/Admin/Paciente en
-8787/5173/8080 respondieron HTTP 200; cola existente PID 2044, 31 entradas
-explícitas por hash. Supabase productivo enlazado: 460 conceptos, 234 ofertas,
-4,742 pendientes, 68 marcas, 152 ubicaciones y 112 migraciones. Son un corte
+Última observación de datos: **14-oct-2026, 12:55 UTC**. Supabase productivo
+enlazado: 474 conceptos, 234 ofertas, 4,636 pendientes en 845 grupos, 68 marcas,
+152 ubicaciones y 112 migraciones. Cola local: 34 entradas explícitas por hash
+verificadas, modo sólo lectura tras recuperarse de una caída DNS. Son un corte
 fechado, no una garantía de que un puerto abierto demuestre salud futura.
 Revisiones 34–37 e identidad 13 conservan rollback/commit/ledger y RAW;
 50 consultas públicas y once internas de proveedor dieron el ID esperado.
@@ -31,7 +31,7 @@ Ejecutar cada servicio en una terminal independiente:
 | --- | --- | --- |
 | `apps/api` | `npm.cmd run dev -- --ip 127.0.0.1` | `http://localhost:8787/health`; confirmar puerto real mostrado por Wrangler. |
 | `apps/admin` | `npm.cmd run dev -- --host 127.0.0.1 --port 5173 --strictPort` | Abrir `http://localhost:5173`; Auth, MFA y carga de datos. |
-| `apps/patient` | `flutter run -d web-server --web-port 8080 --dart-define=API_BASE_URL=http://localhost:8787` | Abrir `http://localhost:8080` y probar búsqueda. |
+| Raíz | `python scripts/run_pruevia_patient_local.py` | Compila Flutter debug y sirve en `http://localhost:8080`; abrir búsqueda. |
 
 El script API local acepta `ALLOWED_ORIGINS` para los tres frontends
 (`http://localhost:3000`, `http://localhost:5173` y `http://localhost:8080`).
@@ -49,6 +49,11 @@ frontends simultáneamente, declarar la lista exacta en el archivo local de
 variables; nunca sustituirla por un wildcard.
 
 No reiniciar servicios a ciegas: identificar PID/puerto y proceso de este proyecto.
+El servidor paciente local usa una compilación debug en artefactos ignorados,
+CanvasKit y fuentes incluidos; no necesita DWDS ni descargar fuentes al abrir.
+Conserva la restricción del cliente: HTTP sólo para loopback en debug. Sirve
+únicamente archivos compilados, sin listados de directorios ni logs de consultas.
+Un cambio de fuentes requiere volver a compilar antes de servirlo.
 Cuando sea necesario iniciar un helper en segundo plano con `Start-Process`, usar
 `-WindowStyle Hidden`; conservar cómo pararlo y verificar que quedó vivo.
 
