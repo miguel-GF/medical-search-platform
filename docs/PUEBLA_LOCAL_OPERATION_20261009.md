@@ -28,6 +28,30 @@ de entorno y los artefactos permanecen ignorados por Git.
 
 ## Inventario estatal guardado y comprobado
 
+**Corte vigente 14-oct-2026, 12:55 UTC:** 40 revisiones clínicas aplicadas,
+324 aliases y 2,392 filas históricas cerradas. Paginación completa: 474 conceptos
+activos y 4,636 pendientes en 845 grupos. Permanecen 234 ofertas, 68 marcas,
+152 ubicaciones y 112 migraciones; ningún despliegue público nuevo.
+La revisión 38 cerró 72 filas IgE específicas de Salud Digna. La 39 cerró diez
+Western blot VIH conservando tipo conjunto frente a VIH-1 y el suero SEMIN;
+se usó la sustituta `reviewed-aliases-20261014-04.json`, nunca el original `-02`.
+La 40 cerró 24 filas HbA1c, ABO/Rh y urocultivo, sin inventar muestra para
+HbA1c/ABO-Rh ni añadir antibiograma. Observación independiente de 39/40:
+34 UUID/RAW/guardas exactos, diez consultas públicas y seis de proveedor con
+el ID esperado, vecinos congelados intactos. Recibos en
+`collectors/artifacts/puebla-expansion-20261009/clinical-research/`
+(`review-39-revised/` y `review-40/`).
+La memoria después de 40 registra 343 reglas/contextos y verifica los hashes
+de las 34 entradas de cola. Sus sombras son sólo lectura: 2,389 contextos
+históricos reutilizables y tres campos no reconocidos; pendientes 4,552 con
+necesidad de evidencia y 84 campos no reconocidos. Cero coincidencias exactas
+pendientes reutilizables. Recibos completos en
+`collectors/artifacts/normalization-memory-after-review-40/`.
+Una caída de DNS detuvo el worker de escritura; la recuperación sólo lectura
+confirmó todos los ledgers sin reenviar commits. El watcher reintenta únicamente
+la consulta de ledger y declara `transaction_submitted=false` cuando falla.
+Suites formales no ejecutadas; resolver clínico, esquema y permisos sin cambios.
+
 **Corte revalidado el 13-oct local/UTC tras treinta y siete revisiones aplicadas:**
 309 aliases (286 globales y 23 de proveedor), 271 conceptos nuevos y
 **2,286 filas cerradas**; quedan **4,742 filas / 860 grupos**.

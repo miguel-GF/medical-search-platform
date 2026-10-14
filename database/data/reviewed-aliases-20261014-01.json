@@ -1,0 +1,276 @@
+{
+  "review_id": "pruevia:evidence-review:20261014:01",
+  "research_date": "2026-10-14",
+  "scope": "Revisión38, nueve órdenes individuales IgE específicas SD (72 filas), matrices y métodos desconocidos. Pteronyssi8 retenido por puente literal ausente; trigo Chopo1 fuera de alcance. Revisión clínica delegada, no revisión humana.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "747a5afbc04742d6d36d58e70bcdef50d7eefe670faf4695789f86fbf9022a72",
+  "research_snapshot_sha256": "2246a115dd98c3d56e247f5d5f6375bd8d08b03fe6e4ebfe57a880f42eebfec2",
+  "definition_sha256": "574109e4ca9694df4a67b88a8af1bd89426b3407ea507b98083376e747ea4556",
+  "new_concepts": [
+    {
+      "item_id": "f0a1ea1c-84b8-5b0c-98cb-b475a4e17d91",
+      "canonical_name": "IgE específica contra Aspergillus fumigatus",
+      "component": "Aspergillus fumigatus specific IgE",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://clevelandcliniclabs.com/test/allergen-aspergillus-fumigatus-ige/",
+      "reason": "IgE específica de la especie Aspergillus fumigatus escrita. No confundir con IgG, precipitinas, antígeno galactomanano, género Aspergillus genérico ni componentes moleculares Asp f individuales. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "RAW no declara matriz exacta ni familia de muestra. Preparación vacía o sólo ayuno no prueba sangre, suero ni plasma; no copiar matriz de un catálogo externo."
+    },
+    {
+      "item_id": "c93f44f4-b036-5c52-98f9-7a96e45f740b",
+      "canonical_name": "IgE específica contra clara de huevo",
+      "component": "Egg white specific IgE",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/602452/egg-white",
+      "reason": "Clara de huevo explícita, distinta de huevo entero, yema, ovalbúmina y ovomucoide. No crear panel ni reflexes o especie del huevo no escrita. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "RAW no declara matriz exacta ni familia de muestra. Preparación vacía o sólo ayuno no prueba sangre, suero ni plasma; no copiar matriz de un catálogo externo."
+    },
+    {
+      "item_id": "12d84eca-9a3a-5b04-8ee4-606e6f4e643c",
+      "canonical_name": "IgE específica contra caseína",
+      "component": "Casein specific IgE",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/602554/casein",
+      "reason": "Caseína individual explícita, distinta de leche completa, lactoalbúmina y lactoglobulina. No añadir Bos d 8, subfracción, origen bovino, procesamiento o método si RAW no lo declara. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "RAW no declara matriz exacta ni familia de muestra. Preparación vacía o sólo ayuno no prueba sangre, suero ni plasma; no copiar matriz de un catálogo externo."
+    },
+    {
+      "item_id": "0243abbe-acad-56ca-9a5f-5f5c3376c294",
+      "canonical_name": "IgE específica contra Dermatophagoides farinae",
+      "component": "Dermatophagoides farinae specific IgE",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/602475/dermatophagoides-farinae",
+      "reason": "La especie Dermatophagoides farinae está completa en RAW. No sustituir por pteronyssinus, mezcla de ácaros ni componentes Der f 1/2; reactividad cruzada no establece equivalencia de orden. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "RAW no declara matriz exacta ni familia de muestra. Preparación vacía o sólo ayuno no prueba sangre, suero ni plasma; no copiar matriz de un catálogo externo."
+    },
+    {
+      "item_id": "46a86f33-90aa-5cfb-b1bf-98acd5ba2c4c",
+      "canonical_name": "IgE específica contra leche de vaca",
+      "component": "Cow's milk specific IgE",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/602453/milk",
+      "reason": "Leche de vaca explícita, distinta de cabra, leche hervida, caseína y proteínas individuales de suero lácteo. No convertir en panel de leche con reflexes. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "RAW no declara matriz exacta ni familia de muestra. Preparación vacía o sólo ayuno no prueba sangre, suero ni plasma; no copiar matriz de un catálogo externo."
+    },
+    {
+      "item_id": "a243301a-4779-50d2-9db0-f27991435a9e",
+      "canonical_name": "IgE específica contra lactoalbúmina",
+      "component": "Lactalbumin specific IgE",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/603927/allergen-profile-milk-ige-with-component-reflexes",
+      "reason": "Conservar literalmente la orden IgE contra LACTOALBÚMINA. Las referencias externas especifican alfa-lactoalbúmina: no importar alfa, Bos d 4, origen bovino, carácter nativo/recombinante ni identificar resultados con la variante alfa. Alias limitado a Salud Digna y sin reutilizar una variante molecular más específica. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "RAW no declara matriz exacta ni familia de muestra. Preparación vacía o sólo ayuno no prueba sangre, suero ni plasma; no copiar matriz de un catálogo externo."
+    },
+    {
+      "item_id": "b0900921-1fd5-54b3-ba8d-7601a516ebfd",
+      "canonical_name": "IgE específica contra lactoglobulina",
+      "component": "Lactoglobulin specific IgE",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/603927/allergen-profile-milk-ige-with-component-reflexes",
+      "reason": "Conservar literalmente IgE contra LACTOGLOBULINA. Las referencias externas especifican beta-lactoglobulina: no importar beta, Bos d 5, origen bovino, variante genética, carácter nativo/recombinante ni equivalencia de resultados con esa variante. Alias limitado a Salud Digna y distinto de lactoalbúmina. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "RAW no declara matriz exacta ni familia de muestra. Preparación vacía o sólo ayuno no prueba sangre, suero ni plasma; no copiar matriz de un catálogo externo."
+    },
+    {
+      "item_id": "1bac691c-e869-5c90-8fa6-ef6f2326e8a1",
+      "canonical_name": "IgE específica contra gluten",
+      "component": "Gluten specific IgE",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/test-menu/resources/individual-allergen-list",
+      "reason": "Gluten aparece como alérgeno individual en el catálogo primario, separado de trigo. Preservar gluten e IgE: no inferir trigo, gliadina omega-5, péptidos desamidados, IgA/IgG, antitransglutaminasa, diagnóstico celíaco ni gluten fecal. El vecino Chopo IgE a trigo queda fuera del alcance. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "RAW no declara matriz exacta ni familia de muestra. Preparación vacía o sólo ayuno no prueba sangre, suero ni plasma; no copiar matriz de un catálogo externo."
+    },
+    {
+      "item_id": "1e9622de-2c5c-5fb5-a83e-7b10aa02f607",
+      "canonical_name": "IgE específica contra peniciloil G",
+      "component": "Penicilloyl G specific IgE",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/602646/penicilloyl-g",
+      "reason": "Penicilloyl G es determinante alergénico individual y la letra G está explícita; conservarla. No sustituir por penicilloyl V, amoxicilina, penicilinas genéricas, prueba cutánea ni perfil de fármacos. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "RAW no declara matriz exacta ni familia de muestra. Preparación vacía o sólo ayuno no prueba sangre, suero ni plasma; no copiar matriz de un catálogo externo."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "ige especifica contra aspergillus fumigatus",
+      "item_id": "f0a1ea1c-84b8-5b0c-98cb-b475a4e17d91",
+      "canonical_name": "IgE específica contra Aspergillus fumigatus",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://clevelandcliniclabs.com/test/allergen-aspergillus-fumigatus-ige/",
+      "reason": "IgE específica de la especie Aspergillus fumigatus escrita. No confundir con IgG, precipitinas, antígeno galactomanano, género Aspergillus genérico ni componentes moleculares Asp f individuales. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "IgE ESPECIFICA CONTRA ASPERGILLUS FUMIGATUS"
+      }
+    },
+    {
+      "alias": "ige especifica contra clara de huevo",
+      "item_id": "c93f44f4-b036-5c52-98f9-7a96e45f740b",
+      "canonical_name": "IgE específica contra clara de huevo",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.labcorp.com/tests/602452/egg-white",
+      "reason": "Clara de huevo explícita, distinta de huevo entero, yema, ovalbúmina y ovomucoide. No crear panel ni reflexes o especie del huevo no escrita. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "IGE ESPECIFICA CONTRA CLARA DE HUEVO"
+      }
+    },
+    {
+      "alias": "ige especifica contra caseina",
+      "item_id": "12d84eca-9a3a-5b04-8ee4-606e6f4e643c",
+      "canonical_name": "IgE específica contra caseína",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.labcorp.com/tests/602554/casein",
+      "reason": "Caseína individual explícita, distinta de leche completa, lactoalbúmina y lactoglobulina. No añadir Bos d 8, subfracción, origen bovino, procesamiento o método si RAW no lo declara. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "IgE ESPECIFICA CONTRA CASEINA"
+      }
+    },
+    {
+      "alias": "ige especifica contra dermatophagoides farinae",
+      "item_id": "0243abbe-acad-56ca-9a5f-5f5c3376c294",
+      "canonical_name": "IgE específica contra Dermatophagoides farinae",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.labcorp.com/tests/602475/dermatophagoides-farinae",
+      "reason": "La especie Dermatophagoides farinae está completa en RAW. No sustituir por pteronyssinus, mezcla de ácaros ni componentes Der f 1/2; reactividad cruzada no establece equivalencia de orden. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "IgE ESPECIFICA CONTRA DERMATOPHAGOIDES FARINAE"
+      }
+    },
+    {
+      "alias": "ige especifica contra leche de vaca",
+      "item_id": "46a86f33-90aa-5cfb-b1bf-98acd5ba2c4c",
+      "canonical_name": "IgE específica contra leche de vaca",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.labcorp.com/tests/602453/milk",
+      "reason": "Leche de vaca explícita, distinta de cabra, leche hervida, caseína y proteínas individuales de suero lácteo. No convertir en panel de leche con reflexes. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "IgE ESPECIFICA CONTRA LECHE DE VACA"
+      }
+    },
+    {
+      "alias": "ige especifica contra lactoalbumina",
+      "item_id": "a243301a-4779-50d2-9db0-f27991435a9e",
+      "canonical_name": "IgE específica contra lactoalbúmina",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.labcorp.com/tests/603927/allergen-profile-milk-ige-with-component-reflexes",
+      "reason": "Conservar literalmente la orden IgE contra LACTOALBÚMINA. Las referencias externas especifican alfa-lactoalbúmina: no importar alfa, Bos d 4, origen bovino, carácter nativo/recombinante ni identificar resultados con la variante alfa. Alias limitado a Salud Digna y sin reutilizar una variante molecular más específica. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "IgE ESPECIFICA CONTRA LACTOALBÚMINA"
+      }
+    },
+    {
+      "alias": "ige especifica contra lactoglobulina",
+      "item_id": "b0900921-1fd5-54b3-ba8d-7601a516ebfd",
+      "canonical_name": "IgE específica contra lactoglobulina",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.labcorp.com/tests/603927/allergen-profile-milk-ige-with-component-reflexes",
+      "reason": "Conservar literalmente IgE contra LACTOGLOBULINA. Las referencias externas especifican beta-lactoglobulina: no importar beta, Bos d 5, origen bovino, variante genética, carácter nativo/recombinante ni equivalencia de resultados con esa variante. Alias limitado a Salud Digna y distinto de lactoalbúmina. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "IgE ESPECIFICA CONTRA LACTOGLOBULINA"
+      }
+    },
+    {
+      "alias": "ige especifica contra gluten",
+      "item_id": "1bac691c-e869-5c90-8fa6-ef6f2326e8a1",
+      "canonical_name": "IgE específica contra gluten",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.labcorp.com/test-menu/resources/individual-allergen-list",
+      "reason": "Gluten aparece como alérgeno individual en el catálogo primario, separado de trigo. Preservar gluten e IgE: no inferir trigo, gliadina omega-5, péptidos desamidados, IgA/IgG, antitransglutaminasa, diagnóstico celíaco ni gluten fecal. El vecino Chopo IgE a trigo queda fuera del alcance. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "IgE ESPECIFICA CONTRA GLUTEN"
+      }
+    },
+    {
+      "alias": "ige especifica contra penicilloyl g",
+      "item_id": "1e9622de-2c5c-5fb5-a83e-7b10aa02f607",
+      "canonical_name": "IgE específica contra peniciloil G",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.labcorp.com/tests/602646/penicilloyl-g",
+      "reason": "Penicilloyl G es determinante alergénico individual y la letra G está explícita; conservarla. No sustituir por penicilloyl V, amoxicilina, penicilinas genéricas, prueba cutánea ni perfil de fármacos. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "IgE ESPECIFICA CONTRA PENICILLOYL G"
+      }
+    }
+  ]
+}

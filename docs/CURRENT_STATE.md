@@ -1,6 +1,6 @@
 # Estado y prioridades de Pruevia
 
-Tipo: punto de continuidad. Actualizado el 13-oct-2026 para operación local y datos;
+Tipo: punto de continuidad. Actualizado el 14-oct-2026 para operación local y datos;
 el corte de publicación siguiente corresponde al 25-sep-2026 sobre el árbol local, el
 ledger Supabase y los Workers de producción. El proyecto enlazado se llama
 `pruevia-dev`, pero también es la base inicial de producción: las migraciones
@@ -15,6 +15,34 @@ base inicial de producción. Una escritura o migración allí afecta datos que
 podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
+
+**Corte vigente, 14-oct-2026 12:55 UTC:** 40 revisiones clínicas aplicadas,
+324 aliases investigados y 2,392 filas históricas cerradas. Paginación completa:
+474 conceptos activos y 4,636 pendientes en 845 grupos; 234 ofertas, 68 marcas,
+152 ubicaciones y 112 migraciones. Las revisiones 38–40 cerraron 106 filas con
+14 conceptos nuevos. El original `reviewed-aliases-20261014-02.json` no se aplicó;
+su sustituta `20261014-04` conserva el suero explícito del Western blot VIH-1
+de SEMIN. Memoria: 343 reglas/contextos, 2,389 contextos históricos reutilizables
+y tres con campos no reconocidos. Ningún pendiente tiene reutilización exacta
+aprobada: 4,552 requieren evidencia y 84 tienen campos no reconocidos. Los
+recibos están en `collectors/artifacts/normalization-memory-after-review-40/`
+y `collectors/artifacts/puebla-expansion-20261009/clinical-research/`
+(`review-39-revised/`, `review-40/`).
+La cola local recuperó conexión y confirmó sus 34 ledgers por hash, en modo
+sólo lectura (`execution_enabled=false`); no repitió commits durante la caída
+de DNS. El resolver clínico permanece sin cambios. Las cifras del 13-oct que
+siguen son antecedentes fechados, no el inventario actual.
+
+**Paciente local, 14-oct:** búsquedas generales «sangre» y «orina» muestran
+opciones para precisar el estudio, diferenciando examen general, cultivo y
+recolecciones de 24 horas. No seleccionan estudios de una orden ni afirman
+ofertas. GET reales y capturas de escritorio/móvil están en
+`collectors/artifacts/specimen-search-20261014/`; cero errores de página en la
+observación. El servidor local compila Flutter debug y sirve sólo loopback con
+CanvasKit y Roboto incluidos. Cuando falla la consulta remota, las opciones
+previamente verificadas se etiquetan como catálogo revisado el 14-oct, sin
+afirmar proveedores disponibles. Los fallos de permisos/configuración no usan
+esa alternativa. Sin publicación ni suites formales.
 
 **Operación local y datos (13-oct-2026):** con autorización expresa se reanudó
 la misma base productiva enlazada, encontrada `INACTIVE`; quedó `ACTIVE_HEALTHY`,

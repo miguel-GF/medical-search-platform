@@ -2,6 +2,17 @@
 
 ## Operación delegada vigente — 13-oct-2026
 
+**Actualización 14-oct-2026, 12:55 UTC:** 40 revisiones aplicadas, 324 aliases,
+343 reglas/contextos y 2,392 filas cerradas. Paginación completa de pendientes:
+4,636 filas / 845 grupos; 4,552 requieren evidencia y 84 conservan campos
+no reconocidos. Memoria y recibos en
+`collectors/artifacts/normalization-memory-after-review-40/`. Ningún pendiente
+coincide exactamente con una decisión reutilizable aprobada. La cola confirmó
+34 ledgers por hash y permanece en modo sólo lectura tras una caída de DNS.
+El watcher reintenta únicamente consultas de ledger; nunca reenvía preview o
+commit ante un fallo de conexión de resultado desconocido. Los cortes del 13-oct
+que siguen conservan su fecha y no sustituyen esta actualización.
+
 El usuario autorizó investigar nombres pendientes y decidir los casos claros sin
 esperar confirmación rutinaria. Primero contrastar RAW, atributos canónicos y
 fuentes primarias; después guardar alias, motivo, fecha y auditoría que identifique

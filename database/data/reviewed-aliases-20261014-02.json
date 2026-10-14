@@ -1,0 +1,95 @@
+{
+  "review_id": "pruevia:evidence-review:20261014:02",
+  "research_date": "2026-10-14",
+  "scope": "Revisión 39: VIH-1 confirmatorio Western Blot y VIH-1+VIH-2 confirmatorio Western Blot, dos identidades, tres aliases, diez filas (8 SD, 2 SEMIN). Tipos/composición y método escritos por proveedor; sin generación/isotipo/RNA inferidos. Suero SEMIN sólo por entrada. No cubre VIH presuntivo ni carga viral PCR sin tipo.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "21f40a10b37a82aa2d3409fa40d25bdf26b7b990fc443ff9062a9ee2ce604ae3",
+  "research_snapshot_sha256": "9d3b6b0deeaa42b80fdcee47f61341ab80b4c2316cb0a8d9e4cf0de40f66b2b0",
+  "definition_sha256": "8b3131c99dbdc908e904647440725515f69cda899d445a36f1064ffa1917c4e0",
+  "new_concepts": [
+    {
+      "item_id": "527d59ed-b9f4-5c47-b5c9-da43efb55a08",
+      "canonical_name": "Prueba confirmatoria de VIH-1 por Western Blot",
+      "component": "HIV 1 Ab.by Western blot",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://semindigital.com/servicios",
+      "reason": "El catálogo propio SEMIN conservado en RAW nombra VIH-1, Western Blot y Confirmatoria; el beneficio confirma infección VIH-1. No se escoge isotipo, generación, RNA, cobertura VIH-2 o PCR. El método escrito permanece en nombre/componente; muestra sérica sólo por entrada SEMIN. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "La matriz canónica permanece desconocida; el suero literal de SEMIN no se copia a SD ni al canónico."
+    },
+    {
+      "item_id": "00b5a791-3091-5bab-92e1-c74fe1dd8659",
+      "canonical_name": "Prueba confirmatoria de VIH-1 y VIH-2 por Western Blot",
+      "component": "HIV 1+2 Ab.by Western blot",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://api.emarketingsd.org/Citas/Citas2/SubEstudiosPorSucursalPP?estudio%5BId%5D=2&sucursal%5BId%5D=58&filtro=1&busqueda=",
+      "reason": "Ambos títulos propios declaran VIH-1 y VIH-2 juntos, Western Blot y Confirmatoria. El catálogo SD público actual volvió a nombrar la misma orden, CatSubestudiosId 2830. Se conserva su composición conjunta explícita sin inferir generación o ensayo molecular. Suero pertenece sólo a SEMIN. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "La matriz canónica permanece desconocida; el suero literal de SEMIN no se copia a SD ni al canónico."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "hiv 1 por western blot confirmatoria",
+      "item_id": "527d59ed-b9f4-5c47-b5c9-da43efb55a08",
+      "canonical_name": "Prueba confirmatoria de VIH-1 por Western Blot",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://semindigital.com/servicios",
+      "reason": "El catálogo propio SEMIN conservado en RAW nombra VIH-1, Western Blot y Confirmatoria; el beneficio confirma infección VIH-1. No se escoge isotipo, generación, RNA, cobertura VIH-2 o PCR. El método escrito permanece en nombre/componente; muestra sérica sólo por entrada SEMIN. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "2 ml Suero. Refrigerado"
+      },
+      "source_attributes": {
+        "specimen_code": "serum"
+      }
+    },
+    {
+      "alias": "hiv 1 y 2 por western blot confirmatoria",
+      "item_id": "00b5a791-3091-5bab-92e1-c74fe1dd8659",
+      "canonical_name": "Prueba confirmatoria de VIH-1 y VIH-2 por Western Blot",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://api.emarketingsd.org/Citas/Citas2/SubEstudiosPorSucursalPP?estudio%5BId%5D=2&sucursal%5BId%5D=58&filtro=1&busqueda=",
+      "reason": "Ambos títulos propios declaran VIH-1 y VIH-2 juntos, Western Blot y Confirmatoria. El catálogo SD público actual volvió a nombrar la misma orden, CatSubestudiosId 2830. Se conserva su composición conjunta explícita sin inferir generación o ensayo molecular. Suero pertenece sólo a SEMIN. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "2 ml Suero. Refrigerado"
+      },
+      "source_attributes": {
+        "specimen_code": "serum"
+      }
+    },
+    {
+      "alias": "hiv 1 y hiv 2 por western blot confirmatoria",
+      "item_id": "00b5a791-3091-5bab-92e1-c74fe1dd8659",
+      "canonical_name": "Prueba confirmatoria de VIH-1 y VIH-2 por Western Blot",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://api.emarketingsd.org/Citas/Citas2/SubEstudiosPorSucursalPP?estudio%5BId%5D=2&sucursal%5BId%5D=58&filtro=1&busqueda=",
+      "reason": "Ambos títulos propios declaran VIH-1 y VIH-2 juntos, Western Blot y Confirmatoria. El catálogo SD público actual volvió a nombrar la misma orden, CatSubestudiosId 2830. Se conserva su composición conjunta explícita sin inferir generación o ensayo molecular. Suero pertenece sólo a SEMIN. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "HIV-1 y HIV-2 por Western Blot (Confirmatoria)"
+      }
+    }
+  ]
+}

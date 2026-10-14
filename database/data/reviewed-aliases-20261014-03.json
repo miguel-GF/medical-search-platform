@@ -1,0 +1,104 @@
+{
+  "review_id": "pruevia:evidence-review:20261014:03",
+  "research_date": "2026-10-14",
+  "scope": "Tres identidades de órdenes de laboratorio comunes, con todos los contextos RAW actuales de sus etiquetas; B12 y folatos conservan conceptos activos existentes. Fecha UTC 14-oct; investigacion local 13-oct sin alterar sus recibos.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "c753ca37f6b1c02a01b7517f68138c66ca4ec97b6840cf0981b7a333fa7002d1",
+  "research_snapshot_sha256": "fe15683d42be02d4dff18a683e709353d2223ea10727cd1dd796e71519f1fb70",
+  "definition_sha256": "afeea0964eec849649aac5fa4368ffe7159fe1a47b31cdfea525d684dd79b790",
+  "new_concepts": [
+    {
+      "item_id": "78322e0d-fa32-58a4-98e4-ec538743eb49",
+      "canonical_name": "Hemoglobina glicosilada (HbA1c)",
+      "component": "Hemoglobin A1c",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://medlineplus.gov/spanish/pruebas-de-laboratorio/prueba-de-hemoglobina-a1c/",
+      "reason": "El título literal HEMOGLOBINA GLUCOSILADA corresponde a un nombre alternativo explícito de HbA1c en MedlinePlus. Sólo identidad de orden; no hemoglobina total, variantes por electroforesis, metahemoglobina, carboxihemoglobina, FIT ni fructosamina. Matriz, método, propiedad, escala, unidad y LOINC no aprobados. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "RAW no declara matriz exacta: No requiere ayuno no identifica suero, plasma ni sangre total. No se hereda la muestra de la referencia médica."
+    },
+    {
+      "item_id": "3aa94396-81e6-59ea-982a-3ece64e10fbf",
+      "canonical_name": "Grupo sanguíneo y factor Rh (ABO/Rh)",
+      "component": "ABO/Rh blood group",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://medlineplus.gov/spanish/ency/article/003345.htm",
+      "reason": "El título literal solicita grupo sanguíneo y factor Rh conjuntamente. MedlinePlus distingue clasificación ABO y Rh; se mantiene la orden combinada sin crear equivalencia con grupo aislado, Rh aislado, RhD molecular, fenotipo eritrocitario extendido, Coombs ni compatibilidad cruzada. No se define composición de una oferta o panel comercial. Matriz, método, propiedad, escala, unidad y LOINC no aprobados. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "La palabra sanguíneo nombra la clasificación solicitada; RAW no declara material ni matriz de la muestra. SIN PREPARACIONES ESPECIALES no completa este atributo."
+    },
+    {
+      "item_id": "075b5a83-c228-5126-add0-7d916dcbbc86",
+      "canonical_name": "Urocultivo (cultivo de orina)",
+      "component": "Urine culture",
+      "specimen_code": "urine",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://medlineplus.gov/spanish/ency/article/003751.htm",
+      "reason": "El título literal CULTIVO DE ORINA --UROCULTIVO-- escribe ambas denominaciones y la muestra orina. Se identifica la orden de cultivo sin inferir antibiograma, sensibilidad, microorganismo específico, micobacterias, hongos exclusivos, técnica de obtención ni duración de recolección. La preparación original se conserva sin validar ni trasladar sus instrucciones farmacológicas al concepto. No equivale a EGO ni a orina de 24 horas. Propiedad, método específico, escala, unidad y LOINC no aprobados. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "hemoglobina glucosilada",
+      "item_id": "78322e0d-fa32-58a4-98e4-ec538743eb49",
+      "canonical_name": "Hemoglobina glicosilada (HbA1c)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://medlineplus.gov/spanish/pruebas-de-laboratorio/prueba-de-hemoglobina-a1c/",
+      "reason": "El título literal HEMOGLOBINA GLUCOSILADA corresponde a un nombre alternativo explícito de HbA1c en MedlinePlus. Sólo identidad de orden; no hemoglobina total, variantes por electroforesis, metahemoglobina, carboxihemoglobina, FIT ni fructosamina. Matriz, método, propiedad, escala, unidad y LOINC no aprobados. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "HEMOGLOBINA GLUCOSILADA"
+      }
+    },
+    {
+      "alias": "grupo sanguineo y factor rh",
+      "item_id": "3aa94396-81e6-59ea-982a-3ece64e10fbf",
+      "canonical_name": "Grupo sanguíneo y factor Rh (ABO/Rh)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://medlineplus.gov/spanish/ency/article/003345.htm",
+      "reason": "El título literal solicita grupo sanguíneo y factor Rh conjuntamente. MedlinePlus distingue clasificación ABO y Rh; se mantiene la orden combinada sin crear equivalencia con grupo aislado, Rh aislado, RhD molecular, fenotipo eritrocitario extendido, Coombs ni compatibilidad cruzada. No se define composición de una oferta o panel comercial. Matriz, método, propiedad, escala, unidad y LOINC no aprobados. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "GRUPO SANGUÍNEO Y FACTOR RH"
+      }
+    },
+    {
+      "alias": "cultivo de orina urocultivo",
+      "item_id": "075b5a83-c228-5126-add0-7d916dcbbc86",
+      "canonical_name": "Urocultivo (cultivo de orina)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://medlineplus.gov/spanish/ency/article/003751.htm",
+      "reason": "El título literal CULTIVO DE ORINA --UROCULTIVO-- escribe ambas denominaciones y la muestra orina. Se identifica la orden de cultivo sin inferir antibiograma, sensibilidad, microorganismo específico, micobacterias, hongos exclusivos, técnica de obtención ni duración de recolección. La preparación original se conserva sin validar ni trasladar sus instrucciones farmacológicas al concepto. No equivale a EGO ni a orina de 24 horas. Propiedad, método específico, escala, unidad y LOINC no aprobados. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "CULTIVO DE ORINA --UROCULTIVO--"
+      },
+      "source_attributes": {
+        "specimen_code": "urine"
+      }
+    }
+  ]
+}
