@@ -8,7 +8,9 @@
 no reconocidos. Memoria y recibos en
 `collectors/artifacts/normalization-memory-after-review-40/`. Ningún pendiente
 coincide exactamente con una decisión reutilizable aprobada. La cola confirmó
-34 ledgers por hash y permanece en modo sólo lectura tras una caída de DNS.
+34 ledgers por hash en recuperación sólo lectura tras una caída de DNS;
+a las 13:03 UTC volvió al modo de ejecución de lotes revisados fijados por hash,
+con 34 `already_applied` y ninguna escritura repetida.
 El watcher reintenta únicamente consultas de ledger; nunca reenvía preview o
 commit ante un fallo de conexión de resultado desconocido. Los cortes del 13-oct
 que siguen conservan su fecha y no sustituyen esta actualización.

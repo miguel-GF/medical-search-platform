@@ -52,6 +52,16 @@ confirmó todos los ledgers sin reenviar commits. El watcher reintenta únicamen
 la consulta de ledger y declara `transaction_submitted=false` cuando falla.
 Suites formales no ejecutadas; resolver clínico, esquema y permisos sin cambios.
 
+Identidad 14 incorporó Sanatorio Gutiérrez, DENUE 3441877: una marca en
+verificación y un hospital pendiente, elevando el registro a 69 marcas / 153
+ubicaciones (31 instituciones y 66 sedes nuevas). RAW, coordenadas y domicilio
+12 Norte 1805A intactos; se conserva la discrepancia de letra A omitida en el
+directorio estatal. Web propia NULL con incertidumbre, no se sustituye por la
+página estatal. Preflight/rollback sin persistencia y commit único, seguido de
+observación independiente: una marca, sede, vínculo DENUE, auditoría y
+observación accepted. Ofertas 234 y migraciones 112 intactas. Recibos en
+`collectors/artifacts/puebla-expansion-20261009/identity-review-14/`.
+
 **Corte revalidado el 13-oct local/UTC tras treinta y siete revisiones aplicadas:**
 309 aliases (286 globales y 23 de proveedor), 271 conceptos nuevos y
 **2,286 filas cerradas**; quedan **4,742 filas / 860 grupos**.

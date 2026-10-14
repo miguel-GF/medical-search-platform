@@ -28,9 +28,11 @@ aprobada: 4,552 requieren evidencia y 84 tienen campos no reconocidos. Los
 recibos están en `collectors/artifacts/normalization-memory-after-review-40/`
 y `collectors/artifacts/puebla-expansion-20261009/clinical-research/`
 (`review-39-revised/`, `review-40/`).
-La cola local recuperó conexión y confirmó sus 34 ledgers por hash, en modo
-sólo lectura (`execution_enabled=false`); no repitió commits durante la caída
-de DNS. El resolver clínico permanece sin cambios. Las cifras del 13-oct que
+La recuperación sólo lectura confirmó los 34 ledgers por hash; no repitió
+commits durante la caída de DNS. Después de verificar ese cierre y detener el
+único observador, la cola volvió a vigilancia con ejecución de lotes revisados
+habilitada a las 13:03 UTC: 34 `already_applied`, ninguna escritura repetida.
+El resolver clínico permanece sin cambios. Las cifras del 13-oct que
 siguen son antecedentes fechados, no el inventario actual.
 
 **Paciente local, 14-oct:** búsquedas generales «sangre» y «orina» muestran
@@ -43,6 +45,15 @@ CanvasKit y Roboto incluidos. Cuando falla la consulta remota, las opciones
 previamente verificadas se etiquetan como catálogo revisado el 14-oct, sin
 afirmar proveedores disponibles. Los fallos de permisos/configuración no usan
 esa alternativa. Sin publicación ni suites formales.
+
+**Identidad 14, 14-oct:** Sanatorio Gutiérrez (DENUE 3441877) incorporado con
+una marca `verification_pending` y un hospital `pending`: 69 marcas y 153
+ubicaciones. Dirección 12 Norte 1805A y coordenadas DENUE conservadas;
+el directorio estatal omite la letra A, sin borrar ese dato. Sitio propio no
+acreditado, `website_url=NULL` con incertidumbre explícita. Rollback, commit
+único, vínculo DENUE, auditoría, observación y RAW íntegro comprobados en
+`collectors/artifacts/puebla-expansion-20261009/identity-review-14/`.
+Ofertas 234 y migraciones 112 intactas; no acredita cobertura comercial.
 
 **Operación local y datos (13-oct-2026):** con autorización expresa se reanudó
 la misma base productiva enlazada, encontrada `INACTIVE`; quedó `ACTIVE_HEALTHY`,

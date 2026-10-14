@@ -1,0 +1,26 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261014:01",
+  "reviewed_by": "Codex; investigación delegada por el operador",
+  "authorization": "D-021/D-022: identidad candidata pending investigada, sin confirmación rutinaria.",
+  "research_date": "2026-10-14",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "Una institución nueva en verificación y un hospital pending: Sanatorio Gutiérrez. Conservar exterior 1805 y letra A, web NULL con incertidumbre y omisión de letra en directorio estatal. Sin ofertas, precios, captura comercial, migración o disponibilidad.",
+  "providers": [
+    {
+      "provider_key": "sanatorio_gutierrez_puebla",
+      "name": "Sanatorio Gutiérrez",
+      "slug": "sanatorio-gutierrez-puebla",
+      "website_url": null,
+      "identity_evidence_url": "https://ss.puebla.gob.mx/emergencias",
+      "identity_activity_codes": [
+        "622111"
+      ],
+      "denue_record_ids": [
+        "3441877"
+      ],
+      "identity_note": "El directorio oficial de emergencias de la Secretaría de Salud de Puebla, modificado 06-feb-2026 y consultado con HTTP 200 el 14-oct-2026 UTC, identifica Sanatorio Gutiérrez en Calle 12 Norte no. 1805, Barrio del Alto, CP 72000, Puebla. DENUE 3441877 registra SANATORIO GUTIERREZ, SCIAN 622111, CALLE 12 NORTE, numero_ext 1805 y letra_ext A, numero_int y letra_int vacíos, BARRIO DE EL ALTO, CP 72000, Puebla. Coinciden institución, calle, base del exterior, barrio y CP. El directorio omite la letra A: conservar 1805 y A por separado en el RAW y 1805A en la dirección del modelo, registrando la omisión como discrepancia, sin borrar, completar o corregir campos. Conservar coordenadas y hash íntegros de la corrida gubernamental licenciada. No confundir con Hospital Vilaseca Esparza en 12 Norte 1802: institución y exterior distintos. DENUE no declara web y no hay sitio propio acreditado; website_url permanece NULL con incertidumbre explícita, sin usar el directorio estatal como web del proveedor. El directorio no demuestra titularidad legal, afiliación corporativa o control de dominio. Una marca verification_pending y un hospital pending. La identidad de sede y la clase hospitalaria no acreditan estudios, ofertas, precios, disponibilidad, horarios, permisos sanitarios o autorización de captura comercial.",
+      "website_uncertainty": "No hay sitio institucional propio acreditado y el campo www del RAW DENUE está vacío. Conservar website_url NULL; la evidencia estatal de nombre y sede no se sustituye por una web propia ni demuestra control de dominio o titularidad legal."
+    }
+  ]
+}

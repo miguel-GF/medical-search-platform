@@ -6,7 +6,9 @@ No es un registro de ejecución ni una autorización de despliegue.
 Última observación de datos: **14-oct-2026, 12:55 UTC**. Supabase productivo
 enlazado: 474 conceptos, 234 ofertas, 4,636 pendientes en 845 grupos, 68 marcas,
 152 ubicaciones y 112 migraciones. Cola local: 34 entradas explícitas por hash
-verificadas, modo sólo lectura tras recuperarse de una caída DNS. Son un corte
+verificadas; recuperación sólo lectura tras una caída DNS y vigilancia con
+ejecución de lotes revisados restaurada a las 13:03 UTC, sin repetir escrituras.
+Son un corte
 fechado, no una garantía de que un puerto abierto demuestre salud futura.
 Revisiones 34–37 e identidad 13 conservan rollback/commit/ledger y RAW;
 50 consultas públicas y once internas de proveedor dieron el ID esperado.
