@@ -1,0 +1,45 @@
+{
+  "review_id": "pruevia:evidence-review:20261014:05",
+  "research_date": "2026-10-14",
+  "scope": "Revisión 41: una orden SEMIN de anticuerpos contra estreptolisina O semicuantitativos por aglutinación en suero. Un concepto, un alias exclusivamente de proveedor y una fila crawler. No traslada diana, muestra o método a Salud Digna ni aprueba perfiles estreptocócicos.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "502b559c63cde99690b3bb8de36fe037353848ec4bf7685ac8a0484bc49c8865",
+  "research_snapshot_sha256": "60e9b1db876d32cd7c15cc251986c640908c37e0e10420a1f4e1a2f8e623c245",
+  "definition_sha256": "c59b2d96b87e50314b34a36a0309bca03947ba953123be514301b0ca4b21f8f9",
+  "new_concepts": [
+    {
+      "item_id": "fde2f7c3-3b5c-5809-8080-fba37ec405db",
+      "canonical_name": "Anticuerpos contra estreptolisina O semicuantitativos por aglutinación en suero",
+      "component": "Streptolysin O Ab.semiquantitative.by agglutination",
+      "specimen_code": "serum",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://semindigital.com/semin-api/api/v3/catalog/informacion-catalogo/5901",
+      "reason": "El detalle público propio vigente SEMIN 5901 declara sinAcro=NA / ASO / AELO. ASO significa anticuerpos contra estreptolisina O según NLM/MedlinePlus (https://medlineplus.gov/ency/article/003522.htm) y Mayo ASO (https://www.mayocliniclabs.com/test-catalog/overview/80205). Ese campo no está en el RAW histórico; se conserva recibo del detalle vigente vinculado por provider_external_id=5901, título completo ANTIESTREPTOLOSINAS (Semicuantitativo, aglutinacion) y muestra completa Suero / Tubo de tapon rojo o dorado, todos coincidentes con la única fila f0fdda74-c408-5939-8a3c-925b8083b9fd. La evidencia propia aclara diana O únicamente para SEMIN. Nombre y componente preservan método de aglutinación y escala semicuantitativa escritos; columnas analíticas method/scale quedan NULL por contrato del preparador vigente, sin equivalencia cuantitativa o de resultados. No se infiere látex, isotipo, concentración, unidades, LOINC, estreptolisina S, anti-DNasa B ni panel. Muestra sérica literal y alias SEMIN exclusivo; no transferir a las 16 filas SD sin O/S explícito. Tiempo de colección desconocido: ocho horas de entrega no son duración de colección. Original y preparación conservados sin reescribir el RAW ni validar instrucciones clínicas. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "antiestreptolosinas semicuantitativo aglutinacion",
+      "item_id": "fde2f7c3-3b5c-5809-8080-fba37ec405db",
+      "canonical_name": "Anticuerpos contra estreptolisina O semicuantitativos por aglutinación en suero",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://semindigital.com/semin-api/api/v3/catalog/informacion-catalogo/5901",
+      "reason": "El detalle público propio vigente SEMIN 5901 declara sinAcro=NA / ASO / AELO. ASO significa anticuerpos contra estreptolisina O según NLM/MedlinePlus (https://medlineplus.gov/ency/article/003522.htm) y Mayo ASO (https://www.mayocliniclabs.com/test-catalog/overview/80205). Ese campo no está en el RAW histórico; se conserva recibo del detalle vigente vinculado por provider_external_id=5901, título completo ANTIESTREPTOLOSINAS (Semicuantitativo, aglutinacion) y muestra completa Suero / Tubo de tapon rojo o dorado, todos coincidentes con la única fila f0fdda74-c408-5939-8a3c-925b8083b9fd. La evidencia propia aclara diana O únicamente para SEMIN. Nombre y componente preservan método de aglutinación y escala semicuantitativa escritos; columnas analíticas method/scale quedan NULL por contrato del preparador vigente, sin equivalencia cuantitativa o de resultados. No se infiere látex, isotipo, concentración, unidades, LOINC, estreptolisina S, anti-DNasa B ni panel. Muestra sérica literal y alias SEMIN exclusivo; no transferir a las 16 filas SD sin O/S explícito. Tiempo de colección desconocido: ocho horas de entrega no son duración de colección. Original y preparación conservados sin reescribir el RAW ni validar instrucciones clínicas. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "Suero / Tubo de tapon rojo o dorado"
+      },
+      "source_attributes": {
+        "specimen_code": "serum"
+      }
+    }
+  ]
+}

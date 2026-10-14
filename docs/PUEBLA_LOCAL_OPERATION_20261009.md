@@ -28,6 +28,19 @@ de entorno y los artefactos permanecen ignorados por Git.
 
 ## Inventario estatal guardado y comprobado
 
+**Cierre completo vigente 14-oct, 13:15 UTC:** 41 revisiones aplicadas,
+325 aliases y 2,393 filas cerradas; 475 conceptos y 4,635 pendientes / 844
+grupos, paginados íntegramente. Memoria shadow v3: 344 reglas y todos los
+2,393 contextos históricos reutilizables. Los 84 pendientes con metadatos
+antes desconocidos pasan a necesidad de evidencia; no son cierres clínicos.
+`specialty` se conserva en la firma literal, incluso cuando contradice el título;
+seis claves administrativas de los productores dejan de confundirse con
+datos clínicos. Los tres históricos antes bloqueados pasan a reutilización
+exacta. Ocho artefactos v2 intactos por hash; las 35 entradas de cola verificadas.
+Base estable durante esta observación: 69 marcas / 153 sedes / 234 ofertas /
+112 migraciones. Recibos: `normalization-memory-after-review-41-v3/` en
+artefactos de collectors. Sólo lecturas, sin suites formales ni nuevas decisiones.
+
 **Corte vigente 14-oct-2026, 12:55 UTC:** 40 revisiones clínicas aplicadas,
 324 aliases y 2,392 filas históricas cerradas. Paginación completa: 474 conceptos
 activos y 4,636 pendientes en 845 grupos. Permanecen 234 ofertas, 68 marcas,
@@ -61,6 +74,18 @@ página estatal. Preflight/rollback sin persistencia y commit único, seguido de
 observación independiente: una marca, sede, vínculo DENUE, auditoría y
 observación accepted. Ofertas 234 y migraciones 112 intactas. Recibos en
 `collectors/artifacts/puebla-expansion-20261009/identity-review-14/`.
+
+Revisión 41, observada 14-oct 13:12 UTC: el detalle propio SEMIN 5901 declara
+ASO explícito y aclara la diana O de una orden semicuantitativa por aglutinación
+en suero. Un concepto/alias de proveedor/fila, con RAW y muestra intactos;
+catálogo 475 y pendientes 4,635. Canónico público y alias con scope SEMIN
+correctos. El endpoint público no admite ese scope: el alias sin scope quedó
+`no_match`, sin presentarlo como una consulta de proveedor fallida. Las 16 filas
+SD sin diana propia siguen pendientes y anti-DNasa B conserva identidad y
+resolución. Ofertas 234, migraciones 112, marcas 69 y sedes 153 intactas;
+resolver sin cambios. Cola 35 fijada por hash; ejecutó sólo el worker autorizado.
+Recibos en `clinical-research/review-41-semin-aso/` dentro de los artefactos
+de expansión Puebla. No suites formales.
 
 **Corte revalidado el 13-oct local/UTC tras treinta y siete revisiones aplicadas:**
 309 aliases (286 globales y 23 de proveedor), 271 conceptos nuevos y

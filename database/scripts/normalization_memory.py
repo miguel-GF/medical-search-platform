@@ -25,10 +25,10 @@ from reviewed_alias_batch import reviewed_targets
 from run_local_review_queue import ledger, query, save
 from render_ingest_artifact import q
 
-VERSION = 'normalization-memory-shadow-v2'
+VERSION = 'normalization-memory-shadow-v3'
 CLINICAL_FIELDS = (
     'provider_display_name', 'sample_type', 'description', 'category', 'area', 'benefit_description',
-    'room', 'pre_exam_instructions', 'other_instructions',
+    'room', 'pre_exam_instructions', 'other_instructions', 'specialty',
 )
 STUDY_FIELDS = ('Estudio', 'Preparacion', 'Descripcion')
 PAYLOAD_OTHER_FIELDS = {
@@ -37,6 +37,10 @@ PAYLOAD_OTHER_FIELDS = {
     'price_claim_status', 'product_url', 'provider_brand', 'provider_created_at',
     'provider_external_id', 'provider_last_updated_at',
     'provider_sku', 'raw_study', 'turnaround',
+    # Inspected source metadata: extraction provenance and commercial pagination.
+    # evidence_method="heading_pattern" describes HTML capture, not an assay.
+    'discount_text', 'page_number', 'price_text', 'evidence_method',
+    'evidence_page_url', 'provider_brand_hint',
 }
 STUDY_OTHER_FIELDS = {
     'CatSubestudiosId', 'Descuento', 'Estatus', 'EstatusPrecioFijo',

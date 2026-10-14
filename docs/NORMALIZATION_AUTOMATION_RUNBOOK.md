@@ -2,6 +2,18 @@
 
 ## Operación delegada vigente — 13-oct-2026
 
+**Corte vigente 14-oct, 13:15 UTC:** 41 revisiones, 325 aliases, 344 reglas
+y 2,393 filas históricas; 4,635 pendientes / 844 grupos. Memoria shadow v3
+reconstruida tras revalidar 35 entradas de cola: 2,393 contextos históricos
+reutilizables y todos los pendientes requieren fuente. Se reconocen seis
+metadatos de precio/extracción y se conserva `specialty` literalmente en la
+firma, sin inferir atributos clínicos desde categorías inconsistentes. Los
+84 pendientes con campos antes desconocidos pasan a investigación; no se
+aprueba ninguno. Versiones v2 y v3 no son intercambiables: reconstruir memoria
+y exportar contextos con la misma versión. Los controles sobre pacientes y
+campos nuevos desconocidos siguen bloqueando. Recibos y comparación por UUID
+en `collectors/artifacts/normalization-memory-after-review-41-v3/`; v2 intacta.
+
 **Actualización 14-oct-2026, 12:55 UTC:** 40 revisiones aplicadas, 324 aliases,
 343 reglas/contextos y 2,392 filas cerradas. Paginación completa de pendientes:
 4,636 filas / 845 grupos; 4,552 requieren evidencia y 84 conservan campos

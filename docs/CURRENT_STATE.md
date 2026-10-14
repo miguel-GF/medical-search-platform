@@ -16,7 +16,30 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
-**Corte vigente, 14-oct-2026 12:55 UTC:** 40 revisiones clínicas aplicadas,
+**Corte completo vigente, 14-oct 13:15 UTC:** 41 revisiones aplicadas,
+325 aliases, 344 reglas/contextos y 2,393 filas históricas cerradas. Paginación
+íntegra: 475 conceptos, 4,635 pendientes en 844 grupos y 1,162 términos;
+69 marcas, 153 ubicaciones, 234 ofertas y 112 migraciones. Memoria shadow v3
+reconstruida con los 35 ledgers/hashes de cola: los 2,393 contextos históricos
+son reutilizables; los 4,635 pendientes requieren evidencia, ninguno fue
+aprobado por la memoria. Se reconocieron seis metadatos administrativos de los
+collectors y se preservó `specialty` como contexto literal, sin inferir modalidad,
+muestra ni composición. Los 84 pendientes antes bloqueados por esquema pasan
+a investigación; los tres históricos antes bloqueados se reconocen exactamente.
+Los ocho artefactos principales v2 permanecen intactos. Evidencia en
+`collectors/artifacts/normalization-memory-after-review-41-v3/`; sólo lecturas
+y planificación, sin cambios del resolver, ofertas o permisos ni suites formales.
+
+**Última revisión aplicada, 14-oct 13:12 UTC:** ASO SEMIN cerró una fila,
+con suero, aglutinación y escala semicuantitativa explícitos. Catálogo 475;
+pendientes 4,635. El alias es exclusivo de SEMIN: correcto con scope de
+proveedor; su forma sin scope no se presenta como resuelta públicamente.
+Canónico público correcto, 16 vecinos SD pendientes y anti-DNasa B íntegros.
+La cola conserva 35 revisiones por hash, worker único observado tras verificar
+su predecesor idle y terminal. Evidencia en
+`collectors/artifacts/puebla-expansion-20261009/clinical-research/review-41-semin-aso/`.
+
+**Corte completo anterior, 14-oct-2026 12:55 UTC:** 40 revisiones clínicas aplicadas,
 324 aliases investigados y 2,392 filas históricas cerradas. Paginación completa:
 474 conceptos activos y 4,636 pendientes en 845 grupos; 234 ofertas, 68 marcas,
 152 ubicaciones y 112 migraciones. Las revisiones 38–40 cerraron 106 filas con
@@ -54,6 +77,15 @@ acreditado, `website_url=NULL` con incertidumbre explícita. Rollback, commit
 único, vínculo DENUE, auditoría, observación y RAW íntegro comprobados en
 `collectors/artifacts/puebla-expansion-20261009/identity-review-14/`.
 Ofertas 234 y migraciones 112 intactas; no acredita cobertura comercial.
+
+**Casos con estructura adicional preparados, sin activar:** ocho RAW de
+clearance SD requieren sangre y orina, con 24 horas sólo para la recolección
+urinaria; un cotesting Chopo requiere padre de panel y dos componentes.
+SQL rollback v2, ledgers completos, guardas y excepciones explícitas de hijos
+sin alias están en `clinical-research/ambiguity-resolution-20261013/model-draft/`
+dentro de `collectors/artifacts/puebla-expansion-20261009/`. Son nueve filas
+preparadas, no cierres. No se afirma que el resolver o paciente ya represente
+todos esos requisitos; contrato clínico y ejecución siguen separados bajo D-006.
 
 **Operación local y datos (13-oct-2026):** con autorización expresa se reanudó
 la misma base productiva enlazada, encontrada `INACTIVE`; quedó `ACTIVE_HEALTHY`,

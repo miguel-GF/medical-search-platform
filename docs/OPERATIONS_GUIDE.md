@@ -15,6 +15,12 @@ Revisiones 34–37 e identidad 13 conservan rollback/commit/ledger y RAW;
 Suites formales no ejecutadas en esta operación.
 [Evidencia y límites](PUEBLA_LOCAL_OPERATION_20261009.md).
 
+Actualización de cierre **14-oct, 13:15 UTC**: 475 conceptos, 4,635 pendientes
+en 844 grupos, 69 marcas y 153 ubicaciones; ofertas 234 y migraciones 112
+intactas. Cola 35 entradas con ledger/hash confirmado, worker único en vigilancia
+con ejecución de lotes investigados. Memoria shadow v3 reconstruida, v2 intacta:
+2,393 históricos reutilizables y ningún pendiente aprobado por esa herramienta.
+
 ## Entorno y arranque
 
 Desde la raíz, usar `git status --short` antes de modificar. Los comandos siguientes
