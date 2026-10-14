@@ -154,10 +154,11 @@ class SearchService {
 }
 
 class SearchResponse {
-  const SearchResponse({required this.query, required this.services});
+  const SearchResponse({required this.query, required this.services, this.guidance});
 
   final String query;
   final List<SearchService> services;
+  final SearchGuidance? guidance;
 
   factory SearchResponse.fromJson(JsonMap json) => SearchResponse(
     query: _stringValue(json['query']) ?? '',
@@ -165,7 +166,63 @@ class SearchResponse {
       json['results'],
       100,
     ).whereType<JsonMap>().map(SearchService.fromJson).toList(growable: false),
+    guidance: SearchGuidance.parse(json['guidance']),
   );
+}
+
+class SearchGuidance {
+  const SearchGuidance({
+    required this.specimen,
+    required this.title,
+    required this.message,
+    required this.options,
+  });
+
+  final String specimen;
+  final String title;
+  final String message;
+  final List<SearchGuidanceOption> options;
+
+  static SearchGuidance? parse(Object? value) {
+    final json = _record(value);
+    if (json['kind'] != 'specimen' ||
+        !['blood', 'urine'].contains(json['specimen'])) {
+      return null;
+    }
+    return SearchGuidance(
+      specimen: json['specimen'] as String,
+      title: _guidanceText(json['title'], 200),
+      message: _guidanceText(json['message'], 700),
+      options: _boundedList(json['options'], 8)
+          .whereType<JsonMap>()
+          .map(SearchGuidanceOption.fromJson)
+          .where((option) => option.itemId.isNotEmpty && option.displayName.isNotEmpty)
+          .toList(growable: false),
+    );
+  }
+}
+
+class SearchGuidanceOption {
+  const SearchGuidanceOption({
+    required this.itemId,
+    required this.displayName,
+    required this.detail,
+  });
+
+  final String itemId;
+  final String displayName;
+  final String detail;
+
+  factory SearchGuidanceOption.fromJson(JsonMap json) => SearchGuidanceOption(
+    itemId: _guidanceText(json['item_id'], 36),
+    displayName: _guidanceText(json['display_name'], 200),
+    detail: _guidanceText(json['detail'], 300),
+  );
+}
+
+String _guidanceText(Object? value, int limit) {
+  final text = _stringValue(value) ?? '';
+  return text.length > limit ? text.substring(0, limit) : text;
 }
 
 enum PackageObjective { allInOne, lowestCost, nearest, balanced }

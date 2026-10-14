@@ -625,18 +625,28 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         if (!_loading && _response != null) ...[
           const SizedBox(height: 30),
-          _ResultHeader(
+          if (_response!.guidance == null)
+            _ResultHeader(
             query: _response!.query,
             count: _response!.services.length,
           ),
           const SizedBox(height: 14),
-          if (_response!.services.isEmpty)
+          if (_response!.guidance != null)
+            _SpecimenSearchGuidanceCard(
+              guidance: _response!.guidance!,
+              onSearch: (name) {
+                _query.text = name;
+                _search();
+              },
+            ),
+          if (_response!.guidance == null && _response!.services.isEmpty)
             const _EmptyState(
               title: 'No encontramos una coincidencia segura',
               text:
                   'Prueba con el nombre completo o revisa la sección de receta para confirmar cada renglón.',
             ),
-          SearchResultsExplorer(
+          if (_response!.guidance == null)
+            SearchResultsExplorer(
             services: _response!.services,
             api: widget.api,
             preferences: widget.preferences,
@@ -1370,6 +1380,51 @@ class SolutionCard extends StatelessWidget {
 /// service cards hides which branches belong to the same business; this view
 /// keeps the evidence grouped and uses a two-column layout on wide screens,
 /// with collapsible providers/branches on phones.
+class _SpecimenSearchGuidanceCard extends StatelessWidget {
+  const _SpecimenSearchGuidanceCard({
+    required this.guidance,
+    required this.onSearch,
+  });
+
+  final SearchGuidance guidance;
+  final ValueChanged<String> onSearch;
+
+  @override
+  Widget build(BuildContext context) => Card(
+    child: Padding(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(guidance.title, style: Theme.of(context).textTheme.titleLarge),
+          const SizedBox(height: 8),
+          Text(guidance.message),
+          const SizedBox(height: 12),
+          for (final option in guidance.options)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: ListTile(
+                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(color: Theme.of(context).colorScheme.outlineVariant),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                title: Text(option.displayName),
+                subtitle: Text(option.detail),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => onSearch(option.displayName),
+              ),
+            ),
+          if (guidance.options.isEmpty)
+            const Text('No hay opciones verificadas para mostrar en este momento. Escribe el nombre completo de tu orden.'),
+          const SizedBox(height: 4),
+          const Text('Los estudios tienen propósitos y muestras distintos. No se ha seleccionado ninguno por ti.'),
+        ],
+      ),
+    ),
+  );
+}
+
 class SearchResultsExplorer extends StatefulWidget {
   const SearchResultsExplorer({
     super.key,

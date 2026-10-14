@@ -1,4 +1,5 @@
 import { SupabaseConfigurationError, SupabaseResponseError, SupabaseRpcError, SupabaseRpcClient, SupabaseTimeoutError } from './supabase.js';
+import { specimenSearchGuidance } from './search_guidance.js';
 import { applicationResponse } from './provider-applications.js';
 import { documentAccess } from './provider-document-access.js';
 import type { AdminAlert, AdminCatalogItem, AdminNormalizationDetail, AdminNormalizationQueueRow, AdminQualityIssue, AdminUser, Env, OcrCorrection, PackageCandidate, PackageItem, PackageLocation, PackageOffer, PackageResolutionResponse, PackageSolution, RateLimitBinding, ResolutionCandidate, ResolutionResponse, RpcClient, SearchRow, ServiceSummaryRow } from './types.js';
@@ -256,6 +257,10 @@ async function searchResponse(request: Request, url: URL, rpc: RpcClient, env: E
   const locationId = url.searchParams.get('location_id');
   if (locationId && !isUuid(locationId)) {
     return json({ error: { code: 'invalid_location_id', message: 'location_id must be a UUID' } }, 400, origin);
+  }
+  if (domain === 'health_diagnostics') {
+    const guidance = await specimenSearchGuidance(query, rpc);
+    if (guidance) return json({ query, results: [], suggestions: [], guidance }, 200, origin);
   }
   const rows = await rpc.call<SearchRow[]>('api_search', {
     p_query: query,
