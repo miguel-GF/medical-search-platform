@@ -91,12 +91,12 @@ def listening(port):
         return connection.connect_ex(("127.0.0.1", port)) == 0
 
 
-def launch(name, args, directory, stamp):
+def launch(name, args, directory, stamp, *, env=None):
     with (ARTIFACTS / f"{stamp}-{name}.stdout.log").open("ab") as output, \
             (ARTIFACTS / f"{stamp}-{name}.stderr.log").open("ab") as errors:
         process = subprocess.Popen(
             args, cwd=ROOT / directory, stdin=subprocess.DEVNULL,
-            stdout=output, stderr=errors, creationflags=subprocess.CREATE_NO_WINDOW,
+            stdout=output, stderr=errors, env=env, creationflags=subprocess.CREATE_NO_WINDOW,
         )
     return process.pid
 
@@ -107,6 +107,27 @@ def batch_command(binary, arguments):
     if any(character in binary for character in '\"\r\n'):
         raise ValueError("Unexpected executable path")
     return f'"{os.environ["COMSPEC"]}" /d /s /c ""{binary}" {arguments}"'
+
+
+def installed_node():
+    """Use an existing compatible runtime even when Windows login has old PATH."""
+    candidates = []
+    current = shutil.which("node.exe")
+    if current:
+        candidates.append(Path(current))
+    # This workspace lives in Laragon. Limit fallback discovery to its runtime
+    # directory; do not download, install, or change the user's global PATH.
+    laragon_runtimes = ROOT.parents[1] / "bin/nodejs"
+    candidates.extend(sorted(laragon_runtimes.glob("node-v*-win-x64/node.exe"), reverse=True))
+    for candidate in dict.fromkeys(candidates):
+        result = subprocess.run([str(candidate), "--version"], check=True,
+                                capture_output=True, text=True, timeout=10,
+                                creationflags=subprocess.CREATE_NO_WINDOW)
+        version = tuple(int(part) for part in result.stdout.strip().lstrip("v").split("."))
+        npm = candidate.with_name("npm.cmd")
+        if version >= (22, 12, 0) and npm.is_file():
+            return candidate, npm, result.stdout.strip()
+    raise RuntimeError("An existing Node.js >=22.12 with npm is required; no runtime was installed")
 
 
 def main():
@@ -133,14 +154,18 @@ def main():
         try:
             if args.install_startup:
                 receipt["startup_shortcut"] = install_startup()
-            npm = shutil.which("npm.cmd")
+            node, npm, node_version = installed_node()
+            child_env = dict(os.environ)
+            child_env["PATH"] = str(node.parent) + os.pathsep + child_env.get("PATH", "")
+            receipt["node_runtime"] = {"path": str(node), "version": node_version,
+                                       "global_path_modified": False}
             flutter = shutil.which("flutter.bat")
             if not npm or not flutter:
                 raise RuntimeError("Existing npm and Flutter installations are required")
             stamp = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S-%f")
             services = [
-                ("api", 8787, "apps/api", batch_command(npm, "run dev -- --ip 127.0.0.1 --port 8787")),
-                ("admin", 5173, "apps/admin", batch_command(npm, "run dev -- --host 127.0.0.1 --port 5173 --strictPort")),
+                ("api", 8787, "apps/api", batch_command(str(npm), "run dev -- --ip 127.0.0.1 --port 8787")),
+                ("admin", 5173, "apps/admin", batch_command(str(npm), "run dev -- --host 127.0.0.1 --port 5173 --strictPort")),
                 ("patient", 8080, ".", [sys.executable, str(ROOT / "scripts/run_pruevia_patient_local.py")]),
             ]
             for name, port, directory, command in services:
@@ -148,7 +173,7 @@ def main():
                 if listening(port):
                     entry["status"] = "port_in_use"
                 else:
-                    entry.update(status="started", process_id=launch(name, command, directory, stamp))
+                    entry.update(status="started", process_id=launch(name, command, directory, stamp, env=child_env))
                 receipt["services"].append(entry)
             pids = worker_pids()
             status_path = QUEUE / "status.json"

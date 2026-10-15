@@ -23,6 +23,17 @@ con ejecución de lotes investigados. Memoria shadow v3 reconstruida, v2 intacta
 
 ## Entorno y arranque
 
+Recuperación observada **15-oct-2026 04:27 UTC (14-oct local)**: el inicio de
+sesión Windows arrancó Paciente y cola, pero API/Admin se detuvieron al heredar
+Node 14.17.3. El launcher ahora selecciona Node >=22.12 ya instalado (en esta
+máquina 24.19.0 de Laragon) y npm del mismo directorio; antepone ese runtime
+sólo al PATH de los procesos hijo. No instala software ni cambia el PATH global.
+Después del arranque real, API 8787, Admin 5173 y Paciente 8080 respondieron 200.
+Una nueva invocación con PATH de perfil que seleccionaba Node14 eligió Node24,
+conservó los tres puertos y el único worker existente. Recibo:
+`collectors/artifacts/local-stack/startup-profile-recovery.json`. La selección
+del runtime en un recibo no sustituye comprobar los endpoints después del arranque.
+
 Desde la raíz, usar `git status --short` antes de modificar. Los comandos siguientes
 asumen herramientas instaladas y dependencias disponibles. Para instalación Node
 usar `npm.cmd ci` dentro de cada app con su lockfile. Las versiones de CI están en
