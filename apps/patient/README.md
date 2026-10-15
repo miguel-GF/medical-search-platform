@@ -38,9 +38,22 @@ una compilación concreta con `--dart-define=PRODUCT_FEEDBACK_ENABLED=true`.
 La analítica anónima y los clics salientes tienen un segundo gate de compilación,
 `--dart-define=ANALYTICS_ENABLED=true`; su valor predeterminado es `false` aunque
 exista una preferencia de consentimiento guardada.
-Las builds públicas deben incluir
-`--dart-define=PRIVACY_POLICY_URL=https://pruevia.com.mx/privacidad`; Ajustes sólo
-muestra soporte cuando `SUPPORT_EMAIL` contiene un correo válido y operativo.
+El aviso usa por defecto `https://pruevia.com.mx/privacidad` cuando no se define
+`PRIVACY_POLICY_URL` o está vacío. Una URL configurada distinta debe conservar
+HTTPS, dominio exacto y ruta `/privacidad`, sin credenciales, query o fragmento;
+una configuración inválida no abre otro destino. Ajustes sólo muestra soporte
+cuando `SUPPORT_EMAIL` contiene un correo válido y operativo.
+
+La bienvenida y el shell muestran un recordatorio informativo no modal del aviso,
+con enlace permanente. **Entendido** guarda sólo versión y fecha UTC en
+`pruevia.privacy_notice.acknowledgment.v1` de SharedPreferences. La versión vigente
+es `pruevia-privacidad-2026-10-15-v1`; el acuse dura 180 días y se revisa también
+al volver a la app y durante una sesión abierta. Cambiar de versión, borrar datos
+o usar otro navegador puede mostrar el recordatorio de nuevo. No se registra IP,
+identificador o evento en servidor y no concede analítica, OCR ni tratamiento de
+datos médicos. El acuse no prueba lectura del documento ni sustituye los controles
+de consentimiento de cada función. Los enlaces del recordatorio sólo se abren
+por acción del usuario; en web usan la misma pestaña.
 Para la variante cerrada de Android se usa además
 `--dart-define=PRUEVIA_CHANNEL=closed_android`; esa variante permite un comentario
 opcional sólo después de confirmar 18 años. El feedback público no solicita texto

@@ -1,13 +1,14 @@
 # Estado y prioridades de Pruevia
 
 Tipo: punto de continuidad. Actualizado el 15-oct-2026 UTC (14-oct local) para operación local y datos;
-el corte de publicación siguiente corresponde al 25-sep-2026 sobre el árbol local, el
+el corte histórico de publicación de septiembre corresponde al árbol local, el
 ledger Supabase y los Workers de producción. El proyecto enlazado se llama
 `pruevia-dev`, pero también es la base inicial de producción: las migraciones
 aplicadas allí afectan el catálogo público. Landing, PWA, API y Admin privado se
-habían publicado en sus dominios finales. Desde el 25-sep-2026 la API, la PWA y
-el Worker Admin están pausados; sólo el landing permanece activo. Proveedores,
-feedback, analítica y registro Android continúan cerrados.
+habían publicado en sus dominios finales. El 15-oct-2026 a las 12:25 UTC se
+reabrieron API y PWA por autorización expresa del usuario, tras actualizar el
+aviso de privacidad y su recordatorio de 180 días. Admin continúa pausado.
+Proveedores, feedback, analítica y registro Android continúan cerrados.
 Los datos de septiembre citados abajo son cortes de evidencia, no contadores en vivo.
 Advertencia de entorno: el proyecto Supabase enlazado se llama `pruevia-dev`, pero
 la [decisión de publicación](ADR-003-PATIENT-FIRST-PUBLICATION.md) lo usa como
@@ -15,6 +16,19 @@ base inicial de producción. Una escritura o migración allí afecta datos que
 podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
+
+**Privacidad y reapertura pública, 15-oct 12:25 UTC:** landing/aviso/app/API
+responden 200; Patient sirve el mismo JS compilado por hash. Aviso
+`pruevia-privacidad-2026-10-15-v1`, recordatorio por navegador sin IP y enlace
+permanente; «Entendido» no acredita lectura ni sustituye consentimiento médico.
+Captura de consultas D-019 false, analítica bloqueada también en servidor,
+sin cron, documentos/proveedores/feedback/testers cerrados. La API aislada evita
+publicar cambios Admin/scheduler ajenos; conserva la base productiva existente.
+TSH devuelve coincidencia y sangre/orina piden aclaración por muestra.
+Se entregó informe en lenguaje común y PDF privado con aviso actual/anterior;
+la revisión jurídica de consentimiento, retención y antecedente D-019 sigue
+pendiente. [Evidencia y recuperación](PRIVACY_PUBLICATION_20261015.md),
+[informe para abogado](legal/REVISION_PRIVACIDAD_PARA_ABOGADO_20261015.md).
 
 **Identidad 17, 15-oct 04:35 UTC:** Hospital Universitario de Puebla,
 Sanatorio de los Ángeles (27 Poniente) y Unidad Médica de la Cruz incorporados

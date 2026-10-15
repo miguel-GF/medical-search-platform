@@ -10,6 +10,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'src/api_client.dart';
 import 'src/local_preferences.dart';
+import 'src/privacy_notice.dart';
 import 'src/models.dart';
 import 'src/picked_file_cleanup_stub.dart'
     if (dart.library.io) 'src/picked_file_cleanup_io.dart';
@@ -38,7 +39,7 @@ const String _appVersion = String.fromEnvironment(
 );
 const String _privacyPolicyUrl = String.fromEnvironment(
   'PRIVACY_POLICY_URL',
-  defaultValue: '',
+  defaultValue: 'https://pruevia.com.mx/privacidad',
 );
 const String _supportEmail = String.fromEnvironment(
   'SUPPORT_EMAIL',
@@ -49,7 +50,10 @@ bool shouldOpenProviderPortal(Uri uri, {required bool enabled}) =>
     enabled && uri.queryParameters['provider'] == '1';
 
 Uri? privacyPolicyUri(String value) {
-  final uri = Uri.tryParse(value.trim());
+  final configured = value.trim();
+  final uri = Uri.tryParse(configured.isEmpty
+      ? 'https://pruevia.com.mx/privacidad'
+      : configured);
   if (uri == null ||
       uri.scheme != 'https' ||
       uri.host.toLowerCase() != 'pruevia.com.mx' ||
@@ -203,6 +207,7 @@ class _PatientAppState extends State<PatientApp> {
             providerPortalEnabled: widget.providerPortalEnabled,
           )
         : ConsentScreen(
+            preferences: widget.preferences,
             analyticsEnabled: widget.analyticsEnabled,
             onAccept: () => _finishOnboarding(true),
             onDecline: () => _finishOnboarding(false),
@@ -213,10 +218,12 @@ class _PatientAppState extends State<PatientApp> {
 class ConsentScreen extends StatelessWidget {
   const ConsentScreen({
     super.key,
+    this.preferences,
     this.analyticsEnabled = false,
     required this.onAccept,
     required this.onDecline,
   });
+  final PatientPreferences? preferences;
   final bool analyticsEnabled;
   final Future<void> Function() onAccept;
   final Future<void> Function() onDecline;
@@ -257,9 +264,18 @@ class ConsentScreen extends StatelessWidget {
                   icon: Icons.lock_outline,
                   title: 'Privacidad desde el inicio',
                   text: analyticsEnabled
-                      ? 'La receta y las imágenes no se guardan. Si aceptas, el uso anónimo sólo mide qué pantallas funcionan.'
-                      : 'La receta y las imágenes no se guardan. Esta versión no envía analítica de uso.',
+                      ? 'Los estudios que escribes y las imágenes que envías se procesan para ayudarte a buscar. La medición opcional usa un identificador aleatorio; consulta sus detalles en el aviso.'
+                      : 'Los estudios que escribes y las imágenes que envías se procesan para ayudarte a buscar. Esta versión no envía medición de uso. Consulta los detalles en el aviso de privacidad.',
                 ),
+                if (privacyPolicyUri(_privacyPolicyUrl) case final Uri policyUri) ...[
+                  const SizedBox(height: 12),
+                  if (preferences != null)
+                    PrivacyNoticeReminder(
+                      preferences: preferences!,
+                      policyUri: policyUri,
+                    ),
+                  PrivacyNoticeLink(policyUri: policyUri),
+                ],
                 const SizedBox(height: 28),
                 SizedBox(
                   width: double.infinity,
@@ -408,6 +424,8 @@ class _PatientShellState extends State<PatientShell> {
       appBar: AppBar(
         title: const PrueviaLogo(compact: true),
         actions: [
+          if (privacyPolicyUri(_privacyPolicyUrl) case final Uri policyUri)
+            PrivacyNoticeLink(policyUri: policyUri, compact: true),
           IconButton(
             tooltip: 'Cambiar tema',
             onPressed: () => widget.onThemeChanged(
@@ -424,7 +442,14 @@ class _PatientShellState extends State<PatientShell> {
           const SizedBox(width: 8),
         ],
       ),
-      body: Row(
+      body: Column(
+        children: [
+          if (privacyPolicyUri(_privacyPolicyUrl) case final Uri policyUri)
+            PrivacyNoticeReminder(
+              preferences: widget.preferences,
+              policyUri: policyUri,
+            ),
+          Expanded(child: Row(
         children: [
           if (wide)
             NavigationRail(
@@ -449,6 +474,8 @@ class _PatientShellState extends State<PatientShell> {
           Expanded(
             child: IndexedStack(index: _index, children: pages),
           ),
+        ],
+          )),
         ],
       ),
       bottomNavigationBar: wide

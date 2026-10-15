@@ -76,6 +76,12 @@ no ejecutar primero y avisar después. Avanzar tareas independientes mientras ta
 | D-022 | Reanudar el mismo proyecto Supabase productivo para la operación local autorizada; conservar la pausa de las superficies públicas de D-020. | Aprobación explícita del usuario el 9-oct-2026 para reanudar esa base. Proyecto `ymtcmfgwuzdqtsbuvzqf`, encontrado `INACTIVE`, restaurado por Management API y confirmado `ACTIVE_HEALTHY`; PostgreSQL 17.6 / 112 migraciones. No hubo nueva base, migración ni despliegue de Workers. [Operación](PUEBLA_LOCAL_OPERATION_20261009.md). |
 | D-023 | Guardar en commits locales por sección los cambios terminados y revisados, preservando trabajo ajeno y diferenciando datos aplicados de propuestas. | Autorización expresa del usuario el 13-oct-2026 para commitear por secciones. Primeros commits: `8948671` herramientas locales y protección de hashes; `724e183` 45 fixtures históricas aplicadas. Los nuevos lotes se incluyen tras confirmar sus recibos; las propuestas críticas conservan su estado sin activar. No amplía permisos de push, publicación o despliegue. [Cierre y evidencia](PUEBLA_LOCAL_OPERATION_20261009.md). |
 
+## Privacidad y reapertura — 15-oct-2026
+
+| ID | Decisión / fundamento | Estado y evidencia |
+| --- | --- | --- |
+| D-024 | Reabrir landing/enlace de paciente, PWA y API con la misma base después de actualizar privacidad; recordatorio por navegador durante 180 días, sin identificar por IP ni asumir lectura o consentimiento médico. | Autorización explícita del usuario en esta sesión para volver a levantar la app en producción con su base y entregar documentación/PDF al abogado. Publicado 15-oct 12:25 UTC: landing `18d3718c-1e45-4054-8859-26bf6c25c6ca`, API `72bc81ed-f6a5-4dde-a834-15ae2dc30b63`, Patient `5bda3d31-f3b4-4fae-8f07-41c8339c5350`. D-020 se reemplaza sólo para API/Paciente; Admin sigue pausado. Captura D-019 y analítica false, sin crons; proveedores/documentos/feedback/testers cerrados. Sin nueva DB, migraciones, borrado histórico o reactivación de finalidades opcionales. La publicación no acredita aprobación jurídica. [Evidencia y recuperación](PRIVACY_PUBLICATION_20261015.md). |
+
 ## Cómo registrar o reemplazar una decisión
 
 Crear una entrada con ID estable, fecha, estado (`propuesta`, `aprobada`,

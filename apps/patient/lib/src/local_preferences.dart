@@ -1,7 +1,11 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+const privacyNoticeVersion = 'pruevia-privacidad-2026-10-15-v1';
+const privacyNoticeReminderPeriod = Duration(days: 180);
 
 class PatientPreferences {
   PatientPreferences._(this._prefs);
@@ -11,12 +15,44 @@ class PatientPreferences {
   static const _onboardingKey = 'pruevia.onboarding.v1';
   static const _themeKey = 'pruevia.theme.v1';
   static const _anonymousIdKey = 'pruevia.anonymous_id.v1';
+  static const _privacyNoticeKey = 'pruevia.privacy_notice.acknowledgment.v1';
 
   static Future<PatientPreferences> load() async =>
       PatientPreferences._(await SharedPreferences.getInstance());
 
   bool get consentGiven => _prefs.getBool(_consentKey) ?? false;
   bool get onboardingComplete => _prefs.getBool(_onboardingKey) ?? false;
+
+  DateTime? get privacyNoticeAcknowledgedAt {
+    try {
+      final raw = _prefs.getString(_privacyNoticeKey);
+      if (raw == null) return null;
+      final acknowledgment = jsonDecode(raw);
+      if (acknowledgment is! Map<String, dynamic> ||
+          acknowledgment['version'] != privacyNoticeVersion ||
+          acknowledgment['date'] is! String) return null;
+      return DateTime.tryParse(acknowledgment['date'] as String)?.toUtc();
+    } catch (_) {
+      return null;
+    }
+  }
+
+  bool privacyNoticeReminderDue({DateTime? now}) {
+    final current = (now ?? DateTime.now()).toUtc();
+    final acknowledged = privacyNoticeAcknowledgedAt;
+    return acknowledged == null ||
+        acknowledged.isAfter(current) ||
+        !current.isBefore(acknowledged.add(privacyNoticeReminderPeriod));
+  }
+
+  Future<void> acknowledgePrivacyNotice() async {
+    // Informational acknowledgment only. No consent, identifier or API event.
+    final saved = await _prefs.setString(_privacyNoticeKey, jsonEncode({
+      'version': privacyNoticeVersion,
+      'date': DateTime.now().toUtc().toIso8601String(),
+    }));
+    if (!saved) throw StateError('No se pudo guardar el recordatorio local.');
+  }
 
   ThemeMode get themeMode => switch (_prefs.getString(_themeKey)) {
     'dark' => ThemeMode.dark,

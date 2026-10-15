@@ -12,6 +12,8 @@ La conversación original no es lectura obligatoria para incorporarse.
 | [Guías de trabajo](WORK_GUIDE.md) | Procedimientos por tipo de cambio y traspaso. |
 | [Operación](OPERATIONS_GUIDE.md) | Directorios, comandos, comprobaciones y alcance de resultados. |
 | [Estado y prioridades](CURRENT_STATE.md) | Capacidades y pendientes con evidencia fechada. |
+| [Privacidad para abogado](legal/REVISION_PRIVACIDAD_PARA_ABOGADO_20261015.md) | Explicación en lenguaje común, pendientes y ubicación del PDF privado con los avisos exactos. |
+| [Reapertura pública, 15-oct](PRIVACY_PUBLICATION_20261015.md) | Versiones publicadas, controles cerrados, observaciones y recuperación. |
 | [Operación local y crecimiento Puebla, 9–11 oct](PUEBLA_LOCAL_OPERATION_20261009.md) | Reanudación Supabase, inventario estatal DENUE y equivalencias investigadas aplicadas. |
 | [Decisiones](DECISIONS.md) | Autonomía, aprobación de cambios críticos y evolución de reglas. |
 | [ADR de liberación Puebla](ADR-002-RELEASE-PILOT-GATES.md) | Propuesta de puerta conjunta para datos, orígenes y publicación. |

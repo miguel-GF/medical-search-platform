@@ -5,5 +5,8 @@ useHead({ meta: [{ name: 'robots', content: publication.indexable ? 'index, foll
 </script>
 
 <template>
-  <NuxtPage />
+  <div>
+    <NuxtPage />
+    <PrivacyNoticeReminder />
+  </div>
 </template>
