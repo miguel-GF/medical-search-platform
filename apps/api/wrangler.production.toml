@@ -8,15 +8,18 @@ preview_urls = false
 pattern = "api.pruevia.com.mx"
 custom_domain = true
 
-# The scheduler remains fail-closed unless its three NORMALIZATION_* settings
-# are explicitly configured. Do not activate it as part of the public launch.
+# Isolated public reopening: no scheduled triggers or automatic data writes.
 [triggers]
-crons = ["17 * * * *"]
+crons = []
 
 [vars]
 API_VERSION = "v1"
 APP_ENV = "production"
 PROVIDER_DOCUMENTS_ENABLED = "false"
+NORMALIZATION_REPROCESS_ENABLED = "false"
+DENUE_COLLECTION_ENABLED = "false"
+PUBLIC_SEARCH_REVIEW_CAPTURE_ENABLED = "false"
+PUBLIC_ANALYTICS_ENABLED = "false"
 SUPABASE_TIMEOUT_MS = "5000"
 ALLOWED_ORIGINS = "https://pruevia.com.mx,https://app.pruevia.com.mx,https://admin.pruevia.com.mx"
 

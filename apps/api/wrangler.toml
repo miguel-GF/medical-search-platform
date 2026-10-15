@@ -8,6 +8,8 @@ compatibility_date = "2026-08-25"
 crons = ["17 * * * *"]
 
 [vars]
+PUBLIC_ANALYTICS_ENABLED = "false"
+PUBLIC_SEARCH_REVIEW_CAPTURE_ENABLED = "false"
 API_VERSION = "v1"
 APP_ENV = "production"
 PROVIDER_DOCUMENTS_ENABLED = "false"

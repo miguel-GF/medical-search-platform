@@ -125,9 +125,11 @@ export function createHandler(dependencies: Dependencies) {
         return await resolveImageResponse(request, dependencies.rpc, env, origin, requestId);
       }
       if (url.pathname === '/api/v1/events' && request.method === 'POST') {
+        if (env.PUBLIC_ANALYTICS_ENABLED !== 'true') return json({ error: { code: 'analytics_disabled', message: 'La medición de uso no está disponible.' } }, 503, origin);
         return await analyticsEventResponse(request, dependencies.rpc, origin);
       }
       if (url.pathname === '/api/v1/events/offer-click' && request.method === 'POST') {
+        if (env.PUBLIC_ANALYTICS_ENABLED !== 'true') return json({ error: { code: 'analytics_disabled', message: 'La medición de uso no está disponible.' } }, 503, origin);
         return await offerClickResponse(request, dependencies.rpc, origin);
       }
       if (url.pathname === '/api/v1/android-pilot' && request.method === 'GET') {
@@ -387,6 +389,7 @@ async function resolveResponse(request: Request, rpc: RpcClient, env: Env, origi
  * the capture RPC itself remains service-role-only and deduplicated in SQL.
  */
 async function captureResolutionReview(payload: ResolutionResponse, rpc: RpcClient, domain: string, requestId: string, request: Request, env: Env): Promise<void> {
+  if (env.PUBLIC_SEARCH_REVIEW_CAPTURE_ENABLED !== 'true') return;
   if (payload?.status !== 'ambiguous' && payload?.status !== 'no_match') return;
   if (!await allowReviewCapture(request, env)) return;
   try {

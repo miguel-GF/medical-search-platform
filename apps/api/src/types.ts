@@ -19,6 +19,10 @@ export interface Env {
   NORMALIZATION_REPROCESS_ADMIN_USER_ID?: string;
   /** Maximum exact/approved-alias rows per scheduled run. */
   NORMALIZATION_REPROCESS_LIMIT?: string;
+  /** Public review capture remains off unless separately authorized with consent. */
+  PUBLIC_SEARCH_REVIEW_CAPTURE_ENABLED?: string;
+  /** Separate from the local notice reminder; no public events unless explicitly enabled. */
+  PUBLIC_ANALYTICS_ENABLED?: string;
   PUBLIC_RATE_LIMITER?: RateLimitBinding;
   REVIEW_CAPTURE_RATE_LIMITER?: RateLimitBinding;
   OCR_RATE_LIMITER?: RateLimitBinding;
