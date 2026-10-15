@@ -1,6 +1,6 @@
 # Estado y prioridades de Pruevia
 
-Tipo: punto de continuidad. Actualizado el 14-oct-2026 para operación local y datos;
+Tipo: punto de continuidad. Actualizado el 15-oct-2026 UTC (14-oct local) para operación local y datos;
 el corte de publicación siguiente corresponde al 25-sep-2026 sobre el árbol local, el
 ledger Supabase y los Workers de producción. El proyecto enlazado se llama
 `pruevia-dev`, pero también es la base inicial de producción: las migraciones
@@ -16,7 +16,47 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
-**Corte completo vigente, 14-oct 13:15 UTC:** 41 revisiones aplicadas,
+**Revisiones 42–44 aplicadas, 15-oct 04:30 UTC:** 164 filas adicionales,
+24 conceptos/aliases; catálogo 499 y pendientes 4,471. Acumulado: 2,557 filas
+cerradas mediante 44 revisiones y 349 aliases investigados. La revisión 43
+conserva ocho órdenes urinarias (36 filas), distinguiendo confirmación Chopo
+de benzodiacepinas SD sin método declarado. Las 40 filas vecinas siguen
+abiertas, incluido cortisol salival: código de muestra activo, pero importador
+y léxico de consulta aún no dan soporte completo; no se rellenó con NULL.
+Observación independiente 43: 8/8 consultas públicas y 8/8 con proveedor
+correctas, RAW/guardas/atributos intactos. No se modificó el resolver.
+La memoria y paginación posteriores a 44 se reconstruyen en carpeta nueva;
+no usar los grupos del corte 41 como si fueran actuales.
+
+**Recuperación tras inicio de sesión, 15-oct 04:27 UTC:** Paciente y cola
+arrancaron automáticamente; la cola aplicó las revisiones 42 y 44. API/Admin
+fallaron al heredar Node14 del perfil de Windows. Se corrigió el launcher para
+seleccionar Node compatible ya instalado y npm vecino, con PATH sólo del hijo.
+API/Admin/Paciente volvieron a HTTP 200; una invocación real con perfil Node 14
+eligió Node 24 y conservó los procesos. Recibos en
+`collectors/artifacts/local-stack/startup-profile-recovery.json`. Primer nuevo
+inicio de sesión observado; no se afirma que los servicios nunca puedan fallar.
+
+**Lotes 42 y 44, cierre independiente 15-oct 04:26 UTC:** 128 UUID/RAW/guardas
+conservados, 16 conceptos y 16 aliases; 32 consultas públicas y 16 de proveedor
+correctas. Catálogo 491, pendientes 4,507; ofertas 234 y migraciones 112 intactas.
+Clases IgA/G/M separadas y siete analitos individuales, sin escoger muestra o
+método externos. Biotinidasa/glutatión peroxidasa: 16 filas siguen abiertas;
+17-hidroxipregnenolona y Prolactina conservan identidades distintas. Las consultas
+positivas no prueban todos los filtros de variantes clínicas. Recibos
+`independent-applied-verified.json` en `clinical-research/review-42-antibodies/`
+y `review-44-individual-analytes/` dentro de artefactos de expansión Puebla.
+
+**Identidades 15–16 aplicadas:** Sanatorio Santa María — Puebla y Central de
+Médicos San Gabriel — Cholula elevan el registro a 71 marcas/155 ubicaciones.
+Una marca en verificación y un hospital pendiente por caso. Webs NULL con
+incertidumbre y discrepancias de colonia/CP conservadas. San Gabriel usa además
+un registro laboral federal de 2022 como evidencia histórica, sin afirmar operación
+actual. Rollback/commit único/observación independiente comprobados en
+`collectors/artifacts/puebla-expansion-20261009/identity-review-15/` y
+`identity-review-16/`. Ninguna oferta ni migración nueva.
+
+**Corte completo anterior, 14-oct 13:15 UTC:** 41 revisiones aplicadas,
 325 aliases, 344 reglas/contextos y 2,393 filas históricas cerradas. Paginación
 íntegra: 475 conceptos, 4,635 pendientes en 844 grupos y 1,162 términos;
 69 marcas, 153 ubicaciones, 234 ofertas y 112 migraciones. Memoria shadow v3

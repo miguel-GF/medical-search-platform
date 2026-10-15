@@ -1,0 +1,26 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261014:02",
+  "reviewed_by": "Codex; investigación delegada por el operador",
+  "authorization": "D-021/D-022: identidad candidata pending investigada, sin confirmación rutinaria.",
+  "research_date": "2026-10-14",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "Una institución nueva en verificación y un hospital pending: Sanatorio Santa María en Puebla, DENUE 3257796. Conservar 38 Poniente 1304, colonia y CP gubernamentales discrepantes del directorio, web NULL con incertidumbre y homónimos separados. Sin ofertas, precios, captura comercial, migración o disponibilidad.",
+  "providers": [
+    {
+      "provider_key": "sanatorio_santa_maria_puebla",
+      "name": "Sanatorio Santa María — Puebla",
+      "slug": "sanatorio-santa-maria-puebla",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó un sitio institucional propio en esta investigación. El campo www del RAW está vacío y el directorio estatal no publica web de esta institución. Conservar website_url NULL; la página gubernamental de evidencia no se convierte en web del proveedor ni demuestra control de dominio.",
+      "identity_evidence_url": "https://ss.puebla.gob.mx/emergencias",
+      "identity_activity_codes": [
+        "622111"
+      ],
+      "denue_record_ids": [
+        "3257796"
+      ],
+      "identity_note": "El directorio oficial de emergencias de la Secretaría de Salud de Puebla, modificado 06-feb-2026 y leído con HTTP 200 el 14-oct-2026 UTC, identifica Sanatorio Santa María en 38 Poniente 1304, Puebla. DENUE 3257796 registra SANATORIO SANTA MARIA, SCIAN 622111, CALLE 38 PONIENTE, numero_ext 1304, letras e interiores vacíos, colonia JOSE MARIA MORELOS Y PAVON, CP 72250, municipio Puebla. Coinciden institución, municipio, vialidad y exterior. La fuente estatal usa Santa María y CP 72080: conservar JOSE MARIA MORELOS Y PAVON y CP 72250 del RAW y documentar ambas discrepancias, sin completar o corregir domicilio ni afirmar coincidencia postal total. Conservar coordenadas, hash y procedencia gubernamentales íntegros. No fusionar los homónimos de San Pedro Cholula (DENUE 3431140, 9 Poniente 111) o Tehuacán (3427646, Camelia Poniente 113): no hay evidencia primaria de una misma institución o red, y no forman parte de este vínculo. No se acreditó sitio propio: website_url NULL con incertidumbre, sin sustituirlo por la página estatal. La fuente estatal no demuestra titularidad jurídica, afiliación o control de dominio. Una marca verification_pending y un hospital pending. Identidad de sede y clase hospitalaria no acreditan estudios, ofertas, precios, horarios, disponibilidad, permisos sanitarios o autorización de captura comercial."
+    }
+  ]
+}

@@ -28,6 +28,37 @@ de entorno y los artefactos permanecen ignorados por Git.
 
 ## Inventario estatal guardado y comprobado
 
+**Actualización 15-oct-2026 04:30 UTC:** revisiones 42–44 aplicadas y observadas:
+164 cierres adicionales, 24 conceptos y 24 aliases; acumulado 2,557 filas /
+44 revisiones / 349 aliases. Catálogo 499 y pendientes 4,471. Las 72 filas de
+anticuerpos separan IgA/IgG/IgM; los 56 analitos individuales no toman muestra,
+método o tiempos de los laboratorios externos. Mayo se observó por herramienta
+web guardada por separado: sus capturas nativas fallaron, sin atribuir HTTP200.
+Las 36 urinarias mantienen duración literal y confirmación Chopo separada de
+la orden SD sin método. Observaciones públicas 18/18, 14/14 y 8/8;
+proveedor 9/9, 7/7 y 8/8. Vecinos RAW y canónicos preservados; las observaciones
+positivas no prueban todos los filtros clínicos negativos. Evidencia:
+`clinical-research/review-42-antibodies/independent-applied-verified.json`,
+`review-43-urine-analytes/applied-verified.json` y
+`review-44-individual-analytes/independent-applied-verified.json`, dentro de
+`collectors/artifacts/puebla-expansion-20261009/`.
+
+Identidades 15–16: Sanatorio Santa María — Puebla y Central de Médicos San
+Gabriel — Cholula incorporados como candidatos: 71 marcas / 155 ubicaciones.
+Cada operación conserva rollback observado, único commit y observación
+independiente de vínculo DENUE, auditoría, observación, RAW y website NULL.
+Discrepancias de colonia/CP registradas. La evidencia federal San Gabriel de
+2022 no prueba operación actual. Ninguna oferta nueva; permanecen 234 ofertas,
+112 migraciones y políticas sin cambios. Recibos en `identity-review-15/`
+y `identity-review-16/` de los mismos artefactos de expansión.
+
+El inicio de sesión Windows del 15-oct 04:18 UTC arrancó paciente/cola; la cola
+aplicó 42 sin intervención manual. API/Admin se detuvieron por Node14 del perfil.
+El launcher selecciona ahora runtime compatible instalado y npm vecino, sin
+instalar ni cambiar PATH global. Arranque real y repetición con perfil Node14
+eligieron Node24, conservaron procesos existentes y observaron HTTP200 en los
+tres endpoints. Recibo `collectors/artifacts/local-stack/startup-profile-recovery.json`.
+
 **Cierre completo vigente 14-oct, 13:15 UTC:** 41 revisiones aplicadas,
 325 aliases y 2,393 filas cerradas; 475 conceptos y 4,635 pendientes / 844
 grupos, paginados íntegramente. Memoria shadow v3: 344 reglas y todos los

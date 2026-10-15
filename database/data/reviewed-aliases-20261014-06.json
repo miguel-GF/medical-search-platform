@@ -1,0 +1,276 @@
+{
+  "review_id": "pruevia:evidence-review:20261014:06",
+  "research_date": "2026-10-14",
+  "scope": "Revisión 42: nueve órdenes individuales de anticuerpos Chlamydia trachomatis, Helicobacter pylori y Bordetella pertussis, cada una IgA/IgG/IgM explícita; 72 filas SD, nueve conceptos/aliases. Muestra y tiempo desconocidos. Excluye combinados/paneles, PCR, antígeno y aliento; sin ofertas nuevas.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "509b3464f6ba4158e31c193e3a043910d32aa8637e508cf89d1f1162f67c712a",
+  "research_snapshot_sha256": "de7f0006d7f95433f1ca3c73d01802503ea9473b6f33b242fa295fe2fb1cd380",
+  "definition_sha256": "25648b07e1615a1a416073bb0a5996e351283e743481a1925aa0a075ed14e989",
+  "new_concepts": [
+    {
+      "item_id": "be4aca97-83fb-5ea6-8741-3e39289d2d39",
+      "canonical_name": "Anticuerpos IgA contra Chlamydia trachomatis",
+      "component": "Chlamydia trachomatis Ab.IgA",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/0098880",
+      "reason": "Las ocho filas SD conservan título/Descripcion de anticuerpos contra Chlamydia trachomatis y clase IgA explícita. Se investigaron TODOS los payloads: una variante clínica por etiqueta, sin muestra, método o tiempo escritos. La referencia primaria ARUP distingue anticuerpos de clase IgA, IgG e IgM contra C. trachomatis, por separado de otras especies. Su panel de diferenciación no se atribuye a esta orden individual SD; no se eligen serovares D-K/L1/L2/L3, antígeno/reactivo ni inmunofluorescencia desde esa referencia. Alias global sólo porque su etiqueta completa expresa diana de especie y una única clase sin depender de preparación/proveedor para desambiguar. No une otras clases, paneles, antígeno, cultivo o PCR. Guarda literal Descripcion íntegra, conservando espacios y preparación original. Identidad de orden por analito, sin equivalencia de resultados; isotipo IgA permanece en nombre y componente. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW no escribe matriz exacta ni duración de colección. Ayuno y toma de muestra no indican suero/plasma/sangre; la matriz de la referencia externa no se traslada al canónico. Método, antígeno más fino, escala y unidades desconocidos."
+    },
+    {
+      "item_id": "02ceb95d-ef14-56b5-b268-9e851ff7b356",
+      "canonical_name": "Anticuerpos IgG contra Chlamydia trachomatis",
+      "component": "Chlamydia trachomatis Ab.IgG",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/0098880",
+      "reason": "Las ocho filas SD conservan título/Descripcion de anticuerpos contra Chlamydia trachomatis y clase IgG explícita. Se investigaron TODOS los payloads: una variante clínica por etiqueta, sin muestra, método o tiempo escritos. La referencia primaria ARUP distingue anticuerpos de clase IgA, IgG e IgM contra C. trachomatis, por separado de otras especies. Su panel de diferenciación no se atribuye a esta orden individual SD; no se eligen serovares D-K/L1/L2/L3, antígeno/reactivo ni inmunofluorescencia desde esa referencia. Alias global sólo porque su etiqueta completa expresa diana de especie y una única clase sin depender de preparación/proveedor para desambiguar. No une otras clases, paneles, antígeno, cultivo o PCR. Guarda literal Descripcion íntegra, conservando espacios y preparación original. Identidad de orden por analito, sin equivalencia de resultados; isotipo IgG permanece en nombre y componente. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW no escribe matriz exacta ni duración de colección. Ayuno y toma de muestra no indican suero/plasma/sangre; la matriz de la referencia externa no se traslada al canónico. Método, antígeno más fino, escala y unidades desconocidos."
+    },
+    {
+      "item_id": "0bff0393-e323-529f-a0c9-8e8f9f0f403e",
+      "canonical_name": "Anticuerpos IgM contra Chlamydia trachomatis",
+      "component": "Chlamydia trachomatis Ab.IgM",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/0098880",
+      "reason": "Las ocho filas SD conservan título/Descripcion de anticuerpos contra Chlamydia trachomatis y clase IgM explícita. Se investigaron TODOS los payloads: una variante clínica por etiqueta, sin muestra, método o tiempo escritos. La referencia primaria ARUP distingue anticuerpos de clase IgA, IgG e IgM contra C. trachomatis, por separado de otras especies. Su panel de diferenciación no se atribuye a esta orden individual SD; no se eligen serovares D-K/L1/L2/L3, antígeno/reactivo ni inmunofluorescencia desde esa referencia. Alias global sólo porque su etiqueta completa expresa diana de especie y una única clase sin depender de preparación/proveedor para desambiguar. No une otras clases, paneles, antígeno, cultivo o PCR. Guarda literal Descripcion íntegra, conservando espacios y preparación original. Identidad de orden por analito, sin equivalencia de resultados; isotipo IgM permanece en nombre y componente. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW no escribe matriz exacta ni duración de colección. Ayuno y toma de muestra no indican suero/plasma/sangre; la matriz de la referencia externa no se traslada al canónico. Método, antígeno más fino, escala y unidades desconocidos."
+    },
+    {
+      "item_id": "c2702919-397f-5e4e-b5dd-67ef1b475c3e",
+      "canonical_name": "Anticuerpos IgA contra Helicobacter pylori",
+      "component": "Helicobacter pylori Ab.IgA",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://arupconsult.com/content/helicobacter-pylori",
+      "reason": "Las ocho filas SD conservan título/Descripcion de anticuerpos contra Helicobacter pylori y clase IgA explícita. Se investigaron TODOS los payloads: una variante clínica por etiqueta, sin muestra, método o tiempo escritos. ARUP Consult identifica serología IgA, IgG e IgM como identidades diferentes de antígeno fecal y prueba de aliento. No demuestra infección activa ni curación y no se convierte a un ensayo recomendado alternativo. Se registra la orden escrita sin aprobar su utilidad diagnóstica, resultado o método. Alias global sólo porque su etiqueta completa expresa diana de especie y una única clase sin depender de preparación/proveedor para desambiguar. No une otras clases, paneles, antígeno, cultivo o PCR. Guarda literal Descripcion íntegra, conservando espacios y preparación original. Identidad de orden por analito, sin equivalencia de resultados; isotipo IgA permanece en nombre y componente. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW no escribe matriz exacta ni duración de colección. Ayuno y toma de muestra no indican suero/plasma/sangre; la matriz de la referencia externa no se traslada al canónico. Método, antígeno más fino, escala y unidades desconocidos."
+    },
+    {
+      "item_id": "b30b4533-fd44-5b18-a402-820ac84fd751",
+      "canonical_name": "Anticuerpos IgG contra Helicobacter pylori",
+      "component": "Helicobacter pylori Ab.IgG",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://arupconsult.com/content/helicobacter-pylori",
+      "reason": "Las ocho filas SD conservan título/Descripcion de anticuerpos contra Helicobacter pylori y clase IgG explícita. Se investigaron TODOS los payloads: una variante clínica por etiqueta, sin muestra, método o tiempo escritos. ARUP Consult identifica serología IgA, IgG e IgM como identidades diferentes de antígeno fecal y prueba de aliento. No demuestra infección activa ni curación y no se convierte a un ensayo recomendado alternativo. Se registra la orden escrita sin aprobar su utilidad diagnóstica, resultado o método. Alias global sólo porque su etiqueta completa expresa diana de especie y una única clase sin depender de preparación/proveedor para desambiguar. No une otras clases, paneles, antígeno, cultivo o PCR. Guarda literal Descripcion íntegra, conservando espacios y preparación original. Identidad de orden por analito, sin equivalencia de resultados; isotipo IgG permanece en nombre y componente. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW no escribe matriz exacta ni duración de colección. Ayuno y toma de muestra no indican suero/plasma/sangre; la matriz de la referencia externa no se traslada al canónico. Método, antígeno más fino, escala y unidades desconocidos."
+    },
+    {
+      "item_id": "fc9586aa-6069-50c9-947e-f42636046724",
+      "canonical_name": "Anticuerpos IgM contra Helicobacter pylori",
+      "component": "Helicobacter pylori Ab.IgM",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://arupconsult.com/content/helicobacter-pylori",
+      "reason": "Las ocho filas SD conservan título/Descripcion de anticuerpos contra Helicobacter pylori y clase IgM explícita. Se investigaron TODOS los payloads: una variante clínica por etiqueta, sin muestra, método o tiempo escritos. ARUP Consult identifica serología IgA, IgG e IgM como identidades diferentes de antígeno fecal y prueba de aliento. No demuestra infección activa ni curación y no se convierte a un ensayo recomendado alternativo. Se registra la orden escrita sin aprobar su utilidad diagnóstica, resultado o método. Alias global sólo porque su etiqueta completa expresa diana de especie y una única clase sin depender de preparación/proveedor para desambiguar. No une otras clases, paneles, antígeno, cultivo o PCR. Guarda literal Descripcion íntegra, conservando espacios y preparación original. Identidad de orden por analito, sin equivalencia de resultados; isotipo IgM permanece en nombre y componente. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW no escribe matriz exacta ni duración de colección. Ayuno y toma de muestra no indican suero/plasma/sangre; la matriz de la referencia externa no se traslada al canónico. Método, antígeno más fino, escala y unidades desconocidos."
+    },
+    {
+      "item_id": "eb225f8a-3d58-5b49-8185-3d1ef3e3cbef",
+      "canonical_name": "Anticuerpos IgA contra Bordetella pertussis",
+      "component": "Bordetella pertussis Ab.IgA",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/2001774",
+      "reason": "Las ocho filas SD conservan título/Descripcion de anticuerpos contra Bordetella pertussis y clase IgA explícita. Se investigaron TODOS los payloads: una variante clínica por etiqueta, sin muestra, método o tiempo escritos. ARUP reconoce clases IgA e IgG por separado en 2001774 e IgM en 2001769. Esas referencias tienen métodos/reflex propios que no se copian a SD; no se elige toxina pertussis PT, hemaglutinina filamentosa FHA, otra composición antigénica, ELISA ni inmunoblot. Se conserva la diana de especie y la clase de la orden; la diana antigénica más fina y el ensayo siguen desconocidos. Alias global sólo porque su etiqueta completa expresa diana de especie y una única clase sin depender de preparación/proveedor para desambiguar. No une otras clases, paneles, antígeno, cultivo o PCR. Guarda literal Descripcion íntegra, conservando espacios y preparación original. Identidad de orden por analito, sin equivalencia de resultados; isotipo IgA permanece en nombre y componente. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW no escribe matriz exacta ni duración de colección. Ayuno y toma de muestra no indican suero/plasma/sangre; la matriz de la referencia externa no se traslada al canónico. Método, antígeno más fino, escala y unidades desconocidos."
+    },
+    {
+      "item_id": "3204758b-eb50-5d5b-a2d2-942277d59756",
+      "canonical_name": "Anticuerpos IgG contra Bordetella pertussis",
+      "component": "Bordetella pertussis Ab.IgG",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/2001774",
+      "reason": "Las ocho filas SD conservan título/Descripcion de anticuerpos contra Bordetella pertussis y clase IgG explícita. Se investigaron TODOS los payloads: una variante clínica por etiqueta, sin muestra, método o tiempo escritos. ARUP reconoce clases IgA e IgG por separado en 2001774 e IgM en 2001769. Esas referencias tienen métodos/reflex propios que no se copian a SD; no se elige toxina pertussis PT, hemaglutinina filamentosa FHA, otra composición antigénica, ELISA ni inmunoblot. Se conserva la diana de especie y la clase de la orden; la diana antigénica más fina y el ensayo siguen desconocidos. Alias global sólo porque su etiqueta completa expresa diana de especie y una única clase sin depender de preparación/proveedor para desambiguar. No une otras clases, paneles, antígeno, cultivo o PCR. Guarda literal Descripcion íntegra, conservando espacios y preparación original. Identidad de orden por analito, sin equivalencia de resultados; isotipo IgG permanece en nombre y componente. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW no escribe matriz exacta ni duración de colección. Ayuno y toma de muestra no indican suero/plasma/sangre; la matriz de la referencia externa no se traslada al canónico. Método, antígeno más fino, escala y unidades desconocidos."
+    },
+    {
+      "item_id": "b9429d57-0286-5e89-9a29-166e461821b3",
+      "canonical_name": "Anticuerpos IgM contra Bordetella pertussis",
+      "component": "Bordetella pertussis Ab.IgM",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/2001769",
+      "reason": "Las ocho filas SD conservan título/Descripcion de anticuerpos contra Bordetella pertussis y clase IgM explícita. Se investigaron TODOS los payloads: una variante clínica por etiqueta, sin muestra, método o tiempo escritos. ARUP reconoce clases IgA e IgG por separado en 2001774 e IgM en 2001769. Esas referencias tienen métodos/reflex propios que no se copian a SD; no se elige toxina pertussis PT, hemaglutinina filamentosa FHA, otra composición antigénica, ELISA ni inmunoblot. Se conserva la diana de especie y la clase de la orden; la diana antigénica más fina y el ensayo siguen desconocidos. Alias global sólo porque su etiqueta completa expresa diana de especie y una única clase sin depender de preparación/proveedor para desambiguar. No une otras clases, paneles, antígeno, cultivo o PCR. Guarda literal Descripcion íntegra, conservando espacios y preparación original. Identidad de orden por analito, sin equivalencia de resultados; isotipo IgM permanece en nombre y componente. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW no escribe matriz exacta ni duración de colección. Ayuno y toma de muestra no indican suero/plasma/sangre; la matriz de la referencia externa no se traslada al canónico. Método, antígeno más fino, escala y unidades desconocidos."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "anticuerpos anti chlamydia trachomatis iga",
+      "item_id": "be4aca97-83fb-5ea6-8741-3e39289d2d39",
+      "canonical_name": "Anticuerpos IgA contra Chlamydia trachomatis",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/0098880",
+      "reason": "Las ocho filas SD conservan título/Descripcion de anticuerpos contra Chlamydia trachomatis y clase IgA explícita. Se investigaron TODOS los payloads: una variante clínica por etiqueta, sin muestra, método o tiempo escritos. La referencia primaria ARUP distingue anticuerpos de clase IgA, IgG e IgM contra C. trachomatis, por separado de otras especies. Su panel de diferenciación no se atribuye a esta orden individual SD; no se eligen serovares D-K/L1/L2/L3, antígeno/reactivo ni inmunofluorescencia desde esa referencia. Alias global sólo porque su etiqueta completa expresa diana de especie y una única clase sin depender de preparación/proveedor para desambiguar. No une otras clases, paneles, antígeno, cultivo o PCR. Guarda literal Descripcion íntegra, conservando espacios y preparación original. Identidad de orden por analito, sin equivalencia de resultados; isotipo IgA permanece en nombre y componente. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS ANTI CHLAMYDIA TRACHOMATIS IGA"
+      }
+    },
+    {
+      "alias": "anticuerpos anti chlamydia trachomatis igg",
+      "item_id": "02ceb95d-ef14-56b5-b268-9e851ff7b356",
+      "canonical_name": "Anticuerpos IgG contra Chlamydia trachomatis",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/0098880",
+      "reason": "Las ocho filas SD conservan título/Descripcion de anticuerpos contra Chlamydia trachomatis y clase IgG explícita. Se investigaron TODOS los payloads: una variante clínica por etiqueta, sin muestra, método o tiempo escritos. La referencia primaria ARUP distingue anticuerpos de clase IgA, IgG e IgM contra C. trachomatis, por separado de otras especies. Su panel de diferenciación no se atribuye a esta orden individual SD; no se eligen serovares D-K/L1/L2/L3, antígeno/reactivo ni inmunofluorescencia desde esa referencia. Alias global sólo porque su etiqueta completa expresa diana de especie y una única clase sin depender de preparación/proveedor para desambiguar. No une otras clases, paneles, antígeno, cultivo o PCR. Guarda literal Descripcion íntegra, conservando espacios y preparación original. Identidad de orden por analito, sin equivalencia de resultados; isotipo IgG permanece en nombre y componente. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS ANTI CHLAMYDIA TRACHOMATIS IGG"
+      }
+    },
+    {
+      "alias": "anticuerpos anti chlamydia trachomatis igm",
+      "item_id": "0bff0393-e323-529f-a0c9-8e8f9f0f403e",
+      "canonical_name": "Anticuerpos IgM contra Chlamydia trachomatis",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/0098880",
+      "reason": "Las ocho filas SD conservan título/Descripcion de anticuerpos contra Chlamydia trachomatis y clase IgM explícita. Se investigaron TODOS los payloads: una variante clínica por etiqueta, sin muestra, método o tiempo escritos. La referencia primaria ARUP distingue anticuerpos de clase IgA, IgG e IgM contra C. trachomatis, por separado de otras especies. Su panel de diferenciación no se atribuye a esta orden individual SD; no se eligen serovares D-K/L1/L2/L3, antígeno/reactivo ni inmunofluorescencia desde esa referencia. Alias global sólo porque su etiqueta completa expresa diana de especie y una única clase sin depender de preparación/proveedor para desambiguar. No une otras clases, paneles, antígeno, cultivo o PCR. Guarda literal Descripcion íntegra, conservando espacios y preparación original. Identidad de orden por analito, sin equivalencia de resultados; isotipo IgM permanece en nombre y componente. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS ANTI CHLAMYDIA TRACHOMATIS IGM"
+      }
+    },
+    {
+      "alias": "anticuerpos anti helicobacter pylori iga",
+      "item_id": "c2702919-397f-5e4e-b5dd-67ef1b475c3e",
+      "canonical_name": "Anticuerpos IgA contra Helicobacter pylori",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://arupconsult.com/content/helicobacter-pylori",
+      "reason": "Las ocho filas SD conservan título/Descripcion de anticuerpos contra Helicobacter pylori y clase IgA explícita. Se investigaron TODOS los payloads: una variante clínica por etiqueta, sin muestra, método o tiempo escritos. ARUP Consult identifica serología IgA, IgG e IgM como identidades diferentes de antígeno fecal y prueba de aliento. No demuestra infección activa ni curación y no se convierte a un ensayo recomendado alternativo. Se registra la orden escrita sin aprobar su utilidad diagnóstica, resultado o método. Alias global sólo porque su etiqueta completa expresa diana de especie y una única clase sin depender de preparación/proveedor para desambiguar. No une otras clases, paneles, antígeno, cultivo o PCR. Guarda literal Descripcion íntegra, conservando espacios y preparación original. Identidad de orden por analito, sin equivalencia de resultados; isotipo IgA permanece en nombre y componente. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS ANTI HELICOBACTER PYLORI  IGA "
+      }
+    },
+    {
+      "alias": "anticuerpos anti helicobacter pylori igg",
+      "item_id": "b30b4533-fd44-5b18-a402-820ac84fd751",
+      "canonical_name": "Anticuerpos IgG contra Helicobacter pylori",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://arupconsult.com/content/helicobacter-pylori",
+      "reason": "Las ocho filas SD conservan título/Descripcion de anticuerpos contra Helicobacter pylori y clase IgG explícita. Se investigaron TODOS los payloads: una variante clínica por etiqueta, sin muestra, método o tiempo escritos. ARUP Consult identifica serología IgA, IgG e IgM como identidades diferentes de antígeno fecal y prueba de aliento. No demuestra infección activa ni curación y no se convierte a un ensayo recomendado alternativo. Se registra la orden escrita sin aprobar su utilidad diagnóstica, resultado o método. Alias global sólo porque su etiqueta completa expresa diana de especie y una única clase sin depender de preparación/proveedor para desambiguar. No une otras clases, paneles, antígeno, cultivo o PCR. Guarda literal Descripcion íntegra, conservando espacios y preparación original. Identidad de orden por analito, sin equivalencia de resultados; isotipo IgG permanece en nombre y componente. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS ANTI HELICOBACTER PYLORI IGG"
+      }
+    },
+    {
+      "alias": "ac anti helicobacter pylori igm",
+      "item_id": "fc9586aa-6069-50c9-947e-f42636046724",
+      "canonical_name": "Anticuerpos IgM contra Helicobacter pylori",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://arupconsult.com/content/helicobacter-pylori",
+      "reason": "Las ocho filas SD conservan título/Descripcion de anticuerpos contra Helicobacter pylori y clase IgM explícita. Se investigaron TODOS los payloads: una variante clínica por etiqueta, sin muestra, método o tiempo escritos. ARUP Consult identifica serología IgA, IgG e IgM como identidades diferentes de antígeno fecal y prueba de aliento. No demuestra infección activa ni curación y no se convierte a un ensayo recomendado alternativo. Se registra la orden escrita sin aprobar su utilidad diagnóstica, resultado o método. Alias global sólo porque su etiqueta completa expresa diana de especie y una única clase sin depender de preparación/proveedor para desambiguar. No une otras clases, paneles, antígeno, cultivo o PCR. Guarda literal Descripcion íntegra, conservando espacios y preparación original. Identidad de orden por analito, sin equivalencia de resultados; isotipo IgM permanece en nombre y componente. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "Ac. Anti-Helicobacter pylori IgM"
+      }
+    },
+    {
+      "alias": "bordetella pertussis anticuerpos iga",
+      "item_id": "eb225f8a-3d58-5b49-8185-3d1ef3e3cbef",
+      "canonical_name": "Anticuerpos IgA contra Bordetella pertussis",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/2001774",
+      "reason": "Las ocho filas SD conservan título/Descripcion de anticuerpos contra Bordetella pertussis y clase IgA explícita. Se investigaron TODOS los payloads: una variante clínica por etiqueta, sin muestra, método o tiempo escritos. ARUP reconoce clases IgA e IgG por separado en 2001774 e IgM en 2001769. Esas referencias tienen métodos/reflex propios que no se copian a SD; no se elige toxina pertussis PT, hemaglutinina filamentosa FHA, otra composición antigénica, ELISA ni inmunoblot. Se conserva la diana de especie y la clase de la orden; la diana antigénica más fina y el ensayo siguen desconocidos. Alias global sólo porque su etiqueta completa expresa diana de especie y una única clase sin depender de preparación/proveedor para desambiguar. No une otras clases, paneles, antígeno, cultivo o PCR. Guarda literal Descripcion íntegra, conservando espacios y preparación original. Identidad de orden por analito, sin equivalencia de resultados; isotipo IgA permanece en nombre y componente. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "Bordetella pertussis anticuerpos IgA"
+      }
+    },
+    {
+      "alias": "bordetella pertussis anticuerpos igg",
+      "item_id": "3204758b-eb50-5d5b-a2d2-942277d59756",
+      "canonical_name": "Anticuerpos IgG contra Bordetella pertussis",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/2001774",
+      "reason": "Las ocho filas SD conservan título/Descripcion de anticuerpos contra Bordetella pertussis y clase IgG explícita. Se investigaron TODOS los payloads: una variante clínica por etiqueta, sin muestra, método o tiempo escritos. ARUP reconoce clases IgA e IgG por separado en 2001774 e IgM en 2001769. Esas referencias tienen métodos/reflex propios que no se copian a SD; no se elige toxina pertussis PT, hemaglutinina filamentosa FHA, otra composición antigénica, ELISA ni inmunoblot. Se conserva la diana de especie y la clase de la orden; la diana antigénica más fina y el ensayo siguen desconocidos. Alias global sólo porque su etiqueta completa expresa diana de especie y una única clase sin depender de preparación/proveedor para desambiguar. No une otras clases, paneles, antígeno, cultivo o PCR. Guarda literal Descripcion íntegra, conservando espacios y preparación original. Identidad de orden por analito, sin equivalencia de resultados; isotipo IgG permanece en nombre y componente. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "Bordetella pertussis anticuerpos IgG"
+      }
+    },
+    {
+      "alias": "acs anti bordetella pertussis igm",
+      "item_id": "b9429d57-0286-5e89-9a29-166e461821b3",
+      "canonical_name": "Anticuerpos IgM contra Bordetella pertussis",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/2001769",
+      "reason": "Las ocho filas SD conservan título/Descripcion de anticuerpos contra Bordetella pertussis y clase IgM explícita. Se investigaron TODOS los payloads: una variante clínica por etiqueta, sin muestra, método o tiempo escritos. ARUP reconoce clases IgA e IgG por separado en 2001774 e IgM en 2001769. Esas referencias tienen métodos/reflex propios que no se copian a SD; no se elige toxina pertussis PT, hemaglutinina filamentosa FHA, otra composición antigénica, ELISA ni inmunoblot. Se conserva la diana de especie y la clase de la orden; la diana antigénica más fina y el ensayo siguen desconocidos. Alias global sólo porque su etiqueta completa expresa diana de especie y una única clase sin depender de preparación/proveedor para desambiguar. No une otras clases, paneles, antígeno, cultivo o PCR. Guarda literal Descripcion íntegra, conservando espacios y preparación original. Identidad de orden por analito, sin equivalencia de resultados; isotipo IgM permanece en nombre y componente. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ACS. ANTI Bordetella pertussis IgM"
+      }
+    }
+  ]
+}

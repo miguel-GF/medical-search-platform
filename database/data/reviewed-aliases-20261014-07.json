@@ -1,0 +1,256 @@
+{
+  "review_id": "pruevia:evidence-review:20261014:07",
+  "research_date": "2026-10-14",
+  "scope": "Revisión43: ocho órdenes urinarias individuales de3proveedores,36filas; separar confirmaciónChopo y clasesSD, conservar duración escrita y método desconocido. Cortisol salival8 conserva propuesta técnica fuera de fixture;32vecinos ambiguos/fuera de alcance no se cierran.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "b21391bbd02e454147ac280d88686f0b81bad0a5de2428d0d254b0aa58682ca0",
+  "research_snapshot_sha256": "a5e22bbba58db91a4212fba95576ff770c3642c01a9f1a60553f57ea3abe3a07",
+  "definition_sha256": "c81df12702261bf5c7af20f2ecafd41034526e84c2175b7d1cd938b2accab9f0",
+  "new_concepts": [
+    {
+      "item_id": "9e46b30d-b2f9-5f82-bb2b-c6f037f73a01",
+      "canonical_name": "Barbitúricos en orina",
+      "component": "Barbiturates",
+      "specimen_code": "urine",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://www.labcorp.com/tests/737695/barbiturates-screen-and-confirmation-urine-pain-management",
+      "reason": "Clase barbitúricos y orina explícitas como orden individual de clase. No identificarla con fenobarbital individual ni inventar cobertura de compuestos, tamizaje/confirmación, reflex, técnica, umbral o escala. La referencia distingue esas variantes; no se incorporan al RAW SD. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos."
+    },
+    {
+      "item_id": "adfa8cd1-b12e-57df-baa6-a3603fc748d3",
+      "canonical_name": "Benzodiacepinas en orina",
+      "component": "Benzodiazepines",
+      "specimen_code": "urine",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://www.labcorp.com/tests/763900/benzodiazepines-screen-and-confirmation-urine-pain-management",
+      "reason": "Clase benzodiacepinas y orina explícitas, sin decir confirmación. Preservar orden de clase de esta fuente, no cobertura de metabolitos/medicamentos. No equiparar con confirmación Chopo ni copiar IA, MS, reflex, cuantificación o umbral de la ficha externa. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos."
+    },
+    {
+      "item_id": "8a71cba9-73c0-5120-8a06-ead82e7c0bd5",
+      "canonical_name": "Urea en orina de 24 horas",
+      "component": "Urea",
+      "specimen_code": "urine",
+      "time_aspect": "24H",
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://laboratories.newcastle-hospitals.nhs.uk/test-directory/urea-urine/",
+      "reason": "UREA y recolección de24horas explícitas en descripción y preparación. Fuente institucional distingue urea urinaria y colecciones. No reemplazar por nitrógeno ureico urinario/BUN ni creatinina o clearance; sin equivalencia de unidades o resultados. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos."
+    },
+    {
+      "item_id": "161bfe9c-7758-5417-a635-4aedefb6bb15",
+      "canonical_name": "Inmunofijación de proteínas en orina",
+      "component": "Protein immunofixation",
+      "specimen_code": "urine",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://www.labcorp.com/tests/123034/immunofixation-ife-urine",
+      "reason": "La orden individual escribe procedimiento inmunofijación y orina. No agregar electroforesis+reflex, Mass-Fix, cadenas libres cuantitativas, clases o composición de un panel externo. No copiar agarosa o24horas/random; duración local no declarada. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos."
+    },
+    {
+      "item_id": "d56c9cf2-591f-5a47-b6cb-3e47a2d47a31",
+      "canonical_name": "Ácido delta-aminolevulínico en orina de 24 horas",
+      "component": "Delta-aminolevulinic acid",
+      "specimen_code": "urine",
+      "time_aspect": "24H",
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/61547",
+      "reason": "Analito delta-aminolevulínico y orina de24horas explícitos en RAW propio. La referencia individual confirma identidad ALA; su colección random y relación con creatinina no se importan. No confundir con porfobilinógeno o perfil de porfirinas ni copiar método. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos."
+    },
+    {
+      "item_id": "a9b8bfda-525a-5fb6-9b80-4ebe91b25e83",
+      "canonical_name": "Ácido fenilmercaptúrico en orina aleatoria",
+      "component": "Phenylmercapturic acid",
+      "specimen_code": "urine",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://stacks.cdc.gov/view/cdc/192239",
+      "reason": "Fenilmercaptúrico, contexto de exposición a benceno y orina aleatoria explícitos. La primaria CDC/NIOSH distingue fenilmercaptúrico de benzilmercaptúrico, sin convertir benceno en el analito medido. No completar S, ratio/creatinina, técnica, hora de fin de jornada o24horas; aleatoria queda literal en nombre y guard, time_aspectNULL. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos."
+    },
+    {
+      "item_id": "bc348319-01b0-52ab-b0cd-430c9a21063b",
+      "canonical_name": "Serotonina en orina de 24 horas",
+      "component": "Serotonin",
+      "specimen_code": "urine",
+      "time_aspect": "24H",
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/87834",
+      "reason": "Serotonina individual y colección de24horas explícitas en sample_type e instrucciones. Distinta de5-HIAA,5-HTP, serotonina en sangre/suero o canónico de matrizNULL. No completar método, conservador, unidad, creatinina ni indicaciones diagnósticas. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos."
+    },
+    {
+      "item_id": "7dce43c1-47fd-5b5b-9550-cb5428580fa3",
+      "canonical_name": "Confirmación de benzodiacepinas en orina",
+      "component": "Benzodiazepines [confirmation]",
+      "specimen_code": "urine",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://medtox.labcorp.com/tests/100441/compliance-benzodiazepines-confirmation-urine",
+      "reason": "El título propio Chopo declara confirmación de benzodiacepinas y orina. Conservar esa finalidad individual de clase, distinta de la orden SD sinconfirmación; no copiar lista de compuestos ni LCMS de la referencia. La muestra está en la guarda provider_display_name y canónicoUrine; attrs{} porque el renderer vigente no admite atribución por esa ruta. No inventar sample_type ni trasladar el texto a raw_study. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "barbituricos en orina",
+      "item_id": "9e46b30d-b2f9-5f82-bb2b-c6f037f73a01",
+      "canonical_name": "Barbitúricos en orina",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.labcorp.com/tests/737695/barbiturates-screen-and-confirmation-urine-pain-management",
+      "reason": "Clase barbitúricos y orina explícitas como orden individual de clase. No identificarla con fenobarbital individual ni inventar cobertura de compuestos, tamizaje/confirmación, reflex, técnica, umbral o escala. La referencia distingue esas variantes; no se incorporan al RAW SD. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "BARBITURICOS EN ORINA"
+      },
+      "source_attributes": {
+        "specimen_code": "urine"
+      }
+    },
+    {
+      "alias": "benzodiacepinas en orina",
+      "item_id": "adfa8cd1-b12e-57df-baa6-a3603fc748d3",
+      "canonical_name": "Benzodiacepinas en orina",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.labcorp.com/tests/763900/benzodiazepines-screen-and-confirmation-urine-pain-management",
+      "reason": "Clase benzodiacepinas y orina explícitas, sin decir confirmación. Preservar orden de clase de esta fuente, no cobertura de metabolitos/medicamentos. No equiparar con confirmación Chopo ni copiar IA, MS, reflex, cuantificación o umbral de la ficha externa. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "BENZODIACEPINAS EN ORINA"
+      },
+      "source_attributes": {
+        "specimen_code": "urine"
+      }
+    },
+    {
+      "alias": "urea en orina de 24 hrs",
+      "item_id": "8a71cba9-73c0-5120-8a06-ead82e7c0bd5",
+      "canonical_name": "Urea en orina de 24 horas",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://laboratories.newcastle-hospitals.nhs.uk/test-directory/urea-urine/",
+      "reason": "UREA y recolección de24horas explícitas en descripción y preparación. Fuente institucional distingue urea urinaria y colecciones. No reemplazar por nitrógeno ureico urinario/BUN ni creatinina o clearance; sin equivalencia de unidades o resultados. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "RECOLECTAR ORINA DURANTE 24 HORAS.\r\n\r\nEN UN RECIPIENTE ESTÉRIL DEPOSITAR LAS MUESTRAS DE ORINA DE LA SIGUIENTE MANERA: \r\n• DESECHAR LA PRIMERA MICCIÓN  DE LA MAÑANA Y ANOTAR LA HORA DE ÉSTA. \r\n• RECOLECTAR TODAS LAS MUESTRAS DE ORINA HASTA EL DÍA SIGUIENTE A LA MISMA HORA DE LA PRIMERA ORINA DESECHADA. \r\n• MANTENER REFRIGERADA LA MUESTRA DURANTE TODA LA RECOLECCIÓN.\r\n\r\n\r\n\r\n"
+      },
+      "source_attributes": {
+        "specimen_code": "urine"
+      }
+    },
+    {
+      "alias": "inmunofijacion de proteinas en orina",
+      "item_id": "161bfe9c-7758-5417-a635-4aedefb6bb15",
+      "canonical_name": "Inmunofijación de proteínas en orina",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.labcorp.com/tests/123034/immunofixation-ife-urine",
+      "reason": "La orden individual escribe procedimiento inmunofijación y orina. No agregar electroforesis+reflex, Mass-Fix, cadenas libres cuantitativas, clases o composición de un panel externo. No copiar agarosa o24horas/random; duración local no declarada. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "INMUNOFIJACION DE PROTEINAS EN ORINA"
+      },
+      "source_attributes": {
+        "specimen_code": "urine"
+      }
+    },
+    {
+      "alias": "acido delta amino levulinico en orina de 24 horas",
+      "item_id": "d56c9cf2-591f-5a47-b6cb-3e47a2d47a31",
+      "canonical_name": "Ácido delta-aminolevulínico en orina de 24 horas",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/61547",
+      "reason": "Analito delta-aminolevulínico y orina de24horas explícitos en RAW propio. La referencia individual confirma identidad ALA; su colección random y relación con creatinina no se importan. No confundir con porfobilinógeno o perfil de porfirinas ni copiar método. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "Recolectar orina de 24 horas, enviar 100 ml Orina en recipiente obscuro, anotar el volumen recolectado de 24 horas"
+      },
+      "source_attributes": {
+        "specimen_code": "urine"
+      }
+    },
+    {
+      "alias": "acido fenilmercapturico benceno en orina",
+      "item_id": "a9b8bfda-525a-5fb6-9b80-4ebe91b25e83",
+      "canonical_name": "Ácido fenilmercaptúrico en orina aleatoria",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://stacks.cdc.gov/view/cdc/192239",
+      "reason": "Fenilmercaptúrico, contexto de exposición a benceno y orina aleatoria explícitos. La primaria CDC/NIOSH distingue fenilmercaptúrico de benzilmercaptúrico, sin convertir benceno en el analito medido. No completar S, ratio/creatinina, técnica, hora de fin de jornada o24horas; aleatoria queda literal en nombre y guard, time_aspectNULL. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "100 ml Orina aleatoria, enviar refrigerada"
+      },
+      "source_attributes": {
+        "specimen_code": "urine"
+      }
+    },
+    {
+      "alias": "serotonina en orina",
+      "item_id": "bc348319-01b0-52ab-b0cd-430c9a21063b",
+      "canonical_name": "Serotonina en orina de 24 horas",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/87834",
+      "reason": "Serotonina individual y colección de24horas explícitas en sample_type e instrucciones. Distinta de5-HIAA,5-HTP, serotonina en sangre/suero o canónico de matrizNULL. No completar método, conservador, unidad, creatinina ni indicaciones diagnósticas. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "Recolectar orina de 24 horas"
+      },
+      "source_attributes": {
+        "specimen_code": "urine"
+      }
+    },
+    {
+      "alias": "confirmacion de benzodiacepinas en orina",
+      "item_id": "7dce43c1-47fd-5b5b-9550-cb5428580fa3",
+      "canonical_name": "Confirmación de benzodiacepinas en orina",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://medtox.labcorp.com/tests/100441/compliance-benzodiazepines-confirmation-urine",
+      "reason": "El título propio Chopo declara confirmación de benzodiacepinas y orina. Conservar esa finalidad individual de clase, distinta de la orden SD sinconfirmación; no copiar lista de compuestos ni LCMS de la referencia. La muestra está en la guarda provider_display_name y canónicoUrine; attrs{} porque el renderer vigente no admite atribución por esa ruta. No inventar sample_type ni trasladar el texto a raw_study. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "edad5c4c-9cb7-5098-bb6d-4d9f58907cbc",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "provider_display_name"
+        ],
+        "value": "CONFIRMACIÓN DE BENZODIACEPINAS EN ORINA"
+      }
+    }
+  ]
+}

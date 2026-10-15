@@ -1,0 +1,26 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261015:01",
+  "reviewed_by": "Codex; investigación delegada por el operador",
+  "authorization": "D-021/D-022: identidad candidata pending con evidencia, sin confirmación rutinaria.",
+  "research_date": "2026-10-15",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "Central de Médicos San Gabriel en Cholula, una institución candidata y hospital pendiente; identidad histórica, sin ofertas ni garantía de operación actual.",
+  "providers": [
+    {
+      "provider_key": "central_medicos_san_gabriel_cholula",
+      "name": "Central de Médicos San Gabriel — Cholula",
+      "slug": "central-medicos-san-gabriel-cholula",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio institucional propio. DENUE no registra web. El repositorio federal es evidencia de identidad, no web del proveedor.",
+      "identity_evidence_url": "https://repositorio.centrolaboral.gob.mx/reglamento/1826",
+      "identity_activity_codes": [
+        "622111"
+      ],
+      "denue_record_ids": [
+        "3451807"
+      ],
+      "identity_note": "El repositorio público del Centro Federal de Conciliación y Registro Laboral, reglamento 1826, consultado con HTTP 200 el 15-oct-2026 UTC, vincula la institución con 4 Poniente 503 en San Pedro Cholula y actividad hospitalaria general privada. Coinciden nombre institucional, municipio, vialidad y exterior con DENUE 3451807, clase 622111. El registro laboral es de 2022: evidencia histórica de identidad, no prueba de operación o permisos actuales. Conservar del DENUE íntegros colonia SAN JUAN CALVARIO, CP 72764 y coordenadas; el repositorio usa Centro y CP 72760, discrepancias documentadas sin corregir el RAW. No demuestra propiedad jurídica actual, afiliación a otra red, disponibilidad, servicios, precios ni cobertura comercial. Web institucional no acreditada: NULL. Una marca verification_pending y hospital pending. Sin ofertas ni cambios de política o esquema."
+    }
+  ]
+}

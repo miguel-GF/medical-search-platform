@@ -1,0 +1,218 @@
+{
+  "review_id": "pruevia:evidence-review:20261014:08",
+  "research_date": "2026-10-14",
+  "scope": "Revisión44: siete órdenes individuales SD,56filas. Muestra/colección/método desconocidos; no elegir isoformas ni paneles. Biotinidasa y glutatión peroxidasa16filas retenidas.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "3370bacf2b3cbb374a6bba461e2e12bb65a4b08f1cb6cd0f88df47b943003c34",
+  "research_snapshot_sha256": "b4b0cb07c4ff48fb1c67eb3d71db9802f8ea3a79507d2840c8d3e178c8b1edf3",
+  "definition_sha256": "11ce698970df57238eb42590f036a0032b4fd36c4204df8bb12a05e84f6d852c",
+  "new_concepts": [
+    {
+      "item_id": "a9cf27bb-0ba7-5510-83c8-b81c53cd9343",
+      "canonical_name": "Leptina",
+      "component": "Leptin",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/91339",
+      "reason": "Las ocho filas SD nombran el mismo analito individual y se investigaron todos sus RAW completos. La referencia primaria identifica la orden y no se trasladan su matriz, método, LOINC, unidades, resultados, tiempos o requisitos. Conserva fracción libre de estriol y entidad macroprolactina cuando forman parte del título; no equivale a estriol total, estradiol, estrona, prolactina monomérica/total, 17-hidroxipregnenolona, panel de citocinas o liberación leucocitaria de histamina. Alias de identidad de orden, no equivalencia de resultados ni aprobación de utilidad diagnóstica. No inferir isoformas alfa/beta, actividad/concentración, método PEG, ELISA/FEIA/ICMA/EIA, sangre total, suero/plasma u orina desde fuentes externas. Descripcion completa y preparación original íntegras. Mayo se observó por herramienta web: sus capturas nativas locales fallaron, sin presentarlas como HTTP200; Labcorp conserva captura nativa200 y digest. No cambios de fuentes, ofertas, precio, disponibilidad ni resolver clínico. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "RAW sin matriz exacta ni duración de colección. Ayuno no es muestra ni colección. Método, propiedad, escala y unidad no inferidos."
+    },
+    {
+      "item_id": "7933506c-792b-56e4-8341-371ed7981cfe",
+      "canonical_name": "Triptasa",
+      "component": "Tryptase",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/81608",
+      "reason": "Las ocho filas SD nombran el mismo analito individual y se investigaron todos sus RAW completos. La referencia primaria identifica la orden y no se trasladan su matriz, método, LOINC, unidades, resultados, tiempos o requisitos. Conserva fracción libre de estriol y entidad macroprolactina cuando forman parte del título; no equivale a estriol total, estradiol, estrona, prolactina monomérica/total, 17-hidroxipregnenolona, panel de citocinas o liberación leucocitaria de histamina. Alias de identidad de orden, no equivalencia de resultados ni aprobación de utilidad diagnóstica. No inferir isoformas alfa/beta, actividad/concentración, método PEG, ELISA/FEIA/ICMA/EIA, sangre total, suero/plasma u orina desde fuentes externas. Descripcion completa y preparación original íntegras. Mayo se observó por herramienta web: sus capturas nativas locales fallaron, sin presentarlas como HTTP200; Labcorp conserva captura nativa200 y digest. No cambios de fuentes, ofertas, precio, disponibilidad ni resolver clínico. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "RAW sin matriz exacta ni duración de colección. Ayuno no es muestra ni colección. Método, propiedad, escala y unidad no inferidos."
+    },
+    {
+      "item_id": "2bdd81a8-1251-5cd9-a066-6a7ed987ca70",
+      "canonical_name": "Interleucina 6 (IL-6)",
+      "component": "Interleukin 6",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/618776",
+      "reason": "Las ocho filas SD nombran el mismo analito individual y se investigaron todos sus RAW completos. La referencia primaria identifica la orden y no se trasladan su matriz, método, LOINC, unidades, resultados, tiempos o requisitos. Conserva fracción libre de estriol y entidad macroprolactina cuando forman parte del título; no equivale a estriol total, estradiol, estrona, prolactina monomérica/total, 17-hidroxipregnenolona, panel de citocinas o liberación leucocitaria de histamina. Alias de identidad de orden, no equivalencia de resultados ni aprobación de utilidad diagnóstica. No inferir isoformas alfa/beta, actividad/concentración, método PEG, ELISA/FEIA/ICMA/EIA, sangre total, suero/plasma u orina desde fuentes externas. Descripcion completa y preparación original íntegras. Mayo se observó por herramienta web: sus capturas nativas locales fallaron, sin presentarlas como HTTP200; Labcorp conserva captura nativa200 y digest. No cambios de fuentes, ofertas, precio, disponibilidad ni resolver clínico. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "RAW sin matriz exacta ni duración de colección. Ayuno no es muestra ni colección. Método, propiedad, escala y unidad no inferidos."
+    },
+    {
+      "item_id": "2dc670e6-d4b0-5d41-9940-7a5928af116f",
+      "canonical_name": "Pregnenolona",
+      "component": "Pregnenolone",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/88645",
+      "reason": "Las ocho filas SD nombran el mismo analito individual y se investigaron todos sus RAW completos. La referencia primaria identifica la orden y no se trasladan su matriz, método, LOINC, unidades, resultados, tiempos o requisitos. Conserva fracción libre de estriol y entidad macroprolactina cuando forman parte del título; no equivale a estriol total, estradiol, estrona, prolactina monomérica/total, 17-hidroxipregnenolona, panel de citocinas o liberación leucocitaria de histamina. Alias de identidad de orden, no equivalencia de resultados ni aprobación de utilidad diagnóstica. No inferir isoformas alfa/beta, actividad/concentración, método PEG, ELISA/FEIA/ICMA/EIA, sangre total, suero/plasma u orina desde fuentes externas. Descripcion completa y preparación original íntegras. Mayo se observó por herramienta web: sus capturas nativas locales fallaron, sin presentarlas como HTTP200; Labcorp conserva captura nativa200 y digest. No cambios de fuentes, ofertas, precio, disponibilidad ni resolver clínico. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "RAW sin matriz exacta ni duración de colección. Ayuno no es muestra ni colección. Método, propiedad, escala y unidad no inferidos."
+    },
+    {
+      "item_id": "d1c7a84a-74de-55a4-a85a-b125d9262acc",
+      "canonical_name": "Estriol libre (E3)",
+      "component": "Estriol.free",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://testmenu.labcorp.com/media/3042/download?inline=",
+      "reason": "Las ocho filas SD nombran el mismo analito individual y se investigaron todos sus RAW completos. La referencia primaria identifica la orden y no se trasladan su matriz, método, LOINC, unidades, resultados, tiempos o requisitos. Conserva fracción libre de estriol y entidad macroprolactina cuando forman parte del título; no equivale a estriol total, estradiol, estrona, prolactina monomérica/total, 17-hidroxipregnenolona, panel de citocinas o liberación leucocitaria de histamina. Alias de identidad de orden, no equivalencia de resultados ni aprobación de utilidad diagnóstica. No inferir isoformas alfa/beta, actividad/concentración, método PEG, ELISA/FEIA/ICMA/EIA, sangre total, suero/plasma u orina desde fuentes externas. Descripcion completa y preparación original íntegras. Mayo se observó por herramienta web: sus capturas nativas locales fallaron, sin presentarlas como HTTP200; Labcorp conserva captura nativa200 y digest. No cambios de fuentes, ofertas, precio, disponibilidad ni resolver clínico. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "RAW sin matriz exacta ni duración de colección. Ayuno no es muestra ni colección. Método, propiedad, escala y unidad no inferidos."
+    },
+    {
+      "item_id": "cf0c5627-416e-53b1-ae4d-80b09920aba9",
+      "canonical_name": "Histamina",
+      "component": "Histamine",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/081315/histamine-determination-whole-blood",
+      "reason": "Las ocho filas SD nombran el mismo analito individual y se investigaron todos sus RAW completos. La referencia primaria identifica la orden y no se trasladan su matriz, método, LOINC, unidades, resultados, tiempos o requisitos. Conserva fracción libre de estriol y entidad macroprolactina cuando forman parte del título; no equivale a estriol total, estradiol, estrona, prolactina monomérica/total, 17-hidroxipregnenolona, panel de citocinas o liberación leucocitaria de histamina. Alias de identidad de orden, no equivalencia de resultados ni aprobación de utilidad diagnóstica. No inferir isoformas alfa/beta, actividad/concentración, método PEG, ELISA/FEIA/ICMA/EIA, sangre total, suero/plasma u orina desde fuentes externas. Descripcion completa y preparación original íntegras. Mayo se observó por herramienta web: sus capturas nativas locales fallaron, sin presentarlas como HTTP200; Labcorp conserva captura nativa200 y digest. No cambios de fuentes, ofertas, precio, disponibilidad ni resolver clínico. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "RAW sin matriz exacta ni duración de colección. Ayuno no es muestra ni colección. Método, propiedad, escala y unidad no inferidos."
+    },
+    {
+      "item_id": "c8d4ed92-45a9-586e-9d40-8cf34ed8416c",
+      "canonical_name": "Macroprolactina",
+      "component": "Macroprolactin",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/34643",
+      "reason": "Las ocho filas SD nombran el mismo analito individual y se investigaron todos sus RAW completos. La referencia primaria identifica la orden y no se trasladan su matriz, método, LOINC, unidades, resultados, tiempos o requisitos. Conserva fracción libre de estriol y entidad macroprolactina cuando forman parte del título; no equivale a estriol total, estradiol, estrona, prolactina monomérica/total, 17-hidroxipregnenolona, panel de citocinas o liberación leucocitaria de histamina. Alias de identidad de orden, no equivalencia de resultados ni aprobación de utilidad diagnóstica. No inferir isoformas alfa/beta, actividad/concentración, método PEG, ELISA/FEIA/ICMA/EIA, sangre total, suero/plasma u orina desde fuentes externas. Descripcion completa y preparación original íntegras. Mayo se observó por herramienta web: sus capturas nativas locales fallaron, sin presentarlas como HTTP200; Labcorp conserva captura nativa200 y digest. No cambios de fuentes, ofertas, precio, disponibilidad ni resolver clínico. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "RAW sin matriz exacta ni duración de colección. Ayuno no es muestra ni colección. Método, propiedad, escala y unidad no inferidos."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "leptina",
+      "item_id": "a9cf27bb-0ba7-5510-83c8-b81c53cd9343",
+      "canonical_name": "Leptina",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/91339",
+      "reason": "Las ocho filas SD nombran el mismo analito individual y se investigaron todos sus RAW completos. La referencia primaria identifica la orden y no se trasladan su matriz, método, LOINC, unidades, resultados, tiempos o requisitos. Conserva fracción libre de estriol y entidad macroprolactina cuando forman parte del título; no equivale a estriol total, estradiol, estrona, prolactina monomérica/total, 17-hidroxipregnenolona, panel de citocinas o liberación leucocitaria de histamina. Alias de identidad de orden, no equivalencia de resultados ni aprobación de utilidad diagnóstica. No inferir isoformas alfa/beta, actividad/concentración, método PEG, ELISA/FEIA/ICMA/EIA, sangre total, suero/plasma u orina desde fuentes externas. Descripcion completa y preparación original íntegras. Mayo se observó por herramienta web: sus capturas nativas locales fallaron, sin presentarlas como HTTP200; Labcorp conserva captura nativa200 y digest. No cambios de fuentes, ofertas, precio, disponibilidad ni resolver clínico. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "LEPTINA"
+      }
+    },
+    {
+      "alias": "triptasa",
+      "item_id": "7933506c-792b-56e4-8341-371ed7981cfe",
+      "canonical_name": "Triptasa",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/81608",
+      "reason": "Las ocho filas SD nombran el mismo analito individual y se investigaron todos sus RAW completos. La referencia primaria identifica la orden y no se trasladan su matriz, método, LOINC, unidades, resultados, tiempos o requisitos. Conserva fracción libre de estriol y entidad macroprolactina cuando forman parte del título; no equivale a estriol total, estradiol, estrona, prolactina monomérica/total, 17-hidroxipregnenolona, panel de citocinas o liberación leucocitaria de histamina. Alias de identidad de orden, no equivalencia de resultados ni aprobación de utilidad diagnóstica. No inferir isoformas alfa/beta, actividad/concentración, método PEG, ELISA/FEIA/ICMA/EIA, sangre total, suero/plasma u orina desde fuentes externas. Descripcion completa y preparación original íntegras. Mayo se observó por herramienta web: sus capturas nativas locales fallaron, sin presentarlas como HTTP200; Labcorp conserva captura nativa200 y digest. No cambios de fuentes, ofertas, precio, disponibilidad ni resolver clínico. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "TRIPTASA"
+      }
+    },
+    {
+      "alias": "interleucina 6",
+      "item_id": "2bdd81a8-1251-5cd9-a066-6a7ed987ca70",
+      "canonical_name": "Interleucina 6 (IL-6)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/618776",
+      "reason": "Las ocho filas SD nombran el mismo analito individual y se investigaron todos sus RAW completos. La referencia primaria identifica la orden y no se trasladan su matriz, método, LOINC, unidades, resultados, tiempos o requisitos. Conserva fracción libre de estriol y entidad macroprolactina cuando forman parte del título; no equivale a estriol total, estradiol, estrona, prolactina monomérica/total, 17-hidroxipregnenolona, panel de citocinas o liberación leucocitaria de histamina. Alias de identidad de orden, no equivalencia de resultados ni aprobación de utilidad diagnóstica. No inferir isoformas alfa/beta, actividad/concentración, método PEG, ELISA/FEIA/ICMA/EIA, sangre total, suero/plasma u orina desde fuentes externas. Descripcion completa y preparación original íntegras. Mayo se observó por herramienta web: sus capturas nativas locales fallaron, sin presentarlas como HTTP200; Labcorp conserva captura nativa200 y digest. No cambios de fuentes, ofertas, precio, disponibilidad ni resolver clínico. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "INTERLEUCINA 6"
+      }
+    },
+    {
+      "alias": "pregnenolona",
+      "item_id": "2dc670e6-d4b0-5d41-9940-7a5928af116f",
+      "canonical_name": "Pregnenolona",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/88645",
+      "reason": "Las ocho filas SD nombran el mismo analito individual y se investigaron todos sus RAW completos. La referencia primaria identifica la orden y no se trasladan su matriz, método, LOINC, unidades, resultados, tiempos o requisitos. Conserva fracción libre de estriol y entidad macroprolactina cuando forman parte del título; no equivale a estriol total, estradiol, estrona, prolactina monomérica/total, 17-hidroxipregnenolona, panel de citocinas o liberación leucocitaria de histamina. Alias de identidad de orden, no equivalencia de resultados ni aprobación de utilidad diagnóstica. No inferir isoformas alfa/beta, actividad/concentración, método PEG, ELISA/FEIA/ICMA/EIA, sangre total, suero/plasma u orina desde fuentes externas. Descripcion completa y preparación original íntegras. Mayo se observó por herramienta web: sus capturas nativas locales fallaron, sin presentarlas como HTTP200; Labcorp conserva captura nativa200 y digest. No cambios de fuentes, ofertas, precio, disponibilidad ni resolver clínico. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "PREGNENOLONA"
+      }
+    },
+    {
+      "alias": "estriol libre e3",
+      "item_id": "d1c7a84a-74de-55a4-a85a-b125d9262acc",
+      "canonical_name": "Estriol libre (E3)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://testmenu.labcorp.com/media/3042/download?inline=",
+      "reason": "Las ocho filas SD nombran el mismo analito individual y se investigaron todos sus RAW completos. La referencia primaria identifica la orden y no se trasladan su matriz, método, LOINC, unidades, resultados, tiempos o requisitos. Conserva fracción libre de estriol y entidad macroprolactina cuando forman parte del título; no equivale a estriol total, estradiol, estrona, prolactina monomérica/total, 17-hidroxipregnenolona, panel de citocinas o liberación leucocitaria de histamina. Alias de identidad de orden, no equivalencia de resultados ni aprobación de utilidad diagnóstica. No inferir isoformas alfa/beta, actividad/concentración, método PEG, ELISA/FEIA/ICMA/EIA, sangre total, suero/plasma u orina desde fuentes externas. Descripcion completa y preparación original íntegras. Mayo se observó por herramienta web: sus capturas nativas locales fallaron, sin presentarlas como HTTP200; Labcorp conserva captura nativa200 y digest. No cambios de fuentes, ofertas, precio, disponibilidad ni resolver clínico. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ESTRIOL LIBRE -E3-"
+      }
+    },
+    {
+      "alias": "histamina",
+      "item_id": "cf0c5627-416e-53b1-ae4d-80b09920aba9",
+      "canonical_name": "Histamina",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.labcorp.com/tests/081315/histamine-determination-whole-blood",
+      "reason": "Las ocho filas SD nombran el mismo analito individual y se investigaron todos sus RAW completos. La referencia primaria identifica la orden y no se trasladan su matriz, método, LOINC, unidades, resultados, tiempos o requisitos. Conserva fracción libre de estriol y entidad macroprolactina cuando forman parte del título; no equivale a estriol total, estradiol, estrona, prolactina monomérica/total, 17-hidroxipregnenolona, panel de citocinas o liberación leucocitaria de histamina. Alias de identidad de orden, no equivalencia de resultados ni aprobación de utilidad diagnóstica. No inferir isoformas alfa/beta, actividad/concentración, método PEG, ELISA/FEIA/ICMA/EIA, sangre total, suero/plasma u orina desde fuentes externas. Descripcion completa y preparación original íntegras. Mayo se observó por herramienta web: sus capturas nativas locales fallaron, sin presentarlas como HTTP200; Labcorp conserva captura nativa200 y digest. No cambios de fuentes, ofertas, precio, disponibilidad ni resolver clínico. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "HISTAMINA"
+      }
+    },
+    {
+      "alias": "macroprolactina",
+      "item_id": "c8d4ed92-45a9-586e-9d40-8cf34ed8416c",
+      "canonical_name": "Macroprolactina",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/34643",
+      "reason": "Las ocho filas SD nombran el mismo analito individual y se investigaron todos sus RAW completos. La referencia primaria identifica la orden y no se trasladan su matriz, método, LOINC, unidades, resultados, tiempos o requisitos. Conserva fracción libre de estriol y entidad macroprolactina cuando forman parte del título; no equivale a estriol total, estradiol, estrona, prolactina monomérica/total, 17-hidroxipregnenolona, panel de citocinas o liberación leucocitaria de histamina. Alias de identidad de orden, no equivalencia de resultados ni aprobación de utilidad diagnóstica. No inferir isoformas alfa/beta, actividad/concentración, método PEG, ELISA/FEIA/ICMA/EIA, sangre total, suero/plasma u orina desde fuentes externas. Descripcion completa y preparación original íntegras. Mayo se observó por herramienta web: sus capturas nativas locales fallaron, sin presentarlas como HTTP200; Labcorp conserva captura nativa200 y digest. No cambios de fuentes, ofertas, precio, disponibilidad ni resolver clínico. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "MACROPROLACTINA"
+      }
+    }
+  ]
+}
