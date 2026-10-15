@@ -33,7 +33,7 @@ protobuf==7.36.0
 pyclipper==1.4.0
 pydantic==2.13.4
 pydantic-core==2.46.4
-Pygments==2.20.0
+Pygments==2.21.0
 PyYAML==6.0.3
 pytest==9.0.3
 python-dotenv==1.2.2
