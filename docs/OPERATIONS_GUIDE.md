@@ -21,6 +21,17 @@ intactas. Cola 35 entradas con ledger/hash confirmado, worker único en vigilanc
 con ejecución de lotes investigados. Memoria shadow v3 reconstruida, v2 intacta:
 2,393 históricos reutilizables y ningún pendiente aprobado por esa herramienta.
 
+Último cierre completo **15-oct, 04:33 UTC**: 499 conceptos, 4,471 pendientes /
+820 grupos, 71 marcas / 155 sedes y 234 ofertas / 112 migraciones. Cola 38
+entradas y memoria v3 reconstruida con 44 revisiones y 2,557 históricos
+reutilizables. El cierre de sólo lectura conservó contadores y corte previo;
+recibos en `collectors/artifacts/normalization-memory-after-review-44-v3/`.
+Identidad 17 elevó después el registro a **74 marcas / 158 sedes**, 15-oct
+04:35 UTC, conservando los demás contadores. Su importador admite los códigos
+oficiales adicionales 622312 (hospital) y 621111 (oficina), con IDs y evidencia
+explícitos; no convierte clases ni publica ofertas. Recibos en
+`collectors/artifacts/puebla-expansion-20261009/identity-review-17/`.
+
 ## Entorno y arranque
 
 Recuperación observada **15-oct-2026 04:27 UTC (14-oct local)**: el inicio de

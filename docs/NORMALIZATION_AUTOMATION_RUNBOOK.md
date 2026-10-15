@@ -2,7 +2,19 @@
 
 ## Operación delegada vigente — 13-oct-2026
 
-**Corte vigente 14-oct, 13:15 UTC:** 41 revisiones, 325 aliases, 344 reglas
+**Corte vigente 15-oct, 04:33 UTC:** 44 revisiones aplicadas, 349 aliases,
+368 reglas/contextos y 2,557 filas históricas. Paginación completa: 4,471
+pendientes / 820 grupos / 499 conceptos / 1,210 términos. La memoria v3
+revalidó las 38 entradas de cola por ledger/hash; todos los contextos históricos
+son reutilizables. Ninguno de los pendientes es reutilizable exactamente:
+requieren evidencia propia. Triage: 787 brechas y 33 con sugerencias, sin
+aprobar esas sugerencias. No confundir el bloqueo de publicación comercial
+por política con la investigación autorizada de terminología histórica.
+Diecisiete archivos del corte anterior conservados. Evidencia en
+`collectors/artifacts/normalization-memory-after-review-44-v3/`; sólo lecturas,
+sin cambios del resolver, cola o datos ni suites formales.
+
+**Corte anterior 14-oct, 13:15 UTC:** 41 revisiones, 325 aliases, 344 reglas
 y 2,393 filas históricas; 4,635 pendientes / 844 grupos. Memoria shadow v3
 reconstruida tras revalidar 35 entradas de cola: 2,393 contextos históricos
 reutilizables y todos los pendientes requieren fuente. Se reconocen seis

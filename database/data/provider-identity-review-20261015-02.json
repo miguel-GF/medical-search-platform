@@ -1,0 +1,55 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261015:02",
+  "reviewed_by": "Codex; investigación delegada por el operador",
+  "authorization": "D-021/D-022: identidades candidatas pending investigadas; conservar clases literales, sin ofertas.",
+  "research_date": "2026-10-15",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "Tres instituciones separadas: Hospital Universitario de Puebla hospital 622312; Sanatorio de los Ángeles y Unidad Médica de la Cruz office 621111. Fuente estatal primaria, sin reclasificar desde nombres, sin ofertas, sin fusión con homónimos.",
+  "providers": [
+    {
+      "provider_key": "hospital_universitario_puebla",
+      "name": "Hospital Universitario de Puebla",
+      "slug": "hospital-universitario-puebla",
+      "website_url": null,
+      "website_uncertainty": "El directorio estatal enlaza el dominio hup.buap.mx por HTTP; su HTTPS falló validación de certificado y no se debilitó TLS. DENUE contiene WWW.BUAP.COM.MX, que no fue validado ni corregido como dominio propio. No se acredita sitio institucional HTTPS consultable: NULL con estas limitaciones.",
+      "identity_evidence_url": "https://ss.puebla.gob.mx/emergencias",
+      "identity_activity_codes": [
+        "622312"
+      ],
+      "denue_record_ids": [
+        "3361764"
+      ],
+      "identity_note": "Fuente estatal de emergencias de la Secretaría de Salud de Puebla revalidada HTTP 200 el 15-oct-2026 UTC. Conservar RAW, coordenadas y clase gubernamental originales. Marca verification_pending y sede pending. Identidad no acredita estudios, ofertas, precios, disponibilidad, permiso sanitario o autorización de captura comercial. Hospital Universitario de Puebla y DENUE 3361764 coinciden en 25 Poniente 1301, Puebla, CP 72410. El directorio escribe Volcanes y DENUE LOS VOLCANES; conservar literal del RAW. Clase 622312, hospitales del sector público de otras especialidades médicas: location_type hospital, sin reclasificarlo como hospital general o privado. Dominio HTTPS no verificable por certificado; web NULL con incertidumbre. No inferir red, titularidad jurídica o prestación de un estudio desde el nombre universitario."
+    },
+    {
+      "provider_key": "sanatorio_los_angeles_27_poniente_puebla",
+      "name": "Sanatorio de los Ángeles — 27 Poniente, Puebla",
+      "slug": "sanatorio-los-angeles-27-poniente-puebla",
+      "website_url": "https://www.sanatoriodelosangeles.mx/",
+      "identity_evidence_url": "https://ss.puebla.gob.mx/emergencias",
+      "identity_activity_codes": [
+        "621111"
+      ],
+      "denue_record_ids": [
+        "3360704"
+      ],
+      "identity_note": "Fuente estatal de emergencias de la Secretaría de Salud de Puebla revalidada HTTP 200 el 15-oct-2026 UTC. Conservar RAW, coordenadas y clase gubernamental originales. Marca verification_pending y sede pending. Identidad no acredita estudios, ofertas, precios, disponibilidad, permiso sanitario o autorización de captura comercial. Sanatorio los Ángeles del directorio estatal, el sitio institucional sanatoriodelosangeles.mx consultado HTTP 200 y DENUE 3360704 coinciden en 27 Poniente 3518, Puebla. Sitio propio publica CP 72400; conservar CP 72180 y BELISARIO DOMINGUEZ del RAW, sin afirmar coincidencia postal completa. DENUE nom_vial contiene AVENIDA 27 PONIENTE y tipo_vial CALLE: no reescribir ese doble literal. La clase 621111 corresponde a consultorios de medicina general privados: location_type office aunque el nombre comercial diga Sanatorio y la web anuncie hospitalización. No cambiar la clase por publicidad ni atribuir esas prestaciones como ofertas. No fusionar con Hospital Angeles Puebla o laboratorios Los Ángeles: nombres, domicilios y dominios distintos."
+    },
+    {
+      "provider_key": "unidad_medica_cruz_19_poniente_puebla",
+      "name": "Unidad Médica de la Cruz — Puebla",
+      "slug": "unidad-medica-cruz-19-poniente-puebla",
+      "website_url": null,
+      "website_uncertainty": "DENUE registra WWW.UNIDADMEDICADELACRUZ.COM. La consulta HTTPS de ese dominio falló por DNS; no se presume vigente ni se usa el directorio estatal como sitio propio. Mantener NULL sin completar otra dirección web.",
+      "identity_evidence_url": "https://ss.puebla.gob.mx/emergencias",
+      "identity_activity_codes": [
+        "621111"
+      ],
+      "denue_record_ids": [
+        "3538398"
+      ],
+      "identity_note": "Fuente estatal de emergencias de la Secretaría de Salud de Puebla revalidada HTTP 200 el 15-oct-2026 UTC. Conservar RAW, coordenadas y clase gubernamental originales. Marca verification_pending y sede pending. Identidad no acredita estudios, ofertas, precios, disponibilidad, permiso sanitario o autorización de captura comercial. Unidad Médica de la Cruz del directorio estatal coincide con DENUE 3538398 en 19 Poniente 3511, Belisario Domínguez, CP 72180, Puebla. Conservar tipo_vial CALLE y nom_vial AVENIDA 19 PONIENTE del RAW, sin limpiar el doble literal. Clase 621111, consultorios de medicina general privados: location_type office. No inferir hospitalización o especialidades desde nombre comercial. Dominio registrado por DENUE falló DNS: web NULL con incertidumbre. No trasladar al municipio Tehuacán desde directorios secundarios discrepantes ni fusionar homónimos."
+    }
+  ]
+}

@@ -16,6 +16,29 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Identidad 17, 15-oct 04:35 UTC:** Hospital Universitario de Puebla,
+Sanatorio de los Ángeles (27 Poniente) y Unidad Médica de la Cruz incorporados
+como tres candidatos separados: 74 marcas / 158 ubicaciones. El importador
+admite dos clases oficiales adicionales, conservando 622312 como hospital
+y 621111 como oficina; no reclasifica un consultorio por llamarse Sanatorio.
+El modelo y su restricción existente ya admiten ambos tipos, sin migración.
+Rollback observado, commit único y cliente independiente comprobaron tres
+vínculos DENUE/auditorías/observaciones, RAW, coordenadas, notas y sitios.
+Dos webs NULL por certificado/DNS; domicilio propio Ángeles comprobado,
+discrepancia de CP conservada. Ofertas 234 / migraciones 112 / conceptos 499 /
+pendientes 4,471 intactos. Evidencia en
+`collectors/artifacts/puebla-expansion-20261009/identity-review-17/`.
+
+**Corte completo vigente, 15-oct 04:33 UTC:** 499 conceptos y 4,471 filas
+pendientes en 820 grupos, paginación íntegra y 1,210 términos. Memoria v3:
+44 revisiones / 349 aliases / 368 reglas / 2,557 contextos históricos
+reutilizables. Los 4,471 pendientes requieren evidencia; ninguna aprobación
+automática nueva. Cola de 38 entradas verificada por ledger/hash. Contadores
+estables durante el cierre: 71 marcas / 155 sedes / 234 ofertas / 112 migraciones.
+Diecisiete artefactos del corte41-v3 intactos por hash. Evidencia y recibos:
+`collectors/artifacts/normalization-memory-after-review-44-v3/`. Sólo lecturas,
+sin suites formales ni cambios del resolver.
+
 **Revisiones 42–44 aplicadas, 15-oct 04:30 UTC:** 164 filas adicionales,
 24 conceptos/aliases; catálogo 499 y pendientes 4,471. Acumulado: 2,557 filas
 cerradas mediante 44 revisiones y 349 aliases investigados. La revisión 43
@@ -25,7 +48,7 @@ abiertas, incluido cortisol salival: código de muestra activo, pero importador
 y léxico de consulta aún no dan soporte completo; no se rellenó con NULL.
 Observación independiente 43: 8/8 consultas públicas y 8/8 con proveedor
 correctas, RAW/guardas/atributos intactos. No se modificó el resolver.
-La memoria y paginación posteriores a 44 se reconstruyen en carpeta nueva;
+La memoria y paginación posteriores a 44 están cerradas en carpeta nueva;
 no usar los grupos del corte 41 como si fueran actuales.
 
 **Recuperación tras inicio de sesión, 15-oct 04:27 UTC:** Paciente y cola

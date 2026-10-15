@@ -28,6 +28,30 @@ de entorno y los artefactos permanecen ignorados por Git.
 
 ## Inventario estatal guardado y comprobado
 
+Identidad 17 aplicada **15-oct 04:35 UTC**: HUP 3361764, Sanatorio de los
+Ángeles 3360704 y Unidad Médica de la Cruz 3538398: 74 marcas / 158 sedes.
+Ampliación compatible del importador, sin esquema nuevo: 622312 se conserva
+hospital y 621111 oficina, según las clases explícitas del RAW gubernamental.
+No se deduce la clase desde nombre comercial ni publicidad de hospitalización.
+La restricción remota ya admite ambos tipos. El preview histórico16 vuelve a
+renderizar bytes idénticos con el importador actualizado (sin ejecutar SQL).
+Guardas, clases antiguas y exigencia de investigación/IDs explícitos conservadas.
+Rollback sin persistencia, commit único y observador independiente verificaron
+tres vínculos/audits/observaciones, domicilios/coordenadas/RAW y notas exactas.
+HUP/Cruz sin web consultable por certificado/DNS mantienen NULL; Ángeles tiene
+web propia comprobada, CP discrepante conservado. 499 conceptos, 4,471
+pendientes, 234 ofertas y 112 migraciones intactos. Recibos en
+`collectors/artifacts/puebla-expansion-20261009/identity-review-17/`.
+
+**Cierre completo vigente 15-oct, 04:33 UTC:** 499 conceptos, 4,471 pendientes
+en 820 grupos y 1,210 términos. Memoria v3: 44 revisiones, 349 aliases,
+368 reglas y 2,557 contextos históricos reutilizables. Cero pendientes
+reutilizables exactamente, todos requieren evidencia. Cola 38 verificada por
+ledger/hash, 17 archivos del corte41 intactos y contadores estables antes/después:
+71 marcas / 155 sedes / 234 ofertas / 112 migraciones. El proceso18531 terminó
+exit0; sólo lecturas y sin suites formales. Recibos completos en
+`collectors/artifacts/normalization-memory-after-review-44-v3/`.
+
 **Actualización 15-oct-2026 04:30 UTC:** revisiones 42–44 aplicadas y observadas:
 164 cierres adicionales, 24 conceptos y 24 aliases; acumulado 2,557 filas /
 44 revisiones / 349 aliases. Catálogo 499 y pendientes 4,471. Las 72 filas de
@@ -59,7 +83,7 @@ instalar ni cambiar PATH global. Arranque real y repetición con perfil Node14
 eligieron Node24, conservaron procesos existentes y observaron HTTP200 en los
 tres endpoints. Recibo `collectors/artifacts/local-stack/startup-profile-recovery.json`.
 
-**Cierre completo vigente 14-oct, 13:15 UTC:** 41 revisiones aplicadas,
+**Cierre completo anterior 14-oct, 13:15 UTC:** 41 revisiones aplicadas,
 325 aliases y 2,393 filas cerradas; 475 conceptos y 4,635 pendientes / 844
 grupos, paginados íntegramente. Memoria shadow v3: 344 reglas y todos los
 2,393 contextos históricos reutilizables. Los 84 pendientes con metadatos

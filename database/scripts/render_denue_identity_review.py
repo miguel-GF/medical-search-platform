@@ -25,6 +25,15 @@ FIXTURE = Path(__file__).resolve().parents[1] / "data/provider-identity-review-2
 ARCHIVE_URL = "https://www.inegi.org.mx/contenidos/masiva/denue/denue_21_csv.zip"
 DIAGNOSTIC_CODES = {"621511", "621512"}
 GENERAL_HOSPITAL_CODES = {"622111", "622112"}
+# Additional classes inspected in the official Puebla DENUE snapshot. Keep the
+# source class: a business called "Sanatorio" can still be a medical office.
+SPECIALIZED_PUBLIC_HOSPITAL_CODES = {"622312"}
+PRIVATE_GENERAL_MEDICAL_OFFICE_CODES = {"621111"}
+IDENTITY_LOCATION_TYPES = {
+    **dict.fromkeys(DIAGNOSTIC_CODES, "branch"),
+    **dict.fromkeys(GENERAL_HOSPITAL_CODES | SPECIALIZED_PUBLIC_HOSPITAL_CODES, "hospital"),
+    **dict.fromkeys(PRIVATE_GENERAL_MEDICAL_OFFICE_CODES, "office"),
+}
 
 
 def render(artifact: Path, *, apply: bool = False, fixture: Path = FIXTURE) -> str:
@@ -47,8 +56,8 @@ def render(artifact: Path, *, apply: bool = False, fixture: Path = FIXTURE) -> s
         if (not isinstance(activity_codes, list) or not activity_codes
                 or any(not isinstance(code, str) for code in activity_codes)
                 or len(set(activity_codes)) != len(activity_codes)
-                or not set(activity_codes) <= DIAGNOSTIC_CODES | GENERAL_HOSPITAL_CODES):
-            raise ValueError("Declare specific supported diagnostic or general hospital identity classes")
+                or not set(activity_codes) <= IDENTITY_LOCATION_TYPES.keys()):
+            raise ValueError("Declare specific supported DENUE health identity classes")
         existing = provider.get("existing_brand")
         if existing is not None:
             required = {"id", "name", "normalized_name", "slug", "website_url", "status", "verification_status"}
@@ -98,7 +107,7 @@ def render(artifact: Path, *, apply: bool = False, fixture: Path = FIXTURE) -> s
             if (payload["cve_ent"] != "21" or payload["codigo_act"] not in activity_codes
                     or not payload["nom_estab"] or payload.get("_quality_flags")):
                 raise ValueError("Reviewed provider identity has missing or unexpected source fields")
-            location_type = "hospital" if payload["codigo_act"] in GENERAL_HOSPITAL_CODES else "branch"
+            location_type = IDENTITY_LOCATION_TYPES[payload["codigo_act"]]
             address_1 = " ".join(filter(None, [payload["tipo_vial"], payload["nom_vial"],
                                                payload["numero_ext"] + payload["letra_ext"]]))
             address_2 = " ".join(filter(None, [payload["numero_int"] + payload["letra_int"], payload["nomb_asent"]]))
