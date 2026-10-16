@@ -1,0 +1,189 @@
+{
+  "review_id": "pruevia:evidence-review:20261016:07",
+  "research_date": "2026-10-16",
+  "scope": "Revisión54: seis órdenes individuales con blanco e isotipo literales, seis aliases limitados a Salud Digna y48contextos. Matriz, método y subfracciones no escritas permanecen desconocidos. GAD, LKM, PM-Scl y typo JoI retenidos. Preparación sin SQL persistente, ofertas o cambios del resolver.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "7559715edca093e56f398f0ad30ac9840a1f3bca9e8d09fd67550646c90d5ee1",
+  "research_snapshot_sha256": "05fb8b5e945eb3f36ae4e632d5837b3017cc5880bd9c655dddfaa8142d18c799",
+  "definition_sha256": "8cdbfecd9af1237d2b47a8597c1f8407bd2c3c76c62a2b06499233df7a5bb3fb",
+  "new_concepts": [
+    {
+      "item_id": "2adc1749-fa6f-5bab-954e-0541bcd10d87",
+      "canonical_name": "Anticuerpos IgM contra herpes simplex tipo 1 (HSV-1)",
+      "component": "Herpes simplex virus 1 Ab.IgM",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.clinicabiblica.com/catalogo-laboratorio-clinico/211791230000",
+      "reason": "Clínica Bíblica LBE00503 documenta una orden HSV-1 IgM separada de HSV-2 e IgG. Tipo I romano corresponde al tipo1 literalmente escrito en SD. No HSV2, VZV, HHV6, IgG, PCR, panel HSV1+2 ni IgG+IgM. La referencia clínica declara posible reactividad cruzada: la identidad de orden no aprueba especificidad analítica ni equivalencia de resultados. No copiar CLIA/VirClia, muestra, escala, intervalos o uso clínico externo. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "SD no declara matriz ni duración. Ayuno y referencia externa no prueban suero/plasma. Isotipo literal conservado; fracción antigénica y método permanecen desconocidos cuando no están escritos."
+    },
+    {
+      "item_id": "237067b4-a5ed-5f2e-9bf4-13c464e8bd2c",
+      "canonical_name": "Anticuerpos IgM contra herpes simplex tipo 2 (HSV-2)",
+      "component": "Herpes simplex virus 2 Ab.IgM",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.clinicabiblica.com/catalogo-laboratorio-clinico/211791230002",
+      "reason": "Clínica Bíblica LBE00505 documenta HSV-2 IgM separado de HSV1 e IgG. Tipo II romano corresponde al tipo2 escrito en SD. No HSV1, VZV, HHV6, IgG, PCR, perfil HSV1+2 ni IgG+IgM. La referencia advierte reactividad cruzada, que no cambia la denominación de la orden ni permite interpretar infección. No copiar CLIA/VirClia, muestra, escala, intervalos o recomendaciones externas. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "SD no declara matriz ni duración. Ayuno y referencia externa no prueban suero/plasma. Isotipo literal conservado; fracción antigénica y método permanecen desconocidos cuando no están escritos."
+    },
+    {
+      "item_id": "9cfd6370-6571-5a8b-91b6-008a7e8999b5",
+      "canonical_name": "Anticuerpos IgG contra Mycobacterium tuberculosis",
+      "component": "Mycobacterium tuberculosis Ab.IgG",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.ibl-america.com/content/elisa/IB79284.pdf",
+      "reason": "La abreviatura M.tuberculosis es literal en SD; el fabricante IBL IB79284 identifica anticuerpos dirigidos a M.tuberculosis de clase IgG, distintos de IB79285 IgM. La ficha es RUO y sólo fundamenta blanco/isotipo, sin validar utilidad diagnóstica o recomendar serología. No IgM, IgA, IGRA, PPD, antígeno, cultivo, PCR ni panel IgG+IgM. No asignar proteínas38/16kDa, cepa, especie dentro del complejo no escrita, ELISA, suero/plasma, escala, unidades o equivalencia de resultados. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "SD no declara matriz ni duración. Ayuno y referencia externa no prueban suero/plasma. Isotipo literal conservado; fracción antigénica y método permanecen desconocidos cuando no están escritos."
+    },
+    {
+      "item_id": "bd326ce8-26b4-5bbc-a8d4-760ef033f3c2",
+      "canonical_name": "Anticuerpos IgM contra Mycobacterium tuberculosis",
+      "component": "Mycobacterium tuberculosis Ab.IgM",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.ibl-america.com/content/elisa/IB79285.pdf",
+      "reason": "M.tuberculosis e IgM están escritos en SD. IBL IB79285 confirma blanco/isotipo individual; IB79284 IgG es otra orden. El fabricante declara RUO: no se aprueba eficacia clínica, diagnóstico, resultado o recomendación de serología. No IgG, IgA, IGRA, PPD, antígeno, cultivo, PCR ni panel IgG+IgM. No importar antígenos específicos, discriminación del complejo, ELISA, matriz suero/plasma, escala ni unidades. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "SD no declara matriz ni duración. Ayuno y referencia externa no prueban suero/plasma. Isotipo literal conservado; fracción antigénica y método permanecen desconocidos cuando no están escritos."
+    },
+    {
+      "item_id": "95c56012-ad30-5e3d-8ea0-a783530d3e6d",
+      "canonical_name": "Anticuerpos IgM contra antígeno nuclear de Epstein-Barr (EBNA)",
+      "component": "Epstein Barr virus nuclear Ab.IgM",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.ibl-international.com/media/mageworx/downloads/attachment/file/r/e/re56261_ifu_eu_es_ebv-ebna-1_igm-elisa_2013-05_sym6.pdf",
+      "reason": "SD declara antígeno nuclear de EBV e IgM. El IFU IBL RE56261 acredita una orden de la familia nuclear EBNA IgM; su subfracción EBNA1 queda sólo en la referencia y no se completa en SD. Se conserva la familia nuclear escrita, sin inferir EBNA1/2/3, número de antígenos o mezcla. No VCA, EA, heterófilos, IgG, PCR, DNA o panel. No copiar ELISA, matriz, escala o equivalencia analítica ni interpretar fase de infección. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "SD no declara matriz ni duración. Ayuno y referencia externa no prueban suero/plasma. Isotipo literal conservado; fracción antigénica y método permanecen desconocidos cuando no están escritos."
+    },
+    {
+      "item_id": "caaa35bc-143c-5407-ac95-eeda25e251e4",
+      "canonical_name": "Anticuerpos IgM contra antígeno temprano de Epstein-Barr (EA)",
+      "component": "Epstein Barr virus early Ab.IgM",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.ibl-international.com/media/mageworx/downloads/attachment/file/r/e/re56231_ifu_eu_en_ebv-ea_igm_elisa_2013-05_sym4.pdf",
+      "reason": "Early antígeno e IgM son literales en SD. El IFU IBL RE56231 identifica anticuerpos IgM contra antígeno temprano EA y separa VCA y EBNA. No escoger fracción difusa EA-D, restringida EA-R, composición antigénica o número de antígenos. No EBNA, VCA, IgG/IgA, heterófilos, PCR ni perfil; no importar ELISA, matriz suero/plasma, escala, unidades o interpretación clínica de la referencia. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "SD no declara matriz ni duración. Ayuno y referencia externa no prueban suero/plasma. Isotipo literal conservado; fracción antigénica y método permanecen desconocidos cuando no están escritos."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "ac anti virus herpes hsv tipo i igm",
+      "item_id": "2adc1749-fa6f-5bab-954e-0541bcd10d87",
+      "canonical_name": "Anticuerpos IgM contra herpes simplex tipo 1 (HSV-1)",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.clinicabiblica.com/catalogo-laboratorio-clinico/211791230000",
+      "reason": "Clínica Bíblica LBE00503 documenta una orden HSV-1 IgM separada de HSV-2 e IgG. Tipo I romano corresponde al tipo1 literalmente escrito en SD. No HSV2, VZV, HHV6, IgG, PCR, panel HSV1+2 ni IgG+IgM. La referencia clínica declara posible reactividad cruzada: la identidad de orden no aprueba especificidad analítica ni equivalencia de resultados. No copiar CLIA/VirClia, muestra, escala, intervalos o uso clínico externo. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "AC. ANTI-VIRUS HERPES (HSV) TIPO I IGM"
+      }
+    },
+    {
+      "alias": "ac anti virus herpes hsv tipo ii igm",
+      "item_id": "237067b4-a5ed-5f2e-9bf4-13c464e8bd2c",
+      "canonical_name": "Anticuerpos IgM contra herpes simplex tipo 2 (HSV-2)",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.clinicabiblica.com/catalogo-laboratorio-clinico/211791230002",
+      "reason": "Clínica Bíblica LBE00505 documenta HSV-2 IgM separado de HSV1 e IgG. Tipo II romano corresponde al tipo2 escrito en SD. No HSV1, VZV, HHV6, IgG, PCR, perfil HSV1+2 ni IgG+IgM. La referencia advierte reactividad cruzada, que no cambia la denominación de la orden ni permite interpretar infección. No copiar CLIA/VirClia, muestra, escala, intervalos o recomendaciones externas. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "AC. ANTI-VIRUS HERPES (HSV) TIPO II IGM"
+      }
+    },
+    {
+      "alias": "ac anti m tuberculosis igg",
+      "item_id": "9cfd6370-6571-5a8b-91b6-008a7e8999b5",
+      "canonical_name": "Anticuerpos IgG contra Mycobacterium tuberculosis",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.ibl-america.com/content/elisa/IB79284.pdf",
+      "reason": "La abreviatura M.tuberculosis es literal en SD; el fabricante IBL IB79284 identifica anticuerpos dirigidos a M.tuberculosis de clase IgG, distintos de IB79285 IgM. La ficha es RUO y sólo fundamenta blanco/isotipo, sin validar utilidad diagnóstica o recomendar serología. No IgM, IgA, IGRA, PPD, antígeno, cultivo, PCR ni panel IgG+IgM. No asignar proteínas38/16kDa, cepa, especie dentro del complejo no escrita, ELISA, suero/plasma, escala, unidades o equivalencia de resultados. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "AC ANTI M TUBERCULOSIS IgG"
+      }
+    },
+    {
+      "alias": "ac anti mycobacterium tuberculosis igm",
+      "item_id": "bd326ce8-26b4-5bbc-a8d4-760ef033f3c2",
+      "canonical_name": "Anticuerpos IgM contra Mycobacterium tuberculosis",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.ibl-america.com/content/elisa/IB79285.pdf",
+      "reason": "M.tuberculosis e IgM están escritos en SD. IBL IB79285 confirma blanco/isotipo individual; IB79284 IgG es otra orden. El fabricante declara RUO: no se aprueba eficacia clínica, diagnóstico, resultado o recomendación de serología. No IgG, IgA, IGRA, PPD, antígeno, cultivo, PCR ni panel IgG+IgM. No importar antígenos específicos, discriminación del complejo, ELISA, matriz suero/plasma, escala ni unidades. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "AC. ANTI-MYCOBACTERIUM TUBERCULOSIS IGM"
+      }
+    },
+    {
+      "alias": "ac anti ag nuclear de virus de epstein barr igm",
+      "item_id": "95c56012-ad30-5e3d-8ea0-a783530d3e6d",
+      "canonical_name": "Anticuerpos IgM contra antígeno nuclear de Epstein-Barr (EBNA)",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.ibl-international.com/media/mageworx/downloads/attachment/file/r/e/re56261_ifu_eu_es_ebv-ebna-1_igm-elisa_2013-05_sym6.pdf",
+      "reason": "SD declara antígeno nuclear de EBV e IgM. El IFU IBL RE56261 acredita una orden de la familia nuclear EBNA IgM; su subfracción EBNA1 queda sólo en la referencia y no se completa en SD. Se conserva la familia nuclear escrita, sin inferir EBNA1/2/3, número de antígenos o mezcla. No VCA, EA, heterófilos, IgG, PCR, DNA o panel. No copiar ELISA, matriz, escala o equivalencia analítica ni interpretar fase de infección. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "Ac. Anti-Ag Nuclear de Virus de Epstein Barr IgM"
+      }
+    },
+    {
+      "alias": "epstein barr early antigeno igm anticuerpos",
+      "item_id": "caaa35bc-143c-5407-ac95-eeda25e251e4",
+      "canonical_name": "Anticuerpos IgM contra antígeno temprano de Epstein-Barr (EA)",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.ibl-international.com/media/mageworx/downloads/attachment/file/r/e/re56231_ifu_eu_en_ebv-ea_igm_elisa_2013-05_sym4.pdf",
+      "reason": "Early antígeno e IgM son literales en SD. El IFU IBL RE56231 identifica anticuerpos IgM contra antígeno temprano EA y separa VCA y EBNA. No escoger fracción difusa EA-D, restringida EA-R, composición antigénica o número de antígenos. No EBNA, VCA, IgG/IgA, heterófilos, PCR ni perfil; no importar ELISA, matriz suero/plasma, escala, unidades o interpretación clínica de la referencia. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "Epstein Barr Early Antígeno IgM Anticuerpos"
+      }
+    }
+  ]
+}

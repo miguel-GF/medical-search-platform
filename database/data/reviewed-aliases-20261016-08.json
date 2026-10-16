@@ -1,0 +1,224 @@
+{
+  "review_id": "pruevia:evidence-review:20261016:08",
+  "research_date": "2026-10-16",
+  "scope": "Revisión55 preparada por prioridad de ocurrencias: siete grupos de ocho filas cada uno de Salud Digna,56 filas, siete órdenes individuales y aliases exclusivos del proveedor. Matriz exacta y métodos no inferidos. No ofertas ni cambios del resolver; sin ejecución SQL.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "ab4a431219dc5579829e90b8b97fee1002126064144349014e13114fe76e4323",
+  "research_snapshot_sha256": "85068554457b6097cb86238a88a54f18cbb70faee6410657a8b7197560af69cb",
+  "definition_sha256": "c155845162851b0f8c288af1edb4aa45db0c23f15e0ef3d6c2a755c17e63bf9e",
+  "new_concepts": [
+    {
+      "item_id": "570d2672-dca9-5f67-929f-69b9d79d0e05",
+      "canonical_name": "Antígeno tisular polipeptídico (TPA)",
+      "component": "Tissue polypeptide antigen",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.ncbi.nlm.nih.gov/mesh/68019396",
+      "reason": "NLM MeSH reconoce TPA como marcador serológico propio. La etiqueta nombra expresamente antígeno tisular polipeptídico. No seleccionar TPS, CYFRA21-1, citoqueratinas individuales ni agregar un panel de citoqueratinas; sólo orden TPA, sin composición analítica adicional. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Matriz exacta no especificada en SD. La familia sangre, cuando está escrita, se conserva en source_attributes y en nombre canónico; no implica sangre total, suero ni plasma. Sin duración ni método inferidos."
+    },
+    {
+      "item_id": "2c296b57-f7f3-5792-a1c4-4e69401367f3",
+      "canonical_name": "C-telopéptidos (Crosslaps CTX)",
+      "component": "C-telopeptides",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/500089/c-telopeptide-endocrine-sciences",
+      "reason": "Labcorp500089 documenta Crosslaps como sinónimo de C-telopéptidos. SD sólo identifica esa orden nominal; no importar suero, orina, beta-isomerización, fracción, tipo de colágeno, ECLIA ni unidades de la fuente externa. No N-telopéptidos, PINP, ICTP ni panel óseo. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Matriz exacta no especificada en SD. La familia sangre, cuando está escrita, se conserva en source_attributes y en nombre canónico; no implica sangre total, suero ni plasma. Sin duración ni método inferidos."
+    },
+    {
+      "item_id": "f796eef5-e849-5872-9cbf-28db38630389",
+      "canonical_name": "Mutación asociada a enfermedad de Huntington",
+      "component": "Huntington disease mutation",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/35452",
+      "reason": "MayoHAD acredita orden molecular específica de enfermedad de Huntington. SD declara enfermedad y mutación, sin declarar blanco por secuencia, expansión, número de repeticiones CAG, PCR, genotipo ni muestra; esos detalles de Mayo no se importan. No se convierte el nombre de enfermedad en diagnóstico ni en panel neurogenético. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Matriz exacta no especificada en SD. La familia sangre, cuando está escrita, se conserva en source_attributes y en nombre canónico; no implica sangre total, suero ni plasma. Sin duración ni método inferidos."
+    },
+    {
+      "item_id": "ec1da9aa-4ea2-503a-8baf-cf09e377f145",
+      "canonical_name": "Níquel en sangre (matriz exacta no especificada)",
+      "component": "Nickel",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/8622",
+      "reason": "Níquel es analito individual en MayoNIS, donde el suero es específico del ensayo externo. SD declara sólo sangre; conservar familia blood por RAW sin seleccionar suero, plasma ni sangre total. No orina, estudio de hipersensibilidad, sal de níquel concreta ni panel de metales. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Matriz exacta no especificada en SD. La familia sangre, cuando está escrita, se conserva en source_attributes y en nombre canónico; no implica sangre total, suero ni plasma. Sin duración ni método inferidos."
+    },
+    {
+      "item_id": "7b78258e-94b6-5618-a962-4d892197483c",
+      "canonical_name": "Silicio en sangre (matriz exacta no especificada)",
+      "component": "Silicon",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://ddrcagilus.com/test/pathanamthitta/200025482/silicon-plasma",
+      "reason": "Agilus documenta silicio como parámetro individual y explicita plasma en su orden; no se importa esa matriz a SD. SD dice sangre, conservada como familia blood, con matriz exacta desconocida. No seleccionar selenio, sílice ambiental, silicona, silicato específico, orina ni panel de elementos. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Matriz exacta no especificada en SD. La familia sangre, cuando está escrita, se conserva en source_attributes y en nombre canónico; no implica sangre total, suero ni plasma. Sin duración ni método inferidos."
+    },
+    {
+      "item_id": "8472a519-4d31-5848-8c3b-e47b086bd264",
+      "canonical_name": "Primidona (Mysoline)",
+      "component": "Primidone",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://tools.thermofisher.com/content/sfs/manuals/D20525~.pdf",
+      "reason": "El fabricante ThermoFisher DRI Primidone Assay declara determinación individual de primidona y distingue sus metabolitos fenobarbital/PEMA. Labcorp007856 documenta Mysoline como sinónimo, pero su composición incluye fenobarbital y no se importa. SD nombra primidona/Mysoline, sin metabolitos ni panel. No importar suero/plasma, método, escala, unidades, intervalos ni preparación externa; matriz de SD desconocida. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Matriz exacta no especificada en SD. La familia sangre, cuando está escrita, se conserva en source_attributes y en nombre canónico; no implica sangre total, suero ni plasma. Sin duración ni método inferidos."
+    },
+    {
+      "item_id": "8d1c1e58-33a5-590b-a825-3746533a57da",
+      "canonical_name": "Tiempo de trombina",
+      "component": "Thrombin time",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/015230/thrombin-time",
+      "reason": "Labcorp015230 distingue tiempo de trombina como orden propia. SD declara tiempo de trombina; no es antitrombinaIII, tiempo de protrombina, TTPa, reptilasa ni estudio de mezclas. No importar plasma citratado, método fotométrico, segundos ni preparación farmacológica de Labcorp. Sólo atributo de tiempo nominal literal, sin unidad/escala fijada. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Matriz exacta no especificada en SD. La familia sangre, cuando está escrita, se conserva en source_attributes y en nombre canónico; no implica sangre total, suero ni plasma. Sin duración ni método inferidos."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "antigeno tisular polipeptidico",
+      "item_id": "570d2672-dca9-5f67-929f-69b9d79d0e05",
+      "canonical_name": "Antígeno tisular polipeptídico (TPA)",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.ncbi.nlm.nih.gov/mesh/68019396",
+      "reason": "NLM MeSH reconoce TPA como marcador serológico propio. La etiqueta nombra expresamente antígeno tisular polipeptídico. No seleccionar TPS, CYFRA21-1, citoqueratinas individuales ni agregar un panel de citoqueratinas; sólo orden TPA, sin composición analítica adicional. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTIGENO TISULAR POLIPEPTIDICO"
+      }
+    },
+    {
+      "alias": "c telopeptidos crosslaps ctx",
+      "item_id": "2c296b57-f7f3-5792-a1c4-4e69401367f3",
+      "canonical_name": "C-telopéptidos (Crosslaps CTX)",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.labcorp.com/tests/500089/c-telopeptide-endocrine-sciences",
+      "reason": "Labcorp500089 documenta Crosslaps como sinónimo de C-telopéptidos. SD sólo identifica esa orden nominal; no importar suero, orina, beta-isomerización, fracción, tipo de colágeno, ECLIA ni unidades de la fuente externa. No N-telopéptidos, PINP, ICTP ni panel óseo. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "C- TELOPEPTIDOS (CROSSLAPS CTX)"
+      }
+    },
+    {
+      "alias": "enfermedad de huntington mutacion",
+      "item_id": "f796eef5-e849-5872-9cbf-28db38630389",
+      "canonical_name": "Mutación asociada a enfermedad de Huntington",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/35452",
+      "reason": "MayoHAD acredita orden molecular específica de enfermedad de Huntington. SD declara enfermedad y mutación, sin declarar blanco por secuencia, expansión, número de repeticiones CAG, PCR, genotipo ni muestra; esos detalles de Mayo no se importan. No se convierte el nombre de enfermedad en diagnóstico ni en panel neurogenético. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "Enfermedad de Huntington, mutacion"
+      }
+    },
+    {
+      "alias": "niquel en sangre",
+      "item_id": "ec1da9aa-4ea2-503a-8baf-cf09e377f145",
+      "canonical_name": "Níquel en sangre (matriz exacta no especificada)",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/8622",
+      "reason": "Níquel es analito individual en MayoNIS, donde el suero es específico del ensayo externo. SD declara sólo sangre; conservar familia blood por RAW sin seleccionar suero, plasma ni sangre total. No orina, estudio de hipersensibilidad, sal de níquel concreta ni panel de metales. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "NIQUEL EN SANGRE"
+      },
+      "source_attributes": {
+        "specimen_family": "blood"
+      }
+    },
+    {
+      "alias": "silicio en sangre",
+      "item_id": "7b78258e-94b6-5618-a962-4d892197483c",
+      "canonical_name": "Silicio en sangre (matriz exacta no especificada)",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://ddrcagilus.com/test/pathanamthitta/200025482/silicon-plasma",
+      "reason": "Agilus documenta silicio como parámetro individual y explicita plasma en su orden; no se importa esa matriz a SD. SD dice sangre, conservada como familia blood, con matriz exacta desconocida. No seleccionar selenio, sílice ambiental, silicona, silicato específico, orina ni panel de elementos. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "SILICIO EN SANGRE"
+      },
+      "source_attributes": {
+        "specimen_family": "blood"
+      }
+    },
+    {
+      "alias": "primidona mysoline",
+      "item_id": "8472a519-4d31-5848-8c3b-e47b086bd264",
+      "canonical_name": "Primidona (Mysoline)",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://tools.thermofisher.com/content/sfs/manuals/D20525~.pdf",
+      "reason": "El fabricante ThermoFisher DRI Primidone Assay declara determinación individual de primidona y distingue sus metabolitos fenobarbital/PEMA. Labcorp007856 documenta Mysoline como sinónimo, pero su composición incluye fenobarbital y no se importa. SD nombra primidona/Mysoline, sin metabolitos ni panel. No importar suero/plasma, método, escala, unidades, intervalos ni preparación externa; matriz de SD desconocida. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "PRIMIDONA --MYSOLINE--"
+      }
+    },
+    {
+      "alias": "tiempo de trombina",
+      "item_id": "8d1c1e58-33a5-590b-a825-3746533a57da",
+      "canonical_name": "Tiempo de trombina",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.labcorp.com/tests/015230/thrombin-time",
+      "reason": "Labcorp015230 distingue tiempo de trombina como orden propia. SD declara tiempo de trombina; no es antitrombinaIII, tiempo de protrombina, TTPa, reptilasa ni estudio de mezclas. No importar plasma citratado, método fotométrico, segundos ni preparación farmacológica de Labcorp. Sólo atributo de tiempo nominal literal, sin unidad/escala fijada. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "TIEMPO DE  TROMBINA"
+      }
+    }
+  ]
+}

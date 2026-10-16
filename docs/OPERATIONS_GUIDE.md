@@ -3,6 +3,13 @@
 Tipo: procedimientos vigentes contrastados con scripts/configuración el 14-sep-2026.
 No es un registro de ejecución ni una autorización de despliegue.
 
+Observación posterior: **16-oct12:25 UTC**, lotes prioritarios54–55 aplicados:
+542 conceptos,4,147 registros pendientes,114 marcas /198 ubicaciones,
+234 ofertas /112 migraciones. Cola48 entradas explícitas por hash;104 registros
+cerrados en13 grupos de ocho, sin modificar resolver ni ofertas. Los66 grupos
+de paquetes /367 registros investigados permanecen pendientes de integración
+de composición. [Alcance y evidencia](PUEBLA_PRIORITY_GROUPS_20261016.md).
+
 Última observación de datos: **16-oct-2026, 04:04 UTC**:529 conceptos,
 4,251 registros pendientes,114 marcas y198 ubicaciones;234 ofertas y112
 migraciones. Revisiones51–52 e identidades25–27 aplicadas y observadas; cola46

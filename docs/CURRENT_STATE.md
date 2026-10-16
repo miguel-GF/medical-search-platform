@@ -17,6 +17,16 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Prioridad por grupos, 16-oct12:25 UTC:** lotes54 y55 incorporados:
+104 registros adicionales,13 conceptos y13 aliases exclusivos de proveedor.
+Conteo remoto posterior: **542 conceptos /4,147 pendientes /114 marcas /
+198 ubicaciones /234 ofertas /112 migraciones**. Cola48. Paquetes investigados:
+66 grupos /367 registros, orden individual8→1; cero cierres por la propuesta
+de composición aún aislada. Tres auxiliares simultáneos es el límite disponible.
+Observación independiente12:26:31 UTC:26 HTTP públicos,13 consultas de proveedor,
+36 etiquetas/variantes,176 RAW íntegros y72 contextos retenidos intactos.
+[Detalle y siguiente acción](PUEBLA_PRIORITY_GROUPS_20261016.md).
+
 **Corte completo52, 16-oct 04:06:54 UTC; revalidado12:00 UTC:** 529 conceptos,
 4,251 pendientes en781 grupos y1,279 términos;114 marcas /198 ubicaciones,
 234 ofertas /112 migraciones. Memoria shadow v3:52 revisiones /388 aliases /
