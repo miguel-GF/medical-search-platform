@@ -169,11 +169,12 @@ def prepare(client: httpx.Client, ref: str, *, definition: Path, snapshot: Path,
             alias = {
                 'alias': a['label'], 'item_id': item, 'canonical_name': d['canonical_name'],
                 'service_type': 'lab_test', 'alias_scope': scope,
-                'evidence_url': d['evidence_url'], 'reason': reason, **targets[0],
+                'evidence_url': d['evidence_url'], 'reason': reason,
             }
             if scope == 'provider':
                 review['aliases'].extend({**alias, **target} for target in targets)
             else:
+                alias.update(targets[0])
                 if len(targets) > 1:
                     alias['additional_targets'] = targets[1:]
                 review['aliases'].append(alias)

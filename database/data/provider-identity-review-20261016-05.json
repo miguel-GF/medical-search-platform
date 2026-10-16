@@ -1,0 +1,356 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261016:05",
+  "reviewed_by": "Codex; investigación delegada por el operador, revisión de candidatos por root",
+  "authorization": "D-021/D-022: identidades candidatas pending con evidencia; sin ofertas.",
+  "research_date": "2026-10-16",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "23 centros de salud/consultorios públicos candidatos institucionales independientes; personalidad jurídica y red actual desconocidas. Evidencia federal histórica y DENUE aprobados; discrepancias conservadas, sin ofertas.",
+  "providers": [
+    {
+      "provider_key": "denue_public_center_3413509",
+      "name": "Centro De Salud Urbano Atlixco — Atlixco",
+      "slug": "centro-de-salud-urbano-atlixco-atlixco-3413509",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio de esta unidad. Documento federal es evidencia de identidad histórica, no web institucional; conservar NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "3413509"
+      ],
+      "identity_note": "Identidad candidata institucional contrastada entre DENUE3413509, clase literal621116, y CLUESPLSSA000414 del Anexo2 del convenio15-marzo2024 alojado en el Diario Oficial/SIDOF. Fuente federal histórica, no acredita operación2026 ni fecha exacta de publicación. Nombre específico y municipio/localidad/CP compatibles; el domicilio federal literal es: CALLE 4 NORTE 204 , COLONIA ATLIXCO CENTRO, C.P. 74200. DENUE conserva CALLE 4 NORTE, exterior204, interior, CENTRO, CP74200.   Conservar RAW, coordenadas, domicilios y discrepancias; coincidencia de identidad candidata no es aprobación de equivalencias viales. Cada unidad se registra como candidata independiente verification_pending y ubicación pending; personalidad jurídica y dependencia administrativa actual desconocidas. No reasignar a IMSS-Bienestar, IMSS, ISSSTE ni otra red a partir del convenio histórico. WebsiteNULL porque no se acreditó web propia de la unidad; el DOF es evidencia, no sitio institucional. No se aprueban estudios, equivalencias clínicas, ofertas, precios, horarios, disponibilidad, permisos sanitarios ni cobertura comercial. No se contactó a terceros ni se enviaron formularios."
+    },
+    {
+      "provider_key": "denue_public_center_3516808",
+      "name": "Centro De Salud San Juan Amecac — Atzitzihuacán",
+      "slug": "centro-de-salud-san-juan-amecac-atzitzihuacan-3516808",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio de esta unidad. Documento federal es evidencia de identidad histórica, no web institucional; conservar NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "3516808"
+      ],
+      "identity_note": "Identidad candidata institucional contrastada entre DENUE3516808, clase literal621116, y CLUESPLSSA000484 del Anexo2 del convenio15-marzo2024 alojado en el Diario Oficial/SIDOF. Fuente federal histórica, no acredita operación2026 ni fecha exacta de publicación. Nombre específico y municipio/localidad/CP compatibles; el domicilio federal literal es: CALLE NIÑOS HÉROES 2 , PUEBLO SAN JUAN AMECAC, C.P. 74505. DENUE conserva CALLE NIÑOS HEROES, exterior2, interior, SAN JUAN AMECAC, CP74505.   Conservar RAW, coordenadas, domicilios y discrepancias; coincidencia de identidad candidata no es aprobación de equivalencias viales. Cada unidad se registra como candidata independiente verification_pending y ubicación pending; personalidad jurídica y dependencia administrativa actual desconocidas. No reasignar a IMSS-Bienestar, IMSS, ISSSTE ni otra red a partir del convenio histórico. WebsiteNULL porque no se acreditó web propia de la unidad; el DOF es evidencia, no sitio institucional. No se aprueban estudios, equivalencias clínicas, ofertas, precios, horarios, disponibilidad, permisos sanitarios ni cobertura comercial. No se contactó a terceros ni se enviaron formularios."
+    },
+    {
+      "provider_key": "denue_public_center_3433353",
+      "name": "Centro De Salud Caltepec — Caltepec",
+      "slug": "centro-de-salud-caltepec-caltepec-3433353",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio de esta unidad. Documento federal es evidencia de identidad histórica, no web institucional; conservar NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "3433353"
+      ],
+      "identity_note": "Identidad candidata institucional contrastada entre DENUE3433353, clase literal621116, y CLUESPLSSA000554 del Anexo2 del convenio15-marzo2024 alojado en el Diario Oficial/SIDOF. Fuente federal histórica, no acredita operación2026 ni fecha exacta de publicación. Nombre específico y municipio/localidad/CP compatibles; el domicilio federal literal es: CALLE PRIMAVERA 1 , PUEBLO CALTEPEC, C.P. 75890. DENUE conserva CALLE PRIMAVERA, exterior1, interior, CENTRO, CP75890. Asentamiento DENUE CENTRO no aparece literal en domicilio federal; no sobrescribir.  Conservar RAW, coordenadas, domicilios y discrepancias; coincidencia de identidad candidata no es aprobación de equivalencias viales. Cada unidad se registra como candidata independiente verification_pending y ubicación pending; personalidad jurídica y dependencia administrativa actual desconocidas. No reasignar a IMSS-Bienestar, IMSS, ISSSTE ni otra red a partir del convenio histórico. WebsiteNULL porque no se acreditó web propia de la unidad; el DOF es evidencia, no sitio institucional. No se aprueban estudios, equivalencias clínicas, ofertas, precios, horarios, disponibilidad, permisos sanitarios ni cobertura comercial. No se contactó a terceros ni se enviaron formularios."
+    },
+    {
+      "provider_key": "denue_public_center_3454651",
+      "name": "Centro De Salud Cohetzala — Cohetzala",
+      "slug": "centro-de-salud-cohetzala-cohetzala-3454651",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio de esta unidad. Documento federal es evidencia de identidad histórica, no web institucional; conservar NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "3454651"
+      ],
+      "identity_note": "Identidad candidata institucional contrastada entre DENUE3454651, clase literal621116, y CLUESPLSSA000571 del Anexo2 del convenio15-marzo2024 alojado en el Diario Oficial/SIDOF. Fuente federal histórica, no acredita operación2026 ni fecha exacta de publicación. Nombre específico y municipio/localidad/CP compatibles; el domicilio federal literal es: CALLE 5 DE MAYO 11 , PUEBLO SANTA MARÍA COHETZALA, C.P. 74740. DENUE conserva CALLE 5 DE MAYO, exterior11, interior, CENTRO, CP74740. Asentamiento DENUE CENTRO no aparece literal en domicilio federal; no sobrescribir.  Conservar RAW, coordenadas, domicilios y discrepancias; coincidencia de identidad candidata no es aprobación de equivalencias viales. Cada unidad se registra como candidata independiente verification_pending y ubicación pending; personalidad jurídica y dependencia administrativa actual desconocidas. No reasignar a IMSS-Bienestar, IMSS, ISSSTE ni otra red a partir del convenio histórico. WebsiteNULL porque no se acreditó web propia de la unidad; el DOF es evidencia, no sitio institucional. No se aprueban estudios, equivalencias clínicas, ofertas, precios, horarios, disponibilidad, permisos sanitarios ni cobertura comercial. No se contactó a terceros ni se enviaron formularios."
+    },
+    {
+      "provider_key": "denue_public_center_3329633",
+      "name": "Centro De Salud San Francisco Ocotlan — Coronango",
+      "slug": "centro-de-salud-san-francisco-ocotlan-coronango-3329633",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio de esta unidad. Documento federal es evidencia de identidad histórica, no web institucional; conservar NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "3329633"
+      ],
+      "identity_note": "Identidad candidata institucional contrastada entre DENUE3329633, clase literal621116, y CLUESPLSSA000600 del Anexo2 del convenio15-marzo2024 alojado en el Diario Oficial/SIDOF. Fuente federal histórica, no acredita operación2026 ni fecha exacta de publicación. Nombre específico y municipio/localidad/CP compatibles; el domicilio federal literal es: CALLE VICENTE GUERRERO 340 , PUEBLO SAN FRANCISCO OCOTLAN, C.P. 72680. DENUE conserva CALLE VICENTE GUERRERO, exterior340, interior, SAN FRANCISCO OCOTLAN, CP72680.   Conservar RAW, coordenadas, domicilios y discrepancias; coincidencia de identidad candidata no es aprobación de equivalencias viales. Cada unidad se registra como candidata independiente verification_pending y ubicación pending; personalidad jurídica y dependencia administrativa actual desconocidas. No reasignar a IMSS-Bienestar, IMSS, ISSSTE ni otra red a partir del convenio histórico. WebsiteNULL porque no se acreditó web propia de la unidad; el DOF es evidencia, no sitio institucional. No se aprueban estudios, equivalencias clínicas, ofertas, precios, horarios, disponibilidad, permisos sanitarios ni cobertura comercial. No se contactó a terceros ni se enviaron formularios."
+    },
+    {
+      "provider_key": "denue_public_center_3458065",
+      "name": "Centro De Salud Tlancualpican — Chiautla",
+      "slug": "centro-de-salud-tlancualpican-chiautla-3458065",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio de esta unidad. Documento federal es evidencia de identidad histórica, no web institucional; conservar NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "3458065"
+      ],
+      "identity_note": "Identidad candidata institucional contrastada entre DENUE3458065, clase literal621116, y CLUESPLSSA000945 del Anexo2 del convenio15-marzo2024 alojado en el Diario Oficial/SIDOF. Fuente federal histórica, no acredita operación2026 ni fecha exacta de publicación. Nombre específico y municipio/localidad/CP compatibles; el domicilio federal literal es: CALLE CORREGIDORA 1 , PUEBLO TLANCUALPICAN, C.P. 74735. DENUE conserva CALLE CORREGIDORA, exterior1, interior, TLANCUALPICAN, CP74735.   Conservar RAW, coordenadas, domicilios y discrepancias; coincidencia de identidad candidata no es aprobación de equivalencias viales. Cada unidad se registra como candidata independiente verification_pending y ubicación pending; personalidad jurídica y dependencia administrativa actual desconocidas. No reasignar a IMSS-Bienestar, IMSS, ISSSTE ni otra red a partir del convenio histórico. WebsiteNULL porque no se acreditó web propia de la unidad; el DOF es evidencia, no sitio institucional. No se aprueban estudios, equivalencias clínicas, ofertas, precios, horarios, disponibilidad, permisos sanitarios ni cobertura comercial. No se contactó a terceros ni se enviaron formularios."
+    },
+    {
+      "provider_key": "denue_public_center_3416232",
+      "name": "Centro De Salud San Juan Tetla — Chiautzingo",
+      "slug": "centro-de-salud-san-juan-tetla-chiautzingo-3416232",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio de esta unidad. Documento federal es evidencia de identidad histórica, no web institucional; conservar NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "3416232"
+      ],
+      "identity_note": "Identidad candidata institucional contrastada entre DENUE3416232, clase literal621116, y CLUESPLSSA000962 del Anexo2 del convenio15-marzo2024 alojado en el Diario Oficial/SIDOF. Fuente federal histórica, no acredita operación2026 ni fecha exacta de publicación. Nombre específico y municipio/localidad/CP compatibles; el domicilio federal literal es: PRIVADA MELCHOR OCAMPO 333-A , PUEBLO SAN JUAN TETLA, C.P. 74155. DENUE conserva PRIVADA MELCHOR OCAMPO, exterior333, interior, SAN JUAN TETLA, CP74155.  El domicilio federal declara exterior 333-A; DENUE conserva exterior333 sin letra. No completar ni corregir letra. Conservar RAW, coordenadas, domicilios y discrepancias; coincidencia de identidad candidata no es aprobación de equivalencias viales. Cada unidad se registra como candidata independiente verification_pending y ubicación pending; personalidad jurídica y dependencia administrativa actual desconocidas. No reasignar a IMSS-Bienestar, IMSS, ISSSTE ni otra red a partir del convenio histórico. WebsiteNULL porque no se acreditó web propia de la unidad; el DOF es evidencia, no sitio institucional. No se aprueban estudios, equivalencias clínicas, ofertas, precios, horarios, disponibilidad, permisos sanitarios ni cobertura comercial. No se contactó a terceros ni se enviaron formularios."
+    },
+    {
+      "provider_key": "denue_public_center_3437685",
+      "name": "Centro De Salud Chietla — Chietla",
+      "slug": "centro-de-salud-chietla-chietla-3437685",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio de esta unidad. Documento federal es evidencia de identidad histórica, no web institucional; conservar NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "3437685"
+      ],
+      "identity_note": "Identidad candidata institucional contrastada entre DENUE3437685, clase literal621116, y CLUESPLSSA001032 del Anexo2 del convenio15-marzo2024 alojado en el Diario Oficial/SIDOF. Fuente federal histórica, no acredita operación2026 ni fecha exacta de publicación. Nombre específico y municipio/localidad/CP compatibles; el domicilio federal literal es: CALLE MORELOS 100 , PUEBLO CHIETLA , C.P. 74580. DENUE conserva CALLE MORELOS, exterior100, interior, CENTRO, CP74580. Asentamiento DENUE CENTRO no aparece literal en domicilio federal; no sobrescribir.  Conservar RAW, coordenadas, domicilios y discrepancias; coincidencia de identidad candidata no es aprobación de equivalencias viales. Cada unidad se registra como candidata independiente verification_pending y ubicación pending; personalidad jurídica y dependencia administrativa actual desconocidas. No reasignar a IMSS-Bienestar, IMSS, ISSSTE ni otra red a partir del convenio histórico. WebsiteNULL porque no se acreditó web propia de la unidad; el DOF es evidencia, no sitio institucional. No se aprueban estudios, equivalencias clínicas, ofertas, precios, horarios, disponibilidad, permisos sanitarios ni cobertura comercial. No se contactó a terceros ni se enviaron formularios."
+    },
+    {
+      "provider_key": "denue_public_center_3441620",
+      "name": "Centro De Salud Ayutla — Izúcar de Matamoros",
+      "slug": "centro-de-salud-ayutla-izucar-de-matamoros-3441620",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio de esta unidad. Documento federal es evidencia de identidad histórica, no web institucional; conservar NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "621112"
+      ],
+      "denue_record_ids": [
+        "3441620"
+      ],
+      "identity_note": "Identidad candidata institucional contrastada entre DENUE3441620, clase literal621112, y CLUESPLSSA001925 del Anexo2 del convenio15-marzo2024 alojado en el Diario Oficial/SIDOF. Fuente federal histórica, no acredita operación2026 ni fecha exacta de publicación. Nombre específico y municipio/localidad/CP compatibles; el domicilio federal literal es: CALLE 5 DE MAYO 14 , PUEBLO AYUTLA (SAN FELIPE AYUTLA), C.P. 74577. DENUE conserva CALLE 5 DE MAYO, exterior14, interior, AYUTLA, CP74577.   Conservar RAW, coordenadas, domicilios y discrepancias; coincidencia de identidad candidata no es aprobación de equivalencias viales. Cada unidad se registra como candidata independiente verification_pending y ubicación pending; personalidad jurídica y dependencia administrativa actual desconocidas. No reasignar a IMSS-Bienestar, IMSS, ISSSTE ni otra red a partir del convenio histórico. WebsiteNULL porque no se acreditó web propia de la unidad; el DOF es evidencia, no sitio institucional. No se aprueban estudios, equivalencias clínicas, ofertas, precios, horarios, disponibilidad, permisos sanitarios ni cobertura comercial. No se contactó a terceros ni se enviaron formularios."
+    },
+    {
+      "provider_key": "denue_public_center_3429831",
+      "name": "Centro De Salud Chicontla — Jopala",
+      "slug": "centro-de-salud-chicontla-jopala-3429831",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio de esta unidad. Documento federal es evidencia de identidad histórica, no web institucional; conservar NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "3429831"
+      ],
+      "identity_note": "Identidad candidata institucional contrastada entre DENUE3429831, clase literal621116, y CLUESPLSSA002053 del Anexo2 del convenio15-marzo2024 alojado en el Diario Oficial/SIDOF. Fuente federal histórica, no acredita operación2026 ni fecha exacta de publicación. Nombre específico y municipio/localidad/CP compatibles; el domicilio federal literal es: CALLE MARIANO ESCOBEDO 37 , PUEBLO CHICONTLA, C.P. 73270. DENUE conserva CALLE MARIANO ESCOBEDO, exterior37, interior, CHICONTLA, CP73270.   Conservar RAW, coordenadas, domicilios y discrepancias; coincidencia de identidad candidata no es aprobación de equivalencias viales. Cada unidad se registra como candidata independiente verification_pending y ubicación pending; personalidad jurídica y dependencia administrativa actual desconocidas. No reasignar a IMSS-Bienestar, IMSS, ISSSTE ni otra red a partir del convenio histórico. WebsiteNULL porque no se acreditó web propia de la unidad; el DOF es evidencia, no sitio institucional. No se aprueban estudios, equivalencias clínicas, ofertas, precios, horarios, disponibilidad, permisos sanitarios ni cobertura comercial. No se contactó a terceros ni se enviaron formularios."
+    },
+    {
+      "provider_key": "denue_public_center_3254252",
+      "name": "Centro De Salud Urbano La Loma — Puebla",
+      "slug": "centro-de-salud-urbano-la-loma-puebla-3254252",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio de esta unidad. Documento federal es evidencia de identidad histórica, no web institucional; conservar NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "3254252"
+      ],
+      "identity_note": "Identidad candidata institucional contrastada entre DENUE3254252, clase literal621116, y CLUESPLSSA002683 del Anexo2 del convenio15-marzo2024 alojado en el Diario Oficial/SIDOF. Fuente federal histórica, no acredita operación2026 ni fecha exacta de publicación. Nombre específico y municipio/localidad/CP compatibles; el domicilio federal literal es: CALLE 74 PONIENTE 1502 , COLONIA VEINTE DE NOVIEMBRE, C.P. 72230. DENUE conserva CALLE 74 PONIENTE, exterior1502, interior, LA LOMA NORTE, CP72230. Asentamiento DENUE LA LOMA NORTE no aparece literal en domicilio federal; no sobrescribir.  Conservar RAW, coordenadas, domicilios y discrepancias; coincidencia de identidad candidata no es aprobación de equivalencias viales. Cada unidad se registra como candidata independiente verification_pending y ubicación pending; personalidad jurídica y dependencia administrativa actual desconocidas. No reasignar a IMSS-Bienestar, IMSS, ISSSTE ni otra red a partir del convenio histórico. WebsiteNULL porque no se acreditó web propia de la unidad; el DOF es evidencia, no sitio institucional. No se aprueban estudios, equivalencias clínicas, ofertas, precios, horarios, disponibilidad, permisos sanitarios ni cobertura comercial. No se contactó a terceros ni se enviaron formularios."
+    },
+    {
+      "provider_key": "denue_public_center_3274182",
+      "name": "Centro De Salud Rafael Lara Grajales — Rafael Lara Grajales",
+      "slug": "centro-de-salud-rafael-lara-grajales-rafael-lara-grajales-3274182",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio de esta unidad. Documento federal es evidencia de identidad histórica, no web institucional; conservar NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "3274182"
+      ],
+      "identity_note": "Identidad candidata institucional contrastada entre DENUE3274182, clase literal621116, y CLUESPLSSA002975 del Anexo2 del convenio15-marzo2024 alojado en el Diario Oficial/SIDOF. Fuente federal histórica, no acredita operación2026 ni fecha exacta de publicación. Nombre específico y municipio/localidad/CP compatibles; el domicilio federal literal es: CALLE 16 DE SEPTIEMBRE 1001 , PUEBLO RAFAEL LARA GRAJALES, C.P. 75000. DENUE conserva AVENIDA 16 DE SEPTIEMBRE, exterior1001, interior, CENTRO, CP75000. Asentamiento DENUE CENTRO no aparece literal en domicilio federal; no sobrescribir. Tipo vial DENUE AVENIDA difiere del federal; no sobrescribir.  Conservar RAW, coordenadas, domicilios y discrepancias; coincidencia de identidad candidata no es aprobación de equivalencias viales. Cada unidad se registra como candidata independiente verification_pending y ubicación pending; personalidad jurídica y dependencia administrativa actual desconocidas. No reasignar a IMSS-Bienestar, IMSS, ISSSTE ni otra red a partir del convenio histórico. WebsiteNULL porque no se acreditó web propia de la unidad; el DOF es evidencia, no sitio institucional. No se aprueban estudios, equivalencias clínicas, ofertas, precios, horarios, disponibilidad, permisos sanitarios ni cobertura comercial. No se contactó a terceros ni se enviaron formularios."
+    },
+    {
+      "provider_key": "denue_public_center_3451250",
+      "name": "Centro De Salud Teotlalco — Teotlalco",
+      "slug": "centro-de-salud-teotlalco-teotlalco-3451250",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio de esta unidad. Documento federal es evidencia de identidad histórica, no web institucional; conservar NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "3451250"
+      ],
+      "identity_note": "Identidad candidata institucional contrastada entre DENUE3451250, clase literal621116, y CLUESPLSSA003762 del Anexo2 del convenio15-marzo2024 alojado en el Diario Oficial/SIDOF. Fuente federal histórica, no acredita operación2026 ni fecha exacta de publicación. Nombre específico y municipio/localidad/CP compatibles; el domicilio federal literal es: CALLE BENITO JUÁREZ 1 , PUEBLO TEOTLALCO, C.P. 74700. DENUE conserva CALLE BENITO JUAREZ, exterior1, interior, TEOTLALCO, CP74700.   Conservar RAW, coordenadas, domicilios y discrepancias; coincidencia de identidad candidata no es aprobación de equivalencias viales. Cada unidad se registra como candidata independiente verification_pending y ubicación pending; personalidad jurídica y dependencia administrativa actual desconocidas. No reasignar a IMSS-Bienestar, IMSS, ISSSTE ni otra red a partir del convenio histórico. WebsiteNULL porque no se acreditó web propia de la unidad; el DOF es evidencia, no sitio institucional. No se aprueban estudios, equivalencias clínicas, ofertas, precios, horarios, disponibilidad, permisos sanitarios ni cobertura comercial. No se contactó a terceros ni se enviaron formularios."
+    },
+    {
+      "provider_key": "denue_public_center_3508798",
+      "name": "Centro De Salud Urbano Zacatlán — Zacatlán",
+      "slug": "centro-de-salud-urbano-zacatlan-zacatlan-3508798",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio de esta unidad. Documento federal es evidencia de identidad histórica, no web institucional; conservar NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "3508798"
+      ],
+      "identity_note": "Identidad candidata institucional contrastada entre DENUE3508798, clase literal621116, y CLUESPLSSA004964 del Anexo2 del convenio15-marzo2024 alojado en el Diario Oficial/SIDOF. Fuente federal histórica, no acredita operación2026 ni fecha exacta de publicación. Nombre específico y municipio/localidad/CP compatibles; el domicilio federal literal es: CALLE LIC. LUIS CABRERA LOBATO 5 , COLONIA SANTA JULIA, C.P. 73310. DENUE conserva CARRETERA LOBATO, exterior5, interior, ZACATLAN CENTRO, CP73310. Asentamiento DENUE ZACATLAN CENTRO no aparece literal en domicilio federal; no sobrescribir. Tipo vial DENUE CARRETERA difiere del federal; no sobrescribir. Federal declara CALLE LIC.LUIS CABRERA LOBATO; DENUE conserva CARRETERA LOBATO. No inferir equivalencia vial. Conservar RAW, coordenadas, domicilios y discrepancias; coincidencia de identidad candidata no es aprobación de equivalencias viales. Cada unidad se registra como candidata independiente verification_pending y ubicación pending; personalidad jurídica y dependencia administrativa actual desconocidas. No reasignar a IMSS-Bienestar, IMSS, ISSSTE ni otra red a partir del convenio histórico. WebsiteNULL porque no se acreditó web propia de la unidad; el DOF es evidencia, no sitio institucional. No se aprueban estudios, equivalencias clínicas, ofertas, precios, horarios, disponibilidad, permisos sanitarios ni cobertura comercial. No se contactó a terceros ni se enviaron formularios."
+    },
+    {
+      "provider_key": "denue_public_center_3425836",
+      "name": "Centro De Salud Trinidad Tepango — Atlixco",
+      "slug": "centro-de-salud-trinidad-tepango-atlixco-3425836",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio de esta unidad. Documento federal es evidencia de identidad histórica, no web institucional; conservar NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "621112"
+      ],
+      "denue_record_ids": [
+        "3425836"
+      ],
+      "identity_note": "Identidad candidata institucional contrastada entre DENUE3425836, clase literal621112, y CLUESPLSSA005326 del Anexo2 del convenio15-marzo2024 alojado en el Diario Oficial/SIDOF. Fuente federal histórica, no acredita operación2026 ni fecha exacta de publicación. Nombre específico y municipio/localidad/CP compatibles; el domicilio federal literal es: CALLE 3 NORTE 1, INTERIOR 13, COLONIA TRINIDAD TEPANGO, C.P. 74365. DENUE conserva AVENIDA 3 NORTE, exterior1, interior, TRINIDAD TEPANGO, CP74365. Tipo vial DENUE AVENIDA difiere del federal; no sobrescribir. El domicilio federal declara interior13; DENUE conserva interior vacío. No completar. Conservar RAW, coordenadas, domicilios y discrepancias; coincidencia de identidad candidata no es aprobación de equivalencias viales. Cada unidad se registra como candidata independiente verification_pending y ubicación pending; personalidad jurídica y dependencia administrativa actual desconocidas. No reasignar a IMSS-Bienestar, IMSS, ISSSTE ni otra red a partir del convenio histórico. WebsiteNULL porque no se acreditó web propia de la unidad; el DOF es evidencia, no sitio institucional. No se aprueban estudios, equivalencias clínicas, ofertas, precios, horarios, disponibilidad, permisos sanitarios ni cobertura comercial. No se contactó a terceros ni se enviaron formularios."
+    },
+    {
+      "provider_key": "denue_public_center_3496684",
+      "name": "Centro De Salud Petlalcingo — Petlalcingo",
+      "slug": "centro-de-salud-petlalcingo-petlalcingo-3496684",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio de esta unidad. Documento federal es evidencia de identidad histórica, no web institucional; conservar NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "621112"
+      ],
+      "denue_record_ids": [
+        "3496684"
+      ],
+      "identity_note": "Identidad candidata institucional contrastada entre DENUE3496684, clase literal621112, y CLUESPLSSA005961 del Anexo2 del convenio15-marzo2024 alojado en el Diario Oficial/SIDOF. Fuente federal histórica, no acredita operación2026 ni fecha exacta de publicación. Nombre específico y municipio/localidad/CP compatibles; el domicilio federal literal es: AVENIDA NACIONAL 102 , COLONIA PETLALCINGO CENTRO, C.P. 74970. DENUE conserva AVENIDA NACIONAL, exterior102, interior, SAN RAFAEL, CP74970. Asentamiento DENUE SAN RAFAEL no aparece literal en domicilio federal; no sobrescribir.  Conservar RAW, coordenadas, domicilios y discrepancias; coincidencia de identidad candidata no es aprobación de equivalencias viales. Cada unidad se registra como candidata independiente verification_pending y ubicación pending; personalidad jurídica y dependencia administrativa actual desconocidas. No reasignar a IMSS-Bienestar, IMSS, ISSSTE ni otra red a partir del convenio histórico. WebsiteNULL porque no se acreditó web propia de la unidad; el DOF es evidencia, no sitio institucional. No se aprueban estudios, equivalencias clínicas, ofertas, precios, horarios, disponibilidad, permisos sanitarios ni cobertura comercial. No se contactó a terceros ni se enviaron formularios."
+    },
+    {
+      "provider_key": "denue_public_center_8154920",
+      "name": "Centro De Salud Santa María Coronango — Coronango",
+      "slug": "centro-de-salud-santa-maria-coronango-coronango-8154920",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio de esta unidad. Documento federal es evidencia de identidad histórica, no web institucional; conservar NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "8154920"
+      ],
+      "identity_note": "Identidad candidata institucional contrastada entre DENUE8154920, clase literal621116, y CLUESPLSSA009163 del Anexo2 del convenio15-marzo2024 alojado en el Diario Oficial/SIDOF. Fuente federal histórica, no acredita operación2026 ni fecha exacta de publicación. Nombre específico y municipio/localidad/CP compatibles; el domicilio federal literal es: CALLE PENSADOR MEXICANO 902 , PUEBLO SANTA MARÍA CORONANGO, C.P. 72670. DENUE conserva AVENIDA PENSADOR MEXICANO, exterior902, interior, CUAPILCO, CP72670. Asentamiento DENUE CUAPILCO no aparece literal en domicilio federal; no sobrescribir. Tipo vial DENUE AVENIDA difiere del federal; no sobrescribir.  Conservar RAW, coordenadas, domicilios y discrepancias; coincidencia de identidad candidata no es aprobación de equivalencias viales. Cada unidad se registra como candidata independiente verification_pending y ubicación pending; personalidad jurídica y dependencia administrativa actual desconocidas. No reasignar a IMSS-Bienestar, IMSS, ISSSTE ni otra red a partir del convenio histórico. WebsiteNULL porque no se acreditó web propia de la unidad; el DOF es evidencia, no sitio institucional. No se aprueban estudios, equivalencias clínicas, ofertas, precios, horarios, disponibilidad, permisos sanitarios ni cobertura comercial. No se contactó a terceros ni se enviaron formularios."
+    },
+    {
+      "provider_key": "denue_public_center_6800893",
+      "name": "Cessa De Huaquechula — Huaquechula",
+      "slug": "cessa-de-huaquechula-huaquechula-6800893",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio de esta unidad. Documento federal es evidencia de identidad histórica, no web institucional; conservar NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "6800893"
+      ],
+      "identity_note": "Identidad candidata institucional contrastada entre DENUE6800893, clase literal621116, y CLUESPLSSA006026 del Anexo2 del convenio15-marzo2024 alojado en el Diario Oficial/SIDOF. Fuente federal histórica, no acredita operación2026 ni fecha exacta de publicación. Nombre específico y municipio/localidad/CP compatibles; el domicilio federal literal es: AVENIDA MIGUEL HIDALGO 1040 , PUEBLO CACALOXÚCHITL, C.P. 74375. DENUE conserva AVENIDA HIDALGO, exterior1040, interior, CACALOXUCHITL, CP74375.  Federal declara AVENIDA MIGUEL HIDALGO; DENUE conserva AVENIDA HIDALGO. No inferir equivalencia de denominación vial. Conservar RAW, coordenadas, domicilios y discrepancias; coincidencia de identidad candidata no es aprobación de equivalencias viales. Cada unidad se registra como candidata independiente verification_pending y ubicación pending; personalidad jurídica y dependencia administrativa actual desconocidas. No reasignar a IMSS-Bienestar, IMSS, ISSSTE ni otra red a partir del convenio histórico. WebsiteNULL porque no se acreditó web propia de la unidad; el DOF es evidencia, no sitio institucional. No se aprueban estudios, equivalencias clínicas, ofertas, precios, horarios, disponibilidad, permisos sanitarios ni cobertura comercial. No se contactó a terceros ni se enviaron formularios."
+    },
+    {
+      "provider_key": "denue_public_center_6800096",
+      "name": "Centro De Salud San Gregorio Atzompa-Chipilo — San Gregorio Atzompa",
+      "slug": "centro-de-salud-san-gregorio-atzompa-chipilo-san-gregorio-atzompa-6800096",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio de esta unidad. Documento federal es evidencia de identidad histórica, no web institucional; conservar NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "6800096"
+      ],
+      "identity_note": "Identidad candidata institucional contrastada entre DENUE6800096, clase literal621116, y CLUESPLSSA006171 del Anexo2 del convenio15-marzo2024 alojado en el Diario Oficial/SIDOF. Fuente federal histórica, no acredita operación2026 ni fecha exacta de publicación. Nombre específico y municipio/localidad/CP compatibles; el domicilio federal literal es: AVENIDA REFORMA 659 , PUEBLO LOS RANCHOS, C.P. 74325. DENUE conserva AVENIDA REFORMA, exterior659, interior, CHIPILO DE FRANCISCO JAVIER MINA, CP74325. Asentamiento DENUE CHIPILO DE FRANCISCO JAVIER MINA no aparece literal en domicilio federal; no sobrescribir.  Conservar RAW, coordenadas, domicilios y discrepancias; coincidencia de identidad candidata no es aprobación de equivalencias viales. Cada unidad se registra como candidata independiente verification_pending y ubicación pending; personalidad jurídica y dependencia administrativa actual desconocidas. No reasignar a IMSS-Bienestar, IMSS, ISSSTE ni otra red a partir del convenio histórico. WebsiteNULL porque no se acreditó web propia de la unidad; el DOF es evidencia, no sitio institucional. No se aprueban estudios, equivalencias clínicas, ofertas, precios, horarios, disponibilidad, permisos sanitarios ni cobertura comercial. No se contactó a terceros ni se enviaron formularios."
+    },
+    {
+      "provider_key": "denue_public_center_8628180",
+      "name": "Cessa Tepatlaxco De Hidalgo — Tepatlaxco de Hidalgo",
+      "slug": "cessa-tepatlaxco-de-hidalgo-tepatlaxco-de-hidalgo-8628180",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio de esta unidad. Documento federal es evidencia de identidad histórica, no web institucional; conservar NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "621112"
+      ],
+      "denue_record_ids": [
+        "8628180"
+      ],
+      "identity_note": "Identidad candidata institucional contrastada entre DENUE8628180, clase literal621112, y CLUESPLSSA009412 del Anexo2 del convenio15-marzo2024 alojado en el Diario Oficial/SIDOF. Fuente federal histórica, no acredita operación2026 ni fecha exacta de publicación. Nombre específico y municipio/localidad/CP compatibles; el domicilio federal literal es: CALLE 8 PONIENTE 1107 , PUEBLO TEPATLAXCO DE HIDALGO, C.P. 75100. DENUE conserva CARRETERA 8 PONIENTE, exterior1107, interiorSN, PRIMERA, CP75100. Asentamiento DENUE PRIMERA no aparece literal en domicilio federal; no sobrescribir. Tipo vial DENUE CARRETERA difiere del federal; no sobrescribir.  Conservar RAW, coordenadas, domicilios y discrepancias; coincidencia de identidad candidata no es aprobación de equivalencias viales. Cada unidad se registra como candidata independiente verification_pending y ubicación pending; personalidad jurídica y dependencia administrativa actual desconocidas. No reasignar a IMSS-Bienestar, IMSS, ISSSTE ni otra red a partir del convenio histórico. WebsiteNULL porque no se acreditó web propia de la unidad; el DOF es evidencia, no sitio institucional. No se aprueban estudios, equivalencias clínicas, ofertas, precios, horarios, disponibilidad, permisos sanitarios ni cobertura comercial. No se contactó a terceros ni se enviaron formularios."
+    },
+    {
+      "provider_key": "denue_public_center_3534405",
+      "name": "Centro De Salud Xochimilco — Tecamachalco",
+      "slug": "centro-de-salud-xochimilco-tecamachalco-3534405",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio de esta unidad. Documento federal es evidencia de identidad histórica, no web institucional; conservar NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "3534405"
+      ],
+      "identity_note": "Identidad candidata institucional contrastada entre DENUE3534405, clase literal621116, y CLUESPLSSA015131 del Anexo2 del convenio15-marzo2024 alojado en el Diario Oficial/SIDOF. Fuente federal histórica, no acredita operación2026 ni fecha exacta de publicación. Nombre específico y municipio/localidad/CP compatibles; el domicilio federal literal es: CALLE 2 PONIENTE 1 , RANCHERÍA XOCHIMILCO, C.P. 75485. DENUE conserva CALLE 2 PONIENTE, exterior1, interior0SN, XOCHIMILCO, CP75485.  DENUE conserva interior0 y letra interiorSN; el domicilio federal no declara ese interior. Mantener ambos campos originales. Conservar RAW, coordenadas, domicilios y discrepancias; coincidencia de identidad candidata no es aprobación de equivalencias viales. Cada unidad se registra como candidata independiente verification_pending y ubicación pending; personalidad jurídica y dependencia administrativa actual desconocidas. No reasignar a IMSS-Bienestar, IMSS, ISSSTE ni otra red a partir del convenio histórico. WebsiteNULL porque no se acreditó web propia de la unidad; el DOF es evidencia, no sitio institucional. No se aprueban estudios, equivalencias clínicas, ofertas, precios, horarios, disponibilidad, permisos sanitarios ni cobertura comercial. No se contactó a terceros ni se enviaron formularios."
+    },
+    {
+      "provider_key": "denue_public_center_3430931",
+      "name": "Centro De Salud Calvarío — San Pedro Cholula",
+      "slug": "centro-de-salud-calvario-san-pedro-cholula-3430931",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio de esta unidad. Documento federal es evidencia de identidad histórica, no web institucional; conservar NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "3430931"
+      ],
+      "identity_note": "Identidad candidata institucional contrastada entre DENUE3430931, clase literal621116, y CLUESPLSSA015160 del Anexo2 del convenio15-marzo2024 alojado en el Diario Oficial/SIDOF. Fuente federal histórica, no acredita operación2026 ni fecha exacta de publicación. Nombre específico y municipio/localidad/CP compatibles; el domicilio federal literal es: CALLE AQUILES SERDAN 2 , PUEBLO SAN GREGORIO ZACAPECHPAN, C.P. 72760. DENUE conserva CALLE AQUILES SERDAN, exterior2, interior, SAN AGUSTIN CALVARIO, CP72760. Asentamiento DENUE SAN AGUSTIN CALVARIO no aparece literal en domicilio federal; no sobrescribir.  Conservar RAW, coordenadas, domicilios y discrepancias; coincidencia de identidad candidata no es aprobación de equivalencias viales. Cada unidad se registra como candidata independiente verification_pending y ubicación pending; personalidad jurídica y dependencia administrativa actual desconocidas. No reasignar a IMSS-Bienestar, IMSS, ISSSTE ni otra red a partir del convenio histórico. WebsiteNULL porque no se acreditó web propia de la unidad; el DOF es evidencia, no sitio institucional. No se aprueban estudios, equivalencias clínicas, ofertas, precios, horarios, disponibilidad, permisos sanitarios ni cobertura comercial. No se contactó a terceros ni se enviaron formularios."
+    },
+    {
+      "provider_key": "denue_public_center_6760225",
+      "name": "Cessa Nopalucan — Nopalucan",
+      "slug": "cessa-nopalucan-nopalucan-6760225",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio de esta unidad. Documento federal es evidencia de identidad histórica, no web institucional; conservar NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "621112"
+      ],
+      "denue_record_ids": [
+        "6760225"
+      ],
+      "identity_note": "Identidad candidata institucional contrastada entre DENUE6760225, clase literal621112, y CLUESPLSSA009343 del Anexo2 del convenio15-marzo2024 alojado en el Diario Oficial/SIDOF. Fuente federal histórica, no acredita operación2026 ni fecha exacta de publicación. Nombre específico y municipio/localidad/CP compatibles; el domicilio federal literal es: BOULEVARD RAFAEL MÉNDEZ MORENO 900 , PUEBLO NOPALUCAN DE LA GRANJA, C.P. 75120. DENUE conserva AVENIDA RAFAEL MENDEZ MORENO, exterior900, interior, CENTRO, CP75120. Asentamiento DENUE CENTRO no aparece literal en domicilio federal; no sobrescribir. Tipo vial DENUE AVENIDA difiere del federal; no sobrescribir.  Conservar RAW, coordenadas, domicilios y discrepancias; coincidencia de identidad candidata no es aprobación de equivalencias viales. Cada unidad se registra como candidata independiente verification_pending y ubicación pending; personalidad jurídica y dependencia administrativa actual desconocidas. No reasignar a IMSS-Bienestar, IMSS, ISSSTE ni otra red a partir del convenio histórico. WebsiteNULL porque no se acreditó web propia de la unidad; el DOF es evidencia, no sitio institucional. No se aprueban estudios, equivalencias clínicas, ofertas, precios, horarios, disponibilidad, permisos sanitarios ni cobertura comercial. No se contactó a terceros ni se enviaron formularios."
+    }
+  ]
+}

@@ -1,0 +1,151 @@
+{
+  "review_id": "pruevia:evidence-review:20261016:04",
+  "research_date": "2026-10-16",
+  "scope": "Revisión51 preparada: 33 filas, cuatro órdenes nominales individuales, aliases limitados a proveedor. Tres blancos de anticuerpos con isotipo y composición desconocidos; estrógenos totales sin fraccionamiento inferido. Sin ofertas, precios, disponibilidad, cambios de resolver o escrituras. Toda selección específica vecina debe abstenerse o seleccionar identidad específica existente.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "972058ec95c9b217b3237d92da0dc07c5ede10a7ffeeaf6fa1531fcacf717a2a",
+  "research_snapshot_sha256": "6531695a40223bcbf79b705ba93077d1e0b286db30ea3a4d264108683765ef63",
+  "definition_sha256": "02e8301ae45645741c6dc6177242f4eb3cb8e6891bac61cc550b87fedd678a95",
+  "new_concepts": [
+    {
+      "item_id": "23b20bd5-cc8f-50a5-a438-485cd341e9e6",
+      "canonical_name": "Estrógenos totales",
+      "component": "Estrogens.total",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/004549/estrogens-total",
+      "reason": "La denominación total es literal en ambos proveedores y es una orden propia en Labcorp004549. No se equipara estradiol, estrona, estriol, estrógenos fraccionados ni un perfil hormonal. No se fija composición molecular oculta ni se agregan componentes individuales. El suero literal SEMIN se conserva en atributo de fuente; SD no declara muestra. No se trasladan ELISA, LCMS, duración serial, escala, unidad o LOINC externos. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Matriz exacta desconocida salvo atributo literal del contexto. No importar muestra externa, isotipo, composición, propiedad, técnica, escala, unidad o LOINC. Isotipo no especificado no significa anticuerpos totales ni un panel."
+    },
+    {
+      "item_id": "d0f358fc-8ab9-5d20-b712-6423fe733702",
+      "canonical_name": "Anticuerpos contra Histoplasma capsulatum (isotipo no especificado)",
+      "component": "Histoplasma capsulatum Ab",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.publichealthontario.ca/en/laboratory-services/test-information-index/fungal-serology",
+      "reason": "La serología dirigida a Histoplasma capsulatum se distingue de antígeno, cultivo y otros hongos en PHO. Sólo se identifica el blanco literalmente escrito. No se seleccionan isotipos, anticuerpos totales, bandas H/M, forma micelial o levaduriforme, composición de panel ni un método de inmunodifusión o fijación de complemento. La fuente externa describe métodos concretos que no se importan a SD. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Matriz exacta desconocida salvo atributo literal del contexto. No importar muestra externa, isotipo, composición, propiedad, técnica, escala, unidad o LOINC. Isotipo no especificado no significa anticuerpos totales ni un panel."
+    },
+    {
+      "item_id": "7be6bf2b-2463-54ac-bb63-b6d7c990871d",
+      "canonical_name": "Anticuerpos contra Aspergillus fumigatus (isotipo no especificado)",
+      "component": "Aspergillus fumigatus Ab",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/607550/aspergillus-fumigatus-antibody-igg",
+      "reason": "Labcorp distingue anticuerpos IgG contra A.fumigatus de IgE y de precipitinas multiespecie. SD sólo declara anticuerpos contra la especie fumigatus. Se conserva el isotipo desconocido y no se selecciona IgG, IgM, IgA, IgE, anticuerpos totales, precipitinas, panel IgG+IgM, galactomanano, otras especies ni método. La identidad IgE ya existente permanece distinta; no se aprueba equivalencia de resultados ni alergia/infección. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Matriz exacta desconocida salvo atributo literal del contexto. No importar muestra externa, isotipo, composición, propiedad, técnica, escala, unidad o LOINC. Isotipo no especificado no significa anticuerpos totales ni un panel."
+    },
+    {
+      "item_id": "453c3266-6bc7-5fb4-bc53-1606f850a7b9",
+      "canonical_name": "Anticuerpos contra fosfatidilserina (isotipo no especificado)",
+      "component": "Phosphatidylserine Ab",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.tdlpathology.com/tests/tests-a-z/tests-a/anti-phosphatidylserine-antibodies/",
+      "reason": "TDL conserva una orden denominada anticuerpos antifosfatidilserina. Cleveland distingue un panel IgG+IgM+IgA y Labcorp el complejo fosfatidilserina/protrombina; ninguno se importa a SD. Sólo se identifica el blanco lipídico escrito, sin escoger isotipo ni composición, y sin equiparar cardiolipina, fosfolípidos genéricos, protrombina o complejo PS/PT. Muestra y técnica siguen desconocidas. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Matriz exacta desconocida salvo atributo literal del contexto. No importar muestra externa, isotipo, composición, propiedad, técnica, escala, unidad o LOINC. Isotipo no especificado no significa anticuerpos totales ni un panel."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "estrogenos totales",
+      "item_id": "23b20bd5-cc8f-50a5-a438-485cd341e9e6",
+      "canonical_name": "Estrógenos totales",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.labcorp.com/tests/004549/estrogens-total",
+      "reason": "La denominación total es literal en ambos proveedores y es una orden propia en Labcorp004549. No se equipara estradiol, estrona, estriol, estrógenos fraccionados ni un perfil hormonal. No se fija composición molecular oculta ni se agregan componentes individuales. El suero literal SEMIN se conserva en atributo de fuente; SD no declara muestra. No se trasladan ELISA, LCMS, duración serial, escala, unidad o LOINC externos. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ESTROGENOS TOTALES"
+      }
+    },
+    {
+      "alias": "estrogenos totales",
+      "item_id": "23b20bd5-cc8f-50a5-a438-485cd341e9e6",
+      "canonical_name": "Estrógenos totales",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.labcorp.com/tests/004549/estrogens-total",
+      "reason": "La denominación total es literal en ambos proveedores y es una orden propia en Labcorp004549. No se equipara estradiol, estrona, estriol, estrógenos fraccionados ni un perfil hormonal. No se fija composición molecular oculta ni se agregan componentes individuales. El suero literal SEMIN se conserva en atributo de fuente; SD no declara muestra. No se trasladan ELISA, LCMS, duración serial, escala, unidad o LOINC externos. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "Suero / Tubo de tapon rojo o dorado"
+      },
+      "source_attributes": {
+        "specimen_code": "serum"
+      }
+    },
+    {
+      "alias": "anticuerpos anti histoplasma capsulatum",
+      "item_id": "d0f358fc-8ab9-5d20-b712-6423fe733702",
+      "canonical_name": "Anticuerpos contra Histoplasma capsulatum (isotipo no especificado)",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.publichealthontario.ca/en/laboratory-services/test-information-index/fungal-serology",
+      "reason": "La serología dirigida a Histoplasma capsulatum se distingue de antígeno, cultivo y otros hongos en PHO. Sólo se identifica el blanco literalmente escrito. No se seleccionan isotipos, anticuerpos totales, bandas H/M, forma micelial o levaduriforme, composición de panel ni un método de inmunodifusión o fijación de complemento. La fuente externa describe métodos concretos que no se importan a SD. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS ANTI HISTOPLASMA CAPSULATUM"
+      }
+    },
+    {
+      "alias": "anticuerpos anti aspergillus fumigatus",
+      "item_id": "7be6bf2b-2463-54ac-bb63-b6d7c990871d",
+      "canonical_name": "Anticuerpos contra Aspergillus fumigatus (isotipo no especificado)",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.labcorp.com/tests/607550/aspergillus-fumigatus-antibody-igg",
+      "reason": "Labcorp distingue anticuerpos IgG contra A.fumigatus de IgE y de precipitinas multiespecie. SD sólo declara anticuerpos contra la especie fumigatus. Se conserva el isotipo desconocido y no se selecciona IgG, IgM, IgA, IgE, anticuerpos totales, precipitinas, panel IgG+IgM, galactomanano, otras especies ni método. La identidad IgE ya existente permanece distinta; no se aprueba equivalencia de resultados ni alergia/infección. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS ANTI ASPERGILLUS FUMIGATUS"
+      }
+    },
+    {
+      "alias": "fosfatidilserina anticuerpos",
+      "item_id": "453c3266-6bc7-5fb4-bc53-1606f850a7b9",
+      "canonical_name": "Anticuerpos contra fosfatidilserina (isotipo no especificado)",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.tdlpathology.com/tests/tests-a-z/tests-a/anti-phosphatidylserine-antibodies/",
+      "reason": "TDL conserva una orden denominada anticuerpos antifosfatidilserina. Cleveland distingue un panel IgG+IgM+IgA y Labcorp el complejo fosfatidilserina/protrombina; ninguno se importa a SD. Sólo se identifica el blanco lipídico escrito, sin escoger isotipo ni composición, y sin equiparar cardiolipina, fosfolípidos genéricos, protrombina o complejo PS/PT. Muestra y técnica siguen desconocidas. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "FOSFATIDILSERINA ANTICUERPOS"
+      }
+    }
+  ]
+}

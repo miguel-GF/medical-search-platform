@@ -1,0 +1,41 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261016:03",
+  "reviewed_by": "Codex; investigación delegada por el operador",
+  "authorization": "D-021/D-022: identidades candidatas pending con evidencia; sin ofertas.",
+  "research_date": "2026-10-16",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "Dos laboratorios pequeños candidatos Puebla, Galaviz y RVLAB. Fuente municipal independiente histórica, discrepancias conservadas, sin ofertas ni red inferida.",
+  "providers": [
+    {
+      "provider_key": "laboratorios_galaviz_puebla",
+      "name": "Laboratorios Galaviz — Puebla",
+      "slug": "laboratorios-galaviz-puebla",
+      "website_url": null,
+      "website_uncertainty": "DENUE no declara web; fuente municipal histórica no acredita sitio institucional propio. Mantener NULL.",
+      "identity_evidence_url": "https://memorias.pueblacapital.gob.mx/images/2022/martes-descuento/pdf/salud.pdf",
+      "identity_activity_codes": [
+        "621511"
+      ],
+      "denue_record_ids": [
+        "10889439"
+      ],
+      "identity_note": "Directorio municipal Martes de Descuento, sección Salud, página 13, alojado en memorias.pueblacapital.gob.mx bajo ruta 2022, recuperado HTTP200 con TLS válido el 16-oct-2026 UTC, contrasta identidad con DENUE 10889439. Nombre, avenida 39 Oriente, número 1612, interior 4A y colonia El Mirador coinciden. El PDF imprime 1612-4a; DENUE separa exterior 1612, interior 4 y letra interior A. No fusionar con DENUE9859630 en San Isidro, Cuautlancingo: falta evidencia específica de red. El documento es histórico y advierte que la información es responsabilidad de quien la proporciona y promociones pueden cambiar; no prueba operación actual, autorización sanitaria ni control jurídico. Conservar clasificación literal 621511 Laboratorios médicos y de diagnóstico del sector privado, tipo branch, domicilio, coordenadas y hash RAW. Marca verification_pending y sede pending. Website NULL: DENUE no declara web y no se acreditó sitio propio; el directorio municipal es evidencia, no web del proveedor. No se aprueban estudios, equivalencias clínicas, ofertas, precios, promociones, horarios, disponibilidad ni cobertura comercial. No se contactó a terceros ni se enviaron formularios."
+    },
+    {
+      "provider_key": "rvlab_puebla",
+      "name": "RVLAB — Puebla",
+      "slug": "rvlab-puebla",
+      "website_url": null,
+      "website_uncertainty": "DENUE no declara web; fuente municipal histórica no acredita sitio institucional propio. Mantener NULL.",
+      "identity_evidence_url": "https://memorias.pueblacapital.gob.mx/images/2022/martes-descuento/pdf/salud.pdf",
+      "identity_activity_codes": [
+        "621511"
+      ],
+      "denue_record_ids": [
+        "11178584"
+      ],
+      "identity_note": "Directorio municipal Martes de Descuento, sección Salud, página 11, alojado en memorias.pueblacapital.gob.mx bajo ruta 2022, recuperado HTTP200 con TLS válido el 16-oct-2026 UTC, contrasta identidad con DENUE 11178584. Nombre RVLAB, calle Higuera y colonia Bosques de Manzanilla coinciden. El PDF declara 5015 L1; DENUE conserva número exterior vacío, letra exterior SN e interior vacío. Discrepancia sin resolver, sin rellenar el RAW ni afirmar coincidencia de número. Sólo existe un candidato DENUE RVLAB y un laboratorio DENUE en Higuera en el inventario consultado; la identidad sigue pendiente. El documento es histórico y advierte que la información es responsabilidad de quien la proporciona y promociones pueden cambiar; no prueba operación actual, autorización sanitaria ni control jurídico. Conservar clasificación literal 621511 Laboratorios médicos y de diagnóstico del sector privado, tipo branch, domicilio, coordenadas y hash RAW. Marca verification_pending y sede pending. Website NULL: DENUE no declara web y no se acreditó sitio propio; el directorio municipal es evidencia, no web del proveedor. No se aprueban estudios, equivalencias clínicas, ofertas, precios, promociones, horarios, disponibilidad ni cobertura comercial. No se contactó a terceros ni se enviaron formularios."
+    }
+  ]
+}

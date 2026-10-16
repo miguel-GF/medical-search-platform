@@ -1,0 +1,71 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261016:04",
+  "reviewed_by": "Codex; investigación delegada por el operador",
+  "authorization": "D-021/D-022: identidades candidatas pending con evidencia; sin ofertas.",
+  "research_date": "2026-10-16",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "Tres identidades institucionales candidatas: Hospital General Ciudad Serdán, Hospital Integral Ayotoxco y Hospital Integral Guadalupe Victoria. Domicilios contrastados con documento estatal histórico; discrepancias explícitas. Sin asignación de red actual ni ofertas.",
+  "providers": [
+    {
+      "provider_key": "hospital_comunitario_tlaola",
+      "name": "Hospital Comunitario de Tlaola",
+      "slug": "hospital-comunitario-tlaola",
+      "website_url": null,
+      "website_uncertainty": "DENUE no declara web propia y el documento gubernamental histórico no acredita dominio institucional ni operación actual. Conservar website_url NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "622112"
+      ],
+      "denue_record_ids": [
+        "3428789"
+      ],
+      "identity_note": "El convenio federal recuperado HTTP200 con TLS v?lido el16-oct-2026, Anexo2 del convenio de15-marzo-2024, incluye el establecimiento correspondiente a DENUE 3428789. CLUES PLSSA005606: Hospital Comunitario Tlaola, municipio/localidad Tlaola, calle Corregidora sin n?mero, CP73220. DENUE conserva AVENIDA CORREGIDORA SN, asentamiento IXTACATLA; el federal dice CALLE y PUEBLO TLAOLA. No completar colonia Centro ni aprobar equivalencia vial. Se contrasta fuente federal de2024 con DENUE publicado20-may-2026: evidencia hist?rica de identidad, sin probar operaci?n actual. Aunque el convenio documenta transferencia de bienes, no se reasigna red, propiedad o dependencia administrativa actual a IMSS-Bienestar, IMSS, ISSSTE u otra sin evidencia vigente espec?fica. Identidad institucional candidata independiente verification_pending y sede pending; no afirma personalidad jur?dica separada. Mantener clase literal622112 Hospitales generales del sector p?blico, tipo hospital, domicilio, coordenadas y hash RAW originales. Website NULL porque no hay web propia comprobada; SEGOB es fuente documental, no web institucional. No se aprueban estudios, equivalencias cl?nicas, ofertas, precios, horarios, disponibilidad, permisos sanitarios, acceso sin requisitos ni cobertura comercial. No se contact? a terceros ni se enviaron formularios."
+    },
+    {
+      "provider_key": "hospital_comunitario_cuyoaco",
+      "name": "Hospital Comunitario de Cuyoaco",
+      "slug": "hospital-comunitario-cuyoaco",
+      "website_url": null,
+      "website_uncertainty": "DENUE no declara web propia y el documento gubernamental histórico no acredita dominio institucional ni operación actual. Conservar website_url NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "622112"
+      ],
+      "denue_record_ids": [
+        "3482582"
+      ],
+      "identity_note": "El convenio federal recuperado HTTP200 con TLS v?lido el16-oct-2026, Anexo2 del convenio de15-marzo-2024, incluye el establecimiento correspondiente a DENUE 3482582. CLUES PLSSA000834: coincide instituci?n, Cuyoaco, vialidad Francisco La Madrid, sin n?mero, Ignacio Zaragoza, CP73983. Federal dice AVENIDA GENERAL FRANCISCO LA MADRID; DENUE conserva PRIVADA FRANCISCO DE LA MADRID. Preservar la variante de nombre y tipo vial, sin modificar RAW ni tratar avenidas y privadas como equivalentes. Se contrasta fuente federal de2024 con DENUE publicado20-may-2026: evidencia hist?rica de identidad, sin probar operaci?n actual. Aunque el convenio documenta transferencia de bienes, no se reasigna red, propiedad o dependencia administrativa actual a IMSS-Bienestar, IMSS, ISSSTE u otra sin evidencia vigente espec?fica. Identidad institucional candidata independiente verification_pending y sede pending; no afirma personalidad jur?dica separada. Mantener clase literal622112 Hospitales generales del sector p?blico, tipo hospital, domicilio, coordenadas y hash RAW originales. Website NULL porque no hay web propia comprobada; SEGOB es fuente documental, no web institucional. No se aprueban estudios, equivalencias cl?nicas, ofertas, precios, horarios, disponibilidad, permisos sanitarios, acceso sin requisitos ni cobertura comercial. No se contact? a terceros ni se enviaron formularios."
+    },
+    {
+      "provider_key": "hospital_comunitario_zacapala",
+      "name": "Hospital Comunitario Zacapala",
+      "slug": "hospital-comunitario-zacapala",
+      "website_url": null,
+      "website_uncertainty": "DENUE no declara web propia y el documento gubernamental histórico no acredita dominio institucional ni operación actual. Conservar website_url NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "622112"
+      ],
+      "denue_record_ids": [
+        "10113938"
+      ],
+      "identity_note": "El convenio federal recuperado HTTP200 con TLS v?lido el16-oct-2026, Anexo2 del convenio de15-marzo-2024, incluye el establecimiento correspondiente a DENUE 10113938. CLUES PLSSA016811: coincide instituci?n, municipio/localidad Zacapala, calle Tenochtitlan sin n?mero y CP74680. DENUE especifica TENOCHTITLAN PONIENTE y asentamiento PRIMERA; el federal dice TENOCHTITLAN y PUEBLO ZACAPALA. Retener ambos textos y el calificativo Poniente sin eliminarlo; no completar Segunda Secci?n desde directorios anteriores. Se contrasta fuente federal de2024 con DENUE publicado20-may-2026: evidencia hist?rica de identidad, sin probar operaci?n actual. Aunque el convenio documenta transferencia de bienes, no se reasigna red, propiedad o dependencia administrativa actual a IMSS-Bienestar, IMSS, ISSSTE u otra sin evidencia vigente espec?fica. Identidad institucional candidata independiente verification_pending y sede pending; no afirma personalidad jur?dica separada. Mantener clase literal622112 Hospitales generales del sector p?blico, tipo hospital, domicilio, coordenadas y hash RAW originales. Website NULL porque no hay web propia comprobada; SEGOB es fuente documental, no web institucional. No se aprueban estudios, equivalencias cl?nicas, ofertas, precios, horarios, disponibilidad, permisos sanitarios, acceso sin requisitos ni cobertura comercial. No se contact? a terceros ni se enviaron formularios."
+    },
+    {
+      "provider_key": "hospital_comunitario_ajalpan",
+      "name": "Hospital Comunitario Ajalpan",
+      "slug": "hospital-comunitario-ajalpan",
+      "website_url": null,
+      "website_uncertainty": "DENUE no declara web propia y el documento gubernamental histórico no acredita dominio institucional ni operación actual. Conservar website_url NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "622112"
+      ],
+      "denue_record_ids": [
+        "3479591"
+      ],
+      "identity_note": "El convenio federal recuperado HTTP200 con TLS v?lido el16-oct-2026, Anexo2 del convenio de15-marzo-2024, incluye el establecimiento correspondiente a DENUE 3479591. CLUES PLSSA005664: coincide instituci?n comunitaria de Ajalpan, municipio Ajalpan, Ciudad de Ajalpan, calle Ricardo Flores Magon sin n?mero y CP75914. DENUE conserva errata literal HOPITAL COMUNITARIO AJALPAN y asentamiento MANZANA 011; el federal dice PUEBLO PANTZINGO DE MORELOS. Nombre institucional corregido s?lo en la marca candidata; RAW y nombre de sede permanecen intactos. No completar colonia Guadalupe ni CP75910 de fuentes hist?ricas distintas. Se contrasta fuente federal de2024 con DENUE publicado20-may-2026: evidencia hist?rica de identidad, sin probar operaci?n actual. Aunque el convenio documenta transferencia de bienes, no se reasigna red, propiedad o dependencia administrativa actual a IMSS-Bienestar, IMSS, ISSSTE u otra sin evidencia vigente espec?fica. Identidad institucional candidata independiente verification_pending y sede pending; no afirma personalidad jur?dica separada. Mantener clase literal622112 Hospitales generales del sector p?blico, tipo hospital, domicilio, coordenadas y hash RAW originales. Website NULL porque no hay web propia comprobada; SEGOB es fuente documental, no web institucional. No se aprueban estudios, equivalencias cl?nicas, ofertas, precios, horarios, disponibilidad, permisos sanitarios, acceso sin requisitos ni cobertura comercial. No se contact? a terceros ni se enviaron formularios."
+    }
+  ]
+}

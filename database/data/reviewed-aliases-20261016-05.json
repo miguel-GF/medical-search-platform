@@ -1,0 +1,54 @@
+{
+  "review_id": "pruevia:evidence-review:20261016:05",
+  "research_date": "2026-10-16",
+  "scope": "Revisión52 preparada: dos aliases exclusivos de SEMIN, dos filas y dos conceptos existentes reutilizados con matriz literal compatible. Se conservan definiciones, RAW y atributos; sin conceptos, ofertas, disponibilidad ni cambios del resolver. SQL generado sin aplicar.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "80d915fbfc8ca14fff7d855fe7a9c26173182024b10cbfb865efe7eccfd33bfd",
+  "research_snapshot_sha256": "28f376d19faa345331fd528d94a620bddc89c5897c7171124509e17f83cd401f",
+  "definition_sha256": "10b5018ece6deb88f68d9b5c496f3e3548e4e53e640ee5a23de802751329ed6f",
+  "new_concepts": [],
+  "aliases": [
+    {
+      "alias": "hierro",
+      "item_id": "9d34ad9d-c69b-5e2c-8d52-f2df65e6c1dc",
+      "canonical_name": "Hierro en suero",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.labcorp.com/tests/001339/iron",
+      "reason": "Hierro individual de SEMIN tiene muestra literal 2 ml Suero. Refrigerado, compatible con la definición existente Iron / Serum. Se reutiliza identidad de analito y matriz; no ferritina, transferrina, capacidad de fijación TIBC, saturación, panel, eritrocitos, sangre total u orina. Alias limitado a SEMIN porque el término aislado no acredita matriz en otros proveedores. Volumen, refrigeración y preparación permanecen literales; no importar método colorimétrico, plasma alternativo, unidad ni intervalo de Labcorp. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "2 ml Suero. Refrigerado"
+      },
+      "source_attributes": {
+        "specimen_code": "serum"
+      }
+    },
+    {
+      "alias": "azucares reductores",
+      "item_id": "0eec7c57-cd15-537d-a74f-a5af2839e4ec",
+      "canonical_name": "Azúcares reductores en heces",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/3002514",
+      "reason": "Azúcares reductores de SEMIN tiene muestra literal Heces / Frasco de plastico, compatible con la definición existente Reducing substances / Stool. ARUP documenta la clase de sustancias reductoras fecales. Se reutiliza la orden fecal sin elegir glucosa o galactosa individual, cromatografía de azúcares, pH fecal, orina ni panel coprológico. Alias limitado a SEMIN porque el rótulo aislado no determina matriz en otra fuente. No importar método, escala o preparación de ARUP; envase, tamaño y original quedan en RAW. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "Heces / Frasco de plastico"
+      },
+      "source_attributes": {
+        "specimen_code": "stool"
+      }
+    }
+  ]
+}

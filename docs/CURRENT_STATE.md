@@ -17,6 +17,20 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Revisiones51–52 e identidades25–27, 16-oct 04:04 UTC:** 35 registros
+adicionales cerrados y29 nuevas instituciones candidatas, incluidos23 centros
+públicos pequeños. Totales observados: **529 conceptos / 4,251 registros
+pendientes / 114 marcas / 198 ubicaciones / 234 ofertas / 112 migraciones**.
+Cuatro conceptos nuevos, dos reutilizados y siete aliases de proveedor; RAW,
+guardas y muestras intactos. Dieciséis solicitudes HTTP, siete consultas v6 con
+proveedor y26 observaciones de etiquetas/variantes; los nombres canónicos
+resuelven, las etiquetas públicas genéricas sin contexto no se aprueban globalmente.
+Instituciones con rollback, commit único y cliente independiente; clases públicas
+621112→office y621116→clinic conservan el código original y tipos ya existentes.
+No hubo migración, cambio del resolver ni ofertas nuevas. Cola46 entradas.
+El corte completo52 se reconstruye en carpeta nueva, preservando49 y47 parcial.
+[Detalle, fuentes y límites](PUEBLA_CATALOG_REVIEW_52_20261016.md).
+
 **Instituciones24, 16-oct 03:49 UTC:** Ciudad Serdán, Ayotoxco y Guadalupe
 Victoria incorporados como tres candidatos hospitalarios distintos. Totales:
 **85 marcas / 169 ubicaciones / 525 conceptos / 4,286 registros pendientes**;

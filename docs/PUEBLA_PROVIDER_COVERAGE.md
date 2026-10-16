@@ -3,7 +3,16 @@
 > Informe de cobertura con snapshots fechados; sus cantidades y cadencias recomendadas no demuestran estado actual ni jobs activos.
 > Entrada: [índice vigente](README.md). Estado: [CURRENT_STATE](CURRENT_STATE.md).
 
-## Corte vigente — 13-oct-2026
+## Actualización — 16-oct-2026, 04:04 UTC
+
+Registro observado:114 marcas y198 ubicaciones. Identidades25–27 agregaron
+Galaviz, RVLAB, cuatro hospitales comunitarios y23 centros/consultorios públicos
+pequeños. Son candidatos con verificación comercial pendiente; no se acreditan
+servicios ni operación actual por una fuente histórica. Se preservan domicilio,
+coordenadas, clasificación y discrepancias;234 ofertas existentes, sin nuevas.
+[Investigación, aplicación y límites](PUEBLA_CATALOG_REVIEW_52_20261016.md).
+
+## Corte histórico — 13-oct-2026
 
 La base productiva reanudada contiene una nueva descarga oficial DENUE de Puebla
 (metadatos 20-may-2026): **13,747 establecimientos de salud en 217 municipios**,

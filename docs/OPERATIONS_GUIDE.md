@@ -3,7 +3,16 @@
 Tipo: procedimientos vigentes contrastados con scripts/configuración el 14-sep-2026.
 No es un registro de ejecución ni una autorización de despliegue.
 
-Última observación de datos: **14-oct-2026, 12:55 UTC**. Supabase productivo
+Última observación de datos: **16-oct-2026, 04:04 UTC**:529 conceptos,
+4,251 registros pendientes,114 marcas y198 ubicaciones;234 ofertas y112
+migraciones. Revisiones51–52 e identidades25–27 aplicadas y observadas; cola46
+entradas. [Evidencia y límites](PUEBLA_CATALOG_REVIEW_52_20261016.md).
+Las clases públicas DENUE621112 y621116 conservan su código y usan los tipos
+existentes `office` y `clinic`; sin migración ni cambio de resolver. Atributos
+de fuente de aliases de proveedor se construyen por destino, sin heredar datos
+de otro proveedor. No se ejecutaron suites formales.
+
+Observación histórica: **14-oct-2026, 12:55 UTC**. Supabase productivo
 enlazado: 474 conceptos, 234 ofertas, 4,636 pendientes en 845 grupos, 68 marcas,
 152 ubicaciones y 112 migraciones. Cola local: 34 entradas explícitas por hash
 verificadas; recuperación sólo lectura tras una caída DNS y vigilancia con
