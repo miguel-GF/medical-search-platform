@@ -25,6 +25,11 @@ Conteo remoto posterior: **542 conceptos /4,147 pendientes /114 marcas /
 de composición aún aislada. Tres auxiliares simultáneos es el límite disponible.
 Observación independiente12:26:31 UTC:26 HTTP públicos,13 consultas de proveedor,
 36 etiquetas/variantes,176 RAW íntegros y72 contextos retenidos intactos.
+Nuevo corte completo12:28:28 UTC:4,147 pendientes en768 grupos,1,305 términos;
+memoria shadow v3 con54 revisiones,401 aliases,420 reglas y2,881 contextos
+históricos reutilizables. Cola48 verificada y42 archivos previos intactos;
+fuentes, contadores y resolver conservados. Ninguna aprobación automática nueva.
+Recibos: `collectors/artifacts/normalization-memory-after-priority-54-55-v3/`.
 [Detalle y siguiente acción](PUEBLA_PRIORITY_GROUPS_20261016.md).
 
 **Corte completo52, 16-oct 04:06:54 UTC; revalidado12:00 UTC:** 529 conceptos,

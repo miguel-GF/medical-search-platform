@@ -9,6 +9,11 @@ Observación posterior: **16-oct12:25 UTC**, lotes prioritarios54–55 aplicados
 cerrados en13 grupos de ocho, sin modificar resolver ni ofertas. Los66 grupos
 de paquetes /367 registros investigados permanecen pendientes de integración
 de composición. [Alcance y evidencia](PUEBLA_PRIORITY_GROUPS_20261016.md).
+El corte completo posterior terminó12:28:28 UTC con768 grupos /1,305 términos,
+54 revisiones /401 aliases /420 reglas /2,881 históricos reutilizables.
+Cola48 y42 archivos previos verificados;fuentes/contadores/resolver intactos.
+Los4,147 pendientes siguen requiriendo evidencia, sin aprobación nueva por memoria.
+Recibos: `collectors/artifacts/normalization-memory-after-priority-54-55-v3/`.
 
 Última observación de datos: **16-oct-2026, 04:04 UTC**:529 conceptos,
 4,251 registros pendientes,114 marcas y198 ubicaciones;234 ofertas y112

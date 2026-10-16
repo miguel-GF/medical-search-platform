@@ -49,6 +49,14 @@ Recibos y fuentes bajo
 La numeración de carpetas no equivale al número de revisiones aplicadas: la
 propuesta de paquetes06 no se aplicó.
 
+El nuevo corte completo terminó a12:28:28 UTC:4,147 pendientes en768 grupos y
+1,305 términos; memoria shadow v3 de54 revisiones,401 aliases,420 reglas y
+2,881 contextos históricos reutilizables. Las48 entradas de cola coinciden con
+ledger y hashes;42 archivos de cortes52/49/47 permanecen intactos. Fuentes,
+contadores y resolver clínico no cambiaron durante la lectura. La memoria no
+aprobó nuevos pendientes. Recibos en
+`collectors/artifacts/normalization-memory-after-priority-54-55-v3/`.
+
 ## Paquetes: prioridad de mayor a menor
 
 Lectura remota separada: **66 grupos y367 registros de laboratorio**;
