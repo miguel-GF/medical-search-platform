@@ -1,6 +1,6 @@
 # Estado y prioridades de Pruevia
 
-Tipo: punto de continuidad. Actualizado el 16-oct-2026 UTC (15-oct local) para operación local y datos;
+Tipo: punto de continuidad. Actualizado el 16-oct-2026 UTC y local para operación y datos;
 el corte histórico de publicación de septiembre corresponde al árbol local, el
 ledger Supabase y los Workers de producción. El proyecto enlazado se llama
 `pruevia-dev`, pero también es la base inicial de producción: las migraciones
@@ -17,6 +17,27 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Corte completo52, 16-oct 04:06:54 UTC; revalidado12:00 UTC:** 529 conceptos,
+4,251 pendientes en781 grupos y1,279 términos;114 marcas /198 ubicaciones,
+234 ofertas /112 migraciones. Memoria shadow v3:52 revisiones /388 aliases /
+407 reglas /2,777 contextos históricos reutilizables. Los4,251 pendientes
+requieren evidencia; cero aprobaciones nuevas por memoria. Cola46 comprobada
+por ledger/hash; fuentes, contadores, resolver y24 archivos previos intactos.
+Recibos: `collectors/artifacts/normalization-memory-after-review-52-v3/`.
+La lectura de12:00 confirmó esos contadores y HTTP200 en landing/app/API públicos
+y API/Admin/Paciente locales; colaPID14920 observada viva en vigilancia a12:06.
+No se reinició el cierre terminado al perderse el handle de observación.
+
+**Preparación de imagen, 16-oct12:02 UTC:** los14 RAW del piloto PA/PA+lateral
+siguen elegibles y sus payloads/guardas coinciden. Hay importador aislado que
+genera rollback/commit con alcance fijado por hash; no ejecuta SQL. Tablas de
+protocolos aún ausentes. Auditoría detectó que el parche anterior parte de
+app/types del árbol sucio, diferentes de la versión publicada, y que paquete/OCR
+requiere conservar originales por entrada antes de segmentación/correcciones.
+Importador compilado, sin suites ni activación. Continúan pendientes integración,
+guardas de modificaciones posteriores del protocolo y aprobación D-006.
+[Propuesta y siguiente acción](proposals/20261016-imaging-importer-and-integration.md).
+
 **Revisiones51–52 e identidades25–27, 16-oct 04:04 UTC:** 35 registros
 adicionales cerrados y29 nuevas instituciones candidatas, incluidos23 centros
 públicos pequeños. Totales observados: **529 conceptos / 4,251 registros
@@ -28,7 +49,7 @@ resuelven, las etiquetas públicas genéricas sin contexto no se aprueban global
 Instituciones con rollback, commit único y cliente independiente; clases públicas
 621112→office y621116→clinic conservan el código original y tipos ya existentes.
 No hubo migración, cambio del resolver ni ofertas nuevas. Cola46 entradas.
-El corte completo52 se reconstruye en carpeta nueva, preservando49 y47 parcial.
+El corte completo52 terminó en carpeta nueva, preservando49 y47 parcial.
 [Detalle, fuentes y límites](PUEBLA_CATALOG_REVIEW_52_20261016.md).
 
 **Instituciones24, 16-oct 03:49 UTC:** Ciudad Serdán, Ayotoxco y Guadalupe

@@ -12,6 +12,17 @@ existentes `office` y `clinic`; sin migración ni cambio de resolver. Atributos
 de fuente de aliases de proveedor se construyen por destino, sin heredar datos
 de otro proveedor. No se ejecutaron suites formales.
 
+Cierre completo52 terminado **16-oct04:06:54 UTC**, revalidado a12:00 UTC:
+4,251 pendientes en781 grupos y1,279 términos. Memoria v3:52 revisiones,
+388 aliases,407 reglas y2,777 históricos reutilizables. Los pendientes siguen
+requiriendo evidencia. Cola46 fijada por ledger/hash, sin cambios de fuente,
+contadores o resolver. Recibos en `collectors/artifacts/normalization-memory-after-review-52-v3/`;
+comprobación posterior en `collectors/artifacts/catalog-resume-20261016/`.
+Los seis endpoints públicos/locales consultados respondieron200. El proceso de
+colaPID14920 seguía vivo y en vigilancia a12:06 UTC; no es un agente investigando
+en segundo plano. Los agentes terminaron por límite de uso; el cierre de datos
+produjo informe y recibo final antes de esa interrupción.
+
 Observación histórica: **14-oct-2026, 12:55 UTC**. Supabase productivo
 enlazado: 474 conceptos, 234 ofertas, 4,636 pendientes en 845 grupos, 68 marcas,
 152 ubicaciones y 112 migraciones. Cola local: 34 entradas explícitas por hash

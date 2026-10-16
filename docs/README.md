@@ -17,6 +17,7 @@ La conversación original no es lectura obligatoria para incorporarse.
 | [Operación local y crecimiento Puebla, 9–11 oct](PUEBLA_LOCAL_OPERATION_20261009.md) | Reanudación Supabase, inventario estatal DENUE y equivalencias investigadas aplicadas. |
 | [Cierre de catálogo, 16-oct](PUEBLA_CATALOG_CLOSE_20261016.md) | Revisiones 45–50, identidades 18–24, evidencia aplicada y ambigüedades conservadas. |
 | [Catálogo y centros públicos, revisión52](PUEBLA_CATALOG_REVIEW_52_20261016.md) | Revisiones 51–52, laboratorios pequeños, hospitales comunitarios y fuente federal para centros públicos. |
+| [Importador de imagen e integración](proposals/20261016-imaging-importer-and-integration.md) | Propuesta aislada para conservar proyecciones; avances y brechas antes de solicitar aprobación crítica. |
 | [Decisiones](DECISIONS.md) | Autonomía, aprobación de cambios críticos y evolución de reglas. |
 | [ADR de liberación Puebla](ADR-002-RELEASE-PILOT-GATES.md) | Propuesta de puerta conjunta para datos, orígenes y publicación. |
 | [ADR de publicación pacientes primero](ADR-003-PATIENT-FIRST-PUBLICATION.md) | Propuesta crítica para conectar pruevia.com.mx, PWA/API y preparar Android sin abrir proveedores. |
