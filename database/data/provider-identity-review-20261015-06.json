@@ -1,0 +1,25 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261015:06",
+  "reviewed_by": "Codex; investigación delegada por el operador",
+  "authorization": "D-021/D-022: identidad candidata pending con evidencia; sin ofertas.",
+  "research_date": "2026-10-15",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "Una identidad institucional candidata: CHRISTUS MUGUERZA Hospital UPAEP. Conservar hospital privado otras especialidades622311, no fusionar con Hospital Betania por dominio de red compartido. Sin ofertas ni cambios de esquema/política.",
+  "providers": [
+    {
+      "provider_key": "christus_muguerza_hospital_upaep",
+      "name": "CHRISTUS MUGUERZA — Hospital UPAEP",
+      "slug": "christus-muguerza-hospital-upaep",
+      "website_url": "https://christusmuguerza.com.mx/hospital-upaep/",
+      "identity_evidence_url": "https://christusmuguerza.com.mx/hospital-upaep/",
+      "identity_activity_codes": [
+        "622311"
+      ],
+      "denue_record_ids": [
+        "3255641"
+      ],
+      "identity_note": "El sitio propio christusmuguerza.com.mx/hospital-upaep/ respondió HTTP 200 el 15-oct-2026 UTC. Presenta Hospital UPAEP en Av 5 Pte 715, Centro, CP 72000, Puebla. Coinciden institución, municipio, calle, número, colonia y CP con DENUE 3255641 CHRISTUS MUGUERZA HOSPITAL UPAEP. El dominio coincide con el literal www del DENUE, admitiendo su forma canónica HTTPS sin www. La marca institucional Hospital Betania ya existe en el catálogo y pertenece a la misma red mostrada por el dominio, pero es otro hospital y domicilio: no se fusionan sus identidades institucionales ni se traslada información o cobertura entre ellas. La coincidencia de dominio se registra como red compartida, no como duplicado de sede; tampoco se afirma personalidad jurídica separada o propiedad registral verificada. Mantener código_act 622311 Hospitales del sector privado de otras especialidades médicas, con location_type hospital por clase literal; no reclasificar a 622111 por anuncios de servicios generales. Conservar coordenadas, domicilio y hash RAW. Marca verification_pending y hospital pending. El sitio muestra servicios y precios que no se importan: esta revisión sólo establece identidad candidata, sin aprobar equivalencias, realización de estudios por sede, ofertas, precios, horarios, disponibilidad, permisos sanitarios o funcionamiento comprobado. No se siguieron perfiles de médicos, citas, formularios o contactos."
+    }
+  ]
+}

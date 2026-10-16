@@ -1,0 +1,218 @@
+{
+  "review_id": "pruevia:evidence-review:20261015:03",
+  "research_date": "2026-10-15",
+  "scope": "Revisión46: siete identidades de órdenes individuales explícitas, 56 filas Salud Digna. Cuatro fármacos sin inferir fracción o muestra; metahemoglobina y dos variantes exactas. Biotinidasa, G6PD y glutatión peroxidasa retenidas. No equivalencia de resultados ni cobertura comercial. Conserva preparación literal, incertidumbre y vecinos pendientes; sin migraciones, resolver, ofertas o aprobación de instrucciones farmacológicas.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "5581c9daa89e40010020b2707d975847854973882868d41200eaad8a0ec18d43",
+  "research_snapshot_sha256": "42d8a049c489835a029882de56ac8f1a058f1a7c8bb5afcc60698bdbd3b0571c",
+  "definition_sha256": "fae8aae4d69b04a8a97434febfddb18990c55fa780b2466cceba68ba06cc7335",
+  "new_concepts": [
+    {
+      "item_id": "1ecee352-9ed1-5847-b68a-3a7a22d97174",
+      "canonical_name": "Ácido valproico (fracción no especificada)",
+      "component": "Valproate",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/37067",
+      "reason": "Mayo distingue valproato libre y total como órdenes diferentes. SD sólo declara ácido valproico; no se elige ninguna fracción, perfil libre+total, suero ni técnica. Preparación literal de una hora antes de próxima dosis permanece en RAW; no equivale a duración o ventana canónica ni se valida como instrucción médica. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW no declara matriz exacta. Ayuno, ventana respecto a dosis, nombre de enzima/fármaco o muestra del laboratorio de referencia no autorizan completar suero, plasma, sangre, células o ADN. Tampoco se aprueba duración, fracción libre/total, propiedad, escala, método ni LOINC."
+    },
+    {
+      "item_id": "a3c6c0a6-7d7f-5e29-88e0-13a52138b6de",
+      "canonical_name": "Carbamazepina (fracción no especificada)",
+      "component": "Carbamazepine",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/37039",
+      "reason": "Mayo distingue carbamazepina libre y total. CBZ identifica el fármaco escrito; no se añade ninguna fracción, epóxido 10,11, perfil, suero o inmunoensayo. Preparación previa a siguiente dosis y registro de última dosis permanecen literales, sin convertir a tiempo canónico ni aprobar instrucciones. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW no declara matriz exacta. Ayuno, ventana respecto a dosis, nombre de enzima/fármaco o muestra del laboratorio de referencia no autorizan completar suero, plasma, sangre, células o ADN. Tampoco se aprueba duración, fracción libre/total, propiedad, escala, método ni LOINC."
+    },
+    {
+      "item_id": "ae83ffb3-9c57-587e-ba7e-d728f9784cf9",
+      "canonical_name": "Fenitoína (fracción no especificada)",
+      "component": "Phenytoin",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/37050",
+      "reason": "Mayo registra Diphenylhydantoin como alias de fenitoína y distingue fenitoína de fenobarbital y fracciones libre/total. El propio título explicita FENITOINA entre paréntesis; EPAMIN se conserva sin atribuir formulación o dosis. No elegir total, libre, combinado con fenobarbital, muestra o técnica. Preparación previa a dosis permanece literal sin validación farmacológica. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW no declara matriz exacta. Ayuno, ventana respecto a dosis, nombre de enzima/fármaco o muestra del laboratorio de referencia no autorizan completar suero, plasma, sangre, células o ADN. Tampoco se aprueba duración, fracción libre/total, propiedad, escala, método ni LOINC."
+    },
+    {
+      "item_id": "839e90f4-7b0b-5e28-9aa2-561b1f82c446",
+      "canonical_name": "Digoxina",
+      "component": "Digoxin",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/8674",
+      "reason": "La ficha Mayo identifica digoxina como analito de monitorización, distinto de digitoxina. No importar suero, electroquimioluminiscencia, fracción ligada/libre o intervalo posdosis desde Mayo. SD sólo escribe ayuno; no se completa una ventana farmacocinética. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW no declara matriz exacta. Ayuno, ventana respecto a dosis, nombre de enzima/fármaco o muestra del laboratorio de referencia no autorizan completar suero, plasma, sangre, células o ADN. Tampoco se aprueba duración, fracción libre/total, propiedad, escala, método ni LOINC."
+    },
+    {
+      "item_id": "cea2e560-143d-528a-800b-f671a6dc1d10",
+      "canonical_name": "Metahemoglobina",
+      "component": "Methemoglobin",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://uvmlabs.testcatalog.org/show/MET",
+      "reason": "El catálogo propio del centro médico universitario Vermont identifica metahemoglobina como orden individual. No convertir en carboxihemoglobina, sulfhemoglobina, evaluación genética, panel de cooximetría, porcentaje o concentración. El RAW no declara sangre arterial/venosa, matriz, escala o método; no añadirlos por fisiología. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW no declara matriz exacta. Ayuno, ventana respecto a dosis, nombre de enzima/fármaco o muestra del laboratorio de referencia no autorizan completar suero, plasma, sangre, células o ADN. Tampoco se aprueba duración, fracción libre/total, propiedad, escala, método ni LOINC."
+    },
+    {
+      "item_id": "2feb8b83-0c54-5a4c-b62a-d0dc8ef548ea",
+      "canonical_name": "Variante G20210A de la protrombina (F2)",
+      "component": "F2 gene G20210A variant",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/0056060",
+      "reason": "ARUP identifica la variante G20210A del gen F2/protrombina como orden dirigida. El título propio explicita mutación 20210 G-A; se conserva esa variante, sin protrombina funcional, tiempo de protrombina, factor II actividad/antígeno, factor V Leiden o panel trombofilia. No importar PCR, fluorescencia, muestra, genotipo resultado, cuantificación o reflejos. No añadir HGVS/transcrito no declarado al canónico. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW no declara matriz exacta. Ayuno, ventana respecto a dosis, nombre de enzima/fármaco o muestra del laboratorio de referencia no autorizan completar suero, plasma, sangre, células o ADN. Tampoco se aprueba duración, fracción libre/total, propiedad, escala, método ni LOINC."
+    },
+    {
+      "item_id": "61f09b1c-91ed-5da4-a68c-8ff0d3d2cdda",
+      "canonical_name": "Variante V617F de JAK2",
+      "component": "JAK2 gene V617F variant",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/31156",
+      "reason": "Mayo identifica la variante JAK2 V617F como orden dirigida separada de secuenciación de otros exones/reflejos. Se preserva exactamente V617F; no JAK2 genérico, panel MPN, exones 12-15, CALR/MPL, carga alélica cuantitativa ni resultado. No importar PCR, escala, sensibilidad, sangre, médula o ADN de referencia. Preparación antibióticos/ayuno queda literal en RAW sin aval farmacológico. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW no declara matriz exacta. Ayuno, ventana respecto a dosis, nombre de enzima/fármaco o muestra del laboratorio de referencia no autorizan completar suero, plasma, sangre, células o ADN. Tampoco se aprueba duración, fracción libre/total, propiedad, escala, método ni LOINC."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "acido valproico",
+      "item_id": "1ecee352-9ed1-5847-b68a-3a7a22d97174",
+      "canonical_name": "Ácido valproico (fracción no especificada)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/37067",
+      "reason": "Mayo distingue valproato libre y total como órdenes diferentes. SD sólo declara ácido valproico; no se elige ninguna fracción, perfil libre+total, suero ni técnica. Preparación literal de una hora antes de próxima dosis permanece en RAW; no equivale a duración o ventana canónica ni se valida como instrucción médica. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ACIDO VALPROICO"
+      }
+    },
+    {
+      "alias": "carbamazepina cbz",
+      "item_id": "a3c6c0a6-7d7f-5e29-88e0-13a52138b6de",
+      "canonical_name": "Carbamazepina (fracción no especificada)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/37039",
+      "reason": "Mayo distingue carbamazepina libre y total. CBZ identifica el fármaco escrito; no se añade ninguna fracción, epóxido 10,11, perfil, suero o inmunoensayo. Preparación previa a siguiente dosis y registro de última dosis permanecen literales, sin convertir a tiempo canónico ni aprobar instrucciones. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "CARBAMAZEPINA (CBZ)"
+      }
+    },
+    {
+      "alias": "difenilhidantoina fenitoina epamin",
+      "item_id": "ae83ffb3-9c57-587e-ba7e-d728f9784cf9",
+      "canonical_name": "Fenitoína (fracción no especificada)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/37050",
+      "reason": "Mayo registra Diphenylhydantoin como alias de fenitoína y distingue fenitoína de fenobarbital y fracciones libre/total. El propio título explicita FENITOINA entre paréntesis; EPAMIN se conserva sin atribuir formulación o dosis. No elegir total, libre, combinado con fenobarbital, muestra o técnica. Preparación previa a dosis permanece literal sin validación farmacológica. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "DIFENILHIDANTOINA (FENITOINA) (EPAMIN)"
+      }
+    },
+    {
+      "alias": "digoxina",
+      "item_id": "839e90f4-7b0b-5e28-9aa2-561b1f82c446",
+      "canonical_name": "Digoxina",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/overview/8674",
+      "reason": "La ficha Mayo identifica digoxina como analito de monitorización, distinto de digitoxina. No importar suero, electroquimioluminiscencia, fracción ligada/libre o intervalo posdosis desde Mayo. SD sólo escribe ayuno; no se completa una ventana farmacocinética. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "DIGOXINA"
+      }
+    },
+    {
+      "alias": "metahemoglobina",
+      "item_id": "cea2e560-143d-528a-800b-f671a6dc1d10",
+      "canonical_name": "Metahemoglobina",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://uvmlabs.testcatalog.org/show/MET",
+      "reason": "El catálogo propio del centro médico universitario Vermont identifica metahemoglobina como orden individual. No convertir en carboxihemoglobina, sulfhemoglobina, evaluación genética, panel de cooximetría, porcentaje o concentración. El RAW no declara sangre arterial/venosa, matriz, escala o método; no añadirlos por fisiología. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "METAHEMOGLOBINA"
+      }
+    },
+    {
+      "alias": "mutacion 20210 g a de la protrombina",
+      "item_id": "2feb8b83-0c54-5a4c-b62a-d0dc8ef548ea",
+      "canonical_name": "Variante G20210A de la protrombina (F2)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/0056060",
+      "reason": "ARUP identifica la variante G20210A del gen F2/protrombina como orden dirigida. El título propio explicita mutación 20210 G-A; se conserva esa variante, sin protrombina funcional, tiempo de protrombina, factor II actividad/antígeno, factor V Leiden o panel trombofilia. No importar PCR, fluorescencia, muestra, genotipo resultado, cuantificación o reflejos. No añadir HGVS/transcrito no declarado al canónico. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "MUTACIÓN 20210 G-A DE LA PROTROMBINA"
+      }
+    },
+    {
+      "alias": "mutacion jak 2 v617f",
+      "item_id": "61f09b1c-91ed-5da4-a68c-8ff0d3d2cdda",
+      "canonical_name": "Variante V617F de JAK2",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/31156",
+      "reason": "Mayo identifica la variante JAK2 V617F como orden dirigida separada de secuenciación de otros exones/reflejos. Se preserva exactamente V617F; no JAK2 genérico, panel MPN, exones 12-15, CALR/MPL, carga alélica cuantitativa ni resultado. No importar PCR, escala, sensibilidad, sangre, médula o ADN de referencia. Preparación antibióticos/ayuno queda literal en RAW sin aval farmacológico. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "MUTACION JAK-2 V617F"
+      }
+    }
+  ]
+}

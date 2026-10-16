@@ -1,0 +1,75 @@
+{
+  "review_id": "pruevia:evidence-review:20261016:01",
+  "research_date": "2026-10-16",
+  "scope": "Revisión 49 preparada: dos órdenes individuales, 16 filas Salud Digna; lípidos totales y desoxipiridinolina en orina con primera micción matutina conservada literalmente. Metales con sangre sin fracción precisa, fármacos con metabolitos/paneles y otros candidatos insuficientes retenidos. Sin publicaciones, ofertas, método, fracción, escala, LOINC, migraciones o cambios del resolver. SQL sólo generado.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "2f2772b275bc4fbcd2c9a656a56fe837e80c8c06429b08adbc9ad77ecf5a2d5b",
+  "research_snapshot_sha256": "c671dc8e48f27b8022738a13798f43d2d5818983f7d4d15d4ffa351c70afbfe3",
+  "definition_sha256": "e601552f0f988215c48f9154381cf548dadfc04187c4e7aab93350ffe049e3dd",
+  "new_concepts": [
+    {
+      "item_id": "6b5ff0e0-7b42-578d-bab1-5f65f1d54fdf",
+      "canonical_name": "Lípidos totales",
+      "component": "Lipids",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.medical-diagnosis.co.uk/exam/all-tests/diabetes/lipids-total/",
+      "reason": "El nombre propio declara LIPIDOS TOTALES. La fuente primaria distingue la determinación conjunta total de clases lipídicas de mediciones lipídicas específicas. Se conserva el total explícito; no convertir en perfil de lípidos, colesterol total, triglicéridos, lipoproteínas o componentes separados. El RAW sólo declara ayuno de 12 horas: no completar suero, plasma, sangre, método directo/calculado, propiedad, escala, unidad ni composición de panel desde la referencia. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "No se declara matriz en el RAW. Ayuno no identifica suero, plasma, sangre ni otra muestra."
+    },
+    {
+      "item_id": "dcc8b1b3-5432-5721-86d8-18177219d6c3",
+      "canonical_name": "Desoxipiridinolina (DPD) en orina",
+      "component": "Deoxypyridinoline",
+      "specimen_code": "urine",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://www.labcorp.com/tests/511105/deoxypyridinoline-dpd-cross-links-serial-monitor-onc",
+      "reason": "El nombre propio declara DESOXIPIRIDINOLINA --DPD-- y la preparación propia exige primera orina de la mañana en recipiente estéril. Se conserva orina mediante guarda literal completa de Preparacion; primera micción y recipiente permanecen en RAW y motivo, sin duración de 24 horas. La fuente primaria identifica DPD como marcador urinario de resorción ósea. No se aprueba el producto serial externo, relación DPD/creatinina, creatinina como componente adicional, gráfica, fracción libre/total, método ICMA, propiedad, escala, unidad o LOINC. DPD no se transforma en piridinolina ni en dihidropirimidina deshidrogenasa. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "lipidos totales",
+      "item_id": "6b5ff0e0-7b42-578d-bab1-5f65f1d54fdf",
+      "canonical_name": "Lípidos totales",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.medical-diagnosis.co.uk/exam/all-tests/diabetes/lipids-total/",
+      "reason": "El nombre propio declara LIPIDOS TOTALES. La fuente primaria distingue la determinación conjunta total de clases lipídicas de mediciones lipídicas específicas. Se conserva el total explícito; no convertir en perfil de lípidos, colesterol total, triglicéridos, lipoproteínas o componentes separados. El RAW sólo declara ayuno de 12 horas: no completar suero, plasma, sangre, método directo/calculado, propiedad, escala, unidad ni composición de panel desde la referencia. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "LIPIDOS TOTALES"
+      }
+    },
+    {
+      "alias": "desoxipiridinolina dpd",
+      "item_id": "dcc8b1b3-5432-5721-86d8-18177219d6c3",
+      "canonical_name": "Desoxipiridinolina (DPD) en orina",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.labcorp.com/tests/511105/deoxypyridinoline-dpd-cross-links-serial-monitor-onc",
+      "reason": "El nombre propio declara DESOXIPIRIDINOLINA --DPD-- y la preparación propia exige primera orina de la mañana en recipiente estéril. Se conserva orina mediante guarda literal completa de Preparacion; primera micción y recipiente permanecen en RAW y motivo, sin duración de 24 horas. La fuente primaria identifica DPD como marcador urinario de resorción ósea. No se aprueba el producto serial externo, relación DPD/creatinina, creatinina como componente adicional, gráfica, fracción libre/total, método ICMA, propiedad, escala, unidad o LOINC. DPD no se transforma en piridinolina ni en dihidropirimidina deshidrogenasa. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "RECOLECTAR LA PRIMER ORINA DE LA MAÑANA EN RECIPIENTE ESTÉRIL."
+      },
+      "source_attributes": {
+        "specimen_code": "urine"
+      }
+    }
+  ]
+}

@@ -15,6 +15,7 @@ La conversación original no es lectura obligatoria para incorporarse.
 | [Privacidad para abogado](legal/REVISION_PRIVACIDAD_PARA_ABOGADO_20261015.md) | Explicación en lenguaje común, pendientes y ubicación del PDF privado con los avisos exactos. |
 | [Reapertura pública, 15-oct](PRIVACY_PUBLICATION_20261015.md) | Versiones publicadas, controles cerrados, observaciones y recuperación. |
 | [Operación local y crecimiento Puebla, 9–11 oct](PUEBLA_LOCAL_OPERATION_20261009.md) | Reanudación Supabase, inventario estatal DENUE y equivalencias investigadas aplicadas. |
+| [Cierre de catálogo, 16-oct](PUEBLA_CATALOG_CLOSE_20261016.md) | Revisiones 45–49, identidades 18–23, evidencia aplicada y ambigüedades conservadas. |
 | [Decisiones](DECISIONS.md) | Autonomía, aprobación de cambios críticos y evolución de reglas. |
 | [ADR de liberación Puebla](ADR-002-RELEASE-PILOT-GATES.md) | Propuesta de puerta conjunta para datos, orígenes y publicación. |
 | [ADR de publicación pacientes primero](ADR-003-PATIENT-FIRST-PUBLICATION.md) | Propuesta crítica para conectar pruevia.com.mx, PWA/API y preparar Android sin abrir proveedores. |

@@ -1,0 +1,25 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261015:03",
+  "reviewed_by": "Codex; investigación delegada por el operador",
+  "authorization": "D-021/D-022: identidad candidata pending con evidencia; sin ofertas.",
+  "research_date": "2026-10-15",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "Una identidad nueva: Ythalia Medical Calle Veracruz 10742 Puebla, sede hospital pending por clase literal DENUE 622111. CP discrepante conservado. Sin ofertas, cobertura confirmada o cambio de esquema/política.",
+  "providers": [
+    {
+      "provider_key": "ythalia_medical_veracruz_puebla",
+      "name": "Ythalia Medical — Unidad de Diagnóstico, Puebla",
+      "slug": "ythalia-medical-veracruz-puebla",
+      "website_url": "https://www.ythaliamedical.com.mx/",
+      "identity_evidence_url": "https://www.ythaliamedical.com.mx/",
+      "identity_activity_codes": [
+        "622111"
+      ],
+      "denue_record_ids": [
+        "3520739"
+      ],
+      "identity_note": "El sitio propio ythaliamedical.com.mx, registrado en el campo www del DENUE, respondió HTTP 200 el 15-oct-2026 UTC y presenta Ythalia Medical Unidad de Diagnóstico en Calle Veracruz 10742, colonia Coatepec, Puebla. Coinciden nombre institucional, municipio, calle, número y colonia con DENUE 3520739. La web publica CP 72490, discrepante del CP 72470 del RAW: conservar 72470 del DENUE y documentar ambos sin corregirlo ni afirmar coincidencia postal completa. La página tiene copyright 2020, sin fecha visible de actualización: la lectura actual no certifica vigencia de operación, permisos o publicidad. Conservar código_act 622111 y su descripción Hospitales generales del sector privado: location_type hospital según clase de origen, sin reclasificar desde el nombre Unidad de Diagnóstico. Mantener coordenadas y hash originales, sin deducir tipo desde segmentos del CLEE. No fusionar con otras marcas o sedes denominadas Ythalia Medical Laboratorio sin evidencia de red o propiedad. Una marca verification_pending y un hospital pending. El sitio anuncia consultas y estudios, pero esta revisión sólo establece identidad candidata: no aprueba equivalencias, estudios realizados en la sede, ofertas, precios, horarios, disponibilidad, permisos sanitarios ni captura comercial. No se siguieron citas, formularios o contactos."
+    }
+  ]
+}

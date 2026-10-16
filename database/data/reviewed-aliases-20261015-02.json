@@ -1,0 +1,215 @@
+{
+  "review_id": "pruevia:evidence-review:20261015:02",
+  "research_date": "2026-10-15",
+  "scope": "Revisión45 ajustada: siete órdenes individuales de anticuerpos, 34 filas (31 Salud Digna y3 Chopo), diana/clase explícitas y matriz/tiempo desconocidos. Excluye16filas FTA-ABS hasta preservar método estructurado; conserva HSV tipo-específico IgM, EBNA IgM y TB pendientes. No aval diagnóstico, ofertas, resolver o migraciones.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "55330797ce563833ce1ba366ed5fbb331f518ad003e612822869eb690f3a0749",
+  "research_snapshot_sha256": "d17999086b29cd35b6898a9e968dcf9ba30b184f9d26de92e6a09a419b4637d3",
+  "definition_sha256": "7a6c11463bbdc831f82e492862294ec58b3b361bc8ea46fdb35629bd1aef42ec",
+  "new_concepts": [
+    {
+      "item_id": "a6d8e9b3-a58f-5868-adc6-57422e0fbd3b",
+      "canonical_name": "Anticuerpos IgM contra herpesvirus humano 6 (HHV-6)",
+      "component": "Human herpes virus 6 Ab.IgM",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://pathcat.vcu.edu/Tests/Details/1230133839",
+      "reason": "La ficha del laboratorio universitario VCU identifica una orden HHV-6 IgM separada de IgG y PCR. No seleccionar HHV-6A/6B, proteína antigénica, técnica, resultado ni muestra de la referencia. Clase y diana escritas conservadas, sin combinados, paneles, otros isotipos ni equivalencia de resultados. Guarda exacta del título propio íntegro. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW propio no declara matriz ni duración. Ayuno, especialidad, título de anticuerpos o matriz de otra institución no demuestran suero/plasma/sangre. No completar la muestra desde una referencia."
+    },
+    {
+      "item_id": "aa3da665-f4ca-5dc3-9bf3-c0ba1812a7c4",
+      "canonical_name": "Anticuerpos IgG contra Toxocara",
+      "component": "Toxocara Ab.IgG",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/3006066",
+      "reason": "ARUP identifica anticuerpos Toxocara IgG. El RAW no declara especie canis/cati ni antígeno TES; no se añade especie, ensayo ELISA ni suero de la referencia. El canónico existente AC ANTI TOXOCARA CANIS IGG (J) contiene especie y no acredita equivalencia al género sin especificar. No se reutiliza ni se modifica. Clase y diana escritas conservadas, sin combinados, paneles, otros isotipos ni equivalencia de resultados. Guarda exacta del título propio íntegro. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW propio no declara matriz ni duración. Ayuno, especialidad, título de anticuerpos o matriz de otra institución no demuestran suero/plasma/sangre. No completar la muestra desde una referencia."
+    },
+    {
+      "item_id": "f1e3fd7d-ccc6-587d-8820-5a150d861b57",
+      "canonical_name": "Anticuerpos IgM contra Toxocara",
+      "component": "Toxocara Ab.IgM",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://pubmed.ncbi.nlm.nih.gov/28543101/",
+      "reason": "La investigación primaria humana evalúa IgM anti-Toxocara y demuestra falta de especificidad para serodiagnóstico. Se conserva la identidad escrita de clase IgM sin avalar utilidad diagnóstica ni corregirla a IgG. Especie, antígeno TES, técnica y muestra no se importan. Clase y diana escritas conservadas, sin combinados, paneles, otros isotipos ni equivalencia de resultados. Guarda exacta del título propio íntegro. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW propio no declara matriz ni duración. Ayuno, especialidad, título de anticuerpos o matriz de otra institución no demuestran suero/plasma/sangre. No completar la muestra desde una referencia."
+    },
+    {
+      "item_id": "d9e6f3e0-2b57-5336-b660-c4505cb900c4",
+      "canonical_name": "Anticuerpos IgA contra Brucella abortus",
+      "component": "Brucella abortus Ab.IgA",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://pubmed.ncbi.nlm.nih.gov/68181/",
+      "reason": "El trabajo primario humano distingue anticuerpos IgM, IgG e IgA contra Brucella abortus. Sólo apoya la identidad analítica; no se importa radioinmunoensayo, muestra, antígeno ni conclusiones de rendimiento de 1977. Specialty Citogenética se conserva sin inferir técnica ni genética. No se convierte a Brucella spp. o panel IgG/IgM. Clase y diana escritas conservadas, sin combinados, paneles, otros isotipos ni equivalencia de resultados. Guarda exacta del título propio íntegro. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW propio no declara matriz ni duración. Ayuno, especialidad, título de anticuerpos o matriz de otra institución no demuestran suero/plasma/sangre. No completar la muestra desde una referencia."
+    },
+    {
+      "item_id": "988ed109-e15c-5b3c-b759-9c14fd7236b7",
+      "canonical_name": "Anticuerpos IgG contra Brucella abortus",
+      "component": "Brucella abortus Ab.IgG",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://pubmed.ncbi.nlm.nih.gov/68181/",
+      "reason": "El título Chopo identifica Brucella abortus e IgG. Fuente primaria humana distingue clases IgA/IgG/IgM; no importar su técnica o muestra ni equiparar especie con panel de género. Specialty Infectología queda literal. Clase y diana escritas conservadas, sin combinados, paneles, otros isotipos ni equivalencia de resultados. Guarda exacta del título propio íntegro. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW propio no declara matriz ni duración. Ayuno, especialidad, título de anticuerpos o matriz de otra institución no demuestran suero/plasma/sangre. No completar la muestra desde una referencia."
+    },
+    {
+      "item_id": "79e41e4e-4525-5515-a486-5e3cc1a93740",
+      "canonical_name": "Anticuerpos IgM contra glicoproteína asociada a mielina (MAG)",
+      "component": "Myelin associated glycoprotein Ab.IgM",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/0051285",
+      "reason": "ARUP identifica MAG (myelin-associated glycoprotein) e IgM como ensayo individual. No equivale a MOG (myelin oligodendrocyte glycoprotein), anti-mielina genérico, SGPG o panel neuropático. No importar ELISA, unidades, muestra, umbral ni interpretación de la referencia. Clase y diana escritas conservadas, sin combinados, paneles, otros isotipos ni equivalencia de resultados. Guarda exacta del título propio íntegro. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW propio no declara matriz ni duración. Ayuno, especialidad, título de anticuerpos o matriz de otra institución no demuestran suero/plasma/sangre. No completar la muestra desde una referencia."
+    },
+    {
+      "item_id": "f7863651-7509-58d8-a9a2-07e5b56a11a9",
+      "canonical_name": "Anticuerpos IgM contra varicela-zóster (VZV)",
+      "component": "Varicella zoster virus Ab.IgM",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://womenshealth.labcorp.com/tests/096776/varicella-zoster-virus-vzv-antibodies-qualitative-igm",
+      "reason": "La ficha primaria distingue anticuerpos IgM VZV de IgG, PCR o panel. No se añade cualitativo, método o muestra desde esa ficha al RAW SD. Se conservan siete filas realmente pendientes, sin inventar la octava ni modificar decisiones previas. Clase y diana escritas conservadas, sin combinados, paneles, otros isotipos ni equivalencia de resultados. Guarda exacta del título propio íntegro. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW propio no declara matriz ni duración. Ayuno, especialidad, título de anticuerpos o matriz de otra institución no demuestran suero/plasma/sangre. No completar la muestra desde una referencia."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "ac anti herpes virus humano tipo 6 hvh 6 igm",
+      "item_id": "a6d8e9b3-a58f-5868-adc6-57422e0fbd3b",
+      "canonical_name": "Anticuerpos IgM contra herpesvirus humano 6 (HHV-6)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://pathcat.vcu.edu/Tests/Details/1230133839",
+      "reason": "La ficha del laboratorio universitario VCU identifica una orden HHV-6 IgM separada de IgG y PCR. No seleccionar HHV-6A/6B, proteína antigénica, técnica, resultado ni muestra de la referencia. Clase y diana escritas conservadas, sin combinados, paneles, otros isotipos ni equivalencia de resultados. Guarda exacta del título propio íntegro. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "Ac. Anti-Herpes Virus Humano tipo 6 (HVH-6) IgM"
+      }
+    },
+    {
+      "alias": "anticuerpos anti toxocara igg",
+      "item_id": "aa3da665-f4ca-5dc3-9bf3-c0ba1812a7c4",
+      "canonical_name": "Anticuerpos IgG contra Toxocara",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/3006066",
+      "reason": "ARUP identifica anticuerpos Toxocara IgG. El RAW no declara especie canis/cati ni antígeno TES; no se añade especie, ensayo ELISA ni suero de la referencia. El canónico existente AC ANTI TOXOCARA CANIS IGG (J) contiene especie y no acredita equivalencia al género sin especificar. No se reutiliza ni se modifica. Clase y diana escritas conservadas, sin combinados, paneles, otros isotipos ni equivalencia de resultados. Guarda exacta del título propio íntegro. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS ANTI TOXOCARA IGG"
+      }
+    },
+    {
+      "alias": "anticuerpos anti toxocara igm",
+      "item_id": "f1e3fd7d-ccc6-587d-8820-5a150d861b57",
+      "canonical_name": "Anticuerpos IgM contra Toxocara",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://pubmed.ncbi.nlm.nih.gov/28543101/",
+      "reason": "La investigación primaria humana evalúa IgM anti-Toxocara y demuestra falta de especificidad para serodiagnóstico. Se conserva la identidad escrita de clase IgM sin avalar utilidad diagnóstica ni corregirla a IgG. Especie, antígeno TES, técnica y muestra no se importan. Clase y diana escritas conservadas, sin combinados, paneles, otros isotipos ni equivalencia de resultados. Guarda exacta del título propio íntegro. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS ANTI TOXOCARA IGM"
+      }
+    },
+    {
+      "alias": "ac iga brucella abortus",
+      "item_id": "d9e6f3e0-2b57-5336-b660-c4505cb900c4",
+      "canonical_name": "Anticuerpos IgA contra Brucella abortus",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://pubmed.ncbi.nlm.nih.gov/68181/",
+      "reason": "El trabajo primario humano distingue anticuerpos IgM, IgG e IgA contra Brucella abortus. Sólo apoya la identidad analítica; no se importa radioinmunoensayo, muestra, antígeno ni conclusiones de rendimiento de 1977. Specialty Citogenética se conserva sin inferir técnica ni genética. No se convierte a Brucella spp. o panel IgG/IgM. Clase y diana escritas conservadas, sin combinados, paneles, otros isotipos ni equivalencia de resultados. Guarda exacta del título propio íntegro. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "edad5c4c-9cb7-5098-bb6d-4d9f58907cbc",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "provider_display_name"
+        ],
+        "value": "AC IgA BRUCELLA ABORTUS"
+      }
+    },
+    {
+      "alias": "ac igg brucella abortus",
+      "item_id": "988ed109-e15c-5b3c-b759-9c14fd7236b7",
+      "canonical_name": "Anticuerpos IgG contra Brucella abortus",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://pubmed.ncbi.nlm.nih.gov/68181/",
+      "reason": "El título Chopo identifica Brucella abortus e IgG. Fuente primaria humana distingue clases IgA/IgG/IgM; no importar su técnica o muestra ni equiparar especie con panel de género. Specialty Infectología queda literal. Clase y diana escritas conservadas, sin combinados, paneles, otros isotipos ni equivalencia de resultados. Guarda exacta del título propio íntegro. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "edad5c4c-9cb7-5098-bb6d-4d9f58907cbc",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "provider_display_name"
+        ],
+        "value": "AC IgG BRUCELLA ABORTUS"
+      }
+    },
+    {
+      "alias": "ac igm anti mielina asociada a glicoproteina",
+      "item_id": "79e41e4e-4525-5515-a486-5e3cc1a93740",
+      "canonical_name": "Anticuerpos IgM contra glicoproteína asociada a mielina (MAG)",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://ltd.aruplab.com/Tests/Pub/0051285",
+      "reason": "ARUP identifica MAG (myelin-associated glycoprotein) e IgM como ensayo individual. No equivale a MOG (myelin oligodendrocyte glycoprotein), anti-mielina genérico, SGPG o panel neuropático. No importar ELISA, unidades, muestra, umbral ni interpretación de la referencia. Clase y diana escritas conservadas, sin combinados, paneles, otros isotipos ni equivalencia de resultados. Guarda exacta del título propio íntegro. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "edad5c4c-9cb7-5098-bb6d-4d9f58907cbc",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "provider_display_name"
+        ],
+        "value": "AC IGM ANTI MIELINA ASOCIADA A GLICOPROTEINA"
+      }
+    },
+    {
+      "alias": "ac anti varicela igm",
+      "item_id": "f7863651-7509-58d8-a9a2-07e5b56a11a9",
+      "canonical_name": "Anticuerpos IgM contra varicela-zóster (VZV)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://womenshealth.labcorp.com/tests/096776/varicella-zoster-virus-vzv-antibodies-qualitative-igm",
+      "reason": "La ficha primaria distingue anticuerpos IgM VZV de IgG, PCR o panel. No se añade cualitativo, método o muestra desde esa ficha al RAW SD. Se conservan siete filas realmente pendientes, sin inventar la octava ni modificar decisiones previas. Clase y diana escritas conservadas, sin combinados, paneles, otros isotipos ni equivalencia de resultados. Guarda exacta del título propio íntegro. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 7,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "AC. ANTI-VARICELA IGM"
+      }
+    }
+  ]
+}

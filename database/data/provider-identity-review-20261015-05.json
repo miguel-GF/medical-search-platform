@@ -1,0 +1,26 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261015:05",
+  "reviewed_by": "Codex; investigación delegada por el operador",
+  "authorization": "D-021/D-022: identidad candidata pending con evidencia; sin ofertas.",
+  "research_date": "2026-10-15",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "Una identidad institucional candidata: Hospital para el Niño Poblano. Hospital público clase literal 622112, web NULL con incertidumbre, sin asignar red o propiedad actual ni ofertas. Evidencia gubernamental histórica y RAW mayo2026 conservados.",
+  "providers": [
+    {
+      "provider_key": "hospital_para_nino_poblano",
+      "name": "Hospital para el Niño Poblano",
+      "slug": "hospital-para-el-nino-poblano",
+      "website_url": null,
+      "website_uncertainty": "El dominio institucional literal DENUE www.hnp.org.mx no resolvió DNS el 15-oct-2026 UTC. El documento gubernamental acredita identidad histórica y domicilio; no se usa el sitio de licitaciones como web propia ni se afirma vigencia operativa.",
+      "identity_evidence_url": "https://licitaciones.puebla.gob.mx/images/BasesEstatales2021/Febrero/GESAL-009-032-2021-LAVADO.pdf",
+      "identity_activity_codes": [
+        "622112"
+      ],
+      "denue_record_ids": [
+        "3433899"
+      ],
+      "identity_note": "El documento oficial de la Secretaría de Administración de Puebla GESAL-009-032-2021-LAVADO, página 99 de 118, descargado HTTP 200 el 15-oct-2026 UTC, identifica Hospital para el Niño Poblano en Boulevard del Niño Poblano 5307, Concepción la Cruz, CP 72190, San Andrés Cholula. Coinciden institución, municipio, calle, número y CP con DENUE 3433899 de mayo 2026; DENUE describe colonia Reserva Territorial Atlixcáyotl, que se conserva sin sustituir por Concepción la Cruz. El documento de 2021 acredita identidad histórica, no operación o permisos vigentes; Periódico Oficial Puebla T_4_08052024_C.pdf contiene además la obra de oncología del hospital en el mismo domicilio, como corroboración fechada 2024 sin importar servicios. El dominio literal www.hnp.org.mx falla DNS al observarse, por lo que website_url permanece NULL. No sustituirlo por el dominio de licitaciones ni crear una red privada o asignar propiedad actual. Aunque se localizaron referencias de IMSS-Bienestar en buscador, sus PDFs no pudieron recuperarse actualmente (404); no se fusiona ni reasigna por esa evidencia incompleta. Conservar código_act 622112 Hospitales generales del sector público y tipo hospital, domicilio, coordenadas y hash RAW originales. Se crea identidad institucional candidata independiente verification_pending y sede pending, sin afirmar personalidad jurídica separada. No fusionar con otras unidades pediátricas del mismo domicilio, ni afirmar cobertura comercial, acceso sin requisitos, estudios por sede, precios, horarios, disponibilidad o permisos sanitarios. No se contactó a terceros ni se enviaron formularios."
+    }
+  ]
+}

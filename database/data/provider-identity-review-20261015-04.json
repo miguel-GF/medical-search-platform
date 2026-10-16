@@ -1,0 +1,39 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261015:04",
+  "reviewed_by": "Codex; investigación delegada por el operador",
+  "authorization": "D-021/D-022: identidad candidata pending con evidencia; sin ofertas.",
+  "research_date": "2026-10-15",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "Dos identidades nuevas: Hospital Angelopolitano y Fifty Doctors San Manuel. Dos hospitales pending por clase literal DENUE 622111. Discrepancia postal y dominios originales obsoletos conservados en evidencia. Sin ofertas, cobertura confirmada o cambios de esquema/política.",
+  "providers": [
+    {
+      "provider_key": "hospital_angelopolitano_puebla",
+      "name": "Hospital Angelopolitano — Puebla",
+      "slug": "hospital-angelopolitano-puebla",
+      "website_url": "https://hospitalangelopolitano.com/contacto/",
+      "identity_evidence_url": "https://hospitalangelopolitano.com/contacto/",
+      "identity_activity_codes": [
+        "622111"
+      ],
+      "denue_record_ids": [
+        "6272378"
+      ],
+      "identity_note": "El sitio propio hospitalangelopolitano.com/contacto/ respondió HTTP 200 el 15-oct-2026 UTC y presenta Hospital Angelopolitano en Privada 9 C Sur 4108, Puebla. Coinciden institución, municipio, calle y número con DENUE 6272378. El RAW indica colonia Gabriel Pastor Primera Sección y CP 72420; la página publica CP 72300 y escribe Publa: conservar el RAW sin corregirlo ni afirmar coincidencia postal completa. El dominio DENUE WWW.HOSPITALNGELOPOLITANO.COM contiene una omisión de letra; no se publica ese literal. El dominio utilizado se identifica expresamente como el hospital, con nombre y domicilio coincidentes; copyright 2014 sin fecha de actualización visible, por lo que esta lectura no acredita vigencia operativa o permisos. Mantener código_act 622111 y ubicación hospital, coordenadas y hash originales. No fusionar con Hospital Ángeles Puebla, Sanatorio de los Ángeles o Unidad Hospitalaria La Paz por parecido. Marca verification_pending y sede pending. No se aprueban estudios por sede, equivalencias, ofertas, precios, horarios, disponibilidad ni permisos sanitarios. Sin citas, formularios ni contactos."
+    },
+    {
+      "provider_key": "fifty_doctors_san_manuel_puebla",
+      "name": "Fifty Doctors — Hospital San Manuel, Puebla",
+      "slug": "fifty-doctors-san-manuel-puebla",
+      "website_url": "https://50doctors.mx/",
+      "identity_evidence_url": "https://50doctors.mx/",
+      "identity_activity_codes": [
+        "622111"
+      ],
+      "denue_record_ids": [
+        "10315597"
+      ],
+      "identity_note": "El sitio propio 50doctors.mx respondió HTTP 200 el 15-oct-2026 UTC y se presenta como Fifty Doctors, red de hospitales. Identifica 50 Doctors San Manuel entre sus hospitales en operación y publica Blvrd 14 Sur 4302, Jardines de San Manuel, CP 72570, Puebla. Coinciden municipio, calle, número, colonia y CP con Hospital Fifty Doctors DENUE 10315597. La página propia medical-space/ enlazada desde el sitio también presenta esa dirección en la torre médica San Manuel; no se crea una segunda sede ni se confunden los consultorios con el hospital. El campo www del RAW es WWW.JOINTHE50.COM: su lectura actual respondió 200 pero mostró un blog en inglés para empresarios sin identidad médica ni domicilio coincidente. Se conserva el literal en RAW y se excluye como web del hospital; no se afirma propiedad común ni redirección entre dominios. No se agregan otros hospitales anunciados por la red ni se deduce relación de propiedad con BIOSCAN por cohabitación. Mantener código_act 622111, ubicación hospital, coordenadas y hash originales. Marca verification_pending y sede pending. La web propia es evidencia de identidad candidata, no de permisos, funcionamiento comprobado, equivalencias, ofertas, precios o disponibilidad. No se siguieron citas, formularios o contactos."
+    }
+  ]
+}

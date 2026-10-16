@@ -21,7 +21,7 @@ intactas. Cola 35 entradas con ledger/hash confirmado, worker único en vigilanc
 con ejecución de lotes investigados. Memoria shadow v3 reconstruida, v2 intacta:
 2,393 históricos reutilizables y ningún pendiente aprobado por esa herramienta.
 
-Último cierre completo **15-oct, 04:33 UTC**: 499 conceptos, 4,471 pendientes /
+Cierre completo histórico **15-oct, 04:33 UTC**: 499 conceptos, 4,471 pendientes /
 820 grupos, 71 marcas / 155 sedes y 234 ofertas / 112 migraciones. Cola 38
 entradas y memoria v3 reconstruida con 44 revisiones y 2,557 históricos
 reutilizables. El cierre de sólo lectura conservó contadores y corte previo;
@@ -33,6 +33,12 @@ explícitos; no convierte clases ni publica ofertas. Recibos en
 `collectors/artifacts/puebla-expansion-20261009/identity-review-17/`.
 
 ## Entorno y arranque
+
+Observación posterior **16-oct, 03:44 UTC**: 525 conceptos, 4,296 pendientes,
+82 marcas / 166 ubicaciones; 234 ofertas y 112 migraciones. Cola 43 entradas.
+Las revisiones 45 ajustada–49 e identidades 18–23 tienen recibos aplicados;
+el corte de memoria 47 quedó parcial y no sustituye un inventario completo.
+[Detalle del cierre y pendientes conservados](PUEBLA_CATALOG_CLOSE_20261016.md).
 
 Recuperación observada **15-oct-2026 04:27 UTC (14-oct local)**: el inicio de
 sesión Windows arrancó Paciente y cola, pero API/Admin se detuvieron al heredar

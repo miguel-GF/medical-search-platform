@@ -1,0 +1,41 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261015:07",
+  "reviewed_by": "Codex; investigación delegada por el operador",
+  "authorization": "D-021/D-022: identidad candidata pending con evidencia; sin ofertas.",
+  "research_date": "2026-10-15",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "Dos identidades institucionales públicas candidatas: Hospital General de Tepeaca y Hospital General de Acatlán de Osorio. Clase literal 622112, web NULL, sin asignación de red/propiedad actual, servicios u ofertas. Discrepancias de colonia/tipo vialidad conservadas. Hospital Zona Norte ya tiene vínculo vigente y se excluye.",
+  "providers": [
+    {
+      "provider_key": "hospital_general_tepeaca",
+      "name": "Hospital General de Tepeaca",
+      "slug": "hospital-general-tepeaca",
+      "website_url": null,
+      "website_uncertainty": "DENUE no declara dominio institucional y no se ha establecido una web propia con identidad/domicilio coincidentes. Se conserva website_url NULL; el PDF gubernamental es evidencia de identidad histórica, no página institucional ni prueba de operación actual.",
+      "identity_evidence_url": "https://licitaciones.puebla.gob.mx/images/BasesEstatales2021/Febrero/GESAL-009-032-2021-LAVADO.pdf",
+      "identity_activity_codes": [
+        "622112"
+      ],
+      "denue_record_ids": [
+        "3314899"
+      ],
+      "identity_note": "El documento oficial de Secretaría de Administración de Puebla GESAL-009-032-2021-LAVADO, página101 de118, descargado HTTP200 con TLS válido el15-oct-2026UTC, identifica Hospital General de Tepeaca. Coinciden institución, municipioTepeaca, calleDoctorAntonioLópezRosas, número18 y CP75200. El documento describe Boulevard y coloniaSanIsidro; DENUE clasifica tipo_vialCALLE y coloniaSanJuanNegrete: conservar ambos literales RAW sin corregirlos ni afirmar coincidencia completa de colonia/tipo de vialidad. La fuente de2021 acredita identidad histórica; se contrasta con el RAW DENUE publicado20-may-2026, sin afirmar operación o permisos vigentes. No asignar red IMSS-Bienestar, IMSS, ISSSTE u otra propiedad administrativa actual sin evidencia recuperable específica. Identidad institucional candidata independiente verification_pending y sede pending, sin afirmar personalidad jurídica separada. Mantener código_act622112 Hospitales generales del sector público, tipo hospital, domicilio, coordenadas y hash RAW originales. WebNULL por ausencia de dominio comprobado; no usar licitaciones como web propia. No se aprueban estudios por sede, equivalencias, ofertas, precios, horarios, disponibilidad, permisos sanitarios, acceso sin requisitos o cobertura comercial. No se contactó a terceros ni se enviaron formularios."
+    },
+    {
+      "provider_key": "hospital_general_acatlan_osorio",
+      "name": "Hospital General de Acatlán de Osorio",
+      "slug": "hospital-general-acatlan-osorio",
+      "website_url": null,
+      "website_uncertainty": "DENUE no declara dominio institucional y no se ha establecido una web propia con identidad/domicilio coincidentes. Se conserva website_url NULL; el PDF gubernamental es evidencia de identidad histórica, no página institucional ni prueba de operación actual.",
+      "identity_evidence_url": "https://licitaciones.puebla.gob.mx/images/BasesEstatales2021/Febrero/GESAL-009-032-2021-LAVADO.pdf",
+      "identity_activity_codes": [
+        "622112"
+      ],
+      "denue_record_ids": [
+        "10086921"
+      ],
+      "identity_note": "El documento oficial de Secretaría de Administración de Puebla GESAL-009-032-2021-LAVADO, página101 de118, descargado HTTP200 con TLS válido el15-oct-2026UTC, identifica Hospital General de Acatlán de Osorio. Coinciden institución, municipioAcatlán, carreteraInternacional, númeroausente/SN, barrioLaPalma y CP74949. El documento amplía el nombre de carretera a México-Oaxaca; conservar literalINTERNACIONAL del RAW y barrioLaPalmaAcatlánDeOsorio. No confundir con IMSS o ISSSTE de LaPalma, que son instituciones distintas y RAW separados. La fuente de2021 acredita identidad histórica; se contrasta con el RAW DENUE publicado20-may-2026, sin afirmar operación o permisos vigentes. No asignar red IMSS-Bienestar, IMSS, ISSSTE u otra propiedad administrativa actual sin evidencia recuperable específica. Identidad institucional candidata independiente verification_pending y sede pending, sin afirmar personalidad jurídica separada. Mantener código_act622112 Hospitales generales del sector público, tipo hospital, domicilio, coordenadas y hash RAW originales. WebNULL por ausencia de dominio comprobado; no usar licitaciones como web propia. No se aprueban estudios por sede, equivalencias, ofertas, precios, horarios, disponibilidad, permisos sanitarios, acceso sin requisitos o cobertura comercial. No se contactó a terceros ni se enviaron formularios."
+    }
+  ]
+}

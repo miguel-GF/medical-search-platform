@@ -1,0 +1,26 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261016:01",
+  "reviewed_by": "Codex; investigación delegada por el operador",
+  "authorization": "D-021/D-022: identidad candidata pending con evidencia; sin ofertas.",
+  "research_date": "2026-10-16",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "Una identidad institucional candidata: Hospital Comunitario de Cuacnopalan, con domicilio exacto en fuente estatal histórica. Sin asignación de red actual, ofertas ni segunda identidad por fila duplicada del PDF.",
+  "providers": [
+    {
+      "provider_key": "hospital_comunitario_cuacnopalan",
+      "name": "Hospital Comunitario de Cuacnopalan",
+      "slug": "hospital-comunitario-cuacnopalan",
+      "website_url": null,
+      "website_uncertainty": "DENUE no declara web institucional y la fuente gubernamental de 2021 no acredita dominio propio ni operación actual. Conservar website_url NULL.",
+      "identity_evidence_url": "https://licitaciones.puebla.gob.mx/images/BasesEstatales2021/Febrero/GESAL-009-032-2021-LAVADO.pdf",
+      "identity_activity_codes": [
+        "622112"
+      ],
+      "denue_record_ids": [
+        "3529463"
+      ],
+      "identity_note": "El documento oficial de Secretaría de Administración de Puebla GESAL-009-032/2021, página 101 de 118, recuperado HTTP 200 con TLS válido el 16-oct-2026 UTC, identifica Hospital Integral Cuacnopalan en Melchor Ocampo 817, CP 75515, Palmar de Bravo, Cuacnopalan. Coinciden localidad, municipio, vialidad, número y CP con DENUE 3529463. DENUE denomina Hospital Comunitario de Cuacnopalan y clasifica AVENIDA / PUEBLO CUACNOPALAN; el PDF dice Integral / colonia Centro y no especifica tipo de vialidad: conservar ambos textos sin corregir el RAW ni afirmar equivalencia administrativa de esas denominaciones. El mismo PDF lista Hospital Integral Palmar de Bravo en el mismo domicilio; esa fila no prueba una segunda sede y no se crea otra identidad ni se aprueba un alias. Fuente de febrero de 2021: identidad histórica contrastada con DENUE publicado 20-may-2026, sin probar operación actual. No asignar propiedad o red actual IMSS-Bienestar, IMSS, ISSSTE u otra sin evidencia específica. Identidad institucional candidata independiente verification_pending y sede pending; no afirma personalidad jurídica separada. Mantener clase 622112 Hospitales generales del sector público, tipo hospital, domicilio, coordenadas y hash RAW originales. Website NULL porque no hay web propia comprobada; licitaciones es evidencia gubernamental, no sitio institucional. No se aprueban estudios, equivalencias clínicas, ofertas, precios, horarios, disponibilidad, permisos sanitarios, acceso sin requisitos ni cobertura comercial. No se contactó a terceros ni se enviaron formularios."
+    }
+  ]
+}

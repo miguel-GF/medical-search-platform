@@ -1,6 +1,6 @@
 # Estado y prioridades de Pruevia
 
-Tipo: punto de continuidad. Actualizado el 15-oct-2026 UTC (14-oct local) para operación local y datos;
+Tipo: punto de continuidad. Actualizado el 16-oct-2026 UTC (15-oct local) para operación local y datos;
 el corte histórico de publicación de septiembre corresponde al árbol local, el
 ledger Supabase y los Workers de producción. El proyecto enlazado se llama
 `pruevia-dev`, pero también es la base inicial de producción: las migraciones
@@ -16,6 +16,22 @@ base inicial de producción. Una escritura o migración allí afecta datos que
 podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
+
+**Catálogo e instituciones, 16-oct 03:44 UTC:** 525 conceptos, 4,296 filas
+pendientes, 82 marcas y 166 ubicaciones; ofertas 234 y migraciones 112 intactas.
+Revisiones 45 ajustada a 49 aplicadas: 175 filas adicionales, 26 conceptos
+nuevos y 29 aliases, reutilizando tres identidades. Identidades 18–23 añaden
+ocho establecimientos pendientes de verificación comercial. Las últimas 21
+filas tienen comprobación independiente de RAW, guardas, 14 consultas públicas,
+siete de proveedor y 22 variantes cercanas sin selección incompatible de los
+conceptos nuevos. Las tres definiciones reutilizadas permanecen intactas.
+Cola explícita 43 entradas; no hay aprobación por guardar un borrador.
+El original 48 con factor reumatoide no se aplicó: se detectó durante rollback
+una sustitución indebida de IgM por el genérico propuesto. FTA-ABS del original
+45 sigue retenido por soporte de método. No se modificó el resolver.
+[Detalle, evidencia y límites](PUEBLA_CATALOG_CLOSE_20261016.md).
+El cierre completo 47 se interrumpió; su memoria parcial no acredita inventario
+final. El corte nuevo 49 se reconstruye en una carpeta independiente.
 
 **Privacidad y reapertura pública, 15-oct 12:25 UTC:** landing/aviso/app/API
 responden 200; Patient sirve el mismo JS compilado por hash. Aviso
@@ -43,7 +59,7 @@ discrepancia de CP conservada. Ofertas 234 / migraciones 112 / conceptos 499 /
 pendientes 4,471 intactos. Evidencia en
 `collectors/artifacts/puebla-expansion-20261009/identity-review-17/`.
 
-**Corte completo vigente, 15-oct 04:33 UTC:** 499 conceptos y 4,471 filas
+**Corte completo histórico, 15-oct 04:33 UTC:** 499 conceptos y 4,471 filas
 pendientes en 820 grupos, paginación íntegra y 1,210 términos. Memoria v3:
 44 revisiones / 349 aliases / 368 reglas / 2,557 contextos históricos
 reutilizables. Los 4,471 pendientes requieren evidencia; ninguna aprobación

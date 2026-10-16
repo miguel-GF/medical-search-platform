@@ -1756,3 +1756,14 @@ los aliases/decisiones afectados; conservar vínculos y evidencia del incidente.
 No borrar RAW ni
 revertir toda la base para corregir una equivalencia. Reanudar publicaciones,
 activar capturas comerciales o contactar proveedores tiene alcance separado.
+
+## Cierre de cat?logo del 16-oct-2026 UTC
+
+Revisiones45 ajustada?49:175 filas cerradas adicionales y26 conceptos nuevos.
+Identidades18?23: ocho marcas/sedes adicionales. Observaci?n03:44 UTC:
+525 conceptos,4,296 pendientes,82 marcas,166 ubicaciones;234 ofertas y112
+migraciones intactas. Cola43 entradas con hashes expl?citos.
+
+[Detalle, evidencia independiente y borradores retenidos](PUEBLA_CATALOG_CLOSE_20261016.md).
+El original48 de factor reumatoide y original45 con FTA-ABS no se aplicaron.
+El corte47 de memoria qued? interrumpido y se conserva como parcial.
