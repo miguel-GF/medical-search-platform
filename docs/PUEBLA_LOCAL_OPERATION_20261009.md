@@ -1767,3 +1767,9 @@ migraciones intactas. Cola43 entradas con hashes expl?citos.
 [Detalle, evidencia independiente y borradores retenidos](PUEBLA_CATALOG_CLOSE_20261016.md).
 El original48 de factor reumatoide y original45 con FTA-ABS no se aplicaron.
 El corte47 de memoria qued? interrumpido y se conserva como parcial.
+
+Actualizaci?n posterior 16-oct 03:49 UTC: revisi?n50 cierra diez filas reutilizando
+tres estudios; identidad24 agrega tres instituciones. Totales 525 conceptos,
+4,286 pendientes, 85 marcas, 169 ubicaciones; 234 ofertas y 112 migraciones.
+El corte completo49 anterior conserva 791 grupos / 1,265 t?rminos y cola43;
+la cola posterior tiene 44 entradas. No atribuir ese inventario anterior al cierre50.

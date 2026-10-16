@@ -17,6 +17,24 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Instituciones24, 16-oct 03:49 UTC:** Ciudad Serdán, Ayotoxco y Guadalupe
+Victoria incorporados como tres candidatos hospitalarios distintos. Totales:
+**85 marcas / 169 ubicaciones / 525 conceptos / 4,286 registros pendientes**;
+ofertas234 y migraciones112 intactas. RAW, clasificación622112, domicilios,
+coordenadas y discrepancias conservados; websNULL, sin inferir operación actual
+desde el documento histórico. Rollback y commit único observados, seguidos por
+cliente independiente. Recibo `identity-review-24/applied-verified.json` bajo
+artefactos de expansión Puebla. API/App/landing públicos y tres servicios locales
+respondieron HTTP200 durante el cierre. [Resumen](PUEBLA_CATALOG_CLOSE_20261016.md).
+
+**Revisión50 aplicada, 16-oct 03:48 UTC:** 525 conceptos y 4,286 pendientes.
+Diez filas y tres aliases reutilizan CA 27.29, CA 72-4 y anticuerpos ZnT8,
+sin duplicar ni cambiar las definiciones existentes. RAW y atributos conservados;
+seis consultas públicas, tres de proveedor y once variantes cercanas comprobadas.
+Cola44; identidades 82 marcas / 166 ubicaciones en este corte, ofertas234 y
+migraciones112. El corte completo49 siguiente precede estas diez resoluciones:
+sus 791 grupos no se presentan como un recuento posterior a50.
+
 **Catálogo e instituciones, 16-oct 03:44 UTC:** 525 conceptos, 4,296 filas
 pendientes, 82 marcas y 166 ubicaciones; ofertas 234 y migraciones 112 intactas.
 Revisiones 45 ajustada a 49 aplicadas: 175 filas adicionales, 26 conceptos
@@ -30,8 +48,13 @@ El original 48 con factor reumatoide no se aplicó: se detectó durante rollback
 una sustitución indebida de IgM por el genérico propuesto. FTA-ABS del original
 45 sigue retenido por soporte de método. No se modificó el resolver.
 [Detalle, evidencia y límites](PUEBLA_CATALOG_CLOSE_20261016.md).
-El cierre completo 47 se interrumpió; su memoria parcial no acredita inventario
-final. El corte nuevo 49 se reconstruye en una carpeta independiente.
+**Corte completo 49, 16-oct 03:46:45 UTC:** paginación completa: 4,296 filas en
+791 grupos y 1,265 términos. Memoria shadow v3: 49 revisiones / 378 aliases /
+397 reglas / 2,732 contextos históricos reutilizables. Los 4,296 pendientes
+requieren evidencia; cero aprobaciones nuevas por memoria. Cola 43 comprobada
+por ledger/hash, fuentes y contadores estables, resolver y 24 archivos previos
+intactos. Recibos en `collectors/artifacts/normalization-memory-after-review-49-v3/`.
+El cierre 47 interrumpido se conserva como parcial, sin confundirlo con este corte.
 
 **Privacidad y reapertura pública, 15-oct 12:25 UTC:** landing/aviso/app/API
 responden 200; Patient sirve el mismo JS compilado por hash. Aviso

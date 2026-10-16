@@ -37,8 +37,17 @@ explícitos; no convierte clases ni publica ofertas. Recibos en
 Observación posterior **16-oct, 03:44 UTC**: 525 conceptos, 4,296 pendientes,
 82 marcas / 166 ubicaciones; 234 ofertas y 112 migraciones. Cola 43 entradas.
 Las revisiones 45 ajustada–49 e identidades 18–23 tienen recibos aplicados;
-el corte de memoria 47 quedó parcial y no sustituye un inventario completo.
+el corte de memoria 47 quedó parcial. El nuevo corte49 terminó a las 03:46:45
+UTC con 791 grupos / 1,265 términos, paginación completa y memoria v3 de
+49 revisiones / 378 aliases / 397 reglas / 2,732 históricos. Cola43 verificada;
+resolver y 24 archivos previos intactos. Los 4,296 pendientes requieren evidencia.
+Recibos: `collectors/artifacts/normalization-memory-after-review-49-v3/`.
 [Detalle del cierre y pendientes conservados](PUEBLA_CATALOG_CLOSE_20261016.md).
+
+Actualización posterior **16-oct, 03:49 UTC**: revisión50 e identidad24 aplicadas
+y observadas independientemente: 525 conceptos, 4,286 pendientes, 85 marcas /
+169 ubicaciones; ofertas234 y migraciones112. Cola44 entradas. El inventario
+de 791 grupos anterior precede estas diez resoluciones; no es un recuento nuevo.
 
 Recuperación observada **15-oct-2026 04:27 UTC (14-oct local)**: el inicio de
 sesión Windows arrancó Paciente y cola, pero API/Admin se detuvieron al heredar

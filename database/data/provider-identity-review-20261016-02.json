@@ -1,0 +1,56 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261016:02",
+  "reviewed_by": "Codex; investigación delegada por el operador",
+  "authorization": "D-021/D-022: identidades candidatas pending con evidencia; sin ofertas.",
+  "research_date": "2026-10-16",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "Tres identidades institucionales candidatas: Hospital General Ciudad Serdán, Hospital Integral Ayotoxco y Hospital Integral Guadalupe Victoria. Domicilios contrastados con documento estatal histórico; discrepancias explícitas. Sin asignación de red actual ni ofertas.",
+  "providers": [
+    {
+      "provider_key": "hospital_general_ciudad_serdan",
+      "name": "Hospital General Ciudad Serdán",
+      "slug": "hospital-general-ciudad-serdan",
+      "website_url": null,
+      "website_uncertainty": "DENUE no declara web propia y el documento gubernamental histórico no acredita dominio institucional ni operación actual. Conservar website_url NULL.",
+      "identity_evidence_url": "https://licitaciones.puebla.gob.mx/images/BasesEstatales2021/Febrero/GESAL-009-032-2021-LAVADO.pdf",
+      "identity_activity_codes": [
+        "622112"
+      ],
+      "denue_record_ids": [
+        "3489826"
+      ],
+      "identity_note": "El documento oficial de Secretaría de Administración de Puebla GESAL-009-032/2021, página 98 de 118, recuperado HTTP 200 con TLS válido el 16-oct-2026 UTC, contrasta la identidad y domicilio con DENUE 3489826. Coinciden nombre institucional, localidad Ciudad Serdán, CALLE 3 NORTE, número 1 y CP 75520. El PDF dice colonia CENTR (literal truncado); DENUE conserva PUEBLO CIUDAD SERDAN, municipio Chalchicomula de Sesma. No inferir colonia Centro ni corregir el RAW. Fuente gubernamental de febrero de 2021 contrastada con DENUE publicado 20-may-2026: acredita identidad histórica, sin probar operación actual. No asignar red, propiedad o dependencia administrativa actual IMSS-Bienestar, IMSS, ISSSTE u otra sin evidencia específica. Identidad institucional candidata independiente verification_pending y sede pending; no afirma personalidad jurídica separada. Mantener clase literal 622112 Hospitales generales del sector público, tipo hospital, domicilio, coordenadas y hash RAW originales. Website NULL porque no hay web propia comprobada; licitaciones es evidencia gubernamental, no sitio institucional. No se aprueban estudios, equivalencias clínicas, ofertas, precios, horarios, disponibilidad, permisos sanitarios, acceso sin requisitos ni cobertura comercial. No se contactó a terceros ni se enviaron formularios."
+    },
+    {
+      "provider_key": "hospital_integral_ayotoxco_guerrero",
+      "name": "Hospital Integral de Ayotoxco de Guerrero con Medicina Tradicional",
+      "slug": "hospital-integral-ayotoxco-guerrero",
+      "website_url": null,
+      "website_uncertainty": "DENUE no declara web propia y el documento gubernamental histórico no acredita dominio institucional ni operación actual. Conservar website_url NULL.",
+      "identity_evidence_url": "https://licitaciones.puebla.gob.mx/images/BasesEstatales2021/Febrero/GESAL-009-032-2021-LAVADO.pdf",
+      "identity_activity_codes": [
+        "622112"
+      ],
+      "denue_record_ids": [
+        "6494137"
+      ],
+      "identity_note": "El documento oficial de Secretaría de Administración de Puebla GESAL-009-032/2021, página 98 de 118, recuperado HTTP 200 con TLS válido el 16-oct-2026 UTC, contrasta la identidad y domicilio con DENUE 6494137. Coinciden Hospital Integral Ayotoxco, IGNACIO ALLENDE, número 14, colonia CENTRO y CP 73570. El PDF denomina AV. y abrevia Ayotoxco; DENUE conserva CALLE, municipio/localidad Ayotoxco de Guerrero y nombre ampliado CON MEDICINA TRADICIONAL. Esta última denominación no aprueba servicios ni capacidad terapéutica. Fuente gubernamental de febrero de 2021 contrastada con DENUE publicado 20-may-2026: acredita identidad histórica, sin probar operación actual. No asignar red, propiedad o dependencia administrativa actual IMSS-Bienestar, IMSS, ISSSTE u otra sin evidencia específica. Identidad institucional candidata independiente verification_pending y sede pending; no afirma personalidad jurídica separada. Mantener clase literal 622112 Hospitales generales del sector público, tipo hospital, domicilio, coordenadas y hash RAW originales. Website NULL porque no hay web propia comprobada; licitaciones es evidencia gubernamental, no sitio institucional. No se aprueban estudios, equivalencias clínicas, ofertas, precios, horarios, disponibilidad, permisos sanitarios, acceso sin requisitos ni cobertura comercial. No se contactó a terceros ni se enviaron formularios."
+    },
+    {
+      "provider_key": "hospital_integral_guadalupe_victoria",
+      "name": "Hospital Integral Guadalupe Victoria",
+      "slug": "hospital-integral-guadalupe-victoria",
+      "website_url": null,
+      "website_uncertainty": "DENUE no declara web propia y el documento gubernamental histórico no acredita dominio institucional ni operación actual. Conservar website_url NULL.",
+      "identity_evidence_url": "https://licitaciones.puebla.gob.mx/images/BasesEstatales2021/Febrero/GESAL-009-032-2021-LAVADO.pdf",
+      "identity_activity_codes": [
+        "622112"
+      ],
+      "denue_record_ids": [
+        "8281556"
+      ],
+      "identity_note": "El documento oficial de Secretaría de Administración de Puebla GESAL-009-032/2021, página 98 de 118, recuperado HTTP 200 con TLS válido el 16-oct-2026 UTC, contrasta la identidad y domicilio con DENUE 8281556. Coinciden institución, municipio/localidad Guadalupe Victoria, 4 ORIENTE, número 320, barrio LA CONCEPCION y CP 75040. El PDF especifica PROLONGACIÓN 4 OTE.; DENUE conserva AVENIDA 4 ORIENTE, sin afirmar que ambos tipos viales sean equivalentes ni corregir RAW. Fuente gubernamental de febrero de 2021 contrastada con DENUE publicado 20-may-2026: acredita identidad histórica, sin probar operación actual. No asignar red, propiedad o dependencia administrativa actual IMSS-Bienestar, IMSS, ISSSTE u otra sin evidencia específica. Identidad institucional candidata independiente verification_pending y sede pending; no afirma personalidad jurídica separada. Mantener clase literal 622112 Hospitales generales del sector público, tipo hospital, domicilio, coordenadas y hash RAW originales. Website NULL porque no hay web propia comprobada; licitaciones es evidencia gubernamental, no sitio institucional. No se aprueban estudios, equivalencias clínicas, ofertas, precios, horarios, disponibilidad, permisos sanitarios, acceso sin requisitos ni cobertura comercial. No se contactó a terceros ni se enviaron formularios."
+    }
+  ]
+}
