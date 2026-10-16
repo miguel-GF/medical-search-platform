@@ -40,6 +40,17 @@ def now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
+def wait_for_queue_update(path: Path, stamp: int, seconds: int) -> None:
+    """Wake for a reviewed queue change or stop, retaining the normal scan limit."""
+    deadline = time.monotonic() + seconds
+    while time.monotonic() < deadline:
+        if (ARTIFACTS / "STOP").exists():
+            raise StopRequested()
+        if path.stat().st_mtime_ns != stamp:
+            return
+        time.sleep(min(1.0, max(0.0, deadline - time.monotonic())))
+
+
 def save(path: Path, data: object) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(path.suffix + ".tmp")
@@ -265,6 +276,8 @@ def main() -> int:
                     return 0
                 results = []
                 connection_wait = False
+                queue_path = ROOT / args.queue
+                queue_stamp = queue_path.stat().st_mtime_ns
                 for queued in load_queue(args.queue, ref):
                     if (ARTIFACTS / "STOP").exists():
                         raise StopRequested()
@@ -304,7 +317,7 @@ def main() -> int:
                 print(json.dumps({"status": status["status"], "reviews": results, "next_scan_at": next_scan}), flush=True)
                 if not args.watch:
                     return 0
-                time.sleep(args.interval_seconds)
+                wait_for_queue_update(queue_path, queue_stamp, args.interval_seconds)
     except (KeyboardInterrupt, StopRequested):
         status.update(status="stopped", updated_at=now(), next_scan_at=None)
         if lock_acquired:

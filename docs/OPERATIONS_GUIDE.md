@@ -139,6 +139,15 @@ fuentes y guards RAW; guardar un borrador en `database/data` no lo ejecuta.
 Conservar las entradas anteriores al añadir otra y actualizar la cola de forma
 atómica para que el observador no lea un JSON parcial.
 
+Desde el 15-oct, la espera normal comprueba cada segundo si cambió el archivo
+de cola o apareció `STOP`; una entrada revisada puede despertar al worker antes
+del siguiente barrido de 300 segundos. El intervalo de recuperación de conexión
+se conserva. No se descubren ni aprueban fixtures por guardar un archivo:
+siguen siendo obligatorios la entrada explícita, hash, destino, RAW y ledger.
+La sustitución ordenada del proceso y la aplicación de los lotes 46–47 tras
+cambiar la cola constan en `collectors/artifacts/local-stack/queue-refresh-maintenance.json`
+y `collectors/artifacts/puebla-expansion-20261009/clinical-research/reviews-46-47-observed-close.json`.
+
 ```powershell
 # Una lectura del ledger; no aplica lotes pendientes.
 python database/scripts/run_local_review_queue.py --queue collectors/artifacts/local-review-queue/queue.json --project-ref ymtcmfgwuzdqtsbuvzqf

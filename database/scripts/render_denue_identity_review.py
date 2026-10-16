@@ -28,10 +28,12 @@ GENERAL_HOSPITAL_CODES = {"622111", "622112"}
 # Additional classes inspected in the official Puebla DENUE snapshot. Keep the
 # source class: a business called "Sanatorio" can still be a medical office.
 SPECIALIZED_PUBLIC_HOSPITAL_CODES = {"622312"}
+SPECIALIZED_PRIVATE_HOSPITAL_CODES = {"622311"}
 PRIVATE_GENERAL_MEDICAL_OFFICE_CODES = {"621111"}
 IDENTITY_LOCATION_TYPES = {
     **dict.fromkeys(DIAGNOSTIC_CODES, "branch"),
-    **dict.fromkeys(GENERAL_HOSPITAL_CODES | SPECIALIZED_PUBLIC_HOSPITAL_CODES, "hospital"),
+    **dict.fromkeys(GENERAL_HOSPITAL_CODES | SPECIALIZED_PUBLIC_HOSPITAL_CODES
+                    | SPECIALIZED_PRIVATE_HOSPITAL_CODES, "hospital"),
     **dict.fromkeys(PRIVATE_GENERAL_MEDICAL_OFFICE_CODES, "office"),
 }
 

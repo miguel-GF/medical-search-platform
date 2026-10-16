@@ -113,7 +113,7 @@ def prepare(client: httpx.Client, ref: str, *, definition: Path, snapshot: Path,
         item = str(UUID(existing)) if existing else str(uuid5(
             NAMESPACE_URL, rid + ':concept:' + d['aliases'][0]['label']))
         if existing:
-            identity = query(client, ref, "select i.id,n.name,h.service_type from catalog.items i "
+            identity = query(client, ref, "select i.id,n.name,n.normalized_name,h.service_type from catalog.items i "
                              "join catalog.domains dm on dm.id=i.domain_id "
                              "join catalog.item_names n on n.item_id=i.id and n.is_primary "
                              "join health.services h on h.catalog_item_id=i.id "
@@ -182,18 +182,18 @@ def prepare(client: httpx.Client, ref: str, *, definition: Path, snapshot: Path,
     terms = sorted(set(labels + [d['canonical_name'] for d in defs]))
     values = ','.join('(' + q(term) + ')' for term in terms)
     collisions = query(client, ref, 'with terms(raw) as (values ' + values + ") "
-                       "select 'name' source,n.item_id,n.name term from catalog.item_names n "
+                       "select 'name' source,n.item_id,n.name term,n.normalized_name normalized_term from catalog.item_names n "
                        "where n.normalized_name in(select core.normalized_text(raw) from terms) "
-                       "union all select 'alias',a.item_id,a.alias from catalog.item_aliases a "
+                       "union all select 'alias',a.item_id,a.alias,a.normalized_alias from catalog.item_aliases a "
                        "where a.status<>'rejected' and a.normalized_alias in"
                        "(select core.normalized_text(raw) from terms) "
-                       "union all select 'disambiguation',null::uuid,d.term from catalog.disambiguation_terms d "
+                       "union all select 'disambiguation',null::uuid,d.term,d.normalized_term from catalog.disambiguation_terms d "
                        "where d.status='approved' and d.normalized_term in"
                        "(select core.normalized_text(raw) from terms)")
     save(artifacts / 'exact-collisions-before.json', collisions)
     unexpected_collisions = [row for row in collisions if not (
         row['source'] in ('name', 'alias') and row['item_id'] in reused
-        and row['term'] == reused[row['item_id']]['name'])]
+        and row['normalized_term'] == reused[row['item_id']]['normalized_name'])]
     save(artifacts / 'reused-identities-before.json', list(reused.values()))
     if unexpected_collisions:
         raise ValueError('Review the existing identity instead of creating a duplicate')
