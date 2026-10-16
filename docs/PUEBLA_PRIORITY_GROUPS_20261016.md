@@ -98,6 +98,17 @@ Artefactos locales de paquetes:
 `priority-matrix.md`, RAW completos, fuentes, `proposal.md`, pilotos no ejecutables
 y `panel_policy_draft.py`. Ningún SQL de esa propuesta se ejecutó.
 
+Preparación posterior:hay diff SQL/patch aislado de consumidores públicos,
+proveedor, batch/OCR y detalles, con13 funciones leídas y cinco cuerpos remotos
+idénticos a la base comprometida. Compilación Python correcta; no es una
+comprobación de PostgreSQL. Registro de composiciones inicialmente vacío:
+**activarlo así retendría los cinco paneles históricos y sus ofertas**.
+Todavía falta el importador atómico completo y revisar los hijos de los pilotos.
+Además, imagen y paneles comparten consumidores; se prepara su reconciliación
+aislada para evitar que un reemplazo elimine la guardia del otro.
+Contrato, diff y recuperación en `integration-contract.md`,
+`proposed-panel-integration.patch` y `proposed-panel-recovery.sql`.
+
 Siguiente acción: terminar integración aislada de composición y revisar los
 hijos de los pilotos. Continuar por los grupos de ocho antes de los de uno,
 conservando pendientes cuando falte evidencia o soporte del contrato.

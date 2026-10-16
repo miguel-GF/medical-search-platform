@@ -32,6 +32,16 @@ fuentes, contadores y resolver conservados. Ninguna aprobación automática nuev
 Recibos: `collectors/artifacts/normalization-memory-after-priority-54-55-v3/`.
 [Detalle y siguiente acción](PUEBLA_PRIORITY_GROUPS_20261016.md).
 
+**Preparación posterior de imagen y paquetes,16-oct:** candidato API rebasado
+sobre fuentes comprometidas idénticas a las conservadas del despliegue y
+compilado. SQL aislado valida originales/índices/ofertas y añade guardas diferidas
+de definición auditada. Flutter candidato compilado, pero su base no acredita
+identidad con Patient publicado. Paneles tiene diff de consumidores; aplicarlo
+con registro vacío retendría los cinco paneles históricos. Las propuestas
+comparten funciones y se reconcilian aisladas; ninguna está activada ni sus SQL
+ejecutados. Continúa D-006 y falta importador completo de paneles.
+[Avance y límites](proposals/20261016-imaging-importer-and-integration.md).
+
 **Corte completo52, 16-oct 04:06:54 UTC; revalidado12:00 UTC:** 529 conceptos,
 4,251 pendientes en781 grupos y1,279 términos;114 marcas /198 ubicaciones,
 234 ofertas /112 migraciones. Memoria shadow v3:52 revisiones /388 aliases /
