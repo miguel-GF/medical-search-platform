@@ -17,6 +17,20 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Reanudación expresa,17-oct12:44 UTC:** cola local reanudada después de la
+instrucción del usuario. Revisión56 ajustada aplicada y observada:33 registros,
+4 conceptos y5 aliases;81 RAW intactos, incluidos48 contextos retenidos.
+Identidades28 aplicadas con rollback previo y cliente independiente:12 unidades
+candidatas, sin ofertas nuevas. Corte: **546 conceptos /4,114 pendientes /
+126 marcas o instituciones /210 ubicaciones /234 ofertas /112 migraciones**.
+Cola49 con hashes fijados. Las capturas nuevas de Samalab y Medic Scanner se
+guardan aparte sin revisar; no aumentan cobertura publicada. Continúa revisión
+de precios condicionados y enlaces reales por sucursal, y ocultación de reservas
+solicitada por el usuario. Los párrafos de pausa siguientes son históricos.
+Recibos: `collectors/artifacts/catalog-resume-20261017/`,
+`clinical-research/review-56-adjusted/` e `identity-review-28/` bajo el artefacto
+de expansión Puebla. [Continuidad del17-oct](CATALOG_AND_COMMERCIAL_REVIEW_20261017.md).
+
 **Corrección de paciente,17-oct UTC:** el encargo nuevo corrige botones,móvil,
 tarjeta técnica de analítica y navegación de candidatos ambiguos. API publicada
 04:29:27 UTC, versión `777b7a40-1785-4bb5-aa4c-1990cc7d416b`, extraída del
