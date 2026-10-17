@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, reactive, ref } from 'vue';
-import { createAdminApi, createMutationRequestId, formatDate, type AlertRow, type CatalogItem, type Dashboard, type ExactReprocessResult, type LocationRow, type NormalizationDetail, type NormalizationRow, type OfferRow, type PriceRow, type ProviderRow, type QualityIssueRow, type RawRecord } from './api';
+import { createAdminApi, createMutationRequestId, formatDate, type AlertRow, type CatalogItem, type Dashboard, type ExactReprocessResult, type LocationRow, type NormalizationDetail, type NormalizationGroup, type NormalizationRow, type OfferRow, type PriceRow, type ProviderRow, type QualityIssueRow, type RawRecord } from './api';
 import { matchesPasswordCallback, supabase } from './auth';
 import { toQrDataUrl } from './qr';
 import { safeHttpUrl } from './safe-url';
@@ -43,7 +43,11 @@ const dashboardData = ref<Dashboard | null>(null);
 const queueRows = ref<NormalizationRow[]>([]);
 const queueHasMore = ref(false);
 const queueLoadingMore = ref(false);
-const queueStatus = ref('ambiguous');
+const queueGroups = ref<NormalizationGroup[]>([]);
+const queueGroupHasMore = ref(false);
+const queueGroupLoadingMore = ref(false);
+const queueMode = ref<'groups' | 'rows'>('groups');
+const queueStatus = ref('all');
 const queueInputType = ref('');
 const recordRows = ref<RawRecord[]>([]);
 const providerRows = ref<ProviderRow[]>([]);
@@ -66,6 +70,7 @@ const manualCatalogLoading = ref(false);
 const mutationRequestIds = new Map<string, string>();
 const AUTO_REFRESH_MS = 30_000;
 let autoRefreshTimer: number | null = null;
+let queueSearchTimer: number | null = null;
 type TimeFilter = 'all' | '7' | '15' | '30';
 interface TableFilterState {
   query: string;
@@ -142,7 +147,7 @@ const tableFilterConfig = computed(() => {
     case 'locations': return { ...base, placeholder: 'Buscar sucursal, proveedor o ciudad…', showTime: false, statusOptions: statusOptions([{ label: 'Activas', value: 'active' }, { label: 'Inactivas', value: 'inactive' }]) };
     case 'offers': return { ...base, placeholder: 'Buscar servicio o proveedor…', showTime: true, statusOptions: statusOptions([{ label: 'Activas', value: 'active' }, { label: 'Inactivas', value: 'inactive' }]) };
     case 'prices': return { ...base, placeholder: 'Buscar servicio o proveedor…', showTime: true, secondaryLabel: 'Tipo de precio', secondaryOptions: statusOptions([{ label: 'Particular', value: 'cash' }, { label: 'Aseguradora', value: 'insured' }, { label: 'Paquete', value: 'package' }]) };
-    case 'queue': return { ...base, placeholder: 'Buscar texto, proveedor o fuente…', showTime: true, statusLabel: 'Resultado', statusOptions: hasAccurateNormalizationCounts.value ? statusOptions([{ label: 'Ambiguos', value: 'ambiguous' }, { label: 'Sin cobertura', value: 'no_match' }, { label: 'Pendientes', value: 'pending' }]) : statusOptions([{ label: 'Ambiguos', value: 'ambiguous' }, { label: 'Pendientes', value: 'pending' }]), secondaryLabel: 'Origen', secondaryOptions: statusOptions([{ label: 'Proveedor', value: 'crawler' }, { label: 'Búsqueda', value: 'search' }, { label: 'Receta OCR', value: 'ocr' }, { label: 'Manual', value: 'manual' }]) };
+    case 'queue': return { ...base, placeholder: 'Buscar etiqueta, proveedor o fuente…', showTime: true, statusLabel: 'Resultado', statusOptions: hasAccurateNormalizationCounts.value ? statusOptions([{ label: 'Ambiguos', value: 'ambiguous' }, { label: 'Sin cobertura', value: 'no_match' }, { label: 'Pendientes', value: 'pending' }]) : statusOptions([{ label: 'Ambiguos', value: 'ambiguous' }, { label: 'Pendientes', value: 'pending' }]), secondaryLabel: 'Origen', secondaryOptions: queueMode.value === 'groups' ? undefined : statusOptions([{ label: 'Proveedor', value: 'crawler' }, { label: 'Búsqueda', value: 'search' }, { label: 'Receta OCR', value: 'ocr' }, { label: 'Manual', value: 'manual' }]) };
     case 'records': return { ...base, placeholder: 'Buscar fuente, tipo o ID externo…', showTime: true };
     case 'quality': return { ...base, placeholder: 'Buscar código o detalle…', showTime: true, statusOptions: statusOptions([{ label: 'Abiertas', value: 'open' }, { label: 'Reconocidas', value: 'acknowledged' }, { label: 'Resueltas', value: 'resolved' }, { label: 'Ignoradas', value: 'ignored' }]) };
     case 'alerts': return { ...base, placeholder: 'Buscar código, título o fuente…', showTime: true, statusOptions: statusOptions([{ label: 'Abiertas', value: 'open' }, { label: 'Reconocidas', value: 'acknowledged' }, { label: 'Resueltas', value: 'resolved' }, { label: 'Ignoradas', value: 'ignored' }]) };
@@ -181,6 +186,16 @@ function resetTableFilter() {
   tableFilter.secondary = 'all';
 }
 
+function setTableQuery(value: string) {
+  tableFilter.query = value;
+  if (tab.value !== 'queue' || queueMode.value !== 'groups' || typeof window === 'undefined') return;
+  if (queueSearchTimer !== null) window.clearTimeout(queueSearchTimer);
+  queueSearchTimer = window.setTimeout(() => {
+    queueSearchTimer = null;
+    void loadNormalizationGroups();
+  }, 300);
+}
+
 function setTableStatus(value: string) {
   tableFilter.status = value;
   if (tab.value === 'queue') {
@@ -197,6 +212,7 @@ function setTableSecondary(value: string) {
   tableFilter.secondary = value;
   if (tab.value === 'queue') {
     queueInputType.value = value === 'all' ? '' : value;
+    if (queueInputType.value && queueInputType.value !== 'crawler') queueMode.value = 'rows';
     void changeQueueFilter();
   }
 }
@@ -208,6 +224,8 @@ const filteredRecentRuns = computed(() => (dashboardData.value?.recent_runs ?? [
 const filteredQueue = computed(() => queueRows.value.filter((row) =>
   matchesFilterQuery(normalizedFilterQuery(), [row.raw_text, row.normalized_input, row.provider_brand_name, row.source_name, row.status])
   && matchesTimeFilter(row.created_at)));
+const filteredQueueGroups = computed(() => queueGroups.value.filter((group) =>
+  matchesTimeFilter(group.last_queued_at)));
 const filteredRecords = computed(() => recordRows.value.filter((row) =>
   matchesFilterQuery(normalizedFilterQuery(), [row.source_name, row.record_type, row.external_record_id, row.parse_status])
   && matchesTimeFilter(row.observed_at)));
@@ -237,6 +255,8 @@ const filteredAlerts = computed(() => alertRows.value.filter((row) =>
 // Keep the template readable while exposing only the rows matching the active
 // toolbar filters. The raw collections above remain the source for refreshes.
 const queue = filteredQueue;
+const groups = filteredQueueGroups;
+const queueTotalGroups = computed(() => queueGroups.value[0]?.total_groups ?? 0);
 const records = filteredRecords;
 const providers = filteredProviders;
 const locations = filteredLocations;
@@ -500,6 +520,28 @@ async function loadQueue(reset = true) {
   queueHasMore.value = rows.length === 100;
 }
 
+async function loadNormalizationGroups(reset = true) {
+  const generation = authGeneration;
+  const userId = session.value?.user.id ?? null;
+  if (!hasAccurateNormalizationCounts.value && (queueStatus.value === 'all' || queueStatus.value === 'no_match')) {
+    queueStatus.value = 'ambiguous';
+  }
+  const offset = reset ? 0 : queueGroups.value.length;
+  const requestedQuery = tableFilter.query;
+  const requestedStatus = queueStatus.value;
+  const rows = await api.normalizationGroups(
+    requestedStatus === 'all' ? undefined : requestedStatus,
+    requestedQuery,
+    offset,
+  );
+  if (!isCurrentAuth(generation, userId)
+    || requestedQuery !== tableFilter.query
+    || requestedStatus !== queueStatus.value) return;
+  if (reset) queueGroups.value = rows;
+  else queueGroups.value = [...queueGroups.value, ...rows];
+  queueGroupHasMore.value = rows.length === 100 && queueGroups.value.length < (rows[0]?.total_groups ?? 0);
+}
+
 async function loadMoreQueue() {
   if (!queueHasMore.value || queueLoadingMore.value) return;
   const generation = authGeneration;
@@ -512,6 +554,37 @@ async function loadMoreQueue() {
   finally { queueLoadingMore.value = false; }
 }
 
+async function loadMoreNormalizationGroups() {
+  if (!queueGroupHasMore.value || queueGroupLoadingMore.value) return;
+  const generation = authGeneration;
+  const userId = session.value?.user.id ?? null;
+  queueGroupLoadingMore.value = true;
+  try { await loadNormalizationGroups(false); }
+  catch (cause) {
+    if (isCurrentAuth(generation, userId)) error.value = errorMessage(cause, 'No se pudieron cargar más grupos');
+  }
+  finally { queueGroupLoadingMore.value = false; }
+}
+
+async function setQueueMode(mode: 'groups' | 'rows') {
+  if (queueMode.value === mode) return;
+  queueMode.value = mode;
+  error.value = '';
+  try {
+    if (mode === 'groups') {
+      queueInputType.value = 'crawler';
+      tableFilter.secondary = 'all';
+      await loadNormalizationGroups();
+    } else {
+      queueInputType.value = '';
+      tableFilter.secondary = 'all';
+      await loadQueue();
+    }
+  } catch (cause) {
+    error.value = errorMessage(cause, 'No se pudo cambiar la presentación de la cola');
+  }
+}
+
 async function refresh() {
   const generation = authGeneration;
   const userId = session.value?.user.id ?? null;
@@ -521,7 +594,10 @@ async function refresh() {
     const nextDashboard = await api.dashboard();
     if (!isCurrentAuth(generation, userId)) return;
     dashboardData.value = nextDashboard;
-    if (tab.value === 'queue') await loadQueue();
+    if (tab.value === 'queue') {
+      if (queueMode.value === 'groups') await loadNormalizationGroups();
+      else await loadQueue();
+    }
     if (tab.value === 'records') { const value = await api.rawRecords(); if (!isCurrentAuth(generation, userId)) return; recordRows.value = value; }
     if (tab.value === 'providers') { const value = await api.providers(); if (!isCurrentAuth(generation, userId)) return; providerRows.value = value; }
     if (tab.value === 'locations') { const value = await api.locations(); if (!isCurrentAuth(generation, userId)) return; locationRows.value = value; }
@@ -566,7 +642,8 @@ async function switchTab(next: Tab) {
   mobileNavOpen.value = false;
   notice.value = '';
   try {
-    if (next === 'queue' && !queueRows.value.length) await loadQueue();
+    if (next === 'queue' && queueMode.value === 'groups' && !queueGroups.value.length) await loadNormalizationGroups();
+    if (next === 'queue' && queueMode.value === 'rows' && !queueRows.value.length) await loadQueue();
     if (next === 'records' && !recordRows.value.length) { const value = await api.rawRecords(); if (!isCurrentAuth(generation, userId)) return; recordRows.value = value; }
     if (next === 'providers' && !providerRows.value.length) { const value = await api.providers(); if (!isCurrentAuth(generation, userId)) return; providerRows.value = value; }
     if (next === 'locations' && !locationRows.value.length) { const value = await api.locations(); if (!isCurrentAuth(generation, userId)) return; locationRows.value = value; }
@@ -582,7 +659,10 @@ async function switchTab(next: Tab) {
 async function changeQueueFilter() {
   const generation = authGeneration;
   const userId = session.value?.user.id ?? null;
-  try { await loadQueue(); }
+  try {
+    if (queueMode.value === 'groups') await loadNormalizationGroups();
+    else await loadQueue();
+  }
   catch (cause) {
     if (isCurrentAuth(generation, userId)) error.value = errorMessage(cause, 'No se pudo cargar la cola');
   }
@@ -628,6 +708,25 @@ async function openRow(row: NormalizationRow) {
     detail.value = value;
     if (detail.value?.candidates.length === 1) selectedCandidateId.value = detail.value.candidates[0].candidate_id;
   } catch (cause) { if (isCurrentAuth(generation, userId)) error.value = errorMessage(cause, 'No se pudo cargar la evidencia'); }
+}
+
+async function openGroup(group: NormalizationGroup) {
+  await openRow({
+    normalization_run_id: group.representative_run_id,
+    input_type: 'crawler',
+    raw_record_id: null,
+    raw_text: group.sample_raw_text,
+    normalized_input: group.normalized_input,
+    provider_brand_id: group.provider_brand_id,
+    provider_brand_name: group.provider_brand_name,
+    status: group.status,
+    engine_version: null,
+    created_at: group.last_queued_at,
+    candidate_count: group.rows_with_candidates,
+    decision_type: null,
+    decision_reason: null,
+    source_name: group.source_name,
+  });
 }
 
 function closeReview() {
@@ -698,10 +797,12 @@ async function approveCandidate() {
     await api.reviewNormalization(runId, reviewInput, requestId);
     if (!isCurrentAuth(generation, userId)) return;
     notice.value = aliasRequired.value
-      ? 'Candidato aprobado y alias guardado para futuras resoluciones.'
+      ? 'Alias aprobado para este proveedor. Para resolver las repeticiones, ve a Resumen → Analizar coincidencias → Resolver seguras.'
       : 'Candidato aprobado. No se creó un alias global fuera de un proveedor.';
     closeReview();
-    await loadQueue();
+    if (queueMode.value === 'groups') await loadNormalizationGroups();
+    else await loadQueue();
+    await previewExactReprocess();
     const nextDashboard = await api.dashboard();
     if (!isCurrentAuth(generation, userId)) return;
     dashboardData.value = nextDashboard;
@@ -724,7 +825,8 @@ async function markNoMatch() {
     if (!isCurrentAuth(generation, userId)) return;
     notice.value = 'Caso marcado como no_match y no se publicará ninguna equivalencia.';
     closeReview();
-    await loadQueue();
+    if (queueMode.value === 'groups') await loadNormalizationGroups();
+    else await loadQueue();
     const nextDashboard = await api.dashboard();
     if (!isCurrentAuth(generation, userId)) return;
     dashboardData.value = nextDashboard;
@@ -870,6 +972,10 @@ function resetAdminState(options: { preservePasswordSetup?: boolean } = {}) {
   queueRows.value = [];
   queueHasMore.value = false;
   queueLoadingMore.value = false;
+  queueGroups.value = [];
+  queueGroupHasMore.value = false;
+  queueGroupLoadingMore.value = false;
+  queueMode.value = 'groups';
   recordRows.value = [];
   providerRows.value = [];
   locationRows.value = [];
@@ -942,6 +1048,8 @@ onMounted(async () => {
 });
 onUnmounted(() => {
   stopAutoRefresh();
+  if (queueSearchTimer !== null && typeof window !== 'undefined') window.clearTimeout(queueSearchTimer);
+  queueSearchTimer = null;
   if (typeof document !== 'undefined') document.removeEventListener('visibilitychange', refreshOnVisibilityChange);
   authGeneration += 1;
   authSubscription?.unsubscribe();
@@ -976,7 +1084,7 @@ onUnmounted(() => {
       :status-options="tableFilterConfig.statusOptions"
       :secondary-label="tableFilterConfig.secondaryLabel"
       :secondary-options="tableFilterConfig.secondaryOptions"
-      @update:query="tableFilter.query = $event"
+      @update:query="setTableQuery"
       @update:time="setTableTime"
       @update:status="setTableStatus"
       @update:secondary="setTableSecondary"
@@ -991,19 +1099,101 @@ onUnmounted(() => {
     <main v-else-if="tab === 'locations'" class="panel"><div class="panel-title"><div><p class="eyebrow">COBERTURA GEOGRÁFICA</p><h2>Sucursales</h2><p class="panel-description">Ubicaciones donde se ofrecen los servicios.</p></div><span class="record-count">{{ locations.length }} registros</span></div><div class="table-wrap"><table><thead><tr><th>Proveedor</th><th>Sucursal</th><th>Dirección</th><th>Localidad</th><th>Estado</th><th>Coordenadas</th></tr></thead><tbody><tr v-for="row in locations" :key="row.location_id"><td><strong>{{ row.provider_name }}</strong></td><td>{{ row.location_name }}</td><td>{{ row.address ?? '—' }}</td><td>{{ row.locality ?? '—' }}</td><td><span class="status" :class="row.status">{{ statusLabel(row.status) }}</span></td><td>{{ row.latitude ?? '—' }}, {{ row.longitude ?? '—' }}</td></tr><tr v-if="!locations.length"><td colspan="6" class="empty">Sin sucursales.</td></tr></tbody></table></div></main>
     <main v-else-if="tab === 'offers'" class="panel"><div class="panel-title"><div><p class="eyebrow">CATÁLOGO PUBLICADO</p><h2>Servicios</h2><p class="panel-description">Oferta activa por proveedor.</p></div><span class="record-count">{{ offers.length }} registros</span></div><div class="table-wrap"><table><thead><tr><th>Proveedor</th><th>Servicio</th><th>Estado</th><th>Precios vigentes</th><th>Última observación</th></tr></thead><tbody><tr v-for="row in offers" :key="row.offer_id"><td><strong>{{ row.provider_name }}</strong></td><td>{{ row.service_name }}</td><td><span class="status" :class="row.status">{{ statusLabel(row.status) }}</span></td><td>{{ row.current_price_count }}</td><td>{{ formatDate(row.last_seen_at) }}</td></tr><tr v-if="!offers.length"><td colspan="5" class="empty">Sin servicios.</td></tr></tbody></table></div></main>
     <main v-else-if="tab === 'prices'" class="panel"><div class="panel-title"><div><p class="eyebrow">PRECIOS VIGENTES</p><h2>Precios</h2><p class="panel-description">Importes publicados y su última fuente de verificación.</p></div><span class="record-count">{{ prices.length }} registros</span></div><div class="table-wrap"><table><thead><tr><th>Proveedor</th><th>Servicio</th><th>Tipo</th><th>Importe</th><th>Última observación</th><th>Fuente</th></tr></thead><tbody><tr v-for="row in prices" :key="row.price_version_id"><td><strong>{{ row.provider_name }}</strong></td><td>{{ row.service_name }}</td><td>{{ statusLabel(row.price_type) }}</td><td><strong>{{ row.amount_minor / 100 }} {{ row.currency }}</strong></td><td>{{ formatDate(row.last_seen_at) }}</td><td><a v-if="row.source_url" :href="row.source_url" target="_blank" rel="noopener noreferrer">Abrir fuente</a><span v-else>—</span></td></tr><tr v-if="!prices.length"><td colspan="6" class="empty">Sin precios registrados.</td></tr></tbody></table></div></main>
-    <main v-else-if="tab === 'queue'" class="panel"><div v-if="queueStatus === 'no_match' && hasAccurateNormalizationCounts" class="queue-note"><UiIcon name="quality" :size="21" /><div><strong>Sin cobertura no significa error humano</strong><p>Estos registros necesitan catálogo, no descartes manuales. Revisa sólo los que tengan evidencia suficiente.</p></div></div><div class="panel-title"><div><p class="eyebrow">NORMALIZACIÓN CONTROLADA</p><h2>Normalización y excepciones</h2><p class="hint">El número del menú cuenta registros de normalización, no estudios distintos ni pantallas para revisar. Las etiquetas repetidas se agrupan y las coincidencias exactas se resuelven por lote; aquí quedan las que necesitan contexto.</p></div><div class="panel-tools"><span class="muted">{{ queue.length }} registros visibles</span><button v-if="queueHasMore" class="link" type="button" :disabled="queueLoadingMore" @click="loadMoreQueue">{{ queueLoadingMore ? 'Cargando…' : 'Cargar 100 más' }}</button></div></div><div class="table-wrap"><table><thead><tr><th>Entrada recibida</th><th>Origen</th><th>Fuente</th><th>Resultado</th><th>Candidatos</th><th>Fecha</th><th></th></tr></thead><tbody><tr v-for="row in queue" :key="row.normalization_run_id"><td><strong>{{ row.raw_text ?? row.normalized_input ?? '—' }}</strong><small class="block">{{ row.normalized_input ?? '—' }}</small></td><td>{{ statusLabel(row.input_type) }}</td><td>{{ row.source_name ?? '—' }}</td><td><span class="status" :class="row.status">{{ statusLabel(row.status) }}</span></td><td>{{ row.candidate_count }}</td><td>{{ formatDate(row.created_at) }}</td><td><button class="link" @click="openRow(row)">Revisar</button></td></tr><tr v-if="!queue.length"><td colspan="7" class="empty">No hay casos con estos filtros.</td></tr></tbody></table></div></main>
+    <main v-else-if="tab === 'queue'" class="panel">
+      <div v-if="queueStatus === 'no_match' && hasAccurateNormalizationCounts" class="queue-note"><UiIcon name="quality" :size="21" /><div><strong>Sin cobertura no significa error humano</strong><p>Estos registros necesitan catálogo, no descartes manuales. Revisa sólo los que tengan evidencia suficiente.</p></div></div>
+      <div class="panel-title">
+        <div><p class="eyebrow">NORMALIZACIÓN CONTROLADA</p><h2>Normalización y excepciones</h2><p class="hint">Agrupamos etiquetas repetidas del mismo proveedor. Revisar una sola puede crear un alias acotado y habilitar el reproceso exacto de todas sus repeticiones.</p></div>
+        <div class="queue-view-switch" role="group" aria-label="Presentación de la cola">
+          <button type="button" :class="{ active: queueMode === 'groups' }" @click="setQueueMode('groups')">Etiquetas agrupadas</button>
+          <button type="button" :class="{ active: queueMode === 'rows' }" @click="setQueueMode('rows')">Registros individuales</button>
+        </div>
+      </div>
+      <template v-if="queueMode === 'groups'">
+        <div class="group-explainer"><UiIcon name="review" :size="19" /><p><strong>{{ formatNumber(queueTotalGroups) }} etiquetas distintas</strong><span> ordenadas por impacto. Son datos de proveedores, no búsquedas de pacientes. Revisar una muestra no cierra todo el grupo: un alias aprobado habilita el lote exacto desde Resumen.</span></p></div>
+        <div class="panel-tools queue-tools"><span class="muted">{{ groups.length }} grupos visibles · {{ formatNumber(groups.reduce((sum, group) => sum + group.occurrence_count, 0)) }} registros representados</span><button v-if="queueGroupHasMore" class="link" type="button" :disabled="queueGroupLoadingMore" @click="loadMoreNormalizationGroups">{{ queueGroupLoadingMore ? 'Cargando…' : 'Cargar 100 grupos más' }}</button></div>
+        <div class="table-wrap"><table><thead><tr><th>Etiqueta del proveedor</th><th>Proveedor / fuente</th><th>Repeticiones</th><th>Resultado</th><th>Periodo observado</th><th></th></tr></thead><tbody><tr v-for="group in groups" :key="`${group.provider_brand_id ?? 'none'}:${group.normalized_input}`"><td><strong>{{ group.sample_raw_text ?? group.normalized_input }}</strong><small class="block">{{ group.normalized_input }}</small></td><td><strong>{{ group.provider_brand_name ?? 'Proveedor sin identificar' }}</strong><small class="block">{{ group.source_name ?? 'Fuente desconocida' }}</small><small v-if="group.source_usage_policy_status && group.source_usage_policy_status !== 'approved'" class="block">Uso de fuente: {{ group.source_usage_policy_status }}</small></td><td><span class="group-count">{{ formatNumber(group.occurrence_count) }}</span><small v-if="group.rows_with_candidates" class="block">{{ formatNumber(group.rows_with_candidates) }} con candidatos</small></td><td><span class="status" :class="group.status">{{ statusLabel(group.status) }}</span></td><td>{{ formatDate(group.first_queued_at) }}<small class="block">hasta {{ formatDate(group.last_queued_at) }}</small></td><td><button class="link" @click="openGroup(group)">Revisar muestra</button></td></tr><tr v-if="!groups.length"><td colspan="6" class="empty">No hay etiquetas agrupadas con estos filtros.</td></tr></tbody></table></div>
+      </template>
+      <template v-else>
+        <div class="panel-tools queue-tools"><span class="muted">{{ queue.length }} registros visibles</span><button v-if="queueHasMore" class="link" type="button" :disabled="queueLoadingMore" @click="loadMoreQueue">{{ queueLoadingMore ? 'Cargando…' : 'Cargar 100 más' }}</button></div>
+        <div class="table-wrap"><table><thead><tr><th>Entrada recibida</th><th>Origen</th><th>Fuente</th><th>Resultado</th><th>Candidatos</th><th>Fecha</th><th></th></tr></thead><tbody><tr v-for="row in queue" :key="row.normalization_run_id"><td><strong>{{ row.raw_text ?? row.normalized_input ?? '—' }}</strong><small class="block">{{ row.normalized_input ?? '—' }}</small></td><td>{{ statusLabel(row.input_type) }}</td><td>{{ row.source_name ?? '—' }}</td><td><span class="status" :class="row.status">{{ statusLabel(row.status) }}</span></td><td>{{ row.candidate_count }}</td><td>{{ formatDate(row.created_at) }}</td><td><button class="link" @click="openRow(row)">Revisar</button></td></tr><tr v-if="!queue.length"><td colspan="7" class="empty">No hay casos con estos filtros.</td></tr></tbody></table></div>
+      </template>
+    </main>
     <main v-else-if="tab === 'quality'" class="panel"><div class="panel-title"><div><p class="eyebrow">CALIDAD DE DATOS</p><h2>Integridad de datos</h2><p class="panel-description">Señales que requieren seguimiento antes de publicar información.</p></div><span class="record-count">{{ qualityIssues.length }} registros</span></div><div class="table-wrap"><table><thead><tr><th>Código</th><th>Severidad</th><th>Estado</th><th>Corrida</th><th>Creado</th><th>Detalle</th><th>Acciones</th></tr></thead><tbody><tr v-for="row in qualityIssues" :key="row.issue_id"><td><strong>{{ row.issue_code }}</strong></td><td><span class="status" :class="row.severity">{{ statusLabel(row.severity) }}</span></td><td><span class="status" :class="row.status">{{ statusLabel(row.status) }}</span></td><td>{{ row.crawl_run_id ?? '—' }}</td><td>{{ formatDate(row.created_at) }}</td><td><pre>{{ JSON.stringify(row.details, null, 2) }}</pre></td><td class="actions" v-if="row.status === 'open' || row.status === 'acknowledged'"><button class="link" @click="updateQuality(row, 'acknowledged')">Reconocer</button><button class="link" @click="updateQuality(row, 'resolved')">Resolver</button><button class="link danger-link" @click="updateQuality(row, 'ignored')">Ignorar</button></td><td v-else>—</td></tr><tr v-if="!qualityIssues.length"><td colspan="7" class="empty">No hay incidencias de calidad.</td></tr></tbody></table></div></main>
     <main v-else-if="tab === 'alerts'" class="panel"><div class="panel-title"><div><p class="eyebrow">OPERACIÓN</p><h2>Alertas</h2><p class="panel-description">Eventos que pueden afectar la calidad o disponibilidad del servicio.</p></div><span class="record-count">{{ alerts.length }} registros</span></div><div class="table-wrap"><table><thead><tr><th>Código</th><th>Título</th><th>Severidad</th><th>Estado</th><th>Fuente</th><th>Creado</th><th>Acciones</th></tr></thead><tbody><tr v-for="row in alerts" :key="row.alert_id"><td><strong>{{ row.alert_code }}</strong></td><td><strong>{{ row.title }}</strong><small class="block">{{ row.detail ?? '' }}</small></td><td><span class="status" :class="row.severity">{{ statusLabel(row.severity) }}</span></td><td><span class="status" :class="row.status">{{ statusLabel(row.status) }}</span></td><td>{{ row.source ?? '—' }}</td><td>{{ formatDate(row.created_at) }}</td><td class="actions" v-if="row.status === 'open' || row.status === 'acknowledged'"><button class="link" @click="updateAlert(row, 'acknowledged')">Reconocer</button><button class="link" @click="updateAlert(row, 'resolved')">Resolver</button><button class="link danger-link" @click="updateAlert(row, 'ignored')">Ignorar</button></td><td v-else>—</td></tr><tr v-if="!alerts.length"><td colspan="7" class="empty">No hay alertas activas.</td></tr></tbody></table></div></main>
     <ProviderApplications v-else-if="tab === 'claims'" :key="session.user.id" :api="api" />
     <ResearchPilot v-else-if="tab === 'research'" :key="session.user.id" :api="api" />
     <ClickAnalytics v-else-if="tab === 'analytics'" :key="session.user.id" :api="api" />
 <main v-else class="panel"><div class="panel-title"><div><p class="eyebrow">AUDITORÍA</p><h2>Registros fuente recientes</h2><p class="panel-description">Evidencia original recibida de cada proveedor.</p></div><span class="record-count">{{ records.length }} registros</span></div><div class="table-wrap"><table><thead><tr><th>Fuente</th><th>Tipo</th><th>ID externo</th><th>Procesamiento</th><th>Observado</th><th>Payload</th></tr></thead><tbody><tr v-for="record in records" :key="record.raw_record_id"><td><strong>{{ record.source_name }}</strong></td><td>{{ record.record_type }}</td><td>{{ record.external_record_id ?? '—' }}</td><td><span class="status" :class="record.parse_status">{{ statusLabel(record.parse_status) }}</span></td><td>{{ formatDate(record.observed_at) }}</td><td><details><summary>Ver JSON</summary><pre>{{ JSON.stringify(record.payload, null, 2) }}</pre></details></td></tr><tr v-if="!records.length"><td colspan="6" class="empty">Sin registros fuente cargados.</td></tr></tbody></table></div></main>
-     <div v-if="selected" class="modal-backdrop" @click.self="closeReview"><section class="modal review-modal"><div class="panel-title"><div><p class="eyebrow">EVIDENCIA Y DECISIÓN</p><h2>Revisar excepción</h2></div><button class="close" @click="closeReview">×</button></div><div v-if="detail" class="review-content"><div class="review-summary"><div><span class="muted">Entrada</span><strong>{{ detail.run.raw_text ?? detail.run.normalized_input ?? '—' }}</strong></div><div><span class="muted">Origen</span><strong>{{ detail.run.input_type }}</strong></div><div><span class="muted">Motor</span><strong>{{ detail.run.engine_version ?? '—' }}</strong></div><div><span class="muted">Estado</span><span class="status" :class="detail.run.status">{{ detail.run.status }}</span></div></div><section v-if="detail.candidates.length" class="candidate-list"><h3>Candidatos del resolver</h3><label v-for="candidate in detail.candidates" :key="candidate.candidate_id" class="candidate-card" :class="{ selected: selectedCandidateId === candidate.candidate_id }"><input v-model="selectedCandidateId" type="radio" :value="candidate.candidate_id" /><span class="candidate-main"><strong>{{ candidate.display_name }}</strong><small>{{ candidate.method }} · score {{ Number(candidate.score).toFixed(3) }} · rank {{ candidate.rank }}</small><details><summary>Ver explicación</summary><pre>{{ JSON.stringify(candidate.explanation, null, 2) }}</pre></details></span></label></section><p v-else class="empty">El resolver no produjo candidatos.</p><p v-if="detail.candidates.length && !detail.run.provider_brand_id" class="hint">Esta revisión no tiene proveedor asociado; aprobarla no crea un alias global.</p><section v-if="detail.raw_record" class="evidence"><div class="section-title"><h3>Evidencia del scraper</h3><span class="muted">{{ detail.raw_record.source_name ?? 'Fuente desconocida' }} · {{ detail.raw_record.payload_bytes }} bytes</span></div><p>{{ detail.raw_record.record_type }} · {{ detail.raw_record.external_record_id ?? 'sin ID externo' }} · {{ formatDate(detail.raw_record.observed_at) }}</p><a v-if="detail.raw_record.source_url" :href="detail.raw_record.source_url" target="_blank" rel="noopener noreferrer">Abrir fuente original</a><details v-if="detail.raw_record.payload"><summary>Ver payload acotado</summary><pre>{{ JSON.stringify(detail.raw_record.payload, null, 2) }}</pre></details><button v-else class="link" @click="showPayload">Cargar payload (máximo 64 KB)</button></section><label v-if="detail.candidates.length && detail.run.provider_brand_id">Alias que se aprobará<input v-model="alias" maxlength="200" /></label><label>Motivo / notas<textarea v-model="reason" rows="3" maxlength="1000" placeholder="Explica por qué se aprueba o descarta…" /></label><div class="modal-actions"><button class="secondary" @click="closeReview">Cancelar</button><button class="danger" :disabled="loading || !reason.trim()" @click="markNoMatch">Marcar no_match</button><button class="primary" :disabled="loading || !selectedCandidateId || (aliasRequired && !alias.trim())" @click="approveCandidate">{{ loading ? 'Guardando…' : 'Aprobar candidato' }}</button></div></div><p v-else class="empty">Cargando evidencia…</p></section></div>
-    <section v-if="selected && detail && !detail.candidates.length && !manualCatalogItemId" class="manual-candidate-drawer">
-      <div class="panel-title"><div><p class="eyebrow">SELECCION MANUAL</p><h2>Buscar servicio canonico</h2><p class="hint">Este caso no tiene candidatos del resolver. Elige un servicio activo del catalogo; quedara registrado como candidato manual.</p></div></div>
-      <form class="manual-search" @submit.prevent="searchCatalog"><input v-model="manualCatalogQuery" placeholder="Ej. biometria hematica" maxlength="200" /><button class="secondary" type="submit" :disabled="manualCatalogLoading">{{ manualCatalogLoading ? 'Buscando...' : 'Buscar' }}</button></form>
-      <div v-if="manualCatalogResults.length" class="manual-results"><button v-for="item in manualCatalogResults" :key="item.item_id" type="button" class="manual-result" @click="chooseManualCatalogItem(item)"><strong>{{ item.display_name }}</strong><small>{{ item.service_type }} · {{ item.status }}</small></button></div>
-       <label v-if="selected.provider_brand_id">Alias que se aprobara<input v-model="alias" maxlength="200" /></label>
-    </section>
+    <div v-if="selected" class="modal-backdrop" @click.self="closeReview">
+      <section class="modal review-modal" role="dialog" aria-modal="true" aria-labelledby="review-title">
+        <div class="panel-title review-heading">
+          <div><p class="eyebrow">EVIDENCIA Y DECISIÓN</p><h2 id="review-title">Revisar excepción</h2></div>
+          <button class="close" type="button" aria-label="Cerrar revisión" @click="closeReview">×</button>
+        </div>
+        <div v-if="detail" class="review-content">
+          <aside class="review-evidence-column">
+            <div class="review-summary">
+              <div><span class="muted">Entrada recibida</span><strong>{{ detail.run.raw_text ?? detail.run.normalized_input ?? '—' }}</strong></div>
+              <div><span class="muted">Origen</span><strong>{{ statusLabel(detail.run.input_type) }}</strong></div>
+              <div><span class="muted">Motor</span><strong>{{ detail.run.engine_version ?? '—' }}</strong></div>
+              <div><span class="muted">Resultado actual</span><span class="status" :class="detail.run.status">{{ statusLabel(detail.run.status) }}</span></div>
+            </div>
+
+            <section v-if="detail.raw_record" class="evidence">
+              <div class="section-title"><h3>1. Evidencia de la fuente</h3><span class="muted">{{ detail.raw_record.source_name ?? 'Fuente desconocida' }} · {{ detail.raw_record.payload_bytes }} bytes</span></div>
+              <p>{{ detail.raw_record.record_type }} · {{ detail.raw_record.external_record_id ?? 'sin ID externo' }} · {{ formatDate(detail.raw_record.observed_at) }}</p>
+              <a v-if="detail.raw_record.source_url" :href="detail.raw_record.source_url" target="_blank" rel="noopener noreferrer">Abrir publicación original</a>
+              <details v-if="detail.raw_record.payload"><summary>Ver datos capturados</summary><pre>{{ JSON.stringify(detail.raw_record.payload, null, 2) }}</pre></details>
+              <button v-else class="link" type="button" @click="showPayload">Cargar datos capturados (máximo 64 KB)</button>
+            </section>
+          </aside>
+
+          <section class="review-decision-column">
+            <div class="review-decision-scroll">
+              <ol class="decision-guide" aria-label="Pasos para resolver la excepción">
+                <li><span>1</span><div><strong>Revisa la evidencia</strong><small>Confirma qué publicó la fuente.</small></div></li>
+                <li><span>2</span><div><strong>Elige el estudio</strong><small>Usa una sugerencia o busca en el catálogo.</small></div></li>
+                <li><span>3</span><div><strong>Guarda la decisión</strong><small>Justifica cualquier selección manual o descarte.</small></div></li>
+              </ol>
+
+              <section v-if="detail.candidates.length" class="candidate-list">
+                <h3>2. Selecciona una coincidencia sugerida</h3>
+                <p class="hint">Elige únicamente si conserva el tipo de estudio, muestra y demás características de la entrada.</p>
+                <label v-for="candidate in detail.candidates" :key="candidate.candidate_id" class="candidate-card" :class="{ selected: selectedCandidateId === candidate.candidate_id }">
+                  <input v-model="selectedCandidateId" type="radio" :value="candidate.candidate_id" />
+                  <span class="candidate-main"><strong>{{ candidate.display_name }}</strong><small>{{ candidate.method }} · score {{ Number(candidate.score).toFixed(3) }} · posición {{ candidate.rank }}</small><details><summary>Ver explicación técnica</summary><pre>{{ JSON.stringify(candidate.explanation, null, 2) }}</pre></details></span>
+                </label>
+              </section>
+
+              <section v-else class="manual-candidate-section">
+                <div><p class="eyebrow">SIN COINCIDENCIA AUTOMÁTICA</p><h3>2. Busca el estudio correcto en el catálogo</h3><p class="hint">Escribe el nombre completo del estudio. Seleccionarlo no publica nada por sí solo: primero tendrás que justificar y guardar la decisión.</p></div>
+                <form class="manual-search" @submit.prevent="searchCatalog">
+                  <input v-model="manualCatalogQuery" aria-label="Nombre del estudio en el catálogo" placeholder="Ej. antidoping en cabello" maxlength="200" />
+                  <button class="secondary" type="submit" :disabled="manualCatalogLoading || manualCatalogQuery.trim().length < 2">{{ manualCatalogLoading ? 'Buscando…' : 'Buscar' }}</button>
+                </form>
+                <p v-if="manualCatalogQuery.trim().length >= 2 && !manualCatalogLoading && !manualCatalogResults.length" class="hint">No hay resultados para esa búsqueda. Prueba con otro término o marca la entrada como sin coincidencia.</p>
+                <div v-if="manualCatalogResults.length" class="manual-results">
+                  <button v-for="item in manualCatalogResults" :key="item.item_id" type="button" class="manual-result" :class="{ selected: manualCatalogItemId === item.item_id }" @click="chooseManualCatalogItem(item)">
+                    <span><strong>{{ item.display_name }}</strong><small>{{ statusLabel(item.service_type) }} · {{ statusLabel(item.status) }}</small></span>
+                    <b>{{ manualCatalogItemId === item.item_id ? 'Seleccionado' : 'Elegir' }}</b>
+                  </button>
+                </div>
+              </section>
+
+              <p v-if="detail.candidates.length && !detail.run.provider_brand_id" class="hint">Esta entrada no está asociada con un proveedor; aprobarla no creará un alias global.</p>
+              <label v-if="detail.run.provider_brand_id && selectedCandidateId">Alias que se aprobará<input v-model="alias" maxlength="200" /></label>
+              <label>3. Motivo o notas<textarea v-model="reason" rows="3" maxlength="1000" :placeholder="manualCatalogItemId ? 'Obligatorio: explica por qué corresponde al estudio seleccionado…' : 'Explica la decisión cuando sea necesario…'" /></label>
+              <p v-if="manualCatalogItemId && !reason.trim()" class="field-help">La selección manual requiere un motivo antes de guardarse.</p>
+            </div>
+            <div class="modal-actions review-actions">
+            <button class="secondary" type="button" @click="closeReview">Cancelar</button>
+            <button class="danger" type="button" :disabled="loading || !reason.trim()" @click="markNoMatch">No corresponde a ningún estudio</button>
+            <button class="primary" type="button" :disabled="!canApprove" @click="approveCandidate">{{ loading ? 'Guardando…' : 'Guardar coincidencia' }}</button>
+          </div>
+          </section>
+        </div>
+        <p v-else class="empty">Cargando evidencia…</p>
+      </section>
+    </div>
   </div>
 </template>

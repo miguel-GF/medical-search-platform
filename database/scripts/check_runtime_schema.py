@@ -21,8 +21,9 @@ select jsonb_build_object(
     where polrelid = 'storage.objects'::regclass and polname = 'provider_documents_internal_freeze'
       and not polpermissive and polcmd = '*'
       and polroles @> array['anon'::regrole::oid, 'authenticated'::regrole::oid]
-      and pg_get_expr(polqual, polrelid) = '(bucket_id <> ''provider-claims''::text)'
-      and pg_get_expr(polwithcheck, polrelid) = '(bucket_id <> ''provider-claims''::text)'),
+      and pg_get_expr(polqual, polrelid) = '((bucket_id <> ''provider-claims''::text) OR provider_documents_open())'
+      and pg_get_expr(polwithcheck, polrelid) = '((bucket_id <> ''provider-claims''::text) OR provider_documents_open())'),
+  'internal_document_effective_closed', (select case when public.provider_documents_open() then 0 else 1 end),
   'internal_document_write_freeze', (select count(*)::integer from pg_trigger
     where tgrelid = 'identity.verification_documents'::regclass
       and tgname = 'internal_document_write_freeze' and tgenabled = 'O'
@@ -73,10 +74,14 @@ select jsonb_build_object(
       and p.oid in (to_regprocedure('public.provider_can_access_claim_storage(text)'),
                     to_regprocedure('public.provider_can_upload_claim_storage(text)'))
       and has_function_privilege('authenticated', p.oid, 'execute')),
+  'public_authenticated_document_gate_exec', (select count(*)::integer from pg_proc p join pg_namespace n on n.oid = p.pronamespace
+    where n.nspname = 'public' and p.oid = to_regprocedure('public.provider_documents_open()')
+      and has_function_privilege('authenticated', p.oid, 'execute')),
   'unexpected_public_authenticated_exec', (select count(*)::integer from pg_proc p join pg_namespace n on n.oid = p.pronamespace
     where n.nspname = 'public' and p.prokind = 'f' and has_function_privilege('authenticated', p.oid, 'execute')
       and p.oid not in (to_regprocedure('public.provider_can_access_claim_storage(text)'),
-                        to_regprocedure('public.provider_can_upload_claim_storage(text)'))),
+                        to_regprocedure('public.provider_can_upload_claim_storage(text)'),
+                        to_regprocedure('public.provider_documents_open()'))),
   'scan_queue_service_exec', (select count(*)::integer from pg_proc p join pg_namespace n on n.oid = p.pronamespace
     where n.nspname = 'public' and p.proname = 'api_server_document_scan_queue'
       and p.oid = to_regprocedure('public.api_server_document_scan_queue(integer)')
@@ -108,9 +113,10 @@ select jsonb_build_object(
 """
 EXPECTED = {
     "internal_document_storage_freeze": 1,
+    "internal_document_effective_closed": 1,
     "internal_document_write_freeze": 1,
-    "provider_wrappers": 7,
-    "provider_wrappers_service_exec": 7,
+    "provider_wrappers": 11,
+    "provider_wrappers_service_exec": 11,
     "provider_wrappers_anon_exec": 0,
     "provider_wrappers_authenticated_exec": 0,
     "provider_legacy_anon_exec": 0,
@@ -120,8 +126,9 @@ EXPECTED = {
   "worker_rpc_anon_exec": 0,
   "worker_rpc_authenticated_exec": 0,
   "public_anon_exec": 0,
-  "public_authenticated_exec": 2,
+  "public_authenticated_exec": 3,
   "public_authenticated_storage_exec": 2,
+  "public_authenticated_document_gate_exec": 1,
   "unexpected_public_authenticated_exec": 0,
     "scan_queue_service_exec": 1,
     "scan_queue_anon_exec": 0,

@@ -1,7 +1,8 @@
 # Publicación privada del Admin
 
-Estado: API publicada; Admin preparado, publicación externa pendiente de
-configurar/verificar Cloudflare Access.
+Estado: API y Admin publicados. Cloudflare Access, CORS y la sesión interactiva
+Supabase/MFA del operador están verificados; queda una mutación auditable para una
+acción operativa real.
 
 ## Alcance aprobado
 
@@ -61,10 +62,32 @@ La clave publicable puede formar parte del bundle; nunca se compilan
 
 ## Estado actual y recuperación
 
-La consulta API de Cloudflare no pudo administrar Access con el OAuth local por
-falta de permisos Zero Trust; la política debe crearse en el panel de Cloudflare
-o con un token que tenga sólo los permisos Access necesarios. No se expuso el
-token existente.
+El 22-sep-2026 el operador creó desde el panel la aplicación Self-hosted para
+`admin.pruevia.com.mx` y le asoció la política reutilizable `Solo Miguel`. El
+Worker de assets `pruevia-admin` se publicó inicialmente como versión
+`bee91afd-8a50-425d-b257-a6f8ea51fc75`; la revisión actual del flujo quedó en
+`fb7e18c8-5a2e-40df-8448-6ff172932597`. El 24-sep-2026 se publicó la nueva
+interfaz/cola agrupada como versión `4b16c144-bca9-4518-91c7-514036130181`.
+Los resolvers públicos `1.1.1.1` y
+`8.8.8.8` resolvieron el hostname; una petición sin sesión obtuvo `302` hacia
+Cloudflare Access. El preflight desde el Admin obtuvo `204` y un origen ajeno
+obtuvo `403`. Typecheck, 24 pruebas y build de producción pasaron antes del
+despliegue.
+
+El operador acreditó en navegador el recorrido posterior a Access: sesión
+Supabase autorizada, AAL2/MFA e interfaz con datos obtenidos del API. La primera
+carga mostró un aviso de conexión transitorio y después recuperó la lectura; si
+se repite de forma estable debe capturarse la petición fallida en Network. No se
+ejecutó una mutación artificial: se comprobará la auditoría al realizar una acción
+operativa necesaria.
+
+La mejora inicial eliminó el selector manual superpuesto. El 23-sep-2026 se
+reorganizó el modal para usar dos columnas en escritorio: resumen/evidencia a la
+izquierda y pasos, selección, motivo y acciones persistentes a la derecha. Sólo el
+contenido de cada columna se desplaza; en pantallas pequeñas vuelve a una columna.
+Typecheck, 24 pruebas y build de producción pasaron antes de desplegarla. El
+smoke anónimo posterior al despliegue volvió a confirmar `302` hacia Access; el
+login con sesión del operador debe volver a comprobarse desde su navegador.
 
 Si falla la verificación, retirar el custom domain del Admin o desactivar su
 despliegue sin tocar la base de datos. Mantener la versión previa del Worker API

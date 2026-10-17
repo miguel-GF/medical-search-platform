@@ -17,6 +17,10 @@ ADMIN_USER_IDS="<supabase-auth-user-uuid>"
 NORMALIZATION_REPROCESS_ENABLED="false"
 NORMALIZATION_REPROCESS_ADMIN_USER_ID="<supabase-auth-user-uuid>"
 NORMALIZATION_REPROCESS_LIMIT="200"
+DENUE_COLLECTION_ENABLED="false"
+# Keep public no-match/ambiguous query capture off absent explicit consent and policy approval.
+PUBLIC_SEARCH_REVIEW_CAPTURE_ENABLED="false"
+# Store DENUE_API_TOKEN as a Worker secret after registering it with INEGI.
 PROVIDER_DOCUMENTS_ENABLED="false"
 OCR_AI_MODEL="@cf/moondream/moondream3.1-9B-A2B"
 # Optional private FastAPI OCR service. When set, this takes precedence over Workers AI.

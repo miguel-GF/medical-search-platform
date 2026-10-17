@@ -164,7 +164,7 @@ select extensions.throws_ok(
     'approved', '00000000-0000-0000-0000-000000000899', 'Pending evidence must fail'
   )$$,
   'P0001',
-  'Claim requires accepted, verified evidence',
+  'Document must be scanned, verified and reviewed before acceptance',
   'claim approval cannot accept pending evidence implicitly'
 );
 
@@ -449,7 +449,7 @@ select extensions.throws_ok(
     'approved', '00000000-0000-0000-0000-000000000899', 'Without evidence'
   )$$,
   'P0001',
-  'Claim requires accepted, verified evidence',
+  'Claim requires at least one verification document or confirmed official contact',
   'admin approval requires evidence'
 );
 

@@ -15,12 +15,25 @@ testers de 18 años o más.
 ## Usar la PWA antes de Android
 
 Publica el build web de release en un dominio HTTPS, comparte esa URL desde el
-landing y abrela desde Chrome/Edge/Safari. En Android, el usuario puede elegir
-**Instalar aplicación** o **Agregar a pantalla principal** desde el menú del
-navegador; en iPhone usa **Compartir → Agregar a pantalla de inicio**. Esto crea
-un acceso independiente mientras llega el APK, pero no equivale a tener soporte
-offline: Flutter ya no genera un service worker automáticamente, así que el
-cacheo offline requiere una implementación posterior.
+landing y ábrela desde Chrome/Edge/Safari. El aviso de instalación ofrece el
+prompt nativo sólo cuando el navegador emite `beforeinstallprompt`; si no lo
+emite, muestra los pasos del menú de Android o **Compartir → Agregar a pantalla
+de inicio** en Safari para iPhone. No se puede forzar un prompt en cualquier
+navegador o visita. Un service worker propio guarda únicamente archivos públicos
+de la aplicación; jamás cachea consultas, recetas, imágenes clínicas o respuestas
+del API. La búsqueda y comparación siguen requiriendo conexión, aunque el acceso
+instalado y parte de la interfaz puedan abrirse sin ella.
+El bundle Flutter conserva el nombre fijo `main.dart.js`: los headers de release
+prohíben tratarlo como inmutable para que una actualización consulte la versión
+publicada. El service worker también usa red primero para esos archivos.
+
+Pruebas del aviso web: `node --test test_web/*.test.mjs`. Verificar además en un
+teléfono real con HTTPS, en navegador normal y desde el icono instalado.
+Después de `flutter build web`, `node test_web/check_installability.mjs` comprueba
+el artefacto en Chrome móvil emulado: montaje de Flutter, manifiesto, iconos, service worker y aviso
+o acción nativa. Para revisar producción, define `PRUEVIA_PWA_URL=https://app.pruevia.com.mx/`
+antes de correr el mismo script; sólo carga la PWA, no envía búsquedas. Requiere
+Chrome local y no sustituye la prueba en el teléfono.
 
 ## Ejecutar
 

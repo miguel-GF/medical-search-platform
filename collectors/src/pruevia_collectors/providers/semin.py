@@ -43,7 +43,7 @@ SEMIN_CATALOG_DETAIL_PATH = "/api/v3/catalog/informacion-catalogo/"
 SEMIN_BRANCHES_URL = f"{SEMIN_SITE_ORIGIN}/sucursales"
 SEMIN_SERVICES_URL = f"{SEMIN_SITE_ORIGIN}/servicios"
 SEMIN_ROBOTS_URL = f"{SEMIN_SITE_ORIGIN}/robots.txt"
-SEMIN_USER_AGENT = "PrueviaSeminCollector/0.2 (+https://pruevia.local/collector)"
+SEMIN_USER_AGENT = "PrueviaSeminCollector/0.2 (+https://pruevia.com.mx/)"
 
 MAX_SEMIN_PAGES = 20
 MAX_SEMIN_RESULTS = 500

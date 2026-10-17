@@ -1,0 +1,151 @@
+{
+  "review_id": "pruevia:evidence-review:20261016:09",
+  "research_date": "2026-10-16",
+  "scope": "Revisión56 preparada por máxima ocurrencia: cuatro gruposSD de ocho filas y APCRSEMIN una fila adicional,33 filas; cuatro conceptos y cinco aliases limitados a proveedor. Sin inferir métodos ni matriz externa; no se ejecuta SQL ni se modifica cola/resolver.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "d6e27ecc54162f3c877f5578ee26be6980e76a0601341ce17d858ee6752680f6",
+  "research_snapshot_sha256": "1007734c7d48c58054b55a77fe737b74f0a7327e4e87b9573c9cbba2796eebb8",
+  "definition_sha256": "f7a8751a3fd8fe631a9b18c29e01258ab102149fe89e110a6b7bfde58c1e4df1",
+  "new_concepts": [
+    {
+      "item_id": "e322e2fd-c20f-5b5d-864b-bd2dc2c5cc5f",
+      "canonical_name": "Velocidad de sedimentación globular (VSG)",
+      "component": "Erythrocyte sedimentation rate",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/005215/erythrocyte-sedimentation-rate",
+      "reason": "SD nombra eritrosedimentación VSG, identidad de orden individual documentada en Labcorp005215. No se importa Westergren modificado, Wintrobe, capilaridad, técnica automatizada, sangre total, anticoagulante, duración de una hora, escala ni unidades desde la fuente externa. No equivale a proteína C reactiva ni viscosidad. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Matriz exacta desconocida en la orden SD. Plasma citratado explícito de APCR SEMIN se conserva únicamente como atributo de ese proveedor; no completa el canónico común ni otras fuentes. Sin duración ni método inferidos."
+    },
+    {
+      "item_id": "7d42bc7a-ba2c-56c6-bd12-9ff6d0227186",
+      "canonical_name": "Resistencia a la proteína C activada",
+      "component": "Activated protein C resistance",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/117762/activated-protein-c-resistance-apcr",
+      "reason": "APCR es una orden propia en Labcorp117762. SD y SEMIN declaran resistencia a proteína C activada. No equivale a genotipo factor V Leiden, actividad/antígeno de proteína C, actividad/antígeno de proteína S, ni un perfil trombofilia. El plasma con citrato congelado sólo es atributo literal de SEMIN; SD no declara matriz. No importar método aPTT, razón, unidad o interferencias farmacológicas del ensayo externo. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Matriz exacta desconocida en la orden SD. Plasma citratado explícito de APCR SEMIN se conserva únicamente como atributo de ese proveedor; no completa el canónico común ni otras fuentes. Sin duración ni método inferidos."
+    },
+    {
+      "item_id": "c31086d9-538d-5a9e-beb0-fcfee1dd6f36",
+      "canonical_name": "Yodo proteico (PBI)",
+      "component": "Iodine.protein bound",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://sintesislab.com/examenes/yodo-proteico",
+      "reason": "La orden Yodo proteico de SD coincide nominalmente con la orden individual Yodo proteico de Síntesis Laboratorio, que identifica yodo asociado a proteínas. No seleccionar yodo total, yodo libre, yodo urinario, T4, T3, yodo butanólico ni perfil tiroideo; no deducir concentración de hormonas ni composición de panel. No importar sangre venosa, volumen, método o preparación externa; SD conserva ayuno literal y matriz desconocida. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Matriz exacta desconocida en la orden SD. Plasma citratado explícito de APCR SEMIN se conserva únicamente como atributo de ese proveedor; no completa el canónico común ni otras fuentes. Sin duración ni método inferidos."
+    },
+    {
+      "item_id": "2e6204a1-32c1-52ce-adf9-0810e7149181",
+      "canonical_name": "Actividad de diamino oxidasa (DAO)",
+      "component": "Diamine oxidase.activity",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.tdlpathology.com/tests/tests-a-z/tests-D/diamine-oxidase-activity/",
+      "reason": "TDL documenta diamino oxidasa actividad como orden individual. SD dice Test Actividad de DAO; se conserva la actividad expresamente escrita, distinta de concentración de DAO, genotipo AOC1, histamina, actividad HNMT o perfil de intolerancia alimentaria. No importar suero, radioensayo, sustrato, ELISA, unidades, umbrales ni recomendaciones clínicas de fuentes externas. La advertencia de preparación SD se conserva sin validarla ni recomendarla. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Matriz exacta desconocida en la orden SD. Plasma citratado explícito de APCR SEMIN se conserva únicamente como atributo de ese proveedor; no completa el canónico común ni otras fuentes. Sin duración ni método inferidos."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "eritrosedimentacion vsg",
+      "item_id": "e322e2fd-c20f-5b5d-864b-bd2dc2c5cc5f",
+      "canonical_name": "Velocidad de sedimentación globular (VSG)",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.labcorp.com/tests/005215/erythrocyte-sedimentation-rate",
+      "reason": "SD nombra eritrosedimentación VSG, identidad de orden individual documentada en Labcorp005215. No se importa Westergren modificado, Wintrobe, capilaridad, técnica automatizada, sangre total, anticoagulante, duración de una hora, escala ni unidades desde la fuente externa. No equivale a proteína C reactiva ni viscosidad. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ERITROSEDIMENTACION VSG"
+      }
+    },
+    {
+      "alias": "resistencia a la proteina c activada",
+      "item_id": "7d42bc7a-ba2c-56c6-bd12-9ff6d0227186",
+      "canonical_name": "Resistencia a la proteína C activada",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.labcorp.com/tests/117762/activated-protein-c-resistance-apcr",
+      "reason": "APCR es una orden propia en Labcorp117762. SD y SEMIN declaran resistencia a proteína C activada. No equivale a genotipo factor V Leiden, actividad/antígeno de proteína C, actividad/antígeno de proteína S, ni un perfil trombofilia. El plasma con citrato congelado sólo es atributo literal de SEMIN; SD no declara matriz. No importar método aPTT, razón, unidad o interferencias farmacológicas del ensayo externo. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "3 ml Plasma con Citrato. Congelado"
+      },
+      "source_attributes": {
+        "specimen_code": "plasma"
+      }
+    },
+    {
+      "alias": "resistencia a la proteina c activada",
+      "item_id": "7d42bc7a-ba2c-56c6-bd12-9ff6d0227186",
+      "canonical_name": "Resistencia a la proteína C activada",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.labcorp.com/tests/117762/activated-protein-c-resistance-apcr",
+      "reason": "APCR es una orden propia en Labcorp117762. SD y SEMIN declaran resistencia a proteína C activada. No equivale a genotipo factor V Leiden, actividad/antígeno de proteína C, actividad/antígeno de proteína S, ni un perfil trombofilia. El plasma con citrato congelado sólo es atributo literal de SEMIN; SD no declara matriz. No importar método aPTT, razón, unidad o interferencias farmacológicas del ensayo externo. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "RESISTENCIA A LA PROTEINA C ACTIVADA"
+      }
+    },
+    {
+      "alias": "yodo proteico",
+      "item_id": "c31086d9-538d-5a9e-beb0-fcfee1dd6f36",
+      "canonical_name": "Yodo proteico (PBI)",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://sintesislab.com/examenes/yodo-proteico",
+      "reason": "La orden Yodo proteico de SD coincide nominalmente con la orden individual Yodo proteico de Síntesis Laboratorio, que identifica yodo asociado a proteínas. No seleccionar yodo total, yodo libre, yodo urinario, T4, T3, yodo butanólico ni perfil tiroideo; no deducir concentración de hormonas ni composición de panel. No importar sangre venosa, volumen, método o preparación externa; SD conserva ayuno literal y matriz desconocida. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "YODO PROTEICO"
+      }
+    },
+    {
+      "alias": "test actividad de dao",
+      "item_id": "2e6204a1-32c1-52ce-adf9-0810e7149181",
+      "canonical_name": "Actividad de diamino oxidasa (DAO)",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.tdlpathology.com/tests/tests-a-z/tests-D/diamine-oxidase-activity/",
+      "reason": "TDL documenta diamino oxidasa actividad como orden individual. SD dice Test Actividad de DAO; se conserva la actividad expresamente escrita, distinta de concentración de DAO, genotipo AOC1, histamina, actividad HNMT o perfil de intolerancia alimentaria. No importar suero, radioensayo, sustrato, ELISA, unidades, umbrales ni recomendaciones clínicas de fuentes externas. La advertencia de preparación SD se conserva sin validarla ni recomendarla. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "Test Actividad de DAO"
+      }
+    }
+  ]
+}

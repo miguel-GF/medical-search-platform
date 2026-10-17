@@ -79,11 +79,27 @@ def artifact_counts(artifact_directory: Path) -> dict[str, int]:
     }
 
 
+def validated_artifact_counts(source: SourceSpec, summary: RunSummary) -> dict[str, int]:
+    artifact_directory = Path(summary.artifact_directory)
+    raw_rows, observation_rows = IngestPublisher.validate_artifacts(
+        source,
+        summary,
+        artifact_directory / "raw_records.jsonl",
+        artifact_directory / "observations.jsonl",
+    )
+    return {
+        "raw_records": len(raw_rows),
+        "parsed_raw_records": summary.records_valid,
+        "observations": len(observation_rows),
+        "quarantined_observations": sum(row.get("status") == "quarantined" for row in observation_rows),
+    }
+
+
 def main() -> int:
     load_local_environment()
     args = build_parser().parse_args()
     source, summary = load_summary(args.artifact_directory)
-    counts = artifact_counts(args.artifact_directory)
+    counts = validated_artifact_counts(source, summary)
     result: dict[str, object] = {"source_key": source.source_key, "run_id": summary.run_id, **counts}
     if args.dry_run:
         result["action"] = "dry_run"

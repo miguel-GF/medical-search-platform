@@ -44,6 +44,29 @@ export interface NormalizationRow {
   source_name: string | null;
 }
 
+export interface NormalizationGroup {
+  representative_run_id: string;
+  input_type: 'crawler';
+  normalized_input: string;
+  sample_raw_text: string | null;
+  provider_brand_id: string | null;
+  provider_brand_name: string | null;
+  source_name: string | null;
+  source_type: string | null;
+  source_usage_policy_status: string | null;
+  // May be an external capture ID rather than a commercial SKU.
+  provider_sku: string | null;
+  source_url: string | null;
+  status: 'pending' | 'ambiguous' | 'no_match';
+  occurrence_count: number;
+  // Counts unverified source identifiers, not validated commercial SKUs.
+  distinct_sku_count: number;
+  rows_with_candidates: number;
+  first_queued_at: string;
+  last_queued_at: string;
+  total_groups: number;
+}
+
 export interface NormalizationCandidate {
   candidate_id: string;
   catalog_item_id: string;
@@ -184,6 +207,7 @@ export interface AdminApi {
   clickMetrics(days?: number): Promise<ClickMetrics>;
   dashboard(): Promise<Dashboard>;
   normalizationQueue(status?: string, inputType?: string, cursor?: { before_created_at: string; before_id: string }): Promise<NormalizationRow[]>;
+  normalizationGroups(status?: string, query?: string, offset?: number): Promise<NormalizationGroup[]>;
   normalizationDetail(id: string, includePayload?: boolean): Promise<NormalizationDetail | null>;
   rawRecords(): Promise<RawRecord[]>;
   catalogItems(query: string): Promise<CatalogItem[]>;
@@ -306,6 +330,12 @@ export function createAdminApi(baseUrl: string, accessToken: () => Promise<strin
         params.set('before_id', cursor.before_id);
       }
       return request<NormalizationRow[]>(`/api/v1/admin/normalization-queue?${params.toString()}`);
+    },
+    normalizationGroups: (status, query = '', offset = 0) => {
+      const params = new URLSearchParams({ limit: '100', offset: String(Math.max(0, Math.trunc(offset))) });
+      if (status) params.set('status', status);
+      if (query.trim()) params.set('q', query.trim().slice(0, 200));
+      return request<NormalizationGroup[]>(`/api/v1/admin/normalization-groups?${params.toString()}`);
     },
     normalizationDetail: (id, includePayload = false) => request<NormalizationDetail | null>(`/api/v1/admin/normalization/${encodeURIComponent(id)}${includePayload ? '?include_payload=true' : ''}`),
     rawRecords: () => request<RawRecord[]>('/api/v1/admin/raw-records?limit=25'),

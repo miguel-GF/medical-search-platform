@@ -67,6 +67,15 @@ test('indexable landing requires its site origin and patient release requires pr
   }).patientUrl, 'https://app.example.com');
 });
 
+test('SEO routes read the validated nested publication config', async () => {
+  const robots = await readFile(new URL('../server/routes/robots.txt.ts', import.meta.url), 'utf8');
+  const sitemap = await readFile(new URL('../server/routes/sitemap.xml.ts', import.meta.url), 'utf8');
+  assert.match(robots, /config\.public\.publication/);
+  assert.match(sitemap, /config\.public\.publication/);
+  assert.doesNotMatch(robots, /config\.public\.indexable/);
+  assert.doesNotMatch(sitemap, /config\.public\.indexable/);
+});
+
 test('integral privacy notice covers pilot data, purposes, Play transfer and ARCO', async () => {
   const notice = await readFile(new URL('../app/pages/privacidad.vue', import.meta.url), 'utf8');
   for (const required of [
@@ -81,9 +90,9 @@ test('integral privacy notice covers pilot data, purposes, Play transfer and ARC
   assert.match(notice, /Este formulario de testers no solicita datos de salud/);
 });
 
-test('closed pilot still renders a disabled form preview', async () => {
+test('closed pilot still renders a disabled recruitment form', async () => {
   const page = await readFile(new URL('../app/pages/prueba-android.vue', import.meta.url), 'utf8');
-  assert.match(page, /Vista previa:/);
+  assert.match(page, /Convocatoria cerrada:/);
   assert.match(page, /:disabled="!available \|\| submitting"/);
   assert.match(page, /Registro aún no disponible/);
 });

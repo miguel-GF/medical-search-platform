@@ -40,7 +40,7 @@ h1 > span { color: var(--brand-primary); font-family: Georgia, serif; font-weigh
 .hero-note { margin-top: 24px; font-size: 11px; }
 .hero-note > span:first-child { color: var(--brand-primary); padding-right: 5px; }
 .note-divider { margin-inline: 8px; }
-.hero-art { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 460px; padding-top: 30px; isolation: isolate; }
+.hero-art { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 460px; padding-top: 30px; isolation: isolate; overflow: clip; }
 .hero-art::before { content: ''; position: absolute; width: 410px; height: 420px; border-radius: 47% 53% 48% 52%; background: var(--color-mint); z-index: -2; transform: rotate(-14deg); }
 .orbit { position: absolute; border: 1px solid var(--color-orbit); border-radius: 50%; z-index: -1; }
 .orbit-one { width: 465px; height: 270px; transform: rotate(-32deg); }

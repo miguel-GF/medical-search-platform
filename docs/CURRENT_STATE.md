@@ -17,6 +17,13 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Pausa y nuevo encargo,17-oct UTC /16-oct local:** se detuvo el crecimiento
+automático del catálogo por instrucción del usuario. Marcador local `STOP`
+conservado y proceso de cola detenido durante espera de lectura por conexión.
+Lote56 de33 filas preparado pero no encolado/aplicado. Se guarda checkpoint
+del árbol previo antes de corregir botones,móvil,analítica visible y búsquedas
+reportadas por el usuario. [Corte y continuidad](HANDOFF_20261017.md).
+
 **Prioridad por grupos, 16-oct12:25 UTC:** lotes54 y55 incorporados:
 104 registros adicionales,13 conceptos y13 aliases exclusivos de proveedor.
 Conteo remoto posterior: **542 conceptos /4,147 pendientes /114 marcas /

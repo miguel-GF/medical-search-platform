@@ -52,16 +52,16 @@ class IngestPublisher:
     def __init__(self, connection: Connection) -> None:
         self.connection = connection
 
-    def publish(self, source: SourceSpec, summary: RunSummary) -> int:
+    def publish(self, source: SourceSpec, summary: RunSummary, *, expected_source_id: str | None = None) -> int:
         artifact_dir = Path(summary.artifact_directory)
         raw_path = artifact_dir / "raw_records.jsonl"
         observations_path = artifact_dir / "observations.jsonl"
         if not raw_path.exists() or not observations_path.exists():
             raise FileNotFoundError(f"collector artifacts are incomplete: {artifact_dir}")
-        raw_rows, observation_rows = self._validate_artifacts(source, summary, raw_path, observations_path)
+        raw_rows, observation_rows = self.validate_artifacts(source, summary, raw_path, observations_path)
 
         with self.connection.transaction():
-            source_id = self._ensure_source(source)
+            source_id = self._ensure_source(source, expected_source_id=expected_source_id)
             endpoint_id = self._ensure_endpoint(source_id, source)
             crawl_run_id, inserted = self._create_crawl_run(endpoint_id, summary)
             if not inserted:
@@ -79,7 +79,8 @@ class IngestPublisher:
     def _canonical_json(value: object) -> str:
         return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str)
 
-    def _validate_artifacts(self, source: SourceSpec, summary: RunSummary, raw_path: Path, observations_path: Path) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    @classmethod
+    def validate_artifacts(cls, source: SourceSpec, summary: RunSummary, raw_path: Path, observations_path: Path) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
         if summary.status not in {"succeeded", "quarantined", "failed"}:
             raise ValueError(f"unsupported collector run status: {summary.status}")
         for field_name in ("records_received", "records_valid", "records_rejected"):
@@ -89,8 +90,8 @@ class IngestPublisher:
         if summary.records_valid + summary.records_rejected > summary.records_received:
             raise ValueError("run record counts are inconsistent")
         try:
-            raw_rows = self._read_jsonl(raw_path)
-            observation_rows = self._read_jsonl(observations_path)
+            raw_rows = cls._read_jsonl(raw_path)
+            observation_rows = cls._read_jsonl(observations_path)
         except (OSError, UnicodeError, json.JSONDecodeError, ValueError) as error:
             raise ValueError(f"collector artifact JSON is invalid: {error}") from error
         if len(raw_rows) != summary.records_received:
@@ -110,7 +111,7 @@ class IngestPublisher:
             payload = row.get("payload")
             if not isinstance(payload, dict):
                 raise ValueError("parsed raw record payload must be an object")
-            serialized_payload = self._canonical_json(payload).encode("utf-8")
+            serialized_payload = cls._canonical_json(payload).encode("utf-8")
             if len(serialized_payload) > MAX_RECORD_PAYLOAD_BYTES:
                 raise ValueError("raw record payload exceeds the safety limit")
             expected_hash = hashlib.sha256(serialized_payload).hexdigest()
@@ -148,7 +149,7 @@ class IngestPublisher:
                 rows.append(row)
         return rows
 
-    def _ensure_source(self, source: SourceSpec) -> str:
+    def _ensure_source(self, source: SourceSpec, *, expected_source_id: str | None = None) -> str:
         endpoint_url = _safe_endpoint_url(source.endpoint_url)
         row = self.connection.execute(
             """
@@ -161,6 +162,8 @@ class IngestPublisher:
             (source.name, source.source_type),
         ).fetchone()
         if row:
+            if expected_source_id is not None and str(row[0]) != expected_source_id:
+                raise ValueError("reviewed source identity changed before ingest publication")
             self.connection.execute(
                 """
                 update ingest.source_endpoints
@@ -181,14 +184,16 @@ class IngestPublisher:
                 ),
             )
             return str(row[0])
+        if expected_source_id is not None:
+            raise ValueError("reviewed source disappeared before ingest publication")
         return str(
             self.connection.execute(
                 """
                 insert into ingest.sources(name, source_type, trust_rank, usage_policy_status)
-                values (%s, %s, %s, %s)
+                values (%s, %s, %s, 'review_required')
                 returning id
                 """,
-                (source.name, source.source_type, 80, source.usage_policy_status),
+                (source.name, source.source_type, 80),
             ).fetchone()[0]
         )
 

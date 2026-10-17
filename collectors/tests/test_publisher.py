@@ -3,6 +3,8 @@ import json
 from pathlib import Path
 from unittest.mock import MagicMock
 
+import pytest
+
 from pruevia_collectors.models import RunSummary, SourceSpec
 from pruevia_collectors import publisher as publisher_module
 from pruevia_collectors.publisher import IngestPublisher
@@ -93,6 +95,64 @@ def test_publisher_strips_signed_endpoint_material_before_persisting(tmp_path: P
     ]
     assert endpoint_updates
     assert endpoint_updates[0].args[1][2] == "https://example.test/catalog"
+
+
+def test_new_source_cannot_self_approve_from_collector_manifest(tmp_path: Path):
+    (tmp_path / "raw_records.jsonl").write_text("", encoding="utf-8")
+    (tmp_path / "observations.jsonl").write_text("", encoding="utf-8")
+    connection = MagicMock()
+    connection.transaction.return_value.__enter__.return_value = connection
+    connection.execute.side_effect = [
+        MagicMock(fetchone=MagicMock(return_value=None)),
+        MagicMock(fetchone=MagicMock(return_value=("new-source-id",))),
+        MagicMock(fetchone=MagicMock(return_value=None)),
+        MagicMock(fetchone=MagicMock(return_value=("endpoint-id",))),
+        MagicMock(fetchone=MagicMock(return_value=("run-id",))),
+        MagicMock(),
+        MagicMock(),
+    ]
+    summary = RunSummary(
+        source_key="fixture", run_id="run-id", status="succeeded",
+        records_received=0, records_valid=0, records_rejected=0,
+        records_published=0, previous_success_count=None,
+        deviation_percentage=None, artifact_directory=str(tmp_path),
+    )
+
+    IngestPublisher(connection).publish(
+        SourceSpec("fixture", "Fixture", "provider_official", usage_policy_status="approved"),
+        summary,
+    )
+
+    source_inserts = [
+        call for call in connection.execute.call_args_list
+        if "insert into ingest.sources(" in call.args[0]
+    ]
+    assert len(source_inserts) == 1
+    assert "'review_required'" in source_inserts[0].args[0]
+    assert "approved" not in source_inserts[0].args[1]
+
+
+def test_scheduled_ingest_rejects_changed_source_identity_before_writing(tmp_path: Path):
+    (tmp_path / "raw_records.jsonl").write_text("", encoding="utf-8")
+    (tmp_path / "observations.jsonl").write_text("", encoding="utf-8")
+    connection = MagicMock()
+    connection.transaction.return_value.__enter__.return_value = connection
+    connection.execute.return_value.fetchone.return_value = ("other-source",)
+    summary = RunSummary(
+        source_key="fixture", run_id="run-id", status="succeeded",
+        records_received=0, records_valid=0, records_rejected=0,
+        records_published=0, previous_success_count=None,
+        deviation_percentage=None, artifact_directory=str(tmp_path),
+    )
+
+    with pytest.raises(ValueError, match="identity changed"):
+        IngestPublisher(connection).publish(
+            SourceSpec("fixture", "Fixture", "provider_official"),
+            summary,
+            expected_source_id="reviewed-source",
+        )
+
+    assert len(connection.execute.call_args_list) == 1
 
 
 def test_publisher_rejects_oversized_payload_before_database_write(tmp_path: Path):

@@ -1,6 +1,6 @@
 # ADR-003 — Publicación pacientes primero en pruevia.com.mx
 
-Estado: **pacientes primero aprobado; Admin privado aprobado el 21-sep-2026 y pendiente de activación/verificación externa**.
+Estado: **ejecutado el 22-sep-2026 para landing, PWA, API y Admin privado; proveedores, feedback, analítica y reclutamiento Android siguen cerrados**.
 Fecha: 20-sep-2026.  
 Alcance: landing, PWA, API, Admin privado y preparación de prueba cerrada Android.
 No incluye alta de proveedores ni apertura del portal de proveedores.
@@ -16,8 +16,8 @@ notificaciones e invitaciones siguen cerrados.
 
 La API se publicó el 21-sep-2026 como `pruevia-api`, versión
 `7c78e0bc-f538-45b1-8111-400a64dcd10a`. La comprobación real de `/health`, CORS
-de raíz/PWA/Admin y rechazo de un origen ajeno pasó. El Admin sigue pendiente
-únicamente de Access, su custom domain y la sesión real.
+de raíz/PWA/Admin y rechazo de un origen ajeno pasó. El 22-sep-2026 se verificaron
+Access, custom domain, sesión Supabase AAL2/MFA y lectura real del Admin.
 
 ## Problema y evidencia
 
@@ -111,6 +111,27 @@ límites gratuitos de la cuenta.
    elija y verifique el buzón destinatario. No se configurará un destino supuesto.
 
 ## Ejecución y verificación
+
+La publicación aprobada se ejecutó el 22-sep-2026. La corrección CSP de
+`pruevia-patient` quedó el 23-sep-2026 en `5102b99d-e019-4a8e-807e-d0b86648b145`;
+`pruevia-landing`, después de
+corregir la lectura anidada de configuración de robots/sitemap, quedó indexable en
+`9562dd9e-f363-4bc1-b10a-65173a9f013c`; y la revisión de dos columnas de
+`pruevia-admin` quedó en `fb7e18c8-5a2e-40df-8448-6ff172932597`. Raíz,
+privacidad, sitemap, PWA
+y estado del piloto respondieron `200`; el piloto devolvió `closed`, `enabled=false`
+y `0/20`. No se publicaron enlaces de proveedor ni Admin en las superficies públicas.
+
+El 24-sep-2026 el usuario autorizó publicar la siguiente versión de landing,
+PWA, API y Admin privado. Se desplegaron `pruevia-api`
+`f412ae67-dab4-4200-97b1-edb5027a1fc0`, `pruevia-patient`
+`303acaac-c5d0-4f39-a9ae-7e63ea1b5d31`, `pruevia-admin`
+`4b16c144-bca9-4518-91c7-514036130181` y `pruevia-landing`
+`d5cd3120-e60a-4a54-863e-2e0db4101e21`. Producción respondió `200` para raíz,
+PWA/manifest/service worker y API health; Admin anónimo respondió `302` hacia
+Cloudflare Access. Chrome móvil emulado confirmó instalación disponible de la
+PWA y ausencia de overflow horizontal del landing a 320–430 px. El registro
+Android sigue `0/20` y cerrado; proveedores y funciones gated no se abrieron.
 
 El trabajo local preparado debe pasar:
 

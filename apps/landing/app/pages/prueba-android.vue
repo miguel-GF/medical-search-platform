@@ -102,7 +102,7 @@ async function submit() {
         <form v-else @submit.prevent="submit">
           <h2 id="tester-form-title">Quiero participar</h2>
           <p>Usaremos estos datos únicamente para organizar la prueba cerrada. No escribas estudios, diagnósticos ni información de salud.</p>
-          <p v-if="!available" class="form-closed-notice" role="status"><strong>Vista previa:</strong> el registro todavía está cerrado. Los campos se habilitarán cuando publiquemos el domicilio del responsable y las fechas definitivas.</p>
+          <p v-if="!available" class="form-closed-notice" role="status"><strong>Convocatoria cerrada:</strong> publicaremos aquí las fechas y habilitaremos el registro cuando comience el reclutamiento de la cohorte.</p>
           <fieldset class="form-fields" :disabled="!available || submitting">
             <label>Correo asociado con Google Play<input v-model.trim="form.play_email" type="email" autocomplete="email" maxlength="254" required></label>
             <label>Municipio<select v-model="form.municipality" required><option v-for="municipality in municipalities" :key="municipality" :value="municipality">{{ municipality }}</option></select></label>

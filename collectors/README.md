@@ -229,11 +229,158 @@ $env:PYTHONPATH = "src"
 python -m pruevia_collectors.cli_publish artifacts/<source>/<run-id> --dry-run
 ```
 
+El `--dry-run` comprueba recuentos, hashes, límites y enlaces entre observaciones
+y RAW sin conectarse a la base. El manifiesto no puede aprobar su propia fuente:
+una fuente nueva se registra siempre como `review_required`; la política de una
+fuente existente se conserva en la base y sólo puede cambiarse mediante revisión
+administrativa separada. Una validación local no autoriza rastrear un sitio ni
+activa el reproceso clínico.
+
+### DENUE estatal local — operativo desde 9-oct-2026
+
+La [descarga estatal oficial](https://www.inegi.org.mx/contenidos/masiva/denue/denue_21_csv.zip)
+permite investigar todo Puebla sin token del API. `pruevia-denue-bulk` valida ZIP,
+metadatos, licencia, esquema, estado, IDs y límites; selecciona SCIAN 621/622 y
+conserva sólo evidencia de identidad/ubicación. No crea conceptos, ofertas ni
+sedes canónicas. Excluye teléfono, correo y representante legal. Las filas sin
+nombre/coordenadas válidas conservan señales de calidad y no se completan por
+inferencia. Atribuir “Fuente: INEGI, DENUE”, fecha del corte y transformación de
+Pruevia conforme a los [términos oficiales](https://www.inegi.org.mx/inegi/terminos.html).
+
+Desde `collectors/`, con el ZIP oficial descargado en la carpeta ignorada:
+
+```powershell
+python -m pruevia_collectors.cli_denue_bulk `
+  --archive artifacts/puebla-expansion-20261009/denue_21_csv.zip `
+  --artifact-root artifacts/puebla-expansion-20261009/denue-bulk
+```
+
+El manifiesto impreso proporciona la carpeta exacta de la corrida. Desde
+`database/`, preparar los lotes sin escribir en remoto:
+
+```powershell
+python scripts/publish_denue_bulk_linked.py <carpeta-exacta-de-la-corrida> `
+  --output-dir ../collectors/artifacts/puebla-expansion-20261009/ingest-sql `
+  --expected-project-ref <referencia-confirmada>
+```
+
+Agregar `--apply` sólo dentro de una operación remota autorizada sobre esa base;
+`--management-api` usa el token privado existente del CLI (Windows Credential
+Manager o `SUPABASE_ACCESS_TOKEN`) para el API oficial, sin imprimirlo. El
+transporte sólo acepta este origen gubernamental con licencia revisada;
+un manifiesto arbitrario no obtiene permiso. Una corrida queda `partial` hasta
+confirmar RAW y observaciones completos; cada lote actualiza `load_receipt.json`.
+Ante un fallo inspeccionar ese recibo y el estado remoto antes de reintentar.
+
+La carga del 9-oct confirmó 13,747 establecimientos, 217 municipios y 69,426
+observaciones en 157 lotes. No equivale a cobertura comercial de estudios ni a
+que todos los negocios sigan abiertos. [Evidencia y siguiente trabajo](../docs/PUEBLA_LOCAL_OPERATION_20261009.md).
+
+### DENUE mensual por API (preparado, apagado)
+
+La API oficial del [DENUE](https://www.inegi.org.mx/servicios/api_denue.html)
+requiere token y limita `Buscar` a radios de 5 km. El runner preparado consulta
+dos términos en cinco centros del piloto (Puebla, San Pedro y San Andrés
+Cholula, Amozoc y Tlaxcala), deduplica establecimientos por ID y guarda sólo
+evidencia de `provider_location` en `ingest`. Es una cobertura por puntos, no un
+censo exhaustivo municipal. No crea marcas, sucursales verificadas, estudios,
+ofertas, precios ni disponibilidad. Si los datos se muestran públicamente,
+debe acreditarse “Fuente: INEGI, DENUE” y su actualización, indicar que la
+transformación es de Pruevia y no aparentar aval del Instituto, conforme a sus
+[términos de libre uso](https://www.inegi.org.mx/inegi/terminos.html).
+
+El Worker `pruevia-api` comprueba en cada corrida que la base mantenga
+exactamente la fuente y endpoint activos, `usage_policy_status=approved` y que
+el gobierno no esté ligado a una marca. La RPC vuelve a validar estas
+condiciones al escribir. Sólo conserva ID DENUE, nombre del establecimiento,
+actividad, dirección y coordenadas; excluye teléfono, correo y sitio web. La
+migración/RPC y el cron mensual del Worker ya están desplegados, pero
+`DENUE_COLLECTION_ENABLED=false` y aún falta el secreto `DENUE_API_TOKEN` en
+Cloudflare; no ha ocurrido una corrida ni está activa la recolección. El token
+se solicita en el [portal oficial del API](https://www.inegi.org.mx/servicios/api_denue.html)
+y debe guardarse como secreto del Worker, nunca en Git ni en el chat.
+
+Al habilitarse, el Worker vuelve a comprobar la política dentro de la RPC,
+serializa corridas mensuales e idempotentes y escribe sólo en `ingest`. La
+captura no procesa el backlog clínico y no autoriza los collectors comerciales
+de Chopo, Salud Digna, SEMIN o sitios genéricos. El cron sólo registra la
+captura dirigida por puntos; no afirma un censo municipal ni actualiza sedes
+canónicas.
+
+Antes de programar Chopo, Salud Digna o SEMIN, el preflight de sólo lectura
+puede comprobar la política y el endpoint persistidos, con
+`PRUEVIA_DATABASE_URL` configurado en el entorno local:
+
+```powershell
+python -m pruevia_collectors.automation_preflight chopo_puebla
+```
+
+Sólo acepta una fuente oficial activa, ligada a un proveedor, con política
+`approved` y endpoint activo que coincida con el adaptador. Hoy no activa
+ningún collector ni cambia políticas. El resultado del preflight no basta por
+sí solo para afirmar que existe un horario, que el sitio permite la captura o
+que se publicó una oferta; esa revisión y el job siguen pendientes.
+
+Hay además un runner local preparado para una sola captura acotada del catálogo
+SEMIN. Requiere `PRUEVIA_DATABASE_URL`, pasa el preflight antes de abrir red,
+obtiene un bloqueo por fuente, limita la ejecución a 15 minutos, valida el
+artefacto, vuelve a comprobar la política y sólo entonces guarda evidencia en
+`ingest`. No crea equivalencias ni ofertas. Si el collector falla o queda en
+cuarentena, no ingiere ese lote. La base actual mantiene esa fuente en
+`review_required`, por lo que el comando se detendrá antes de capturar:
+
+```powershell
+python -m pruevia_collectors.scheduled_runner semin_catalog_puebla
+```
+
+Esto no es un scheduler activo. Antes de conectarlo a un horario faltan la
+revisión de condiciones de fuente, un ensayo real aprobado, alertas y recuperación
+operativa. Los demás adaptadores necesitan además un plan de captura completa
+para no marcar una muestra parcial como fuente fresca.
+
 Para publicar, usa un DSN de servidor en `PRUEVIA_DATABASE_URL` (nunca una clave `anon` del cliente):
 
 ```powershell
 python -m pruevia_collectors.cli_publish artifacts/<source>/<run-id>
 ```
+
+### Revisión de identidades DENUE ya capturadas
+
+Desde la raíz del repositorio, el renderer reutiliza la corrida gubernamental
+licenciada y un fixture fechado con IDs investigados. No captura un catálogo
+comercial ni deduce ofertas a partir de una dirección:
+
+```powershell
+python database/scripts/render_denue_identity_review.py <carpeta-exacta-de-la-corrida-DENUE> `
+  --fixture database/data/provider-identity-review-20261011-02.json `
+  --output collectors/artifacts/identity-review/preview.sql
+```
+
+Por defecto genera una transacción con `ROLLBACK`; `--apply` genera `COMMIT`,
+pero el comando no ejecuta SQL. Las sedes nuevas permanecen `pending` y las
+marcas `verification_pending`; el SQL aborta si una identidad ya está enlazada
+o existe colisión. Conservar recibos antes de reintentar. Las observaciones
+derivadas `reviewed_identity_link` no se cuentan como los seis atributos
+originales de captura al comprobar integridad de una recarga DENUE.
+
+El fixture puede declarar `identity_activity_codes` por marca. Sin ese campo
+se admiten sólo 621511/621512; la lista explícita también admite hospitales
+generales 622111/622112. Cada ID conserva su clase exacta del RAW: hospitales
+se guardan como `hospital` y establecimientos diagnósticos como `branch`.
+La transacción vuelve a comprobar esa clase, hash, corrida y licencia; conserva
+`pending`, auditoría y cero ofertas. La revisión del 11-oct enlazó ocho sedes,
+incluida la matriz hospitalaria CEEAD, después de rollback y commit comprobados.
+Las diferencias de domicilio permanecen en el fixture y no se rellenan.
+
+`existing_brand` permite reutilizar explícitamente una marca activa investigada
+sin crearla ni actualizarla. Debe contener exactamente `id`, `name`,
+`normalized_name`, `slug`, `website_url`, `status`, `verification_status`, con
+identidad y estado iguales a los leídos en la base. La transacción bloquea la
+fila y exige que su snapshot completo permanezca idéntico. El recibo separa
+`brands` nuevas y `brands_reused` cuando corresponde; no permite replay de una
+sede enlazada. La revisión 07 de Zacatlán conserva `CALLE DEL ROBLE SN` y añade
+una sede `pending` bajo IMSS-Bienestar existente, con rollback/commit y ledger
+comprobados, cero ofertas y políticas sin cambios.
 
 ### Catálogo público de SEMIN Puebla
 

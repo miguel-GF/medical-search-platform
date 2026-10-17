@@ -2,7 +2,7 @@
 
 begin;
 create extension if not exists pgtap with schema extensions;
-select extensions.plan(45);
+select extensions.plan(53);
 
 select extensions.has_function(
   'public',
@@ -31,6 +31,26 @@ select extensions.has_function('public', 'api_admin_prices', array['integer'], '
 select extensions.has_function('public', 'api_admin_quality_issues', array['text','integer'], 'admin quality lookup exists');
 select extensions.has_function('public', 'api_admin_alerts', array['text','integer'], 'admin alerts lookup exists');
 select extensions.has_function('public', 'api_admin_normalization_queue_v2', array['text','text','integer','timestamptz','uuid'], 'rich normalization queue RPC exists');
+select extensions.has_function('public', 'api_admin_normalization_groups', array['text','text','integer','integer'], 'grouped crawler normalization RPC exists');
+select extensions.has_function('public', 'api_admin_catalog_terms', array['integer','integer'], 'bounded admin catalog term export exists');
+select extensions.has_function('public', 'api_search_spelling_suggestions', array['text','integer'], 'read-only spelling suggestion RPC exists');
+select extensions.is(
+  (select count(*) from public.api_search_spelling_suggestions('biometira hematica', 5)
+   where display_name = 'Biometría hemática'),
+  1::bigint,
+  'close typo offers a name to search explicitly'
+);
+select extensions.is(
+  (select count(*) from public.api_search_spelling_suggestions('BH', 5)
+   where display_name = 'Biometría hemática'),
+  1::bigint,
+  'generated initialism is offered as a search suggestion, not a resolution'
+);
+select extensions.is(
+  (select count(*) from public.api_search_spelling_suggestions('metieron sangre', 5)),
+  0::bigint,
+  'unrelated blood phrase is not guessed as a clinical study'
+);
 select extensions.has_function('public', 'api_admin_normalization_detail', array['uuid','boolean'], 'normalization detail RPC exists');
 select extensions.has_function('public', 'api_record_resolution_review', array['jsonb','text','text'], 'scoped resolution review capture RPC exists');
 select extensions.has_function('public', 'api_admin_add_manual_candidate', array['uuid','uuid','uuid','text','text'], 'manual candidate RPC exists');
@@ -135,6 +155,22 @@ select extensions.is(
   (select count(*)::bigint from public.api_admin_catalog_items('api fixture', 10)),
   1::bigint,
   'admin catalog lookup returns the canonical fixture'
+);
+
+insert into ingest.normalization_runs(id, input_type, provider_brand_id, raw_text, normalized_input, engine_version, status)
+values
+  ('00000000-0000-0000-0000-000000000910', 'crawler', '00000000-0000-0000-0000-000000000901', 'Etiqueta repetida API', 'etiqueta repetida api', 'test', 'no_match'),
+  ('00000000-0000-0000-0000-000000000911', 'crawler', '00000000-0000-0000-0000-000000000901', 'ETIQUETA REPETIDA API', 'etiqueta repetida api', 'test', 'no_match'),
+  ('00000000-0000-0000-0000-000000000912', 'search', null, 'Etiqueta repetida API', 'etiqueta repetida api', 'test', 'no_match');
+select extensions.is(
+  (select occurrence_count from public.api_admin_normalization_groups('no_match', 'repetida', 10, 0) limit 1),
+  2::bigint,
+  'grouped normalization counts repeated crawler labels once per provider'
+);
+select extensions.is(
+  (select count(*)::bigint from public.api_admin_normalization_groups('no_match', 'repetida', 10, 0)),
+  1::bigint,
+  'grouped normalization excludes patient search inputs'
 );
 
 insert into ingest.normalization_runs(id, input_type, provider_brand_id, raw_text, normalized_input, engine_version, status)

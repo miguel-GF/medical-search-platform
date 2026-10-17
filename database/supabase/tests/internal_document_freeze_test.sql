@@ -14,8 +14,11 @@ select extensions.ok(
   exists (select 1 from pg_policy where polrelid = 'storage.objects'::regclass
     and polname = 'provider_documents_internal_freeze' and not polpermissive and polcmd = '*'
     and polroles @> array['anon'::regrole::oid, 'authenticated'::regrole::oid]
-    and pg_get_expr(polqual, polrelid) = '(bucket_id <> ''provider-claims''::text)'
-    and pg_get_expr(polwithcheck, polrelid) = '(bucket_id <> ''provider-claims''::text)'),
+    and pg_get_expr(polqual, polrelid) =
+      '((bucket_id <> ''provider-claims''::text) OR provider_documents_open())'
+    and pg_get_expr(polwithcheck, polrelid) =
+      '((bucket_id <> ''provider-claims''::text) OR provider_documents_open())'
+    and not public.provider_documents_open()),
   'direct client Storage access is closed only for the evidence bucket'
 );
 select extensions.is(

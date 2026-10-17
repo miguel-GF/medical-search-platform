@@ -8,18 +8,19 @@ preview_urls = false
 pattern = "api.pruevia.com.mx"
 custom_domain = true
 
-# Isolated public reopening: no scheduled triggers or automatic data writes.
+# Normalization remains disabled until exact eligible matches exist. DENUE also
+# remains disabled until its API token is configured as a Worker secret.
 [triggers]
-crons = []
+crons = ["17 * * * *", "17 14 1 * *"]
 
 [vars]
+PUBLIC_ANALYTICS_ENABLED = "false"
 API_VERSION = "v1"
 APP_ENV = "production"
 PROVIDER_DOCUMENTS_ENABLED = "false"
 NORMALIZATION_REPROCESS_ENABLED = "false"
 DENUE_COLLECTION_ENABLED = "false"
 PUBLIC_SEARCH_REVIEW_CAPTURE_ENABLED = "false"
-PUBLIC_ANALYTICS_ENABLED = "false"
 SUPABASE_TIMEOUT_MS = "5000"
 ALLOWED_ORIGINS = "https://pruevia.com.mx,https://app.pruevia.com.mx,https://admin.pruevia.com.mx"
 
@@ -72,3 +73,4 @@ binding = "AI"
 # SUPABASE_PUBLISHABLE_KEY
 # SUPABASE_SECRET_KEY
 # ADMIN_USER_IDS
+# DENUE_API_TOKEN (only if DENUE_COLLECTION_ENABLED is explicitly enabled)

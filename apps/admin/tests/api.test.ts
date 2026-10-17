@@ -115,6 +115,16 @@ describe('admin API client', () => {
     );
   });
 
+  it('requests grouped crawler labels with encoded server-side filters', async () => {
+    const fetcher = vi.fn(async () => new Response('[]', { status: 200 }));
+    const api = createAdminApi('https://api.test', async () => 'secret', fetcher);
+    await api.normalizationGroups('no_match', 'perfil tiroideo', 100);
+    expect(fetcher).toHaveBeenCalledWith(
+      'https://api.test/api/v1/admin/normalization-groups?limit=100&offset=100&status=no_match&q=perfil+tiroideo',
+      expect.objectContaining({ cache: 'no-store' }),
+    );
+  });
+
   it('rejects oversized successful API responses before buffering them', async () => {
     const fetcher = vi.fn(async () => new Response('x'.repeat(2 * 1024 * 1024 + 1), { status: 200 }));
     await expect(createAdminApi('https://api.test', async () => 'secret', fetcher).dashboard()).rejects.toMatchObject({

@@ -1,0 +1,162 @@
+{
+  "review_id": "pruevia:evidence-review:20261015:05",
+  "research_date": "2026-10-15",
+  "scope": "Revisión48: seis identidades/aliases,13filas. Factorreumatoide genérico8,androsterona1,amonio plasmático1; AFP,antiCCP y estriol libre existentes reutilizados1fila cada uno. Sin métodos/propiedades/escala inferidos. TGFbeta1-MBL,estrógenos totales,estrona contradictoria,renina y FR cuantificación retenidos. No ofertas,migraciones,resolver ni instrucciones farmacológicas aprobadas.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "4f5b354760eba8945f60782c13995320ef0d2283f95a05bda7d84d534e43dabb",
+  "research_snapshot_sha256": "4ce01f32d390568358f3133aef99f2956af78b87963059ae15282c8afb94040e",
+  "definition_sha256": "622d034f5de5c00536afcc8b3f38b1e4434fa0790bb2b4acf58961cb0dd1d1bd",
+  "new_concepts": [
+    {
+      "item_id": "99fb2c28-351b-53eb-b1b0-6fef6cee2517",
+      "canonical_name": "Factor reumatoide",
+      "component": "Rheumatoid factor Ab",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/006502/rheumatoid-factor-rf",
+      "reason": "La ficha primaria identifica factor reumatoide como autoanticuerpos y distingue variación de isotipos. Sólo diana FR explícita, sin IgM/IgG/IgA, panel, cuantificación, título, escala, técnica o muestra importados. Ocho filas cuantificación y variante semicuantitativa aglutinación quedan fuera; no se aprueban sus atributos por esta etiqueta genérica. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW no declara matriz exacta, salvo los atributos literales del contexto individual. No completar muestra, forma, fracción, método, escala, unidad, duración o LOINC desde referencia."
+    },
+    {
+      "item_id": "a028854d-69b7-532b-b5de-621dcf356a2c",
+      "canonical_name": "Androsterona",
+      "component": "Androsterone",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/504005/androsterone",
+      "reason": "Labcorp identifica androsterona y advierte que no equivale a androstenediona. No corregir a DHEA/DHEAS, androstenediona, testosterona o androstanediol. No importar forma conjugada/libre, muestra, HPLC/MS-MS o validez diagnóstica. Especialidad Infectología Chopo se conserva literal sin inferir indicación, método o corrección clínica. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW no declara matriz exacta, salvo los atributos literales del contexto individual. No completar muestra, forma, fracción, método, escala, unidad, duración o LOINC desde referencia."
+    },
+    {
+      "item_id": "f79fb3eb-2d0a-517a-87b1-3d7f62d29973",
+      "canonical_name": "Amonio en plasma",
+      "component": "Ammonia",
+      "specimen_code": "plasma",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://www.labcorp.com/tests/007054/ammonia-plasma",
+      "reason": "Labcorp identifica orden de amonio/amoniaco en plasma. El RAW propio declara2ml PlasmaEDTA Congelado; se conserva plasma con guarda exacta sample_type, sin importar método enzimático, concentración, unidades, rango o duración de referencia. EDTA y congelado permanecen en RAW como preparación, no técnica analítica. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "factor reumatoide",
+      "item_id": "99fb2c28-351b-53eb-b1b0-6fef6cee2517",
+      "canonical_name": "Factor reumatoide",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.labcorp.com/tests/006502/rheumatoid-factor-rf",
+      "reason": "La ficha primaria identifica factor reumatoide como autoanticuerpos y distingue variación de isotipos. Sólo diana FR explícita, sin IgM/IgG/IgA, panel, cuantificación, título, escala, técnica o muestra importados. Ocho filas cuantificación y variante semicuantitativa aglutinación quedan fuera; no se aprueban sus atributos por esta etiqueta genérica. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "FACTOR REUMATOIDE"
+      }
+    },
+    {
+      "alias": "androsterona",
+      "item_id": "a028854d-69b7-532b-b5de-621dcf356a2c",
+      "canonical_name": "Androsterona",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.labcorp.com/tests/504005/androsterone",
+      "reason": "Labcorp identifica androsterona y advierte que no equivale a androstenediona. No corregir a DHEA/DHEAS, androstenediona, testosterona o androstanediol. No importar forma conjugada/libre, muestra, HPLC/MS-MS o validez diagnóstica. Especialidad Infectología Chopo se conserva literal sin inferir indicación, método o corrección clínica. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "edad5c4c-9cb7-5098-bb6d-4d9f58907cbc",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "provider_display_name"
+        ],
+        "value": "ANDROSTERONA"
+      }
+    },
+    {
+      "alias": "amonio",
+      "item_id": "f79fb3eb-2d0a-517a-87b1-3d7f62d29973",
+      "canonical_name": "Amonio en plasma",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.labcorp.com/tests/007054/ammonia-plasma",
+      "reason": "Labcorp identifica orden de amonio/amoniaco en plasma. El RAW propio declara2ml PlasmaEDTA Congelado; se conserva plasma con guarda exacta sample_type, sin importar método enzimático, concentración, unidades, rango o duración de referencia. EDTA y congelado permanecen en RAW como preparación, no técnica analítica. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "2 ml Plasma EDTA, Congelado"
+      },
+      "source_attributes": {
+        "specimen_code": "plasma"
+      }
+    },
+    {
+      "alias": "alfafeto proteina",
+      "item_id": "4c0a6be9-12b9-5f25-ac02-d476daee48ea",
+      "canonical_name": "Alfa-fetoproteína (AFP)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.labcorp.com/tests/002253/a-fetoprotein-afp-tumor-marker",
+      "reason": "Título propio ALFAFETO PROTEINA identifica AFP, compatible con concepto existente; se reutiliza su ID. Suero está escrito en sample_type propio y queda en atributos de contexto, sin ampliar muestra del canónico genérico. No AFP-L3, panel materno, riesgo calculado, anticuerpo o técnica ECLIA externos. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "Suero / Tubo de tapon rojo o dorado"
+      },
+      "source_attributes": {
+        "specimen_code": "serum"
+      }
+    },
+    {
+      "alias": "ac anti ccp peptido ciclico citrulinado",
+      "item_id": "a8be3f62-3d78-5825-8abb-851f31d55244",
+      "canonical_name": "Anticuerpos antipéptido cíclico citrulinado (CCP)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://medlineplus.gov/lab-tests/ccp-antibody-test/",
+      "reason": "El título propio explicita anti-CCP y péptido cíclico citrulinado, compatible con concepto existente sin isotipo; se reutiliza ID. Suero está declarado en sample_type y se conserva como atributo del contexto, sin cambiar canónico. No importar IgG/IgA, generaciónCCP2/3, técnica, título, escala o perfil artritis reumatoide. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "2 ml Suero. Refrigerado"
+      },
+      "source_attributes": {
+        "specimen_code": "serum"
+      }
+    },
+    {
+      "alias": "estriol e3 libre",
+      "item_id": "d1c7a84a-74de-55a4-a85a-b125d9262acc",
+      "canonical_name": "Estriol libre (E3)",
+      "service_type": "lab_test",
+      "alias_scope": "global",
+      "evidence_url": "https://www.labcorp.com/tests/004614/estriol",
+      "reason": "El título propio dice Estriol(E3)Libre, misma identidad y fracción del canónico existente; se reutiliza ID. Se conserva suero escrito en sample_type en el contexto sin modificar canónico. No estriol total, estrona, estradiol, panel materno, riesgo calculado, método ICMA o indicación obstétrica inferidos. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "2 ml Suero. Refrigerado"
+      },
+      "source_attributes": {
+        "specimen_code": "serum"
+      }
+    }
+  ]
+}

@@ -1,8 +1,8 @@
 import { SupabaseConfigurationError, SupabaseResponseError, SupabaseRpcError, SupabaseRpcClient, SupabaseTimeoutError } from './supabase.js';
-import { specimenSearchGuidance } from './search_guidance.js';
 import { applicationResponse } from './provider-applications.js';
 import { documentAccess } from './provider-document-access.js';
-import type { AdminAlert, AdminCatalogItem, AdminNormalizationDetail, AdminNormalizationQueueRow, AdminQualityIssue, AdminUser, Env, OcrCorrection, PackageCandidate, PackageItem, PackageLocation, PackageOffer, PackageResolutionResponse, PackageSolution, RateLimitBinding, ResolutionCandidate, ResolutionResponse, RpcClient, SearchRow, ServiceSummaryRow } from './types.js';
+import type { AdminAlert, AdminCatalogItem, AdminNormalizationDetail, AdminNormalizationGroup, AdminNormalizationQueueRow, AdminQualityIssue, AdminUser, Env, OcrCorrection, PackageCandidate, PackageItem, PackageLocation, PackageOffer, PackageResolutionResponse, PackageSolution, RateLimitBinding, ResolutionCandidate, ResolutionResponse, RpcClient, SearchRow, ServiceSummaryRow } from './types.js';
+import { specimenSearchGuidance } from './search_guidance.js';
 import {
   buildPackageResolution,
   normalizeBatchRpcPayload,
@@ -232,7 +232,9 @@ export async function runScheduledNormalizationReprocess(
   }
   const limit = parsePositiveInt(env.NORMALIZATION_REPROCESS_LIMIT, 200, 1, 200);
   const requestId = `normalization-cron-${new Date(scheduledTime).toISOString()}`;
-  const result = await rpc.call<Record<string, unknown>>('api_admin_reprocess_exact_normalizations', {
+  // The scheduled path has its own database RPC. The older Admin RPC also
+  // considers search/OCR inputs and must never be used by an unattended job.
+  const result = await rpc.call<Record<string, unknown>>('api_admin_reprocess_exact_crawler_normalizations', {
     p_reviewer_user_id: reviewerId,
     p_limit: limit,
     p_apply: true,
@@ -285,7 +287,7 @@ async function searchResponse(request: Request, url: URL, rpc: RpcClient, env: E
   const publicResolution = isResolutionResponse(resolution) ? sanitizePublicResolution(resolution) : null;
   if (publicResolution && publicResolution.status !== 'resolved') {
     const results = await addServiceSummaries(groupResolutionCandidates(publicResolution.candidates ?? []), rpc, requestId);
-    return json({ query, results }, 200, origin);
+    return json({ query, results, suggestions: results.length ? [] : await searchSpellingSuggestions(rpc, query, requestId) }, 200, origin);
   }
   if (grouped.length > 0) {
     const results = await addServiceSummaries(grouped, rpc, requestId);
@@ -296,7 +298,33 @@ async function searchResponse(request: Request, url: URL, rpc: RpcClient, env: E
   // service but no provider has a current offer. The search UI can then say
   // "recognized, no active offer" instead of looking like a typo/no-match.
   const results = await addServiceSummaries(groupResolutionCandidates(publicResolution?.candidates ?? []), rpc, requestId);
-  return json({ query, results }, 200, origin);
+  return json({ query, results, suggestions: results.length ? [] : await searchSpellingSuggestions(rpc, query, requestId) }, 200, origin);
+}
+
+async function searchSpellingSuggestions(rpc: RpcClient, query: string, requestId: string): Promise<Array<{ item_id: string; display_name: string }>> {
+  try {
+    const rows = await rpc.call<unknown[]>('api_search_spelling_suggestions', {
+      p_query: query,
+      p_limit: 5,
+    }, { admin: true });
+    return (Array.isArray(rows) ? rows : [])
+      .filter(isRecord)
+      .slice(0, 5)
+      .flatMap((row) => {
+        const name = safePublicText(row.display_name, 200);
+        return isUuidValue(row.item_id) && name
+          ? [{ item_id: row.item_id, display_name: name }]
+          : [];
+      });
+  } catch (error) {
+    // Staggered DB deployments must not break public search.
+    console.error(JSON.stringify({
+      event: 'search_spelling_suggestions_failed',
+      request_id: requestId,
+      error_tag: error instanceof SupabaseRpcError ? error.tag : 'SEARCH_SUGGESTIONS',
+    }));
+    return [];
+  }
 }
 
 async function addServiceSummaries<T extends { service: Record<string, unknown> }>(
@@ -1350,6 +1378,26 @@ async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClien
         p_limit: parseBoundedInt(url.searchParams.get('limit'), 50, 1, 200),
         p_before_created_at: beforeCreatedAt,
         p_before_id: beforeId,
+      }, { admin: true }),
+      200,
+      origin,
+    );
+  }
+  if (request.method === 'GET' && url.pathname === '/api/v1/admin/normalization-groups') {
+    const groupStatus = url.searchParams.get('status');
+    const query = url.searchParams.get('q')?.trim() ?? '';
+    if (groupStatus && !['pending', 'ambiguous', 'no_match'].includes(groupStatus)) {
+      return json({ error: { code: 'invalid_status', message: 'normalization group status is invalid' } }, 400, origin);
+    }
+    if (query.length > 200) {
+      return json({ error: { code: 'invalid_query', message: 'normalization group query is too long' } }, 400, origin);
+    }
+    return json(
+      await rpc.call<AdminNormalizationGroup[]>('api_admin_normalization_groups', {
+        p_status: groupStatus,
+        p_query: query || null,
+        p_limit: parseBoundedInt(url.searchParams.get('limit'), 100, 1, 200),
+        p_offset: parseBoundedInt(url.searchParams.get('offset'), 0, 0, 100000),
       }, { admin: true }),
       200,
       origin,

@@ -1,4 +1,6 @@
 export interface Env {
+  /** Public telemetry is independent of the notice reminder and defaults to disabled. */
+  PUBLIC_ANALYTICS_ENABLED?: string;
   SUPABASE_URL: string;
   SUPABASE_PUBLISHABLE_KEY?: string;
   SUPABASE_SECRET_KEY?: string;
@@ -19,10 +21,12 @@ export interface Env {
   NORMALIZATION_REPROCESS_ADMIN_USER_ID?: string;
   /** Maximum exact/approved-alias rows per scheduled run. */
   NORMALIZATION_REPROCESS_LIMIT?: string;
-  /** Public review capture remains off unless separately authorized with consent. */
+  /** Public ambiguous/no-match query capture; requires explicit product/privacy approval. */
   PUBLIC_SEARCH_REVIEW_CAPTURE_ENABLED?: string;
-  /** Separate from the local notice reminder; no public events unless explicitly enabled. */
-  PUBLIC_ANALYTICS_ENABLED?: string;
+  /** DENUE location-only monthly collector; database source policy also gates writes. */
+  DENUE_COLLECTION_ENABLED?: string;
+  /** INEGI DENUE API token; secret binding only, never a public variable. */
+  DENUE_API_TOKEN?: string;
   PUBLIC_RATE_LIMITER?: RateLimitBinding;
   REVIEW_CAPTURE_RATE_LIMITER?: RateLimitBinding;
   OCR_RATE_LIMITER?: RateLimitBinding;
@@ -295,6 +299,30 @@ export interface AdminNormalizationQueueRow {
   decision_type: string | null;
   decision_reason: string | null;
   source_name: string | null;
+}
+
+export interface AdminNormalizationGroup {
+  representative_run_id: string;
+  input_type: 'crawler';
+  normalized_input: string;
+  sample_raw_text: string | null;
+  provider_brand_id: string | null;
+  provider_brand_name: string | null;
+  source_name: string | null;
+  source_type: string | null;
+  source_usage_policy_status: string | null;
+  // SQL coalesces provider_sku, provider_external_id and raw external_record_id.
+  // This value is an unverified source identifier, not necessarily a stable SKU.
+  provider_sku: string | null;
+  source_url: string | null;
+  status: 'pending' | 'ambiguous' | 'no_match';
+  occurrence_count: number;
+  // Distinct coalesced source identifiers, not validated commercial SKUs.
+  distinct_sku_count: number;
+  rows_with_candidates: number;
+  first_queued_at: string;
+  last_queued_at: string;
+  total_groups: number;
 }
 
 export interface AdminNormalizationDetail {

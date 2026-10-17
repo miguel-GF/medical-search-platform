@@ -53,8 +53,8 @@ select extensions.is(
   (select count(*)::integer from pg_proc p join pg_namespace n on n.oid = p.pronamespace
    where n.nspname = 'public' and p.proname like 'api_server_provider_%'
      and has_function_privilege('service_role', p.oid, 'execute')),
-  7,
-  'service role owns the seven provider entry points'
+  11,
+  'service role owns the eleven server provider entry points'
 );
 select extensions.throws_ok(
   $$select count(*) from public.api_server_provider_my_claims('00000000-0000-0000-0000-000000000899', 'aal1')$$,

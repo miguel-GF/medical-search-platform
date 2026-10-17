@@ -57,7 +57,8 @@ class PatientPreferences {
   ThemeMode get themeMode => switch (_prefs.getString(_themeKey)) {
     'dark' => ThemeMode.dark,
     'light' => ThemeMode.light,
-    _ => ThemeMode.system,
+    'system' => ThemeMode.system,
+    _ => ThemeMode.light,
   };
 
   String get anonymousId {

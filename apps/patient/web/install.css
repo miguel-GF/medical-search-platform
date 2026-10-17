@@ -1,0 +1,34 @@
+.install-help[hidden], .install-help button[hidden] { display: none !important; }
+.install-help {
+  position: fixed;
+  z-index: 100000;
+  right: 16px;
+  bottom: max(16px, env(safe-area-inset-bottom));
+  left: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 500px;
+  margin-inline: auto;
+  padding: 13px 14px;
+  border: 1px solid #a5d6d0;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 12px 36px rgb(15 23 42 / 18%);
+  color: #17323d;
+  font: 14px/1.4 system-ui, sans-serif;
+}
+.install-help span { flex: 1; }
+.install-help button {
+  flex-shrink: 0;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: #0f766e;
+  color: #ffffff;
+  font: 600 13px/1.2 system-ui, sans-serif;
+  cursor: pointer;
+}
+.install-help #install-dismiss { background: transparent; color: #17323d; font-size: 22px; }
+.install-help button:focus-visible { outline: 3px solid #177a70; outline-offset: 2px; }
+@media (display-mode: standalone), (display-mode: fullscreen) { .install-help { display: none !important; } }

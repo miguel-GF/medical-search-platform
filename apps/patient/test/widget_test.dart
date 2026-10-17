@@ -165,7 +165,107 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('Sobre este estudio'), findsOneWidget);
+    expect(find.text('Estudio 1'), findsWidgets);
+    expect(find.text('¿Qué es este estudio?'), findsNWidgets(2));
+
+    await tester.tap(find.text('¿Qué es este estudio?').first);
+    await tester.pumpAndSettle();
+    expect(
+      find.text('Mide las células presentes en una muestra de sangre.'),
+      findsNWidgets(2),
+    );
   });
+
+  testWidgets(
+    'ambiguous search labels alternatives instead of ordered studies',
+    (tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(
+            body: SingleChildScrollView(
+              child: SearchResultsExplorer(
+                services: [
+                  SearchService(
+                    id: 'service-1',
+                    displayName: 'Anticuerpos IgG',
+                    confidence: .82,
+                    resolutionStatus: 'ambiguous',
+                    offers: [],
+                  ),
+                  SearchService(
+                    id: 'service-2',
+                    displayName: 'Anticuerpos IgM',
+                    confidence: .8,
+                    resolutionStatus: 'ambiguous',
+                    offers: [],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+
+      expect(
+        find.textContaining('no 2 estudios distintos de tu orden'),
+        findsOneWidget,
+      );
+      expect(find.text('Estudio 1'), findsOneWidget);
+      expect(find.text('Estudio 2'), findsOneWidget);
+    },
+  );
+
+  testWidgets(
+    'wide results pin provider picker while branches keep scrolling',
+    (tester) async {
+      await tester.binding.setSurfaceSize(const Size(1200, 800));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      final offers = List.generate(
+        14,
+        (index) => SearchOffer(
+          id: 'offer-$index',
+          providerId: 'provider-1',
+          providerName: 'Laboratorio fijo',
+          locationId: 'location-$index',
+          locationName: 'Sucursal $index',
+        ),
+      );
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: CustomScrollView(
+              slivers: [
+                SearchResultsSliverExplorer(
+                  services: [
+                    SearchService(
+                      id: 'service-1',
+                      displayName: 'Biometría hemática',
+                      confidence: 1,
+                      offers: offers,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+
+      expect(find.byType(SliverPersistentHeader), findsOneWidget);
+      await tester.drag(find.byType(CustomScrollView), const Offset(0, -650));
+      await tester.pumpAndSettle();
+      final firstPinnedTop = tester
+          .getTopLeft(find.text('Proveedores encontrados'))
+          .dy;
+      await tester.drag(find.byType(CustomScrollView), const Offset(0, -240));
+      await tester.pumpAndSettle();
+      final secondPinnedTop = tester
+          .getTopLeft(find.text('Proveedores encontrados'))
+          .dy;
+      expect((secondPinnedTop - firstPinnedTop).abs(), lessThan(2));
+      expect(find.text('Sucursal 13'), findsOneWidget);
+    },
+  );
 
   testWidgets(
     'feedback asks structured questions without requesting medical text',

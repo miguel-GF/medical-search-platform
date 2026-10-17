@@ -82,7 +82,7 @@ describe('Pruevia API', () => {
     const result = await runScheduledNormalizationReprocess(configured, { call: call as RpcClient['call'] }, 1_758_000_000_000);
     expect(result.enabled).toBe(true);
     expect(result.request_id).toMatch(/^normalization-cron-.*Z$/);
-    expect(call).toHaveBeenCalledWith('api_admin_reprocess_exact_normalizations', {
+    expect(call).toHaveBeenCalledWith('api_admin_reprocess_exact_crawler_normalizations', {
       p_reviewer_user_id: '00000000-0000-0000-0000-000000000099',
       p_limit: 200,
       p_apply: true,
@@ -101,6 +101,19 @@ describe('Pruevia API', () => {
     expect(call).not.toHaveBeenCalled();
   });
 
+  it('does not fall back to the broad Admin RPC when the crawler RPC is unavailable', async () => {
+    const call = vi.fn(async (_name: string) => { throw new Error('crawler RPC missing'); });
+    const configured: Env = {
+      ...env,
+      NORMALIZATION_REPROCESS_ENABLED: 'true',
+      NORMALIZATION_REPROCESS_ADMIN_USER_ID: '00000000-0000-0000-0000-000000000099',
+    };
+    await expect(runScheduledNormalizationReprocess(configured, { call: call as RpcClient['call'] }))
+      .rejects.toThrow('crawler RPC missing');
+    expect(call).toHaveBeenCalledTimes(1);
+    expect(call.mock.calls[0][0]).toBe('api_admin_reprocess_exact_crawler_normalizations');
+  });
+
   it('returns a grouped search response', async () => {
     const rpc = rpcWith([row, { ...row, price_type: 'member', price_key: 'blue_card', amount_minor: 22000 }]);
     const response = await createHandler({ rpc })(new Request('https://api.test/api/v1/search?q=biometria'), env);
@@ -117,6 +130,27 @@ describe('Pruevia API', () => {
     expect(payload.results[0].offers).toHaveLength(1);
     expect(payload.results[0].offers[0].prices).toHaveLength(2);
     expect(rpc.call).toHaveBeenCalledWith('api_search', expect.objectContaining({ p_query: 'biometria' }));
+  });
+
+  it('keeps spelling suggestions separate from confirmed search results', async () => {
+    const suggestion = { item_id: row.service_id, display_name: 'Biometría hemática', similarity_score: 0.65, internal_note: 'never public' };
+    const call = vi.fn(async <T>(name: string): Promise<T> => {
+      if (name === 'api_search') return [] as T;
+      if (name === 'api_resolve_search') return {
+        query: 'biometira hematica', normalized_query: 'biometira hematica',
+        engine_version: 'clinical-resolver-v6', status: 'no_match', candidates: [],
+      } as T;
+      if (name === 'api_search_spelling_suggestions') return [suggestion] as T;
+      return null as T;
+    });
+    const response = await createHandler({ rpc: { call: call as RpcClient['call'] } })(
+      new Request('https://api.test/api/v1/search?q=biometira%20hematica'), env,
+    );
+    const payload = await response.json() as { results: unknown[]; suggestions: unknown[] };
+    expect(payload.results).toEqual([]);
+    expect(payload.suggestions).toEqual([{ item_id: row.service_id, display_name: 'Biometría hemática' }]);
+    expect(JSON.stringify(payload)).not.toContain('internal_note');
+    expect(call).toHaveBeenCalledWith('api_search_spelling_suggestions', { p_query: 'biometira hematica', p_limit: 5 }, { admin: true });
   });
 
   it('drops non-http source URLs from public offers', async () => {
@@ -310,7 +344,7 @@ describe('Pruevia API', () => {
     const reviewLimiter = { limit: vi.fn(async () => ({ success: false })) };
     const response = await createHandler({ rpc: { call: call as RpcClient['call'] } })(
       new Request('https://api.test/api/v1/search?q=perfil%20tiroideo'),
-      { ...env, REVIEW_CAPTURE_RATE_LIMITER: reviewLimiter },
+      { ...env, PUBLIC_SEARCH_REVIEW_CAPTURE_ENABLED: 'true', REVIEW_CAPTURE_RATE_LIMITER: reviewLimiter },
     );
     expect(response.status).toBe(200);
     expect(reviewLimiter.limit).toHaveBeenCalledOnce();
@@ -331,7 +365,7 @@ describe('Pruevia API', () => {
     const reviewLimiter = { limit: vi.fn(async ({ key }: { key: string }) => ({ success: !key.endsWith(':global') })) };
     const response = await createHandler({ rpc: { call: call as RpcClient['call'] } })(
       new Request('https://api.test/api/v1/search?q=perfil%20tiroideo'),
-      { ...env, REVIEW_CAPTURE_RATE_LIMITER: reviewLimiter },
+      { ...env, PUBLIC_SEARCH_REVIEW_CAPTURE_ENABLED: 'true', REVIEW_CAPTURE_RATE_LIMITER: reviewLimiter },
     );
     expect(response.status).toBe(200);
     expect(reviewLimiter.limit).toHaveBeenCalledTimes(2);
@@ -347,6 +381,54 @@ describe('Pruevia API', () => {
     );
     expect(response.status).toBe(503);
     expect(rpc.call).not.toHaveBeenCalled();
+  });
+
+  it('does not persist public ambiguous searches unless the explicit capture flag is enabled', async () => {
+    const resolution = {
+      query: 'perfil tiroideo',
+      normalized_query: 'perfil tiroideo',
+      engine_version: 'clinical-resolver-v6',
+      status: 'ambiguous',
+      candidates: [],
+    };
+    const call = vi.fn(async <T>(name: string): Promise<T> =>
+      (name === 'api_resolve_search' ? resolution : []) as T,
+    );
+    const limiter = { limit: vi.fn(async () => ({ success: true })) };
+    const response = await createHandler({ rpc: { call: call as RpcClient['call'] } })(
+      new Request('https://api.test/api/v1/search?q=perfil%20tiroideo'),
+      { ...env, REVIEW_CAPTURE_RATE_LIMITER: limiter },
+    );
+
+    expect(response.status).toBe(200);
+    expect(limiter.limit).not.toHaveBeenCalled();
+    expect(call).not.toHaveBeenCalledWith('api_record_resolution_review', expect.anything(), expect.anything());
+  });
+
+  it('also disables review capture for the public resolve endpoint by default', async () => {
+    const resolution = {
+      query: 'consulta sintética',
+      normalized_query: 'consulta sintetica',
+      engine_version: 'clinical-resolver-v6',
+      status: 'no_match',
+      candidates: [],
+    };
+    const call = vi.fn(async <T>(name: string): Promise<T> =>
+      (name === 'api_resolve_search' ? resolution : []) as T,
+    );
+    const limiter = { limit: vi.fn(async () => ({ success: true })) };
+    const response = await createHandler({ rpc: { call: call as RpcClient['call'] } })(
+      new Request('https://api.test/api/v1/resolve', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ text: 'consulta sintética' }),
+      }),
+      { ...env, REVIEW_CAPTURE_RATE_LIMITER: limiter },
+    );
+
+    expect(response.status).toBe(200);
+    expect(limiter.limit).not.toHaveBeenCalled();
+    expect(call).not.toHaveBeenCalledWith('api_record_resolution_review', expect.anything(), expect.anything());
   });
 
   it('selects an exact origin from the CORS allowlist and rejects foreign origins', async () => {
@@ -499,7 +581,7 @@ describe('Pruevia API', () => {
     );
     const response = await createHandler({ rpc: { call: call as RpcClient['call'] } })(
       new Request('https://api.test/api/v1/search?q=perfil%20tiroideo'),
-      env,
+      { ...env, PUBLIC_SEARCH_REVIEW_CAPTURE_ENABLED: 'true' },
     );
     const payload = await response.json() as { results: Array<{ service: { display_name: string; resolution_status: string }; offers: unknown[] }> };
     expect(payload.results).toEqual([
@@ -979,6 +1061,31 @@ describe('Pruevia API', () => {
       p_before_created_at: beforeCreatedAt,
       p_before_id: beforeId,
     }), { admin: true });
+  });
+
+  it('loads grouped crawler labels with bounded server-side filters', async () => {
+    const rpc = rpcWith([]);
+    const handler = createHandler({ rpc, authenticateAdmin });
+    const response = await handler(new Request('https://api.test/api/v1/admin/normalization-groups?status=no_match&q=perfil%20tiroideo&limit=25&offset=50', {
+      headers: { authorization: 'Bearer user-token' },
+    }), env);
+    expect(response.status).toBe(200);
+    expect(rpc.call).toHaveBeenCalledWith('api_admin_normalization_groups', {
+      p_status: 'no_match',
+      p_query: 'perfil tiroideo',
+      p_limit: 25,
+      p_offset: 50,
+    }, { admin: true });
+  });
+
+  it('rejects invalid grouped-normalization filters before privileged RPCs', async () => {
+    const rpc = rpcWith([]);
+    const handler = createHandler({ rpc, authenticateAdmin });
+    const response = await handler(new Request('https://api.test/api/v1/admin/normalization-groups?status=resolved', {
+      headers: { authorization: 'Bearer user-token' },
+    }), env);
+    expect(response.status).toBe(400);
+    expect(rpc.call).not.toHaveBeenCalled();
   });
 
   it('blocks Admin routes until the Supabase session reaches aal2', async () => {

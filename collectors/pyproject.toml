@@ -17,6 +17,7 @@ dependencies = [
 
 [project.scripts]
 pruevia-denue = "pruevia_collectors.cli:main"
+pruevia-denue-bulk = "pruevia_collectors.cli_denue_bulk:main"
 pruevia-chopo = "pruevia_collectors.cli_chopo:main"
 pruevia-ruiz = "pruevia_collectors.cli_ruiz:main"
 pruevia-salud-digna = "pruevia_collectors.cli_salud_digna:main"
@@ -28,6 +29,9 @@ pruevia-linfolab = "pruevia_collectors.cli_linfolab:main"
 pruevia-puebla-discovery = "pruevia_collectors.puebla_discovery:main"
 pruevia-puebla-retry = "pruevia_collectors.puebla_retry:main"
 pruevia-publish = "pruevia_collectors.cli_publish:main"
+pruevia-normalization-triage = "pruevia_collectors.cli_normalization_triage:main"
+pruevia-collector-preflight = "pruevia_collectors.automation_preflight:main"
+pruevia-collector-once = "pruevia_collectors.scheduled_runner:main"
 
 [project.optional-dependencies]
 dev = ["pytest>=9.0.3,<10"]

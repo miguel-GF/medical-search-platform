@@ -33,8 +33,14 @@
 
   <title>Pruevia · Estudios claros, decisiones informadas</title>
   <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="install.css">
 </head>
 <body>
+  <aside id="install-help" class="install-help" aria-label="Instalar Pruevia" hidden>
+    <span id="install-message"></span>
+    <button id="install-action" type="button" hidden>Instalar Pruevia</button>
+    <button id="install-dismiss" type="button" aria-label="Cerrar instrucciones de instalación">×</button>
+  </aside>
   <!--
     You can customize the "flutter_bootstrap.js" script.
     This is useful to provide a custom configuration to the Flutter loader
@@ -44,5 +50,6 @@
     * https://docs.flutter.dev/platform-integration/web/initialization
   -->
   <script src="flutter_bootstrap.js" async></script>
+  <script src="install.js" defer></script>
 </body>
 </html>

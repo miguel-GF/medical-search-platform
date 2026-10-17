@@ -94,20 +94,29 @@ class CatalogResolver:
         candidates: dict[str, NormalizationCandidate] = {}
         for term in terms:
             self._consider(candidates, term, normalized_input, term.display_name, "exact")
+            self._consider_initialism(candidates, term, normalized_input, term.display_name)
             for alias in term.aliases:
                 self._consider(candidates, term, normalized_input, alias, "alias")
+                self._consider_initialism(candidates, term, normalized_input, alias)
             if provider_brand_id:
                 for alias_brand_id, alias in term.provider_aliases:
                     if alias_brand_id == provider_brand_id:
                         self._consider(candidates, term, normalized_input, alias, "provider_alias")
+                        self._consider_initialism(candidates, term, normalized_input, alias)
 
+        exact_items = {
+            candidate.item_id for candidate in candidates.values()
+            if candidate.score == 1.0 and candidate.method in {"exact", "alias", "provider_alias"}
+        }
         ranked = sorted(candidates.values(), key=lambda item: (-item.score, item.item_id))
         ranked = tuple(ranked[: self.max_candidates])
         if not ranked or ranked[0].score < self.candidate_threshold:
             return NormalizationDecision(raw_text, normalized_input, "no_match", None, ranked)
 
         top = ranked[0]
-        if top.method in {"exact", "alias", "provider_alias"}:
+        if len(exact_items) > 1:
+            return NormalizationDecision(raw_text, normalized_input, "ambiguous", None, ranked)
+        if len(exact_items) == 1 and top.method in {"exact", "alias", "provider_alias"}:
             return NormalizationDecision(raw_text, normalized_input, "resolved", top.item_id, ranked)
         return NormalizationDecision(raw_text, normalized_input, "ambiguous", None, ranked)
 
@@ -141,9 +150,44 @@ class CatalogResolver:
         ):
             candidates[term.item_id] = candidate
 
+    def _consider_initialism(
+        self,
+        candidates: dict[str, NormalizationCandidate],
+        term: CatalogTerm,
+        normalized_input: str,
+        matched_term: str,
+    ) -> None:
+        """Expose an exact generated acronym as a review-only candidate.
+
+        Initialisms are useful for labels such as ``BH`` but are not approved
+        aliases. Even an exact initialism therefore never resolves an item;
+        collisions remain visible as multiple candidates for human review.
+        """
+
+        if not (2 <= len(normalized_input) <= 8 and normalized_input.isalpha()):
+            return
+        tokens = [
+            token for token in normalize_text(matched_term).split()
+            if len(token) >= 3 and token not in _STOPWORDS and token.isalpha()
+        ]
+        if not (2 <= len(tokens) <= 8):
+            return
+        initialism = "".join(token[0] for token in tokens)
+        if initialism != normalized_input:
+            return
+        candidate = NormalizationCandidate(
+            term.item_id, term.display_name, 0.95, "rules", matched_term
+        )
+        current = candidates.get(term.item_id)
+        if current is None or (candidate.score, _method_rank(candidate.method)) > (
+            current.score,
+            _method_rank(current.method),
+        ):
+            candidates[term.item_id] = candidate
+
 
 def _method_rank(method: str) -> int:
-    return {"exact": 4, "provider_alias": 3, "alias": 2, "trigram": 1}.get(method, 0)
+    return {"exact": 4, "provider_alias": 3, "alias": 2, "rules": 2, "trigram": 1}.get(method, 0)
 
 
 def trigram_similarity(left: str, right: str) -> float:

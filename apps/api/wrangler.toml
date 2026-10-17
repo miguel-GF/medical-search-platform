@@ -3,16 +3,19 @@ main = "src/index.ts"
 compatibility_date = "2026-08-25"
 
 # The handler is fail-closed unless NORMALIZATION_REPROCESS_ENABLED=true is
-# configured separately. The trigger never performs fuzzy/AI approvals.
+# configured separately. In the prepared code it calls the distinct
+# approved-crawler-only RPC; do not enable before its migration and review.
 [triggers]
 crons = ["17 * * * *"]
 
 [vars]
 PUBLIC_ANALYTICS_ENABLED = "false"
-PUBLIC_SEARCH_REVIEW_CAPTURE_ENABLED = "false"
 API_VERSION = "v1"
 APP_ENV = "production"
 PROVIDER_DOCUMENTS_ENABLED = "false"
+NORMALIZATION_REPROCESS_ENABLED = "false"
+PUBLIC_SEARCH_REVIEW_CAPTURE_ENABLED = "false"
+DENUE_COLLECTION_ENABLED = "false"
 SUPABASE_TIMEOUT_MS = "5000"
 # Until an HTTPS DEV frontend exists, keep browser CORS restricted to the
 # Worker's own reviewed origin. Native Android and server smoke requests do not

@@ -12,6 +12,7 @@ import 'src/api_client.dart';
 import 'src/local_preferences.dart';
 import 'src/privacy_notice.dart';
 import 'src/models.dart';
+import 'src/search_guidance.dart';
 import 'src/picked_file_cleanup_stub.dart'
     if (dart.library.io) 'src/picked_file_cleanup_io.dart';
 import 'src/theme.dart';
@@ -571,142 +572,207 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => _PageFrame(
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const _Eyebrow('BÚSQUEDA DE ESTUDIOS'),
-        Text(
-          'Compara antes de ir',
-          style: Theme.of(
+  Widget build(BuildContext context) {
+    final pinnedResults =
+        kIsWeb &&
+        MediaQuery.sizeOf(context).width >= 900 &&
+        !_loading &&
+        _response != null &&
+        _response!.services.isNotEmpty;
+    if (!pinnedResults) {
+      return _PageFrame(
+        child: _buildContent(
+          context,
+          includeExplorer: true,
+          includeFeedback: true,
+        ),
+      );
+    }
+    return _PageFrame.slivers(
+      slivers: [
+        SliverToBoxAdapter(
+          child: _buildContent(
             context,
-          ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w800),
+            includeExplorer: false,
+            includeFeedback: false,
+          ),
         ),
-        const SizedBox(height: 10),
-        Text(
-          'Escribe el estudio tal como aparece en tu orden. Mostraremos coincidencias verificables y su sucursal concreta.',
-          style: Theme.of(context).textTheme.bodyLarge,
+        SearchResultsSliverExplorer(
+          services: _response!.services,
+          api: widget.api,
+          preferences: widget.preferences,
         ),
-        const SizedBox(height: 6),
-        if (widget.onOpenProviderAccess != null) ...[
-          Align(
-            alignment: Alignment.centerRight,
-            child: TextButton.icon(
-              onPressed: widget.onOpenProviderAccess,
-              icon: const Icon(Icons.business_center_outlined, size: 18),
-              label: const Text('Acceso para proveedores'),
+        if (widget.showFeedbackInvite)
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: _feedbackInvitation(),
             ),
           ),
-        ],
-        const SizedBox(height: 24),
-        LayoutBuilder(
-          builder: (context, constraints) {
-            final stacked = constraints.maxWidth < 560;
-            final field = TextField(
-              controller: _query,
-              inputFormatters: [LengthLimitingTextInputFormatter(200)],
-              textInputAction: TextInputAction.search,
-              onSubmitted: (_) => _search(),
-              decoration: const InputDecoration(
-                labelText: '¿Qué estudio necesitas?',
-                hintText: 'Ej. biometría hemática',
-                prefixIcon: Icon(Icons.search),
-              ),
-            );
-            final button = FilledButton(
-              onPressed: _loading ? null : _search,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 15),
-                child: Text(_loading ? 'Buscando…' : 'Buscar'),
-              ),
-            );
-            return stacked
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [field, const SizedBox(height: 10), button],
-                  )
-                : Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(child: field),
-                      const SizedBox(width: 10),
-                      button,
-                    ],
-                  );
-          },
+      ],
+    );
+  }
+
+  Widget _buildContent(
+    BuildContext context, {
+    required bool includeExplorer,
+    required bool includeFeedback,
+  }) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      const _Eyebrow('BÚSQUEDA DE ESTUDIOS'),
+      Text(
+        'Compara antes de ir',
+        style: Theme.of(
+          context,
+        ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w800),
+      ),
+      const SizedBox(height: 10),
+      Text(
+        'Escribe el estudio tal como aparece en tu orden. Mostraremos coincidencias verificables y su sucursal concreta.',
+        style: Theme.of(context).textTheme.bodyLarge,
+      ),
+      const SizedBox(height: 6),
+      if (widget.onOpenProviderAccess != null) ...[
+        Align(
+          alignment: Alignment.centerRight,
+          child: TextButton.icon(
+            onPressed: widget.onOpenProviderAccess,
+            icon: const Icon(Icons.business_center_outlined, size: 18),
+            label: const Text('Acceso para proveedores'),
+          ),
         ),
+      ],
+      const SizedBox(height: 24),
+      LayoutBuilder(
+        builder: (context, constraints) {
+          final stacked = constraints.maxWidth < 560;
+          final field = TextField(
+            controller: _query,
+            inputFormatters: [LengthLimitingTextInputFormatter(200)],
+            textInputAction: TextInputAction.search,
+            onSubmitted: (_) => _search(),
+            decoration: const InputDecoration(
+              labelText: '¿Qué estudio necesitas?',
+              hintText: 'Ej. biometría hemática',
+              prefixIcon: Icon(Icons.search),
+            ),
+          );
+          final button = FilledButton(
+            onPressed: _loading ? null : _search,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 15),
+              child: Text(_loading ? 'Buscando…' : 'Buscar'),
+            ),
+          );
+          return stacked
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [field, const SizedBox(height: 10), button],
+                )
+              : Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(child: field),
+                    const SizedBox(width: 10),
+                    button,
+                  ],
+                );
+        },
+      ),
+      const SizedBox(height: 14),
+      OutlinedButton.icon(
+        onPressed: widget.onOpenOrder,
+        icon: const Icon(Icons.document_scanner_outlined),
+        label: const Text('Tengo una receta con varios estudios'),
+      ),
+      if (_error != null) ...[
+        const SizedBox(height: 18),
+        _ErrorBanner(message: _error!),
+      ],
+      if (_loading)
+        const Padding(
+          padding: EdgeInsets.only(top: 32),
+          child: Center(child: CircularProgressIndicator()),
+        ),
+      if (!_loading && _response != null) ...[
+        const SizedBox(height: 30),
+        if (_response!.guidance == null)
+          _ResultHeader(query: _response!.query, services: _response!.services),
         const SizedBox(height: 14),
-        OutlinedButton.icon(
-          onPressed: widget.onOpenOrder,
-          icon: const Icon(Icons.document_scanner_outlined),
-          label: const Text('Tengo una receta con varios estudios'),
-        ),
-        if (_error != null) ...[
-          const SizedBox(height: 18),
-          _ErrorBanner(message: _error!),
+        if (_response!.guidance != null)
+          _SpecimenSearchGuidanceCard(
+            guidance: _response!.guidance!,
+            onSearch: (name) {
+              _query.text = name;
+              _search();
+            },
+          ),
+        if (_response!.guidance == null && _response!.services.isEmpty) ...[
+          _EmptyState(
+            title: 'No encontramos una coincidencia segura',
+            text: noMatchGuidance(_response!.query),
+          ),
+          if (_response!.suggestions.isNotEmpty) ...[
+            const SizedBox(height: 12),
+            Text(
+              'Opciones posibles para buscar (confirma con tu orden):',
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: _response!.suggestions
+                  .map(
+                    (suggestion) => ActionChip(
+                      label: Text(suggestion.displayName),
+                      onPressed: () {
+                        _query.text = suggestion.displayName;
+                        _search();
+                      },
+                    ),
+                  )
+                  .toList(growable: false),
+            ),
+          ],
         ],
-        if (_loading)
-          const Padding(
-            padding: EdgeInsets.only(top: 32),
-            child: Center(child: CircularProgressIndicator()),
-          ),
-        if (!_loading && _response != null) ...[
-          const SizedBox(height: 30),
-          if (_response!.guidance == null)
-            _ResultHeader(
-            query: _response!.query,
-            count: _response!.services.length,
-          ),
-          const SizedBox(height: 14),
-          if (_response!.guidance != null)
-            _SpecimenSearchGuidanceCard(
-              guidance: _response!.guidance!,
-              onSearch: (name) {
-                _query.text = name;
-                _search();
-              },
-            ),
-          if (_response!.guidance == null && _response!.services.isEmpty)
-            const _EmptyState(
-              title: 'No encontramos una coincidencia segura',
-              text:
-                  'Prueba con el nombre completo o revisa la sección de receta para confirmar cada renglón.',
-            ),
-          if (_response!.guidance == null)
-            SearchResultsExplorer(
+        if (includeExplorer && _response!.guidance == null)
+          SearchResultsExplorer(
             services: _response!.services,
             api: widget.api,
             preferences: widget.preferences,
           ),
-          if (widget.showFeedbackInvite) ...[
-            const SizedBox(height: 16),
-            _FeedbackInvitation(
-              onSend: () => widget.onFeedback(
-                _response!.services.isEmpty
-                    ? 'no_match'
-                    : _response!.services.any(
-                        (service) => service.resolutionStatus == 'ambiguous',
-                      )
-                    ? 'ambiguous'
-                    : 'results',
-                _response!.services.length,
-              ),
-              onDismiss: widget.onDismissFeedback,
-            ),
-          ],
+        if (includeFeedback && widget.showFeedbackInvite) ...[
+          const SizedBox(height: 16),
+          _feedbackInvitation(),
         ],
-        if (_response == null && !_loading)
-          const Padding(
-            padding: EdgeInsets.only(top: 38),
-            child: _InfoCard(
-              icon: Icons.fact_check_outlined,
-              title: 'Resultados trazables',
-              text:
-                  'Los precios se muestran con su fuente y fecha. Si un proveedor no publica precio, lo indicaremos como “Cotizar”.',
-            ),
-          ),
       ],
+      if (_response == null && !_loading)
+        const Padding(
+          padding: EdgeInsets.only(top: 38),
+          child: _InfoCard(
+            icon: Icons.fact_check_outlined,
+            title: 'Resultados trazables',
+            text:
+                'Los precios se muestran con su fuente y fecha. Si un proveedor no publica precio, lo indicaremos como “Cotizar”.',
+          ),
+        ),
+    ],
+  );
+
+  Widget _feedbackInvitation() => _FeedbackInvitation(
+    onSend: () => widget.onFeedback(
+      _response!.services.isEmpty
+          ? 'no_match'
+          : _response!.services.any(
+              (service) => service.resolutionStatus == 'ambiguous',
+            )
+          ? 'ambiguous'
+          : 'results',
+      _response!.services.length,
     ),
+    onDismiss: widget.onDismissFeedback,
   );
 }
 
@@ -1473,6 +1539,7 @@ class _SearchResultsExplorerState extends State<SearchResultsExplorer> {
   @override
   Widget build(BuildContext context) {
     final groups = _providerGroups(widget.services);
+    final studyNumbers = _studyNumbers(widget.services);
     final selectedKey = groups.any((group) => group.key == _selectedProvider)
         ? _selectedProvider!
         : groups.firstOrNull?.key;
@@ -1496,7 +1563,10 @@ class _SearchResultsExplorerState extends State<SearchResultsExplorer> {
         ),
         if (widget.services.isNotEmpty) ...[
           const SizedBox(height: 14),
-          _ServiceSummaries(services: widget.services),
+          _ServiceSummaries(
+            services: widget.services,
+            studyNumbers: studyNumbers,
+          ),
         ],
         if (groups.isNotEmpty) ...[
           const SizedBox(height: 14),
@@ -1516,6 +1586,7 @@ class _SearchResultsExplorerState extends State<SearchResultsExplorer> {
                       const SizedBox(height: 12),
                       _ProviderDetails(
                         group: selected,
+                        studyNumbers: studyNumbers,
                         api: widget.api,
                         preferences: widget.preferences,
                       ),
@@ -1544,6 +1615,7 @@ class _SearchResultsExplorerState extends State<SearchResultsExplorer> {
                           )
                         : _ProviderDetails(
                             group: selected,
+                            studyNumbers: studyNumbers,
                             api: widget.api,
                             preferences: widget.preferences,
                           ),
@@ -1564,6 +1636,163 @@ class _SearchResultsExplorerState extends State<SearchResultsExplorer> {
   void _selectProvider(String key) => setState(() => _selectedProvider = key);
 }
 
+/// Wide-screen counterpart that uses a pinned sliver for the provider picker.
+/// The pinned header is bounded by the result group, so it releases once the
+/// final branch has scrolled past instead of covering later page content.
+class SearchResultsSliverExplorer extends StatefulWidget {
+  const SearchResultsSliverExplorer({
+    super.key,
+    required this.services,
+    this.api,
+    this.preferences,
+  });
+
+  final List<SearchService> services;
+  final PatientApiClient? api;
+  final PatientPreferences? preferences;
+
+  @override
+  State<SearchResultsSliverExplorer> createState() =>
+      _SearchResultsSliverExplorerState();
+}
+
+class _SearchResultsSliverExplorerState
+    extends State<SearchResultsSliverExplorer> {
+  String? _selectedProvider;
+
+  @override
+  Widget build(BuildContext context) {
+    final groups = _providerGroups(widget.services);
+    final studyNumbers = _studyNumbers(widget.services);
+    final selectedKey = groups.any((group) => group.key == _selectedProvider)
+        ? _selectedProvider!
+        : groups.firstOrNull?.key;
+    final selected = groups
+        .where((group) => group.key == selectedKey)
+        .firstOrNull;
+    final unmatched = widget.services
+        .where((service) => service.offers.isEmpty)
+        .toList(growable: false);
+    final ambiguous = widget.services
+        .where((service) => service.resolutionStatus == 'ambiguous')
+        .length;
+    final viewportHeight = MediaQuery.sizeOf(context).height;
+    final desiredPickerHeight = 62.0 + groups.length * 82.0;
+    final pickerExtent = desiredPickerHeight
+        .clamp(180.0, (viewportHeight - 112).clamp(240.0, 680.0))
+        .toDouble();
+
+    return SliverMainAxisGroup(
+      slivers: [
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 14),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _SearchInterpretation(
+                  serviceCount: widget.services.length,
+                  providerCount: groups.length,
+                  ambiguousCount: ambiguous,
+                ),
+                const SizedBox(height: 14),
+                _ServiceSummaries(
+                  services: widget.services,
+                  studyNumbers: studyNumbers,
+                ),
+                if (groups.isNotEmpty) const SizedBox(height: 14),
+              ],
+            ),
+          ),
+        ),
+        if (groups.isNotEmpty && selected != null)
+          SliverCrossAxisGroup(
+            slivers: [
+              SliverCrossAxisExpanded(
+                flex: 1,
+                sliver: SliverMainAxisGroup(
+                  slivers: [
+                    SliverPersistentHeader(
+                      pinned: true,
+                      delegate: _PinnedProviderPickerDelegate(
+                        extent: pickerExtent,
+                        cacheKey:
+                            '${groups.map((group) => group.key).join('|')}:$selectedKey',
+                        child: _ProviderPicker(
+                          groups: groups,
+                          selectedKey: selectedKey,
+                          scrollable: true,
+                          onSelected: (key) =>
+                              setState(() => _selectedProvider = key),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SliverCrossAxisExpanded(
+                flex: 3,
+                sliver: SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 16),
+                    child: _ProviderDetails(
+                      group: selected,
+                      studyNumbers: studyNumbers,
+                      api: widget.api,
+                      preferences: widget.preferences,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        if (unmatched.isNotEmpty)
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: _UnmatchedServices(services: unmatched),
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+class _PinnedProviderPickerDelegate extends SliverPersistentHeaderDelegate {
+  const _PinnedProviderPickerDelegate({
+    required this.extent,
+    required this.cacheKey,
+    required this.child,
+  });
+
+  final double extent;
+  final String cacheKey;
+  final Widget child;
+
+  @override
+  double get minExtent => extent;
+
+  @override
+  double get maxExtent => extent;
+
+  @override
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) => ColoredBox(
+    color: Theme.of(context).scaffoldBackgroundColor,
+    child: Padding(
+      padding: const EdgeInsets.only(right: 8, bottom: 8),
+      child: child,
+    ),
+  );
+
+  @override
+  bool shouldRebuild(covariant _PinnedProviderPickerDelegate oldDelegate) =>
+      oldDelegate.extent != extent || oldDelegate.cacheKey != cacheKey;
+}
+
 class _SearchInterpretation extends StatelessWidget {
   const _SearchInterpretation({
     required this.serviceCount,
@@ -1577,11 +1806,11 @@ class _SearchInterpretation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final text = providerCount == 0
-        ? 'El catálogo reconoce $serviceCount servicio${serviceCount == 1 ? '' : 's'}, pero no hay una oferta comercial vigente para mostrar.'
-        : ambiguousCount == 0
-        ? 'Encontramos $serviceCount servicio${serviceCount == 1 ? '' : 's'} en $providerCount proveedor${providerCount == 1 ? '' : 'es'}. Selecciona una empresa para comparar sus sucursales.'
-        : 'Encontramos $serviceCount posible${serviceCount == 1 ? '' : 's'} coincidencia${serviceCount == 1 ? '' : 's'}. $ambiguousCount requiere${ambiguousCount == 1 ? '' : 'n'} confirmar la variante exacta.';
+    final text = ambiguousCount > 0
+        ? 'Encontramos $serviceCount posible${serviceCount == 1 ? '' : 's'} coincidencia${serviceCount == 1 ? '' : 's'}, no $serviceCount estudios distintos de tu orden. $ambiguousCount requiere${ambiguousCount == 1 ? '' : 'n'} confirmar la variante exacta.'
+        : providerCount == 0
+        ? 'El catálogo reconoce $serviceCount estudio${serviceCount == 1 ? '' : 's'}, pero no hay una oferta vigente para mostrar.'
+        : 'Identificamos $serviceCount estudio${serviceCount == 1 ? '' : 's'} en $providerCount proveedor${providerCount == 1 ? '' : 'es'}. Selecciona una empresa para comparar sus sucursales.';
     return Card(
       color: Theme.of(context).colorScheme.primaryContainer,
       child: Padding(
@@ -1694,68 +1923,80 @@ class _ProviderPicker extends StatelessWidget {
     required this.groups,
     required this.selectedKey,
     required this.onSelected,
+    this.scrollable = false,
   });
 
   final List<_ProviderGroup> groups;
   final String? selectedKey;
   final ValueChanged<String> onSelected;
+  final bool scrollable;
 
   @override
-  Widget build(BuildContext context) => Card(
-    margin: EdgeInsets.zero,
-    child: Padding(
-      padding: const EdgeInsets.all(10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
-            child: Text(
-              'Proveedores encontrados',
-              style: Theme.of(
+  Widget build(BuildContext context) {
+    final entries = groups
+        .map(
+          (group) => Padding(
+            padding: const EdgeInsets.only(bottom: 6),
+            child: ListTile(
+              selected: group.key == selectedKey,
+              selectedTileColor: Theme.of(
                 context,
-              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800),
+              ).colorScheme.primaryContainer.withValues(alpha: .55),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              onTap: () => onSelected(group.key),
+              leading: CircleAvatar(child: Text('${group.offerCount}')),
+              title: Text(
+                group.name,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              subtitle: Text(
+                '${group.serviceCount} estudio${group.serviceCount == 1 ? '' : 's'} · ${group.branchSummary}',
+              ),
+              trailing: const Icon(Icons.chevron_right),
             ),
           ),
-          ...groups.map(
-            (group) => Padding(
-              padding: const EdgeInsets.only(bottom: 6),
-              child: ListTile(
-                selected: group.key == selectedKey,
-                selectedTileColor: Theme.of(
+        )
+        .toList(growable: false);
+    return Card(
+      margin: EdgeInsets.zero,
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
+              child: Text(
+                'Proveedores encontrados',
+                style: Theme.of(
                   context,
-                ).colorScheme.primaryContainer.withValues(alpha: .55),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                onTap: () => onSelected(group.key),
-                leading: CircleAvatar(child: Text('${group.offerCount}')),
-                title: Text(
-                  group.name,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                subtitle: Text(
-                  '${group.serviceCount} estudio${group.serviceCount == 1 ? '' : 's'} · ${group.branchSummary}',
-                ),
-                trailing: const Icon(Icons.chevron_right),
+                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800),
               ),
             ),
-          ),
-        ],
+            if (scrollable)
+              Expanded(child: ListView(children: entries))
+            else
+              ...entries,
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 class _ProviderDetails extends StatelessWidget {
   const _ProviderDetails({
     required this.group,
+    required this.studyNumbers,
     required this.api,
     required this.preferences,
   });
 
   final _ProviderGroup group;
+  final Map<String, int> studyNumbers;
   final PatientApiClient? api;
   final PatientPreferences? preferences;
 
@@ -1807,8 +2048,12 @@ class _ProviderDetails extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         ...branches.map(
-          (branch) =>
-              _BranchCard(branch: branch, api: api, preferences: preferences),
+          (branch) => _BranchCard(
+            branch: branch,
+            studyNumbers: studyNumbers,
+            api: api,
+            preferences: preferences,
+          ),
         ),
       ],
     );
@@ -1818,11 +2063,13 @@ class _ProviderDetails extends StatelessWidget {
 class _BranchCard extends StatelessWidget {
   const _BranchCard({
     required this.branch,
+    required this.studyNumbers,
     required this.api,
     required this.preferences,
   });
 
   final _BranchGroup branch;
+  final Map<String, int> studyNumbers;
   final PatientApiClient? api;
   final PatientPreferences? preferences;
 
@@ -1845,6 +2092,7 @@ class _BranchCard extends StatelessWidget {
           ...branch.offers.map(
             (entry) => _ProviderServiceTile(
               entry: entry,
+              studyNumber: studyNumbers[entry.service.id] ?? 1,
               api: api,
               preferences: preferences,
             ),
@@ -1858,49 +2106,98 @@ class _BranchCard extends StatelessWidget {
 class _ProviderServiceTile extends StatelessWidget {
   const _ProviderServiceTile({
     required this.entry,
+    required this.studyNumber,
     required this.api,
     required this.preferences,
   });
 
   final _ProviderServiceOffer entry;
+  final int studyNumber;
   final PatientApiClient? api;
   final PatientPreferences? preferences;
 
   @override
-  Widget build(BuildContext context) => Container(
-    width: double.infinity,
-    margin: const EdgeInsets.only(top: 8),
-    padding: const EdgeInsets.all(12),
-    decoration: BoxDecoration(
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsets.only(top: 8),
+    child: Material(
       color: Theme.of(
         context,
       ).colorScheme.surfaceContainerHighest.withValues(alpha: .45),
       borderRadius: BorderRadius.circular(12),
-    ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-              child: Text(
-                entry.service.displayName,
-                style: const TextStyle(fontWeight: FontWeight.w800),
-              ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _StudyBadge(number: studyNumber),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    entry.service.displayName,
+                    style: const TextStyle(fontWeight: FontWeight.w800),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                _StatusChip(status: _serviceMatchStatus(entry.service)),
+              ],
             ),
-            const SizedBox(width: 8),
-            _StatusChip(status: _serviceMatchStatus(entry.service)),
+            const SizedBox(height: 8),
+            _OfferPricing(
+              offer: entry.offer,
+              serviceId: entry.service.id,
+              api: api,
+              preferences: preferences,
+            ),
+            const SizedBox(height: 4),
+            ExpansionTile(
+              tilePadding: EdgeInsets.zero,
+              childrenPadding: const EdgeInsets.only(bottom: 8),
+              dense: true,
+              title: const Text('¿Qué es este estudio?'),
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: _ServiceDescription(service: entry.service),
+                ),
+              ],
+            ),
           ],
         ),
-        const SizedBox(height: 8),
-        _OfferPricing(
-          offer: entry.offer,
-          serviceId: entry.service.id,
-          api: api,
-          preferences: preferences,
-        ),
-      ],
+      ),
+    ),
+  );
+}
+
+Map<String, int> _studyNumbers(List<SearchService> services) {
+  final numbers = <String, int>{};
+  for (final service in services) {
+    numbers.putIfAbsent(service.id, () => numbers.length + 1);
+  }
+  return numbers;
+}
+
+class _StudyBadge extends StatelessWidget {
+  const _StudyBadge({required this.number});
+
+  final int number;
+
+  @override
+  Widget build(BuildContext context) => Container(
+    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+    decoration: BoxDecoration(
+      color: Theme.of(context).colorScheme.primaryContainer,
+      borderRadius: BorderRadius.circular(999),
+    ),
+    child: Text(
+      'Estudio $number',
+      style: TextStyle(
+        color: Theme.of(context).colorScheme.onPrimaryContainer,
+        fontSize: 11,
+        fontWeight: FontWeight.w800,
+      ),
     ),
   );
 }
@@ -1941,9 +2238,10 @@ class _ServiceDescription extends StatelessWidget {
 }
 
 class _ServiceSummaries extends StatelessWidget {
-  const _ServiceSummaries({required this.services});
+  const _ServiceSummaries({required this.services, required this.studyNumbers});
 
   final List<SearchService> services;
+  final Map<String, int> studyNumbers;
 
   @override
   Widget build(BuildContext context) {
@@ -1973,9 +2271,18 @@ class _ServiceSummaries extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      service.displayName,
-                      style: const TextStyle(fontWeight: FontWeight.w700),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _StudyBadge(number: studyNumbers[service.id] ?? 1),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            service.displayName,
+                            style: const TextStyle(fontWeight: FontWeight.w700),
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 4),
                     _ServiceDescription(service: service),
@@ -2953,8 +3260,10 @@ class SettingsScreen extends StatelessWidget {
 }
 
 class _PageFrame extends StatefulWidget {
-  const _PageFrame({required this.child});
-  final Widget child;
+  const _PageFrame({required this.child}) : slivers = null;
+  const _PageFrame.slivers({required this.slivers}) : child = null;
+  final Widget? child;
+  final List<Widget>? slivers;
   @override
   State<_PageFrame> createState() => _PageFrameState();
 }
@@ -3073,17 +3382,42 @@ class _PageFrameState extends State<_PageFrame> {
             controller: _scrollController,
             thumbVisibility: kIsWeb,
             interactive: kIsWeb,
-            child: SingleChildScrollView(
-              controller: _scrollController,
-              primary: false,
-              padding: const EdgeInsets.fromLTRB(20, 12, 20, 48),
-              child: Center(
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 1080),
-                  child: widget.child,
-                ),
-              ),
-            ),
+            child: widget.slivers == null
+                ? SingleChildScrollView(
+                    controller: _scrollController,
+                    primary: false,
+                    padding: const EdgeInsets.fromLTRB(20, 12, 20, 48),
+                    child: Center(
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 1080),
+                        child: widget.child,
+                      ),
+                    ),
+                  )
+                : LayoutBuilder(
+                    builder: (context, constraints) {
+                      final horizontalPadding = constraints.maxWidth > 1120
+                          ? (constraints.maxWidth - 1080) / 2
+                          : 20.0;
+                      return CustomScrollView(
+                        controller: _scrollController,
+                        primary: false,
+                        slivers: [
+                          SliverPadding(
+                            padding: EdgeInsets.fromLTRB(
+                              horizontalPadding,
+                              12,
+                              horizontalPadding,
+                              48,
+                            ),
+                            sliver: SliverMainAxisGroup(
+                              slivers: widget.slivers!,
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
           ),
         ),
       ),
@@ -3407,23 +3741,34 @@ class _EmptyState extends StatelessWidget {
 }
 
 class _ResultHeader extends StatelessWidget {
-  const _ResultHeader({required this.query, required this.count});
+  const _ResultHeader({required this.query, required this.services});
   final String query;
-  final int count;
+  final List<SearchService> services;
   @override
-  Widget build(BuildContext context) => Row(
-    children: [
-      Expanded(
-        child: Text(
-          'Resultados para “$query”',
-          style: Theme.of(
-            context,
-          ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
+  Widget build(BuildContext context) {
+    final count = _studyNumbers(services).length;
+    final ambiguous = services.any(
+      (service) => service.resolutionStatus == 'ambiguous',
+    );
+    final countLabel = count == 0
+        ? 'Sin coincidencias'
+        : ambiguous
+        ? '$count posible${count == 1 ? '' : 's'} coincidencia${count == 1 ? '' : 's'}'
+        : '$count estudio${count == 1 ? '' : 's'} identificado${count == 1 ? '' : 's'}';
+    return Row(
+      children: [
+        Expanded(
+          child: Text(
+            'Resultados para “$query”',
+            style: Theme.of(
+              context,
+            ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
+          ),
         ),
-      ),
-      _StatusChip(status: '$count servicio${count == 1 ? '' : 's'}'),
-    ],
-  );
+        _StatusChip(status: countLabel),
+      ],
+    );
+  }
 }
 
 class _StatusChip extends StatelessWidget {

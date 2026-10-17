@@ -153,11 +153,32 @@ class SearchService {
   }
 }
 
+class SearchSuggestion {
+  const SearchSuggestion({required this.itemId, required this.displayName});
+
+  final String itemId;
+  final String displayName;
+
+  factory SearchSuggestion.fromJson(JsonMap json) {
+    final name = _stringValue(json['display_name']) ?? '';
+    return SearchSuggestion(
+      itemId: _stringValue(json['item_id']) ?? '',
+      displayName: name.length > 200 ? name.substring(0, 200) : name,
+    );
+  }
+}
+
 class SearchResponse {
-  const SearchResponse({required this.query, required this.services, this.guidance});
+  const SearchResponse({
+    required this.query,
+    required this.services,
+    this.suggestions = const [],
+    this.guidance,
+  });
 
   final String query;
   final List<SearchService> services;
+  final List<SearchSuggestion> suggestions;
   final SearchGuidance? guidance;
 
   factory SearchResponse.fromJson(JsonMap json) => SearchResponse(
@@ -166,6 +187,11 @@ class SearchResponse {
       json['results'],
       100,
     ).whereType<JsonMap>().map(SearchService.fromJson).toList(growable: false),
+    suggestions: _boundedList(json['suggestions'], 5)
+        .whereType<JsonMap>()
+        .map(SearchSuggestion.fromJson)
+        .where((item) => item.itemId.isNotEmpty && item.displayName.isNotEmpty)
+        .toList(growable: false),
     guidance: SearchGuidance.parse(json['guidance']),
   );
 }

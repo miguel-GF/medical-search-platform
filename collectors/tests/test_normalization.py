@@ -33,6 +33,19 @@ def test_provider_alias_is_scoped_to_matching_brand():
     assert other_brand.selected_item_id is None
 
 
+def test_conflicting_exact_names_never_choose_one_item_even_with_small_candidate_limit():
+    resolver = CatalogResolver(max_candidates=1)
+    terms = [
+        CatalogTerm("item-a", "Perfil tiroideo"),
+        CatalogTerm("item-b", "Panel tiroideo", aliases=("Perfil tiroideo",)),
+    ]
+
+    decision = resolver.resolve("Perfil tiroideo", terms)
+
+    assert decision.status == "ambiguous"
+    assert decision.selected_item_id is None
+
+
 def test_fuzzy_candidate_requires_review_and_does_not_auto_map():
     resolver = CatalogResolver()
     terms = [CatalogTerm("item-emg", "Electromiografía", aliases=("EMG",))]
@@ -42,6 +55,33 @@ def test_fuzzy_candidate_requires_review_and_does_not_auto_map():
     assert decision.status == "ambiguous"
     assert decision.selected_item_id is None
     assert decision.candidates[0].method == "trigram"
+
+
+def test_generated_initialism_is_a_suggestion_not_an_approved_alias():
+    resolver = CatalogResolver()
+    terms = [CatalogTerm("item-cbc", "Biometría hemática")]
+
+    decision = resolver.resolve("BH", terms)
+
+    assert decision.status == "ambiguous"
+    assert decision.selected_item_id is None
+    assert decision.candidates[0].method == "rules"
+    assert decision.candidates[0].score == 0.95
+
+
+def test_colliding_initialisms_keep_all_items_for_review():
+    resolver = CatalogResolver()
+    terms = [
+        CatalogTerm("item-a", "Biometría hemática"),
+        CatalogTerm("item-b", "Bilirrubina hemática"),
+    ]
+
+    decision = resolver.resolve("bh", terms)
+
+    assert decision.status == "ambiguous"
+    assert decision.selected_item_id is None
+    assert {candidate.item_id for candidate in decision.candidates} == {"item-a", "item-b"}
+    assert all(candidate.method == "rules" for candidate in decision.candidates)
 
 
 def test_distinct_service_with_extra_clinical_detail_is_not_collapsed_to_emg():
