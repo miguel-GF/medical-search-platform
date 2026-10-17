@@ -97,6 +97,9 @@ class PatientApiClient {
       'q': query.trim(),
       'domain': domain,
       'limit': '100',
+      // Older clients cannot explain related individual tests as distinct from
+      // an unverified profile. Request that context only when we can show it.
+      'notice_supported': '1',
     };
     if (latitude != null && longitude != null) {
       params['lat'] = '$latitude';

@@ -52,9 +52,9 @@ bool shouldOpenProviderPortal(Uri uri, {required bool enabled}) =>
 
 Uri? privacyPolicyUri(String value) {
   final configured = value.trim();
-  final uri = Uri.tryParse(configured.isEmpty
-      ? 'https://pruevia.com.mx/privacidad'
-      : configured);
+  final uri = Uri.tryParse(
+    configured.isEmpty ? 'https://pruevia.com.mx/privacidad' : configured,
+  );
   if (uri == null ||
       uri.scheme != 'https' ||
       uri.host.toLowerCase() != 'pruevia.com.mx' ||
@@ -268,7 +268,8 @@ class ConsentScreen extends StatelessWidget {
                       ? 'Los estudios que escribes y las imágenes que envías se procesan para ayudarte a buscar. La medición opcional usa un identificador aleatorio; consulta sus detalles en el aviso.'
                       : 'Los estudios que escribes y las imágenes que envías se procesan para ayudarte a buscar. Esta versión no envía medición de uso. Consulta los detalles en el aviso de privacidad.',
                 ),
-                if (privacyPolicyUri(_privacyPolicyUrl) case final Uri policyUri) ...[
+                if (privacyPolicyUri(_privacyPolicyUrl)
+                    case final Uri policyUri) ...[
                   const SizedBox(height: 12),
                   if (preferences != null)
                     PrivacyNoticeReminder(
@@ -450,33 +451,35 @@ class _PatientShellState extends State<PatientShell> {
               preferences: widget.preferences,
               policyUri: policyUri,
             ),
-          Expanded(child: Row(
-        children: [
-          if (wide)
-            NavigationRail(
-              selectedIndex: _index,
-              onDestinationSelected: _selectTab,
-              labelType: NavigationRailLabelType.all,
-              destinations: const [
-                NavigationRailDestination(
-                  icon: Icon(Icons.search),
-                  label: Text('Buscar'),
-                ),
-                NavigationRailDestination(
-                  icon: Icon(Icons.description_outlined),
-                  label: Text('Receta'),
-                ),
-                NavigationRailDestination(
-                  icon: Icon(Icons.tune),
-                  label: Text('Ajustes'),
+          Expanded(
+            child: Row(
+              children: [
+                if (wide)
+                  NavigationRail(
+                    selectedIndex: _index,
+                    onDestinationSelected: _selectTab,
+                    labelType: NavigationRailLabelType.all,
+                    destinations: const [
+                      NavigationRailDestination(
+                        icon: Icon(Icons.search),
+                        label: Text('Buscar'),
+                      ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.description_outlined),
+                        label: Text('Receta'),
+                      ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.tune),
+                        label: Text('Ajustes'),
+                      ),
+                    ],
+                  ),
+                Expanded(
+                  child: IndexedStack(index: _index, children: pages),
                 ),
               ],
             ),
-          Expanded(
-            child: IndexedStack(index: _index, children: pages),
           ),
-        ],
-          )),
         ],
       ),
       bottomNavigationBar: wide
@@ -527,17 +530,24 @@ class _HomeScreenState extends State<HomeScreen> {
   SearchResponse? _response;
   String? _error;
   bool _loading = false;
+  int _searchRevision = 0;
 
   @override
   void dispose() {
+    _searchRevision++;
     _query.dispose();
     super.dispose();
   }
 
   Future<void> _search() async {
+    final revision = ++_searchRevision;
     final query = _query.text.trim();
     if (query.length < 2) {
-      setState(() => _error = 'Escribe al menos dos caracteres para buscar.');
+      setState(() {
+        _loading = false;
+        _response = null;
+        _error = 'Escribe al menos dos caracteres para buscar.';
+      });
       return;
     }
     setState(() {
@@ -547,7 +557,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
     try {
       final response = await widget.api.search(query);
-      if (!mounted) return;
+      if (!_isCurrentSearch(revision)) return;
       setState(() => _response = response);
       await widget.api.recordEvent(
         'search_completed',
@@ -558,17 +568,29 @@ class _HomeScreenState extends State<HomeScreen> {
         metadata: {'result_count': response.services.length},
       );
     } on PatientApiException catch (error) {
-      if (mounted) setState(() => _error = error.message);
+      if (_isCurrentSearch(revision)) {
+        setState(() => _error = error.message);
+      }
     } catch (_) {
-      if (mounted) {
+      if (_isCurrentSearch(revision)) {
         setState(
           () => _error =
               'No pudimos conectar con Pruevia. Revisa tu conexión e inténtalo de nuevo.',
         );
       }
     } finally {
-      if (mounted) setState(() => _loading = false);
+      if (_isCurrentSearch(revision)) setState(() => _loading = false);
     }
+  }
+
+  bool _isCurrentSearch(int revision) => mounted && revision == _searchRevision;
+
+  void _onQueryChanged(String _) {
+    _searchRevision++;
+    setState(() {
+      _loading = false;
+      _error = null;
+    });
   }
 
   @override
@@ -599,8 +621,10 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         SearchResultsSliverExplorer(
           services: _response!.services,
+          currentQuery: _response!.query,
           api: widget.api,
           preferences: widget.preferences,
+          onSearch: _searchStudy,
         ),
         if (widget.showFeedbackInvite)
           SliverToBoxAdapter(
@@ -651,6 +675,7 @@ class _HomeScreenState extends State<HomeScreen> {
             controller: _query,
             inputFormatters: [LengthLimitingTextInputFormatter(200)],
             textInputAction: TextInputAction.search,
+            onChanged: _onQueryChanged,
             onSubmitted: (_) => _search(),
             decoration: const InputDecoration(
               labelText: '¿Qué estudio necesitas?',
@@ -681,10 +706,14 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       ),
       const SizedBox(height: 14),
-      OutlinedButton.icon(
-        onPressed: widget.onOpenOrder,
-        icon: const Icon(Icons.document_scanner_outlined),
-        label: const Text('Tengo una receta con varios estudios'),
+      _ResponsiveActions(
+        children: [
+          OutlinedButton.icon(
+            onPressed: widget.onOpenOrder,
+            icon: const Icon(Icons.document_scanner_outlined),
+            label: const Text('Tengo una receta con varios estudios'),
+          ),
+        ],
       ),
       if (_error != null) ...[
         const SizedBox(height: 18),
@@ -697,6 +726,14 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       if (!_loading && _response != null) ...[
         const SizedBox(height: 30),
+        if (_response!.notice != null) ...[
+          _InfoCard(
+            icon: Icons.info_outline,
+            title: 'Sobre tu búsqueda',
+            text: _response!.notice!,
+          ),
+          const SizedBox(height: 14),
+        ],
         if (_response!.guidance == null)
           _ResultHeader(query: _response!.query, services: _response!.services),
         const SizedBox(height: 14),
@@ -709,10 +746,11 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
         if (_response!.guidance == null && _response!.services.isEmpty) ...[
-          _EmptyState(
-            title: 'No encontramos una coincidencia segura',
-            text: noMatchGuidance(_response!.query),
-          ),
+          if (_response!.notice == null)
+            _EmptyState(
+              title: 'No encontramos una coincidencia segura',
+              text: noMatchGuidance(_response!.query),
+            ),
           if (_response!.suggestions.isNotEmpty) ...[
             const SizedBox(height: 12),
             Text(
@@ -737,11 +775,15 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ],
-        if (includeExplorer && _response!.guidance == null)
+        if (includeExplorer &&
+            _response!.guidance == null &&
+            _response!.services.isNotEmpty)
           SearchResultsExplorer(
             services: _response!.services,
+            currentQuery: _response!.query,
             api: widget.api,
             preferences: widget.preferences,
+            onSearch: _searchStudy,
           ),
         if (includeFeedback && widget.showFeedbackInvite) ...[
           const SizedBox(height: 16),
@@ -760,6 +802,11 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
     ],
   );
+
+  void _searchStudy(String name) {
+    _query.text = name;
+    _search();
+  }
 
   Widget _feedbackInvitation() => _FeedbackInvitation(
     onSend: () => widget.onFeedback(
@@ -1132,9 +1179,7 @@ class _OrderScreenState extends State<OrderScreen> with WidgetsBindingObserver {
                   ),
                 ),
                 const SizedBox(height: 14),
-                Wrap(
-                  spacing: 10,
-                  runSpacing: 10,
+                _ResponsiveActions(
                   children: [
                     FilledButton.icon(
                       onPressed: _loading ? null : _resolveText,
@@ -1290,10 +1335,14 @@ class OcrReviewCard extends StatelessWidget {
               ),
             ],
             const SizedBox(height: 12),
-            FilledButton.icon(
-              onPressed: onResolve,
-              icon: const Icon(Icons.refresh),
-              label: const Text('Resolver texto corregido'),
+            _ResponsiveActions(
+              children: [
+                FilledButton.icon(
+                  onPressed: onResolve,
+                  icon: const Icon(Icons.refresh),
+                  label: const Text('Resolver texto corregido'),
+                ),
+              ],
             ),
           ],
         ),
@@ -1497,9 +1546,14 @@ class _SpecimenSearchGuidanceCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(bottom: 8),
               child: ListTile(
-                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 4,
+                ),
                 shape: RoundedRectangleBorder(
-                  side: BorderSide(color: Theme.of(context).colorScheme.outlineVariant),
+                  side: BorderSide(
+                    color: Theme.of(context).colorScheme.outlineVariant,
+                  ),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 title: Text(option.displayName),
@@ -1509,9 +1563,13 @@ class _SpecimenSearchGuidanceCard extends StatelessWidget {
               ),
             ),
           if (guidance.options.isEmpty)
-            const Text('No hay opciones verificadas para mostrar en este momento. Escribe el nombre completo de tu orden.'),
+            const Text(
+              'No hay opciones verificadas para mostrar en este momento. Escribe el nombre completo de tu orden.',
+            ),
           const SizedBox(height: 4),
-          const Text('Los estudios tienen propósitos y muestras distintos. No se ha seleccionado ninguno por ti.'),
+          const Text(
+            'Los estudios tienen propósitos y muestras distintos. No se ha seleccionado ninguno por ti.',
+          ),
         ],
       ),
     ),
@@ -1522,12 +1580,16 @@ class SearchResultsExplorer extends StatefulWidget {
   const SearchResultsExplorer({
     super.key,
     required this.services,
+    this.currentQuery = '',
     this.api,
     this.preferences,
+    this.onSearch,
   });
   final List<SearchService> services;
+  final String currentQuery;
   final PatientApiClient? api;
   final PatientPreferences? preferences;
+  final ValueChanged<String>? onSearch;
 
   @override
   State<SearchResultsExplorer> createState() => _SearchResultsExplorerState();
@@ -1547,7 +1609,10 @@ class _SearchResultsExplorerState extends State<SearchResultsExplorer> {
         .where((group) => group.key == selectedKey)
         .firstOrNull;
     final unmatched = widget.services
-        .where((service) => service.offers.isEmpty)
+        .where(
+          (service) =>
+              service.offers.isEmpty && service.resolutionStatus != 'ambiguous',
+        )
         .toList(growable: false);
     final ambiguous = widget.services
         .where((service) => service.resolutionStatus == 'ambiguous')
@@ -1561,6 +1626,14 @@ class _SearchResultsExplorerState extends State<SearchResultsExplorer> {
           providerCount: groups.length,
           ambiguousCount: ambiguous,
         ),
+        if (ambiguous > 0 && widget.onSearch != null) ...[
+          const SizedBox(height: 14),
+          _StudyChoices(
+            services: widget.services,
+            currentQuery: widget.currentQuery,
+            onSearch: widget.onSearch!,
+          ),
+        ],
         if (widget.services.isNotEmpty) ...[
           const SizedBox(height: 14),
           _ServiceSummaries(
@@ -1643,13 +1716,17 @@ class SearchResultsSliverExplorer extends StatefulWidget {
   const SearchResultsSliverExplorer({
     super.key,
     required this.services,
+    this.currentQuery = '',
     this.api,
     this.preferences,
+    this.onSearch,
   });
 
   final List<SearchService> services;
+  final String currentQuery;
   final PatientApiClient? api;
   final PatientPreferences? preferences;
+  final ValueChanged<String>? onSearch;
 
   @override
   State<SearchResultsSliverExplorer> createState() =>
@@ -1671,7 +1748,10 @@ class _SearchResultsSliverExplorerState
         .where((group) => group.key == selectedKey)
         .firstOrNull;
     final unmatched = widget.services
-        .where((service) => service.offers.isEmpty)
+        .where(
+          (service) =>
+              service.offers.isEmpty && service.resolutionStatus != 'ambiguous',
+        )
         .toList(growable: false);
     final ambiguous = widget.services
         .where((service) => service.resolutionStatus == 'ambiguous')
@@ -1695,6 +1775,14 @@ class _SearchResultsSliverExplorerState
                   providerCount: groups.length,
                   ambiguousCount: ambiguous,
                 ),
+                if (ambiguous > 0 && widget.onSearch != null) ...[
+                  const SizedBox(height: 14),
+                  _StudyChoices(
+                    services: widget.services,
+                    currentQuery: widget.currentQuery,
+                    onSearch: widget.onSearch!,
+                  ),
+                ],
                 const SizedBox(height: 14),
                 _ServiceSummaries(
                   services: widget.services,
@@ -1807,7 +1895,9 @@ class _SearchInterpretation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final text = ambiguousCount > 0
-        ? 'Encontramos $serviceCount posible${serviceCount == 1 ? '' : 's'} coincidencia${serviceCount == 1 ? '' : 's'}, no $serviceCount estudios distintos de tu orden. $ambiguousCount requiere${ambiguousCount == 1 ? '' : 'n'} confirmar la variante exacta.'
+        ? ambiguousCount == 1
+              ? 'Encontramos una opción que necesita confirmación. Elige el nombre completo de tu orden para consultar sus opciones.'
+              : 'Encontramos $ambiguousCount opciones que necesitan confirmación. Elige el nombre completo de tu orden para consultar sus opciones.'
         : providerCount == 0
         ? 'El catálogo reconoce $serviceCount estudio${serviceCount == 1 ? '' : 's'}, pero no hay una oferta vigente para mostrar.'
         : 'Identificamos $serviceCount estudio${serviceCount == 1 ? '' : 's'} en $providerCount proveedor${providerCount == 1 ? '' : 'es'}. Selecciona una empresa para comparar sus sucursales.';
@@ -2233,6 +2323,74 @@ class _ServiceDescription extends StatelessWidget {
           ),
         ],
       ],
+    );
+  }
+}
+
+class _StudyChoices extends StatelessWidget {
+  const _StudyChoices({
+    required this.services,
+    required this.currentQuery,
+    required this.onSearch,
+  });
+
+  final List<SearchService> services;
+  final String currentQuery;
+  final ValueChanged<String> onSearch;
+
+  bool _isCurrentName(String name) =>
+      name.trim().toLowerCase().replaceAll(RegExp(r'\s+'), ' ') ==
+      currentQuery.trim().toLowerCase().replaceAll(RegExp(r'\s+'), ' ');
+
+  @override
+  Widget build(BuildContext context) {
+    final candidates = <String, SearchService>{};
+    for (final service in services) {
+      if (service.resolutionStatus == 'ambiguous') {
+        candidates.putIfAbsent(service.id, () => service);
+      }
+    }
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Elige el nombre que aparece en tu orden',
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800),
+            ),
+            const SizedBox(height: 6),
+            const Text(
+              'Estas son opciones posibles. Busca la que coincida con tu orden para revisar sus detalles y la oferta disponible. Si no coincide ninguna, escribe el nombre completo.',
+            ),
+            for (final service in candidates.values) ...[
+              const SizedBox(height: 14),
+              Text(
+                service.displayName,
+                style: const TextStyle(fontWeight: FontWeight.w700),
+              ),
+              const SizedBox(height: 6),
+              if (_isCurrentName(service.displayName))
+                const Text(
+                  'Revisa las variantes de tu orden. Si falta algún detalle, consulta con quien la emitió para precisar el estudio.',
+                )
+              else
+                _ResponsiveActions(
+                  children: [
+                    OutlinedButton.icon(
+                      onPressed: () => onSearch(service.displayName),
+                      icon: const Icon(Icons.search),
+                      label: const Text('Buscar este estudio'),
+                    ),
+                  ],
+                ),
+            ],
+          ],
+        ),
+      ),
     );
   }
 }
@@ -3232,8 +3390,8 @@ class SettingsScreen extends StatelessWidget {
                     'Pruevia no guarda recetas, fotos OCR ni resultados en este dispositivo.',
                   ),
                 ),
-                const Divider(height: 1),
-                if (analyticsEnabled)
+                if (analyticsEnabled) ...[
+                  const Divider(height: 1),
                   ListTile(
                     leading: const Icon(Icons.delete_outline),
                     onTap: preferences.consentGiven ? onConsentRevoked : null,
@@ -3243,13 +3401,8 @@ class SettingsScreen extends StatelessWidget {
                           ? 'Activo para mejorar el producto sin guardar texto médico.'
                           : 'No concedido.',
                     ),
-                  )
-                else
-                  const ListTile(
-                    leading: Icon(Icons.analytics_outlined),
-                    title: Text('Analítica de uso'),
-                    subtitle: Text('Desactivada en esta versión.'),
                   ),
+                ],
               ],
             ),
           ),
@@ -3257,6 +3410,35 @@ class SettingsScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Primary search/order actions fill the available content width on mobile.
+/// Wider layouts retain compact buttons that wrap when needed.
+class _ResponsiveActions extends StatelessWidget {
+  const _ResponsiveActions({required this.children});
+
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) => LayoutBuilder(
+    builder: (context, constraints) {
+      if (constraints.maxWidth >= 560) {
+        return Wrap(spacing: 10, runSpacing: 10, children: children);
+      }
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          for (var index = 0; index < children.length; index++) ...[
+            if (index > 0) const SizedBox(height: 10),
+            ConstrainedBox(
+              constraints: const BoxConstraints(minHeight: 48),
+              child: children[index],
+            ),
+          ],
+        ],
+      );
+    },
+  );
 }
 
 class _PageFrame extends StatefulWidget {

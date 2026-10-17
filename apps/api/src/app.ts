@@ -3,6 +3,7 @@ import { applicationResponse } from './provider-applications.js';
 import { documentAccess } from './provider-document-access.js';
 import type { AdminAlert, AdminCatalogItem, AdminNormalizationDetail, AdminNormalizationGroup, AdminNormalizationQueueRow, AdminQualityIssue, AdminUser, Env, OcrCorrection, PackageCandidate, PackageItem, PackageLocation, PackageOffer, PackageResolutionResponse, PackageSolution, RateLimitBinding, ResolutionCandidate, ResolutionResponse, RpcClient, SearchRow, ServiceSummaryRow } from './types.js';
 import { specimenSearchGuidance } from './search_guidance.js';
+import { catalogSearchSuggestions, hepaticSearchNotice, verifyCatalogSearchSuggestions } from './catalog_search_suggestions.js';
 import {
   buildPackageResolution,
   normalizeBatchRpcPayload,
@@ -258,6 +259,11 @@ async function searchResponse(request: Request, url: URL, rpc: RpcClient, env: E
   if (!/^[a-z][a-z0-9_]{1,63}$/.test(domain)) {
     return json({ error: { code: 'invalid_domain', message: 'domain is invalid' } }, 400, origin);
   }
+  const notice = domain === 'health_diagnostics' ? hepaticSearchNotice(query) : undefined;
+  // Older clients label every suggestion as a spelling correction and cannot
+  // display the explanation that individual components do not define a panel.
+  const canShowSuggestions = domain === 'health_diagnostics'
+    && (!notice || url.searchParams.get('notice_supported') === '1');
   const locationId = url.searchParams.get('location_id');
   if (locationId && !isUuid(locationId)) {
     return json({ error: { code: 'invalid_location_id', message: 'location_id must be a UUID' } }, 400, origin);
@@ -287,7 +293,8 @@ async function searchResponse(request: Request, url: URL, rpc: RpcClient, env: E
   const publicResolution = isResolutionResponse(resolution) ? sanitizePublicResolution(resolution) : null;
   if (publicResolution && publicResolution.status !== 'resolved') {
     const results = await addServiceSummaries(groupResolutionCandidates(publicResolution.candidates ?? []), rpc, requestId);
-    return json({ query, results, suggestions: results.length ? [] : await searchSpellingSuggestions(rpc, query, requestId) }, 200, origin);
+    return json({ query, results, suggestions: results.length || !canShowSuggestions ? [] : await searchSpellingSuggestions(rpc, query, requestId, env),
+      ...(results.length ? {} : { notice }) }, 200, origin);
   }
   if (grouped.length > 0) {
     const results = await addServiceSummaries(grouped, rpc, requestId);
@@ -298,16 +305,24 @@ async function searchResponse(request: Request, url: URL, rpc: RpcClient, env: E
   // service but no provider has a current offer. The search UI can then say
   // "recognized, no active offer" instead of looking like a typo/no-match.
   const results = await addServiceSummaries(groupResolutionCandidates(publicResolution?.candidates ?? []), rpc, requestId);
-  return json({ query, results, suggestions: results.length ? [] : await searchSpellingSuggestions(rpc, query, requestId) }, 200, origin);
+  return json({ query, results, suggestions: results.length || !canShowSuggestions ? [] : await searchSpellingSuggestions(rpc, query, requestId, env),
+    ...(results.length ? {} : { notice }) }, 200, origin);
 }
 
-async function searchSpellingSuggestions(rpc: RpcClient, query: string, requestId: string): Promise<Array<{ item_id: string; display_name: string }>> {
+async function searchSpellingSuggestions(rpc: RpcClient, query: string, requestId: string, env: Env): Promise<Array<{ item_id: string; display_name: string }>> {
+  try {
+    const candidates = await catalogSearchSuggestions(query, rpc, env.SUPABASE_URL);
+    if (candidates.length || hepaticSearchNotice(query)) return candidates;
+  } catch {
+    console.error(JSON.stringify({ event: 'catalog_search_suggestions_failed', request_id: requestId }));
+    if (hepaticSearchNotice(query)) return [];
+  }
   try {
     const rows = await rpc.call<unknown[]>('api_search_spelling_suggestions', {
       p_query: query,
       p_limit: 5,
     }, { admin: true });
-    return (Array.isArray(rows) ? rows : [])
+    const suggestions = (Array.isArray(rows) ? rows : [])
       .filter(isRecord)
       .slice(0, 5)
       .flatMap((row) => {
@@ -316,6 +331,7 @@ async function searchSpellingSuggestions(rpc: RpcClient, query: string, requestI
           ? [{ item_id: row.item_id, display_name: name }]
           : [];
       });
+    return verifyCatalogSearchSuggestions(suggestions.map(row => [row.item_id, row.display_name]), rpc);
   } catch (error) {
     // Staggered DB deployments must not break public search.
     console.error(JSON.stringify({

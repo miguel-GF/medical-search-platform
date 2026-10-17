@@ -13,6 +13,13 @@ abstract final class PrueviaColors {
   static const danger = Color(0xFFB91C1C);
 }
 
+abstract final class PrueviaShapes {
+  static const buttonRadius = 10.0;
+  static const button = RoundedRectangleBorder(
+    borderRadius: BorderRadius.all(Radius.circular(buttonRadius)),
+  );
+}
+
 ThemeData buildPrueviaTheme(Brightness brightness) {
   final dark = brightness == Brightness.dark;
   final scheme =
@@ -47,6 +54,24 @@ ThemeData buildPrueviaTheme(Brightness brightness) {
       foregroundColor: text,
       elevation: 0,
       centerTitle: false,
+    ),
+    filledButtonTheme: FilledButtonThemeData(
+      style: FilledButton.styleFrom(shape: PrueviaShapes.button),
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(shape: PrueviaShapes.button),
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(shape: PrueviaShapes.button),
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(shape: PrueviaShapes.button),
+    ),
+    iconButtonTheme: IconButtonThemeData(
+      style: IconButton.styleFrom(shape: PrueviaShapes.button),
+    ),
+    navigationBarTheme: const NavigationBarThemeData(
+      indicatorShape: PrueviaShapes.button,
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,

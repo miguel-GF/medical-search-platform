@@ -174,12 +174,16 @@ class SearchResponse {
     required this.services,
     this.suggestions = const [],
     this.guidance,
+    this.notice,
   });
 
   final String query;
   final List<SearchService> services;
   final List<SearchSuggestion> suggestions;
   final SearchGuidance? guidance;
+
+  /// Search context only; it never confirms a study or replaces an order.
+  final String? notice;
 
   factory SearchResponse.fromJson(JsonMap json) => SearchResponse(
     query: _stringValue(json['query']) ?? '',
@@ -193,6 +197,9 @@ class SearchResponse {
         .where((item) => item.itemId.isNotEmpty && item.displayName.isNotEmpty)
         .toList(growable: false),
     guidance: SearchGuidance.parse(json['guidance']),
+    notice: _guidanceText(json['notice'], 700).trim().isEmpty
+        ? null
+        : _guidanceText(json['notice'], 700),
   );
 }
 
@@ -222,7 +229,10 @@ class SearchGuidance {
       options: _boundedList(json['options'], 8)
           .whereType<JsonMap>()
           .map(SearchGuidanceOption.fromJson)
-          .where((option) => option.itemId.isNotEmpty && option.displayName.isNotEmpty)
+          .where(
+            (option) =>
+                option.itemId.isNotEmpty && option.displayName.isNotEmpty,
+          )
           .toList(growable: false),
     );
   }
