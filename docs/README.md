@@ -12,6 +12,7 @@ La conversación original no es lectura obligatoria para incorporarse.
 | [Guías de trabajo](WORK_GUIDE.md) | Procedimientos por tipo de cambio y traspaso. |
 | [Operación](OPERATIONS_GUIDE.md) | Directorios, comandos, comprobaciones y alcance de resultados. |
 | [Estado y prioridades](CURRENT_STATE.md) | Capacidades y pendientes con evidencia fechada. |
+| [Corrección de búsqueda y controles,17-oct](PATIENT_SEARCH_FIX_20261017.md) | Botones,móvil,analítica oculta,candidatos seleccionables,sugerencias y límites del perfil hepático. |
 | [Privacidad para abogado](legal/REVISION_PRIVACIDAD_PARA_ABOGADO_20261015.md) | Explicación en lenguaje común, pendientes y ubicación del PDF privado con los avisos exactos. |
 | [Reapertura pública, 15-oct](PRIVACY_PUBLICATION_20261015.md) | Versiones publicadas, controles cerrados, observaciones y recuperación. |
 | [Operación local y crecimiento Puebla, 9–11 oct](PUEBLA_LOCAL_OPERATION_20261009.md) | Reanudación Supabase, inventario estatal DENUE y equivalencias investigadas aplicadas. |

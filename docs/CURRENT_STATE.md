@@ -17,6 +17,24 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Corrección de paciente,17-oct UTC:** el encargo nuevo corrige botones,móvil,
+tarjeta técnica de analítica y navegación de candidatos ambiguos. API publicada
+04:29:27 UTC, versión `777b7a40-1785-4bb5-aa4c-1990cc7d416b`, extraída del
+código publicado con cambios de búsqueda solamente. Once consultas públicas200;
+los nombres completos conservan13/12/15 ofertas y la errata de ecocardiograma
+ya ofrece una sugerencia. No hay perfil hepático verificado; el aviso y las
+opciones individuales no lo sustituyen. Patient publicado04:36:43 UTC, versión
+`7f63b3eb-45f0-4ae2-9ee8-0a56b546230d`; JS público idéntico al build congelado,
+HTTP200 y CSP presentes. CORS conserva204 para app y403 para origen ajeno.
+Navegador público390/1280px completó selección de biometría y ecocardiograma
+hasta ofertas; errata y aviso hepático visibles, analítica ausente y JS idéntico
+al release.320px sin recorte de botones. No se observaron errores de página.
+UI y búsqueda guardadas en `007eac3`; checkpoint anterior `1e33c46`.
+Compilación local final refrescada:JS servido por8080 coincide con output debug,
+API local200; mismo código de los últimos ajustes sin reiniciar la cola.
+La cola del catálogo sigue detenida y no hubo SQL de escritura.
+[Alcance, evidencia y recuperación](PATIENT_SEARCH_FIX_20261017.md).
+
 **Pausa y nuevo encargo,17-oct UTC /16-oct local:** se detuvo el crecimiento
 automático del catálogo por instrucción del usuario. Marcador local `STOP`
 conservado y proceso de cola detenido durante espera de lectura por conexión.
