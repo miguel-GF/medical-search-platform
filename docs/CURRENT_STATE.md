@@ -17,6 +17,20 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Revisión 61 e identidad 30,18-oct05:02 UTC:** ocho registros de glutatión
+peroxidasa incorporados, un concepto y un alias de proveedor.64 RAW intactos,
+56 contextos retenidos; dos HTTP públicos y una consulta con proveedor correctos,
+25 etiquetas/variantes sin selección incompatible del nuevo concepto.
+Centro de Salud Atenayuca, Juan N. Méndez, añadido como candidato pendiente:
+domicilio sin número concordante, fuente federal histórica y DENUE conservados.
+Rollback, commit único y lectura independiente correctos. **551 conceptos /
+4,074 pendientes /134 instituciones /218 ubicaciones /234 ofertas /112 migraciones**.
+Cola52; propuestas INR y borradores02/03 sin activar. Inventario completo05:05:55UTC:
+758 grupos,1,324 términos; memoria58 revisiones,411 aliases,430 reglas y2,954
+contextos históricos reutilizables.52 ledgers/hashes comprobados,217 archivos
+previos intactos;4,074 pendientes aún requieren evidencia. Sin aprobación por memoria.
+[Evidencia y límites](CATALOG_REVIEW_61_20261018.md).
+
 **Revisión60 y propuestaINR,18-octUTC:**TPT separado en borrador03 también
 omiteINR en una variante de nombre completo. Ambos borradores02/03 retenidos
 sin encolar. Definición real dev3 confirma que su guardia cuenta tokens≥4;
