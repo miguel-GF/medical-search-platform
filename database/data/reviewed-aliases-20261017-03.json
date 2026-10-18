@@ -1,0 +1,76 @@
+{
+  "review_id": "pruevia:evidence-review:20261017:03",
+  "research_date": "2026-10-17",
+  "scope": "Revisión57 ajustada: sustituye borrador20261017:02 no aplicado, excluye ocho filas RF cuantificación por falsa resolución observada de semicuantitativo a cuantitativo. Dos conceptos nominales y dos aliases de proveedor,16RAW: crioglobulinas y relación A/G. No se modifica el resolvedor ni se relajan guardas.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "0dcc2d88e671fd153d4f6d4de9a5cda351448a6ff6dc98eef4ff877d946d1872",
+  "research_snapshot_sha256": "61ebf4660c3a37dec140bdd1e9bf4a39ba5ac1e5295cf9ef1671bf636f98ec66",
+  "definition_sha256": "6d0ca9efb71a9c281bbe502c4f65ee9a9b4d9462bc1630e6f546d389beb31698",
+  "new_concepts": [
+    {
+      "item_id": "9091026b-d43b-5726-8d54-8dc80f2a4d3c",
+      "canonical_name": "Crioglobulinas",
+      "component": "Cryoglobulins",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/001594/cryoglobulin-qualitative-with-quantitative-reflex",
+      "reason": "SD declara CRIOGLOBULINAS como orden individual. Labcorp documenta la identidad de crioglobulinas, pero su cualitativo con reflejo cuantitativo e inmunofijación no prueba el protocolo de SD. No se importan reflejos, inmunofijación, tipificación I/II/III, técnica, escala, unidad, temperatura ni matriz desde esa ficha. No equivale a criofibrinógeno, crioaglutininas o perfil de crioproteínas. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "La etiqueta SD no declara matriz ni técnica. Permanecen desconocidas; no se asigna suero ni un esquema cualitativo/cuantitativo por la ficha externa."
+    },
+    {
+      "item_id": "5ebb1aad-04fc-562a-b4e3-747b73e9e53a",
+      "canonical_name": "Relación albúmina/globulina (A/G)",
+      "component": "Albumin/Globulin ratio",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://medlineplus.gov/lab-tests/total-protein-and-albumin-globulin-a-g-ratio/",
+      "reason": "SD declara RELACION ALBUMINA-GLOBULINA. MedlinePlus identifica la razón entre albúmina y globulinas; solo respalda esa identidad nominal individual. No se expande a proteínas totales, albúmina individual, globulinas individuales, perfil hepático o electroforesis. No se asigna fórmula, técnica o unidad de SD desde una fuente externa. La preparación SD menciona extracción de sangre: solo familia blood en su contexto, sin elegir suero/plasma ni duración analítica a partir de ayuno o preparación. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW SD menciona extracción de sangre; familia sanguínea explícita, matriz exacta no declarada. No inferir suero/plasma, técnica o duración de medición."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "crioglobulinas",
+      "item_id": "9091026b-d43b-5726-8d54-8dc80f2a4d3c",
+      "canonical_name": "Crioglobulinas",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.labcorp.com/tests/001594/cryoglobulin-qualitative-with-quantitative-reflex",
+      "reason": "SD declara CRIOGLOBULINAS como orden individual. Labcorp documenta la identidad de crioglobulinas, pero su cualitativo con reflejo cuantitativo e inmunofijación no prueba el protocolo de SD. No se importan reflejos, inmunofijación, tipificación I/II/III, técnica, escala, unidad, temperatura ni matriz desde esa ficha. No equivale a criofibrinógeno, crioaglutininas o perfil de crioproteínas. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "CRIOGLOBULINAS"
+      }
+    },
+    {
+      "alias": "relacion albumina globulina",
+      "item_id": "5ebb1aad-04fc-562a-b4e3-747b73e9e53a",
+      "canonical_name": "Relación albúmina/globulina (A/G)",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://medlineplus.gov/lab-tests/total-protein-and-albumin-globulin-a-g-ratio/",
+      "reason": "SD declara RELACION ALBUMINA-GLOBULINA. MedlinePlus identifica la razón entre albúmina y globulinas; solo respalda esa identidad nominal individual. No se expande a proteínas totales, albúmina individual, globulinas individuales, perfil hepático o electroforesis. No se asigna fórmula, técnica o unidad de SD desde una fuente externa. La preparación SD menciona extracción de sangre: solo familia blood en su contexto, sin elegir suero/plasma ni duración analítica a partir de ayuno o preparación. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno 8-12h. No realizar ejercicio físico intenso ni consumir alcohol 24 horas antes de la extracción de sangre. La mañana en la que se obtiene la muestra de sangre no fumar ni tomar bebidas que contengan cafeína. "
+      },
+      "source_attributes": {
+        "specimen_family": "blood"
+      }
+    }
+  ]
+}

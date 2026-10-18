@@ -1,0 +1,44 @@
+{
+  "review_id": "pruevia:evidence-review:20261017:04",
+  "research_date": "2026-10-17",
+  "scope": "Revisión57 limitada a crioglobulinas nominales: ocho RAW SD, un concepto y un alias de proveedor. Excluye ocho RF por falsa resolución semicuantitativo→cuantitativo del borrador02 y ocho A/G por falsa equivalencia con razón G/A invertida del borrador03. Ambos borradores se conservan íntegros y no aplicados; no se cambia el resolvedor.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "52d8112acc53bf7ffcaa25d3a94683adac5e1c94ae352653a0ec8a0e8247d636",
+  "research_snapshot_sha256": "61ebf4660c3a37dec140bdd1e9bf4a39ba5ac1e5295cf9ef1671bf636f98ec66",
+  "definition_sha256": "eccecec5ab8532a78fb0d23717753adc9cc7d3eecf24135cdb3fa8a1afdbeeab",
+  "new_concepts": [
+    {
+      "item_id": "7084a64a-1eac-5aac-beee-41f02614f375",
+      "canonical_name": "Crioglobulinas",
+      "component": "Cryoglobulins",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/001594/cryoglobulin-qualitative-with-quantitative-reflex",
+      "reason": "SD declara CRIOGLOBULINAS como orden individual. Labcorp documenta la identidad de crioglobulinas, pero su cualitativo con reflejo cuantitativo e inmunofijación no prueba el protocolo de SD. No se importan reflejos, inmunofijación, tipificación I/II/III, técnica, escala, unidad, temperatura ni matriz desde esa ficha. No equivale a criofibrinógeno, crioaglutininas o perfil de crioproteínas. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "La etiqueta SD no declara matriz ni técnica. Permanecen desconocidas; no se asigna suero ni un esquema cualitativo/cuantitativo por la ficha externa."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "crioglobulinas",
+      "item_id": "7084a64a-1eac-5aac-beee-41f02614f375",
+      "canonical_name": "Crioglobulinas",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.labcorp.com/tests/001594/cryoglobulin-qualitative-with-quantitative-reflex",
+      "reason": "SD declara CRIOGLOBULINAS como orden individual. Labcorp documenta la identidad de crioglobulinas, pero su cualitativo con reflejo cuantitativo e inmunofijación no prueba el protocolo de SD. No se importan reflejos, inmunofijación, tipificación I/II/III, técnica, escala, unidad, temperatura ni matriz desde esa ficha. No equivale a criofibrinógeno, crioaglutininas o perfil de crioproteínas. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "CRIOGLOBULINAS"
+      }
+    }
+  ]
+}

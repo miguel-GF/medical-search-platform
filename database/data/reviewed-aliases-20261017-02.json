@@ -1,0 +1,105 @@
+{
+  "review_id": "pruevia:evidence-review:20261017:02",
+  "research_date": "2026-10-17",
+  "scope": "Revisión57: tres grupos SD de ocho filas,24RAW, tres conceptos y tres aliases limitados a proveedor. Crioglobulinas nominales sin reflejos inferidos, relación A/G individual sin panel y factor reumatoide con cuantificación explícita sin isotipo inferido. No escribir base, cola, ofertas, esquema o resolvedor.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "ac898c197477cff39f4c6f15b0bcc73a272e02ba175e3505afb72ee806e73394",
+  "research_snapshot_sha256": "61ebf4660c3a37dec140bdd1e9bf4a39ba5ac1e5295cf9ef1671bf636f98ec66",
+  "definition_sha256": "9db7302edc70d4b8cfcaca540541f9d14f95d587849e09fed294ccbe9cda6671",
+  "new_concepts": [
+    {
+      "item_id": "c024c5a3-df65-54cb-b4dd-787f966ebff7",
+      "canonical_name": "Crioglobulinas",
+      "component": "Cryoglobulins",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/001594/cryoglobulin-qualitative-with-quantitative-reflex",
+      "reason": "SD declara CRIOGLOBULINAS como orden individual. Labcorp documenta la identidad de crioglobulinas, pero su cualitativo con reflejo cuantitativo e inmunofijación no prueba el protocolo de SD. No se importan reflejos, inmunofijación, tipificación I/II/III, técnica, escala, unidad, temperatura ni matriz desde esa ficha. No equivale a criofibrinógeno, crioaglutininas o perfil de crioproteínas. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "La etiqueta SD no declara matriz ni técnica. Permanecen desconocidas; no se asigna suero ni un esquema cualitativo/cuantitativo por la ficha externa."
+    },
+    {
+      "item_id": "f2cb73b0-28fe-58f1-990e-c8fe80e62863",
+      "canonical_name": "Relación albúmina/globulina (A/G)",
+      "component": "Albumin/Globulin ratio",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://medlineplus.gov/lab-tests/total-protein-and-albumin-globulin-a-g-ratio/",
+      "reason": "SD declara RELACION ALBUMINA-GLOBULINA. MedlinePlus identifica la razón entre albúmina y globulinas; solo respalda esa identidad nominal individual. No se expande a proteínas totales, albúmina individual, globulinas individuales, perfil hepático o electroforesis. No se asigna fórmula, técnica o unidad de SD desde una fuente externa. La preparación SD menciona extracción de sangre: solo familia blood en su contexto, sin elegir suero/plasma ni duración analítica a partir de ayuno o preparación. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW SD menciona extracción de sangre; familia sanguínea explícita, matriz exacta no declarada. No inferir suero/plasma, técnica o duración de medición."
+    },
+    {
+      "item_id": "317ba478-e2c8-5662-91be-a6071628d713",
+      "canonical_name": "Factor reumatoide cuantitativo",
+      "component": "Rheumatoid factor.quantitative",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/006502/rheumatoid-factor-rf",
+      "reason": "SD declara FACTOR REUMATOIDE (CUANTIFICACION); la cuantificación se conserva expresamente en nombre y componente. Labcorp respalda factor reumatoide como medición individual y explica que pueden existir isotipos distintos. No se elige IgM, IgG o IgA, ni se importa inmunoturbidimetría, látex, suero/plasma, unidad, título o punto de corte de Labcorp. No equivale a anticuerpos CCP/citrulinados, un panel reumatoide o la etiqueta SD separada FACTOR REUMATOIDE sin cuantificación. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "SD no declara matriz, método ni isotipo. Se conserva cuantificación explícita sin completar suero/plasma, IgM/IgG/IgA, técnica o unidad desde fuentes externas."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "crioglobulinas",
+      "item_id": "c024c5a3-df65-54cb-b4dd-787f966ebff7",
+      "canonical_name": "Crioglobulinas",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.labcorp.com/tests/001594/cryoglobulin-qualitative-with-quantitative-reflex",
+      "reason": "SD declara CRIOGLOBULINAS como orden individual. Labcorp documenta la identidad de crioglobulinas, pero su cualitativo con reflejo cuantitativo e inmunofijación no prueba el protocolo de SD. No se importan reflejos, inmunofijación, tipificación I/II/III, técnica, escala, unidad, temperatura ni matriz desde esa ficha. No equivale a criofibrinógeno, crioaglutininas o perfil de crioproteínas. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "CRIOGLOBULINAS"
+      }
+    },
+    {
+      "alias": "relacion albumina globulina",
+      "item_id": "f2cb73b0-28fe-58f1-990e-c8fe80e62863",
+      "canonical_name": "Relación albúmina/globulina (A/G)",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://medlineplus.gov/lab-tests/total-protein-and-albumin-globulin-a-g-ratio/",
+      "reason": "SD declara RELACION ALBUMINA-GLOBULINA. MedlinePlus identifica la razón entre albúmina y globulinas; solo respalda esa identidad nominal individual. No se expande a proteínas totales, albúmina individual, globulinas individuales, perfil hepático o electroforesis. No se asigna fórmula, técnica o unidad de SD desde una fuente externa. La preparación SD menciona extracción de sangre: solo familia blood en su contexto, sin elegir suero/plasma ni duración analítica a partir de ayuno o preparación. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Ayuno 8-12h. No realizar ejercicio físico intenso ni consumir alcohol 24 horas antes de la extracción de sangre. La mañana en la que se obtiene la muestra de sangre no fumar ni tomar bebidas que contengan cafeína. "
+      },
+      "source_attributes": {
+        "specimen_family": "blood"
+      }
+    },
+    {
+      "alias": "factor reumatoide cuantificacion",
+      "item_id": "317ba478-e2c8-5662-91be-a6071628d713",
+      "canonical_name": "Factor reumatoide cuantitativo",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.labcorp.com/tests/006502/rheumatoid-factor-rf",
+      "reason": "SD declara FACTOR REUMATOIDE (CUANTIFICACION); la cuantificación se conserva expresamente en nombre y componente. Labcorp respalda factor reumatoide como medición individual y explica que pueden existir isotipos distintos. No se elige IgM, IgG o IgA, ni se importa inmunoturbidimetría, látex, suero/plasma, unidad, título o punto de corte de Labcorp. No equivale a anticuerpos CCP/citrulinados, un panel reumatoide o la etiqueta SD separada FACTOR REUMATOIDE sin cuantificación. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "FACTOR REUMATOIDE (CUANTIFICACION)"
+      }
+    }
+  ]
+}
