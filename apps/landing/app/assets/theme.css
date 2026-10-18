@@ -50,5 +50,6 @@
   --color-success-surface: #e7f5ed;
   --font-sans: "Segoe UI", Inter, system-ui, -apple-system, sans-serif;
   --radius-card: 22px;
+  --radius-button: 8px;
   color-scheme: light;
 }
