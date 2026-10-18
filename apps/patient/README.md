@@ -7,6 +7,11 @@ El portal de proveedores falla cerrado mediante
 centrada en pacientes no muestra el acceso ni acepta `?provider=1`; habilitarlo
 es una liberación separada.
 
+La reserva permanece oculta mediante `PATIENT_BOOKING_ENABLED=false` por defecto.
+Un `booking_url` o una capacidad de enlace recibidos del servidor no activan
+«Agendar estudio». Se conservan los enlaces informativos del proveedor, estudio
+y sucursal. Habilitar reservas requiere una liberación explícita del producto.
+
 La búsqueda pública no requiere cuenta y está dirigida a adultos para la
 declaración de Google Play; no se activa un bloqueo de menores. Un familiar puede
 usar la app para ayudar a otra persona. La prueba cerrada de Android sólo acepta
@@ -120,6 +125,21 @@ mostrar sucursales.
 - El backend, no el cliente, decide permisos de proveedor.
 
 ## Verificación
+
+### Precios y salida al proveedor
+
+Los botones comparten radio8px. Las acciones móviles agrupadas ocupan todo el
+ancho de contenido; Resolver estudios/Subir receta se sitúan fuera del margen
+adicional de la tarjeta para igualar el ancho de Buscar. No usar áreas táctiles
+o nodos semánticos como prueba del contorno visual: observar también el canvas.
+
+La comparación mantiene las dos tarifas base: en línea y en sucursal. Las
+tarifas de tarjeta o membresía se muestran aparte, sólo cuando están publicadas,
+conservando `price.key` para distinguir tarjeta azul/dorada. Prepago y promociones
+no se convierten en membresía. Un importe desconocido sigue como cotización.
+Los enlaces informativos advierten que el sitio puede pedir elegir nuevamente
+el estudio y la sucursal. Una URL duplicada de reserva no se muestra como ficha
+del estudio; `PATIENT_BOOKING_ENABLED` permanece desactivado en esta versión.
 
 ```text
 flutter analyze

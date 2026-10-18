@@ -29,6 +29,7 @@ class SearchOffer {
     this.amountMinor,
     this.currency,
     this.priceType,
+    this.priceKey,
     this.prices = const [],
     this.sourceUrl,
     this.studyUrl,
@@ -47,6 +48,7 @@ class SearchOffer {
   final int? amountMinor;
   final String? currency;
   final String? priceType;
+  final String? priceKey;
   final List<SearchPrice> prices;
   final String? sourceUrl;
   final String? studyUrl;
@@ -77,6 +79,7 @@ class SearchOffer {
       amountMinor: _intValue(price?['amount_minor']),
       currency: _stringValue(price?['currency']),
       priceType: _stringValue(price?['type']),
+      priceKey: _stringValue(price?['key']),
       prices: prices,
       sourceUrl: _stringValue(source?['url']),
       studyUrl:
@@ -100,16 +103,19 @@ class SearchPrice {
     required this.type,
     required this.amountMinor,
     required this.currency,
+    this.key,
     this.lastSeenAt,
   });
 
   final String? type;
+  final String? key;
   final int? amountMinor;
   final String? currency;
   final String? lastSeenAt;
 
   factory SearchPrice.fromJson(JsonMap json) => SearchPrice(
     type: _stringValue(json['type']),
+    key: _stringValue(json['key']),
     amountMinor: _intValue(json['amount_minor']),
     currency: _stringValue(json['currency']),
     lastSeenAt: _stringValue(json['last_seen_at']),

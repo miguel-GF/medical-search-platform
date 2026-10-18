@@ -30,6 +30,11 @@ const bool _providerPortalEnabled = bool.fromEnvironment(
   'PROVIDER_PORTAL_ENABLED',
   defaultValue: false,
 );
+// Booking is a separate product capability; source URLs cannot enable it.
+const bool _patientBookingEnabled = bool.fromEnvironment(
+  'PATIENT_BOOKING_ENABLED',
+  defaultValue: false,
+);
 const String _prueviaChannel = String.fromEnvironment(
   'PRUEVIA_CHANNEL',
   defaultValue: 'public',
@@ -653,7 +658,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       const SizedBox(height: 10),
       Text(
-        'Escribe el estudio tal como aparece en tu orden. Mostraremos coincidencias verificables y su sucursal concreta.',
+        'Escribe el estudio tal como aparece en tu orden. Mostraremos coincidencias, condiciones del proveedor y sucursales para consultar.',
         style: Theme.of(context).textTheme.bodyLarge,
       ),
       const SizedBox(height: 6),
@@ -1178,37 +1183,6 @@ class _OrderScreenState extends State<OrderScreen> with WidgetsBindingObserver {
                         '1. B H\n2. Q S completa\n3. EGO\n4. Perfil tiroideo',
                   ),
                 ),
-                const SizedBox(height: 14),
-                _ResponsiveActions(
-                  children: [
-                    FilledButton.icon(
-                      onPressed: _loading ? null : _resolveText,
-                      icon: const Icon(Icons.search),
-                      label: const Text('Resolver estudios'),
-                    ),
-                    OutlinedButton.icon(
-                      onPressed: _loading
-                          ? null
-                          : () => _pickImage(
-                              kIsWeb ? ImageSource.gallery : ImageSource.camera,
-                            ),
-                      icon: Icon(
-                        kIsWeb
-                            ? Icons.upload_file
-                            : Icons.photo_camera_outlined,
-                      ),
-                      label: Text(kIsWeb ? 'Subir receta' : 'Tomar foto'),
-                    ),
-                    if (!kIsWeb)
-                      OutlinedButton.icon(
-                        onPressed: _loading
-                            ? null
-                            : () => _pickImage(ImageSource.gallery),
-                        icon: const Icon(Icons.photo_library_outlined),
-                        label: const Text('Galería'),
-                      ),
-                  ],
-                ),
                 const SizedBox(height: 16),
                 DropdownButtonFormField<PackageObjective>(
                   initialValue: _objective,
@@ -1236,17 +1210,47 @@ class _OrderScreenState extends State<OrderScreen> with WidgetsBindingObserver {
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ],
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton.icon(
-                    onPressed: _loading ? null : _clearSensitiveOrderData,
-                    icon: const Icon(Icons.delete_outline),
-                    label: const Text('Borrar datos de esta orden'),
-                  ),
+                _ResponsiveActions(
+                  children: [
+                    TextButton.icon(
+                      onPressed: _loading ? null : _clearSensitiveOrderData,
+                      icon: const Icon(Icons.delete_outline),
+                      label: const Text('Borrar datos de esta orden'),
+                    ),
+                  ],
                 ),
               ],
             ),
           ),
+        ),
+        const SizedBox(height: 14),
+        _ResponsiveActions(
+          children: [
+            FilledButton.icon(
+              onPressed: _loading ? null : _resolveText,
+              icon: const Icon(Icons.search),
+              label: const Text('Resolver estudios'),
+            ),
+            OutlinedButton.icon(
+              onPressed: _loading
+                  ? null
+                  : () => _pickImage(
+                      kIsWeb ? ImageSource.gallery : ImageSource.camera,
+                    ),
+              icon: Icon(
+                kIsWeb ? Icons.upload_file : Icons.photo_camera_outlined,
+              ),
+              label: Text(kIsWeb ? 'Subir receta' : 'Tomar foto'),
+            ),
+            if (!kIsWeb)
+              OutlinedButton.icon(
+                onPressed: _loading
+                    ? null
+                    : () => _pickImage(ImageSource.gallery),
+                icon: const Icon(Icons.photo_library_outlined),
+                label: const Text('Galería'),
+              ),
+          ],
         ),
         if (_error != null) ...[
           const SizedBox(height: 18),
@@ -2128,13 +2132,18 @@ class _ProviderDetails extends StatelessWidget {
         const SizedBox(height: 10),
         Text(
           branches.length > 1
-              ? 'Compara las sucursales: sus estudios y precios aparecen debajo'
+              ? 'Compara las sucursales y consulta las condiciones'
               : branches.first.isUnscoped
               ? 'Alcance publicado · sucursal por confirmar'
               : 'Información por sucursal',
           style: Theme.of(
             context,
           ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          'Los estudios y precios pueden publicarse para varias sucursales. Confirma en la sede elegida que realiza el estudio.',
+          style: Theme.of(context).textTheme.bodySmall,
         ),
         const SizedBox(height: 8),
         ...branches.map(
@@ -2312,14 +2321,18 @@ class _ServiceDescription extends StatelessWidget {
         Text(description, style: Theme.of(context).textTheme.bodyMedium),
         if (service.descriptionSourceUrl != null) ...[
           const SizedBox(height: 4),
-          TextButton.icon(
-            onPressed: () => _open(service.descriptionSourceUrl!),
-            style: TextButton.styleFrom(
-              padding: EdgeInsets.zero,
-              visualDensity: VisualDensity.compact,
-            ),
-            icon: const Icon(Icons.info_outline, size: 16),
-            label: const Text('Información general · MedlinePlus'),
+          _ResponsiveActions(
+            children: [
+              TextButton.icon(
+                onPressed: () => _open(service.descriptionSourceUrl!),
+                style: TextButton.styleFrom(
+                  padding: EdgeInsets.zero,
+                  visualDensity: VisualDensity.compact,
+                ),
+                icon: const Icon(Icons.info_outline, size: 16),
+                label: const Text('Información general · MedlinePlus'),
+              ),
+            ],
           ),
         ],
       ],
@@ -2633,12 +2646,27 @@ class _OfferPricing extends StatelessWidget {
   Widget build(BuildContext context) {
     final online = _priceForType(offer, 'online');
     final inBranch = _priceForType(offer, 'regular');
-    final otherPrices = offer.prices
+    final availablePrices = offer.prices.isNotEmpty
+        ? offer.prices
+        : <SearchPrice>[
+            if (offer.amountMinor != null)
+              SearchPrice(
+                type: offer.priceType,
+                key: offer.priceKey,
+                amountMinor: offer.amountMinor,
+                currency: offer.currency,
+              ),
+          ];
+    final memberPrices = availablePrices
+        .where((price) => price.type == 'member' && price.amountMinor != null)
+        .toList(growable: false);
+    final otherPrices = availablePrices
         .where(
           (price) =>
               price.amountMinor != null &&
               price.type != 'online' &&
-              price.type != 'regular',
+              price.type != 'regular' &&
+              price.type != 'member',
         )
         .toList(growable: false);
     return Column(
@@ -2649,7 +2677,7 @@ class _OfferPricing extends StatelessWidget {
             Expanded(
               child: _PriceCard(
                 label: 'En línea',
-                hint: 'Compra o agenda por internet',
+                hint: 'Tarifa publicada por internet',
                 icon: Icons.language,
                 price: online,
                 color: Theme.of(context).colorScheme.primary,
@@ -2667,6 +2695,39 @@ class _OfferPricing extends StatelessWidget {
             ),
           ],
         ),
+        if (memberPrices.isNotEmpty) ...[
+          const SizedBox(height: 8),
+          DecoratedBox(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Theme.of(context).colorScheme.outlineVariant,
+              ),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Con tarjeta o membresía',
+                    style: Theme.of(context).textTheme.labelLarge,
+                  ),
+                  const SizedBox(height: 4),
+                  for (final price in memberPrices)
+                    Text(
+                      '${_conditionalPriceLabel(price)}: ${_money(price.amountMinor!, price.currency ?? offer.currency ?? 'MXN')}',
+                    ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'Requiere la tarjeta o membresía indicada por el proveedor. Confirma sus condiciones.',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
         if (otherPrices.isNotEmpty) ...[
           const SizedBox(height: 7),
           Wrap(
@@ -2676,7 +2737,7 @@ class _OfferPricing extends StatelessWidget {
             children: otherPrices
                 .map(
                   (price) => Text(
-                    '${_priceTypeLabel(price.type) ?? 'Otro precio'}: ${_money(price.amountMinor!, price.currency ?? offer.currency ?? 'MXN')}',
+                    '${_conditionalPriceLabel(price)}: ${_money(price.amountMinor!, price.currency ?? offer.currency ?? 'MXN')}',
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                 )
@@ -2784,10 +2845,10 @@ class _PriceCard extends StatelessWidget {
 }
 
 bool _offerHasLink(SearchOffer offer) =>
-    offer.sourceUrl != null ||
-    offer.studyUrl != null ||
-    offer.locationUrl != null ||
-    offer.bookingUrl != null;
+    (offer.sourceUrl != null && offer.sourceUrl != offer.bookingUrl) ||
+    (offer.studyUrl != null && offer.studyUrl != offer.bookingUrl) ||
+    (offer.locationUrl != null && offer.locationUrl != offer.bookingUrl) ||
+    (_patientBookingEnabled && offer.bookingUrl != null);
 
 class _OfferLinks extends StatelessWidget {
   const _OfferLinks({
@@ -2829,14 +2890,24 @@ class _OfferLinks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final primaryUrl =
-        offer.bookingUrl ??
-        offer.sourceUrl ??
-        offer.studyUrl ??
-        offer.locationUrl;
+    final bookingUrl = _patientBookingEnabled ? offer.bookingUrl : null;
+    // Older responses can duplicate a booking destination as a study link.
+    // That does not make it an informational study page or retain the branch.
+    final studyUrl = offer.studyUrl == offer.bookingUrl ? null : offer.studyUrl;
+    final sourceUrl = offer.sourceUrl == offer.bookingUrl
+        ? null
+        : offer.sourceUrl;
+    final locationUrl = offer.locationUrl == offer.bookingUrl
+        ? null
+        : offer.locationUrl;
+    final primaryUrl = bookingUrl ?? sourceUrl ?? studyUrl ?? locationUrl;
     if (primaryUrl == null) return const SizedBox.shrink();
-    final capability = offer.linkCapability;
-    final primaryLabel = offer.bookingUrl != null
+    final capability = offer.studyUrl != null && studyUrl == null
+        ? locationUrl != null
+              ? 'location_only'
+              : 'provider_only'
+        : offer.linkCapability;
+    final primaryLabel = bookingUrl != null
         ? 'Agendar estudio'
         : switch (capability) {
             'study_and_location' => 'Ver estudio y sucursal',
@@ -2846,13 +2917,13 @@ class _OfferLinks extends StatelessWidget {
             _ =>
               offer.locationName == null
                   ? 'Ver fuente del proveedor'
-                  : 'Ver fuente de sucursal',
+                  : 'Consultar proveedor',
           };
     final links = <Widget>[
       TextButton.icon(
         onPressed: () => _trackAndOpen(
           primaryUrl,
-          offer.bookingUrl != null
+          bookingUrl != null
               ? 'booking'
               : capability == 'study_only' || capability == 'study_and_location'
               ? 'study'
@@ -2864,18 +2935,18 @@ class _OfferLinks extends StatelessWidget {
         label: Text(primaryLabel),
       ),
     ];
-    if (offer.studyUrl != null && offer.studyUrl != primaryUrl) {
+    if (studyUrl != null && studyUrl != primaryUrl) {
       links.add(
         TextButton(
-          onPressed: () => _trackAndOpen(offer.studyUrl!, 'study'),
+          onPressed: () => _trackAndOpen(studyUrl, 'study'),
           child: const Text('Ver estudio'),
         ),
       );
     }
-    if (offer.locationUrl != null && offer.locationUrl != primaryUrl) {
+    if (locationUrl != null && locationUrl != primaryUrl) {
       links.add(
         TextButton(
-          onPressed: () => _trackAndOpen(offer.locationUrl!, 'location'),
+          onPressed: () => _trackAndOpen(locationUrl, 'location'),
           child: const Text('Ver sucursal'),
         ),
       );
@@ -2883,13 +2954,12 @@ class _OfferLinks extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Wrap(alignment: WrapAlignment.end, children: links),
-        if (capability == 'location_only')
-          Text(
-            'El sitio puede pedir seleccionar el estudio nuevamente.',
-            textAlign: TextAlign.right,
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
+        _ResponsiveActions(children: links),
+        Text(
+          'El proveedor puede pedir seleccionar de nuevo el estudio y la sucursal. Confirma ahí la disponibilidad y el precio.',
+          textAlign: TextAlign.right,
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
       ],
     );
   }
@@ -2902,6 +2972,7 @@ SearchPrice? _priceForType(SearchOffer offer, String type) {
   if (offer.priceType == type && offer.amountMinor != null) {
     return SearchPrice(
       type: offer.priceType,
+      key: offer.priceKey,
       amountMinor: offer.amountMinor,
       currency: offer.currency,
       lastSeenAt: offer.lastSeenAt,
@@ -2919,8 +2990,18 @@ String? _priceTypeLabel(String? value) => switch (value) {
   'from' => 'Desde',
   'insurance' => 'Con seguro',
   null || '' => null,
-  _ => value,
+  'other' => 'Otra tarifa',
+  _ => 'Otra tarifa',
 };
+
+String _conditionalPriceLabel(SearchPrice price) =>
+    switch ((price.type, price.key)) {
+      ('member', 'blue_card') => 'Con tarjeta azul',
+      ('member', 'gold_card') => 'Con tarjeta dorada',
+      ('member', _) => 'Con membresía',
+      ('other', 'prepaid') => 'Con prepago',
+      _ => _priceTypeLabel(price.type) ?? 'Otra tarifa',
+    };
 
 class _FeedbackInvitation extends StatelessWidget {
   const _FeedbackInvitation({required this.onSend, required this.onDismiss});
@@ -3431,8 +3512,8 @@ class _ResponsiveActions extends StatelessWidget {
           for (var index = 0; index < children.length; index++) ...[
             if (index > 0) const SizedBox(height: 10),
             ConstrainedBox(
-              constraints: const BoxConstraints(minHeight: 48),
-              child: children[index],
+              constraints: const BoxConstraints(minHeight: 52),
+              child: SizedBox(width: double.infinity, child: children[index]),
             ),
           ],
         ],

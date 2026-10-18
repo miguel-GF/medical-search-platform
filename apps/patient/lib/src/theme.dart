@@ -14,7 +14,7 @@ abstract final class PrueviaColors {
 }
 
 abstract final class PrueviaShapes {
-  static const buttonRadius = 10.0;
+  static const buttonRadius = 8.0;
   static const button = RoundedRectangleBorder(
     borderRadius: BorderRadius.all(Radius.circular(buttonRadius)),
   );
@@ -56,13 +56,22 @@ ThemeData buildPrueviaTheme(Brightness brightness) {
       centerTitle: false,
     ),
     filledButtonTheme: FilledButtonThemeData(
-      style: FilledButton.styleFrom(shape: PrueviaShapes.button),
+      style: FilledButton.styleFrom(
+        shape: PrueviaShapes.button,
+        minimumSize: const Size(64, 52),
+      ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
-      style: OutlinedButton.styleFrom(shape: PrueviaShapes.button),
+      style: OutlinedButton.styleFrom(
+        shape: PrueviaShapes.button,
+        minimumSize: const Size(64, 52),
+      ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(shape: PrueviaShapes.button),
+      style: ElevatedButton.styleFrom(
+        shape: PrueviaShapes.button,
+        minimumSize: const Size(64, 52),
+      ),
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(shape: PrueviaShapes.button),
