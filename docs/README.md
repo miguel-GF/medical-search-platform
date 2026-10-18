@@ -12,6 +12,7 @@ La conversación original no es lectura obligatoria para incorporarse.
 | [Guías de trabajo](WORK_GUIDE.md) | Procedimientos por tipo de cambio y traspaso. |
 | [Operación](OPERATIONS_GUIDE.md) | Directorios, comandos, comprobaciones y alcance de resultados. |
 | [Estado y prioridades](CURRENT_STATE.md) | Capacidades y pendientes con evidencia fechada. |
+| [Controles móviles,18-oct](MOBILE_CONTROLS_20261018.md) | Radio8px, ancho de CTAs y acciones de receta; comparación de publicación real. |
 | [Catálogo y revisión comercial,17-oct](CATALOG_AND_COMMERCIAL_REVIEW_20261017.md) | Reanudación, cierres aplicados, instituciones candidatas y capturas separadas sin revisar. |
 | [Corrección de búsqueda y controles,17-oct](PATIENT_SEARCH_FIX_20261017.md) | Botones,móvil,analítica oculta,candidatos seleccionables,sugerencias y límites del perfil hepático. |
 | [Privacidad para abogado](legal/REVISION_PRIVACIDAD_PARA_ABOGADO_20261015.md) | Explicación en lenguaje común, pendientes y ubicación del PDF privado con los avisos exactos. |

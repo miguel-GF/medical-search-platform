@@ -17,6 +17,33 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Controles móviles corregidos,18-oct04:19 UTC /17-oct local:** radio8px,
+acciones de receta al mismo ancho de contenido que Buscar, fuera del margen
+adicional de la tarjeta. Botones secundarios de resultados también se expanden
+en móvil. Portada con CTAs al ancho de su contenedor. Publicados Patient
+`5e55a765-f670-42d6-a2fe-2d6bec17dd28` y landing
+`49e394b5-2fb2-41c3-bddd-4e6f3fbf581c`. Chrome público390px: cuatro acciones
+principales350px, CTA de portada354px y radio8px; capturas inspeccionadas.
+La revisión anterior no acreditaba todos los controles. [Evidencia](MOBILE_CONTROLS_20261018.md).
+SELECT04:17 UTC conserva547 conceptos,4,106 pendientes,126 instituciones,
+210 ubicaciones,234 ofertas y112 migraciones. Cola observadaPID15656 viva,
+sin nueva activación de propuestas críticas. Memoria completa56 revisiones,
+407 aliases,426 reglas y2,922 contextos reutilizables;762 grupos pendientes.
+
+**Corrección comercial publicada,17-oct12:48 UTC:** tarifas en línea/sucursal
+y tarjeta o membresía separadas, conservando tarjeta azul/dorada y prepago.
+Reservas ocultas. Navegación real de Salud Digna,Chopo yRuiz documentada;
+booking duplicado deja de ser ficha de estudio y dos URLs no prometen selección
+conjunta de estudio/sucursal. Aviso al paciente sobre selección en el proveedor.
+Sugerencias ya no cambian T3 libre por T4 libre. API `45ed6a34-fcf6-4205-8d6b-0555926072d4`,
+Patient `77d5af9e-d470-43a4-a2e8-921c5174cc07`. Seis GET públicos200 y CORS
+app204/ajeno403; observación visual posterior en curso.
+Revisión57 limitada a crioglobulinas aplicada12:49 UTC:8 registros más.
+Corte **547 conceptos /4,106 pendientes /126 instituciones /210 ubicaciones /
+234 ofertas /112 migraciones**, cola50. RF cuantitativo y razón A/G retenidos
+por falsas equivalencias observadas en rollback; propuesta de core sin activar.
+[Evidencia y límites](CATALOG_AND_COMMERCIAL_REVIEW_20261017.md).
+
 **Reanudación expresa,17-oct12:44 UTC:** cola local reanudada después de la
 instrucción del usuario. Revisión56 ajustada aplicada y observada:33 registros,
 4 conceptos y5 aliases;81 RAW intactos, incluidos48 contextos retenidos.
