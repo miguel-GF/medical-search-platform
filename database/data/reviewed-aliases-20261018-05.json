@@ -1,0 +1,34 @@
+{
+  "review_id": "pruevia:evidence-review:20261018:05",
+  "research_date": "2026-10-18",
+  "scope": "Revisión62: un alias FSH limitado a SEMIN, reutilizando concepto existente sin modificarlo y conservando suero literal. AST retenida por muestra orina declarada en origen. Sin conceptos, ofertas ni cambios clínicos nuevos.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "8b549e916b94562eb36299a0678619c3c5e6f16d0f42da79a7989a222c1cd6b2",
+  "research_snapshot_sha256": "9e96c405821e88663463709456c4e494fa931c0b7241d6971becf54645e5f191",
+  "definition_sha256": "aeffc3aeb3e18e7780c8431b0309b8ea4825d3fa688b1390772a4dd5c2a56735",
+  "new_concepts": [],
+  "aliases": [
+    {
+      "alias": "hormona foliculo estimulante",
+      "item_id": "d9d2e393-5736-5a05-9636-b28d020dd3cd",
+      "canonical_name": "Hormona foliculoestimulante (FSH)",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://medlineplus.gov/spanish/pruebas-de-laboratorio/prueba-de-niveles-de-la-hormona-foliculoestimulante-fsh/",
+      "reason": "La separación ortográfica foliculo estimulante nombra la misma hormona foliculoestimulante FSH documentada por MedlinePlus. SEMIN declara muestra Suero / Tubo de tapon rojo o dorado. Se reutiliza Follitropin sin modificar definición existente. No equivale a LH, TSH, subunidad FSHbeta, receptor FSHR, estudio genético ni prueba estimulada/seriada. No importar tubo, técnica, unidades, muestra de otra institución, preparación o día del ciclo. Sólo identidad nominal y atributo de suero literal del proveedor. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "Suero / Tubo de tapon rojo o dorado"
+      },
+      "source_attributes": {
+        "specimen_code": "serum"
+      }
+    }
+  ]
+}
