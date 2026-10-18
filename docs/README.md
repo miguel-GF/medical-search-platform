@@ -12,6 +12,7 @@ La conversación original no es lectura obligatoria para incorporarse.
 | [Guías de trabajo](WORK_GUIDE.md) | Procedimientos por tipo de cambio y traspaso. |
 | [Operación](OPERATIONS_GUIDE.md) | Directorios, comandos, comprobaciones y alcance de resultados. |
 | [Estado y prioridades](CURRENT_STATE.md) | Capacidades y pendientes con evidencia fechada. |
+| [FSH y precisión administrativa, revisión62](CATALOG_REVIEW_62_20261018.md) | Alias aplicado sin duplicar concepto, discrepancia de muestra conservada y filtro de sugerencias. |
 | [Catálogo y Atenayuca, revisión61](CATALOG_REVIEW_61_20261018.md) | Ocho registros incorporados y un establecimiento candidato; recuento y límites comerciales. |
 | [Propuesta para conservar INR](proposals/20261018-preserve-inr-requirement.md) | Causa observada enTP/TPT, diff aislado, impacto y verificación pendiente; sin activar. |
 | [Coagulación y estudios frecuentes, revisión59](CATALOG_REVIEW_59_20261018.md) |74RAW investigados; borrador TP/TPT retenido por pérdida deINR observada en rollback. |

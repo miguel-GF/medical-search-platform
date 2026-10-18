@@ -8,6 +8,7 @@ equivalence, creates a catalog item, or publishes an offer.
 from __future__ import annotations
 
 import hashlib
+import re
 from collections import Counter, defaultdict
 from typing import Any, Iterable
 from urllib.parse import urlparse
@@ -171,13 +172,64 @@ def _lexical_evidence(query: str, matched_term: str) -> dict[str, Any]:
     }
 
 
+def _explicit_identity_values(value: str) -> dict[str, set[str]]:
+    """Read bounded literal identities solely to reject review suggestions."""
+
+    normalized = normalize_text(value)
+    tokens = normalized.split()
+    identities: dict[str, set[str]] = {}
+    numerals = {"i", "ii", "iii", "iv", "v", "vi", "vii", "viii",
+                "ix", "x", "xi", "xii", "xiii"}
+    factors = {
+        tokens[index + 1] for index, token in enumerate(tokens[:-1])
+        if token in {"factor", "factores"} and tokens[index + 1] in numerals
+    }
+    if factors:
+        identities["coagulation_factor_literal"] = factors
+
+    antigens = set()
+    if re.search(r"\bpm scl\b", normalized):
+        antigens.add("pm scl")
+    if re.search(r"\bpm 1\b", normalized):
+        antigens.add("pm 1")
+    if re.search(r"\bscl 70\b|\bscl70\b", normalized):
+        antigens.add("scl 70")
+    if antigens:
+        identities["autoantigen_literal"] = antigens
+
+    epithets = {
+        tokens[index + 1] for index, token in enumerate(tokens[:-1])
+        if token == "dermatophagoides"
+    }
+    if epithets:
+        identities["dermatophagoides_epithet_literal"] = epithets
+    return identities
+
+
+def _explicit_identity_evidence(query: str, matched_term: str) -> tuple[list[str], list[str]]:
+    """Reject missing or different identifiers without approving equivalence."""
+
+    query_values = _explicit_identity_values(query)
+    term_values = _explicit_identity_values(matched_term)
+    conflicts: list[str] = []
+    missing: list[str] = []
+    for dimension, values in query_values.items():
+        candidate_values = term_values.get(dimension, set())
+        if candidate_values and values != candidate_values:
+            conflicts.append(
+                f"{dimension}:{'|'.join(sorted(values))}!={'|'.join(sorted(candidate_values))}"
+            )
+        elif not candidate_values:
+            missing.extend(f"{dimension}:{value}" for value in sorted(values))
+    return conflicts, missing
+
+
 def _clinical_modifier_evidence(query: str, matched_term: str) -> dict[str, list[str]]:
     """Flag explicit attribute conflicts or missing specificity for reviewers."""
 
     query_tokens = set(normalize_text(query).split())
     term_tokens = set(normalize_text(matched_term).split())
-    conflicts: list[str] = []
-    missing: list[str] = []
+    conflicts, missing = _explicit_identity_evidence(query, matched_term)
 
     query_modalities = {_MODALITY_VALUES[token] for token in query_tokens if token in _MODALITY_VALUES}
     term_modalities = {_MODALITY_VALUES[token] for token in term_tokens if token in _MODALITY_VALUES}

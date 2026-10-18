@@ -206,6 +206,14 @@ Los nombres canónicos y alias aprobados se resuelven de forma determinista; una
 difusa solo produce candidatos y queda `ambiguous` para revisión. Esto evita convertir por
 similitud textual dos servicios clínicos que no sean equivalentes.
 
+El triage administrativo (`normalization_triage`) conserva identificadores literales
+al filtrar sugerencias: numeral romano tras `factor`, secuencias PM-Scl/PM-1/Scl-70
+y epíteto tras `Dermatophagoides`. Una diferencia o identificador ausente se registra
+como conflicto o especificidad perdida. Este filtro sólo restringe candidatos:
+no corrige truncaciones, no aprueba equivalencias, no revalida fuentes ni modifica
+el resolvedor público. Los números arábigos, `FVIII`, `D.` y listas de varios factores
+requieren investigación adicional. Véase [evidencia y límites](../docs/CATALOG_REVIEW_62_20261018.md).
+
 ## Contrato de un adapter
 
 Un adapter debe separar descubrimiento/recuperación de la persistencia:

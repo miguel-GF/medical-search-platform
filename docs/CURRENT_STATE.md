@@ -17,6 +17,18 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Revisión 62 y triage administrativo,18-oct05:11 UTC:** un registroSEMIN
+FSH incorporado mediante alias exclusivo de proveedor, reutilizando el concepto
+existente; nombres y definición completa intactos, suero literal conservado como
+atributo de origen. AST retenida por muestra de orina declarada. Lectura
+independiente: **551 conceptos /4,073 pendientes /134 instituciones /
+218 ubicaciones /234 ofertas /112 migraciones**, cola53. En el triage local se
+rechazan diferencias literales de factor, PM-Scl/Scl-70 y especieDermatophagoides.
+Reanálisis completo del corte61:758 grupos, seis grupos/48RAW pierden sugerencias
+incompatibles (30→24); cero candidatos nuevos, nuevas unicidades exactas o cambios
+de acciones/holds. Inputs conservados. Sin cambios al resolvedor público ni
+propuestasINR activadas. [Evidencia y límites](CATALOG_REVIEW_62_20261018.md).
+
 **Revisión 61 e identidad 30,18-oct05:02 UTC:** ocho registros de glutatión
 peroxidasa incorporados, un concepto y un alias de proveedor.64 RAW intactos,
 56 contextos retenidos; dos HTTP públicos y una consulta con proveedor correctos,
