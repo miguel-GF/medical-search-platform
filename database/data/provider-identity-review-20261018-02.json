@@ -1,0 +1,26 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261018:02",
+  "reviewed_by": "Codex; investigación delegada por el operador; preparación pendiente de revisión root",
+  "authorization": "D-021/D-022: identidades candidatas pending con evidencia, sin ofertas; esta preparación no ejecuta SQL.",
+  "research_date": "2026-10-18",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "1 unidades públicas candidatas independientes; nombre específico, municipio/localidad/CP y vía concordantes; exterior explícitamente sin número en ambas fuentes. Datos históricos y DENUE preservados, sin cobertura comercial.",
+  "providers": [
+    {
+      "provider_key": "denue_public_center_3385384",
+      "name": "Centro De Salud Atenayuca. — Juan N. Méndez",
+      "slug": "centro-de-salud-atenayuca-juan-n-mendez-3385384",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó web propia de la unidad. SIDOF/DOF es evidencia histórica de identidad, no sitio institucional; conservar NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "621112"
+      ],
+      "denue_record_ids": [
+        "3385384"
+      ],
+      "identity_note": "Identidad candidata contrastada entre DENUE3385384 y CLUESPLSSA015616 del Anexo2, convenio15-marzo2024, documento federal/SIDOF. Nombre específico coincide omitiendo sólo artículos/preposiciones; municipio/localidad y CP coinciden. Domicilio federal literal: AVENIDA IXCAQUIXTLA SIN NÚMERO, PUEBLO ATENAYUCA, C.P. 75690. DENUE conserva tipo_vial=AVENIDA; nom_vial=IXCAQUIXTLA; numero_ext vacío y letra_ext SN; numero_int=''; letra_int=''; asentamiento=TERCERA; CP=75690. SIN NÚMERO federal y SN DENUE son ausencia explícita de número; no completar número ni letras. Asentamiento DENUE TERCERA no figura literalmente en el domicilio federal; conservar sin corregir. Conservar RAW completo, coordenadas y toda discrepancia. Fuente histórica no acredita operación2026, propiedad, personalidad jurídica, red administrativa actual ni permisos sanitarios. Registrar unidad candidata independiente verification_pending y ubicación pending; no asignar a IMSS-Bienestar, IMSS, ISSSTE u otra red. Sitio propio desconocido, website_url NULL. Sin estudios, equivalencias clínicas, ofertas, precios, horarios ni disponibilidad aprobados. No hubo contactos ni formularios a terceros."
+    }
+  ]
+}

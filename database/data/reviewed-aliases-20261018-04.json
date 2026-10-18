@@ -1,0 +1,44 @@
+{
+  "review_id": "pruevia:evidence-review:20261018:04",
+  "research_date": "2026-10-18",
+  "scope": "Revisión61: ochoRAW SD con glutatión peroxidasa nominal.56RAW adicionales retenidos por incertidumbres o representación de atributos. Sin inferir muestra, isoenzima, método, unidad, escala ni ofertas.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "3318307adb051cf027a75b76d0a114cb9d67ba162f0e540a179e41d7998030af",
+  "research_snapshot_sha256": "34d9f031a915c1ad2a98eebd3a5e55ebd174e4c40062434e3ba0b3464cb3e3fa",
+  "definition_sha256": "625d943688af734b20eb01279010bfcd483d93ab25f4a85da8b0a7bb6ba00816",
+  "new_concepts": [
+    {
+      "item_id": "9cd6dbca-304d-5c67-a22b-2980d52cb2a3",
+      "canonical_name": "Glutatión peroxidasa",
+      "component": "Glutathione peroxidase",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://cdb.clinicbarcelona.org/es/node/22647",
+      "reason": "GLUTATION PEROXIDASA es una identidad nominal de orden de laboratorio documentada como Glutation peroxidasa por Hospital Clínic. Se conserva la familia enzimática sin elegir GPX1, GPX3, GPX4, genotipo, isoenzima ni ensayo de expresión. No equivale a glutatión total/reducido/oxidado ni glutatión reductasa. No se importa actividad por masa de hemoglobina, espectrometría, LOINC45378-7, sangre total, unidad, escala o intervalo externo. Sólo identidad de orden, no equivalencia analítica. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "SD sólo declara GLUTATION PEROXIDASA; preparación vacía. Muestra y técnica desconocidas. La sangre total, tubos y técnica de Hospital Clínic no describen el protocoloSD y no se importan."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "glutation peroxidasa",
+      "item_id": "9cd6dbca-304d-5c67-a22b-2980d52cb2a3",
+      "canonical_name": "Glutatión peroxidasa",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://cdb.clinicbarcelona.org/es/node/22647",
+      "reason": "GLUTATION PEROXIDASA es una identidad nominal de orden de laboratorio documentada como Glutation peroxidasa por Hospital Clínic. Se conserva la familia enzimática sin elegir GPX1, GPX3, GPX4, genotipo, isoenzima ni ensayo de expresión. No equivale a glutatión total/reducido/oxidado ni glutatión reductasa. No se importa actividad por masa de hemoglobina, espectrometría, LOINC45378-7, sangre total, unidad, escala o intervalo externo. Sólo identidad de orden, no equivalencia analítica. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "GLUTATION PEROXIDASA"
+      }
+    }
+  ]
+}
