@@ -32,6 +32,30 @@ El bundle Flutter conserva el nombre fijo `main.dart.js`: los headers de release
 prohíben tratarlo como inmutable para que una actualización consulte la versión
 publicada. El service worker también usa red primero para esos archivos.
 
+### Actualizaciones de la PWA instalada
+
+La instalación no sustituye el código de una sesión que sigue abierta. La app
+consulta `app-version.json` al iniciar, recuperar visibilidad/conexión y cada
+cinco minutos mientras está visible. Un cambio de build muestra un aviso con
+**Actualizar y reiniciar** o **Más tarde**. No recarga por su cuenta ni guarda
+recetas para hacerlo: el aviso explica que la actualización reinicia lo abierto.
+Más tarde pospone el aviso30min en memoria; no crea identificadores persistentes.
+
+`dart run tool/render_web_headers.dart --output build/web/_headers --allowed-hosts api.pruevia.com.mx`
+estampa también el build público después de compilar: fingerprint de archivos,
+meta del HTML y manifiestoJSON de versión. Es obligatorio generar headers antes
+de congelar/publicar; ejecutar sólo `flutter build web` no completa ese paso.
+`tool/stamp_web_release.dart --output BUILD_DIRECTORY` permite estampar un build
+local sin cambiar sus headers. No se versionan los archivos generados.
+El manifiesto y scripts de control usan `no-store`; el manifiesto de versión no
+entra en CacheStorage. El service worker registra `updateViaCache: none` y
+conserva su caché público existente. API,consultas, imágenes clínicas yURLs con
+query/autorización siguen fuera del caché. No hay push ni permiso adicional.
+
+Las instalaciones anteriores sin este detector necesitan cerrar completamente
+y reabrir una vez para recibirlo; no requieren reinstalar. La actualización
+de nombre/iconos del WebAPK depende del navegador y es distinta del código/UI.
+
 Pruebas del aviso web: `node --test test_web/*.test.mjs`. Verificar además en un
 teléfono real con HTTPS, en navegador normal y desde el icono instalado.
 Después de `flutter build web`, `node test_web/check_installability.mjs` comprueba

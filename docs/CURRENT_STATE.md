@@ -17,6 +17,15 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Actualizaciones PWA,18-oct04:46UTC:** detector de build para sesiones abiertas,
+avisoActualizar/reiniciar oMás tarde, sin recarga forzada ni almacenamiento de
+recetas. Publicado Patient `2e1e136b-9e23-4969-9f59-ab350fb9510b`; Flutter
+compilado idéntico al anterior y49 archivos públicos congelados. Lectura pública:
+meta/JSON actuales, headersno-store, worker activo ysin errores de página.
+Sesión local conservó texto hasta el clic; el evento de reactivación fue
+dirigido por el driver, no una prueba en teléfono físico. Instalaciones viejas
+deben cerrar/reabrir una vez para recibir el detector. [Evidencia](PWA_UPDATES_20261018.md).
+
 **Revisión58 e identidades29,18-oct04:31 UTC:**24 registros incorporados,
 tres conceptos y tres aliases de proveedor: cotinina urinaria ocasional,
 anti-Jo-1 e índiceFTI.80RAW conservados,56 contextos retenidos intactos;
