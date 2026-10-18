@@ -62,3 +62,8 @@ Evidencia en `after/observed.json` y capturas home/order.
 
 Recuperación: Patient anterior `361dff4c-af7d-449f-989b-434ffdbbe66e`,
 landing anterior `18d3718c-1e45-4054-8859-26bf6c25c6ca`.
+
+Local también refrescado: debug terminado0 a04:22 UTC; servidor existente8080
+conservado. API yJS locales200; hash servido idéntico al último build
+`bb0be9b760170518667567c4f278c6d9f713fd1a32daf0fff65b5849d635ac9e`.
+Recibos `local-refresh-receipt.json` y `local-observed.json` en el artefacto.
