@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'stamp_web_release.dart' as release;
 
 const _header = '''/*
   Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' https://www.gstatic.com 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data: https://fonts.gstatic.com; connect-src ''; worker-src 'self' blob:; manifest-src 'self'; media-src 'self' blob:; frame-src 'none'
@@ -20,6 +21,21 @@ const _header = '''/*
   Cache-Control: no-cache, no-store, must-revalidate
 
 /main.dart.js
+  Cache-Control: no-cache, no-store, must-revalidate
+
+/flutter_bootstrap.js
+  Cache-Control: no-cache, no-store, must-revalidate
+
+/install.js
+  Cache-Control: no-cache, no-store, must-revalidate
+
+/pwa-updates.js
+  Cache-Control: no-cache, no-store, must-revalidate
+
+/pruevia-sw.js
+  Cache-Control: no-cache, no-store, must-revalidate
+
+/app-version.json
   Cache-Control: no-cache, no-store, must-revalidate
 ''';
 
@@ -73,4 +89,7 @@ void main(List<String> args) {
   final file = File(output);
   file.parent.createSync(recursive: true);
   file.writeAsStringSync(rendered);
+  if (File('${file.parent.path}/main.dart.js').existsSync()) {
+    release.stampWebRelease(file.parent);
+  }
 }

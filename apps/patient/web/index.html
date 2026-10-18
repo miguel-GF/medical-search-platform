@@ -21,6 +21,7 @@
   <meta name="description" content="Pruevia: compara estudios médicos y sucursales con información trazable.">
   <meta name="theme-color" content="#0F766E">
   <meta name="application-name" content="Pruevia">
+  <meta name="pruevia-build" content="__PRUEVIA_BUILD__">
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
@@ -34,8 +35,18 @@
   <title>Pruevia · Estudios claros, decisiones informadas</title>
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="install.css">
+  <link rel="stylesheet" href="pwa-updates.css">
 </head>
 <body>
+  <aside id="app-update" class="app-update" role="status" aria-live="polite" hidden>
+    <strong>Hay una actualización de Pruevia</strong>
+    <p id="app-update-message">Puedes seguir usando la app o actualizar ahora.</p>
+    <small>Actualizar reinicia la app. Termina primero tu orden o consulta; lo que tengas abierto se borrará.</small>
+    <div class="app-update-actions">
+      <button id="app-update-action" type="button">Actualizar y reiniciar</button>
+      <button id="app-update-later" type="button">Más tarde</button>
+    </div>
+  </aside>
   <aside id="install-help" class="install-help" aria-label="Instalar Pruevia" hidden>
     <span id="install-message"></span>
     <button id="install-action" type="button" hidden>Instalar Pruevia</button>
@@ -51,5 +62,6 @@
   -->
   <script src="flutter_bootstrap.js" async></script>
   <script src="install.js" defer></script>
+  <script src="pwa-updates.js" defer></script>
 </body>
 </html>

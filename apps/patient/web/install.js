@@ -5,7 +5,7 @@
     (location.protocol === 'http:' && ['localhost', '127.0.0.1'].includes(location.hostname));
   if ('serviceWorker' in navigator && secureOrigin) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./pruevia-sw.js').catch(() => {
+      navigator.serviceWorker.register('./pruevia-sw.js', { updateViaCache: 'none' }).catch(() => {
         // Installation from the browser menu remains available if registration fails.
       });
     });
