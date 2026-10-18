@@ -1,6 +1,6 @@
 # Estado y prioridades de Pruevia
 
-Tipo: punto de continuidad. Actualizado el 16-oct-2026 UTC y local para operación y datos;
+Tipo: punto de continuidad. Actualizado el 18-oct-2026 UTC /17-oct local para operación y datos;
 el corte histórico de publicación de septiembre corresponde al árbol local, el
 ledger Supabase y los Workers de producción. El proyecto enlazado se llama
 `pruevia-dev`, pero también es la base inicial de producción: las migraciones
@@ -16,6 +16,20 @@ base inicial de producción. Una escritura o migración allí afecta datos que
 podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
+
+**Revisión58 e identidades29,18-oct04:31 UTC:**24 registros incorporados,
+tres conceptos y tres aliases de proveedor: cotinina urinaria ocasional,
+anti-Jo-1 e índiceFTI.80RAW conservados,56 contextos retenidos intactos;
+seisHTTP públicos y tres consultas con proveedor correctos;39 etiquetas/variantes
+sin selección incompatible de los nuevos conceptos. Siete unidades candidatas
+añadidas con rollback previo, commit único y lectura independiente. Corte:
+**550 conceptos /4,082 pendientes /133 instituciones /217 ubicaciones /
+234 ofertas /112 migraciones**, cola51. No se añaden ofertas ni se atribuyen
+estudios a las nuevas sedes. Core, políticas y propuestas críticas sin cambios.
+Inventario completo04:34UTC:759 grupos,1,322 términos; memoria shadow57 revisiones,
+410 aliases,429 reglas y2,946 contextos reutilizables.51 ledgers/hashes
+comprobados,196 archivos previos intactos y cero aprobaciones nuevas por memoria.
+[Evidencia, municipios y límites](CATALOG_REVIEW_58_20261018.md).
 
 **Controles móviles corregidos,18-oct04:19 UTC /17-oct local:** radio8px,
 acciones de receta al mismo ancho de contenido que Buscar, fuera del margen
