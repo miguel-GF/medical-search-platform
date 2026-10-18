@@ -331,7 +331,7 @@ async function searchSpellingSuggestions(rpc: RpcClient, query: string, requestI
           ? [{ item_id: row.item_id, display_name: name }]
           : [];
       });
-    return verifyCatalogSearchSuggestions(suggestions.map(row => [row.item_id, row.display_name]), rpc);
+    return verifyCatalogSearchSuggestions(suggestions.map(row => [row.item_id, row.display_name]), rpc, query);
   } catch (error) {
     // Staggered DB deployments must not break public search.
     console.error(JSON.stringify({
@@ -557,7 +557,19 @@ function sanitizeOfferSource(value: object): {
   const studyUrl = safeHttpUrl(row.study_url);
   const locationUrl = safeHttpUrl(row.location_url);
   const bookingUrl = safeHttpUrl(row.booking_url);
-  const capability = stringValue(row.link_capability);
+  // A booking form is not an informational study page. Keep its separate
+  // backend field without promoting it to a study deep link.
+  const bookingUsedAsStudy = studyUrl !== null && studyUrl === bookingUrl;
+  const informationalStudyUrl = bookingUsedAsStudy ? null : studyUrl;
+  let capability = stringValue(row.link_capability);
+  if (bookingUsedAsStudy) {
+    capability = locationUrl ? 'location_only' : url ? 'provider_only' : 'none';
+  } else if (capability === 'study_and_location'
+    && (!informationalStudyUrl || informationalStudyUrl !== locationUrl)) {
+    // Two independent URLs do not prove one page has both selections fixed.
+    capability = informationalStudyUrl ? 'study_only'
+      : locationUrl ? 'location_only' : url ? 'provider_only' : 'none';
+  }
   const lastSeenAt = stringValue(row.price_last_seen_at);
   if (!url && !studyUrl && !locationUrl && !bookingUrl) return null;
   const source: {
@@ -568,7 +580,7 @@ function sanitizeOfferSource(value: object): {
     link_capability?: string;
     last_seen_at: string | null;
   } = { url, last_seen_at: lastSeenAt };
-  if (studyUrl) source.study_url = studyUrl;
+  if (informationalStudyUrl) source.study_url = informationalStudyUrl;
   if (locationUrl) source.location_url = locationUrl;
   if (bookingUrl) source.booking_url = bookingUrl;
   if (capability && ['study_only', 'location_only', 'study_and_location', 'provider_only', 'none'].includes(capability)) {

@@ -16,11 +16,43 @@ const LITERAL = new Set(['igg', 'igm', 'iga', 'ige', 'igd', 'pcr', 'rna', 'dna',
   'heces', 'stool', 'nasal', 'semen', 'lcr', 'total', 'totales', 'libre',
   'libres', 'directa', 'indirecta', 'beta', 'alfa', 'alpha', 'sin', 'con',
   'contraste', 'reposo', 'esfuerzo', 'pediatrico', 'izquierdo', 'derecho',
-  'bilateral', 'matutina', 'ayuno', '24', 'horas', 'minutos']);
+  'izquierda', 'derecha', 'bilateral', 'matutina', 'ayuno', '24', 'horas', 'minutos',
+  'serico', 'serica', 'sericos', 'sericas', 'salival', 'urinario', 'urinaria',
+  'urinarios', 'urinarias', 'fecal', 'fecales', 'arterial', 'venoso', 'venosa',
+  'capilar', 'plasmatico', 'plasmatica', 'with', 'without', 'contrast',
+  'left', 'right', 'transtoracico', 'transesofagico', 'doppler']);
+const QUALIFIER_FAMILIES = [
+  ['igg', 'igm', 'iga', 'ige', 'igd'],
+  ['total', 'totales', 'libre', 'libres'],
+  ['directa', 'indirecta'],
+  ['sin', 'con'],
+  ['reposo', 'esfuerzo'],
+  ['izquierdo', 'izquierda', 'derecho', 'derecha', 'bilateral', 'left', 'right'],
+  ['transtoracico', 'transesofagico'],
+];
 
 function tokens(text: string): string[] {
   return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
     .replace(/[^a-z0-9]+/g, ' ').trim().split(/\s+/).filter(v => v && !STOP.has(v));
+}
+
+/** A navigation suggestion must preserve the qualifiers actually supplied.
+ * Identity validation alone cannot make T4 a suggestion for T3. This guard is
+ * shared by catalog ranking and the historical SQL spelling fallback; it does
+ * not create aliases or change the clinical resolver's decisions.
+ */
+export function preservesSearchQualifiers(query: string, candidateName: string): boolean {
+  const input = new Set(tokens(query));
+  const candidate = new Set(tokens(candidateName));
+  for (const word of input) {
+    if ((LITERAL.has(word) || /\d/.test(word) || word.length === 1)
+      && !candidate.has(word)) return false;
+  }
+  for (const family of QUALIFIER_FAMILIES) {
+    if (family.some(word => input.has(word))
+      && family.some(word => candidate.has(word) && !input.has(word))) return false;
+  }
+  return true;
 }
 
 export function hepaticSearchNotice(query: string): string | undefined {
@@ -134,7 +166,7 @@ export async function catalogSearchSuggestions(
     // A family lookup is not permission to drop urine, isotype, collection time
     // or any other qualifier supplied alongside it.
     return tokens(query).every(word => HEPATIC_BROWSING_WORDS.has(word))
-      ? verifyCatalogSearchSuggestions(HEPATIC_INDIVIDUALS, rpc) : [];
+      ? verifyCatalogSearchSuggestions(HEPATIC_INDIVIDUALS, rpc, query) : [];
   }
   const input = tokens(query);
   if (!input.length || !input.some(t => t.length >= 5) || input.length > 12) return [];
@@ -146,13 +178,14 @@ export async function catalogSearchSuggestions(
     }
   }
   const ranked = [...candidates.entries()].sort((a, b) => b[1].score - a[1].score || a[0].localeCompare(b[0])).slice(0, 5);
-  return verifyCatalogSearchSuggestions(ranked.map(([id, candidate]) => [id, candidate.name]), rpc);
+  return verifyCatalogSearchSuggestions(ranked.map(([id, candidate]) => [id, candidate.name]), rpc, query);
 }
 
 export async function verifyCatalogSearchSuggestions(
-  candidates: Array<[string, string]>, rpc: RpcClient,
+  candidates: Array<[string, string]>, rpc: RpcClient, query: string,
 ): Promise<CatalogSearchSuggestion[]> {
   const verified = await Promise.all(candidates.slice(0, 5).map(async ([id, name]): Promise<CatalogSearchSuggestion | null> => {
+    if (!preservesSearchQualifiers(query, name)) return null;
     try {
       const payload = await rpc.call<unknown>('api_resolve_search', {
         p_query: name, p_domain_code: 'health_diagnostics',
