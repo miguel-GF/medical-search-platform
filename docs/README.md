@@ -12,6 +12,7 @@ La conversación original no es lectura obligatoria para incorporarse.
 | [Guías de trabajo](WORK_GUIDE.md) | Procedimientos por tipo de cambio y traspaso. |
 | [Operación](OPERATIONS_GUIDE.md) | Directorios, comandos, comprobaciones y alcance de resultados. |
 | [Estado y prioridades](CURRENT_STATE.md) | Capacidades y pendientes con evidencia fechada. |
+| [Coagulación y estudios frecuentes, revisión59](CATALOG_REVIEW_59_20261018.md) |74RAW investigados; borrador TP/TPT retenido por pérdida deINR observada en rollback. |
 | [Actualizaciones PWA,18-oct](PWA_UPDATES_20261018.md) | Detección de build, aviso para reiniciar y primera recepción en una instalación anterior. |
 | [Catálogo y ubicaciones, revisión58](CATALOG_REVIEW_58_20261018.md) |24 cierres nominales, siete unidades públicas candidatas y sus límites comerciales. |
 | [Controles móviles,18-oct](MOBILE_CONTROLS_20261018.md) | Radio8px, ancho de CTAs y acciones de receta; comparación de publicación real. |

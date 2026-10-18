@@ -1,0 +1,73 @@
+{
+  "review_id": "pruevia:evidence-review:20261018:02",
+  "research_date": "2026-10-18",
+  "scope": "Revisión59: propuesta nominal TP/TPT,16RAW de SD. Pendiente observación de colisiones y variantes antes de aplicación. Otros58RAW retenidos; sin nuevas ofertas ni equivalencias de resultados.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "5bfaab4ebec28cb254ded320627b01e7a7019db02a047ad242f5664958824656",
+  "research_snapshot_sha256": "3b65c7430404267f02f9b5e5b1503e0107c5a65c463b51add2666c6a4043e116",
+  "definition_sha256": "693a1d24723fa9ffcc3cb7a66ddcdab7eb84824a3b74d9e5df9bac5c894b4ff2",
+  "new_concepts": [
+    {
+      "item_id": "07a0fd41-e3c2-5808-8775-345066e8b9cb",
+      "canonical_name": "Tiempo de protrombina (TP)",
+      "component": "Prothrombin time",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://medlineplus.gov/spanish/ency/article/003652.htm",
+      "reason": "La abreviatura TP del RAW se desarrolla como tiempo de protrombina, nomenclatura documentada por MedlinePlus. No es tiempo de trombina, actividad de factor II, mutación F2 ni INR aislado. No se supone inclusión de INR, mezcla, dosis de vitamina K, tubo, muestra, técnica, escala ni unidad. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW únicamente declara ayuno mínimo de cuatro horas. No identifica tubo ni plasma/suero; no se copia matriz desde una referencia externa."
+    },
+    {
+      "item_id": "4bb1ddf0-ab14-544d-9a4b-52ae2b21b16f",
+      "canonical_name": "Tiempo parcial de tromboplastina (TPT)",
+      "component": "Partial thromboplastin time",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://medlineplus.gov/spanish/pruebas-de-laboratorio/prueba-de-tpt-tiempo-parcial-de-tromboplastina/",
+      "reason": "La abreviatura TPT del RAW se desarrolla nominalmente como tiempo parcial de tromboplastina, documentado por MedlinePlus. No se añaden variantes especializadas: mezcla, heparinasa, sensibilidad a anticoagulante lúpico, corrección ni paquete TP/TPT. La fuente usa TPTA como nombre alternativo; no se aprueba alias TPTA ni protocolo activador específico de SD. El catálogo histórico SD de dominio .com corrobora nomenclatura, pero no acredita técnica vigente ni propiedad actual del dominio. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El RAW únicamente declara ayuno mínimo de cuatro horas. No identifica tubo ni plasma/suero; no se copia matriz desde una referencia externa."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "tp",
+      "item_id": "07a0fd41-e3c2-5808-8775-345066e8b9cb",
+      "canonical_name": "Tiempo de protrombina (TP)",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://medlineplus.gov/spanish/ency/article/003652.htm",
+      "reason": "La abreviatura TP del RAW se desarrolla como tiempo de protrombina, nomenclatura documentada por MedlinePlus. No es tiempo de trombina, actividad de factor II, mutación F2 ni INR aislado. No se supone inclusión de INR, mezcla, dosis de vitamina K, tubo, muestra, técnica, escala ni unidad. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "TP"
+      }
+    },
+    {
+      "alias": "tpt",
+      "item_id": "4bb1ddf0-ab14-544d-9a4b-52ae2b21b16f",
+      "canonical_name": "Tiempo parcial de tromboplastina (TPT)",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://medlineplus.gov/spanish/pruebas-de-laboratorio/prueba-de-tpt-tiempo-parcial-de-tromboplastina/",
+      "reason": "La abreviatura TPT del RAW se desarrolla nominalmente como tiempo parcial de tromboplastina, documentado por MedlinePlus. No se añaden variantes especializadas: mezcla, heparinasa, sensibilidad a anticoagulante lúpico, corrección ni paquete TP/TPT. La fuente usa TPTA como nombre alternativo; no se aprueba alias TPTA ni protocolo activador específico de SD. El catálogo histórico SD de dominio .com corrobora nomenclatura, pero no acredita técnica vigente ni propiedad actual del dominio. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "TPT"
+      }
+    }
+  ]
+}

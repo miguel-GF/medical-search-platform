@@ -17,6 +17,15 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Investigación59,18-oct04:53UTC:**74RAW de nueve grupos frecuentes leídos
+completos. Borrador TP/TPT de16 registros preparado, pero retenido fuera de cola:
+rollback mostró que «tiempo de protrombina con INR» resolvería comoTP simple sin
+evidencia deINR incluido. Ledger`not_applied` antes/después; cero escrituras
+persistentes de esta revisión. Otros58RAW requieren fracción, composición o
+muestra. Catálogo leído550 conceptos/772 aliases; colaPID15656 viva. Último corte
+completo4,082 pendientes/133 instituciones/217 ubicaciones sigue vigente como
+corte anterior, no recuento nuevo. [Hallazgo y siguiente acción](CATALOG_REVIEW_59_20261018.md).
+
 **Actualizaciones PWA,18-oct04:46UTC:** detector de build para sesiones abiertas,
 avisoActualizar/reiniciar oMás tarde, sin recarga forzada ni almacenamiento de
 recetas. Publicado Patient `2e1e136b-9e23-4969-9f59-ab350fb9510b`; Flutter
