@@ -17,6 +17,14 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Revisión60 y propuestaINR,18-octUTC:**TPT separado en borrador03 también
+omiteINR en una variante de nombre completo. Ambos borradores02/03 retenidos
+sin encolar. Definición real dev3 confirma que su guardia cuenta tokens≥4;
+diff aislado preparado para exigirINR explícito, no ejecutado. Lectura de cierre:
+74RAW intactos, ambos ledgers`not_applied`,v3 sin cambios; **550 conceptos /
+4,082 pendientes /133 instituciones /217 ubicaciones /234 ofertas /112 migraciones**.
+ColaPID15656 confirmada viva. [Propuesta y límites](proposals/20261018-preserve-inr-requirement.md).
+
 **Investigación59,18-oct04:53UTC:**74RAW de nueve grupos frecuentes leídos
 completos. Borrador TP/TPT de16 registros preparado, pero retenido fuera de cola:
 rollback mostró que «tiempo de protrombina con INR» resolvería comoTP simple sin

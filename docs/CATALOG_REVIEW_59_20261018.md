@@ -64,3 +64,16 @@ y preparar la conservación explícita deINR en el resolvedor. Una modificación
 de core debe seguirD006; este hallazgo no activa una corrección crítica. La
 investigación de otros grupos y proveedores puede continuar mientras tanto.
 No hubo ofertas, precios, fuentes aprobadas, migraciones ni despliegues nuevos.
+
+## Seguimiento: revisión60
+
+Se separó TPT en el borrador20261018:03 (ochoRAW). Una observación más amplia
+también encontró pérdida deINR en «tiempo parcial de tromboplastina con INR».
+Por ello tampoco se encoló. La lectura independiente posterior conservó74RAW
+intactos y ambos ledgers`not_applied`; el nuevo recuento confirma550 conceptos,
+4,082 pendientes,133 instituciones,217 ubicaciones,234 ofertas y112 migraciones.
+
+La definición real dev3 omite tokens de menos de cuatro caracteres en su guardia
+de palabras significativas. Se preparó un diff aislado para conservar el tokenINR,
+con sus límites y recuperación, sin ejecutarlo ni cambiar el core. Véase la
+[propuesta concreta y pendientes de verificación](proposals/20261018-preserve-inr-requirement.md).
