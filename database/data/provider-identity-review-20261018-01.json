@@ -1,0 +1,116 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261018:01",
+  "reviewed_by": "Codex; investigación delegada por el operador; preparación pendiente de revisión root",
+  "authorization": "D-021/D-022: identidades candidatas pending con evidencia, sin ofertas; esta preparación no ejecuta SQL.",
+  "research_date": "2026-10-18",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "7 unidades públicas candidatas independientes; nombre específico, municipio/localidad/CP y vía concordantes; exterior explícitamente sin número en ambas fuentes. Datos históricos y DENUE preservados, sin cobertura comercial.",
+  "providers": [
+    {
+      "provider_key": "denue_public_center_10098862",
+      "name": "Centro De Salud San Marcos Necoxtla — Tehuacán",
+      "slug": "centro-de-salud-san-marcos-necoxtla-tehuacan-10098862",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó web propia de la unidad. SIDOF/DOF es evidencia histórica de identidad, no sitio institucional; conservar NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "621112"
+      ],
+      "denue_record_ids": [
+        "10098862"
+      ],
+      "identity_note": "Identidad candidata contrastada entre DENUE10098862 y CLUESPLSSA005705 del Anexo2, convenio15-marzo2024, documento federal/SIDOF. Nombre específico coincide omitiendo sólo artículos/preposiciones; municipio/localidad y CP coinciden. Domicilio federal literal: CALLE 4 SUR SIN NUMERO, PUEBLO SAN MARCOS NECOXTLA, C.P. 75859. DENUE conserva tipo_vial=CALLE; nom_vial=4 SUR; numero_ext vacío y letra_ext SN; numero_int=''; letra_int=''; asentamiento=SAN MARCOS NECOXTLA; CP=75859. SIN NÚMERO federal y SN DENUE son ausencia explícita de número; no completar número ni letras.  Conservar RAW completo, coordenadas y toda discrepancia. Fuente histórica no acredita operación2026, propiedad, personalidad jurídica, red administrativa actual ni permisos sanitarios. Registrar unidad candidata independiente verification_pending y ubicación pending; no asignar a IMSS-Bienestar, IMSS, ISSSTE u otra red. Sitio propio desconocido, website_url NULL. Sin estudios, equivalencias clínicas, ofertas, precios, horarios ni disponibilidad aprobados. No hubo contactos ni formularios a terceros."
+    },
+    {
+      "provider_key": "denue_public_center_8464873",
+      "name": "Centro De Salud Chapulco — Chapulco",
+      "slug": "centro-de-salud-chapulco-chapulco-8464873",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó web propia de la unidad. SIDOF/DOF es evidencia histórica de identidad, no sitio institucional; conservar NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "621112"
+      ],
+      "denue_record_ids": [
+        "8464873"
+      ],
+      "identity_note": "Identidad candidata contrastada entre DENUE8464873 y CLUESPLSSA006212 del Anexo2, convenio15-marzo2024, documento federal/SIDOF. Nombre específico coincide omitiendo sólo artículos/preposiciones; municipio/localidad y CP coinciden. Domicilio federal literal: CALLE VENUSTIANO CARRANZA SIN NÚMERO, PUEBLO CHAPULCO, C.P. 75810. DENUE conserva tipo_vial=CALLE; nom_vial=VENUSTIANO CARRANZA; numero_ext vacío y letra_ext SN; numero_int=''; letra_int=''; asentamiento=CENTRO; CP=75810. SIN NÚMERO federal y SN DENUE son ausencia explícita de número; no completar número ni letras. Asentamiento DENUE CENTRO no figura literalmente en el domicilio federal; conservar sin corregir. Conservar RAW completo, coordenadas y toda discrepancia. Fuente histórica no acredita operación2026, propiedad, personalidad jurídica, red administrativa actual ni permisos sanitarios. Registrar unidad candidata independiente verification_pending y ubicación pending; no asignar a IMSS-Bienestar, IMSS, ISSSTE u otra red. Sitio propio desconocido, website_url NULL. Sin estudios, equivalencias clínicas, ofertas, precios, horarios ni disponibilidad aprobados. No hubo contactos ni formularios a terceros."
+    },
+    {
+      "provider_key": "denue_public_center_10530853",
+      "name": "Centro De Salud Santa Catarina Villanueva — Quecholac",
+      "slug": "centro-de-salud-santa-catarina-villanueva-quecholac-10530853",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó web propia de la unidad. SIDOF/DOF es evidencia histórica de identidad, no sitio institucional; conservar NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "621112"
+      ],
+      "denue_record_ids": [
+        "10530853"
+      ],
+      "identity_note": "Identidad candidata contrastada entre DENUE10530853 y CLUESPLSSA015155 del Anexo2, convenio15-marzo2024, documento federal/SIDOF. Nombre específico coincide omitiendo sólo artículos/preposiciones; municipio/localidad y CP coinciden. Domicilio federal literal: CALLE 5 DE MAYO SIN NÚMERO, PUEBLO SANTA CATARINA VILLANUEVA, C.P. 75467. DENUE conserva tipo_vial=CALLE; nom_vial=5 DE MAYO; numero_ext vacío y letra_ext SN; numero_int=''; letra_int=''; asentamiento=SANTA CATARINA VILLANUEVA; CP=75467. SIN NÚMERO federal y SN DENUE son ausencia explícita de número; no completar número ni letras.  Conservar RAW completo, coordenadas y toda discrepancia. Fuente histórica no acredita operación2026, propiedad, personalidad jurídica, red administrativa actual ni permisos sanitarios. Registrar unidad candidata independiente verification_pending y ubicación pending; no asignar a IMSS-Bienestar, IMSS, ISSSTE u otra red. Sitio propio desconocido, website_url NULL. Sin estudios, equivalencias clínicas, ofertas, precios, horarios ni disponibilidad aprobados. No hubo contactos ni formularios a terceros."
+    },
+    {
+      "provider_key": "denue_public_center_3448500",
+      "name": "Centro De Salud San Marcos Tlacoyalco — Tlacotepec de Benito Juárez",
+      "slug": "centro-de-salud-san-marcos-tlacoyalco-tlacotepec-de-benito-juarez-3448500",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó web propia de la unidad. SIDOF/DOF es evidencia histórica de identidad, no sitio institucional; conservar NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "3448500"
+      ],
+      "identity_note": "Identidad candidata contrastada entre DENUE3448500 y CLUESPLSSA015493 del Anexo2, convenio15-marzo2024, documento federal/SIDOF. Nombre específico coincide omitiendo sólo artículos/preposiciones; municipio/localidad y CP coinciden. Domicilio federal literal: CALLE 6 SUR SIN NÚMERO, PUEBLO SAN MARCOS TLACOYALCO, C.P. 75685. DENUE conserva tipo_vial=CALLE; nom_vial=6 SUR; numero_ext vacío y letra_ext SN; numero_int=''; letra_int=''; asentamiento=SAN MARCOS TLACOYALCO; CP=75685. SIN NÚMERO federal y SN DENUE son ausencia explícita de número; no completar número ni letras.  Conservar RAW completo, coordenadas y toda discrepancia. Fuente histórica no acredita operación2026, propiedad, personalidad jurídica, red administrativa actual ni permisos sanitarios. Registrar unidad candidata independiente verification_pending y ubicación pending; no asignar a IMSS-Bienestar, IMSS, ISSSTE u otra red. Sitio propio desconocido, website_url NULL. Sin estudios, equivalencias clínicas, ofertas, precios, horarios ni disponibilidad aprobados. No hubo contactos ni formularios a terceros."
+    },
+    {
+      "provider_key": "denue_public_center_11067957",
+      "name": "Centro De Salud De Tlacotepec De José Manzo — San Salvador el Verde",
+      "slug": "centro-de-salud-de-tlacotepec-de-jose-manzo-san-salvador-el-verde-11067957",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó web propia de la unidad. SIDOF/DOF es evidencia histórica de identidad, no sitio institucional; conservar NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "11067957"
+      ],
+      "identity_note": "Identidad candidata contrastada entre DENUE11067957 y CLUESPLSSA016881 del Anexo2, convenio15-marzo2024, documento federal/SIDOF. Nombre específico coincide omitiendo sólo artículos/preposiciones; municipio/localidad y CP coinciden. Domicilio federal literal: CALLE MIGUEL HIDALGO SIN NÚMERO, PUEBLO TLACOTEPEC DE JOSÉ MANZO, C.P. 74133. DENUE conserva tipo_vial=CALLE; nom_vial=MIGUEL HIDALGO; numero_ext vacío y letra_ext SN; numero_int=''; letra_int=''; asentamiento=TLACOTEPEC DE JOSE MANZO; CP=74133. SIN NÚMERO federal y SN DENUE son ausencia explícita de número; no completar número ni letras.  Conservar RAW completo, coordenadas y toda discrepancia. Fuente histórica no acredita operación2026, propiedad, personalidad jurídica, red administrativa actual ni permisos sanitarios. Registrar unidad candidata independiente verification_pending y ubicación pending; no asignar a IMSS-Bienestar, IMSS, ISSSTE u otra red. Sitio propio desconocido, website_url NULL. Sin estudios, equivalencias clínicas, ofertas, precios, horarios ni disponibilidad aprobados. No hubo contactos ni formularios a terceros."
+    },
+    {
+      "provider_key": "denue_public_center_3409954",
+      "name": "Centro De Salud Santa María Malacatepec — Ocoyucan",
+      "slug": "centro-de-salud-santa-maria-malacatepec-ocoyucan-3409954",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó web propia de la unidad. SIDOF/DOF es evidencia histórica de identidad, no sitio institucional; conservar NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "3409954"
+      ],
+      "identity_note": "Identidad candidata contrastada entre DENUE3409954 y CLUESPLSSA017125 del Anexo2, convenio15-marzo2024, documento federal/SIDOF. Nombre específico coincide omitiendo sólo artículos/preposiciones; municipio/localidad y CP coinciden. Domicilio federal literal: CALLE INDEPENDENCIA SIN NÚMERO, PUEBLO SANTA MARÍA MALACATEPEC, C.P. 72850. DENUE conserva tipo_vial=CALLE; nom_vial=INDEPENDENCIA; numero_ext vacío y letra_ext SN; numero_int=''; letra_int=''; asentamiento=SANTA MARIA MALACATEPEC; CP=72850. SIN NÚMERO federal y SN DENUE son ausencia explícita de número; no completar número ni letras.  Conservar RAW completo, coordenadas y toda discrepancia. Fuente histórica no acredita operación2026, propiedad, personalidad jurídica, red administrativa actual ni permisos sanitarios. Registrar unidad candidata independiente verification_pending y ubicación pending; no asignar a IMSS-Bienestar, IMSS, ISSSTE u otra red. Sitio propio desconocido, website_url NULL. Sin estudios, equivalencias clínicas, ofertas, precios, horarios ni disponibilidad aprobados. No hubo contactos ni formularios a terceros."
+    },
+    {
+      "provider_key": "denue_public_center_7547222",
+      "name": "Cessa La Libertad — Puebla",
+      "slug": "cessa-la-libertad-puebla-7547222",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó web propia de la unidad. SIDOF/DOF es evidencia histórica de identidad, no sitio institucional; conservar NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "622112"
+      ],
+      "denue_record_ids": [
+        "7547222"
+      ],
+      "identity_note": "Identidad candidata contrastada entre DENUE7547222 y CLUESPLSSA017134 del Anexo2, convenio15-marzo2024, documento federal/SIDOF. Nombre específico coincide omitiendo sólo artículos/preposiciones; municipio/localidad y CP coinciden. Domicilio federal literal: CALLE 4 SUR SIN NÚMERO, COLONIA LA LIBERTAD, C.P. 72130. DENUE conserva tipo_vial=CALLE; nom_vial=4 SUR; numero_ext vacío y letra_ext SN; numero_int=''; letra_int=''; asentamiento=LA LIBERTAD; CP=72130. SIN NÚMERO federal y SN DENUE son ausencia explícita de número; no completar número ni letras. DENUE clasifica622112 hospital general público aunque la fuente federal identifica CESSA/PRIMER NIVEL; conservar clase y location_type hospital, sin reclasificar. Conservar RAW completo, coordenadas y toda discrepancia. Fuente histórica no acredita operación2026, propiedad, personalidad jurídica, red administrativa actual ni permisos sanitarios. Registrar unidad candidata independiente verification_pending y ubicación pending; no asignar a IMSS-Bienestar, IMSS, ISSSTE u otra red. Sitio propio desconocido, website_url NULL. Sin estudios, equivalencias clínicas, ofertas, precios, horarios ni disponibilidad aprobados. No hubo contactos ni formularios a terceros."
+    }
+  ]
+}

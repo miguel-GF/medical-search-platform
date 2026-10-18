@@ -1,0 +1,101 @@
+{
+  "review_id": "pruevia:evidence-review:20261018:01",
+  "research_date": "2026-10-18",
+  "scope": "Revisión58:24RAW SD en tres grupos de ocho; cotinina urinaria ocasional explícita, anti-Jo-1 nominal sin isotipo/muestra inferidos, índice FTI sin adoptar fórmula externa. Sin publicar ofertas ni resolver otras etiquetas; borrador sujeto a observación rollback y vecinos clínicos.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "530b8b651d25607c4dcdd009ee7497fc9cd79314ad9fd63d1f02cf2e1df57c0b",
+  "research_snapshot_sha256": "3dffac992c7e4edb17d843dff38dfdede27af2d71acab0467ba868b1b6be815f",
+  "definition_sha256": "e5564015258f782dfe7965980ddbe1095537fe60a81ce752b5d5c2a79585b134",
+  "new_concepts": [
+    {
+      "item_id": "33c0806a-6006-5c41-a7b2-aa635b840fb8",
+      "canonical_name": "Cotinina en orina ocasional",
+      "component": "Cotinine",
+      "specimen_code": "urine",
+      "time_aspect": "Pt",
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://www.labcorp.com/tests/737919/nicotine-cotinine-screen-and-confirmation-urine",
+      "reason": "SD declara NICOTINA EN ORINA -COTININA- y recolección de orina al azar. Se conserva cotinina, metabolito expresamente nombrado, y orina ocasional; no se transforma en nicotina medida directamente, panel de metabolitos, cotinina sérica, cociente con creatinina ni colección de24h. Labcorp confirma cotinina como analito urinario; su cribado/reflejo confirmatorio y sus métodos no prueban protocoloSD. No se importan método, escala, unidad ni puntos de corte. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos."
+    },
+    {
+      "item_id": "8038a8a5-f135-53be-b79a-33a140ef2e0d",
+      "canonical_name": "Anticuerpos anti-Jo-1",
+      "component": "Histidyl tRNA synthetase (Jo-1) Ab",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/800219",
+      "reason": "SD declara ANTICUERPOS ANTI JOI. Se interpreta la I terminal de este rótulo como la variante tipográfica de Jo-1, antígeno histidil-ARNt sintetasa documentado por Mayo; corrección nominal trazable y limitada al proveedor, conservando RAW. No equivale a Jo-2, anti-OJ, PL-7, PL-12 ni panel de miositis. SD no declara isotipo, matriz o método; no se copian IgG, suero o inmunoensayo desde Mayo. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "El ayuno no identifica muestra. Isotipo, matriz, técnica y duración analítica desconocidos; no se completa IgG ni suero."
+    },
+    {
+      "item_id": "c9edf444-dc84-52af-9308-2e69c6cf4fc0",
+      "canonical_name": "Índice de tiroxina libre (ITL/FTI)",
+      "component": "Thyroxine.free index",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/62583",
+      "reason": "SD declara explícitamente el índice ITL/FTI, distinto de tiroxina libre medida directamente. Mayo y LOINC documentan esa identidad calculada y variantes de cálculo. Sólo se identifica la orden nominal de índice, sin adoptar fórmula, protocolo, unidades, valores de referencia, panel tiroideo o componentes de otra institución. No equivale a T4 libre directa, T4 total, T3 libre ni T uptake individual. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "SD no declara matriz, fórmula o técnica del índice. Permanecen desconocidas; no se infiere suero desde Mayo ni tiempo analítico desde ayuno."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "nicotina en orina cotinina",
+      "item_id": "33c0806a-6006-5c41-a7b2-aa635b840fb8",
+      "canonical_name": "Cotinina en orina ocasional",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.labcorp.com/tests/737919/nicotine-cotinine-screen-and-confirmation-urine",
+      "reason": "SD declara NICOTINA EN ORINA -COTININA- y recolección de orina al azar. Se conserva cotinina, metabolito expresamente nombrado, y orina ocasional; no se transforma en nicotina medida directamente, panel de metabolitos, cotinina sérica, cociente con creatinina ni colección de24h. Labcorp confirma cotinina como analito urinario; su cribado/reflejo confirmatorio y sus métodos no prueban protocoloSD. No se importan método, escala, unidad ni puntos de corte. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "NICOTINA EN ORINA -COTININA-"
+      }
+    },
+    {
+      "alias": "anticuerpos anti joi",
+      "item_id": "8038a8a5-f135-53be-b79a-33a140ef2e0d",
+      "canonical_name": "Anticuerpos anti-Jo-1",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/800219",
+      "reason": "SD declara ANTICUERPOS ANTI JOI. Se interpreta la I terminal de este rótulo como la variante tipográfica de Jo-1, antígeno histidil-ARNt sintetasa documentado por Mayo; corrección nominal trazable y limitada al proveedor, conservando RAW. No equivale a Jo-2, anti-OJ, PL-7, PL-12 ni panel de miositis. SD no declara isotipo, matriz o método; no se copian IgG, suero o inmunoensayo desde Mayo. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS ANTI JOI"
+      }
+    },
+    {
+      "alias": "indice de tiroxina libre itl fti",
+      "item_id": "c9edf444-dc84-52af-9308-2e69c6cf4fc0",
+      "canonical_name": "Índice de tiroxina libre (ITL/FTI)",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/62583",
+      "reason": "SD declara explícitamente el índice ITL/FTI, distinto de tiroxina libre medida directamente. Mayo y LOINC documentan esa identidad calculada y variantes de cálculo. Sólo se identifica la orden nominal de índice, sin adoptar fórmula, protocolo, unidades, valores de referencia, panel tiroideo o componentes de otra institución. No equivale a T4 libre directa, T4 total, T3 libre ni T uptake individual. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "INDICE DE TIROXINA LIBRE(ITL,FTI)"
+      }
+    }
+  ]
+}
