@@ -7,6 +7,18 @@ select jsonb_build_object(
   'provider_locations', (select count(*) from core.provider_locations),
   'active_catalog_items', (select count(*) from catalog.items where status='active'),
   'active_offers', (select count(*) from supply.offers where status='active'),
+  'resolved_crawler_rows', (
+    select count(*) from ingest.normalization_runs nr
+    where nr.input_type='crawler' and nr.status='resolved'
+      and exists(select 1 from ingest.normalization_decisions nd
+                 where nd.normalization_run_id=nr.id and nd.selected_item_id is not null)
+  ),
+  'terminal_no_match_crawler_rows', (
+    select count(*) from ingest.normalization_runs nr
+    where nr.input_type='crawler' and nr.status='no_match'
+      and exists(select 1 from ingest.normalization_decisions nd
+                 where nd.normalization_run_id=nr.id and nd.decision_type='no_match')
+  ),
   'pending_crawler_rows', (
     select count(*) from ingest.normalization_runs nr
     where nr.input_type='crawler' and nr.status in ('pending','ambiguous','no_match')

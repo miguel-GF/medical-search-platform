@@ -17,6 +17,17 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Recuento y memoria, 19-oct 13:04:36 UTC:** 3,315 registros favorables y
+4,073 pendientes abiertos; además, 946 decisiones históricas no_match de agosto
+fuera de cola, sin considerarlas éxitos. Memoria fresca: 59 revisiones, 412 aliases,
+431 reglas y 2,955 contextos revisados. Comparación local de esos 946: 360 contextos
+exactos reutilizables, 580 requieren evidencia, cuatro campos no reconocidos y
+dos contextos cambiados. Es una proyección de investigación, sin reapertura ni
+nuevas resoluciones. Reporte SQL de sólo lectura expone los agregados por separado.
+Las dos sucursales Salud Digna retenidas ya existen: no duplicar; Tehuacán admite
+preparar vínculo DENUE, Municipio Libre conserva discrepancia exterior/interior.
+[Evidencia y siguiente acción](CATALOG_STATUS_20261019.md).
+
 **Identidad 33 y CLUES, 19-oct 12:59:51 UTC:** 35 ubicaciones candidatas
 incorporadas con nombres y domicilios concordantes; dos Salud Digna retenidos
 para reconciliar la marca existente. Rollback, commit único y lectura independiente

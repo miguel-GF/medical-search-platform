@@ -108,6 +108,15 @@ Evidencia local ignorada:
 - `collectors/artifacts/catalog-status-20261019/counts-observed.json`:
   agregados de resolución, sin consultar texto de pacientes.
 
-Siguiente trabajo: reconciliar los dos Salud Digna con la marca existente y
-buscar evidencia específica de estudios por proveedor/sucursal. Las equivalencias
-clínicas ambiguas conservan sus revisiones y restricciones pendientes.
+La conciliación posterior confirmó que ambos Salud Digna ya tienen sede en la
+marca existente. Tehuacán coincide con Calle 1 Poniente 129 y es candidato a
+vincular DENUE sin crear una sede. Municipio Libre conserva exterior 547-6 frente
+a catálogo 547 Int 6: no convertir exterior en interior ni duplicar. No se
+activaron vínculos; la consulta fresca del sitio oficial no fue accesible y la
+evidencia previa conserva su fecha. Reporte local:
+`collectors/artifacts/puebla-expansion-20261009/identity-review-34-research-20261019/REPORT.md`.
+
+Siguiente trabajo: preparar la vinculación acotada de Tehuacán conservando todos
+los datos existentes y buscar evidencia específica de estudios por proveedor y
+sucursal. Las equivalencias clínicas ambiguas conservan sus restricciones.
+[Recuento posterior e historial separado](CATALOG_STATUS_20261019.md).
