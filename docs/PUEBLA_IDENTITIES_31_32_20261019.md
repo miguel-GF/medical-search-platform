@@ -95,7 +95,10 @@ acotada de ese archivo para revisar encabezados y19CLUES; no se usó para aproba
 estos cinco registros ni se declaró operación actual desde su nombre de archivo.
 Recibos en `collectors/artifacts/clues-source-discovery-20261019/`.
 
-La descarga y campos útiles deben acreditarse con su recibo final. Buscar otra
-fuente no autoriza corregir domicilios, afirmar operación vigente o aprobar
-ofertas sin examinar su evidencia y alcance. La política de uso de una fuente
-nueva requiere revisión propia antes de ingesta recurrente o publicación.
+**Continuación posterior completada:** la descarga final y los campos útiles
+quedaron acreditados con su hash y extractor local. Las cinco claves históricas
+figuran fuera de operación por cambio de institución; no se infirió cierre
+físico o sucesión ni se modificaron estas identidades. Se investigaron nuevos
+pares independientes y se incorporaron 35 candidatos en el lote 33. No hubo
+nueva fuente de ingesta ni cambio de políticas.
+[Resultado, evidencia y límites](PUEBLA_CLUES_IDENTITIES_33_20261019.md).

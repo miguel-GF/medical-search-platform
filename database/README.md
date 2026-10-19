@@ -14,6 +14,14 @@ serie y método en variantes observadas. [Evidencia y límites](../docs/CATALOG_
 
 ## Goals
 
+Herramienta local de investigación: `scripts/extract_clues_registry.py` extrae
+un XLSX CLUES con SHA256 obligatorio y filtros de entidad/claves, conservando
+identidad, domicilio, estado literal y fila original. No descarga, ingiere ni
+aprueba operación actual o sucesiones; omite contactos y texto personal. Su
+salida requiere un directorio nuevo bajo `collectors/artifacts`. Se ejecutó
+sobre el archivo oficial de agosto de 2026 para dos selecciones reales.
+[Evidencia, límites y resultado de identidad 33](../docs/PUEBLA_CLUES_IDENTITIES_33_20261019.md).
+
 - Multi-city and multi-country ready.
 - Provider brand -> organization -> physical location separation.
 - Canonical catalog independent from each provider's commercial naming.
