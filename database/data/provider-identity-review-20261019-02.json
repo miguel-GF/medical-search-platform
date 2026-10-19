@@ -1,0 +1,71 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261019:02",
+  "reviewed_by": "Codex; investigación delegada por el operador; preparación pendiente de revisión root",
+  "authorization": "D-021/D-022: identidades candidatas pending con evidencia, sin ofertas; esta preparación no ejecuta SQL.",
+  "research_date": "2026-10-19",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "Cuatro unidades públicas candidatas independientes; nombres específicos concordantes con descriptores rural/urbano/concentrado conservados, municipio/localidad/CP iguales y componente completo de domicilio numerado concordante. Datos históricos y DENUE preservados, sin cobertura comercial.",
+  "providers": [
+    {
+      "provider_key": "denue_public_center_3537158",
+      "name": "Centro De Salud Nicolás Bravo — Nicolás Bravo",
+      "slug": "centro-de-salud-nicolas-bravo-nicolas-bravo-3537158",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó web propia de la unidad. SIDOF/DOF es evidencia histórica de identidad, no sitio institucional; conservar NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "3537158"
+      ],
+      "identity_note": "Identidad candidata contrastada entre DENUE3537158 y CLUESPLSSA002263 del Anexo2, convenio15-marzo2024, documento federal/SIDOF. Nombre federal: CENTRO DE SALUD NICOLÁS BRAVO; nombre DENUE: CENTRO DE SALUD RURAL NICOLAS BRAVO. Difieren en descriptores rural/urbano/concentrado y partículas; el nombre específico concuerda y se conservan los dos rótulos. El par único concuerda por municipio, localidad, CP y componente completo de tipo de vía, calle y número exterior; municipio/localidad y CP coinciden. Domicilio federal literal: CALLE NACIONAL 44 , PUEBLO NICOLAS BRAVO, C.P. 75830. DENUE conserva tipo_vial=CALLE; nom_vial=NACIONAL; numero_ext='44' y letra_ext=''; numero_int=''; letra_int=''; asentamiento=CENTRO; CP=75830. El exterior numerado coincide literalmente con el primer componente del domicilio federal; no completar ni modificar número, letras o interior. Un SN interior DENUE, si existe, no se traslada al exterior. Asentamiento DENUE CENTRO no figura literalmente en el domicilio federal; conservar sin corregir. Conservar RAW completo, coordenadas y toda discrepancia. Fuente histórica no acredita operación2026, propiedad, personalidad jurídica, red administrativa actual ni permisos sanitarios. Registrar unidad candidata independiente verification_pending y ubicación pending; no asignar a IMSS-Bienestar, IMSS, ISSSTE u otra red. Sitio propio desconocido, website_url NULL. Sin estudios, equivalencias clínicas, ofertas, precios, horarios ni disponibilidad aprobados. No hubo contactos ni formularios a terceros."
+    },
+    {
+      "provider_key": "denue_public_center_3434721",
+      "name": "Centro De Salud San Andrés Cholula — San Andrés Cholula",
+      "slug": "centro-de-salud-san-andres-cholula-san-andres-cholula-3434721",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó web propia de la unidad. SIDOF/DOF es evidencia histórica de identidad, no sitio institucional; conservar NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "3434721"
+      ],
+      "identity_note": "Identidad candidata contrastada entre DENUE3434721 y CLUESPLSSA003021 del Anexo2, convenio15-marzo2024, documento federal/SIDOF. Nombre federal: CENTRO DE SALUD SAN ANDRÉS CHOLULA; nombre DENUE: CENTRO DE SALUD RURAL CONCENTRADO DE SAN ANDRES CHOLULA. Difieren en descriptores rural/urbano/concentrado y partículas; el nombre específico concuerda y se conservan los dos rótulos. El par único concuerda por municipio, localidad, CP y componente completo de tipo de vía, calle y número exterior; municipio/localidad y CP coinciden. Domicilio federal literal: AVENIDA MAXIMINO ÁVILA CAMACHO 604 , BARRIO SANTIAGO XICOHTENCO, C.P. 72810. DENUE conserva tipo_vial=AVENIDA; nom_vial=MAXIMINO AVILA CAMACHO; numero_ext='604' y letra_ext=''; numero_int=''; letra_int=''; asentamiento=CENTRO; CP=72810. El exterior numerado coincide literalmente con el primer componente del domicilio federal; no completar ni modificar número, letras o interior. Un SN interior DENUE, si existe, no se traslada al exterior. Asentamiento DENUE CENTRO no figura literalmente en el domicilio federal; conservar sin corregir. Conservar RAW completo, coordenadas y toda discrepancia. Fuente histórica no acredita operación2026, propiedad, personalidad jurídica, red administrativa actual ni permisos sanitarios. Registrar unidad candidata independiente verification_pending y ubicación pending; no asignar a IMSS-Bienestar, IMSS, ISSSTE u otra red. Sitio propio desconocido, website_url NULL. Sin estudios, equivalencias clínicas, ofertas, precios, horarios ni disponibilidad aprobados. No hubo contactos ni formularios a terceros."
+    },
+    {
+      "provider_key": "denue_public_center_3278688",
+      "name": "Centro De Salud Alpanocan — Tochimilco",
+      "slug": "centro-de-salud-alpanocan-tochimilco-3278688",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó web propia de la unidad. SIDOF/DOF es evidencia histórica de identidad, no sitio institucional; conservar NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "3278688"
+      ],
+      "identity_note": "Identidad candidata contrastada entre DENUE3278688 y CLUESPLSSA004462 del Anexo2, convenio15-marzo2024, documento federal/SIDOF. Nombre federal: CENTRO DE SALUD ALPANOCAN; nombre DENUE: CENTRO DE SALUD RURAL DE ALPANOCAN. Difieren en descriptores rural/urbano/concentrado y partículas; el nombre específico concuerda y se conservan los dos rótulos. El par único concuerda por municipio, localidad, CP y componente completo de tipo de vía, calle y número exterior; municipio/localidad y CP coinciden. Domicilio federal literal: CALLE ALDAMA 7 , PUEBLO SAN ANTONIO ALPANOCAN, C.P. 74339. DENUE conserva tipo_vial=CALLE; nom_vial=ALDAMA; numero_ext='7' y letra_ext=''; numero_int=''; letra_int='SN'; asentamiento=SAN ANTONIO ALPANOCAN; CP=74339. El exterior numerado coincide literalmente con el primer componente del domicilio federal; no completar ni modificar número, letras o interior. Un SN interior DENUE, si existe, no se traslada al exterior.  Conservar RAW completo, coordenadas y toda discrepancia. Fuente histórica no acredita operación2026, propiedad, personalidad jurídica, red administrativa actual ni permisos sanitarios. Registrar unidad candidata independiente verification_pending y ubicación pending; no asignar a IMSS-Bienestar, IMSS, ISSSTE u otra red. Sitio propio desconocido, website_url NULL. Sin estudios, equivalencias clínicas, ofertas, precios, horarios ni disponibilidad aprobados. No hubo contactos ni formularios a terceros."
+    },
+    {
+      "provider_key": "denue_public_center_3477224",
+      "name": "Centro De Salud Zaragoza — Zaragoza",
+      "slug": "centro-de-salud-zaragoza-zaragoza-3477224",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó web propia de la unidad. SIDOF/DOF es evidencia histórica de identidad, no sitio institucional; conservar NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "622112"
+      ],
+      "denue_record_ids": [
+        "3477224"
+      ],
+      "identity_note": "Identidad candidata contrastada entre DENUE3477224 y CLUESPLSSA005121 del Anexo2, convenio15-marzo2024, documento federal/SIDOF. Nombre federal: CENTRO DE SALUD ZARAGOZA; nombre DENUE: CENTRO DE SALUD URBANO ZARAGOZA. Difieren en descriptores rural/urbano/concentrado y partículas; el nombre específico concuerda y se conservan los dos rótulos. El par único concuerda por municipio, localidad, CP y componente completo de tipo de vía, calle y número exterior; municipio/localidad y CP coinciden. Domicilio federal literal: AVENIDA MORELOS 103 , PUEBLO ZARAGOZA, C.P. 73700. DENUE conserva tipo_vial=AVENIDA; nom_vial=MORELOS; numero_ext='103' y letra_ext=''; numero_int=''; letra_int=''; asentamiento=CENTRO; CP=73700. El exterior numerado coincide literalmente con el primer componente del domicilio federal; no completar ni modificar número, letras o interior. Un SN interior DENUE, si existe, no se traslada al exterior. Asentamiento DENUE CENTRO no figura literalmente en el domicilio federal; conservar sin corregir. DENUE clasifica622112 hospital general público aunque la fuente federal identifica CS/PRIMER NIVEL; conservar clase y location_type hospital, sin reclasificar. Conservar RAW completo, coordenadas y toda discrepancia. Fuente histórica no acredita operación2026, propiedad, personalidad jurídica, red administrativa actual ni permisos sanitarios. Registrar unidad candidata independiente verification_pending y ubicación pending; no asignar a IMSS-Bienestar, IMSS, ISSSTE u otra red. Sitio propio desconocido, website_url NULL. Sin estudios, equivalencias clínicas, ofertas, precios, horarios ni disponibilidad aprobados. No hubo contactos ni formularios a terceros."
+    }
+  ]
+}

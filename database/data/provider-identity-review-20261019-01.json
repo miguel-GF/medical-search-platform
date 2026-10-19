@@ -1,0 +1,26 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261019:01",
+  "reviewed_by": "Codex; investigación delegada por el operador; preparación pendiente de revisión root",
+  "authorization": "D-021/D-022: identidades candidatas pending con evidencia, sin ofertas; esta preparación no ejecuta SQL.",
+  "research_date": "2026-10-19",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "1 unidades públicas candidatas independientes; San Sebastián específico con calificativo RURAL DISPERSO sólo DENUE, municipio/localidad/CP y vía concordantes; exterior explícitamente sin número en ambas fuentes. Datos históricos y DENUE preservados, sin cobertura comercial.",
+  "providers": [
+    {
+      "provider_key": "denue_public_center_3481964",
+      "name": "Centro De Salud San Sebastian — Teziutlán",
+      "slug": "centro-de-salud-san-sebastian-teziutlan-3481964",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó web propia de la unidad. SIDOF/DOF es evidencia histórica de identidad, no sitio institucional; conservar NULL.",
+      "identity_evidence_url": "https://sidof.segob.gob.mx/notas/docFuente/5735638",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "3481964"
+      ],
+      "identity_note": "Identidad candidata contrastada entre DENUE3481964 y CLUESPLSSA004095 del Anexo2, convenio15-marzo2024, documento federal/SIDOF. Los nombres conservan San Sebastián; DENUE añade RURAL DISPERSO ausente en el rótulo federal. La sede conserva ese nombre literal y su clase original; no se afirma cambio de tipo de unidad. El par único concuerda por nombre específico, municipio, localidad, CP, vía y ausencia explícita de número; municipio/localidad y CP coinciden. Domicilio federal literal: CALLE VICENTE LOMBARDO TOLEDANO SIN NÚMERO, PUEBLO SAN SEBASTIÁN, C.P. 73967. DENUE conserva tipo_vial=CALLE; nom_vial=TOLEDANO; numero_ext vacío y letra_ext SN; numero_int=''; letra_int=''; asentamiento=SAN SEBASTIAN; CP=73967. SIN NÚMERO federal y SN DENUE son ausencia explícita de número; no completar número ni letras.  Conservar RAW completo, coordenadas y toda discrepancia. Fuente histórica no acredita operación2026, propiedad, personalidad jurídica, red administrativa actual ni permisos sanitarios. Registrar unidad candidata independiente verification_pending y ubicación pending; no asignar a IMSS-Bienestar, IMSS, ISSSTE u otra red. Sitio propio desconocido, website_url NULL. Sin estudios, equivalencias clínicas, ofertas, precios, horarios ni disponibilidad aprobados. No hubo contactos ni formularios a terceros."
+    }
+  ]
+}
