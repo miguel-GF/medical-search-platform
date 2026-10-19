@@ -1,0 +1,536 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261019:03",
+  "reviewed_by": "Codex; investigación delegada por el operador; pares nominales y domicilios revisados por root",
+  "authorization": "D-021/D-022: identidades candidatas con evidencia y datosDENUE aprobados, sin ofertas ni nueva fuente de ingesta.",
+  "research_date": "2026-10-19",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "35 identidades candidatas independientes; referencia mensualCLUES, nombres y domicilios exactos, estados pendientes. No se ingiere CLUES ni aprueba cobertura comercial.",
+  "providers": [
+    {
+      "provider_key": "denue_clues_candidate_8136119",
+      "name": "Centro De Salud Calipan — Coxcatlán",
+      "slug": "centro-de-salud-calipan-coxcatlan-8136119",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio; el directorio de referencia no es web del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "8136119"
+      ],
+      "identity_note": "Identidad candidata investigada con DENUE8136119, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLIMB000445, hojaCLUES_202608 fila42151, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:CENTRO DE SALUD CALIPAN; nombre de unidad de referencia:CENTRO DE SALUD CALIPAN. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='10', letra='', interior='', letra_int='', asentamiento='CENTRO'. ClasificaciónDENUE621116 y tipoclinic conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3514084",
+      "name": "Centro De Salud Lomas De San Miguel — Puebla",
+      "slug": "centro-de-salud-lomas-de-san-miguel-puebla-3514084",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio; el directorio de referencia no es web del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "3514084"
+      ],
+      "identity_note": "Identidad candidata investigada con DENUE3514084, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLIMB001850, hojaCLUES_202608 fila42292, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:CENTRO DE SALUD LOMAS DE SAN MIGUEL; nombre de unidad de referencia:CENTRO DE SALUD URBANO LOMAS DE SAN MIGUEL. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='', letra='SN', interior='', letra_int='', asentamiento='LOMAS DE SAN MIGUEL'. ClasificaciónDENUE621116 y tipoclinic conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros."
+    },
+    {
+      "provider_key": "denue_clues_candidate_7742742",
+      "name": "Centro De Salud San Lorenzo Almecatla — Cuautlancingo",
+      "slug": "centro-de-salud-san-lorenzo-almecatla-cuautlancingo-7742742",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio; el directorio de referencia no es web del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "7742742"
+      ],
+      "identity_note": "Identidad candidata investigada con DENUE7742742, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLIMB004510, hojaCLUES_202608 fila42558, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:CENTRO DE SALUD SAN LORENZO ALMECATLA; nombre de unidad de referencia:CENTRO DE SALUD SAN LORENZO ALMECATLA. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='', letra='SN', interior='', letra_int='', asentamiento='SAN LORENZO ALMECATLA'. ClasificaciónDENUE621116 y tipoclinic conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros."
+    },
+    {
+      "provider_key": "denue_clues_candidate_8776451",
+      "name": "Consultorio Medico Periferico Puebla — Puebla",
+      "slug": "consultorio-medico-periferico-puebla-puebla-8776451",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio; el directorio de referencia no es web del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621112"
+      ],
+      "denue_record_ids": [
+        "8776451"
+      ],
+      "identity_note": "Identidad candidata investigada con DENUE8776451, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLPMX000023, hojaCLUES_202608 fila43668, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:CONSULTORIO MEDICO PERIFERICO PUEBLA; nombre de unidad de referencia:CONSULTORIO MÉDICO PERIFÉRICO PUEBLA. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='1502', letra='', interior='', letra_int='', asentamiento='CLEOTILDE TORRES'. ClasificaciónDENUE621112 y tipooffice conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3444518",
+      "name": "Sanatorio Santa Fe — Tlacotepec de Benito Juárez",
+      "slug": "sanatorio-santa-fe-tlacotepec-de-benito-juarez-3444518",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio; el directorio de referencia no es web del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621111"
+      ],
+      "denue_record_ids": [
+        "3444518"
+      ],
+      "identity_note": "Identidad candidata investigada con DENUE3444518, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLSMP000154, hojaCLUES_202608 fila43779, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:SANATORIO SANTA FE; nombre de unidad de referencia:SANATORIO SANTA FE. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='142', letra='', interior='', letra_int='', asentamiento='TLACOTEPEC DE BENITO JUAREZ'. ClasificaciónDENUE621111 y tipooffice conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3462843",
+      "name": "Clinica De Especialidades Medi-Eng — Puebla",
+      "slug": "clinica-de-especialidades-medi-eng-puebla-3462843",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio; el directorio de referencia no es web del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "622311"
+      ],
+      "denue_record_ids": [
+        "3462843"
+      ],
+      "identity_note": "Identidad candidata investigada con DENUE3462843, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLSMP000236, hojaCLUES_202608 fila43787, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:CLINICA DE ESPECIALIDADES MEDI-ENG; nombre de unidad de referencia:CLÍNICA DE ESPECIALIDADES MEDI-ENG. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='6515', letra='', interior='', letra_int='', asentamiento='GRANJAS DEL SUR'. ClasificaciónDENUE622311 y tipohospital conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3263361",
+      "name": "Sanatorio De Jesus — San Martín Texmelucan",
+      "slug": "sanatorio-de-jesus-san-martin-texmelucan-3263361",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio; el directorio de referencia no es web del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621111"
+      ],
+      "denue_record_ids": [
+        "3263361"
+      ],
+      "identity_note": "Identidad candidata investigada con DENUE3263361, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLSMP000562, hojaCLUES_202608 fila43820, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:SANATORIO DE JESUS; nombre de unidad de referencia:SANATORIO DE JESÚS. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='209', letra='', interior='', letra_int='', asentamiento='CENTRO'. ClasificaciónDENUE621111 y tipooffice conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3530720",
+      "name": "Clinica Materno Infantil — Tepeaca",
+      "slug": "clinica-materno-infantil-tepeaca-3530720",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio; el directorio de referencia no es web del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621111"
+      ],
+      "denue_record_ids": [
+        "3530720"
+      ],
+      "identity_note": "Identidad candidata investigada con DENUE3530720, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLSMP000656, hojaCLUES_202608 fila43829, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:CLINICA MATERNO INFANTIL; nombre de unidad de referencia:CLÍNICA MATERNO - INFANTIL. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='202', letra='', interior='', letra_int='', asentamiento='CENTRO'. ClasificaciónDENUE621111 y tipooffice conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3426847",
+      "name": "Clinica Guadalupe — Huejotzingo",
+      "slug": "clinica-guadalupe-huejotzingo-3426847",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio; el directorio de referencia no es web del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621111"
+      ],
+      "denue_record_ids": [
+        "3426847"
+      ],
+      "identity_note": "Identidad candidata investigada con DENUE3426847, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLSMP000673, hojaCLUES_202608 fila43831, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:CLINICA GUADALUPE; nombre de unidad de referencia:CLÍNICA GUADALUPE. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='369', letra='', interior='', letra_int='', asentamiento='TERCER'. ClasificaciónDENUE621111 y tipooffice conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3423082",
+      "name": "Clinica Del Carmen — Tehuacán",
+      "slug": "clinica-del-carmen-tehuacan-3423082",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio; el directorio de referencia no es web del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "622111"
+      ],
+      "denue_record_ids": [
+        "3423082"
+      ],
+      "identity_note": "Identidad candidata investigada con DENUE3423082, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLSMP000685, hojaCLUES_202608 fila43832, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:CLINICA DEL CARMEN; nombre de unidad de referencia:CLÍNICA DEL CARMEN. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='119', letra='', interior='', letra_int='', asentamiento='MORELOS'. ClasificaciónDENUE622111 y tipohospital conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3489588",
+      "name": "Sanatorio El Nuevo Siglo — Tehuacán",
+      "slug": "sanatorio-el-nuevo-siglo-tehuacan-3489588",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio; el directorio de referencia no es web del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621111"
+      ],
+      "denue_record_ids": [
+        "3489588"
+      ],
+      "identity_note": "Identidad candidata investigada con DENUE3489588, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLSMP000714, hojaCLUES_202608 fila43835, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:SANATORIO EL NUEVO SIGLO; nombre de unidad de referencia:SANATORIO EL NUEVO SIGLO. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='516', letra='', interior='', letra_int='', asentamiento='CENTRO'. ClasificaciónDENUE621111 y tipooffice conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3536246",
+      "name": "Clinica San Jose — Tecamachalco",
+      "slug": "clinica-san-jose-tecamachalco-3536246",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio; el directorio de referencia no es web del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621111"
+      ],
+      "denue_record_ids": [
+        "3536246"
+      ],
+      "identity_note": "Identidad candidata investigada con DENUE3536246, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLSMP000825, hojaCLUES_202608 fila43846, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:CLINICA SAN JOSE; nombre de unidad de referencia:CLÍNICA SAN JOSÉ. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='307', letra='', interior='', letra_int='', asentamiento='SAN JOSE'. ClasificaciónDENUE621111 y tipooffice conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3503310",
+      "name": "Clinica De Especialidades Monte Sinai — Huauchinango",
+      "slug": "clinica-de-especialidades-monte-sinai-huauchinango-3503310",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio; el directorio de referencia no es web del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "622111"
+      ],
+      "denue_record_ids": [
+        "3503310"
+      ],
+      "identity_note": "Identidad candidata investigada con DENUE3503310, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLSMP000866, hojaCLUES_202608 fila43850, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:CLINICA DE ESPECIALIDADES MONTE SINAI; nombre de unidad de referencia:CLÍNICA DE ESPECIALIDADES MONTE SINAI. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='49', letra='', interior='', letra_int='', asentamiento='CENTRO'. ClasificaciónDENUE622111 y tipohospital conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3424266",
+      "name": "Clinica Revolucion — Atlixco",
+      "slug": "clinica-revolucion-atlixco-3424266",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio; el directorio de referencia no es web del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621111"
+      ],
+      "denue_record_ids": [
+        "3424266"
+      ],
+      "identity_note": "Identidad candidata investigada con DENUE3424266, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLSMP000941, hojaCLUES_202608 fila43858, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:CLINICA REVOLUCION; nombre de unidad de referencia:CLÍNICA REVOLUCION. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='602', letra='', interior='', letra_int='', asentamiento='REVOLUCION'. ClasificaciónDENUE621111 y tipooffice conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3262977",
+      "name": "Centro Medico Los Angeles — San Martín Texmelucan",
+      "slug": "centro-medico-los-angeles-san-martin-texmelucan-3262977",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio; el directorio de referencia no es web del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "622111"
+      ],
+      "denue_record_ids": [
+        "3262977"
+      ],
+      "identity_note": "Identidad candidata investigada con DENUE3262977, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLSMP000982, hojaCLUES_202608 fila43862, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:CENTRO MEDICO LOS ANGELES; nombre de unidad de referencia:CENTRO MÉDICO LOS ANGELES. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='25', letra='', interior='', letra_int='', asentamiento='LA MORELOS'. ClasificaciónDENUE622111 y tipohospital conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3435884",
+      "name": "Clinica Hospital San Carlos — Puebla",
+      "slug": "clinica-hospital-san-carlos-puebla-3435884",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio; el directorio de referencia no es web del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621111"
+      ],
+      "denue_record_ids": [
+        "3435884"
+      ],
+      "identity_note": "Identidad candidata investigada con DENUE3435884, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLSMP001134, hojaCLUES_202608 fila43877, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:CLINICA HOSPITAL SAN CARLOS; nombre de unidad de referencia:CLÍNICA HOSPITAL SAN CARLOS. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='1842', letra='', interior='', letra_int='', asentamiento='UNIDAD MAGISTRAL MEXICO 68'. ClasificaciónDENUE621111 y tipooffice conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3420454",
+      "name": "Clinica Medica San Manuel — Puebla",
+      "slug": "clinica-medica-san-manuel-puebla-3420454",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio; el directorio de referencia no es web del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621111"
+      ],
+      "denue_record_ids": [
+        "3420454"
+      ],
+      "identity_note": "Identidad candidata investigada con DENUE3420454, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLSMP001221, hojaCLUES_202608 fila43886, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:CLINICA MEDICA SAN MANUEL; nombre de unidad de referencia:CLÍNICA MEDICA SAN MANUEL. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='5109', letra='', interior='', letra_int='', asentamiento='JARDINES DE SAN MANUEL'. ClasificaciónDENUE621111 y tipooffice conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3456661",
+      "name": "Maternidad Ramos — Puebla",
+      "slug": "maternidad-ramos-puebla-3456661",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio; el directorio de referencia no es web del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621111"
+      ],
+      "denue_record_ids": [
+        "3456661"
+      ],
+      "identity_note": "Identidad candidata investigada con DENUE3456661, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLSMP001361, hojaCLUES_202608 fila43900, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:MATERNIDAD RAMOS; nombre de unidad de referencia:MATERNIDAD RAMOS. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='5305', letra='', interior='', letra_int='', asentamiento='AQUILES SERDAN'. ClasificaciónDENUE621111 y tipooffice conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3411029",
+      "name": "Clinica Medico Quirurgica Santa Clara — Atlixco",
+      "slug": "clinica-medico-quirurgica-santa-clara-atlixco-3411029",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio; el directorio de referencia no es web del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621111"
+      ],
+      "denue_record_ids": [
+        "3411029"
+      ],
+      "identity_note": "Identidad candidata investigada con DENUE3411029, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLSMP001641, hojaCLUES_202608 fila43928, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:CLINICA MEDICO QUIRURGICA SANTA CLARA; nombre de unidad de referencia:CLINICA MEDICO QUIRURGICA SANTA CLARA. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='104', letra='', interior='', letra_int='', asentamiento='CENTRO'. ClasificaciónDENUE621111 y tipooffice conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3530924",
+      "name": "Centro Medico Margarita — Tepeaca",
+      "slug": "centro-medico-margarita-tepeaca-3530924",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio; el directorio de referencia no es web del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "622111"
+      ],
+      "denue_record_ids": [
+        "3530924"
+      ],
+      "identity_note": "Identidad candidata investigada con DENUE3530924, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLSMP001682, hojaCLUES_202608 fila43932, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:CENTRO MEDICO MARGARITA; nombre de unidad de referencia:CENTRO MÉDICO MARGARITA. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='106', letra='', interior='', letra_int='', asentamiento='CENTRO'. ClasificaciónDENUE622111 y tipohospital conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3424330",
+      "name": "Clinica San Antonio — Atlixco",
+      "slug": "clinica-san-antonio-atlixco-3424330",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio; el directorio de referencia no es web del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "622111"
+      ],
+      "denue_record_ids": [
+        "3424330"
+      ],
+      "identity_note": "Identidad candidata investigada con DENUE3424330, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLSMP001735, hojaCLUES_202608 fila43937, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:CLINICA SAN ANTONIO; nombre de unidad de referencia:CLÍNICA SAN ANTONIO. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='1510', letra='', interior='', letra_int='', asentamiento='REVOLUCION'. ClasificaciónDENUE622111 y tipohospital conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3535260",
+      "name": "Sanatorio Guadalupe De Tecamachalco — Tecamachalco",
+      "slug": "sanatorio-guadalupe-de-tecamachalco-tecamachalco-3535260",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio; el directorio de referencia no es web del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "622311"
+      ],
+      "denue_record_ids": [
+        "3535260"
+      ],
+      "identity_note": "Identidad candidata investigada con DENUE3535260, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLSMP001822, hojaCLUES_202608 fila43946, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:SANATORIO GUADALUPE DE TECAMACHALCO; nombre de unidad de referencia:SANATORIO GUADALUPE DE TECAMACHALCO. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='1302', letra='', interior='', letra_int='', asentamiento='SAN NICOLAS'. ClasificaciónDENUE622311 y tipohospital conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3435573",
+      "name": "Centro De Maternidad — Puebla",
+      "slug": "centro-de-maternidad-puebla-3435573",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio; el directorio de referencia no es web del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "622311"
+      ],
+      "denue_record_ids": [
+        "3435573"
+      ],
+      "identity_note": "Identidad candidata investigada con DENUE3435573, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLSMP001991, hojaCLUES_202608 fila43963, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:CENTRO DE MATERNIDAD; nombre de unidad de referencia:CENTRO DE MATERNIDAD. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='49', letra='', interior='', letra_int='', asentamiento='JOAQUIN COLOMBRES'. ClasificaciónDENUE622311 y tipohospital conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3445423",
+      "name": "Clinica Y Maternidad Dra Cazares — Izúcar de Matamoros",
+      "slug": "clinica-y-maternidad-dra-cazares-izucar-de-matamoros-3445423",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio; el directorio de referencia no es web del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "622311"
+      ],
+      "denue_record_ids": [
+        "3445423"
+      ],
+      "identity_note": "Identidad candidata investigada con DENUE3445423, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLSMP002271, hojaCLUES_202608 fila43991, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:CLINICA Y MATERNIDAD DRA CAZARES; nombre de unidad de referencia:CLÍNICA Y MATERNIDAD, DRA CAZARES. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='20', letra='', interior='', letra_int='', asentamiento='CENTRO'. ClasificaciónDENUE622311 y tipohospital conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3260330",
+      "name": "Clinica Rios — San Martín Texmelucan",
+      "slug": "clinica-rios-san-martin-texmelucan-3260330",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio; el directorio de referencia no es web del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621111"
+      ],
+      "denue_record_ids": [
+        "3260330"
+      ],
+      "identity_note": "Identidad candidata investigada con DENUE3260330, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLSMP002756, hojaCLUES_202608 fila44039, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:CLINICA RIOS; nombre de unidad de referencia:CLÍNICA RÍOS. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='6', letra='', interior='', letra_int='', asentamiento='SANTA CATARINA HUEYATZACOALCO'. ClasificaciónDENUE621111 y tipooffice conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3432660",
+      "name": "Clinica Jesus Doctor — Juan Galindo",
+      "slug": "clinica-jesus-doctor-juan-galindo-3432660",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio; el directorio de referencia no es web del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621111"
+      ],
+      "denue_record_ids": [
+        "3432660"
+      ],
+      "identity_note": "Identidad candidata investigada con DENUE3432660, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLSMP002860, hojaCLUES_202608 fila44050, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:CLINICA JESUS DOCTOR; nombre de unidad de referencia:CLÍNICA JESÚS DOCTOR. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='1', letra='', interior='', letra_int='', asentamiento='JUAREZ'. ClasificaciónDENUE621111 y tipooffice conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3333848",
+      "name": "Maternidad La Sagrada Familia — San Pedro Cholula",
+      "slug": "maternidad-la-sagrada-familia-san-pedro-cholula-3333848",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio; el directorio de referencia no es web del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621111"
+      ],
+      "denue_record_ids": [
+        "3333848"
+      ],
+      "identity_note": "Identidad candidata investigada con DENUE3333848, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLSMP002884, hojaCLUES_202608 fila44052, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:MATERNIDAD LA SAGRADA FAMILIA; nombre de unidad de referencia:MATERNIDAD LA SAGRADA FAMILIA. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='1209', letra='', interior='', letra_int='', asentamiento='DE JESUS TLATEMPA'. ClasificaciónDENUE621111 y tipooffice conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3477036",
+      "name": "Clinica San Martin De Porres — Zaragoza",
+      "slug": "clinica-san-martin-de-porres-zaragoza-3477036",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio; el directorio de referencia no es web del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621111"
+      ],
+      "denue_record_ids": [
+        "3477036"
+      ],
+      "identity_note": "Identidad candidata investigada con DENUE3477036, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLSMP005902, hojaCLUES_202608 fila44354, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:CLINICA SAN MARTIN DE PORRES; nombre de unidad de referencia:CLÍNICA SAN MARTÍN DE PORRES. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='112', letra='', interior='', letra_int='', asentamiento='CENTRO'. ClasificaciónDENUE621111 y tipooffice conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3401697",
+      "name": "Clinica Tehuacan — Tehuacán",
+      "slug": "clinica-tehuacan-tehuacan-3401697",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio; el directorio de referencia no es web del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621111"
+      ],
+      "denue_record_ids": [
+        "3401697"
+      ],
+      "identity_note": "Identidad candidata investigada con DENUE3401697, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLSMP006401, hojaCLUES_202608 fila44404, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:CLINICA TEHUACAN; nombre de unidad de referencia:CLINICA TEHUACAN,S.C.. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='101', letra='', interior='', letra_int='', asentamiento='BUENOS AIRES'. ClasificaciónDENUE621111 y tipooffice conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3509179",
+      "name": "Centro Medico San Judas Tadeo — Venustiano Carranza",
+      "slug": "centro-medico-san-judas-tadeo-venustiano-carranza-3509179",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio; el directorio de referencia no es web del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621111"
+      ],
+      "denue_record_ids": [
+        "3509179"
+      ],
+      "identity_note": "Identidad candidata investigada con DENUE3509179, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLSMP006553, hojaCLUES_202608 fila44419, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:CENTRO MEDICO SAN JUDAS TADEO; nombre de unidad de referencia:CENTRO MÉDICO SAN JUDAS TADEO. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='9', letra='', interior='', letra_int='', asentamiento='CENTRO'. ClasificaciónDENUE621111 y tipooffice conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3305651",
+      "name": "Clinica Nazareno — Palmar de Bravo",
+      "slug": "clinica-nazareno-palmar-de-bravo-3305651",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio; el directorio de referencia no es web del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621111"
+      ],
+      "denue_record_ids": [
+        "3305651"
+      ],
+      "identity_note": "Identidad candidata investigada con DENUE3305651, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLSMP007685, hojaCLUES_202608 fila44532, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:CLINICA NAZARENO; nombre de unidad de referencia:CLÍNICA NAZARENO. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='86', letra='', interior='', letra_int='', asentamiento='JUQUILA'. ClasificaciónDENUE621111 y tipooffice conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros."
+    },
+    {
+      "provider_key": "denue_clues_candidate_8317481",
+      "name": "Centro De Especialidades Medicas Adn — Acatzingo",
+      "slug": "centro-de-especialidades-medicas-adn-acatzingo-8317481",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio; el directorio de referencia no es web del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621111"
+      ],
+      "denue_record_ids": [
+        "8317481"
+      ],
+      "identity_note": "Identidad candidata investigada con DENUE8317481, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLSMP007854, hojaCLUES_202608 fila44549, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:CENTRO DE ESPECIALIDADES MEDICAS ADN; nombre de unidad de referencia:CENTRO DE ESPECIALIDADES MÉDICAS ADN. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='111', letra='', interior='', letra_int='', asentamiento='SAN ANTONIO'. ClasificaciónDENUE621111 y tipooffice conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3360305",
+      "name": "Boston Medical — Puebla",
+      "slug": "boston-medical-puebla-3360305",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio; el directorio de referencia no es web del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621111"
+      ],
+      "denue_record_ids": [
+        "3360305"
+      ],
+      "identity_note": "Identidad candidata investigada con DENUE3360305, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLSMP009324, hojaCLUES_202608 fila44696, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:BOSTON MEDICAL; nombre de unidad de referencia:SERVICIOS MÉDICOS BMG S. A. DE C.V.. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='2925', letra='', interior='', letra_int='', asentamiento='LA PAZ'. ClasificaciónDENUE621111 y tipooffice conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3262547",
+      "name": "Bioclinicos Laboratorio — Amozoc",
+      "slug": "bioclinicos-laboratorio-amozoc-3262547",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio; el directorio de referencia no es web del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621511"
+      ],
+      "denue_record_ids": [
+        "3262547"
+      ],
+      "identity_note": "Identidad candidata investigada con DENUE3262547, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLSMP009476, hojaCLUES_202608 fila44711, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:BIOCLINICOS LABORATORIO; nombre de unidad de referencia:BIOCLÍNICOS LABORATORIO. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='311', letra='', interior='', letra_int='', asentamiento='SANTIAGO'. ClasificaciónDENUE621511 y tipobranch conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3533309",
+      "name": "Laboratorio Clinico Pasteur — Tecamachalco",
+      "slug": "laboratorio-clinico-pasteur-tecamachalco-3533309",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio; el directorio de referencia no es web del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621511"
+      ],
+      "denue_record_ids": [
+        "3533309"
+      ],
+      "identity_note": "Identidad candidata investigada con DENUE3533309, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLSMP009756, hojaCLUES_202608 fila44739, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:LABORATORIO CLINICO PASTEUR; nombre de unidad de referencia:SERVICIOS DE SALUD PASTEUR, S. DE R. L. DE C. V.. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='506', letra='', interior='', letra_int='', asentamiento='TECAMACHALCO'. ClasificaciónDENUE621511 y tipobranch conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros."
+    }
+  ]
+}
