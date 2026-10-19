@@ -1,0 +1,46 @@
+{
+  "review_id": "pruevia:evidence-review:20261019:01",
+  "research_date": "2026-10-19",
+  "scope": "Revisión63: propuesta ochoRAW SD de cortisol en saliva, conservando código saliva existente y muestra explícita. Investigación primaria18-oct y relectura productiva19-oct; sin inferir horario/serie ni aprobar glutatión en sangre completa.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "c100a220475407bb0ca17b5fc39659f0d2bd2ba0983c218ee78a46723a6fe819",
+  "research_snapshot_sha256": "5ce2be55311e6eaa67526dae6d3dea99cb2c5e69d9560d18abecd2ac19a7f9f7",
+  "definition_sha256": "41ccb2c4566eeef802265b6c0a3578032668ad953997464e7ab28f488621520a",
+  "new_concepts": [
+    {
+      "item_id": "8a2bddf6-e6b5-5715-8fdb-3768d13c60c7",
+      "canonical_name": "Cortisol en saliva",
+      "component": "Cortisol",
+      "specimen_code": "saliva",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://specialtytesting.labcorp.com/tests/500179/salivary-cortisol-lc-ms-ms",
+      "reason": "El nombre y preparaciónSD declaran cortisol en saliva. Labcorp500179 documenta cortisol salival y distingue el momento de colección, mientras502124 es una orden separada de cuatro muestras. Sólo se identifica cortisol y saliva explícitos, sin inferir nocturno, AM/PM, hora de despertar, número de muestras, serie, libre, estímulo/supresión, LCMSMS, escala, unidad o códigoLOINC. No equivale a cortisona, cociente cortisol/cortisona ni muestras sérica/plasmática/urinaria. Se conserva la preparación original sin validarla clínicamente. El código saliva ya existe activo; no se crea un tipo nuevo ni se cambia el lexicon clínico. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "cortisol en saliva",
+      "item_id": "8a2bddf6-e6b5-5715-8fdb-3768d13c60c7",
+      "canonical_name": "Cortisol en saliva",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://specialtytesting.labcorp.com/tests/500179/salivary-cortisol-lc-ms-ms",
+      "reason": "El nombre y preparaciónSD declaran cortisol en saliva. Labcorp500179 documenta cortisol salival y distingue el momento de colección, mientras502124 es una orden separada de cuatro muestras. Sólo se identifica cortisol y saliva explícitos, sin inferir nocturno, AM/PM, hora de despertar, número de muestras, serie, libre, estímulo/supresión, LCMSMS, escala, unidad o códigoLOINC. No equivale a cortisona, cociente cortisol/cortisona ni muestras sérica/plasmática/urinaria. Se conserva la preparación original sin validarla clínicamente. El código saliva ya existe activo; no se crea un tipo nuevo ni se cambia el lexicon clínico. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "Recolectar aproximadamente 2 mL de saliva en un frasco nuevo con tapa de rosca. Para recolectar la muestra:\r\n• No presentar lesiones bucales \r\n• No lavarse los dientes \r\n• No ingerir alimentos previo a recolectar la muestra\r\n• No masticar chicle al menos 60 minutos antes de la toma"
+      },
+      "source_attributes": {
+        "specimen_code": "saliva"
+      }
+    }
+  ]
+}

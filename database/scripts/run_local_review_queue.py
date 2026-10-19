@@ -157,6 +157,9 @@ def ledger(client: httpx.Client, ref: str, review: dict) -> str:
                                        q(alias["evidence_url"]), q(alias["reason"])]) + ")")
     valid_concepts = "0"
     if review.get("new_concepts"):
+        extra_system_case = " when 'saliva' then 'Saliva'" if any(
+            concept["specimen_code"] == "saliva" for concept in review["new_concepts"]
+        ) else ""
         concepts = ",".join("(" + ",".join([q(c["item_id"]) + "::uuid", q(c["component"]),
                                             q(c["specimen_code"]), q(c.get("time_aspect")),
                                             q(c["evidence_url"]), q(c["reason"])]) + ")"
@@ -166,7 +169,7 @@ def ledger(client: httpx.Client, ref: str, review: dict) -> str:
           join health.lab_service_definitions d on d.service_id=e.id
           where d.component=e.component and d.time_aspect is not distinct from e.time_aspect
           and d.system is not distinct from case e.specimen
-            when 'serum' then 'Serum' when 'plasma' then 'Plasma' when 'urine' then 'Urine' when 'stool' then 'Stool' end
+            when 'serum' then 'Serum' when 'plasma' then 'Plasma' when 'urine' then 'Urine' when 'stool' then 'Stool'{extra_system_case} end
           and ((e.specimen is null and not exists(select 1 from health.service_specimens ss
                  where ss.service_id=e.id))
             or exists(select 1 from health.service_specimens ss join health.specimen_types s

@@ -1,6 +1,6 @@
 # Estado y prioridades de Pruevia
 
-Tipo: punto de continuidad. Actualizado el 18-oct-2026 UTC /17-oct local para operación y datos;
+Tipo: punto de continuidad. Actualizado el 19-oct-2026 UTC/local para operación y datos;
 el corte histórico de publicación de septiembre corresponde al árbol local, el
 ledger Supabase y los Workers de producción. El proyecto enlazado se llama
 `pruevia-dev`, pero también es la base inicial de producción: las migraciones
@@ -16,6 +16,17 @@ base inicial de producción. Una escritura o migración allí afecta datos que
 podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
+
+**Revisión63,19-oct12:32UTC:** importador local admite saliva existente con
+atributo y marcador literal obligatorios;53 SQL previos idénticos porhash.
+Borrador de ocho cortisol salival retenido fuera de cola: rollback de31etiquetas
+mostró pérdida deAM/PM, x2/x4 yLCMSMS. Glutatión total sangre completa retenido
+porque no existe código de muestra específico; no se sustituyó porblood/NULL.
+Lectura independiente:16RAW intactos, ledger`not_applied`, registro de muestras
+yresolvedor sin cambios; **551 conceptos /4,073 pendientes /134 instituciones /
+218 ubicaciones /234 ofertas /112 migraciones**, cola53. Fuentes originales18-oct
+conservadas, lectura fresca19-oct. PWA pública200 conserva el detector publicado.
+[Detalle y límites](CATALOG_REVIEW_63_20261019.md).
 
 **Revisión 62 y triage administrativo,18-oct05:11 UTC:** un registroSEMIN
 FSH incorporado mediante alias exclusivo de proveedor, reutilizando el concepto

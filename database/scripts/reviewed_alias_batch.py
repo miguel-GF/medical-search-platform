@@ -60,6 +60,7 @@ def reviewed_targets(row: dict) -> list[dict]:
                     "plasma": ("plasma",),
                     "urine": ("orina", "urinaria", "urinario"),
                     "stool": ("heces", "fecal", "fecales"),
+                    "saliva": ("saliva", "salival"),
                 }.get(specimen)
                 original = unicodedata.normalize("NFKD", guard.get("value", "").casefold())
                 normalized = "".join(c for c in original if not unicodedata.combining(c))
@@ -105,8 +106,13 @@ def render_new_concepts(review: dict, aliases: list[dict]) -> str:
             if (identity_scope != "analyte_order" or not isinstance(uncertainty, str)
                     or not uncertainty.strip() or concept.get("time_aspect") is not None):
                 raise ValueError("An analyte order without a specimen must record uncertainty and no duration")
-        elif specimen not in {"serum", "plasma", "urine", "stool"} or identity_scope != "specimen_order" or uncertainty:
+        elif specimen not in {"serum", "plasma", "urine", "stool", "saliva"} or identity_scope != "specimen_order" or uncertainty:
             raise ValueError("Explicit specimens require the specimen_order identity scope")
+        if specimen == "saliva" and any(
+            target.get("source_attributes") != {"specimen_code": "saliva"}
+            for alias in targets for target in reviewed_targets(alias)
+        ):
+            raise ValueError("A saliva concept requires literal reviewed saliva on every source target")
         if concept.get("time_aspect") not in {None, "Pt", "24H"}:
             raise ValueError("Unsupported collection duration")
         if not concept.get("component") or not concept.get("reason"):
@@ -120,6 +126,9 @@ def render_new_concepts(review: dict, aliases: list[dict]) -> str:
             q(concept.get("time_aspect")), q(concept["evidence_url"]), q(concept["reason"]),
             q(identity_scope), q(uncertainty)
         ]) + ")")
+    extra_system_case = " when 'saliva' then 'Saliva'" if any(
+        concept["specimen_code"] == "saliva" for concept in concepts
+    ) else ""
     return f"""
 create temporary table reviewed_new_concepts(
  item_id uuid, canonical_name text, component text, specimen_code text,
@@ -163,7 +172,7 @@ select r.item_id,s.id,true,r.reason from reviewed_new_concepts r
 insert into health.lab_service_definitions(
  service_id,component,time_aspect,system,order_observation,verified,source_note)
 select item_id,component,time_aspect,
- case specimen_code when 'serum' then 'Serum' when 'plasma' then 'Plasma' when 'urine' then 'Urine' when 'stool' then 'Stool' end,
+ case specimen_code when 'serum' then 'Serum' when 'plasma' then 'Plasma' when 'urine' then 'Urine' when 'stool' then 'Stool'{extra_system_case} end,
  'order',false,{q(review['review_id'])} || '; ' || evidence_url || '; ' || reason ||
  '; Method/property/scale not inferred; no approved LOINC mapping' ||
  coalesce('; Specimen unspecified: ' || specimen_uncertainty,'')

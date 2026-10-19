@@ -6,6 +6,12 @@ Entrada vigente: [operación y comprobaciones](../docs/OPERATIONS_GUIDE.md).
 Para cambios críticos seguir [propuesta y aprobación](../docs/DECISIONS.md#cambios-críticos-y-aprobación).
 El modelo V1 de este documento no acredita el esquema actualmente desplegado.
 
+El importador local de revisiones admite el código `saliva` ya existente,
+con muestra literal obligatoria por objetivo y validación correspondiente en
+el ledger. Esto no activa equivalencias ni modifica el resolvedor clínico.
+El borrador de cortisol salival permanece fuera de cola por pérdida de horario,
+serie y método en variantes observadas. [Evidencia y límites](../docs/CATALOG_REVIEW_63_20261019.md).
+
 ## Goals
 
 - Multi-city and multi-country ready.
