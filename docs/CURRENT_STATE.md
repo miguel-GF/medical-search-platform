@@ -17,6 +17,14 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Vínculo de identidad 34, 19-oct 13:17:13 UTC:** DENUE 12271886 enlazado a
+Salud Digna Tehuacán existente. Cero marcas o sedes nuevas; marca y 13 ubicaciones
+íntegras, 14 bindings anteriores conservados y uno añadido. Renderer local con
+snapshot completo para reutilizar sede; SQL de las 33 fixtures previas idéntico.
+Rollback, commit único y cliente independiente correctos. Municipio Libre sigue
+retenido por exterior/interior; sin reclasificación, ofertas o verificación
+comercial nueva. [Evidencia](PUEBLA_IDENTITY_LINK_34_20261019.md).
+
 **Recuento y memoria, 19-oct 13:04:36 UTC:** 3,315 registros favorables y
 4,073 pendientes abiertos; además, 946 decisiones históricas no_match de agosto
 fuera de cola, sin considerarlas éxitos. Memoria fresca: 59 revisiones, 412 aliases,

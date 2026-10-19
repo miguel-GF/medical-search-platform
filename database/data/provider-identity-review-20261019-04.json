@@ -1,0 +1,62 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261019:04",
+  "reviewed_by": "Codex; investigación delegada por el operador; domicilio y sede existente revisados por agente clues_extractor",
+  "authorization": "D-021/D-022: operación local autorizada e investigación de identidad clara; vínculo DENUE a sede existente sin modificarla, sin cobertura comercial ni nueva fuente.",
+  "research_date": "2026-10-19",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "Un vínculo DENUE a la sede ya existente de Salud Digna Tehuacán. Cero marcas, ubicaciones u ofertas nuevas; conservar domicilio, tipo, coordenadas y estado completos. Municipio Libre excluido por discrepancia exterior/interior.",
+  "preservation_policy": "En observed_value identity_status conserva existing_brand.verification_status=unverified; existing_location_status=active se conserva por separado. La auditoría conserva status=active de sede. Tipo actual de sede lab, tipo derivado de DENUE 621511 branch: ambos se documentan separados sin modificar el tipo existente ni promover verificación.",
+  "providers": [
+    {
+      "provider_key": "salud_digna",
+      "name": "Salud Digna",
+      "slug": "salud-digna",
+      "website_url": "https://www.salud-digna.org",
+      "existing_brand": {
+        "id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+        "name": "Salud Digna",
+        "normalized_name": "salud digna",
+        "slug": "salud-digna",
+        "website_url": "https://www.salud-digna.org",
+        "status": "active",
+        "verification_status": "unverified"
+      },
+      "existing_location": {
+        "id": "627cb21a-a5f4-5884-a4c2-b9e5d9c7bd44",
+        "name": "Tehuacán",
+        "email": null,
+        "phone": "2222324709",
+        "status": "active",
+        "timezone": "America/Mexico_City",
+        "whatsapp": null,
+        "closed_at": null,
+        "opened_at": null,
+        "created_at": "2026-09-14T06:02:26.549994+00:00",
+        "updated_at": "2026-09-16T05:49:53.929338+00:00",
+        "coordinates": "0101000020E61000008B4346AA4D5958C03E03CC113F763240",
+        "geo_area_id": null,
+        "postal_code": "75700",
+        "row_version": 4,
+        "website_url": "https://salud-digna.org/tehuacan",
+        "locality_text": null,
+        "location_code": "320",
+        "location_type": "lab",
+        "address_line_1": "Calle 1 Poniente #129, Col. Centro, C.P. 75700, Tehuacán, Puebla.",
+        "address_line_2": null,
+        "normalized_name": "tehuacan",
+        "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+        "moved_to_location_id": null,
+        "operating_organization_id": null
+      },
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621511"
+      ],
+      "denue_record_ids": [
+        "12271886"
+      ],
+      "identity_note": "Vinculación de DENUE 12271886 a ubicación existente de Salud Digna Tehuacán, sin crear marca o sede. DENUE INEGI 20-may-2026/captura 9-oct-2026 y CLUES PLSMP009896, hoja CLUES_202608 fila 44753, coinciden en nombre específico, municipio Tehuacán, CALLE 1 PONIENTE exterior 129, interior vacío, colonia Centro y CP 75700. XLSX mensual SHA256 5a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. La sede existente conserva fuente oficial 320, URL https://salud-digna.org/tehuacan y dirección Calle 1 Poniente #129, Col. Centro, C.P. 75700, Tehuacán, Puebla. La diferencia de coordenadas de 20.36m sólo sirve como contexto; la identidad se apoya en nombre y domicilio explícitos. El snapshot completo se conservará y comprobará antes/después; tipo lab existente no se reemplaza por branch derivado de SCIAN. Marca active/unverified y sede active son estados anteriores, no decisiones de verificación. Estado EN OPERACION de CLUES es mensual, no acredita disponibilidad hoy. Acceso oficial fresco no disponible: robots ConnectError y webtool502/timeout; sin bypass ni contenido fresco atribuido. La evidencia mensual es referencia de investigación, no nueva ingesta o política de fuente. No se atribuyen estudios, ofertas, horarios, precios, titularidad ni sucesión; Municipio Libre permanece fuera del lote por exterior547-6 versus #547 Int6."
+    }
+  ]
+}

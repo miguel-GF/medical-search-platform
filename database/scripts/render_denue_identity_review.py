@@ -3,6 +3,10 @@
 Uses the existing core model and stable identifiers. New locations remain
 pending. Existing DENUE bindings or provider identities are never reassigned or
 overwritten. The input review contains specific researched IDs, not fuzzy merges.
+An optional provider.existing_location is the complete to_jsonb(location)
+snapshot, including id and provider_brand_id. It requires matching existing_brand
+and exactly one DENUE ID. This path adds provenance/binding only, preserving the
+entire existing location. Missing/extra snapshot fields fail exact SQL equality.
 """
 
 from __future__ import annotations
@@ -57,6 +61,7 @@ def render(artifact: Path, *, apply: bool = False, fixture: Path = FIXTURE) -> s
     brand_values, location_values, observation_lines = [], [], []
     seen_brand_ids: set[str] = set()
     reused_brands = 0
+    reused_locations: list[dict] = []
     for provider in review["providers"]:
         activity_codes = provider.get("identity_activity_codes", sorted(DIAGNOSTIC_CODES))
         if (not isinstance(activity_codes, list) or not activity_codes
@@ -82,6 +87,21 @@ def render(artifact: Path, *, apply: bool = False, fixture: Path = FIXTURE) -> s
             reused_brands += 1
         else:
             brand_id = stable_id("provider-brand", provider["provider_key"])
+        existing_location = provider.get("existing_location")
+        if existing_location is not None:
+            required_location = {"id", "provider_brand_id", "name", "normalized_name",
+                                 "location_type", "status"}
+            if (existing is None or not isinstance(existing_location, dict)
+                    or not required_location <= existing_location.keys()
+                    or existing_location["provider_brand_id"] != brand_id
+                    or len(provider["denue_record_ids"]) != 1
+                    or any(not isinstance(existing_location[key], str) or not existing_location[key]
+                           for key in required_location)):
+                raise ValueError("Existing location requires matching existing brand, full snapshot and one DENUE ID")
+            str(UUID(existing_location["id"]))
+            if any(row["id"] == existing_location["id"] for row in reused_locations):
+                raise ValueError("An existing location cannot be reused twice in one review")
+            reused_locations.append(existing_location)
         if brand_id in seen_brand_ids:
             raise ValueError("Group locations under one explicit entry per reviewed brand")
         seen_brand_ids.add(brand_id)
@@ -118,7 +138,8 @@ def render(artifact: Path, *, apply: bool = False, fixture: Path = FIXTURE) -> s
                                                payload["numero_ext"] + payload["letra_ext"]]))
             address_2 = " ".join(filter(None, [payload["numero_int"] + payload["letra_int"], payload["nomb_asent"]]))
             coordinates = {"latitude": float(payload["latitud"]), "longitude": float(payload["longitud"])}
-            location_id = stable_id("provider-location", f"denue:{provider['provider_key']}:{external_id}")
+            location_id = (existing_location["id"] if existing_location is not None else
+                           stable_id("provider-location", f"denue:{provider['provider_key']}:{external_id}"))
             raw_id = stable_id("ingest-raw-record", review["source_run_id"] + ":" + record["record_hash"])
             values = [q(location_id) + "::uuid", q(brand_id) + "::uuid", q(external_id),
                       q(payload["nom_estab"]), q(normalize(payload["nom_estab"])), q(address_1), q(address_2),
@@ -134,7 +155,14 @@ def render(artifact: Path, *, apply: bool = False, fixture: Path = FIXTURE) -> s
                                    "website_url": provider["website_url"],
                                    "website_uncertainty": provider.get("website_uncertainty"),
                                    "provider_brand_id": brand_id, "existing_brand_reused": existing is not None,
-                                   "identity_note": provider["identity_note"]},
+                                   "identity_note": provider["identity_note"],
+                                   **({"existing_location_reused": True,
+                                       "identity_status": existing["verification_status"],
+                                       "existing_location_id": existing_location["id"],
+                                       "existing_location_status": existing_location["status"],
+                                       "location_type": existing_location["location_type"],
+                                       "denue_suggested_location_type": location_type}
+                                      if existing_location is not None else {})},
                                   ensure_ascii=False)
             observation_id = stable_id("ingest-observation", review["review_id"] + ":" + external_id)
             observation_lines.append(
@@ -145,6 +173,49 @@ def render(artifact: Path, *, apply: bool = False, fixture: Path = FIXTURE) -> s
                 f"from ingest.raw_records rr where rr.id={q(raw_id)}::uuid on conflict(id) do nothing;"
             )
     request = q(review["review_id"])
+    # Empty strings below preserve historical SQL bytes for every old fixture.
+    location_setup = ""
+    location_precondition = ""
+    location_postcondition = ""
+    new_location_filter = ""
+    pending_scope_filter = ""
+    audit_location_metadata = ""
+    reused_location_receipt = ""
+    if reused_locations:
+        snapshot_values = ",".join(
+            "(" + q(row["id"]) + "::uuid," + q(json.dumps(row, ensure_ascii=False)) + "::jsonb)"
+            for row in reused_locations)
+        location_setup = f"""
+create temporary table reviewed_existing_locations(id uuid primary key,expected_row jsonb) on commit drop;
+insert into reviewed_existing_locations values {snapshot_values};
+select l.id from core.provider_locations l join reviewed_existing_locations r on r.id=l.id
+ for share of l;
+create temporary table before_reused_locations on commit drop as
+ select l.id,to_jsonb(l) as row_snapshot from core.provider_locations l
+ join reviewed_existing_locations r on r.id=l.id;"""
+        location_precondition = """
+ if exists(select 1 from reviewed_existing_locations r where not exists(
+  select 1 from core.provider_locations l join reviewed_locations v on v.id=l.id
+  join reviewed_brands b on b.id=v.brand_id and b.reuse_existing
+  where l.id=r.id and l.provider_brand_id=b.id and to_jsonb(l)=r.expected_row))
+ then raise exception 'Researched existing location snapshot or brand changed'; end if;"""
+        location_postcondition = f"""
+ or (select count(*) from before_reused_locations)<>{len(reused_locations)}
+ or exists(select 1 from before_reused_locations s left join core.provider_locations l on l.id=s.id
+  where to_jsonb(l) is distinct from s.row_snapshot)
+ or exists(select 1 from reviewed_existing_locations r left join core.provider_locations l on l.id=r.id
+  where to_jsonb(l) is distinct from r.expected_row)
+ or (select count(*) from core.location_external_ids e join reviewed_locations r
+  on e.provider_location_id=r.id and e.source_system='denue' and e.external_id=r.denue_id)<>{len(reviewed_ids)}"""
+        new_location_filter = " where not exists(select 1 from reviewed_existing_locations x where x.id=reviewed_locations.id)"
+        pending_scope_filter = " and not exists(select 1 from reviewed_existing_locations x where x.id=r.id)"
+        audit_location_metadata = """ || case when exists(select 1 from reviewed_existing_locations x where x.id=reviewed_locations.id)
+ then jsonb_build_object('existing_location_reused',true,'status',
+  (select row_snapshot->>'status' from before_reused_locations x where x.id=reviewed_locations.id),
+  'location_type',(select row_snapshot->>'location_type' from before_reused_locations x where x.id=reviewed_locations.id),
+  'denue_suggested_location_type',location_type)
+ else '{}'::jsonb end"""
+        reused_location_receipt = f"'locations_reused',{len(reused_locations)},"
     return f"""begin;
 set local lock_timeout='5s';
 set local statement_timeout='60s';
@@ -156,7 +227,7 @@ create temporary table reviewed_locations(id uuid,brand_id uuid,denue_id text,na
  normalized_name text,address_1 text,address_2 text,locality text,postal_code text,
  coordinates gis.geography(Point,4326),raw_id uuid,record_hash text,
  activity_code text,location_type text) on commit drop;
-insert into reviewed_locations values {','.join(location_values)};
+insert into reviewed_locations values {','.join(location_values)};{location_setup}
 create temporary table before_policies on commit drop as select id,usage_policy_status from ingest.sources;
 create temporary table before_offers on commit drop as select count(*) as n from supply.offers;
 select b.id from core.provider_brands b join reviewed_brands r on r.id=b.id
@@ -176,13 +247,13 @@ do $$ begin
  then raise exception 'Licensed DENUE identity provenance changed'; end if;
  if exists(select 1 from reviewed_brands r where r.reuse_existing and not exists(
   select 1 from core.provider_brands b where b.id=r.id and to_jsonb(b) @> r.expected_existing))
- then raise exception 'Researched existing brand identity or state changed'; end if;
+ then raise exception 'Researched existing brand identity or state changed'; end if;{location_precondition}
  if exists(select 1 from reviewed_brands r join core.provider_brands b
   on (b.slug=r.slug or b.normalized_name=r.normalized_name or b.id=r.id)
   where not r.reuse_existing or b.id<>r.id)
  or exists(select 1 from reviewed_locations r join core.location_external_ids e
   on e.source_system='denue' and e.external_id=r.denue_id)
- or exists(select 1 from reviewed_locations r join core.provider_locations l on l.id=r.id)
+ or exists(select 1 from reviewed_locations r join core.provider_locations l on l.id=r.id{pending_scope_filter})
  then raise exception 'Identity already bound; inspect receipt and existing identity before replay'; end if;
 end $$;
 insert into core.provider_brands(id,name,normalized_name,slug,description,website_url,status,verification_status)
@@ -191,7 +262,7 @@ select id,name,normalized_name,slug,description,website_url,'active','verificati
 insert into core.provider_locations(id,provider_brand_id,name,normalized_name,location_code,location_type,
  address_line_1,address_line_2,locality_text,postal_code,coordinates,timezone,status)
 select id,brand_id,name,normalized_name,'denue:'||denue_id,location_type,address_1,address_2,
- locality,postal_code,coordinates,'America/Mexico_City','pending' from reviewed_locations;
+ locality,postal_code,coordinates,'America/Mexico_City','pending' from reviewed_locations{new_location_filter};
 insert into core.location_external_ids(provider_location_id,source_system,external_id,external_url)
 select id,'denue',denue_id,{q(ARCHIVE_URL)} from reviewed_locations;
 {chr(10).join(observation_lines)}
@@ -200,11 +271,11 @@ select 'system','provider.identity_evidence_review','core','provider_locations',
  jsonb_build_object('reviewed_by',{q(review['reviewed_by'])},'human_review',false,'denue_id',denue_id,
  'raw_record_id',raw_id,'activity_code',activity_code,'location_type',location_type,
  'status','pending','offer_approved',false,'provider_brand_id',brand_id,
- 'existing_brand_reused',(select reuse_existing from reviewed_brands b where b.id=reviewed_locations.brand_id))
+ 'existing_brand_reused',(select reuse_existing from reviewed_brands b where b.id=reviewed_locations.brand_id)){audit_location_metadata}
  from reviewed_locations;
 do $$ begin
  if (select count(*) from core.provider_locations l join reviewed_locations r on r.id=l.id
-  where l.status='pending' and l.location_type=r.location_type)<>{len(reviewed_ids)}
+  where l.status='pending' and l.location_type=r.location_type{pending_scope_filter})<>{len(reviewed_ids) - len(reused_locations)}{location_postcondition}
  or (select count(*) from before_reused_brands)<>{reused_brands}
  or exists(select 1 from before_reused_brands s left join core.provider_brands b on b.id=s.id
   where to_jsonb(b) is distinct from s.row_snapshot)
@@ -215,7 +286,7 @@ do $$ begin
 end $$;
 select jsonb_build_object('review_id',{request},'brands',{len(review['providers']) - reused_brands},
  {"'brands_reused'," + str(reused_brands) + "," if reused_brands else ""}
- 'pending_locations',{len(reviewed_ids)},'offers_created',0,'applied',{'true' if apply else 'false'}) as receipt;
+ {reused_location_receipt}'pending_locations',{len(reviewed_ids) - len(reused_locations)},'offers_created',0,'applied',{'true' if apply else 'false'}) as receipt;
 {'commit' if apply else 'rollback'};
 """
 

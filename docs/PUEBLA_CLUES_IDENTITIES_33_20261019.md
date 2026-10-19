@@ -112,11 +112,12 @@ La conciliación posterior confirmó que ambos Salud Digna ya tienen sede en la
 marca existente. Tehuacán coincide con Calle 1 Poniente 129 y es candidato a
 vincular DENUE sin crear una sede. Municipio Libre conserva exterior 547-6 frente
 a catálogo 547 Int 6: no convertir exterior en interior ni duplicar. No se
-activaron vínculos; la consulta fresca del sitio oficial no fue accesible y la
+activaron vínculos en esa investigación; la consulta fresca del sitio oficial no fue accesible y la
 evidencia previa conserva su fecha. Reporte local:
 `collectors/artifacts/puebla-expansion-20261009/identity-review-34-research-20261019/REPORT.md`.
 
-Siguiente trabajo: preparar la vinculación acotada de Tehuacán conservando todos
-los datos existentes y buscar evidencia específica de estudios por proveedor y
-sucursal. Las equivalencias clínicas ambiguas conservan sus restricciones.
+Continuación: el vínculo acotado de Tehuacán se aplicó conservando todos los datos
+existentes; [revisión 34](PUEBLA_IDENTITY_LINK_34_20261019.md). Continúa la búsqueda
+de evidencia de estudios por proveedor y sucursal; Municipio Libre y las
+equivalencias clínicas ambiguas conservan sus restricciones.
 [Recuento posterior e historial separado](CATALOG_STATUS_20261019.md).

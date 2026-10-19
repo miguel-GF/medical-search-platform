@@ -12,6 +12,7 @@ La conversación original no es lectura obligatoria para incorporarse.
 | [Guías de trabajo](WORK_GUIDE.md) | Procedimientos por tipo de cambio y traspaso. |
 | [Operación](OPERATIONS_GUIDE.md) | Directorios, comandos, comprobaciones y alcance de resultados. |
 | [Estado y prioridades](CURRENT_STATE.md) | Capacidades y pendientes con evidencia fechada. |
+| [Puebla, vínculo de identidad 34](PUEBLA_IDENTITY_LINK_34_20261019.md) | Tehuacán enlazado sin duplicar sede, snapshot íntegro y discrepancia Municipio Libre. |
 | [Recuento e historial, 19-oct](CATALOG_STATUS_20261019.md) | Resueltos, pendientes abiertos, 946 históricos y comparación shadow sin reapertura. |
 | [Puebla, CLUES e identidad 33](PUEBLA_CLUES_IDENTITIES_33_20261019.md) | 35 ubicaciones candidatas incorporadas, extractor local y límites de estados/sucesión. |
 | [Puebla, identidades31–32](PUEBLA_IDENTITIES_31_32_20261019.md) | Cinco unidades candidatas incorporadas, domicilios numerados y diferencias conservadas. |
