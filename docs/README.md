@@ -12,6 +12,7 @@ La conversación original no es lectura obligatoria para incorporarse.
 | [Guías de trabajo](WORK_GUIDE.md) | Procedimientos por tipo de cambio y traspaso. |
 | [Operación](OPERATIONS_GUIDE.md) | Directorios, comandos, comprobaciones y alcance de resultados. |
 | [Estado y prioridades](CURRENT_STATE.md) | Capacidades y pendientes con evidencia fechada. |
+| [Puebla, identidades31–32](PUEBLA_IDENTITIES_31_32_20261019.md) | Cinco unidades candidatas incorporadas, domicilios numerados y diferencias conservadas. |
 | [Muestras y calificadores, revisión63](CATALOG_REVIEW_63_20261019.md) | Soporte local de saliva, compatibilidad53 lotes y borrador retenido por horario/serie/método. |
 | [FSH y precisión administrativa, revisión62](CATALOG_REVIEW_62_20261018.md) | Alias aplicado sin duplicar concepto, discrepancia de muestra conservada y filtro de sugerencias. |
 | [Catálogo y Atenayuca, revisión61](CATALOG_REVIEW_61_20261018.md) | Ocho registros incorporados y un establecimiento candidato; recuento y límites comerciales. |

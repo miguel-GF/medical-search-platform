@@ -17,6 +17,18 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Identidades31–32,19-oct12:40:31UTC:** cinco unidades candidatas añadidas en
+Teziutlán, Nicolás Bravo, San Andrés Cholula, Tochimilco yZaragoza. Descriptores
+de nombre conservados; cuatro exteriores numerados y uno sin número concordantes,
+fuente federal recapturada200/filas únicas, rollback/commit único/cliente
+independiente correctos. Alpanocan conservaSN interior; Zaragoza conserva clase
+DENUEhospital frente aCS federal; laboratorio vecino deCholula intacto y separado.
+**139 instituciones /223 ubicaciones /551 conceptos /4,073 pendientes /
+234 ofertas /112 migraciones**. Sin estudios u ofertas atribuidos a las nuevas
+sedes.19 pares adicionales retenidos por domicilios incompatibles. Histórico
+oficialCLUESHTTP200 enlaza archivoagosto2026 (HEAD200); observación acotada en curso,
+sin usarlo todavía para decisiones. [Evidencia y límites](PUEBLA_IDENTITIES_31_32_20261019.md).
+
 **Revisión63,19-oct12:32UTC:** importador local admite saliva existente con
 atributo y marcador literal obligatorios;53 SQL previos idénticos porhash.
 Borrador de ocho cortisol salival retenido fuera de cola: rollback de31etiquetas
