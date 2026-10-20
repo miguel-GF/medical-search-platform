@@ -1,0 +1,49 @@
+{
+  "review_id": "pruevia:provider-website-review:20261020:01",
+  "research_date": "2026-10-20",
+  "reviewed_by": "Codex, investigación delegada por el operador; domicilio y fuente revisados por root",
+  "authorization": "D-021/D-022: corregir identidad factual con evidencia; sin ofertas ni nueva política de fuente.",
+  "provider_brand_id": "3a16478e-658e-58ad-b41f-488d92557bf1",
+  "provider_location_id": "618f9c6c-ec0b-5c02-9075-dfeec52c324b",
+  "denue_id": "3533309",
+  "raw_record_id": "96709cb3-0cc5-58cf-b48b-695e197d970f",
+  "raw_record_hash": "b5a37accc98dee83ef4bd249a07e57f13012c599b786cb306a2aee4b2e53def0",
+  "expected_website_url": null,
+  "expected_verification_status": "verification_pending",
+  "new_website_url": "https://www.laboratorioclinico-pasteur.com/",
+  "evidence_url": "https://www.laboratorioclinico-pasteur.com/contacto",
+  "source_capture_sha256": "112c6cb8a1a2806f048c3c8571d138cb6d6da0d65d2bc34d203239c2b0085d22",
+  "source_observed_at": "2026-10-20T13:00:29.355508+00:00",
+  "reason": "Sitio de Laboratorio Clínico Pasteur identifica Matriz, calle7Sur506, Tecamachalco, CP75480; concordante con DENUE3533309 y ubicación existente. Se añade sólo URL, conservando marca verification_pending y sede pending. Las seis categorías publicadas no prueban estudios individuales, composición, precios o disponibilidad. No se afirma única sucursal, titularidad jurídica o acreditación. Sin nueva fuente de ingesta, aprobación de licencia, política, captura recurrente o contacto. No se abrió el sistema de resultados. Bioclínicos Amozoc sigue sin fuente primaria; homónimos no se mezclan.",
+  "captures": [
+    {
+      "label": "pasteur-robots",
+      "final_url": "https://www.laboratorioclinico-pasteur.com/robots.txt",
+      "observed_at": "2026-10-20T12:59:46.063773+00:00",
+      "status": 200,
+      "sha256": "ff648b9c675b52e9ae02ea03800fd28315b652efde8e8477d223fa0cb0b0efc0"
+    },
+    {
+      "label": "pasteur-home",
+      "final_url": "https://www.laboratorioclinico-pasteur.com/",
+      "observed_at": "2026-10-20T12:59:54.492780+00:00",
+      "status": 200,
+      "sha256": "a0a0ba77adb7a0d406cac716bf0237f870285dee63fcedfd8fc5e4cbc20826bc"
+    },
+    {
+      "label": "pasteur-services",
+      "final_url": "https://www.laboratorioclinico-pasteur.com/servicios",
+      "observed_at": "2026-10-20T13:00:10.016038+00:00",
+      "status": 200,
+      "sha256": "1bd92ec4697f5a87173569e20065caf77ca7f36e5799c62a66b2b15c817df239"
+    },
+    {
+      "label": "pasteur-contact",
+      "final_url": "https://www.laboratorioclinico-pasteur.com/contacto",
+      "observed_at": "2026-10-20T13:00:29.355508+00:00",
+      "status": 200,
+      "sha256": "112c6cb8a1a2806f048c3c8571d138cb6d6da0d65d2bc34d203239c2b0085d22"
+    }
+  ],
+  "publication_scope": "Enlace factual de identidad, no aprobación comercial ni oferta."
+}

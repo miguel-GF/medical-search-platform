@@ -1,0 +1,45 @@
+{
+  "review_id": "pruevia:evidence-review:20261020:01",
+  "research_date": "2026-10-20",
+  "scope": "Revisión65: ocho identidades nominales de anticuerpos totales antiChagas SD, conservando total y atributos desconocidos.16FTA-ABS siguen retenidos por método estructurado. Sin inferir panel, muestra o isotipos ni cambiar el resolvedor.",
+  "reviewed_by": "Codex, investigación delegada por el operador; fuentes y contexto fresco revisados por root",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidad nominal clara; no activar cambios de resolvedor ni perder calificadores.",
+  "research_report_sha256": "b7e5cef029bcd5b856bc1ac554cd8bdaf286b03edb33bc25d8bd82dd1cd2a7e7",
+  "research_snapshot_sha256": "20c82e8502d0a2cd24a9420ada6f541e8b7ee4d97f47ad90c9ecad26549688cd",
+  "new_concepts": [
+    {
+      "item_id": "09b3c9dc-a079-5a8e-88de-92895ec82bfb",
+      "canonical_name": "Anticuerpos totales contra Trypanosoma cruzi (Chagas)",
+      "component": "Trypanosoma cruzi Ab.total",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "specimen_uncertainty": "RAW SD no declara matriz. No trasladar el suero, método o composición del protocolo Mayo.",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/615244",
+      "reason": "Los ocho títulos RAW SD declaran ANTICUERPOS TOTALES ANTI CHAGAS. Mayo615244 y CDC documentan identidad de anticuerpos contra Trypanosoma cruzi y la enfermedad de Chagas. La ficha Mayo obsoleta/no orderable se usa sólo como referencia de identidad, no como oferta vigente. Se conserva total literalmente sin expandir a pareja IgG/IgM, inmunoglobulinas individuales, composición de panel confirmatorio o dos pruebas. No equivale a PCR, antígeno, Trypanosoma rangeli, IgG aislada, IgM aislada, hemocultivo o cuantificación. No inferir suero, ELISA, inmunofluorescencia, muestra, duración, propiedad, escala, unidades ni LOINC. Original y preparación permanecen intactos; no se validan instrucciones clínicas. Identidad nominal de orden y no equivalencia analítica. Observación rollback de25consultas públicas y de proveedor completada sin selección automática incompatible en esos contextos; no acredita conservación universal. Sin ofertas, precios o disponibilidad."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "anticuerpos totales anti chagas",
+      "item_id": "09b3c9dc-a079-5a8e-88de-92895ec82bfb",
+      "canonical_name": "Anticuerpos totales contra Trypanosoma cruzi (Chagas)",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "ANTICUERPOS TOTALES ANTI CHAGAS"
+      },
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/615244",
+      "reason": "Los ocho títulos RAW SD declaran ANTICUERPOS TOTALES ANTI CHAGAS. Mayo615244 y CDC documentan identidad de anticuerpos contra Trypanosoma cruzi y la enfermedad de Chagas. La ficha Mayo obsoleta/no orderable se usa sólo como referencia de identidad, no como oferta vigente. Se conserva total literalmente sin expandir a pareja IgG/IgM, inmunoglobulinas individuales, composición de panel confirmatorio o dos pruebas. No equivale a PCR, antígeno, Trypanosoma rangeli, IgG aislada, IgM aislada, hemocultivo o cuantificación. No inferir suero, ELISA, inmunofluorescencia, muestra, duración, propiedad, escala, unidades ni LOINC. Original y preparación permanecen intactos; no se validan instrucciones clínicas. Identidad nominal de orden y no equivalencia analítica. Observación rollback de25consultas públicas y de proveedor completada sin selección automática incompatible en esos contextos; no acredita conservación universal. Sin ofertas, precios o disponibilidad."
+    }
+  ],
+  "rollback_observation_fixture_sha256": "04b355fbc856e163f587205a47f69046c170d8a944f83780788b60fdd1a1234c",
+  "rollback_observation_scope": "25 consultas públicas y25 del core con proveedor: isotipos individuales, método, matriz, cuantificación, especie, PCR y panel. Original fuente y preparación intactos; rollback independiente sin persistencia."
+}

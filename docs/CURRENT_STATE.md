@@ -17,6 +17,17 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Revisión 65, 20-oct 13:10:49 UTC:** ocho anti-Chagas totales SD resueltos,
+un concepto y un alias de proveedor; sin expandir total a IgG/IgM o panel.
+24 payloads y etiquetas intactos, 16 FTA-ABS aún retenidos por método.
+**554 conceptos /3,325 favorables /4,063 pendientes /946 no_match históricos /
+174 marcas /258 ubicaciones /234 ofertas /112 migraciones**, cola55.
+Inventario completo anterior13:04:55:755grupos/4,071pendientes,60revisiones,
+414aliases/433reglas/2,957históricos;54ledgers y235archivos previos conservados.
+Pasteur Tecamachalco tiene sitio concordante; website preparado sin aplicar,
+sin evidencia para ofertas individuales. Prioridad nueva: selección de candidatos
+y navegación móvil, en preparación local. [Evidencia](CATALOG_REVIEW_65_20261020.md).
+
 **Revisión 64, aplicada 19-oct 13:19 UTC y reobservada 20-oct 12:59:09 UTC:**
 calcio ionizado sérico SEMIN y PlGF individual Chopo incorporados: dos conceptos
 y dos registros resueltos. **553 conceptos /3,317 favorables /4,071 pendientes
