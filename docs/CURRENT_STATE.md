@@ -17,6 +17,15 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Pasteur y revisión66,20-oct13:48:55UTC:** sitio concordante incorporado a marca
+existente con nota fechada y antecedente íntegro. Rollback y único commit,
+observador independiente; sede/RAW/políticas y contadores conservados. Sin nuevas
+ofertas: categorías generales no prueban estudios. Revisión66 clasificó22grupos/
+176RAW sin nueva equivalencia clara; propuesta FTA aislada conserva55lotes/110SQL,
+sin activación ni cierres. Persisten554conceptos/3,325favorables/4,063pendientes,
+174marcas/258sedes/234ofertas/112migraciones.
+[Evidencia y siguiente acción](PUEBLA_WEBSITE_AND_REVIEW_66_20261020.md).
+
 **Selección y navegación móvil, 20-oct:** implementadas localmente para la
 petición de flujo. Confirmar Biometría hemática desde `hematica` devuelve34ofertas;
 IDajeno/incorrecto409/400. Móvil390px: proveedor→sucursal→Atrás conserva selección,
@@ -37,7 +46,7 @@ un concepto y un alias de proveedor; sin expandir total a IgG/IgM o panel.
 174 marcas /258 ubicaciones /234 ofertas /112 migraciones**, cola55.
 Inventario completo anterior13:04:55:755grupos/4,071pendientes,60revisiones,
 414aliases/433reglas/2,957históricos;54ledgers y235archivos previos conservados.
-Pasteur Tecamachalco tiene sitio concordante; website preparado sin aplicar,
+Pasteur Tecamachalco tiene sitio concordante; website preparado en este corte,
 sin evidencia para ofertas individuales. Prioridad nueva: selección de candidatos
 y navegación móvil, en preparación local. [Evidencia](CATALOG_REVIEW_65_20261020.md).
 

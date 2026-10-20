@@ -14,7 +14,7 @@
   "evidence_url": "https://www.laboratorioclinico-pasteur.com/contacto",
   "source_capture_sha256": "112c6cb8a1a2806f048c3c8571d138cb6d6da0d65d2bc34d203239c2b0085d22",
   "source_observed_at": "2026-10-20T13:00:29.355508+00:00",
-  "reason": "Sitio de Laboratorio Clínico Pasteur identifica Matriz, calle7Sur506, Tecamachalco, CP75480; concordante con DENUE3533309 y ubicación existente. Se añade sólo URL, conservando marca verification_pending y sede pending. Las seis categorías publicadas no prueban estudios individuales, composición, precios o disponibilidad. No se afirma única sucursal, titularidad jurídica o acreditación. Sin nueva fuente de ingesta, aprobación de licencia, política, captura recurrente o contacto. No se abrió el sistema de resultados. Bioclínicos Amozoc sigue sin fuente primaria; homónimos no se mezclan.",
+  "reason": "Sitio de Laboratorio Clínico Pasteur identifica Matriz, calle7Sur506, Tecamachalco, CP75480; concordante con DENUE3533309 y ubicación existente. Se añade URL y nota fechada que conserva íntegro el antecedente de identidad, manteniendo marca verification_pending y sede pending. Las seis categorías publicadas no prueban estudios individuales, composición, precios o disponibilidad. No se afirma única sucursal, titularidad jurídica o acreditación. Sin nueva fuente de ingesta, aprobación de licencia, política, captura recurrente o contacto. No se abrió el sistema de resultados. Bioclínicos Amozoc sigue sin fuente primaria; homónimos no se mezclan.",
   "captures": [
     {
       "label": "pasteur-robots",
@@ -45,5 +45,22 @@
       "sha256": "112c6cb8a1a2806f048c3c8571d138cb6d6da0d65d2bc34d203239c2b0085d22"
     }
   ],
-  "publication_scope": "Enlace factual de identidad, no aprobación comercial ni oferta."
+  "publication_scope": "Enlace factual de identidad, no aprobación comercial ni oferta.",
+  "expected_brand_snapshot": {
+    "id": "3a16478e-658e-58ad-b41f-488d92557bf1",
+    "name": "Laboratorio Clinico Pasteur — Tecamachalco",
+    "slug": "laboratorio-clinico-pasteur-tecamachalco-3533309",
+    "status": "active",
+    "created_at": "2026-10-19T12:59:44.86451+00:00",
+    "updated_at": "2026-10-19T12:59:44.86451+00:00",
+    "description": "Identidad candidata investigada con DENUE3533309, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLSMP009756, hojaCLUES_202608 fila44739, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:LABORATORIO CLINICO PASTEUR; nombre de unidad de referencia:SERVICIOS DE SALUD PASTEUR, S. DE R. L. DE C. V.. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='506', letra='', interior='', letra_int='', asentamiento='TECAMACHALCO'. ClasificaciónDENUE621511 y tipobranch conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros.",
+    "row_version": 1,
+    "website_url": null,
+    "logo_object_key": null,
+    "normalized_name": "laboratorio clinico pasteur tecamachalco",
+    "verification_status": "verification_pending",
+    "redirect_to_brand_id": null
+  },
+  "new_description": "20-oct-2026: sitio web identificado por nombre y domicilio de la matriz concordantes con DENUE 3533309: 7 Sur 506, Tecamachalco, CP 75480. Verificación comercial pendiente; sin estudios, ofertas o precios acreditados. La URL procede de revisión manual del sitio, no de DENUE. Antecedente de identidad del 19-oct-2026 (texto original conservado): Identidad candidata investigada con DENUE3533309, publicaciónINEGI20-may2026/captura9-oct2026, y referencia pública CLUESPLSMP009756, hojaCLUES_202608 fila44739, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE:LABORATORIO CLINICO PASTEUR; nombre de unidad de referencia:SERVICIOS DE SALUD PASTEUR, S. DE R. L. DE C. V.. Nombre específico revisado sin fuzzy; variantes de partículas/descriptores quedan conservadas. Códigos municipio/localidad yCP iguales; tipo de vía, calle y exterior coinciden completos. DENUE conserva exterior='506', letra='', interior='', letra_int='', asentamiento='TECAMACHALCO'. ClasificaciónDENUE621511 y tipobranch conservados aunque el nombre comercial sugiera otro tipo. EN OPERACION es un valor del corte mensual de agosto, no prueba de operación actual ni disponibilidad. No se afirma sucesión desde una clave histórica, red actual, titularidad o personalidad jurídica. Sólo los campos de identidad licenciados deDENUE se incorporan como datos de sede; la referenciaCLUES documenta la investigación. No se registra fuenteCLUES de ingesta, aprueba política nueva ni programa captura. Unidad candidata independiente verification_pending/ubicaciónpending; websiteNULL porque no se acreditó sitio propio. Sin estudios, horarios, equivalencias clínicas, ofertas, precios o disponibilidad; no hubo contacto con terceros.",
+  "revision": 2
 }

@@ -76,6 +76,10 @@ Se confirmó sitio propio de [Pasteur Tecamachalco](https://www.laboratorioclini
 hashes conservados. Se preparó una revisión aislada del website, **sin aplicarla**:
 `database/data/provider-website-review-20261020-01.json`.
 
+Actualización posterior20-oct13:48:55UTC: enlace aplicado con nota fechada,
+antecedente íntegro, rollback y lectura independiente; cero nuevas ofertas.
+[Resultado y revisión66](PUEBLA_WEBSITE_AND_REVIEW_66_20261020.md).
+
 La web sólo publica seis categorías generales; no justifican estudios concretos,
 composición, precios u ofertas. No se abrió el sistema de resultados. La política
 de ingesta/licencia sigue sin aprobar y no se activó un collector. La captura
