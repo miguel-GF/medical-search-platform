@@ -1,0 +1,74 @@
+{
+  "review_id": "pruevia:evidence-review:20261019:02",
+  "research_date": "2026-10-19",
+  "scope": "Revisión64: dos identificaciones nominales documentadas (calcio ionizado sérico y PlGF individual), con fuentes primarias y lectura fresca de11RAW. Talio en sangre y ocho nicotina sérica retenidos. Sin cambios al resolvedor ni ofertas.",
+  "reviewed_by": "Codex, investigación delegada por el operador; fuentes y lectura fresca revisadas por root",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades nominales claras; conservar ambigüedad clínica, evidencia y permisos.",
+  "research_report_sha256": "d14b99d36797e563abc56bb33b310b98e1cefbc7b0588e1aaf1ccc1b34a5e90e",
+  "research_snapshot_sha256": "78b09729331a28bfcf267b39ebb5a7c1884697c160e9c470336f8fe1b60cdc22",
+  "definition_sha256": "de650e74d7cfecd7293f264041d059fcec5913ad4f62c5f600979b1908b914eb",
+  "new_concepts": [
+    {
+      "item_id": "9fff72d0-6deb-5a1b-85f1-f5cd44c4ce48",
+      "canonical_name": "Calcio ionizado en suero",
+      "component": "Calcium.ionized",
+      "specimen_code": "serum",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://semindigital.com/semin-api/api/v3/catalog/informacion-catalogo/5401",
+      "reason": "SEMIN5401 declara Calcio Ionizado y muestra 2 ml Suero. Refrigerado; captura19-oct confirma nombre y suero. Labcorp004804 confirma la identidad de calcio ionizado, sin transferir su técnica ISE. Conservar fracción ionizada y suero: no equivale a calcio total, urinario, calculado/corregido por albúmina o ajustado a pH7.4, ni sangre completa/plasma. Método, propiedad, escala, unidad, LOINC y ajuste de pH no se infieren. Preparación original conservada sin validarla clínicamente. Sólo identidad nominal de orden, sin equivalencia analítica ni ofertas, precios o disponibilidad. Observaciones rollback completadas sin selección automática incompatible en los contextos examinados; no acreditan conservación universal de calificadores."
+    },
+    {
+      "item_id": "0daf7b62-458f-5382-9da7-a57bf2a0a67c",
+      "canonical_name": "Factor de crecimiento placentario humano (PlGF)",
+      "component": "Placental growth factor",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.chopo.com.mx/puebla/factor-de-crecimiento-placentario-humano",
+      "reason": "El título Chopo19884 identifica el factor placentario individual. Su descripción menciona uso conjunto con sFlt-1 para formar un índice; no prueba que esta orden incluya sFlt-1 o el cociente. No equivale a razón sFlt-1/PlGF, cribado/panel combinado de preeclampsia, inhibina ni AFP. No crear alias global PIGF desde la grafía del proveedor. Muestra, método, propiedad, escala, tiempo, unidad y LOINC desconocidos; no importar suero de otra fuente. Categoría de origen conservada sin corregirla clínicamente. Sólo identidad nominal de orden, sin equivalencia analítica ni ofertas, precios o disponibilidad. Observaciones rollback completadas sin selección automática incompatible en los contextos examinados; no acreditan conservación universal de calificadores.",
+      "specimen_uncertainty": "El RAW y título Chopo no declaran matriz. No inferir suero/plasma ni copiar protocolo de otro laboratorio."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "calcio ionizado",
+      "item_id": "9fff72d0-6deb-5a1b-85f1-f5cd44c4ce48",
+      "canonical_name": "Calcio ionizado en suero",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "2 ml Suero. Refrigerado"
+      },
+      "evidence_url": "https://semindigital.com/semin-api/api/v3/catalog/informacion-catalogo/5401",
+      "reason": "SEMIN5401 declara Calcio Ionizado y muestra 2 ml Suero. Refrigerado; captura19-oct confirma nombre y suero. Labcorp004804 confirma la identidad de calcio ionizado, sin transferir su técnica ISE. Conservar fracción ionizada y suero: no equivale a calcio total, urinario, calculado/corregido por albúmina o ajustado a pH7.4, ni sangre completa/plasma. Método, propiedad, escala, unidad, LOINC y ajuste de pH no se infieren. Preparación original conservada sin validarla clínicamente. Sólo identidad nominal de orden, sin equivalencia analítica ni ofertas, precios o disponibilidad. Observaciones rollback completadas sin selección automática incompatible en los contextos examinados; no acreditan conservación universal de calificadores.",
+      "source_attributes": {
+        "specimen_code": "serum"
+      }
+    },
+    {
+      "alias": "factor de crecimiento placentario humano",
+      "item_id": "0daf7b62-458f-5382-9da7-a57bf2a0a67c",
+      "canonical_name": "Factor de crecimiento placentario humano (PlGF)",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "provider_brand_id": "edad5c4c-9cb7-5098-bb6d-4d9f58907cbc",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "provider_display_name"
+        ],
+        "value": "FACTOR DE CRECIMIENTO PLACENTARIO HUMANO"
+      },
+      "evidence_url": "https://www.chopo.com.mx/puebla/factor-de-crecimiento-placentario-humano",
+      "reason": "El título Chopo19884 identifica el factor placentario individual. Su descripción menciona uso conjunto con sFlt-1 para formar un índice; no prueba que esta orden incluya sFlt-1 o el cociente. No equivale a razón sFlt-1/PlGF, cribado/panel combinado de preeclampsia, inhibina ni AFP. No crear alias global PIGF desde la grafía del proveedor. Muestra, método, propiedad, escala, tiempo, unidad y LOINC desconocidos; no importar suero de otra fuente. Categoría de origen conservada sin corregirla clínicamente. Sólo identidad nominal de orden, sin equivalencia analítica ni ofertas, precios o disponibilidad. Observaciones rollback completadas sin selección automática incompatible en los contextos examinados; no acreditan conservación universal de calificadores."
+    }
+  ],
+  "rollback_observation_scope": "19 consultas públicas y16 contextos del corev6 (con/sin proveedor); requisitos AM/x2/pH7.4 permanecen ambiguos, ratios sFlt-1/PlGF y otros analitos no se seleccionan como PlGF. Primer intento sin GUC falló y se observó sin persistencia; segunda transacción autorizada conservó ledger not_applied. La API usa location_id en quinto argumento; no confundir esa observación con filtro de proveedor."
+}

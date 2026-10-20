@@ -1,6 +1,6 @@
 # Estado y prioridades de Pruevia
 
-Tipo: punto de continuidad. Actualizado el 19-oct-2026 UTC/local para operación y datos;
+Tipo: punto de continuidad. Actualizado el 20-oct-2026 UTC/local para operación y datos;
 el corte histórico de publicación de septiembre corresponde al árbol local, el
 ledger Supabase y los Workers de producción. El proyecto enlazado se llama
 `pruevia-dev`, pero también es la base inicial de producción: las migraciones
@@ -16,6 +16,17 @@ base inicial de producción. Una escritura o migración allí afecta datos que
 podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
+
+**Revisión 64, aplicada 19-oct 13:19 UTC y reobservada 20-oct 12:59:09 UTC:**
+calcio ionizado sérico SEMIN y PlGF individual Chopo incorporados: dos conceptos
+y dos registros resueltos. **553 conceptos /3,317 favorables /4,071 pendientes
+abiertos /946 no_match históricos /174 marcas /258 ubicaciones /234 ofertas /
+112 migraciones**. Cola54 con hashes anteriores intactos; proceso PID16372
+confirmado vivo en vigilancia, sin reiniciarlo. Dos payloads completos y12contextos
+íntegros; fuentes, políticas y estados ajenos conservados. Variantes observadas
+de pH/AM/x2 siguen ambiguas; no se activó guard clínico nuevo ni cortisol salival.
+Nicotina8 ytalio1 retenidos por composición/representación de muestra.
+[Evidencia, límites y siguiente acción](CATALOG_REVIEW_64_20261020.md).
 
 **Vínculo de identidad 34, 19-oct 13:17:13 UTC:** DENUE 12271886 enlazado a
 Salud Digna Tehuacán existente. Cero marcas o sedes nuevas; marca y 13 ubicaciones
