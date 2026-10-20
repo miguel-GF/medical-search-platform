@@ -71,6 +71,53 @@ Evidencia ignorada: `collectors/artifacts/search-flow-20261020/`, especialmente
 `api-observed.json`, `local-api-observed.json`, `served-build.json` y
 `run4/browser-observed.json` con capturas. Artefactos anteriores quedan conservados.
 
+## Palabras sencillas y errores de escritura
+
+Observación adicional del 20-oct en la API local, usando el catálogo productivo
+en lectura. Se conservan las respuestas públicas anteriores por separado:
+
+| Entrada | Resultado observado localmente |
+| --- | --- |
+| `biometria` | Candidato Biometría hemática; confirmarlo devuelve 34 ofertas. |
+| `orina` | Cinco opciones guiadas, incluyendo examen general y cultivo; no elige por la persona. |
+| `sangre` | Cuatro opciones guiadas, incluyendo biometría y glucosa. |
+| `electro` | Dos candidatos: electrocardiograma en reposo y en esfuerzo. |
+| `electrocardiograma` | Tres candidatos: reposo, esfuerzo y pediátrico. |
+| `eelctro` | Cinco sugerencias verificadas, incluyendo electromiografías y las tres modalidades de electrocardiograma. |
+| `eelctro reposo` / `eelctro esfuerzo` | Una sugerencia compatible en cada caso; confirmar devuelve 26/15 ofertas respectivamente. |
+
+El caso `eelctro` antes no tenía candidatos ni sugerencias, tanto en público como
+en local. Se añadió una regla general de navegación para un prefijo de al menos
+siete letras con un único intercambio de letras contiguas. El resto del prefijo
+debe coincidir literalmente y abarcar al menos un tercio de la palabra de destino.
+No es una lista de correcciones específica de electrocardiograma. Conserva los
+guardas de números, muestra, modalidad, isotipo y demás calificadores; verifica
+además cada identidad contra el resolvedor existente. No crea aliases ni decide
+entre estudios distintos.
+
+Las entradas `eelctro orina`, `eelctro igm`, `eelctro 24` y `eelctro sin contraste`
+no devolvieron sugerencias ni selección. Elegir la primera electromiografía
+identifica ese estudio, pero devuelve cero ofertas: no se presenta como cobertura
+comercial ni se convierte en electrocardiograma. Los ejemplos anteriores no
+acreditan tolerancia a cualquier error o cobertura de cualquier palabra simple.
+
+Typecheck raíz y del paquete aislado correctos; empaquetado dry-run correcto,
+sin publicación ni escrituras de catálogo. Evidencia adicional en
+`search-flow-20261020/typo-navigation/observed.json`. El nuevo candidato API está
+en `api-release-typo/`; el anterior `api-release/` y sus recibos se conservan.
+Bundle nuevo SHA-256:
+`d7732d2a7045834b2e0bf61365f5cab5ee8f9e3990056079c25aede482fee50e`.
+La PWA preparada conserva el mismo build y fuentes; esta extensión cambia sólo API.
+
+Chrome móvil local390×844: `eelctro` → tocar Electrocardiograma en reposo →
+confirmar → **Elegiste este estudio**, con dos solicitudes de búsqueda y cero
+errores de página. Evidencia `typo-navigation/browser3/`. Los dos primeros
+observadores no localizaron el ActionChip mediante etiqueta semántica: la
+captura demuestra que estaba pintado; el tercero usó coordenadas revisadas en
+esa captura. Esto acredita interacción visual, no accesibilidad por lector de
+pantalla. Se conservan los tres intentos. `release-ready-typo-observed.json`
+reconfirma fuentes congeladas y el mismo mainJS/build de PWA, sin despliegue.
+
 ## Publicación concreta para aprobación
 
 Regla aplicable: [D-006 y cambios críticos](DECISIONS.md#cambios-críticos-y-aprobación),
@@ -78,8 +125,9 @@ incluida publicación externa. La petición de implementación y navegación mó
 permite preparar este resultado; la activación externa espera autorización concreta.
 
 1. **Cambio:** publicar selección explícita en API y navegación/selección en PWA.
-   La API aislada parte del paquete publicado, cambia sólo `searchResponse` y
-   conserva nueve módulos y toda su configuración. No publicar el checkpoint
+   La API aislada parte del paquete publicado, cambia `searchResponse` y la
+   puntuación de sugerencias `tokenScore`; conserva ocho módulos y toda su
+   configuración. El candidato vigente es `api-release-typo/`. No publicar el checkpoint
    completo del API local con cambios administrativos ajenos a esta tarea.
 2. **Justificación e impacto:** desbloquear consultas parciales y mostrar el
    resultado del toque en móvil. La confirmación añade una consulta de ofertas
@@ -103,5 +151,5 @@ permite preparar este resultado; la activación externa espera autorización con
 7. **Decisión requerida:** autorizar publicación de estos dos paquetes concretos.
    No se ha desplegado durante esta tarea.
 
-Archivos: `apps/api/src/app.ts`, `apps/patient/lib/main.dart`,
+Archivos: `apps/api/src/app.ts`, `apps/api/src/catalog_search_suggestions.ts`, `apps/patient/lib/main.dart`,
 `apps/patient/lib/src/api_client.dart` y `apps/patient/lib/src/models.dart`.

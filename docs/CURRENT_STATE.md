@@ -22,6 +22,11 @@ petición de flujo. Confirmar Biometría hemática desde `hematica` devuelve34of
 IDajeno/incorrecto409/400. Móvil390px: proveedor→sucursal→Atrás conserva selección,
 consulta yposición; Ruiz también observado sin nuevas llamadas. Escritorio1280px
 mantiene panel. Cero errores de página; typecheck/análisisDart ybuilddebug correctos.
+Palabras sencillas observadas: biometría seleccionable con34ofertas; orina/sangre
+con5/4opciones guiadas; electro/electrocardiograma con2/3modalidades. Corrección
+de prefijo con letras intercambiadas permite sugerencias para `eelctro`, sin
+elegir automáticamente ni perder calificadores. API aislada nueva empaquetada
+en `api-release-typo/`; paquetes anteriores conservados.
 Paquetes API/PWA preparados para revisión; **sin publicación**, espera aprobación
 concreta D-006. [Resultado, evidencia y publicación](SEARCH_SELECTION_MOBILE_20261020.md).
 

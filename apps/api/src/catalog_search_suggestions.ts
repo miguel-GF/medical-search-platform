@@ -136,6 +136,17 @@ function tokenScore(query: string, candidate: string): number {
     || LITERAL.has(candidate) || /\d/.test(query + candidate)) return 0;
   if (candidate.startsWith(query) && query.length / candidate.length >= .55) return 80;
   if (query.length < 7 || candidate.length < 7) return 0;
+  // A mistyped long prefix can still offer navigation choices (for example,
+  // adjacent letters swapped in an abbreviation). Require every other letter
+  // to match; the caller verifies canonical identity and supplied qualifiers.
+  // This never approves an alias or automatically selects a clinical variant.
+  if (candidate.length > query.length && query.length / candidate.length >= 1 / 3) {
+    const prefix = candidate.slice(0, query.length);
+    const first = [...query].findIndex((letter, index) => letter !== prefix[index]);
+    if (first >= 0 && first + 1 < query.length
+      && query[first] === prefix[first + 1] && query[first + 1] === prefix[first]
+      && query.slice(first + 2) === prefix.slice(first + 2)) return 50;
+  }
   const cap = Math.min(query.length, candidate.length) >= 12 ? 3 : 2;
   const edits = distance(query, candidate, cap);
   return edits <= cap && edits / Math.max(query.length, candidate.length) <= .24 ? 70 - edits * 8 : 0;
