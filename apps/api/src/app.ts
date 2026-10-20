@@ -268,9 +268,17 @@ async function searchResponse(request: Request, url: URL, rpc: RpcClient, env: E
   if (locationId && !isUuid(locationId)) {
     return json({ error: { code: 'invalid_location_id', message: 'location_id must be a UUID' } }, 400, origin);
   }
+  const selectedIdInput = url.searchParams.get('selected_service_id');
+  if (selectedIdInput !== null && !isUuid(selectedIdInput)) {
+    return json({ error: { code: 'invalid_selected_service_id', message: 'El estudio elegido no es válido. Vuelve a seleccionarlo.' } }, 400, origin);
+  }
+  const selectedId = selectedIdInput?.toLowerCase() ?? null;
   if (domain === 'health_diagnostics') {
     const guidance = await specimenSearchGuidance(query, rpc);
-    if (guidance) return json({ query, results: [], suggestions: [], guidance }, 200, origin);
+    if (guidance) {
+      if (selectedId) return json({ error: { code: 'selection_not_available', message: 'La búsqueda cambió. Elige una opción de los resultados actuales.' } }, 409, origin);
+      return json({ query, results: [], suggestions: [], guidance }, 200, origin);
+    }
   }
   const rows = await rpc.call<SearchRow[]>('api_search', {
     p_query: query,
@@ -291,6 +299,56 @@ async function searchResponse(request: Request, url: URL, rpc: RpcClient, env: E
   });
   await captureResolutionReview(resolution, rpc, domain, requestId, request, env);
   const publicResolution = isResolutionResponse(resolution) ? sanitizePublicResolution(resolution) : null;
+  if (selectedId) {
+    // A visitor may explicitly choose a displayed study. This is a request-local
+    // choice, never a learned alias or an automatic clinical equivalence. Check
+    // membership again against the current public candidates before retrieving
+    // the chosen study's normal branch/price-aware search rows.
+    const candidates = groupResolutionCandidates(publicResolution?.candidates ?? []);
+    let candidate: Record<string, unknown> | undefined = candidates.find((entry) => entry.service.id === selectedId)?.service;
+    if (!candidate && (!publicResolution || publicResolution.status === 'resolved')) {
+      candidate = grouped.find((entry) => entry.service.id === selectedId)?.service;
+    }
+    if (!candidate && candidates.length === 0 && canShowSuggestions) {
+      const suggestions = await searchSpellingSuggestions(rpc, query, requestId, env);
+      const suggestion = suggestions.find((entry) => entry.item_id === selectedId);
+      if (suggestion) candidate = {
+        id: suggestion.item_id,
+        display_name: suggestion.display_name,
+        matched_term: suggestion.display_name,
+        term_source: 'suggestion',
+        confidence: 0,
+        resolution_status: 'ambiguous',
+      };
+    }
+    const selectedName = candidate ? safePublicText(candidate.display_name, 200) : null;
+    if (!candidate || !selectedName) {
+      return json({ error: { code: 'selection_not_available', message: 'Esta opción ya no aparece en la búsqueda. Revisa los resultados y vuelve a elegir.' } }, 409, origin);
+    }
+    const chosenRows = await rpc.call<SearchRow[]>('api_search', {
+      p_query: selectedName,
+      p_domain_code: domain,
+      p_latitude: latitude,
+      p_longitude: longitude,
+      p_location_id: locationId,
+      p_limit: limit,
+    });
+    const chosen = groupSearchRows(chosenRows ?? [])
+      .find((entry) => entry.service.id === selectedId);
+    const results = await addServiceSummaries([{
+      service: {
+        ...candidate,
+        id: selectedId,
+        display_name: selectedName,
+        resolution_status: 'resolved',
+        selection_method: 'user_confirmed',
+      },
+      // Use the existing effective-price and concrete-location RPC contract;
+      // no offers from a different candidate can enter a confirmed selection.
+      offers: chosen?.offers ?? [],
+    }], rpc, requestId);
+    return json({ query, results, suggestions: [], ...(notice ? { notice } : {}) }, 200, origin);
+  }
   if (publicResolution && publicResolution.status !== 'resolved') {
     const results = await addServiceSummaries(groupResolutionCandidates(publicResolution.candidates ?? []), rpc, requestId);
     return json({ query, results, suggestions: results.length || !canShowSuggestions ? [] : await searchSpellingSuggestions(rpc, query, requestId, env),

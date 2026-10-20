@@ -129,6 +129,7 @@ class SearchService {
     required this.confidence,
     required this.offers,
     this.resolutionStatus,
+    this.selectionMethod,
     this.description,
     this.descriptionSourceUrl,
   });
@@ -138,6 +139,7 @@ class SearchService {
   final double confidence;
   final List<SearchOffer> offers;
   final String? resolutionStatus;
+  final String? selectionMethod;
   final String? description;
   final String? descriptionSourceUrl;
 
@@ -153,6 +155,7 @@ class SearchService {
       confidence: _doubleValue(service['confidence']) ?? 0,
       offers: offers,
       resolutionStatus: _stringValue(service['resolution_status']),
+      selectionMethod: _stringValue(service['selection_method']),
       description: _stringValue(service['description']),
       descriptionSourceUrl: _stringValue(service['description_source_url']),
     );

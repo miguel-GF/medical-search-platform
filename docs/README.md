@@ -12,6 +12,7 @@ La conversación original no es lectura obligatoria para incorporarse.
 | [Guías de trabajo](WORK_GUIDE.md) | Procedimientos por tipo de cambio y traspaso. |
 | [Operación](OPERATIONS_GUIDE.md) | Directorios, comandos, comprobaciones y alcance de resultados. |
 | [Estado y prioridades](CURRENT_STATE.md) | Capacidades y pendientes con evidencia fechada. |
+| [Selección y navegación móvil, 20-oct](SEARCH_SELECTION_MOBILE_20261020.md) | Confirmación explícita de candidato y pantallas móviles; preparado localmente, publicación pendiente. |
 | [Anti-Chagas y proveedores pequeños, revisión 65](CATALOG_REVIEW_65_20261020.md) | Ocho registros incorporados, inventario completo y sitio Pasteur preparado sin nuevas ofertas. |
 | [Calcio ionizado y PlGF, revisión 64](CATALOG_REVIEW_64_20261020.md) | Dos identificaciones incorporadas, alcance observado y retenciones de muestra/composición. |
 | [Puebla, vínculo de identidad 34](PUEBLA_IDENTITY_LINK_34_20261019.md) | Tehuacán enlazado sin duplicar sede, snapshot íntegro y discrepancia Municipio Libre. |

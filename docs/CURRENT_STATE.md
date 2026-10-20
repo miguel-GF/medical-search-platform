@@ -17,6 +17,14 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Selección y navegación móvil, 20-oct:** implementadas localmente para la
+petición de flujo. Confirmar Biometría hemática desde `hematica` devuelve34ofertas;
+IDajeno/incorrecto409/400. Móvil390px: proveedor→sucursal→Atrás conserva selección,
+consulta yposición; Ruiz también observado sin nuevas llamadas. Escritorio1280px
+mantiene panel. Cero errores de página; typecheck/análisisDart ybuilddebug correctos.
+Paquetes API/PWA preparados para revisión; **sin publicación**, espera aprobación
+concreta D-006. [Resultado, evidencia y publicación](SEARCH_SELECTION_MOBILE_20261020.md).
+
 **Revisión 65, 20-oct 13:10:49 UTC:** ocho anti-Chagas totales SD resueltos,
 un concepto y un alias de proveedor; sin expandir total a IgG/IgM o panel.
 24 payloads y etiquetas intactos, 16 FTA-ABS aún retenidos por método.

@@ -544,7 +544,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-  Future<void> _search() async {
+  Future<void> _search({String? selectedServiceId}) async {
     final revision = ++_searchRevision;
     final query = _query.text.trim();
     if (query.length < 2) {
@@ -561,8 +561,25 @@ class _HomeScreenState extends State<HomeScreen> {
       _response = null;
     });
     try {
-      final response = await widget.api.search(query);
+      final response = await widget.api.search(
+        query,
+        selectedServiceId: selectedServiceId,
+      );
       if (!_isCurrentSearch(revision)) return;
+      if (selectedServiceId != null &&
+          (response.services.isEmpty ||
+              response.services.any(
+                (service) =>
+                    service.id != selectedServiceId ||
+                    service.resolutionStatus != 'resolved' ||
+                    service.selectionMethod != 'user_confirmed',
+              ))) {
+        throw const PatientApiException(
+          409,
+          'selection_not_confirmed',
+          'No pudimos consultar el estudio seleccionado. Vuelve a buscar y confirma la opción que coincide con tu orden.',
+        );
+      }
       setState(() => _response = response);
       await widget.api.recordEvent(
         'search_completed',
@@ -595,7 +612,37 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _loading = false;
       _error = null;
+      _response = null;
     });
+  }
+
+  Future<void> _selectStudy(SearchSuggestion candidate) async {
+    if (_loading || _response == null) return;
+    final revision = _searchRevision;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Confirma el estudio de tu orden'),
+        content: Text(
+          'Buscaste: ${_response!.query}.\n\n'
+          'Seleccionaste: ${candidate.displayName}.\n\n'
+          'Comprueba que el nombre y sus detalles coincidan con tu orden. '
+          'Consultar sus opciones no confirma otros estudios ni la cobertura de tu receta completa.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Volver'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Confirmar y consultar opciones'),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true || !_isCurrentSearch(revision)) return;
+    await _search(selectedServiceId: candidate.itemId);
   }
 
   @override
@@ -630,6 +677,7 @@ class _HomeScreenState extends State<HomeScreen> {
           api: widget.api,
           preferences: widget.preferences,
           onSearch: _searchStudy,
+          onSelect: _selectStudy,
         ),
         if (widget.showFeedbackInvite)
           SliverToBoxAdapter(
@@ -739,8 +787,27 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           const SizedBox(height: 14),
         ],
+        if (_response!.services.any(
+          (service) => service.selectionMethod == 'user_confirmed',
+        )) ...[
+          _InfoCard(
+            icon: Icons.check_circle_outline,
+            title: 'Elegiste este estudio',
+            text:
+                '${_response!.services.first.displayName}. Las opciones corresponden sólo a tu selección; no confirman otros estudios ni la cobertura de tu receta completa.',
+          ),
+          const SizedBox(height: 14),
+        ],
         if (_response!.guidance == null)
-          _ResultHeader(query: _response!.query, services: _response!.services),
+          _ResultHeader(
+            query:
+                _response!.services.any(
+                  (service) => service.selectionMethod == 'user_confirmed',
+                )
+                ? _response!.services.first.displayName
+                : _response!.query,
+            services: _response!.services,
+          ),
         const SizedBox(height: 14),
         if (_response!.guidance != null)
           _SpecimenSearchGuidanceCard(
@@ -770,10 +837,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   .map(
                     (suggestion) => ActionChip(
                       label: Text(suggestion.displayName),
-                      onPressed: () {
-                        _query.text = suggestion.displayName;
-                        _search();
-                      },
+                      onPressed: () => _selectStudy(suggestion),
                     ),
                   )
                   .toList(growable: false),
@@ -789,6 +853,7 @@ class _HomeScreenState extends State<HomeScreen> {
             api: widget.api,
             preferences: widget.preferences,
             onSearch: _searchStudy,
+            onSelect: _selectStudy,
           ),
         if (includeFeedback && widget.showFeedbackInvite) ...[
           const SizedBox(height: 16),
@@ -1588,12 +1653,14 @@ class SearchResultsExplorer extends StatefulWidget {
     this.api,
     this.preferences,
     this.onSearch,
+    this.onSelect,
   });
   final List<SearchService> services;
   final String currentQuery;
   final PatientApiClient? api;
   final PatientPreferences? preferences;
   final ValueChanged<String>? onSearch;
+  final ValueChanged<SearchSuggestion>? onSelect;
 
   @override
   State<SearchResultsExplorer> createState() => _SearchResultsExplorerState();
@@ -1615,11 +1682,17 @@ class _SearchResultsExplorerState extends State<SearchResultsExplorer> {
     final unmatched = widget.services
         .where(
           (service) =>
-              service.offers.isEmpty && service.resolutionStatus != 'ambiguous',
+              service.offers.isEmpty &&
+              service.resolutionStatus != 'ambiguous' &&
+              service.resolutionStatus != 'no_match',
         )
         .toList(growable: false);
     final ambiguous = widget.services
-        .where((service) => service.resolutionStatus == 'ambiguous')
+        .where(
+          (service) =>
+              service.resolutionStatus == 'ambiguous' ||
+              service.resolutionStatus == 'no_match',
+        )
         .length;
 
     return Column(
@@ -1629,13 +1702,18 @@ class _SearchResultsExplorerState extends State<SearchResultsExplorer> {
           serviceCount: widget.services.length,
           providerCount: groups.length,
           ambiguousCount: ambiguous,
+          selectedByUser: widget.services.any(
+            (service) => service.selectionMethod == 'user_confirmed',
+          ),
         ),
-        if (ambiguous > 0 && widget.onSearch != null) ...[
+        if (ambiguous > 0 &&
+            (widget.onSelect != null || widget.onSearch != null)) ...[
           const SizedBox(height: 14),
           _StudyChoices(
             services: widget.services,
-            currentQuery: widget.currentQuery,
-            onSearch: widget.onSearch!,
+            onSelect:
+                widget.onSelect ??
+                (candidate) => widget.onSearch!(candidate.displayName),
           ),
         ],
         if (widget.services.isNotEmpty) ...[
@@ -1657,17 +1735,23 @@ class _SearchResultsExplorerState extends State<SearchResultsExplorer> {
                     _ProviderPicker(
                       groups: groups,
                       selectedKey: selectedKey,
-                      onSelected: _selectProvider,
+                      onSelected: (key) {
+                        final group = groups.firstWhere(
+                          (group) => group.key == key,
+                        );
+                        _selectProvider(key);
+                        Navigator.of(context).push<void>(
+                          MaterialPageRoute(
+                            builder: (_) => _ProviderMatchesScreen(
+                              group: group,
+                              studyNumbers: studyNumbers,
+                              api: widget.api,
+                              preferences: widget.preferences,
+                            ),
+                          ),
+                        );
+                      },
                     ),
-                    if (selected != null) ...[
-                      const SizedBox(height: 12),
-                      _ProviderDetails(
-                        group: selected,
-                        studyNumbers: studyNumbers,
-                        api: widget.api,
-                        preferences: widget.preferences,
-                      ),
-                    ],
                   ],
                 );
               }
@@ -1724,6 +1808,7 @@ class SearchResultsSliverExplorer extends StatefulWidget {
     this.api,
     this.preferences,
     this.onSearch,
+    this.onSelect,
   });
 
   final List<SearchService> services;
@@ -1731,6 +1816,7 @@ class SearchResultsSliverExplorer extends StatefulWidget {
   final PatientApiClient? api;
   final PatientPreferences? preferences;
   final ValueChanged<String>? onSearch;
+  final ValueChanged<SearchSuggestion>? onSelect;
 
   @override
   State<SearchResultsSliverExplorer> createState() =>
@@ -1754,11 +1840,17 @@ class _SearchResultsSliverExplorerState
     final unmatched = widget.services
         .where(
           (service) =>
-              service.offers.isEmpty && service.resolutionStatus != 'ambiguous',
+              service.offers.isEmpty &&
+              service.resolutionStatus != 'ambiguous' &&
+              service.resolutionStatus != 'no_match',
         )
         .toList(growable: false);
     final ambiguous = widget.services
-        .where((service) => service.resolutionStatus == 'ambiguous')
+        .where(
+          (service) =>
+              service.resolutionStatus == 'ambiguous' ||
+              service.resolutionStatus == 'no_match',
+        )
         .length;
     final viewportHeight = MediaQuery.sizeOf(context).height;
     final desiredPickerHeight = 62.0 + groups.length * 82.0;
@@ -1778,13 +1870,18 @@ class _SearchResultsSliverExplorerState
                   serviceCount: widget.services.length,
                   providerCount: groups.length,
                   ambiguousCount: ambiguous,
+                  selectedByUser: widget.services.any(
+                    (service) => service.selectionMethod == 'user_confirmed',
+                  ),
                 ),
-                if (ambiguous > 0 && widget.onSearch != null) ...[
+                if (ambiguous > 0 &&
+                    (widget.onSelect != null || widget.onSearch != null)) ...[
                   const SizedBox(height: 14),
                   _StudyChoices(
                     services: widget.services,
-                    currentQuery: widget.currentQuery,
-                    onSearch: widget.onSearch!,
+                    onSelect:
+                        widget.onSelect ??
+                        (candidate) => widget.onSearch!(candidate.displayName),
                   ),
                 ],
                 const SizedBox(height: 14),
@@ -1890,15 +1987,21 @@ class _SearchInterpretation extends StatelessWidget {
     required this.serviceCount,
     required this.providerCount,
     required this.ambiguousCount,
+    this.selectedByUser = false,
   });
 
   final int serviceCount;
   final int providerCount;
   final int ambiguousCount;
+  final bool selectedByUser;
 
   @override
   Widget build(BuildContext context) {
-    final text = ambiguousCount > 0
+    final text = selectedByUser
+        ? providerCount == 0
+              ? 'Para el estudio que elegiste no hay una oferta vigente para mostrar.'
+              : 'Para el estudio que elegiste encontramos $providerCount proveedor${providerCount == 1 ? '' : 'es'}. Selecciona una empresa para consultar todas sus coincidencias.'
+        : ambiguousCount > 0
         ? ambiguousCount == 1
               ? 'Encontramos una opción que necesita confirmación. Elige el nombre completo de tu orden para consultar sus opciones.'
               : 'Encontramos $ambiguousCount opciones que necesitan confirmación. Elige el nombre completo de tu orden para consultar sus opciones.'
@@ -1990,6 +2093,10 @@ class _ProviderServiceOffer {
 List<_ProviderGroup> _providerGroups(List<SearchService> services) {
   final groups = <String, _ProviderGroup>{};
   for (final service in services) {
+    if (service.resolutionStatus == 'ambiguous' ||
+        service.resolutionStatus == 'no_match') {
+      continue;
+    }
     for (final offer in service.offers) {
       final providerKey =
           offer.providerId ?? offer.providerName.trim().toLowerCase();
@@ -2081,18 +2188,90 @@ class _ProviderPicker extends StatelessWidget {
   }
 }
 
+/// A separate mobile route keeps the original search and scroll state mounted.
+/// It displays the existing grouped offers without another query or price merge.
+class _ProviderMatchesScreen extends StatelessWidget {
+  const _ProviderMatchesScreen({
+    required this.group,
+    required this.studyNumbers,
+    required this.api,
+    required this.preferences,
+    this.branch,
+  });
+
+  final _ProviderGroup group;
+  final _BranchGroup? branch;
+  final Map<String, int> studyNumbers;
+  final PatientApiClient? api;
+  final PatientPreferences? preferences;
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    appBar: AppBar(title: Text(branch?.name ?? group.name)),
+    body: SafeArea(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(18),
+        child: branch == null
+            ? _ProviderDetails(
+                group: group,
+                studyNumbers: studyNumbers,
+                api: api,
+                preferences: preferences,
+                onBranchSelected: (selectedBranch) {
+                  Navigator.of(context).push<void>(
+                    MaterialPageRoute(
+                      builder: (_) => _ProviderMatchesScreen(
+                        group: group,
+                        branch: selectedBranch,
+                        studyNumbers: studyNumbers,
+                        api: api,
+                        preferences: preferences,
+                      ),
+                    ),
+                  );
+                },
+              )
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    group.name,
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    branch!.isUnscoped
+                        ? 'Coincidencias publicadas para la red del proveedor. La sucursal y la disponibilidad requieren confirmación.'
+                        : 'Coincidencias publicadas para esta sucursal. Consulta las condiciones de cada estudio; una oferta de red no confirma disponibilidad en otra sede.',
+                  ),
+                  const SizedBox(height: 12),
+                  _BranchCard(
+                    branch: branch!,
+                    studyNumbers: studyNumbers,
+                    api: api,
+                    preferences: preferences,
+                  ),
+                ],
+              ),
+      ),
+    ),
+  );
+}
+
 class _ProviderDetails extends StatelessWidget {
   const _ProviderDetails({
     required this.group,
     required this.studyNumbers,
     required this.api,
     required this.preferences,
+    this.onBranchSelected,
   });
 
   final _ProviderGroup group;
   final Map<String, int> studyNumbers;
   final PatientApiClient? api;
   final PatientPreferences? preferences;
+  final ValueChanged<_BranchGroup>? onBranchSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -2152,6 +2331,9 @@ class _ProviderDetails extends StatelessWidget {
             studyNumbers: studyNumbers,
             api: api,
             preferences: preferences,
+            onSelected: onBranchSelected == null
+                ? null
+                : () => onBranchSelected!(branch),
           ),
         ),
       ],
@@ -2165,12 +2347,14 @@ class _BranchCard extends StatelessWidget {
     required this.studyNumbers,
     required this.api,
     required this.preferences,
+    this.onSelected,
   });
 
   final _BranchGroup branch;
   final Map<String, int> studyNumbers;
   final PatientApiClient? api;
   final PatientPreferences? preferences;
+  final VoidCallback? onSelected;
 
   @override
   Widget build(BuildContext context) => Card(
@@ -2182,6 +2366,10 @@ class _BranchCard extends StatelessWidget {
         children: [
           ListTile(
             contentPadding: EdgeInsets.zero,
+            onTap: onSelected,
+            trailing: onSelected == null
+                ? null
+                : const Icon(Icons.chevron_right),
             leading: const Icon(Icons.location_on_outlined),
             title: Text(branch.name),
             subtitle: Text(
@@ -2341,25 +2529,17 @@ class _ServiceDescription extends StatelessWidget {
 }
 
 class _StudyChoices extends StatelessWidget {
-  const _StudyChoices({
-    required this.services,
-    required this.currentQuery,
-    required this.onSearch,
-  });
+  const _StudyChoices({required this.services, required this.onSelect});
 
   final List<SearchService> services;
-  final String currentQuery;
-  final ValueChanged<String> onSearch;
-
-  bool _isCurrentName(String name) =>
-      name.trim().toLowerCase().replaceAll(RegExp(r'\s+'), ' ') ==
-      currentQuery.trim().toLowerCase().replaceAll(RegExp(r'\s+'), ' ');
+  final ValueChanged<SearchSuggestion> onSelect;
 
   @override
   Widget build(BuildContext context) {
     final candidates = <String, SearchService>{};
     for (final service in services) {
-      if (service.resolutionStatus == 'ambiguous') {
+      if (service.resolutionStatus == 'ambiguous' ||
+          service.resolutionStatus == 'no_match') {
         candidates.putIfAbsent(service.id, () => service);
       }
     }
@@ -2377,7 +2557,7 @@ class _StudyChoices extends StatelessWidget {
             ),
             const SizedBox(height: 6),
             const Text(
-              'Estas son opciones posibles. Busca la que coincida con tu orden para revisar sus detalles y la oferta disponible. Si no coincide ninguna, escribe el nombre completo.',
+              'Estas son opciones posibles. Selecciona y confirma la que coincida con tu orden para consultar sus opciones. Si no coincide ninguna, escribe el nombre completo.',
             ),
             for (final service in candidates.values) ...[
               const SizedBox(height: 14),
@@ -2386,20 +2566,20 @@ class _StudyChoices extends StatelessWidget {
                 style: const TextStyle(fontWeight: FontWeight.w700),
               ),
               const SizedBox(height: 6),
-              if (_isCurrentName(service.displayName))
-                const Text(
-                  'Revisa las variantes de tu orden. Si falta algún detalle, consulta con quien la emitió para precisar el estudio.',
-                )
-              else
-                _ResponsiveActions(
-                  children: [
-                    OutlinedButton.icon(
-                      onPressed: () => onSearch(service.displayName),
-                      icon: const Icon(Icons.search),
-                      label: const Text('Buscar este estudio'),
+              _ResponsiveActions(
+                children: [
+                  OutlinedButton.icon(
+                    onPressed: () => onSelect(
+                      SearchSuggestion(
+                        itemId: service.id,
+                        displayName: service.displayName,
+                      ),
                     ),
-                  ],
-                ),
+                    icon: const Icon(Icons.check_circle_outline),
+                    label: const Text('Seleccionar este estudio'),
+                  ),
+                ],
+              ),
             ],
           ],
         ),
@@ -2469,6 +2649,7 @@ class _ServiceSummaries extends StatelessWidget {
 }
 
 String _serviceMatchStatus(SearchService service) {
+  if (service.selectionMethod == 'user_confirmed') return 'Elegido por ti';
   if (service.resolutionStatus == 'ambiguous') return 'ambiguous';
   if (service.confidence >= .995) return 'exact';
   return '${(service.confidence * 100).toStringAsFixed(0)}% match';
@@ -4013,7 +4194,12 @@ class _ResultHeader extends StatelessWidget {
     final ambiguous = services.any(
       (service) => service.resolutionStatus == 'ambiguous',
     );
-    final countLabel = count == 0
+    final chosen = services.any(
+      (service) => service.selectionMethod == 'user_confirmed',
+    );
+    final countLabel = chosen
+        ? 'Elegido por ti'
+        : count == 0
         ? 'Sin coincidencias'
         : ambiguous
         ? '$count posible${count == 1 ? '' : 's'} coincidencia${count == 1 ? '' : 's'}'

@@ -92,6 +92,7 @@ class PatientApiClient {
     double? latitude,
     double? longitude,
     String domain = 'health_diagnostics',
+    String? selectedServiceId,
   }) async {
     final params = <String, String>{
       'q': query.trim(),
@@ -100,6 +101,7 @@ class PatientApiClient {
       // Older clients cannot explain related individual tests as distinct from
       // an unverified profile. Request that context only when we can show it.
       'notice_supported': '1',
+      'selected_service_id': ?selectedServiceId,
     };
     if (latitude != null && longitude != null) {
       params['lat'] = '$latitude';
