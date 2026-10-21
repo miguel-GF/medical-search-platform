@@ -12,6 +12,7 @@ La conversación original no es lectura obligatoria para incorporarse.
 | [Guías de trabajo](WORK_GUIDE.md) | Procedimientos por tipo de cambio y traspaso. |
 | [Operación](OPERATIONS_GUIDE.md) | Directorios, comandos, comprobaciones y alcance de resultados. |
 | [Estado y prioridades](CURRENT_STATE.md) | Capacidades y pendientes con evidencia fechada. |
+| [Cinco identidades40,21-oct](PUEBLA_IDENTITIES_40_20261021.md) | Coapan, Jesús Nazareno, dos consultorios escolares y Best; SEMIN excluido por vínculo previo. |
 | [Bence Jones y ocho identidades,21-oct](PUEBLA_REVIEW_73_AND_IDENTITIES_39_20261021.md) | Ocho registros resueltos, ocho establecimientos y evaluación del motor preparada sin ejecutar. |
 | [Propuesta de evaluación con rollback,21-oct](proposals/20261021-requirements-rollback-evaluation.md) | Diff acotado, guards y recuperación; aprobación específica D-006 pendiente. |
 | [MuSK/T3 y cinco identidades,21-oct](PUEBLA_REVIEW_72_AND_IDENTITIES_38_20261021.md) | Dos órdenes incorporadas, cinco establecimientos y observación local del fallo INR/x2. |

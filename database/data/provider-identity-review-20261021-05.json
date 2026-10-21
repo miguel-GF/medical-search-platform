@@ -1,0 +1,86 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261021:05",
+  "research_date": "2026-10-21",
+  "reviewed_by": "Codex; revisión individual documentada, pendiente aplicación por coordinador",
+  "authorization": "D-021/D-022: identidades candidatas con evidencia licenciada, sin ofertas ni verificación comercial.",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "Identidad40: cinco establecimientos independientes; nombres íntegros y discrepancias conservados. Escuela no acredita servicio, Best no fusiona farmacia, Coapan/Cuapan no es regla global. Excluir SEMIN6377846 ya vinculado.",
+  "providers": [
+    {
+      "provider_key": "denue_clues_candidate_3446950",
+      "name": "CENTRO DE SALUD RURAL DE SAN FRANCISCO COAPAN",
+      "slug": "centro-de-salud-rural-de-san-francisco-coapan-3446950",
+      "website_url": null,
+      "website_uncertainty": "Sitio propio del establecimiento médico no acreditado; referencias CLUES o escolares no se atribuyen como website de esta identidad.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621112"
+      ],
+      "denue_record_ids": [
+        "3446950"
+      ],
+      "identity_note": "Identidad candidata revisada individualmente21-oct-2026, D-021/D-022. DENUE3446950, INEGI20-may-2026/captura9-oct; CLUESPLIMB002236, hojaCLUES_202608 fila42330, XLSXSHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. NombreDENUE íntegro:CENTRO DE SALUD RURAL DE SAN FRANCISCO COAPAN; nombreCLUES íntegro:CENTRO DE SALUD SAN FRANCISCO CUAPAN. DENUE conserva COAPAN y CLUES CUAPAN, con asentamiento de referencia COAPA. Revisión individual apoyada en códigos localidad0007/municipio140 y Matamoros2/72760 íntegros; no regla de equivalencia COAPAN/CUAPAN/COAPA ni corrección del RAW. No asignar operador por prefijoPLIMB. Municipio140, localidad0007, CP72760, tipo de vía, vialidad y exterior2 completos concordantes; letras e interiores vacíos. AsentamientoDENUE:LOCALIDAD SAN FRANCISCO COAPAN; CLUES:PUEBLO SAN FRANCISCO COAPA; diferencias conservadas sin homologar. SCIAN621112/tipooffice conservados. Revisión individual de denominación específica y domicilio numerado, no regla automática fuzzy, de corrección nominal o de unión por dirección. No inferir propietario, operador, red, personalidad jurídica, sucesión o acceso. CLUES EN OPERACION refleja sólo agosto2026, no operación actual. Sólo campos licenciadosDENUE; CLUES referencia de investigación, sin política de ingesta nueva. Sitio propio del establecimiento médico no acreditado; referencias CLUES o escolares no se atribuyen como website de esta identidad. Marca verification_pending y sede pending. Sin estudios, precios, horarios, disponibilidad, ofertas o cobertura comercial aprobados."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3305491",
+      "name": "CENTRO DE SALUDE JESUS DE NAZARENO",
+      "slug": "centro-de-salude-jesus-de-nazareno-3305491",
+      "website_url": null,
+      "website_uncertainty": "Sitio propio del establecimiento médico no acreditado; referencias CLUES o escolares no se atribuyen como website de esta identidad.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621112"
+      ],
+      "denue_record_ids": [
+        "3305491"
+      ],
+      "identity_note": "Identidad candidata revisada individualmente21-oct-2026, D-021/D-022. DENUE3305491, INEGI20-may-2026/captura9-oct; CLUESPLIMB006931, hojaCLUES_202608 fila42800, XLSXSHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. NombreDENUE íntegro:CENTRO DE SALUDE JESUS DE NAZARENO; nombreCLUES íntegro:CENTRO DE SALUD JESÚS NAZARENO. Conservar SALUDE JESUS DE NAZARENO sin corregir ni generar alias. CLUES conserva CENTRO DE SALUD JESÚS NAZARENO. ClínicaNazareno existente c47de620-e56e-531c-ad1f-50c8011b8c70 tiene DENUE3305651/3Norte86/Juquila; nombre y domicilio distintos, no fusionar. Municipio110, localidad0011, CP75505, tipo de vía, vialidad y exterior42 completos concordantes; letras e interiores vacíos. AsentamientoDENUE:COLONIA CENTRO; CLUES:PUEBLO JESÚS NAZARENO; diferencias conservadas sin homologar. SCIAN621112/tipooffice conservados. Revisión individual de denominación específica y domicilio numerado, no regla automática fuzzy, de corrección nominal o de unión por dirección. No inferir propietario, operador, red, personalidad jurídica, sucesión o acceso. CLUES EN OPERACION refleja sólo agosto2026, no operación actual. Sólo campos licenciadosDENUE; CLUES referencia de investigación, sin política de ingesta nueva. Sitio propio del establecimiento médico no acreditado; referencias CLUES o escolares no se atribuyen como website de esta identidad. Marca verification_pending y sede pending. Sin estudios, precios, horarios, disponibilidad, ofertas o cobertura comercial aprobados."
+    },
+    {
+      "provider_key": "denue_clues_candidate_10142978",
+      "name": "CONSULTORIO BINE MEDICO FAMILIAR ISSSTEP",
+      "slug": "consultorio-bine-medico-familiar-issstep-10142978",
+      "website_url": null,
+      "website_uncertainty": "Sitio propio del establecimiento médico no acreditado; referencias CLUES o escolares no se atribuyen como website de esta identidad.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621112"
+      ],
+      "denue_record_ids": [
+        "10142978"
+      ],
+      "identity_note": "Identidad candidata revisada individualmente21-oct-2026, D-021/D-022. DENUE10142978, INEGI20-may-2026/captura9-oct; CLUESPLSME000365, hojaCLUES_202608 fila43723, XLSXSHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. NombreDENUE íntegro:CONSULTORIO BINE MEDICO FAMILIAR ISSSTEP; nombreCLUES íntegro:CONSULTORIO MÉDICO EN EL BENEMÉRITO INSTITUTO NORMAL DEL ESTADO \"GENERAL JUAN CRISÓSTOMO BONILLA\". BINE se desarrolla en la página institucional bine.mx/nosotros leída por webtool21-oct12:30UTC; nombre de escuela y HermanosSerdán203/72140 concordantes. HTTP directo12:31UTC403 guardado separado, no presentado como200. Escuela no equivale a servicio médico ni website del consultorio; no se aprueba afiliación administrativa actual a ISSSTEP. Matches por bine dentro de gabinete son falsos positivos léxicos, no colisiones institucionales. Municipio114, localidad0001, CP72140, tipo de vía, vialidad y exterior203 completos concordantes; letras e interiores vacíos. AsentamientoDENUE:COLONIA AQUILES SERDAN; CLUES:COLONIA AQUILES SERDÁN; diferencias conservadas sin homologar. SCIAN621112/tipooffice conservados. Revisión individual de denominación específica y domicilio numerado, no regla automática fuzzy, de corrección nominal o de unión por dirección. No inferir propietario, operador, red, personalidad jurídica, sucesión o acceso. CLUES EN OPERACION refleja sólo agosto2026, no operación actual. Sólo campos licenciadosDENUE; CLUES referencia de investigación, sin política de ingesta nueva. Sitio propio del establecimiento médico no acreditado; referencias CLUES o escolares no se atribuyen como website de esta identidad. Marca verification_pending y sede pending. Sin estudios, precios, horarios, disponibilidad, ofertas o cobertura comercial aprobados."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3341943",
+      "name": "CONSULTORIO MEDICO TURNO MATUTINI PROFESOR GREGORIO DE GANTE",
+      "slug": "consultorio-medico-turno-matutini-profesor-gregorio-de-gante-3341943",
+      "website_url": null,
+      "website_uncertainty": "Sitio propio del establecimiento médico no acreditado; referencias CLUES o escolares no se atribuyen como website de esta identidad.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621112"
+      ],
+      "denue_record_ids": [
+        "3341943"
+      ],
+      "identity_note": "Identidad candidata revisada individualmente21-oct-2026, D-021/D-022. DENUE3341943, INEGI20-may-2026/captura9-oct; CLUESPLSME000423, hojaCLUES_202608 fila43729, XLSXSHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. NombreDENUE íntegro:CONSULTORIO MEDICO TURNO MATUTINI PROFESOR GREGORIO DE GANTE; nombreCLUES íntegro:CONSULTORIO MÉDICO CENTRO ESCOLAR  PROF. GREGORIO DE GANTE. Conservar MATUTINI literal sin derivar horario. Asentamiento DENUE JUNTA AUXILIAR IZTATLAN TENEXTLATILOYAN discrepa de SAN JERÓNIMO CALERAS en CLUES; no corregir ni afirmar equivalencia. EncarteIEEP2022 páginas186–187 leído por webtool21-oct12:32UTC corrobora centro escolar GregorioDeGante/CaminoRealATlaxcala11/72100/Puebla históricamente, no operación médica actual. Escuela no equivale a operador o servicio médico. Municipio114, localidad0001, CP72100, tipo de vía, vialidad y exterior11 completos concordantes; letras e interiores vacíos. AsentamientoDENUE:COLONIA JUNTA AUXILIAR IZTATLAN TENEXTLATILOYAN; CLUES:COLONIA SAN JERÓNIMO CALERAS; diferencias conservadas sin homologar. SCIAN621112/tipooffice conservados. Revisión individual de denominación específica y domicilio numerado, no regla automática fuzzy, de corrección nominal o de unión por dirección. No inferir propietario, operador, red, personalidad jurídica, sucesión o acceso. CLUES EN OPERACION refleja sólo agosto2026, no operación actual. Sólo campos licenciadosDENUE; CLUES referencia de investigación, sin política de ingesta nueva. Sitio propio del establecimiento médico no acreditado; referencias CLUES o escolares no se atribuyen como website de esta identidad. Marca verification_pending y sede pending. Sin estudios, precios, horarios, disponibilidad, ofertas o cobertura comercial aprobados."
+    },
+    {
+      "provider_key": "denue_clues_candidate_11734409",
+      "name": "FUNDACION BEST",
+      "slug": "fundacion-best-11734409",
+      "website_url": null,
+      "website_uncertainty": "Sitio propio del establecimiento médico no acreditado; referencias CLUES o escolares no se atribuyen como website de esta identidad.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621111"
+      ],
+      "denue_record_ids": [
+        "11734409"
+      ],
+      "identity_note": "Identidad candidata revisada individualmente21-oct-2026, D-021/D-022. DENUE11734409, INEGI20-may-2026/captura9-oct; CLUESPLSMP008443, hojaCLUES_202608 fila44608, XLSXSHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. NombreDENUE íntegro:FUNDACION BEST; nombreCLUES íntegro:FUNDACION BEST A.C.. DENUE FUNDACION BEST y CLUES FUNDACION BEST A.C. conservados íntegros. Se revisa este establecimiento de BoulevardNorte1831/72090 sin afirmar personalidad jurídica, pertenencia actual o red. DENUE12276702 FARMACIAS SIMILARES comparte dirección/CLUES pero es nombre distinto y no se incorpora, fusiona ni atribuye a este consultorio. Municipio114, localidad0001, CP72090, tipo de vía, vialidad y exterior1831 completos concordantes; letras e interiores vacíos. AsentamientoDENUE:COLONIA VILLA SAN ALEJANDRO; CLUES:COLONIA VILLA SAN ALEJANDRO; diferencias conservadas sin homologar. SCIAN621111/tipooffice conservados. Revisión individual de denominación específica y domicilio numerado, no regla automática fuzzy, de corrección nominal o de unión por dirección. No inferir propietario, operador, red, personalidad jurídica, sucesión o acceso. CLUES EN OPERACION refleja sólo agosto2026, no operación actual. Sólo campos licenciadosDENUE; CLUES referencia de investigación, sin política de ingesta nueva. Sitio propio del establecimiento médico no acreditado; referencias CLUES o escolares no se atribuyen como website de esta identidad. Marca verification_pending y sede pending. Sin estudios, precios, horarios, disponibilidad, ofertas o cobertura comercial aprobados."
+    }
+  ]
+}

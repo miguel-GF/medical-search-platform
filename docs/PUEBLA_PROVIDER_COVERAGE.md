@@ -3,6 +3,13 @@
 > Informe de cobertura con snapshots fechados; sus cantidades y cadencias recomendadas no demuestran estado actual ni jobs activos.
 > Entrada: [índice vigente](README.md). Estado: [CURRENT_STATE](CURRENT_STATE.md).
 
+## Actualización — 21-oct-2026, 12:39 UTC
+
+**204 marcas /288 ubicaciones /234 ofertas**. Cinco establecimientos candidatos
+incorporados, sin nuevas ofertas. SEMIN ya vinculado desde agosto fue excluido;
+Coapan/Cuapan, asentamientos y descriptores originales permanecen sin homologar.
+[Identidad40 y alcance](PUEBLA_IDENTITIES_40_20261021.md).
+
 ## Actualización — 21-oct-2026, 05:42 UTC
 
 **199 marcas /283 ubicaciones /234 ofertas**. Ocho identidades nuevas de centros

@@ -17,6 +17,12 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Identidad40,21-oct12:39UTC:** cinco establecimientos incorporados con nombres/
+direcciones/clases conservados,199marcas/283sedes anteriores íntegras. SEMIN ya
+vinculado desde agosto excluido. **204marcas/288sedes/563conceptos/3,341favorables /
+4,047pendientes/234ofertas/112migraciones**.201hipótesis restantes del discovery234,
+no nuevas identidades aprobadas. [Evidencia y límites](PUEBLA_IDENTITIES_40_20261021.md).
+
 **Revisión73 e identidad39,21-oct05:41–05:42UTC:** ocho BenceJonesurinaria incorporados,
 23consultas públicas/23deproveedor observadas,24RAW íntegros y16rotavirus/BK retenidos.
 Ocho establecimientos añadidos,191marcas/275sedes anteriores íntegras; discrepancia
