@@ -3,6 +3,14 @@
 > Informe de cobertura con snapshots fechados; sus cantidades y cadencias recomendadas no demuestran estado actual ni jobs activos.
 > Entrada: [índice vigente](README.md). Estado: [CURRENT_STATE](CURRENT_STATE.md).
 
+## Actualización — 21-oct-2026, 05:32 UTC
+
+**191 marcas /275 ubicaciones /234 ofertas**. Identidades37–38 añadieron cuatro
+UMF numeradas y cinco establecimientos privados candidatos, sin ofertas nuevas.
+Conservar verificación comercial pendiente y clases/direcciones DENUE; no inferir
+red, operador, catálogo o disponibilidad. Beneficencia1001/1012 sigue retenida.
+[Última incorporación y límites](PUEBLA_REVIEW_72_AND_IDENTITIES_38_20261021.md).
+
 ## Actualización — 16-oct-2026, 04:04 UTC
 
 Registro observado:114 marcas y198 ubicaciones. Identidades25–27 agregaron

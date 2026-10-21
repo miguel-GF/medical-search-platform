@@ -17,6 +17,15 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Revisión72 e identidad38,21-oct05:31–05:32UTC:** anticuerpos MuSK Chopo y captación
+T3 SEMIN con suero incorporados;37consultas públicas/37deproveedor observadas,
+diezRAW y vecinos íntegros. Cinco establecimientos nuevos,186marcas/270sedes previas
+intactas; Beneficencia1001/1012 retenida. **562conceptos/3,333favorables/4,055pendientes /
+191marcas/275sedes/234ofertas/112migraciones**. Cola59, mismo PID17024 sin reiniciar.
+Moco nasal8 requiere muestra explícita. Diagnóstico actual: biometría+INR/x2 pierde
+requisito y API local devuelve ready/complete; sin activar corrección compartida.
+[Evidencia y continuidad](PUEBLA_REVIEW_72_AND_IDENTITIES_38_20261021.md).
+
 **Identidad37 y revisión71,21-oct05:21–05:23UTC:** cuatro UMF numeradas incorporadas
 con nombres y domicilios DENUE conservados; rollback, único commit y observador
 independiente:182marcas/266sedes anteriores íntegras, cero ofertas nuevas.

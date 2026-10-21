@@ -1,0 +1,81 @@
+{
+  "review_id": "pruevia:evidence-review:20261021:04",
+  "research_date": "2026-10-21",
+  "scope": "Revisión72: anticuerpos MuSK Chopo explícitos y captación T3 SEMIN con suero declarado.37 consultas públicas y37 de proveedor observadas sin selección incompatible entre variantes examinadas. SD MUSK/TUPTAKE y moco nasal excluidos. Sin cambio de resolvedor u ofertas.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "246ed8afbee2a0dd748ba8bb55aee22672321bf2ff8fd32abc0cf592a5511893",
+  "research_snapshot_sha256": "b8f4b35c39dfef54a6265863a97bf20634434a9ffeed3031d15b07f366f61b96",
+  "definition_sha256": "892f9112d17faa5aa04d9b77e09f6f83972b07d48d3439123b129ab0b0f5ecb2",
+  "new_concepts": [
+    {
+      "item_id": "bfcc7608-16e3-5636-96a0-46f039540e48",
+      "canonical_name": "Anticuerpos contra MuSK",
+      "component": "Muscle specific kinase Ab",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.labcorp.com/tests/504600/muscle-specific-kinase-musk-antibodies",
+      "reason": "Chopo declara anticuerpos frente a MuSK. No inferir isotipo, muestra, RIPA, resultados, diagnóstico, reflex o equivalencia con AChR. El SD que sólo dice MUSK sigue fuera de alcance. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "Matriz exacta y duración desconocidas en esta orden. Los atributos explícitos de cada fuente quedan en su contexto; ayuno y muestra externa no completan el canónico."
+    },
+    {
+      "item_id": "20426698-d20a-5130-a7c5-c90542e77c39",
+      "canonical_name": "Captación de T3 en suero",
+      "component": "Triiodothyronine uptake",
+      "specimen_code": "serum",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://www.labcorp.com/tests/001156/t3-uptake",
+      "reason": "SEMIN declara T3 CAPTACION y Suero en sample_type íntegro. Captación es distinta de concentración T3 total/libre/reversa, T4, TBG o captación tiroidea de yodo. No inferir resina, ECLIA, radioisótopo, porcentaje o propiedad. duration_minutes es operativo y no tiempo de colección. SD TUPTAKE fuera de alcance. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "anticuerpos musk",
+      "item_id": "bfcc7608-16e3-5636-96a0-46f039540e48",
+      "canonical_name": "Anticuerpos contra MuSK",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.labcorp.com/tests/504600/muscle-specific-kinase-musk-antibodies",
+      "reason": "Chopo declara anticuerpos frente a MuSK. No inferir isotipo, muestra, RIPA, resultados, diagnóstico, reflex o equivalencia con AChR. El SD que sólo dice MUSK sigue fuera de alcance. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "edad5c4c-9cb7-5098-bb6d-4d9f58907cbc",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "provider_display_name"
+        ],
+        "value": "ANTICUERPOS MUSK"
+      }
+    },
+    {
+      "alias": "t3 captacion",
+      "item_id": "20426698-d20a-5130-a7c5-c90542e77c39",
+      "canonical_name": "Captación de T3 en suero",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.labcorp.com/tests/001156/t3-uptake",
+      "reason": "SEMIN declara T3 CAPTACION y Suero en sample_type íntegro. Captación es distinta de concentración T3 total/libre/reversa, T4, TBG o captación tiroidea de yodo. No inferir resina, ECLIA, radioisótopo, porcentaje o propiedad. duration_minutes es operativo y no tiempo de colección. SD TUPTAKE fuera de alcance. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "Suero / Tubo de tapon rojo o dorado"
+      },
+      "source_attributes": {
+        "specimen_code": "serum"
+      }
+    }
+  ],
+  "review_status": "reviewed",
+  "rollback_observation": {
+    "queries": 37,
+    "public_and_provider_core": true,
+    "receipt_sha256": "52c687cfdb6b4da12c000e0c93dc47dac329ad2126de3ed54f5326cccee76099",
+    "observations_sha256": "fdda702155b56f3efd5155a78a5b2856ba2598fee45b8d2aa8c45db0b902bd04",
+    "scope_limit": "Observaciones acotadas, no protección universal ni equivalencia analítica."
+  }
+}

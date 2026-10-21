@@ -1,0 +1,86 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261021:03",
+  "research_date": "2026-10-21",
+  "reviewed_by": "Codex; revisión individual del coordinador",
+  "authorization": "D-021/D-022: identidades candidatas con evidencia licenciada, sin ofertas ni verificación comercial.",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "Identidad38: cinco establecimientos con denominación distintiva y domicilio numerado concordantes. Beneficencia6271529 excluida por colisión1001/1012, sin binding o modificación a la identidad existente.",
+  "providers": [
+    {
+      "provider_key": "denue_clues_candidate_3411895",
+      "name": "HOSPITAL LA SOLEDAD",
+      "slug": "hospital-la-soledad-3411895",
+      "website_url": null,
+      "website_uncertainty": "DENUE no declara sitio propio acreditado para esta identidad; la referencia CLUES no se atribuye como website del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "622111"
+      ],
+      "denue_record_ids": [
+        "3411895"
+      ],
+      "identity_note": "Identidad candidata revisada individualmente el 21-oct-2026 conforme D-021/D-022. DENUE 3411895, INEGI 20-may-2026/captura 9-oct; CLUES PLSMP001793, hoja CLUES_202608 fila 43943, SHA256 5a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE íntegro: HOSPITAL LA SOLEDAD; nombre CLUES íntegro: HOSPITAL GENERAL LA SOLEDAD. La denominación distintiva y el domicilio numerado completo sustentan revisión individual. Se conservan GENERAL/HOSPITAL/CLINICA, orden de palabras y QUIRURGICAS/QUIRURGICA tal como fueron capturados; no es regla automática para quitar descriptores, singularizar o fusionar por dirección. Municipio 019, localidad 0001, CP 74250, tipo de vía, vialidad y exterior 6 concordantes; letras e interiores vacíos. Asentamiento DENUE: COLONIA RICARDO TREVIÑO; CLUES: COLONIA LA SOLEDAD; valores conservados sin homologar. SCIAN 622111/tipo hospital conservados aunque el nombre sugiera clínica u hospital. No inferir personalidad jurídica, operador, propietario, red o relación con Hospitales Ángeles. San Pedro Atlixco no se fusiona con marcas de San Pedro Cholula. CLUES EN OPERACION sólo refleja agosto, no operación vigente. Sólo campos licenciados DENUE; CLUES referencia de investigación sin política de ingesta nueva. DENUE no declara sitio propio acreditado para esta identidad; la referencia CLUES no se atribuye como website del establecimiento. Marca verification_pending y sede pending. Sin estudios, ofertas, precios, disponibilidad u horarios aprobados."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3422643",
+      "name": "HOSPITAL SANATORIO ANGELES DE TEHUACAN",
+      "slug": "hospital-sanatorio-angeles-de-tehuacan-3422643",
+      "website_url": null,
+      "website_uncertainty": "DENUE no declara sitio propio acreditado para esta identidad; la referencia CLUES no se atribuye como website del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "622111"
+      ],
+      "denue_record_ids": [
+        "3422643"
+      ],
+      "identity_note": "Identidad candidata revisada individualmente el 21-oct-2026 conforme D-021/D-022. DENUE 3422643, INEGI 20-may-2026/captura 9-oct; CLUES PLSMP002312, hoja CLUES_202608 fila 43995, SHA256 5a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE íntegro: HOSPITAL SANATORIO ANGELES DE TEHUACAN; nombre CLUES íntegro: SANATORIO ANGELES DE TEHUACAN. La denominación distintiva y el domicilio numerado completo sustentan revisión individual. Se conservan GENERAL/HOSPITAL/CLINICA, orden de palabras y QUIRURGICAS/QUIRURGICA tal como fueron capturados; no es regla automática para quitar descriptores, singularizar o fusionar por dirección. Municipio 156, localidad 0001, CP 75770, tipo de vía, vialidad y exterior 721 concordantes; letras e interiores vacíos. Asentamiento DENUE: COLONIA MORELOS; CLUES: COLONIA MORELOS; valores conservados sin homologar. SCIAN 622111/tipo hospital conservados aunque el nombre sugiera clínica u hospital. No inferir personalidad jurídica, operador, propietario, red o relación con Hospitales Ángeles. San Pedro Atlixco no se fusiona con marcas de San Pedro Cholula. CLUES EN OPERACION sólo refleja agosto, no operación vigente. Sólo campos licenciados DENUE; CLUES referencia de investigación sin política de ingesta nueva. DENUE no declara sitio propio acreditado para esta identidad; la referencia CLUES no se atribuye como website del establecimiento. Marca verification_pending y sede pending. Sin estudios, ofertas, precios, disponibilidad u horarios aprobados."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3424223",
+      "name": "CLINICA DE ESPECIALIDADES MEDICO QUIRURGICAS SAN PEDRO",
+      "slug": "clinica-de-especialidades-medico-quirurgicas-san-pedro-3424223",
+      "website_url": null,
+      "website_uncertainty": "DENUE no declara sitio propio acreditado para esta identidad; la referencia CLUES no se atribuye como website del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621111"
+      ],
+      "denue_record_ids": [
+        "3424223"
+      ],
+      "identity_note": "Identidad candidata revisada individualmente el 21-oct-2026 conforme D-021/D-022. DENUE 3424223, INEGI 20-may-2026/captura 9-oct; CLUES PLSMP002353, hoja CLUES_202608 fila 43999, SHA256 5a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE íntegro: CLINICA DE ESPECIALIDADES MEDICO QUIRURGICAS SAN PEDRO; nombre CLUES íntegro: CLÍNICA DE ESPECIALIDADES MÉDICO QUIRURGICA SAN PEDRO. La denominación distintiva y el domicilio numerado completo sustentan revisión individual. Se conservan GENERAL/HOSPITAL/CLINICA, orden de palabras y QUIRURGICAS/QUIRURGICA tal como fueron capturados; no es regla automática para quitar descriptores, singularizar o fusionar por dirección. Municipio 019, localidad 0001, CP 74260, tipo de vía, vialidad y exterior 1706 concordantes; letras e interiores vacíos. Asentamiento DENUE: COLONIA ALVARO OBREGON; CLUES: COLONIA ALVARO OBREGÓN; valores conservados sin homologar. SCIAN 621111/tipo office conservados aunque el nombre sugiera clínica u hospital. No inferir personalidad jurídica, operador, propietario, red o relación con Hospitales Ángeles. San Pedro Atlixco no se fusiona con marcas de San Pedro Cholula. CLUES EN OPERACION sólo refleja agosto, no operación vigente. Sólo campos licenciados DENUE; CLUES referencia de investigación sin política de ingesta nueva. DENUE no declara sitio propio acreditado para esta identidad; la referencia CLUES no se atribuye como website del establecimiento. Marca verification_pending y sede pending. Sin estudios, ofertas, precios, disponibilidad u horarios aprobados."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3257099",
+      "name": "MEDICA VENECIA",
+      "slug": "medica-venecia-3257099",
+      "website_url": null,
+      "website_uncertainty": "DENUE no declara sitio propio acreditado para esta identidad; la referencia CLUES no se atribuye como website del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621111"
+      ],
+      "denue_record_ids": [
+        "3257099"
+      ],
+      "identity_note": "Identidad candidata revisada individualmente el 21-oct-2026 conforme D-021/D-022. DENUE 3257099, INEGI 20-may-2026/captura 9-oct; CLUES PLSMP002913, hoja CLUES_202608 fila 44055, SHA256 5a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE íntegro: MEDICA VENECIA; nombre CLUES íntegro: CLÍNICA MÉDICA VENECIA. La denominación distintiva y el domicilio numerado completo sustentan revisión individual. Se conservan GENERAL/HOSPITAL/CLINICA, orden de palabras y QUIRURGICAS/QUIRURGICA tal como fueron capturados; no es regla automática para quitar descriptores, singularizar o fusionar por dirección. Municipio 114, localidad 0001, CP 72080, tipo de vía, vialidad y exterior 4613 concordantes; letras e interiores vacíos. Asentamiento DENUE: COLONIA SANTA MARIA; CLUES: COLONIA SANTA MARÍA; valores conservados sin homologar. SCIAN 621111/tipo office conservados aunque el nombre sugiera clínica u hospital. No inferir personalidad jurídica, operador, propietario, red o relación con Hospitales Ángeles. San Pedro Atlixco no se fusiona con marcas de San Pedro Cholula. CLUES EN OPERACION sólo refleja agosto, no operación vigente. Sólo campos licenciados DENUE; CLUES referencia de investigación sin política de ingesta nueva. DENUE no declara sitio propio acreditado para esta identidad; la referencia CLUES no se atribuye como website del establecimiento. Marca verification_pending y sede pending. Sin estudios, ofertas, precios, disponibilidad u horarios aprobados."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3415186",
+      "name": "LABORATORIOS DE ANALISIS CLINICOS DIAGNOSTICA",
+      "slug": "laboratorios-de-analisis-clinicos-diagnostica-3415186",
+      "website_url": null,
+      "website_uncertainty": "DENUE no declara sitio propio acreditado para esta identidad; la referencia CLUES no se atribuye como website del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621511"
+      ],
+      "denue_record_ids": [
+        "3415186"
+      ],
+      "identity_note": "Identidad candidata revisada individualmente el 21-oct-2026 conforme D-021/D-022. DENUE 3415186, INEGI 20-may-2026/captura 9-oct; CLUES PLSMP008986, hoja CLUES_202608 fila 44662, SHA256 5a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE íntegro: LABORATORIOS DE ANALISIS CLINICOS DIAGNOSTICA; nombre CLUES íntegro: DIAGNOSTICA LABORATORIOS. La denominación distintiva y el domicilio numerado completo sustentan revisión individual. Se conservan GENERAL/HOSPITAL/CLINICA, orden de palabras y QUIRURGICAS/QUIRURGICA tal como fueron capturados; no es regla automática para quitar descriptores, singularizar o fusionar por dirección. Municipio 156, localidad 0001, CP 75700, tipo de vía, vialidad y exterior 518 concordantes; letras e interiores vacíos. Asentamiento DENUE: COLONIA CENTRO; CLUES: COLONIA TEHUACÁN CENTRO; valores conservados sin homologar. SCIAN 621511/tipo branch conservados aunque el nombre sugiera clínica u hospital. No inferir personalidad jurídica, operador, propietario, red o relación con Hospitales Ángeles. San Pedro Atlixco no se fusiona con marcas de San Pedro Cholula. CLUES EN OPERACION sólo refleja agosto, no operación vigente. Sólo campos licenciados DENUE; CLUES referencia de investigación sin política de ingesta nueva. DENUE no declara sitio propio acreditado para esta identidad; la referencia CLUES no se atribuye como website del establecimiento. Marca verification_pending y sede pending. Sin estudios, ofertas, precios, disponibilidad u horarios aprobados."
+    }
+  ]
+}

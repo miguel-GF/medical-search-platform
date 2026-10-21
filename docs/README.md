@@ -12,6 +12,7 @@ La conversación original no es lectura obligatoria para incorporarse.
 | [Guías de trabajo](WORK_GUIDE.md) | Procedimientos por tipo de cambio y traspaso. |
 | [Operación](OPERATIONS_GUIDE.md) | Directorios, comandos, comprobaciones y alcance de resultados. |
 | [Estado y prioridades](CURRENT_STATE.md) | Capacidades y pendientes con evidencia fechada. |
+| [MuSK/T3 y cinco identidades,21-oct](PUEBLA_REVIEW_72_AND_IDENTITIES_38_20261021.md) | Dos órdenes incorporadas, cinco establecimientos y observación local del fallo INR/x2. |
 | [Cuatro UMF y trigo retenido,21-oct](PUEBLA_IDENTITIES_37_AND_REVIEW_71_20261021.md) | Identidades incorporadas sin cobertura inferida; observación de pérdida de isotipo, serie y negación. |
 | [Anticuerpos séricos70,21-oct](CATALOG_REVIEW_70_20261021.md) | Tres órdenes incorporadas con isotipo/muestra propios; observaciones y referencias separadas de fallos HTTP. |
 | [Factor XIII y título de muestra69,21-oct](CATALOG_REVIEW_69_20261021.md) | Orden incorporada, guard íntegro y compatible del importador, observación de variantes y recarga ordenada. |

@@ -47,6 +47,34 @@ después llama `normalizeBatchRpcPayload`, `buildPackageResolution` y
 
 ## Próximo trabajo autorizado y límites
 
+### Observación adicional del catálogo y Worker local
+
+A05:27UTC se observaron12consultas existentes por tres RPC: búsqueda, paquete y
+segmentación. `Biometría hemática INR` y `Biometría hemática x2` se resuelven como
+biometría simple con34ofertas; el segmentador devuelve no_match y no elimina esas
+palabras. Seis peticionesHTTP reales al Worker local8787 confirman ready/complete,
+un item cuyo input aún contiene INR/x2 y10soluciones: el problema llega a cobertura.
+No se observó el Worker público ni se instaló el diff de tres funciones.
+
+`Biometría hemática glucosa` se segmenta exactamente en dos y el Worker resuelve
+ambas; al añadir INR queda no_match/none. IgEgluten con IgG/IgA/x2/negación queda
+ambiguous en estas observaciones; no afirmar que sea equivalente al caso trigo
+aislado ni que todas las órdenes con calificadores fallen igual. Los conteos y
+fuentes antes/después de las lecturas SQL permanecieron iguales.
+
+Por lectura de código, `readCatalogSegments` exige reconstrucción normalizada
+completa y método exacto; si falla conserva input previo. `buildPackageResolution`
+produce needs_clarification y no soluciones ante cualquier item ambiguous; sólo
+índices resolved alimentan ofertas. `normalizeBatchRpcPayload` limita forma y
+tamaño, sin validar equivalencia; `sanitizePackageResolution` conserva esos estados.
+Por tanto metadata nueva por sí sola no protege cobertura: debe propagarse como
+estado antes de construir soluciones. Extracción de ayuno es un camino separado,
+acotado y trazable; no se modifica en esta tarea.
+
+Artefactos adicionales: `existing-behavior.json`, `existing-read-receipt.json`,
+`local-package-observed.json` y `local-package-read-receipt.json`. Consultas
+sintéticas, sólo observación; no suites formales ni prueba de solución propuesta.
+
 Preparar una matriz de llamadas externas, segmentación, normalización y cobertura;
 revisar las rutinas transitivas fuera de los cinco esquemas capturados, jobs y
 consumidores de RAW. Conservar las retenciones existentes. Preparar el diff final,
