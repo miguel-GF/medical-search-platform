@@ -17,6 +17,15 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Revisión70,21-oct05:11:58UTC:** tres anticuerpos Chopo incorporados con diana,
+isotipo y suero explícitos: SchistosomaIgG, T.cruziIgM y P.falciparumIgG.48consultas
+públicas/48deproveedor observadas; variantes examinadas no seleccionan los nuevos
+conceptos. Tres RAW y definiciónChagas total previos íntegros, sin ofertas nuevas.
+Referencias leídas por webtool; HTTP directo403 conservado sin presentarlo como200.
+**560conceptos/3,331favorables/4,057pendientes/182marcas/266sedes/234ofertas/112migraciones**.
+Cola58, PID17024 en vigilancia; sin cambios de código o despliegue.
+[Evidencia y continuidad](CATALOG_REVIEW_70_20261021.md).
+
 **Revisión69,21-oct05:02:40UTC:** actividadfactorXIIIenplasma Chopo incorporada,
 un concepto/una fila; RAW y factorVIII previos intactos. Importador admite guard
 de título íntegro exclusivo de proveedor con matriz literal inequívoca;56lotes/

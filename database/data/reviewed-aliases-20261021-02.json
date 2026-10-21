@@ -1,0 +1,114 @@
+{
+  "review_id": "pruevia:evidence-review:20261021:02",
+  "research_date": "2026-10-21",
+  "scope": "Revisión70: tres órdenes Chopo de anticuerpos con isotipo, diana ysuero explícitos.48consultas públicas y48deproveedor observadas sin selección incompatible en vecinos examinados. Sin cambiar resolvedor, definiciónChagas total u ofertas.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "ba97c60c1180d42cb8884ae3ab3e1fd7ad17ccaa041e0d26c8ba03aef61ceec3",
+  "research_snapshot_sha256": "d57eba5713f06c7eca3b1f2957dd3da5dbdc7a09bf0ac4f8d3fb107fe89d5393",
+  "definition_sha256": "d3c54d81e61205fea4ce104146c750709a6c1bf096c8f95a604832817866fa51",
+  "new_concepts": [
+    {
+      "item_id": "6cd87e5d-cb04-5af3-8681-8007a4b2ce3b",
+      "canonical_name": "Anticuerpos IgG contra Schistosoma en suero",
+      "component": "Schistosoma Ab.IgG",
+      "specimen_code": "serum",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/65019",
+      "reason": "Chopo19467 identifica anticuerposIgG frente al género Schistosoma y suero en título íntegro. Mayo65019 documenta identidad de anticuerposIgG y explica que su ensayo no diferencia especies; no transferir antígeno deS.mansoni, reactividad entre especies, métodoEIA/ELISA, sensibilidad, escala o propiedad del ensayo externo. No asignar especie no declarada ni afirmar detección de todas. No sustituir por IgM/IgE, antígeno, huevos fecales/urinarios, PCR, diagnóstico o panel. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos."
+    },
+    {
+      "item_id": "38739835-cc45-5d8b-8c1b-f0573777bedc",
+      "canonical_name": "Anticuerpos IgM contra Trypanosoma cruzi en suero",
+      "component": "Trypanosoma cruzi Ab.IgM",
+      "specimen_code": "serum",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://kuhlab.testcatalog.org/show/CRUZM",
+      "reason": "Chopo19695 declara IgM, Trypanosoma cruzi ysuero. El catálogoKUCRUZM y la identidadLOINC32726-2/15397-3 documentan denominaciónIgM; el directorioKU está desactivado y se usa sólo como referencia de identidad, no oferta vigente. No transferir título, presencia, IFA, unidades o técnica de referencia. No expandir a IgG/IgM, total, perfil confirmatorio, PCR, antígeno o Trypanosoma rangeli. No se recomienda uso diagnóstico ni se aprueba mappingLOINC. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos."
+    },
+    {
+      "item_id": "5d3beca0-3dc8-5c78-a13c-e5565e6ef387",
+      "canonical_name": "Anticuerpos IgG contra Plasmodium falciparum en suero",
+      "component": "Plasmodium falciparum Ab.IgG",
+      "specimen_code": "serum",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://loinc.org/108932-5",
+      "reason": "Chopo19923 declara anticuerposIgG frente a Plasmodium falciparum ysuero. La denominaciónLOINC108932-5/51467-9 documenta identidad nominal sin aprobar código, propiedad, escala o técnica. No es prueba rápida de antígeno, gota gruesa, detección de parásitos, PCR, IgM, otras especies o panel malaria. No inferir inmunofluorescencia, título o cuantificación desde una referencia externa; no aprobar diagnóstico o equivalencia analítica. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "ac igg schistosoma en suero",
+      "item_id": "6cd87e5d-cb04-5af3-8681-8007a4b2ce3b",
+      "canonical_name": "Anticuerpos IgG contra Schistosoma en suero",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.mayocliniclabs.com/test-catalog/Overview/65019",
+      "reason": "Chopo19467 identifica anticuerposIgG frente al género Schistosoma y suero en título íntegro. Mayo65019 documenta identidad de anticuerposIgG y explica que su ensayo no diferencia especies; no transferir antígeno deS.mansoni, reactividad entre especies, métodoEIA/ELISA, sensibilidad, escala o propiedad del ensayo externo. No asignar especie no declarada ni afirmar detección de todas. No sustituir por IgM/IgE, antígeno, huevos fecales/urinarios, PCR, diagnóstico o panel. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "edad5c4c-9cb7-5098-bb6d-4d9f58907cbc",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "provider_display_name"
+        ],
+        "value": "AC IgG SCHISTOSOMA EN SUERO"
+      },
+      "source_attributes": {
+        "specimen_code": "serum"
+      }
+    },
+    {
+      "alias": "ac igm trypanosoma cruzi en suero",
+      "item_id": "38739835-cc45-5d8b-8c1b-f0573777bedc",
+      "canonical_name": "Anticuerpos IgM contra Trypanosoma cruzi en suero",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://kuhlab.testcatalog.org/show/CRUZM",
+      "reason": "Chopo19695 declara IgM, Trypanosoma cruzi ysuero. El catálogoKUCRUZM y la identidadLOINC32726-2/15397-3 documentan denominaciónIgM; el directorioKU está desactivado y se usa sólo como referencia de identidad, no oferta vigente. No transferir título, presencia, IFA, unidades o técnica de referencia. No expandir a IgG/IgM, total, perfil confirmatorio, PCR, antígeno o Trypanosoma rangeli. No se recomienda uso diagnóstico ni se aprueba mappingLOINC. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "edad5c4c-9cb7-5098-bb6d-4d9f58907cbc",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "provider_display_name"
+        ],
+        "value": "AC IgM TRYPANOSOMA CRUZI EN SUERO"
+      },
+      "source_attributes": {
+        "specimen_code": "serum"
+      }
+    },
+    {
+      "alias": "anticuerpos igg plasmodium falciparum malaria en suero",
+      "item_id": "5d3beca0-3dc8-5c78-a13c-e5565e6ef387",
+      "canonical_name": "Anticuerpos IgG contra Plasmodium falciparum en suero",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://loinc.org/108932-5",
+      "reason": "Chopo19923 declara anticuerposIgG frente a Plasmodium falciparum ysuero. La denominaciónLOINC108932-5/51467-9 documenta identidad nominal sin aprobar código, propiedad, escala o técnica. No es prueba rápida de antígeno, gota gruesa, detección de parásitos, PCR, IgM, otras especies o panel malaria. No inferir inmunofluorescencia, título o cuantificación desde una referencia externa; no aprobar diagnóstico o equivalencia analítica. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "edad5c4c-9cb7-5098-bb6d-4d9f58907cbc",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "provider_display_name"
+        ],
+        "value": "ANTICUERPOS IgG PLASMODIUM FALCIPARUM (MALARIA) EN SUERO"
+      },
+      "source_attributes": {
+        "specimen_code": "serum"
+      }
+    }
+  ],
+  "review_status": "reviewed",
+  "rollback_observation": {
+    "queries": 48,
+    "public_and_provider_core": true,
+    "receipt_sha256": "e81dcaefacd875d8730f1d73c891e5bd9bc0c314e1618fc602afceb0c3451f59",
+    "observations_sha256": "016711dcf498803d2250e7737f22dac8c038f05dfd784fb4149faca842683dc9",
+    "scope_limit": "No acredita protección universal ni equivalencia analítica."
+  },
+  "primary_reference_observations_sha256": "b474092157b809c7760e6ba7cec993f709486ae95026149f7a2003d7c956a031"
+}
