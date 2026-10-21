@@ -17,6 +17,14 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Corte solicitado,21-oct13:09UTC:** 205 marcas /290 sedes /563 conceptos /
+3,341 favorables /4,047 pendientes /234 ofertas /112 migraciones, reconsultados.
+Cola60 sin cambios y hashes íntegros; último ledger clínico already_applied.
+Ejecutor local ausente confirmado, STOP presente y estado histórico corregido;
+agentes instruidos a cerrar sin abrir bloques. Automatización parcial guardada,
+no algoritmo autónomo completo ni propuestas clínicas activadas.
+[Corte y reanudación](CLEAN_CUT_20261021.md).
+
 **Identidad41 y evidencia SEMIN,21-oct12:59–13:03UTC:** dos sedes incorporadas,
 una marca nueva y marca ISSSTE reutilizada sin modificarla. **205 marcas /290
 sedes /563 conceptos /3,341 favorables /4,047 pendientes /234 ofertas**.

@@ -12,6 +12,7 @@ La conversación original no es lectura obligatoria para incorporarse.
 | [Guías de trabajo](WORK_GUIDE.md) | Procedimientos por tipo de cambio y traspaso. |
 | [Operación](OPERATIONS_GUIDE.md) | Directorios, comandos, comprobaciones y alcance de resultados. |
 | [Estado y prioridades](CURRENT_STATE.md) | Capacidades y pendientes con evidencia fechada. |
+| [Corte limpio,21-oct](CLEAN_CUT_20261021.md) | Contadores reconsultados, cola detenida, borradores preservados y límites de automatización. |
 | [Dos sedes y evidencia SEMIN,21-oct](PUEBLA_IDENTITIES_41_AND_SEMIN_EVIDENCE_20261021.md) | Identidad41 aplicada; collector conserva referencias y diferencia canales comerciales sin inferir disponibilidad. |
 | [Moco nasal y retención74,21-oct](CATALOG_REVIEW_74_20261021.md) | Representación local compatible; observación del motor y ausencia de altas persistentes. |
 | [Cinco identidades40,21-oct](PUEBLA_IDENTITIES_40_20261021.md) | Coapan, Jesús Nazareno, dos consultorios escolares y Best; SEMIN excluido por vínculo previo. |
