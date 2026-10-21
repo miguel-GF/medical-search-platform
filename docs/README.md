@@ -12,6 +12,7 @@ La conversación original no es lectura obligatoria para incorporarse.
 | [Guías de trabajo](WORK_GUIDE.md) | Procedimientos por tipo de cambio y traspaso. |
 | [Operación](OPERATIONS_GUIDE.md) | Directorios, comandos, comprobaciones y alcance de resultados. |
 | [Estado y prioridades](CURRENT_STATE.md) | Capacidades y pendientes con evidencia fechada. |
+| [Seis identidades privadas36,21-oct](PUEBLA_IDENTITIES_36_20261021.md) | Instituciones candidatas en Puebla, Tehuacán y Teziutlán; nombres, direcciones y límites comerciales conservados. |
 | [Dos estudios e identidades35,21-oct](PUEBLA_REVIEW_68_AND_IDENTITIES_35_20261021.md) | Dos órdenes y dos establecimientos incorporados; retenciones LE/factorXIII y recuperación auditada de cola local. |
 | [Pasteur y revisión66,20-oct](PUEBLA_WEBSITE_AND_REVIEW_66_20261020.md) | Enlace de identidad aplicado,176RAW clasificados y propuesta FTA sin activar; límites y siguiente acción. |
 | [Selección y navegación móvil, 20-oct](SEARCH_SELECTION_MOBILE_20261020.md) | Confirmación explícita de candidato y pantallas móviles; preparado localmente, publicación pendiente. |

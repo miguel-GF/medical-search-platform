@@ -1,0 +1,101 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261021:01",
+  "research_date": "2026-10-21",
+  "reviewed_by": "Codex; investigación y revisión individual del coordinador",
+  "authorization": "D-021/D-022: incorporación de identidades candidatas con evidencia licenciada, sin ofertas ni verificación comercial.",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "Identidad36: seis establecimientos privados con denominación distintiva y domicilio numerado concordantes; conservar nombres íntegros y discrepancias. Sin titularidad, afiliación ni cobertura comercial inferidas.",
+  "providers": [
+    {
+      "provider_key": "denue_clues_candidate_11462988",
+      "name": "CLINICA URBAJ",
+      "slug": "clinica-urbaj-11462988",
+      "website_url": null,
+      "website_uncertainty": "DENUE no declara sitio propio; la referencia gubernamental no es website de la institución.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "622111"
+      ],
+      "denue_record_ids": [
+        "11462988"
+      ],
+      "identity_note": "Identidad candidata investigada21-oct-2026 por autorización D-021/D-022. DENUE11462988, publicaciónINEGI20-may-2026/captura9-oct; referenciaCLUESPLSMP001332, hojaCLUES_202608 fila43897, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. NombreDENUE íntegro:CLINICA URBAJ; nombreCLUES íntegro:CLINICA URBAJ, SC. Se revisó individualmente la denominación distintiva concordante; la referencia añade un sufijo de forma social, sin afirmar personalidad jurídica, propietario, operador actual o sucesión. No es regla automática para quitar sufijos, fuzzy o fusionar nombres. Municipio114, localidad0001, CP72430, tipo de vía, vía y exterior4740 completos concordantes; interiores y letras vacíos. AsentamientoDENUE:COLONIA PRADOS AGUA AZUL; CLUES:COLONIA PRADOS AGUA AZUL; conservar diferencias sin homologarlas. SCIAN622111/tipohospital conservados aunque el nombre sugiera otra clase. Consultorios o laboratorios distintos que comparten domicilio no se fusionan ni se atribuyen a esta institución. EN OPERACION es sólo estado mensual de agosto2026, no prueba de operación actual, red, servicios o disponibilidad. Sólo datos licenciadosDENUE de identidad y dirección; CLUES referencia de investigación, sin fuente de ingesta/política/licencia nueva. DENUE no declara sitio propio; la referencia gubernamental no es website de la institución. Marca verification_pending, sede pending. Sin estudios, horarios, equivalencias clínicas, ofertas o precios nuevos; sin contacto."
+    },
+    {
+      "provider_key": "denue_clues_candidate_6378273",
+      "name": "SANATORIO SAGRADO CORAZON DE TEHUACAN",
+      "slug": "sanatorio-sagrado-corazon-de-tehuacan-6378273",
+      "website_url": null,
+      "website_uncertainty": "DENUE no declara sitio propio; la referencia gubernamental no es website de la institución.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "622111"
+      ],
+      "denue_record_ids": [
+        "6378273"
+      ],
+      "identity_note": "Identidad candidata investigada21-oct-2026 por autorización D-021/D-022. DENUE6378273, publicaciónINEGI20-may-2026/captura9-oct; referenciaCLUESPLSMP002295, hojaCLUES_202608 fila43993, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. NombreDENUE íntegro:SANATORIO SAGRADO CORAZON DE TEHUACAN; nombreCLUES íntegro:SANATORIO SAGRADO CORAZON DE TEHUACAN, S.A.. Se revisó individualmente la denominación distintiva concordante; la referencia añade un sufijo de forma social, sin afirmar personalidad jurídica, propietario, operador actual o sucesión. No es regla automática para quitar sufijos, fuzzy o fusionar nombres. Municipio156, localidad0001, CP75700, tipo de vía, vía y exterior302 completos concordantes; interiores y letras vacíos. AsentamientoDENUE:COLONIA CENTRO; CLUES:COLONIA TEHUACÁN CENTRO; conservar diferencias sin homologarlas. SCIAN622111/tipohospital conservados aunque el nombre sugiera otra clase. Consultorios o laboratorios distintos que comparten domicilio no se fusionan ni se atribuyen a esta institución. EN OPERACION es sólo estado mensual de agosto2026, no prueba de operación actual, red, servicios o disponibilidad. Sólo datos licenciadosDENUE de identidad y dirección; CLUES referencia de investigación, sin fuente de ingesta/política/licencia nueva. DENUE no declara sitio propio; la referencia gubernamental no es website de la institución. Marca verification_pending, sede pending. Sin estudios, horarios, equivalencias clínicas, ofertas o precios nuevos; sin contacto."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3410355",
+      "name": "INSTITUTO MEXICANO DE ONCOLOGIA",
+      "slug": "instituto-mexicano-de-oncologia-3410355",
+      "website_url": null,
+      "website_uncertainty": "DENUE no declara sitio propio; la referencia gubernamental no es website de la institución.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "622311"
+      ],
+      "denue_record_ids": [
+        "3410355"
+      ],
+      "identity_note": "Identidad candidata investigada21-oct-2026 por autorización D-021/D-022. DENUE3410355, publicaciónINEGI20-may-2026/captura9-oct; referenciaCLUESPLSMP002370, hojaCLUES_202608 fila44001, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. NombreDENUE íntegro:INSTITUTO MEXICANO DE ONCOLOGIA; nombreCLUES íntegro:INSTITUTO MEXICANO DE ONCOLOGIA, S.C.. Se revisó individualmente la denominación distintiva concordante; la referencia añade un sufijo de forma social, sin afirmar personalidad jurídica, propietario, operador actual o sucesión. No es regla automática para quitar sufijos, fuzzy o fusionar nombres. Municipio114, localidad0001, CP72420, tipo de vía, vía y exterior3309 completos concordantes; interiores y letras vacíos. AsentamientoDENUE:COLONIA CHULA VISTA; CLUES:COLONIA CHULA VISTA; conservar diferencias sin homologarlas. SCIAN622311/tipohospital conservados aunque el nombre sugiera otra clase. Consultorios o laboratorios distintos que comparten domicilio no se fusionan ni se atribuyen a esta institución. EN OPERACION es sólo estado mensual de agosto2026, no prueba de operación actual, red, servicios o disponibilidad. Sólo datos licenciadosDENUE de identidad y dirección; CLUES referencia de investigación, sin fuente de ingesta/política/licencia nueva. DENUE no declara sitio propio; la referencia gubernamental no es website de la institución. Marca verification_pending, sede pending. Sin estudios, horarios, equivalencias clínicas, ofertas o precios nuevos; sin contacto."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3407461",
+      "name": "CENTRAL GINECO OBSTETRICA",
+      "slug": "central-gineco-obstetrica-3407461",
+      "website_url": null,
+      "website_uncertainty": "DENUE no declara sitio propio; la referencia gubernamental no es website de la institución.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "622311"
+      ],
+      "denue_record_ids": [
+        "3407461"
+      ],
+      "identity_note": "Identidad candidata investigada21-oct-2026 por autorización D-021/D-022. DENUE3407461, publicaciónINEGI20-may-2026/captura9-oct; referenciaCLUESPLSMP002382, hojaCLUES_202608 fila44002, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. NombreDENUE íntegro:CENTRAL GINECO OBSTETRICA; nombreCLUES íntegro:CENTRAL GINECO-OBSTETRICA, S.A. DE C.V.. Se revisó individualmente la denominación distintiva concordante; la referencia añade un sufijo de forma social, sin afirmar personalidad jurídica, propietario, operador actual o sucesión. No es regla automática para quitar sufijos, fuzzy o fusionar nombres. Municipio114, localidad0001, CP72410, tipo de vía, vía y exterior1905 completos concordantes; interiores y letras vacíos. AsentamientoDENUE:COLONIA BARRIO DE SANTIAGO; CLUES:BARRIO SANTIAGO; conservar diferencias sin homologarlas. SCIAN622311/tipohospital conservados aunque el nombre sugiera otra clase. Consultorios o laboratorios distintos que comparten domicilio no se fusionan ni se atribuyen a esta institución. EN OPERACION es sólo estado mensual de agosto2026, no prueba de operación actual, red, servicios o disponibilidad. Sólo datos licenciadosDENUE de identidad y dirección; CLUES referencia de investigación, sin fuente de ingesta/política/licencia nueva. DENUE no declara sitio propio; la referencia gubernamental no es website de la institución. Marca verification_pending, sede pending. Sin estudios, horarios, equivalencias clínicas, ofertas o precios nuevos; sin contacto."
+    },
+    {
+      "provider_key": "denue_clues_candidate_6378802",
+      "name": "POLICLÍNICA ÓPTIMA",
+      "slug": "policlinica-optima-6378802",
+      "website_url": null,
+      "website_uncertainty": "DENUE no declara sitio propio; la referencia gubernamental no es website de la institución.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "622311"
+      ],
+      "denue_record_ids": [
+        "6378802"
+      ],
+      "identity_note": "Identidad candidata investigada21-oct-2026 por autorización D-021/D-022. DENUE6378802, publicaciónINEGI20-may-2026/captura9-oct; referenciaCLUESPLSMP002662, hojaCLUES_202608 fila44030, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. NombreDENUE íntegro:POLICLÍNICA ÓPTIMA; nombreCLUES íntegro:POLICLÍNICA OPTIMA S.A DE C.V. Se revisó individualmente la denominación distintiva concordante; la referencia añade un sufijo de forma social, sin afirmar personalidad jurídica, propietario, operador actual o sucesión. No es regla automática para quitar sufijos, fuzzy o fusionar nombres. Municipio174, localidad0001, CP73885, tipo de vía, vía y exterior6 completos concordantes; interiores y letras vacíos. AsentamientoDENUE:COLONIA LA MESILLA; CLUES:COLONIA LA MESILLA; conservar diferencias sin homologarlas. SCIAN622311/tipohospital conservados aunque el nombre sugiera otra clase. Consultorios o laboratorios distintos que comparten domicilio no se fusionan ni se atribuyen a esta institución. EN OPERACION es sólo estado mensual de agosto2026, no prueba de operación actual, red, servicios o disponibilidad. Sólo datos licenciadosDENUE de identidad y dirección; CLUES referencia de investigación, sin fuente de ingesta/política/licencia nueva. DENUE no declara sitio propio; la referencia gubernamental no es website de la institución. Marca verification_pending, sede pending. Sin estudios, horarios, equivalencias clínicas, ofertas o precios nuevos; sin contacto."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3274215",
+      "name": "HOSPITAL MALDONADO",
+      "slug": "hospital-maldonado-3274215",
+      "website_url": null,
+      "website_uncertainty": "DENUE declara WWW.HOSPITALMALDONADO.COM; webtool no pudo abrir https://www.hospitalmaldonado.com/ el21-oct. Se conserva el texto en RAW sin acreditar sitio vigente ni incorporar URL.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621111"
+      ],
+      "denue_record_ids": [
+        "3274215"
+      ],
+      "identity_note": "Identidad candidata investigada21-oct-2026 por autorización D-021/D-022. DENUE3274215, publicaciónINEGI20-may-2026/captura9-oct; referenciaCLUESPLSMP002761, hojaCLUES_202608 fila44040, SHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. NombreDENUE íntegro:HOSPITAL MALDONADO; nombreCLUES íntegro:HOSPITAL MALDONADO S.C.. Se revisó individualmente la denominación distintiva concordante; la referencia añade un sufijo de forma social, sin afirmar personalidad jurídica, propietario, operador actual o sucesión. No es regla automática para quitar sufijos, fuzzy o fusionar nombres. Municipio114, localidad0001, CP72000, tipo de vía, vía y exterior401 completos concordantes; interiores y letras vacíos. AsentamientoDENUE:COLONIA CENTRO; CLUES:COLONIA SAN FRANCISCO; conservar diferencias sin homologarlas. SCIAN621111/tipooffice conservados aunque el nombre sugiera otra clase. Consultorios o laboratorios distintos que comparten domicilio no se fusionan ni se atribuyen a esta institución. EN OPERACION es sólo estado mensual de agosto2026, no prueba de operación actual, red, servicios o disponibilidad. Sólo datos licenciadosDENUE de identidad y dirección; CLUES referencia de investigación, sin fuente de ingesta/política/licencia nueva. DENUE declara WWW.HOSPITALMALDONADO.COM; webtool no pudo abrir https://www.hospitalmaldonado.com/ el21-oct. Se conserva el texto en RAW sin acreditar sitio vigente ni incorporar URL. Marca verification_pending, sede pending. Sin estudios, horarios, equivalencias clínicas, ofertas o precios nuevos; sin contacto."
+    }
+  ]
+}

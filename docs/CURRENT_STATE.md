@@ -1,6 +1,6 @@
 # Estado y prioridades de Pruevia
 
-Tipo: punto de continuidad. Actualizado el 20-oct-2026 UTC/local para operación y datos;
+Tipo: punto de continuidad. Actualizado el 21-oct-2026 UTC (20-oct local) para operación y datos;
 el corte histórico de publicación de septiembre corresponde al árbol local, el
 ledger Supabase y los Workers de producción. El proyecto enlazado se llama
 `pruevia-dev`, pero también es la base inicial de producción: las migraciones
@@ -16,6 +16,15 @@ base inicial de producción. Una escritura o migración allí afecta datos que
 podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
+
+**Identidad36,21-oct04:54:37UTC:** seis establecimientos privados incorporados,
+con nombres distintivos y domicilios numerados concordantes. Sufijos de formas
+sociales documentados sin inferir persona jurídica; asentamientos y clases DENUE
+conservados. Rollback, único commit y cliente independiente:176marcas/260sedes
+previas íntegras; RAW/políticas/contadores clínicos intactos. **182marcas/266sedes /
+556conceptos/3,327favorables/4,061pendientes/234ofertas/112migraciones**.
+Nuevas identidades pendientes de verificación comercial, cero ofertas añadidas.
+[Evidencia y continuidad](PUEBLA_IDENTITIES_36_20261021.md).
 
 **Revisión68 e identidad35,21-oct04:43–04:46UTC (20-oct local):** vitaminaD25-hidroxi
 total y actividadproteínaC en plasma incorporadas: dos conceptos/dos registros;
