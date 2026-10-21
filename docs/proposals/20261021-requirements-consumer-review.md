@@ -3,6 +3,8 @@
 21-oct-2026. Diagnóstico local de definiciones productivas; **sin instalar SQL**,
 sin migración, sin suite formal y sin aprobación de cambio compartido D-006.
 Complementa la [propuesta INR](20261018-preserve-inr-requirement.md).
+Observación acotada preparada, todavía sin ejecutar:
+[alcance y aprobación del rollback](20261021-requirements-rollback-evaluation.md).
 
 ## Evidencia nueva
 
