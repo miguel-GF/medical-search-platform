@@ -1,0 +1,41 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261020:01",
+  "reviewed_by": "Codex; investigación delegada; pares revisados por root antes de preparar",
+  "authorization": "D-021/D-022: identidades candidatas con evidencia y datos DENUE aprobados; sin cobertura comercial ni nueva fuente de ingesta.",
+  "research_date": "2026-10-20",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "Dos marcas y sedes candidatas BIO-TECK Tepeaca y Médica Norte Acatzingo, nombres íntegros reordenados y domicilios numerados concordantes. Conserva diferencias de asentamiento. Sin estudios u ofertas.",
+  "providers": [
+    {
+      "provider_key": "denue_clues_candidate_3494076",
+      "name": "HOSPITAL MEDICA NORTE",
+      "slug": "hospital-medica-norte-3494076",
+      "website_url": null,
+      "website_uncertainty": "Sitio propio no acreditado; el directorio de referencia no es la web de la institución.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "622111"
+      ],
+      "denue_record_ids": [
+        "3494076"
+      ],
+      "identity_note": "Identidad candidata investigada el 20-oct-2026 por autorización D-021/D-022. DENUE 3494076, publicación INEGI 20-may-2026, captura 9-oct-2026; referencia CLUES PLSMP001723, hoja CLUES_202608 fila 43936, XLSX SHA256 5a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre original DENUE: HOSPITAL MEDICA NORTE; nombre de unidad y comercial CLUES: MEDICA NORTE HOSPITAL. Las mismas palabras completas están reordenadas; no se usó fuzzy ni se eliminaron palabras específicas. Municipio 004, localidad 0001, CP 75150, tipo de vía, vía y exterior completo concuerdan. DENUE conserva exterior='1231', letra_ext='', interior='', letra_int=''; CLUES interior=''. Asentamiento DENUE BARRIO EL CALVARIO; CLUES BARRIO EL CALVARIO. Los descriptores de asentamiento se conservan separados, sin homologar ni sustituir los datos DENUE. Clasificación DENUE 622111 y tipo hospital conservados. EN OPERACION corresponde al corte mensual agosto 2026 y no acredita operación actual, disponibilidad, red ni titularidad. No se infiere sucesión desde una clave histórica. Sólo se incorporan campos licenciados DENUE de identidad y domicilio; CLUES es referencia de investigación, sin nueva fuente de ingesta ni aprobación de licencia/política o collector. Marca candidata verification_pending, sede pending, website NULL por no acreditar sitio propio. Sin estudios, equivalencias clínicas, ofertas, precios, horarios o disponibilidad nuevos; sin contacto con terceros."
+    },
+    {
+      "provider_key": "denue_clues_candidate_8559379",
+      "name": "LABORATORIO DE ANALISIS CLINICOS BIO-TECK",
+      "slug": "laboratorio-de-analisis-clinicos-bio-teck-8559379",
+      "website_url": null,
+      "website_uncertainty": "Sitio propio no acreditado; el directorio de referencia no es la web de la institución.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621511"
+      ],
+      "denue_record_ids": [
+        "8559379"
+      ],
+      "identity_note": "Identidad candidata investigada el 20-oct-2026 por autorización D-021/D-022. DENUE 8559379, publicación INEGI 20-may-2026, captura 9-oct-2026; referencia CLUES PLSMP009814, hoja CLUES_202608 fila 44745, XLSX SHA256 5a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre original DENUE: LABORATORIO DE ANALISIS CLINICOS BIO-TECK; nombre de unidad y comercial CLUES: BIO-TECK LABORATORIO DE ANÁLISIS CLÍNICOS. Las mismas palabras completas están reordenadas; no se usó fuzzy ni se eliminaron palabras específicas. Municipio 164, localidad 0001, CP 75200, tipo de vía, vía y exterior completo concuerdan. DENUE conserva exterior='123', letra_ext='', interior='', letra_int=''; CLUES interior=''. Asentamiento DENUE BARRIO CENTRO; CLUES COLONIA TEPEACA CENTRO. Los descriptores de asentamiento se conservan separados, sin homologar ni sustituir los datos DENUE. Clasificación DENUE 621511 y tipo branch conservados. EN OPERACION corresponde al corte mensual agosto 2026 y no acredita operación actual, disponibilidad, red ni titularidad. No se infiere sucesión desde una clave histórica. Sólo se incorporan campos licenciados DENUE de identidad y domicilio; CLUES es referencia de investigación, sin nueva fuente de ingesta ni aprobación de licencia/política o collector. Marca candidata verification_pending, sede pending, website NULL por no acreditar sitio propio. Sin estudios, equivalencias clínicas, ofertas, precios, horarios o disponibilidad nuevos; sin contacto con terceros."
+    }
+  ]
+}

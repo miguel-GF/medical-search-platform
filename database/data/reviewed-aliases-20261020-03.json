@@ -1,0 +1,84 @@
+{
+  "review_id": "pruevia:evidence-review:20261020:03",
+  "research_date": "2026-10-20",
+  "scope": "Revisión68: vitaminaD25-hidroxi total Chopo y actividadproteínaC en plasma SEMIN, dos identidades nominales observadas. Sin cambiar concepto genérico de vitaminaD ni resolvedor. FactorXIII y CélulasLE retenidos; sin ofertas nuevas.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "907c3caf2e6bfdad76b332a63334ec20995f1fdcf671c5dfaf8a44ae20dfe425",
+  "research_snapshot_sha256": "261b64fe6becff110286bef0f86f30c5841e530550690c2fd462018931eaf7a8",
+  "definition_sha256": "901bbb0ff9b6da8f6348341b8ea265ac7eae4a8290bca124665d0ac0fb5ed4b1",
+  "new_concepts": [
+    {
+      "item_id": "38f6ec01-dbc3-5388-bdb6-6d8afb8be58d",
+      "canonical_name": "Vitamina D 25-hidroxi total",
+      "component": "25-hydroxyvitamin D.total",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://www.chopo.com.mx/puebla/25-hidroxi-vitamina-d-total-calciferol",
+      "reason": "Chopo22211 declara 25 HIDROXI VITAMINA D TOTAL (CALCIFEROL). Total es literal: identidad nueva separada del concepto25-hidroxi sin fracción especificada34f23445-1b6c-564a-bf33-e29ffc0f7882; no se cambia su definición. Labcorp081950 documenta resultado total y lo distingue de1,25-dihidroxi. No transferir técnica ICMA, fracciones individuales D2/D3, resultados fraccionados ni muestra del otro laboratorio. El texto público propio menciona sangre, pero el RAW de la orden no identifica matriz exacta; no convertir a suero. No equivale a1,25-dihidroxi,24,25-dihidroxi, vitaminaD2/D3 individual, libre o cociente. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "RAW no declara matriz exacta; no inferir suero/plasma de otra fuente."
+    },
+    {
+      "item_id": "d3554488-8d55-5fd7-a747-e620ce9c7d33",
+      "canonical_name": "Actividad de proteína C de coagulación en plasma",
+      "component": "Protein C activity",
+      "specimen_code": "plasma",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://semindigital.com/semin-api/api/v3/catalog/informacion-catalogo/5556",
+      "reason": "SEMIN5556 declara Proteina C de la coagulacion (Actividad) y3ml Plasma con Citrato. Congelado. Labcorp117705 y Mayo9339 documentan actividad/funcional de proteínaC. No equivale a proteínaC reactiva, antígeno de proteínaC, proteínaS, APC resistencia/factorVLeiden, genPROC o panel trombofilia. Método cromogénico/coagulométrico no declarado por SEMIN; no transferir el método de referencia. La recuperación webtool fresca del endpoint falló; conservar RAW y no afirmar nueva captura propia. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "25 hidroxi vitamina d total calciferol",
+      "item_id": "38f6ec01-dbc3-5388-bdb6-6d8afb8be58d",
+      "canonical_name": "Vitamina D 25-hidroxi total",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.chopo.com.mx/puebla/25-hidroxi-vitamina-d-total-calciferol",
+      "reason": "Chopo22211 declara 25 HIDROXI VITAMINA D TOTAL (CALCIFEROL). Total es literal: identidad nueva separada del concepto25-hidroxi sin fracción especificada34f23445-1b6c-564a-bf33-e29ffc0f7882; no se cambia su definición. Labcorp081950 documenta resultado total y lo distingue de1,25-dihidroxi. No transferir técnica ICMA, fracciones individuales D2/D3, resultados fraccionados ni muestra del otro laboratorio. El texto público propio menciona sangre, pero el RAW de la orden no identifica matriz exacta; no convertir a suero. No equivale a1,25-dihidroxi,24,25-dihidroxi, vitaminaD2/D3 individual, libre o cociente. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "edad5c4c-9cb7-5098-bb6d-4d9f58907cbc",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "provider_display_name"
+        ],
+        "value": "25 HIDROXI VITAMINA D TOTAL (CALCIFEROL)"
+      }
+    },
+    {
+      "alias": "proteina c de la coagulacion actividad",
+      "item_id": "d3554488-8d55-5fd7-a747-e620ce9c7d33",
+      "canonical_name": "Actividad de proteína C de coagulación en plasma",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://semindigital.com/semin-api/api/v3/catalog/informacion-catalogo/5556",
+      "reason": "SEMIN5556 declara Proteina C de la coagulacion (Actividad) y3ml Plasma con Citrato. Congelado. Labcorp117705 y Mayo9339 documentan actividad/funcional de proteínaC. No equivale a proteínaC reactiva, antígeno de proteínaC, proteínaS, APC resistencia/factorVLeiden, genPROC o panel trombofilia. Método cromogénico/coagulométrico no declarado por SEMIN; no transferir el método de referencia. La recuperación webtool fresca del endpoint falló; conservar RAW y no afirmar nueva captura propia. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "539dc30f-63a6-52d8-8ba4-8bd3e5deadab",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "sample_type"
+        ],
+        "value": "3 ml Plasma con Citrato. Congelado"
+      },
+      "source_attributes": {
+        "specimen_code": "plasma"
+      }
+    }
+  ],
+  "review_status": "reviewed",
+  "rollback_observation": {
+    "queries": 28,
+    "routes": [
+      "public.api_resolve_search",
+      "catalog.resolve_items_v6(provider)"
+    ],
+    "receipt_sha256": "1ec205499fbe5524f37a23dc63f27062527f3b0c171bfae34e018869a9b93368",
+    "observations_sha256": "5349b3fd37c047ec00d32d51b7176f53aa7a09940849d2dc119580bd58672b77",
+    "scope_limit": "Los vecinos examinados no seleccionan los candidatos; no acredita conservación universal de calificadores ni equivalencia analítica."
+  }
+}

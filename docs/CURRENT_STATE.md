@@ -17,6 +17,20 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Revisión68 e identidad35,21-oct04:43–04:46UTC (20-oct local):** vitaminaD25-hidroxi
+total y actividadproteínaC en plasma incorporadas: dos conceptos/dos registros;
+definición genérica previa y RAW intactos. BIO-TECK Tepeaca y Médica Norte Acatzingo
+añaden dos marcas/sedes candidatas, sin ofertas. **556 conceptos /3,327 favorables /
+4,061 pendientes /946 históricos /176 marcas /260 sedes /234 ofertas /112 migraciones**.
+CélulasLE8 retenidas: rollback pierdeIgG/x2 tras nombre canónico; factorXIII1
+retenido por guard de muestra. Cola56; PID16372 ausente,55ledgers auditados antes
+de restaurar PID1812. API/Admin/Paciente localesHTTP200. Sin despliegue.
+Inventario completo04:48:32UTC:752grupos/4,061pendientes/1,335términos; memoria
+62revisiones/417aliases/436reglas/2,967históricos.56ledgers y253archivos previos
+verificados; contadores/fuentes/cola/resolvedor intactos, ningún pendiente aprobado
+por memoria.
+[Evidencia, retenciones y continuidad](PUEBLA_REVIEW_68_AND_IDENTITIES_35_20261021.md).
+
 **Pasteur y revisión66,20-oct13:48:55UTC:** sitio concordante incorporado a marca
 existente con nota fechada y antecedente íntegro. Rollback y único commit,
 observador independiente; sede/RAW/políticas y contadores conservados. Sin nuevas
