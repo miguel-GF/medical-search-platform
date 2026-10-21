@@ -1,0 +1,54 @@
+{
+  "review_id": "pruevia:evidence-review:20261021:05",
+  "research_date": "2026-10-21",
+  "scope": "Revisión73: proteína de Bence Jones con orina explícita en ocho registros SD.23 consultas públicas y23 de proveedor observadas sin selección incompatible entre variantes examinadas. Duración, método, propiedad y escala desconocidos. Rotavirus/BK excluidos. Sin cambio de resolvedor u ofertas.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "fa682e4653351070ed2bec300005c04dcb2a90879bc8f002a0d7c30e28467417",
+  "research_snapshot_sha256": "e7ef793e33b055f87a23ec2f8e0ce571837a38cdc05fd8871a46a260f6909059",
+  "definition_sha256": "b6c167615f7d5114d0c29a9ac13be69f9dda970530d61e86ff001d319d4f4955",
+  "new_concepts": [
+    {
+      "item_id": "5f23fcf3-8e26-5ba2-8a24-96efdfd65566",
+      "canonical_name": "Proteína de Bence Jones en orina",
+      "component": "Bence Jones protein",
+      "specimen_code": "urine",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://medlineplus.gov/ency/article/003597.htm",
+      "reason": "SD declara proteína de Bence Jones y preparación de orina, primera matutina o a cualquier hora; no restringir a primera muestra ni inferir 24 horas. Referencia nominal de proteínas Bence Jones urinarias; no trasladar cuantificación, inmunofijación, técnica, escala o diagnóstico de la referencia. No equivale a proteínas totales, cociente ni panel sérico de cadenas libres kappa/lambda. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "proteina de bence jones",
+      "item_id": "5f23fcf3-8e26-5ba2-8a24-96efdfd65566",
+      "canonical_name": "Proteína de Bence Jones en orina",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://medlineplus.gov/ency/article/003597.htm",
+      "reason": "SD declara proteína de Bence Jones y preparación de orina, primera matutina o a cualquier hora; no restringir a primera muestra ni inferir 24 horas. Referencia nominal de proteínas Bence Jones urinarias; no trasladar cuantificación, inmunofijación, técnica, escala o diagnóstico de la referencia. No equivale a proteínas totales, cociente ni panel sérico de cadenas libres kappa/lambda. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Preparacion"
+        ],
+        "value": "RECOLECTAR EN UN RECIPIENTE ESTERIL LA PRIMER ORINA DE LA MAÑANA O A CUALQUIER HORA DEL DÍA. "
+      },
+      "source_attributes": {
+        "specimen_code": "urine"
+      }
+    }
+  ],
+  "review_status": "reviewed",
+  "rollback_observation": {
+    "queries": 23,
+    "public_and_provider_core": true,
+    "receipt_sha256": "51c7cd28295e2ed3ed4cf4d5d9ca93afeb10ea7b88a6c1549fb59364182d77e4",
+    "observations_sha256": "e68797651b5c4fdd1c2386501a778a99a7375122b0d623367f9b45392abcf218",
+    "scope_limit": "Observaciones acotadas, no protección universal ni equivalencia analítica."
+  }
+}

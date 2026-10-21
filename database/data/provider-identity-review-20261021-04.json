@@ -1,0 +1,131 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261021:04",
+  "research_date": "2026-10-21",
+  "reviewed_by": "Codex; revisión individual del coordinador",
+  "authorization": "D-021/D-022: identidades candidatas con evidencia licenciada, sin ofertas ni verificación comercial.",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "Identidad39: ocho establecimientos con denominación propia o unidad rural contextualizada y domicilio numerado completo concordantes. Institución IMSS/IMSS-Bienestar discordante conservada; ocho identidades independientes sin operador ni red inferidos.",
+  "providers": [
+    {
+      "provider_key": "denue_clues_candidate_3515989",
+      "name": "CENTRO DE SALUD 1 NUCLEO BASICO SAN FELIPE XOCHILTEPEC",
+      "slug": "centro-de-salud-1-nucleo-basico-san-felipe-xochiltepec-3515989",
+      "website_url": null,
+      "website_uncertainty": "DENUE no declara sitio propio acreditado para esta identidad; la referencia CLUES no se atribuye como website del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "3515989"
+      ],
+      "identity_note": "Identidad candidata revisada individualmente el 21-oct-2026 conforme D-021/D-022. DENUE 3515989, INEGI 20-may-2026/captura 9-oct; CLUES PLIMB003303, hoja CLUES_202608 fila 42437, SHA256 5a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE íntegro: CENTRO DE SALUD 1 NUCLEO BASICO SAN FELIPE XOCHILTEPEC; nombre CLUES íntegro: CENTRO DE SALUD XOCHILTEPEC. La denominación distintiva y el domicilio numerado completo sustentan revisión individual. Se conservan descriptores y denominaciones institucionales íntegros. CLUES nombra cuatro unidades rurales por localidad dentro de filas de establecimientos; contexto territorial, sanitario y domicilio completo sustentan la revisión individual, no coincidencia genérica de localidad. No es regla automática de equivalencias de nombres o unión por dirección. Municipio 201, localidad 0001, CP 74620, tipo de vía, vialidad y exterior 12 concordantes; letras e interiores vacíos. Asentamiento DENUE: LOCALIDAD XOCHILTEPEC; CLUES: PUEBLO XOCHILTEPEC; valores conservados sin homologar. SCIAN 621116/tipo clinic conservados aunque el nombre sugiera clínica u hospital. No inferir personalidad jurídica, operador, propietario, red o sucesión. Directorio IMSS400/408 corrobora Tzicatlán, Hueytamalco y Teopantlán pero etiqueta IMSS BIENESTAR frente a institución IMS de CLUES: discrepancia conservada sin decidir afiliación. Xaltipan no se asigna por analogía a esa red. San Joaquín y Candia conservan descriptores diferentes de ambas fuentes; ninguna regla elimina maternidad, Nuestra Señora de Lourdes o forma social. CLUES EN OPERACION sólo refleja agosto, no operación vigente. Sólo campos licenciados DENUE; CLUES referencia de investigación sin política de ingesta nueva. DENUE no declara sitio propio acreditado para esta identidad; la referencia CLUES no se atribuye como website del establecimiento. Marca verification_pending y sede pending. Sin estudios, ofertas, precios, disponibilidad u horarios aprobados."
+    },
+    {
+      "provider_key": "denue_clues_candidate_6762716",
+      "name": "CENTRO DE SALUD AHUATLAN NUCLEO BASICO MAS DENTAL",
+      "slug": "centro-de-salud-ahuatlan-nucleo-basico-mas-dental-6762716",
+      "website_url": null,
+      "website_uncertainty": "DENUE no declara sitio propio acreditado para esta identidad; la referencia CLUES no se atribuye como website del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621112"
+      ],
+      "denue_record_ids": [
+        "6762716"
+      ],
+      "identity_note": "Identidad candidata revisada individualmente el 21-oct-2026 conforme D-021/D-022. DENUE 6762716, INEGI 20-may-2026/captura 9-oct; CLUES PLIMB007380, hoja CLUES_202608 fila 42845, SHA256 5a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE íntegro: CENTRO DE SALUD AHUATLAN NUCLEO BASICO MAS DENTAL; nombre CLUES íntegro: CENTRO DE SALUD UN NÚCLEO BÁSICO MAS DENTAL AHUATLÁN. La denominación distintiva y el domicilio numerado completo sustentan revisión individual. Se conservan descriptores y denominaciones institucionales íntegros. CLUES nombra cuatro unidades rurales por localidad dentro de filas de establecimientos; contexto territorial, sanitario y domicilio completo sustentan la revisión individual, no coincidencia genérica de localidad. No es regla automática de equivalencias de nombres o unión por dirección. Municipio 007, localidad 0001, CP 74640, tipo de vía, vialidad y exterior 5 concordantes; letras e interiores vacíos. Asentamiento DENUE: BARRIO CALVARIO; CLUES: BARRIO EL CALVARIO; valores conservados sin homologar. SCIAN 621112/tipo office conservados aunque el nombre sugiera clínica u hospital. No inferir personalidad jurídica, operador, propietario, red o sucesión. Directorio IMSS400/408 corrobora Tzicatlán, Hueytamalco y Teopantlán pero etiqueta IMSS BIENESTAR frente a institución IMS de CLUES: discrepancia conservada sin decidir afiliación. Xaltipan no se asigna por analogía a esa red. San Joaquín y Candia conservan descriptores diferentes de ambas fuentes; ninguna regla elimina maternidad, Nuestra Señora de Lourdes o forma social. CLUES EN OPERACION sólo refleja agosto, no operación vigente. Sólo campos licenciados DENUE; CLUES referencia de investigación sin política de ingesta nueva. DENUE no declara sitio propio acreditado para esta identidad; la referencia CLUES no se atribuye como website del establecimiento. Marca verification_pending y sede pending. Sin estudios, ofertas, precios, disponibilidad u horarios aprobados."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3451618",
+      "name": "CLINICA DE IMSS UMR TZICATLAN",
+      "slug": "clinica-de-imss-umr-tzicatlan-3451618",
+      "website_url": null,
+      "website_uncertainty": "DENUE no declara sitio propio acreditado para esta identidad; la referencia CLUES no se atribuye como website del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "3451618"
+      ],
+      "identity_note": "Identidad candidata revisada individualmente el 21-oct-2026 conforme D-021/D-022. DENUE 3451618, INEGI 20-may-2026/captura 9-oct; CLUES PLIMS001805, hoja CLUES_202608 fila 43395, SHA256 5a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE íntegro: CLINICA DE IMSS UMR TZICATLAN; nombre CLUES íntegro: TZICATLÁN (HUEHUETLÁN EL CHICO). La denominación distintiva y el domicilio numerado completo sustentan revisión individual. Se conservan descriptores y denominaciones institucionales íntegros. CLUES nombra cuatro unidades rurales por localidad dentro de filas de establecimientos; contexto territorial, sanitario y domicilio completo sustentan la revisión individual, no coincidencia genérica de localidad. No es regla automática de equivalencias de nombres o unión por dirección. Municipio 073, localidad 0011, CP 74728, tipo de vía, vialidad y exterior 7 concordantes; letras e interiores vacíos. Asentamiento DENUE: LOCALIDAD TZICATLAN; CLUES: PUEBLO TZICATLÁN; valores conservados sin homologar. SCIAN 621116/tipo clinic conservados aunque el nombre sugiera clínica u hospital. No inferir personalidad jurídica, operador, propietario, red o sucesión. Directorio IMSS400/408 corrobora Tzicatlán, Hueytamalco y Teopantlán pero etiqueta IMSS BIENESTAR frente a institución IMS de CLUES: discrepancia conservada sin decidir afiliación. Xaltipan no se asigna por analogía a esa red. San Joaquín y Candia conservan descriptores diferentes de ambas fuentes; ninguna regla elimina maternidad, Nuestra Señora de Lourdes o forma social. CLUES EN OPERACION sólo refleja agosto, no operación vigente. Sólo campos licenciados DENUE; CLUES referencia de investigación sin política de ingesta nueva. DENUE no declara sitio propio acreditado para esta identidad; la referencia CLUES no se atribuye como website del establecimiento. Marca verification_pending y sede pending. Sin estudios, ofertas, precios, disponibilidad u horarios aprobados."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3473497",
+      "name": "INSTITUTO MEXICANO DEL SEGURO SOCIAL UNIDAD MEDICA RURAL HUEYTAMALCO",
+      "slug": "instituto-mexicano-del-seguro-social-unidad-medica-rural-hueytamalco-3473497",
+      "website_url": null,
+      "website_uncertainty": "DENUE no declara sitio propio acreditado para esta identidad; la referencia CLUES no se atribuye como website del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "622112"
+      ],
+      "denue_record_ids": [
+        "3473497"
+      ],
+      "identity_note": "Identidad candidata revisada individualmente el 21-oct-2026 conforme D-021/D-022. DENUE 3473497, INEGI 20-may-2026/captura 9-oct; CLUES PLIMS001834, hoja CLUES_202608 fila 43398, SHA256 5a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE íntegro: INSTITUTO MEXICANO DEL SEGURO SOCIAL UNIDAD MEDICA RURAL HUEYTAMALCO; nombre CLUES íntegro: HUEYTAMALCO. La denominación distintiva y el domicilio numerado completo sustentan revisión individual. Se conservan descriptores y denominaciones institucionales íntegros. CLUES nombra cuatro unidades rurales por localidad dentro de filas de establecimientos; contexto territorial, sanitario y domicilio completo sustentan la revisión individual, no coincidencia genérica de localidad. No es regla automática de equivalencias de nombres o unión por dirección. Municipio 076, localidad 0001, CP 73580, tipo de vía, vialidad y exterior 33 concordantes; letras e interiores vacíos. Asentamiento DENUE: COLONIA CENTRO; CLUES: PUEBLO HUEYTAMALCO; valores conservados sin homologar. SCIAN 622112/tipo hospital conservados aunque el nombre sugiera clínica u hospital. No inferir personalidad jurídica, operador, propietario, red o sucesión. Directorio IMSS400/408 corrobora Tzicatlán, Hueytamalco y Teopantlán pero etiqueta IMSS BIENESTAR frente a institución IMS de CLUES: discrepancia conservada sin decidir afiliación. Xaltipan no se asigna por analogía a esa red. San Joaquín y Candia conservan descriptores diferentes de ambas fuentes; ninguna regla elimina maternidad, Nuestra Señora de Lourdes o forma social. CLUES EN OPERACION sólo refleja agosto, no operación vigente. Sólo campos licenciados DENUE; CLUES referencia de investigación sin política de ingesta nueva. DENUE no declara sitio propio acreditado para esta identidad; la referencia CLUES no se atribuye como website del establecimiento. Marca verification_pending y sede pending. Sin estudios, ofertas, precios, disponibilidad u horarios aprobados."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3504905",
+      "name": "UNIDAD MEDICA RURAL DE TEOPANTLAN",
+      "slug": "unidad-medica-rural-de-teopantlan-3504905",
+      "website_url": null,
+      "website_uncertainty": "DENUE no declara sitio propio acreditado para esta identidad; la referencia CLUES no se atribuye como website del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "622112"
+      ],
+      "denue_record_ids": [
+        "3504905"
+      ],
+      "identity_note": "Identidad candidata revisada individualmente el 21-oct-2026 conforme D-021/D-022. DENUE 3504905, INEGI 20-may-2026/captura 9-oct; CLUES PLIMS002855, hoja CLUES_202608 fila 43500, SHA256 5a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE íntegro: UNIDAD MEDICA RURAL DE TEOPANTLAN; nombre CLUES íntegro: TEOPANTLÁN. La denominación distintiva y el domicilio numerado completo sustentan revisión individual. Se conservan descriptores y denominaciones institucionales íntegros. CLUES nombra cuatro unidades rurales por localidad dentro de filas de establecimientos; contexto territorial, sanitario y domicilio completo sustentan la revisión individual, no coincidencia genérica de localidad. No es regla automática de equivalencias de nombres o unión por dirección. Municipio 159, localidad 0001, CP 74600, tipo de vía, vialidad y exterior 3 concordantes; letras e interiores vacíos. Asentamiento DENUE: BARRIO SANTA LUCIA; CLUES: PUEBLO TEOPANTLÁN; valores conservados sin homologar. SCIAN 622112/tipo hospital conservados aunque el nombre sugiera clínica u hospital. No inferir personalidad jurídica, operador, propietario, red o sucesión. Directorio IMSS400/408 corrobora Tzicatlán, Hueytamalco y Teopantlán pero etiqueta IMSS BIENESTAR frente a institución IMS de CLUES: discrepancia conservada sin decidir afiliación. Xaltipan no se asigna por analogía a esa red. San Joaquín y Candia conservan descriptores diferentes de ambas fuentes; ninguna regla elimina maternidad, Nuestra Señora de Lourdes o forma social. CLUES EN OPERACION sólo refleja agosto, no operación vigente. Sólo campos licenciados DENUE; CLUES referencia de investigación sin política de ingesta nueva. DENUE no declara sitio propio acreditado para esta identidad; la referencia CLUES no se atribuye como website del establecimiento. Marca verification_pending y sede pending. Sin estudios, ofertas, precios, disponibilidad u horarios aprobados."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3487806",
+      "name": "UNIDAD DE SALUD XALTIPAN",
+      "slug": "unidad-de-salud-xaltipan-3487806",
+      "website_url": null,
+      "website_uncertainty": "DENUE no declara sitio propio acreditado para esta identidad; la referencia CLUES no se atribuye como website del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "622112"
+      ],
+      "denue_record_ids": [
+        "3487806"
+      ],
+      "identity_note": "Identidad candidata revisada individualmente el 21-oct-2026 conforme D-021/D-022. DENUE 3487806, INEGI 20-may-2026/captura 9-oct; CLUES PLIMS003490, hoja CLUES_202608 fila 43564, SHA256 5a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE íntegro: UNIDAD DE SALUD XALTIPAN; nombre CLUES íntegro: XALTIPAN. La denominación distintiva y el domicilio numerado completo sustentan revisión individual. Se conservan descriptores y denominaciones institucionales íntegros. CLUES nombra cuatro unidades rurales por localidad dentro de filas de establecimientos; contexto territorial, sanitario y domicilio completo sustentan la revisión individual, no coincidencia genérica de localidad. No es regla automática de equivalencias de nombres o unión por dirección. Municipio 199, localidad 0016, CP 73972, tipo de vía, vialidad y exterior 204 concordantes; letras e interiores vacíos. Asentamiento DENUE: LOCALIDAD XALTIPAN; CLUES: PUEBLO XALTIPAN; valores conservados sin homologar. SCIAN 622112/tipo hospital conservados aunque el nombre sugiera clínica u hospital. No inferir personalidad jurídica, operador, propietario, red o sucesión. Directorio IMSS400/408 corrobora Tzicatlán, Hueytamalco y Teopantlán pero etiqueta IMSS BIENESTAR frente a institución IMS de CLUES: discrepancia conservada sin decidir afiliación. Xaltipan no se asigna por analogía a esa red. San Joaquín y Candia conservan descriptores diferentes de ambas fuentes; ninguna regla elimina maternidad, Nuestra Señora de Lourdes o forma social. CLUES EN OPERACION sólo refleja agosto, no operación vigente. Sólo campos licenciados DENUE; CLUES referencia de investigación sin política de ingesta nueva. DENUE no declara sitio propio acreditado para esta identidad; la referencia CLUES no se atribuye como website del establecimiento. Marca verification_pending y sede pending. Sin estudios, ofertas, precios, disponibilidad u horarios aprobados."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3531415",
+      "name": "CLINICA SAN JOAQUIN",
+      "slug": "clinica-san-joaquin-3531415",
+      "website_url": null,
+      "website_uncertainty": "DENUE no declara sitio propio acreditado para esta identidad; la referencia CLUES no se atribuye como website del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621111"
+      ],
+      "denue_record_ids": [
+        "3531415"
+      ],
+      "identity_note": "Identidad candidata revisada individualmente el 21-oct-2026 conforme D-021/D-022. DENUE 3531415, INEGI 20-may-2026/captura 9-oct; CLUES PLSMP000632, hoja CLUES_202608 fila 43827, SHA256 5a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE íntegro: CLINICA SAN JOAQUIN; nombre CLUES íntegro: CLÍNICA MATERNA INFANTIL SAN JOAQUIN. La denominación distintiva y el domicilio numerado completo sustentan revisión individual. Se conservan descriptores y denominaciones institucionales íntegros. CLUES nombra cuatro unidades rurales por localidad dentro de filas de establecimientos; contexto territorial, sanitario y domicilio completo sustentan la revisión individual, no coincidencia genérica de localidad. No es regla automática de equivalencias de nombres o unión por dirección. Municipio 164, localidad 0001, CP 75200, tipo de vía, vialidad y exterior 206 concordantes; letras e interiores vacíos. Asentamiento DENUE: COLONIA CENTRO; CLUES: COLONIA TEPEACA CENTRO; valores conservados sin homologar. SCIAN 621111/tipo office conservados aunque el nombre sugiera clínica u hospital. No inferir personalidad jurídica, operador, propietario, red o sucesión. Directorio IMSS400/408 corrobora Tzicatlán, Hueytamalco y Teopantlán pero etiqueta IMSS BIENESTAR frente a institución IMS de CLUES: discrepancia conservada sin decidir afiliación. Xaltipan no se asigna por analogía a esa red. San Joaquín y Candia conservan descriptores diferentes de ambas fuentes; ninguna regla elimina maternidad, Nuestra Señora de Lourdes o forma social. CLUES EN OPERACION sólo refleja agosto, no operación vigente. Sólo campos licenciados DENUE; CLUES referencia de investigación sin política de ingesta nueva. DENUE no declara sitio propio acreditado para esta identidad; la referencia CLUES no se atribuye como website del establecimiento. Marca verification_pending y sede pending. Sin estudios, ofertas, precios, disponibilidad u horarios aprobados."
+    },
+    {
+      "provider_key": "denue_clues_candidate_6450629",
+      "name": "CLINICA MEDICA QUIRURGICA CANDIA NUESTRA SEÑORA DE LOURDES",
+      "slug": "clinica-medica-quirurgica-candia-nuestra-senora-de-lourdes-6450629",
+      "website_url": null,
+      "website_uncertainty": "DENUE no declara sitio propio acreditado para esta identidad; la referencia CLUES no se atribuye como website del establecimiento.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "622111"
+      ],
+      "denue_record_ids": [
+        "6450629"
+      ],
+      "identity_note": "Identidad candidata revisada individualmente el 21-oct-2026 conforme D-021/D-022. DENUE 6450629, INEGI 20-may-2026/captura 9-oct; CLUES PLSMP001460, hoja CLUES_202608 fila 43910, SHA256 5a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE íntegro: CLINICA MEDICA QUIRURGICA CANDIA NUESTRA SEÑORA DE LOURDES; nombre CLUES íntegro: CLÍNICA MEDICA QUIRURGICA CANDIA, S.C.. La denominación distintiva y el domicilio numerado completo sustentan revisión individual. Se conservan descriptores y denominaciones institucionales íntegros. CLUES nombra cuatro unidades rurales por localidad dentro de filas de establecimientos; contexto territorial, sanitario y domicilio completo sustentan la revisión individual, no coincidencia genérica de localidad. No es regla automática de equivalencias de nombres o unión por dirección. Municipio 114, localidad 0001, CP 72587, tipo de vía, vialidad y exterior 1612 concordantes; letras e interiores vacíos. Asentamiento DENUE: COLONIA GRANJAS DE SAN ISIDRO; CLUES: COLONIA GRANJAS SAN ISIDRO; valores conservados sin homologar. SCIAN 622111/tipo hospital conservados aunque el nombre sugiera clínica u hospital. No inferir personalidad jurídica, operador, propietario, red o sucesión. Directorio IMSS400/408 corrobora Tzicatlán, Hueytamalco y Teopantlán pero etiqueta IMSS BIENESTAR frente a institución IMS de CLUES: discrepancia conservada sin decidir afiliación. Xaltipan no se asigna por analogía a esa red. San Joaquín y Candia conservan descriptores diferentes de ambas fuentes; ninguna regla elimina maternidad, Nuestra Señora de Lourdes o forma social. CLUES EN OPERACION sólo refleja agosto, no operación vigente. Sólo campos licenciados DENUE; CLUES referencia de investigación sin política de ingesta nueva. DENUE no declara sitio propio acreditado para esta identidad; la referencia CLUES no se atribuye como website del establecimiento. Marca verification_pending y sede pending. Sin estudios, ofertas, precios, disponibilidad u horarios aprobados."
+    }
+  ]
+}

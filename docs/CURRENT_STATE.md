@@ -1,6 +1,6 @@
 # Estado y prioridades de Pruevia
 
-Tipo: punto de continuidad. Actualizado el 21-oct-2026 UTC (20-oct local) para operación y datos;
+Tipo: punto de continuidad. Actualizado el 21-oct-2026 para operación y datos;
 el corte histórico de publicación de septiembre corresponde al árbol local, el
 ledger Supabase y los Workers de producción. El proyecto enlazado se llama
 `pruevia-dev`, pero también es la base inicial de producción: las migraciones
@@ -16,6 +16,19 @@ base inicial de producción. Una escritura o migración allí afecta datos que
 podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
+
+**Revisión73 e identidad39,21-oct05:41–05:42UTC:** ocho BenceJonesurinaria incorporados,
+23consultas públicas/23deproveedor observadas,24RAW íntegros y16rotavirus/BK retenidos.
+Ocho establecimientos añadidos,191marcas/275sedes anteriores íntegras; discrepancia
+IMSS/IMSS-Bienestar conservada sin asignar red. **563conceptos/3,341favorables /
+4,047pendientes/199marcas/283sedes/234ofertas/112migraciones**. Cola60, mismo worker.
+Evaluación acotada del motor preparada y aprobación D-006 solicitada; sin ejecutar
+SQL compartido ni publicar. [Evidencia y continuidad](PUEBLA_REVIEW_73_AND_IDENTITIES_39_20261021.md).
+Inventario completo05:48UTC:745grupos/4,047pendientes/1,349términos; memoria66revisiones,
+424aliases/443reglas/2,981contextos históricos.60ledgers verificados,273archivos previos
+conservados; fuentes/contadores/cola/resolvedor base intactos. Ningún pendiente
+aprobado por memoria. Relectura12:30UTC (21-oct local): mismos conteos, review73
+already_applied; PID17024 vivo y watching. Corte archivado, no job investigador.
 
 **Revisión72 e identidad38,21-oct05:31–05:32UTC:** anticuerpos MuSK Chopo y captación
 T3 SEMIN con suero incorporados;37consultas públicas/37deproveedor observadas,

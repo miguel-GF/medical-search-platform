@@ -3,6 +3,14 @@
 > Informe de cobertura con snapshots fechados; sus cantidades y cadencias recomendadas no demuestran estado actual ni jobs activos.
 > Entrada: [índice vigente](README.md). Estado: [CURRENT_STATE](CURRENT_STATE.md).
 
+## Actualización — 21-oct-2026, 05:42 UTC
+
+**199 marcas /283 ubicaciones /234 ofertas**. Ocho identidades nuevas de centros
+y unidades rurales, San Joaquín y Candia; nombres/direcciones/tipos conservados.
+Discrepancia institucional IMSS/IMSS-Bienestar no resuelta como operador/red.
+Sin ofertas o verificación comercial nuevas.
+[Evidencia y límites](PUEBLA_REVIEW_73_AND_IDENTITIES_39_20261021.md).
+
 ## Actualización — 21-oct-2026, 05:32 UTC
 
 **191 marcas /275 ubicaciones /234 ofertas**. Identidades37–38 añadieron cuatro
