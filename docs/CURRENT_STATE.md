@@ -17,6 +17,15 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Identidad37 y revisión71,21-oct05:21–05:23UTC:** cuatro UMF numeradas incorporadas
+con nombres y domicilios DENUE conservados; rollback, único commit y observador
+independiente:182marcas/266sedes anteriores íntegras, cero ofertas nuevas.
+**186marcas/270sedes/560conceptos/3,331favorables/4,057pendientes/234ofertas/112migraciones**.
+IgE trigo Chopo1 retenido:30consultas públicas/30deproveedor en rollback muestran
+siete variantes incompatibles seleccionadas, incluidos IgG/IgA/x2/sinIgE.
+Ledger not_applied, contadores/fuentes intactos; sin encolar ni cambiar resolvedor.
+[Evidencia y continuidad](PUEBLA_IDENTITIES_37_AND_REVIEW_71_20261021.md).
+
 **Revisión70,21-oct05:11:58UTC:** tres anticuerpos Chopo incorporados con diana,
 isotipo y suero explícitos: SchistosomaIgG, T.cruziIgM y P.falciparumIgG.48consultas
 públicas/48deproveedor observadas; variantes examinadas no seleccionan los nuevos

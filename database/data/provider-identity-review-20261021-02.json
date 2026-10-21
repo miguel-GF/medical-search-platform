@@ -1,0 +1,71 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261021:02",
+  "research_date": "2026-10-21",
+  "reviewed_by": "Codex; revisión individual del coordinador",
+  "authorization": "D-021/D-022: identidades candidatas con evidencia licenciada, sin ofertas ni verificación comercial.",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "Identidad37: cuatro UMF numeradas con domicilio completo concordante; identidades individuales, sin fusionar con IMSS-Bienestar ni afirmar operador jurídico.",
+  "providers": [
+    {
+      "provider_key": "denue_clues_candidate_3417474",
+      "name": "IMSS UNIDAD MEDICINA FAMILIAR 34",
+      "slug": "imss-unidad-medicina-familiar-34-3417474",
+      "website_url": null,
+      "website_uncertainty": "Website no acreditado para esta identidad; el dominio institucional consultado es referencia y no se atribuye como URL de sucursal. Texto DENUE conservado en RAW.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "3417474"
+      ],
+      "identity_note": "Identidad candidata revisada individualmente el 21-oct-2026 conforme D-021/D-022. DENUE 3417474, INEGI 20-may-2026/captura 9-oct; CLUES PLIMS000031, hoja CLUES_202608 fila 43218, SHA256 5a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE íntegro: IMSS UNIDAD MEDICINA FAMILIAR 34; nombre CLUES íntegro: UMF 34 ATLIXCO. Número de unidad y denominación corroborados individualmente con catálogo UMF institucional https://www.imss.gob.mx/sites/all/statics/pdf/informes/catalogo_UMF.pdf (captura SHA256 b85851990efbbac18dc670ead2868e0f48a3a22e59d6b8f0b19345f9a56857fc). UMF significa Unidad de Medicina Familiar según documentación institucional. La revisión no es una regla automática de siglas ni de unión por dirección. No asociar con IMSS-Bienestar, ni inferir persona jurídica, operador, propiedad o una red comercial. Municipio 019, localidad 0001, CP 74200, tipo de vía, vialidad y exterior 1102 concordantes; letras e interiores vacíos. Asentamiento DENUE: COLONIA CENTRO; CLUES: COLONIA ATLIXCO CENTRO; valores conservados sin homologar. Se conservan nombres DENUE incluso MEDICA/CLINICA y clase SCIAN 621116/tipo clinic. CLUES EN OPERACION sólo refleja agosto, no operación vigente. Sólo campos licenciados DENUE de identidad/dirección; CLUES e IMSS son referencias de investigación, sin fuente de ingesta o política nueva. Website no acreditado para esta identidad; el dominio institucional consultado es referencia y no se atribuye como URL de sucursal. Texto DENUE conservado en RAW. Marca verification_pending y sede pending. Sin estudios, precios, ofertas, disponibilidad, horarios o acceso sin derechohabiencia acreditados."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3254599",
+      "name": "UNIDAD DE MEDICINA FAMILIAR NUMERO 3 IMSS",
+      "slug": "unidad-de-medicina-familiar-numero-3-imss-3254599",
+      "website_url": null,
+      "website_uncertainty": "Website no acreditado para esta identidad; el dominio institucional consultado es referencia y no se atribuye como URL de sucursal. Texto DENUE conservado en RAW.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "3254599"
+      ],
+      "identity_note": "Identidad candidata revisada individualmente el 21-oct-2026 conforme D-021/D-022. DENUE 3254599, INEGI 20-may-2026/captura 9-oct; CLUES PLIMS000335, hoja CLUES_202608 fila 43248, SHA256 5a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE íntegro: UNIDAD DE MEDICINA FAMILIAR NUMERO 3 IMSS; nombre CLUES íntegro: UMF 3 SAN FELIPE. Número de unidad y denominación corroborados individualmente con catálogo UMF institucional https://www.imss.gob.mx/sites/all/statics/pdf/informes/catalogo_UMF.pdf (captura SHA256 b85851990efbbac18dc670ead2868e0f48a3a22e59d6b8f0b19345f9a56857fc). UMF significa Unidad de Medicina Familiar según documentación institucional. La revisión no es una regla automática de siglas ni de unión por dirección. No asociar con IMSS-Bienestar, ni inferir persona jurídica, operador, propiedad o una red comercial. Municipio 114, localidad 0001, CP 72030, tipo de vía, vialidad y exterior 206 concordantes; letras e interiores vacíos. Asentamiento DENUE: COLONIA SAN FELIPE HUEYOTLIPAN; CLUES: COLONIA SAN FELPE HUEYOTLIPAN; valores conservados sin homologar. Se conservan nombres DENUE incluso MEDICA/CLINICA y clase SCIAN 621116/tipo clinic. CLUES EN OPERACION sólo refleja agosto, no operación vigente. Sólo campos licenciados DENUE de identidad/dirección; CLUES e IMSS son referencias de investigación, sin fuente de ingesta o política nueva. Website no acreditado para esta identidad; el dominio institucional consultado es referencia y no se atribuye como URL de sucursal. Texto DENUE conservado en RAW. Marca verification_pending y sede pending. Sin estudios, precios, ofertas, disponibilidad, horarios o acceso sin derechohabiencia acreditados."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3471377",
+      "name": "CLINICA IMSS UMF4",
+      "slug": "clinica-imss-umf4-3471377",
+      "website_url": null,
+      "website_uncertainty": "Website no acreditado para esta identidad; el dominio institucional consultado es referencia y no se atribuye como URL de sucursal. Texto DENUE conservado en RAW.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "3471377"
+      ],
+      "identity_note": "Identidad candidata revisada individualmente el 21-oct-2026 conforme D-021/D-022. DENUE 3471377, INEGI 20-may-2026/captura 9-oct; CLUES PLIMS000340, hoja CLUES_202608 fila 43249, SHA256 5a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE íntegro: CLINICA IMSS UMF4; nombre CLUES íntegro: UMF 4 CONSTANCIA. Número de unidad y denominación corroborados individualmente con catálogo UMF institucional https://www.imss.gob.mx/sites/all/statics/pdf/informes/catalogo_UMF.pdf (captura SHA256 b85851990efbbac18dc670ead2868e0f48a3a22e59d6b8f0b19345f9a56857fc). UMF significa Unidad de Medicina Familiar según documentación institucional. La revisión no es una regla automática de siglas ni de unión por dirección. No asociar con IMSS-Bienestar, ni inferir persona jurídica, operador, propiedad o una red comercial. Municipio 114, localidad 0001, CP 72110, tipo de vía, vialidad y exterior 6 concordantes; letras e interiores vacíos. Asentamiento DENUE: COLONIA LUZ OBRERA; CLUES: COLONIA LUZ OBRERA; valores conservados sin homologar. Se conservan nombres DENUE incluso MEDICA/CLINICA y clase SCIAN 621116/tipo clinic. CLUES EN OPERACION sólo refleja agosto, no operación vigente. Sólo campos licenciados DENUE de identidad/dirección; CLUES e IMSS son referencias de investigación, sin fuente de ingesta o política nueva. Website no acreditado para esta identidad; el dominio institucional consultado es referencia y no se atribuye como URL de sucursal. Texto DENUE conservado en RAW. Marca verification_pending y sede pending. Sin estudios, precios, ofertas, disponibilidad, horarios o acceso sin derechohabiencia acreditados."
+    },
+    {
+      "provider_key": "denue_clues_candidate_3510464",
+      "name": "UNIDAD MEDICA FAMILIAR N 30",
+      "slug": "unidad-medica-familiar-n-30-3510464",
+      "website_url": null,
+      "website_uncertainty": "Website no acreditado para esta identidad; el dominio institucional consultado es referencia y no se atribuye como URL de sucursal. Texto DENUE conservado en RAW.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "3510464"
+      ],
+      "identity_note": "Identidad candidata revisada individualmente el 21-oct-2026 conforme D-021/D-022. DENUE 3510464, INEGI 20-may-2026/captura 9-oct; CLUES PLIMS000410, hoja CLUES_202608 fila 43256, SHA256 5a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. Nombre DENUE íntegro: UNIDAD MEDICA FAMILIAR N 30; nombre CLUES íntegro: UMF 30 TEHUACÁN. Número de unidad y denominación corroborados individualmente con catálogo UMF institucional https://www.imss.gob.mx/sites/all/statics/pdf/informes/catalogo_UMF.pdf (captura SHA256 b85851990efbbac18dc670ead2868e0f48a3a22e59d6b8f0b19345f9a56857fc). UMF significa Unidad de Medicina Familiar según documentación institucional. La revisión no es una regla automática de siglas ni de unión por dirección. No asociar con IMSS-Bienestar, ni inferir persona jurídica, operador, propiedad o una red comercial. Municipio 156, localidad 0001, CP 75700, tipo de vía, vialidad y exterior 200 concordantes; letras e interiores vacíos. Asentamiento DENUE: COLONIA IGNACIO ZARAGOZA; CLUES: COLONIA CENTRO CIUDAD; valores conservados sin homologar. Se conservan nombres DENUE incluso MEDICA/CLINICA y clase SCIAN 621116/tipo clinic. CLUES EN OPERACION sólo refleja agosto, no operación vigente. Sólo campos licenciados DENUE de identidad/dirección; CLUES e IMSS son referencias de investigación, sin fuente de ingesta o política nueva. Website no acreditado para esta identidad; el dominio institucional consultado es referencia y no se atribuye como URL de sucursal. Texto DENUE conservado en RAW. Marca verification_pending y sede pending. Sin estudios, precios, ofertas, disponibilidad, horarios o acceso sin derechohabiencia acreditados."
+    }
+  ]
+}
