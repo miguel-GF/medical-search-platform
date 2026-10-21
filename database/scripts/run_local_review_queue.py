@@ -160,6 +160,8 @@ def ledger(client: httpx.Client, ref: str, review: dict) -> str:
         extra_system_case = " when 'saliva' then 'Saliva'" if any(
             concept["specimen_code"] == "saliva" for concept in review["new_concepts"]
         ) else ""
+        if any(c["specimen_code"] == "nasal_mucus" for c in review["new_concepts"]):
+            extra_system_case += " when 'nasal_mucus' then 'Nasal mucus'"
         concepts = ",".join("(" + ",".join([q(c["item_id"]) + "::uuid", q(c["component"]),
                                             q(c["specimen_code"]), q(c.get("time_aspect")),
                                             q(c["evidence_url"]), q(c["reason"])]) + ")"

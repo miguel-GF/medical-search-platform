@@ -17,6 +17,12 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Revisión74,21-oct12:43–12:46UTC:** soporte local de moco nasal preparado con
+guarda íntegra y76fixtures/152SQL previos idénticos. Observación25consultas por ruta
+retiene8eosinófilos: pérdidas de serie/isotipo/negación y genéricos en proveedor.
+Registro insertado sólo dentro de rollback:9muestras remotas/8RAW íntegros,
+ledger not_applied, sin encolar ni cerrar. [Evidencia y límites](CATALOG_REVIEW_74_20261021.md).
+
 **Identidad40,21-oct12:39UTC:** cinco establecimientos incorporados con nombres/
 direcciones/clases conservados,199marcas/283sedes anteriores íntegras. SEMIN ya
 vinculado desde agosto excluido. **204marcas/288sedes/563conceptos/3,341favorables /

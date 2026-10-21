@@ -70,5 +70,5 @@ en fixtures era incompleta al omitir bindings anteriores, incluido SEMIN.
 **204marcas /288sedes /563conceptos /3,341registros favorables /4,047pendientes /
 946históricos /234ofertas /112migraciones**. Sin cobertura comercial nueva.
 El inventario clínico completo05:48UTC sigue vigente como corte, sin reconstruirlo
-por una incorporación exclusivamente de identidad. Continuar evidence propia
+por una incorporación exclusivamente de identidad. Continuar evidencia propia
 por sede y las hipótesis restantes con criterio de identidad individual.

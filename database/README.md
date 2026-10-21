@@ -18,6 +18,13 @@ una única matriz literal mediante «en ...» y no contenga negación. No extrae
 aprueba equivalencias; conserva el RAW completo y `specimen_code` por objetivo.
 Los56lotes anteriores generan112SQL idénticos. [Alcance y factorXIII](../docs/CATALOG_REVIEW_69_20261021.md).
 
+El soporte local `nasal_mucus` exige título íntegro, positivo y exclusivo del
+proveedor, marcador `en moco nasal` y atributos exactos en todos sus objetivos.
+No existe aún ese tipo en el registro productivo.76fixtures/152SQL anteriores
+son idénticos; el candidato nasal quedó retenido al observar pérdida de
+calificadores. No hubo alta persistente, cambio del lexicon o del resolvedor.
+[Estado real y límites](../docs/CATALOG_REVIEW_74_20261021.md).
+
 ## Goals
 
 Herramienta local de investigación: `scripts/extract_clues_registry.py` extrae

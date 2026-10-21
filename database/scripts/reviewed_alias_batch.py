@@ -46,6 +46,13 @@ def reviewed_title_specimen(row: dict, guard: dict, specimen: str) -> bool:
         return False
     matrices = {"serum": "suero", "plasma": "plasma", "urine": "orina",
                 "stool": "heces", "saliva": "saliva"}
+    if specimen == "nasal_mucus":
+        matrices["nasal_mucus"] = "moco nasal"
+        if re.search(
+                r"\b(?:y|e|o|u|hisopos?|swabs?|secrecion|secreciones|exudados?|"
+                r"nasofaringe|nasofaringeos?|nasofaringeas?|lavados?|aspirados?|"
+                r"esputos?|orina|suero|plasma|heces|saliva|sangre|lcr|semen)\b", title):
+            return False
     marker = matrices.get(specimen)
     present = {code for code, word in matrices.items() if re.search(r"\b" + word + r"\b", title)}
     return (marker is not None and present == {specimen}
@@ -88,6 +95,7 @@ def reviewed_targets(row: dict) -> list[dict]:
                     "urine": ("orina", "urinaria", "urinario"),
                     "stool": ("heces", "fecal", "fecales"),
                     "saliva": ("saliva", "salival"),
+                    "nasal_mucus": ("moco nasal",),
                 }.get(specimen)
                 original = unicodedata.normalize("NFKD", guard.get("value", "").casefold())
                 normalized = "".join(c for c in original if not unicodedata.combining(c))
@@ -96,6 +104,8 @@ def reviewed_targets(row: dict) -> list[dict]:
                         and not reviewed_title_specimen(row, guard, specimen))
                         or not any(re.search(r"\b" + marker + r"\b", normalized) for marker in markers)):
                     raise ValueError("Source specimen requires an explicit reviewed RAW specimen marker")
+                if specimen == "nasal_mucus" and not reviewed_title_specimen(row, guard, specimen):
+                    raise ValueError("Nasal mucus requires a complete positive provider title with literal moco nasal")
             elif set(attributes) == {"specimen_family"} and attributes["specimen_family"] == "blood":
                 if (guard.get("path") not in [["raw_study", "Preparacion"], ["raw_study", "Descripcion"], ["sample_type"]]
                         or not re.search(r"\bsangre\b", guard.get("value", ""), re.IGNORECASE)):
@@ -134,13 +144,18 @@ def render_new_concepts(review: dict, aliases: list[dict]) -> str:
             if (identity_scope != "analyte_order" or not isinstance(uncertainty, str)
                     or not uncertainty.strip() or concept.get("time_aspect") is not None):
                 raise ValueError("An analyte order without a specimen must record uncertainty and no duration")
-        elif specimen not in {"serum", "plasma", "urine", "stool", "saliva"} or identity_scope != "specimen_order" or uncertainty:
+        elif specimen not in {"serum", "plasma", "urine", "stool", "saliva", "nasal_mucus"} or identity_scope != "specimen_order" or uncertainty:
             raise ValueError("Explicit specimens require the specimen_order identity scope")
         if specimen == "saliva" and any(
             target.get("source_attributes") != {"specimen_code": "saliva"}
             for alias in targets for target in reviewed_targets(alias)
         ):
             raise ValueError("A saliva concept requires literal reviewed saliva on every source target")
+        if specimen == "nasal_mucus" and any(
+            target.get("source_attributes") != {"specimen_code": "nasal_mucus"}
+            for alias in targets for target in reviewed_targets(alias)
+        ):
+            raise ValueError("A nasal mucus concept requires literal reviewed nasal mucus on every source target")
         if concept.get("time_aspect") not in {None, "Pt", "24H"}:
             raise ValueError("Unsupported collection duration")
         if not concept.get("component") or not concept.get("reason"):
@@ -157,6 +172,8 @@ def render_new_concepts(review: dict, aliases: list[dict]) -> str:
     extra_system_case = " when 'saliva' then 'Saliva'" if any(
         concept["specimen_code"] == "saliva" for concept in concepts
     ) else ""
+    if any(c["specimen_code"] == "nasal_mucus" for c in concepts):
+        extra_system_case += " when 'nasal_mucus' then 'Nasal mucus'"
     return f"""
 create temporary table reviewed_new_concepts(
  item_id uuid, canonical_name text, component text, specimen_code text,
