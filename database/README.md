@@ -12,6 +12,12 @@ el ledger. Esto no activa equivalencias ni modifica el resolvedor clínico.
 El borrador de cortisol salival permanece fuera de cola por pérdida de horario,
 serie y método en variantes observadas. [Evidencia y límites](../docs/CATALOG_REVIEW_63_20261019.md).
 
+El guard de muestra también admite `provider_display_name` en un alias de
+laboratorio exclusivo de proveedor que coincida con el título íntegro, declare
+una única matriz literal mediante «en ...» y no contenga negación. No extrae ni
+aprueba equivalencias; conserva el RAW completo y `specimen_code` por objetivo.
+Los56lotes anteriores generan112SQL idénticos. [Alcance y factorXIII](../docs/CATALOG_REVIEW_69_20261021.md).
+
 ## Goals
 
 Herramienta local de investigación: `scripts/extract_clues_registry.py` extrae

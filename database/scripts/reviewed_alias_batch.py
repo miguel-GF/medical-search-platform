@@ -26,6 +26,33 @@ except ImportError:
 FIXTURE = Path(__file__).resolve().parents[1] / "data/reviewed-aliases-20261009.json"
 
 
+def reviewed_title_specimen(row: dict, guard: dict, specimen: str) -> bool:
+    """Accept a complete, provider-scoped laboratory title as specimen evidence.
+
+    The investigator still approves the order. No extraction or alias approval
+    happens here; the SQL subsequently checks the complete original RAW value.
+    Multiple matrices, negation and partial title aliases remain unsupported.
+    """
+    def words(value: str) -> str:
+        value = unicodedata.normalize("NFKD", value.casefold())
+        return re.sub(r"[^a-z0-9]+", " ", "".join(
+            c for c in value if not unicodedata.combining(c))).strip()
+
+    title = words(guard.get("value", ""))
+    if (guard.get("path") != ["provider_display_name"]
+            or row.get("alias_scope") != "provider" or row.get("service_type") != "lab_test"
+            or title != words(row.get("alias", ""))
+            or re.search(r"\b(?:sin|no|ni|excepto)\b", title)):
+        return False
+    matrices = {"serum": "suero", "plasma": "plasma", "urine": "orina",
+                "stool": "heces", "saliva": "saliva"}
+    marker = matrices.get(specimen)
+    present = {code for code, word in matrices.items() if re.search(r"\b" + word + r"\b", title)}
+    return (marker is not None and present == {specimen}
+            and not re.search(r"\b(?:sangre|seric[ao]s?|urinari[ao]s?|fecales?|salivales?|lcr|semen)\b", title)
+            and re.search(r"\ben " + marker + r"\b", title) is not None)
+
+
 def reviewed_targets(row: dict) -> list[dict]:
     """One alias may have several independently reviewed crawler contexts."""
     extra = row.get("additional_targets", [])
@@ -64,8 +91,9 @@ def reviewed_targets(row: dict) -> list[dict]:
                 }.get(specimen)
                 original = unicodedata.normalize("NFKD", guard.get("value", "").casefold())
                 normalized = "".join(c for c in original if not unicodedata.combining(c))
-                if (not markers or guard.get("path") not in
+                if (not markers or (guard.get("path") not in
                         [["sample_type"], ["raw_study", "Descripcion"], ["raw_study", "Preparacion"]]
+                        and not reviewed_title_specimen(row, guard, specimen))
                         or not any(re.search(r"\b" + marker + r"\b", normalized) for marker in markers)):
                     raise ValueError("Source specimen requires an explicit reviewed RAW specimen marker")
             elif set(attributes) == {"specimen_family"} and attributes["specimen_family"] == "blood":

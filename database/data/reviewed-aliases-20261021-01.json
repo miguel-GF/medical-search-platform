@@ -1,0 +1,53 @@
+{
+  "review_id": "pruevia:evidence-review:20261021:01",
+  "research_date": "2026-10-21",
+  "scope": "Revisión69: actividad del factorXIII de coagulación en plasma Chopo, identidad y matriz literales en título íntegro.24consultas públicas y24deproveedor observadas sin selección automática incompatible en vecinos examinados. Sin cambio del resolvedor ni ofertas.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "bad7915d082a69f44d9f50f69a22fe988ad2002bc44ab373d627d9b91036a19f",
+  "research_snapshot_sha256": "95ec13e116fd788f935655f986e5198854482d66795f6711edd01e00f8d24c59",
+  "definition_sha256": "6dac79a9836b652e2f903d6f54e362968a30fdf2229bd1b09d365c5040578889",
+  "new_concepts": [
+    {
+      "item_id": "02b7b1c2-5366-5831-be1e-22647dd2d13c",
+      "canonical_name": "Actividad del factor XIII de coagulación en plasma",
+      "component": "Coagulation factor XIII activity",
+      "specimen_code": "plasma",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://www.chopo.com.mx/puebla/factor-xiii-actividad-en-plasma",
+      "reason": "Chopo17216 declara FACTOR XIII ACTIVIDAD EN PLASMA en el título íntegro. Labcorp086340 confirma identidad de actividadFXIII y plasma. Conservar númeroXIII, actividad y plasma; no factorVIII/XII, antígeno, inhibidor, solubilidad de coágulo, subunidad o panel. No importar anticoagulante, técnica, actividad específica del reactivo ni escala de la referencia. La recuperación webtool fresca de Chopo falló; el título RAW congelado es evidencia propia vigente del contexto y no se afirma nueva captura propia. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "factor xiii actividad en plasma",
+      "item_id": "02b7b1c2-5366-5831-be1e-22647dd2d13c",
+      "canonical_name": "Actividad del factor XIII de coagulación en plasma",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://www.chopo.com.mx/puebla/factor-xiii-actividad-en-plasma",
+      "reason": "Chopo17216 declara FACTOR XIII ACTIVIDAD EN PLASMA en el título íntegro. Labcorp086340 confirma identidad de actividadFXIII y plasma. Conservar númeroXIII, actividad y plasma; no factorVIII/XII, antígeno, inhibidor, solubilidad de coágulo, subunidad o panel. No importar anticoagulante, técnica, actividad específica del reactivo ni escala de la referencia. La recuperación webtool fresca de Chopo falló; el título RAW congelado es evidencia propia vigente del contexto y no se afirma nueva captura propia. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "edad5c4c-9cb7-5098-bb6d-4d9f58907cbc",
+      "expected_rows": 1,
+      "raw_guard": {
+        "path": [
+          "provider_display_name"
+        ],
+        "value": "FACTOR XIII ACTIVIDAD EN PLASMA"
+      },
+      "source_attributes": {
+        "specimen_code": "plasma"
+      }
+    }
+  ],
+  "review_status": "reviewed",
+  "rollback_observation": {
+    "queries": 24,
+    "public_and_provider_core": true,
+    "receipt_sha256": "7816be46b294987d1150ac281343114f1b1dac0c1524a1d8b2904f9733b097e0",
+    "observations_sha256": "155c2e9cc3cf5444ea492dd21c053aa9124a2dfd7f48c748c823868681e282c8",
+    "scope_limit": "No acredita protección universal ni equivalencia analítica."
+  }
+}
