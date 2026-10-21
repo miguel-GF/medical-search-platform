@@ -1,0 +1,65 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261021:06",
+  "research_date": "2026-10-21",
+  "reviewed_by": "Codex; revisión individual coordinada",
+  "authorization": "D-021/D-022: identidades candidatas con fuente licenciada; reutilización ISSSTE sustentada por denominación institucional explícita y snapshot íntegro, sin operador jurídico verificado.",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "Identidad41: CMFQ nueva sede bajo ISSSTE existente, marca íntegra; BestXicotepec nueva identidad específica independiente. Una marca nueva, dos sedes nuevas, una marca reutilizada. Pilares3364230 y Calidad7814282 excluidos.",
+  "providers": [
+    {
+      "provider_key": "denue_clues_candidate_3346935",
+      "name": "ISSSTE",
+      "slug": "issste",
+      "website_url": "https://www.gob.mx/issste",
+      "website_uncertainty": "Website propio de la sede no acreditado; no atribuir fuente gubernamental como sitio propio.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "622312"
+      ],
+      "denue_record_ids": [
+        "3346935"
+      ],
+      "identity_note": "Identidad41 revisada individualmente21-oct-2026 conforme D-021/D-022. DENUE3346935, INEGI20-may2026/captura9-oct; CLUESPLIST000212, hojaCLUES_202608 fila43639, XLSXSHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. NombreDENUE íntegro:CMF Q INSTITUTO DE SEGURIDAD Y SERVICIOS SOCIALES DE LOS TRABAJADORES DEL ESTADO PUEBLA; nombreCLUES íntegro:CMFEQ PUEBLA, PUE.. Asociación institucional candidata con marca ISSSTE existente34af9d27-132d-5133-a827-2fa76717c2c6 sustentada por denominación institucional explícita DENUE, institución CLUES y boletín gubernamental9-may2021 que identifica CMFISSSTE/PinoSuárez25. CapturaHTTP20021-oct12:49:26UTC, SHA25675011404e13475b4efc23827b88a0001b62cacc72c29b7af0fd4dc6d93d0e4c3. Referencia histórica no acredita operador jurídico actual ni acceso universal. No es ISSSTEP, IMSS o IMSS-Bienestar. No se crea marcaISSSTEduplicada. La marca existente completa, incluyendo descripción y timestamps, debe permanecer idéntica. DENUE conserva letra_int SN literal como ausencia de número, no convertirla silenciosamente a vacío ni asignar interior. Nombre CMF Q íntegro, no expandir o resolver siglas como equivalencia clínica. Municipio114, localidad0001, CP72010, tipo de vía, vía y exterior25 completos concordantes. InteriorDENUE='', letra_intDENUE='SN', interiorCLUES='', conservar literalmente. AsentamientoDENUE:COLONIA SANTA MARIA LA RIVERA; CLUES:CIUDAD PUEBLA; diferencias conservadas. SCIAN622312/tipohospital conservados aunque se lea clínica/consultorio. Revisión específica, no regla fuzzy ni unión por domicilio. CLUES ENOPERACION sólo refleja agosto2026; referencia de investigación sin política de ingesta nueva. Sólo datos licenciadosDENUE. Sede pending y marca nueva verification_pending; no actualizar estado/verificación de marca reutilizada. Sin estudios, ofertas, precios, horarios, disponibilidad o cobertura comercial aprobados.",
+      "existing_brand": {
+        "id": "34af9d27-132d-5133-a827-2fa76717c2c6",
+        "name": "ISSSTE",
+        "normalized_name": "issste",
+        "slug": "issste",
+        "website_url": "https://www.gob.mx/issste",
+        "status": "active",
+        "verification_status": "verification_pending"
+      },
+      "existing_brand_full_snapshot": {
+        "id": "34af9d27-132d-5133-a827-2fa76717c2c6",
+        "name": "ISSSTE",
+        "slug": "issste",
+        "status": "active",
+        "created_at": "2026-10-11T19:44:29.866613+00:00",
+        "updated_at": "2026-10-11T19:44:29.866613+00:00",
+        "description": "El padrón federal vigente de 14-may-2026 distingue tres clínicas hospital ISSSTE en Puebla. Clínica Hospital Tehuacán aparece en Manuel Pereyra Mejia1009, Cerritos, CP75730. DENUE3258609 identifica Clínica Hospital ISSSTE en Doctor Manuel Pereyra Mejia1009, Cerritos, Tehuacán, CP75731 y dominioISSSTE.GOB.MX. Institución, municipio, vialidad/exterior y colonia corroboran identidad candidata; se conserva CP75731 y se documenta diferencia75730, sin sustituir domicilio, completar contactos o asumir equivalencia postal completa. No se fusiona con ISSSTEP, IMSS o IMSS-Bienestar. Huauchinango queda fuera por calles/CP diferentes y Teziutlán sin establecimiento DENUE hospitalario inequívoco en este corte. Todo pending/verification_pending; la pertenencia institucional no afirma acceso universal, derechohabiencia, estudios, ofertas, tarifas o cobertura.",
+        "row_version": 1,
+        "website_url": "https://www.gob.mx/issste",
+        "logo_object_key": null,
+        "normalized_name": "issste",
+        "verification_status": "verification_pending",
+        "redirect_to_brand_id": null
+      }
+    },
+    {
+      "provider_key": "denue_clues_candidate_8428765",
+      "name": "CONSULTORIO MEDICO BEST",
+      "slug": "consultorio-medico-best-8428765",
+      "website_url": null,
+      "website_uncertainty": "Website propio de la sede no acreditado; no atribuir fuente gubernamental como sitio propio.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621111"
+      ],
+      "denue_record_ids": [
+        "8428765"
+      ],
+      "identity_note": "Identidad41 revisada individualmente21-oct-2026 conforme D-021/D-022. DENUE8428765, INEGI20-may2026/captura9-oct; CLUESPLSMP008822, hojaCLUES_202608 fila44646, XLSXSHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. NombreDENUE íntegro:CONSULTORIO MEDICO BEST; nombreCLUES íntegro:FUNDACION BEST A.C.. Identidad específica del CONSULTORIO MEDICO BEST enXicotepec; CLUES conserva FUNDACION BEST A.C. Se crea candidata independiente con nombreDENUE, sin fusionarla ni atribuir red jurídica con marcaFUNDACIONBEST enPuebla/BoulevardNorte1831, porque no hay puente primario vigente que pruebe esa pertenencia. No farmacia, propietario o personalidad jurídica inferidos. LaboratoriosGubia próximo tiene AvenidaReforma101B, otro nombre/domicilio, no fusionar. WWW.FARMACIASLIDERES.COM queda literal en RAW, sin corroboración o website incorporado. Municipio197, localidad0001, CP73080, tipo de vía, vía y exterior120 completos concordantes. InteriorDENUE='', letra_intDENUE='', interiorCLUES='', conservar literalmente. AsentamientoDENUE:COLONIA CENTRO; CLUES:COLONIA XICOTEPEC DE JUAREZ CENTRO; diferencias conservadas. SCIAN621111/tipooffice conservados aunque se lea clínica/consultorio. Revisión específica, no regla fuzzy ni unión por domicilio. CLUES ENOPERACION sólo refleja agosto2026; referencia de investigación sin política de ingesta nueva. Sólo datos licenciadosDENUE. Sede pending y marca nueva verification_pending; no actualizar estado/verificación de marca reutilizada. Sin estudios, ofertas, precios, horarios, disponibilidad o cobertura comercial aprobados."
+    }
+  ]
+}

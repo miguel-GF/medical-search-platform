@@ -392,6 +392,15 @@ comprobados, cero ofertas y políticas sin cambios.
 
 ### Catálogo público de SEMIN Puebla
 
+Desde parser `0.2.1`, el detalle conserva `provider_detail_evidence.sinAcro`
+y los IDs declarados en `available_sucursales`, limitados a 100 sedes y 4,000
+caracteres por referencia textual. Marcadores explícitos indican captura parcial
+o inválida. Son referencias no verificadas: no crean aliases ni disponibilidad.
+Observación pública 21-oct: `precioApoyo` corresponde a Precio sucursal y
+`precioVenta` a Precio online en la tarjeta examinada; no se demostró membresía
+ni el canal de `precioNormal`. Los tipos históricos de precio se conservan.
+Véase `docs/PUEBLA_IDENTITIES_41_AND_SEMIN_EVIDENCE_20261021.md` para límites.
+
 El adaptador dedicado captura estudios, categoría, muestra, preparación,
 tiempo de entrega, referencia de precio y sucursales sin llamar operaciones de
 citas. Respeta `robots.txt` y deja todos los registros como `candidate`:

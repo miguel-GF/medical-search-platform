@@ -17,6 +17,14 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Identidad41 y evidencia SEMIN,21-oct12:59–13:03UTC:** dos sedes incorporadas,
+una marca nueva y marca ISSSTE reutilizada sin modificarla. **205 marcas /290
+sedes /563 conceptos /3,341 favorables /4,047 pendientes /234 ofertas**.
+Collector local conserva sinAcro y producto→IDs de sucursal como referencias
+no verificadas; tres cuerpos reales derivados sin ingesta, campos previos íntegros.
+SEMIN muestra precio sucursal/online, sin evidencia de membresía; selector exige
+acceso. [Evidencia y continuidad](PUEBLA_IDENTITIES_41_AND_SEMIN_EVIDENCE_20261021.md).
+
 **Revisión74,21-oct12:43–12:46UTC:** soporte local de moco nasal preparado con
 guarda íntegra y76fixtures/152SQL previos idénticos. Observación25consultas por ruta
 retiene8eosinófilos: pérdidas de serie/isotipo/negación y genéricos en proveedor.

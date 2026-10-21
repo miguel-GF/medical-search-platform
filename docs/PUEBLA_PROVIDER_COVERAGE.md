@@ -3,6 +3,14 @@
 > Informe de cobertura con snapshots fechados; sus cantidades y cadencias recomendadas no demuestran estado actual ni jobs activos.
 > Entrada: [índice vigente](README.md). Estado: [CURRENT_STATE](CURRENT_STATE.md).
 
+## Actualización — 21-oct-2026, 12:59 UTC
+
+**205 marcas /290 ubicaciones /234 ofertas**. CMF ISSSTE Puebla reutiliza marca
+existente intacta; Consultorio Médico Best Xicotepec conserva identidad específica.
+Dos sedes pendientes de verificación comercial, sin ofertas nuevas. Collector
+SEMIN conserva referencias producto→sedes sin declararlas disponibilidad.
+[Identidad41 y evidencia SEMIN](PUEBLA_IDENTITIES_41_AND_SEMIN_EVIDENCE_20261021.md).
+
 ## Actualización — 21-oct-2026, 12:39 UTC
 
 **204 marcas /288 ubicaciones /234 ofertas**. Cinco establecimientos candidatos

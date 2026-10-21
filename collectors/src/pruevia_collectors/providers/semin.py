@@ -343,7 +343,7 @@ class SeminAdapter:
         endpoint_url=f"{SEMIN_API_ORIGIN}{SEMIN_CATALOG_SEARCH_PATH}",
         expected_min_records=1,
         expected_max_records=MAX_SEMIN_RESULTS + MAX_SEMIN_BRANCHES,
-        parser_version="0.2.0",
+        parser_version="0.2.1",
     )
 
     def __init__(
@@ -450,6 +450,39 @@ class SeminAdapter:
             rows_by_id[catalog_id] = row
 
 
+def _detail_evidence(row: Mapping[str, Any]) -> dict[str, Any]:
+    """Keep bounded provider references without approving aliases or availability."""
+    evidence: dict[str, Any] = {}
+    if "sinAcro" in row:
+        value = row["sinAcro"]
+        if value is None or (isinstance(value, str) and len(value) <= MAX_SEMIN_FIELD_CHARS):
+            evidence["sinAcro"] = value
+        else:
+            evidence["sinAcro_capture_status"] = "omitted_invalid_or_over_limit"
+    if "available_sucursales" in row:
+        branches = row["available_sucursales"]
+        evidence["branch_claim_status"] = "unverified_product_embedded_list"
+        if isinstance(branches, list) and len(branches) <= MAX_SEMIN_BRANCHES:
+            ids: list[str] = []
+            invalid_rows = 0
+            for branch in branches:
+                value = _first(branch, "id", "idSucursal") if isinstance(branch, Mapping) else None
+                branch_id = _safe_id(value) if type(value) in (str, int) else None
+                if branch_id is None:
+                    invalid_rows += 1
+                else:
+                    ids.append(branch_id)
+            evidence["available_sucursales_ids"] = ids
+            evidence["available_sucursales_source_count"] = len(branches)
+            evidence["available_sucursales_invalid_rows"] = invalid_rows
+            evidence["available_sucursales_capture_status"] = "complete" if not invalid_rows else "partial"
+        else:
+            evidence["available_sucursales_capture_status"] = "omitted_invalid_or_over_limit"
+    if evidence:
+        evidence["interpretation_status"] = "unverified_provider_reference"
+    return evidence
+
+
 def _catalog_record(catalog_id: int, row: Mapping[str, Any], *, has_detail: bool) -> SourceRecord:
     name = _text(_first(row, "prueba", "nombre", "name"))
     if not name or len(name) < 3:
@@ -481,6 +514,10 @@ def _catalog_record(catalog_id: int, row: Mapping[str, Any], *, has_detail: bool
         "detail_endpoint_captured": has_detail,
         "claim_status": "candidate",
     }
+    if has_detail:
+        detail_evidence = _detail_evidence(row)
+        if detail_evidence:
+            payload["provider_detail_evidence"] = detail_evidence
     record_type = "provider_offer_price" if prices else "provider_offer_discovered"
     observations = [
         Observation(entity_type="offer", attribute_name="provider_display_name", observed_value=name, confidence=0.98),
