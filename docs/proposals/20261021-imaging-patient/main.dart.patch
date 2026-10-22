@@ -1,0 +1,15 @@
+--- a/apps/patient/lib/main.dart
++++ b/apps/patient/lib/main.dart
+@@ -1571,8 +1571,10 @@
+               'No hay opciones verificadas para mostrar en este momento. Escribe el nombre completo de tu orden.',
+             ),
+           const SizedBox(height: 4),
+-          const Text(
+-            'Los estudios tienen propósitos y muestras distintos. No se ha seleccionado ninguno por ti.',
++          Text(
++            guidance.specimen == 'imaging'
++                ? 'Las proyecciones no se sustituyen entre sí. No se ha seleccionado ninguna por ti.'
++                : 'Los estudios tienen propósitos y muestras distintos. No se ha seleccionado ninguno por ti.',
+           ),
+         ],
+       ),

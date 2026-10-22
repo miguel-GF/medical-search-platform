@@ -17,6 +17,13 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Imagen,21-oct local /22-octUTC:** recuperadas30entradas de fuentes runtime de
+Patient por hashes de recibos publicados; manifiesto y JS públicos200coinciden.
+Candidato aislado de guía de imagen sobre esa base, sólo2archivos cambiados;
+análisis, compilación release y estampaciónPWA terminaron0, fuentes intactas.
+sin SQL, despliegue o cierres clínicos. La integración combinada sigue pendiente.
+[Evidencia y límites](proposals/20261021-imaging-patient/README.md).
+
 **Identidad43,21-oct local /22-oct04:02UTC:** una clínica ISSSTE Texmelucan añadida
 reutilizando marca íntegra. **205 marcas /291 sedes /563 conceptos /3,341 favorables /
 4,047 pendientes /234 ofertas /112 migraciones**. Tres candidatos retenidos por

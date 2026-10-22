@@ -4,6 +4,16 @@ Estado: propuesta D-006 aislada, **sin activar**. Fecha:16-oct-2026.
 La autorización ordinaria para investigar estudios no activa este cambio clínico.
 No se solicita aprobación todavía: falta completar el candidato de integración.
 
+## Actualización21-oct local /22-octUTC: fuentesPatient recuperadas
+
+Se recuperaron por hash las30entradas de runtime fijadas en recibos del18-oct,
+incluido lib completo. El manifiesto y JS públicos se leyeron porHTTPS y coinciden
+con esos recibos. El nuevo candidato aislado cambia sólo dos archivos sobre esa
+base, preservando la procedencia que faltaba al candidato16-oct. Análisis, build
+release y estampaciónPWA terminaron0, sin alterar fuentes. No implica
+activación ni integración SQL/API; las correcciones locales20-oct requieren
+conservarse al combinar propuestas. [Diff, evidencia y límites](20261021-imaging-patient/README.md).
+
 ## Avance posterior: candidatos aislados,16-oct12:31 UTC
 
 El candidato API ya parte de nueve archivos comprometidos que coinciden por

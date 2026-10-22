@@ -1,0 +1,79 @@
+{
+  "compilation": {
+    "started_at": "2026-10-22T04:11:53.860393+00:00",
+    "steps": [
+      {
+        "step": "analyze",
+        "command": [
+          "C:/src/flutter/bin/dart.bat",
+          "analyze",
+          "lib/main.dart",
+          "lib/src/models.dart"
+        ],
+        "exit_code": 0
+      },
+      {
+        "step": "build",
+        "command": [
+          "C:/src/flutter/bin/flutter.bat",
+          "build",
+          "web",
+          "--release",
+          "--no-pub",
+          "--no-wasm-dry-run",
+          "--dart-define=API_BASE_URL=https://api.pruevia.com.mx",
+          "--dart-define=API_ALLOWED_HOSTS=api.pruevia.com.mx",
+          "--dart-define=PRODUCT_FEEDBACK_ENABLED=false",
+          "--dart-define=ANALYTICS_ENABLED=false",
+          "--dart-define=PROVIDER_PORTAL_ENABLED=false",
+          "--dart-define=PATIENT_BOOKING_ENABLED=false",
+          "--dart-define=PRIVACY_POLICY_URL=https://pruevia.com.mx/privacidad",
+          "--dart-define=SUPPORT_EMAIL=contacto@pruevia.com.mx",
+          "--dart-define=PRUEVIA_CHANNEL=public"
+        ],
+        "exit_code": 0
+      }
+    ],
+    "deployed": false,
+    "sql_executed": false,
+    "formal_tests_executed": false,
+    "finished_at": "2026-10-22T04:16:45.106594+00:00",
+    "source_files_changed_during_build": [],
+    "bundle_sha256": "d71279b2614cf25a6b10a6b99965dd068f1a45d6fec82df47b1c96a2b23eda07"
+  },
+  "stamp": {
+    "at": "2026-10-22T04:17:31.088978+00:00",
+    "command": [
+      "C:/src/flutter/bin/dart.bat",
+      "run",
+      "tool/render_web_headers.dart",
+      "--output",
+      "build/web/_headers",
+      "--allowed-hosts",
+      "api.pruevia.com.mx"
+    ],
+    "exit_code": 0,
+    "deployed": false,
+    "sql_executed": false,
+    "formal_tests_executed": false,
+    "manifest": {
+      "schema": 1,
+      "build": "9712b597dff75014655ee2775540aa7d65dfa895e40bf35308b256d263cc46cc",
+      "main_js_sha256": "d71279b2614cf25a6b10a6b99965dd068f1a45d6fec82df47b1c96a2b23eda07"
+    },
+    "source_files_unchanged": true,
+    "headers_sha256": "1e0a76b43486e2b07509562e3b9c777aaef96d42343150a2beda717c3a1d7dc7"
+  },
+  "artifact_receipt_pins": {
+    "recovery-manifest.json": "d9d50fc2aab1301dc50d7c86d90bce7d6670d3426203c73fa91e82483c2cb1cf",
+    "candidate-manifest.json": "0449c43766f6d0c2d72f7f09acdaf8dd233a2821fe6765bb533672465a48cdff",
+    "compilation-receipt.json": "5d4d46328703e06adbc1105dfeca7a12ba3f8056026412cccc5c92974d18834e",
+    "stamp-receipt.json": "f4c9837f81e5b06337644b01a5a6868324f339c9fd53f3524930200f9dab8ccd",
+    "live-app-version-receipt.json": "5c19905eb067bb326a7e0dc999578b6bd734e982c56eabce1b0fa194c52a77a7",
+    "live-main-receipt.json": "2f59a1ddd8e96879db977c7966f701fa401c37c9f30642f861f2a16ea1f7978a"
+  },
+  "runtime_in_browser_observed": false,
+  "integration_sql_api_ocr_observed": false,
+  "deployed": false,
+  "database_writes": false
+}

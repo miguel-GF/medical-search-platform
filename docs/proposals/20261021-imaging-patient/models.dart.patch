@@ -1,0 +1,18 @@
+--- a/apps/patient/lib/src/models.dart
++++ b/apps/patient/lib/src/models.dart
+@@ -224,10 +224,11 @@
+ 
+   static SearchGuidance? parse(Object? value) {
+     final json = _record(value);
+-    if (json['kind'] != 'specimen' ||
+-        !['blood', 'urine'].contains(json['specimen'])) {
+-      return null;
+-    }
++    final specimenGuidance = json['kind'] == 'specimen' &&
++        ['blood', 'urine'].contains(json['specimen']);
++    final imagingGuidance = json['kind'] == 'imaging_projection' &&
++        json['specimen'] == 'imaging';
++    if (!specimenGuidance && !imagingGuidance) return null;
+     return SearchGuidance(
+       specimen: json['specimen'] as String,
+       title: _guidanceText(json['title'], 200),

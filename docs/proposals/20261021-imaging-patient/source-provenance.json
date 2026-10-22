@@ -1,0 +1,199 @@
+{
+  "source_recovery_observed_at": "2026-10-22T04:09:39.511776+00:00",
+  "live_manifest_observed_at": "2026-10-22T04:09:55.8673303Z",
+  "live_bundle_observed_at": "2026-10-22T04:11:25.1820963Z",
+  "base_build": "f6361e0b0fe3a789486cc8dc4b79aeae31d9837f2f1d89c4685c6707913e3925",
+  "base_main_js_sha256": "8a04162ed051a9ef42a0069417db465ede470831df9f0c8f32687db542681aaa",
+  "historical_worker_version_not_requeried": "2e1e136b-9e23-4969-9f59-ab350fb9510b",
+  "runtime_inputs": {
+    "lib/main.dart": {
+      "origin": "git:36f6a8099160245ba624cdc41065f4d666600d5f",
+      "transformation": "none",
+      "sha256": "b29220600581029f84fbcc24837ab0f844f4853fbf6a1dd93a2be874fca30fc5",
+      "bytes": 134971
+    },
+    "lib/src/api_client.dart": {
+      "origin": "git:007eac326b4c9b9779b3ad7af92952d3f9f5ce79",
+      "transformation": "none",
+      "sha256": "2a9c2c966005e2ae41ec63f68667659db9b5960d9c874fa4373559b1899a68bc",
+      "bytes": 16642
+    },
+    "lib/src/local_preferences.dart": {
+      "origin": "working_tree_exact_receipt_hash",
+      "transformation": "none",
+      "sha256": "338ed387ac065f506051c0e7091e3d5ef63c7ed74637458a1c73af2d156658c4",
+      "bytes": 3929
+    },
+    "lib/src/models.dart": {
+      "origin": "git:36f6a8099160245ba624cdc41065f4d666600d5f",
+      "transformation": "none",
+      "sha256": "313f9b03b617d0709db1ba7a787f828b56c456319533d8460127d7ea3821ee9b",
+      "bytes": 13521
+    },
+    "lib/src/picked_file_cleanup_io.dart": {
+      "origin": "working_tree_exact_receipt_hash",
+      "transformation": "none",
+      "sha256": "cd75c1005b2fe1a9c86d2e81022a5751061046bb80809875c39a7322f0f86baa",
+      "bytes": 792
+    },
+    "lib/src/picked_file_cleanup_stub.dart": {
+      "origin": "working_tree_exact_receipt_hash",
+      "transformation": "none",
+      "sha256": "5a4728a942decf100e73ee8a8d17580e3cf3153af4c0e12960dc7166fa16b05e",
+      "bytes": 52
+    },
+    "lib/src/privacy_notice.dart": {
+      "origin": "working_tree_exact_receipt_hash",
+      "transformation": "none",
+      "sha256": "1bbc344334ffd3c43a7b83fd2eeceb1b1a4d9dc1d8993e8ae97abaea8b07e48c",
+      "bytes": 4440
+    },
+    "lib/src/provider_portal.dart": {
+      "origin": "working_tree_exact_receipt_hash",
+      "transformation": "none",
+      "sha256": "6f6b861bb168e4ae4c3a258cb810fbc57d732433cfce1488feb6a524076d803a",
+      "bytes": 34117
+    },
+    "lib/src/provider_url_stub.dart": {
+      "origin": "working_tree_exact_receipt_hash",
+      "transformation": "none",
+      "sha256": "acc7bc04d72476822abf61549dce32b0d7f15129aaafdedfaa39c202ba1eca89",
+      "bytes": 28
+    },
+    "lib/src/provider_url_web.dart": {
+      "origin": "working_tree_exact_receipt_hash",
+      "transformation": "none",
+      "sha256": "89cdfee113b4a7c79e86485b75156cd762a45701a175a9f2f58cbcdc41edb6c7",
+      "bytes": 252
+    },
+    "lib/src/search_guidance.dart": {
+      "origin": "working_tree_exact_receipt_hash",
+      "transformation": "none",
+      "sha256": "d08430d66b6d171e04f921d4bc5d3f5aa17729a36c50ae537b904897da0c8d7c",
+      "bytes": 609
+    },
+    "lib/src/theme.dart": {
+      "origin": "working_tree_exact_receipt_hash",
+      "transformation": "none",
+      "sha256": "6dc5f68eb1e1be90d9f4ee4a6e869bdc132615d2a82e52885c079f3751ac22dc",
+      "bytes": 3909
+    },
+    "pubspec.lock": {
+      "origin": "working_tree_exact_receipt_hash",
+      "transformation": "none",
+      "sha256": "7dd40b1159ce9ac944ded5426de60466ce56ac72e90f6e8b0debfd6dddd87ac7",
+      "bytes": 21565
+    },
+    "pubspec.yaml": {
+      "origin": "working_tree_exact_receipt_hash",
+      "transformation": "none",
+      "sha256": "2015caff44eb4ae6eb13dcaaef46245cb523cdc5d858e3f70943e1ee00bd5fcd",
+      "bytes": 4381
+    },
+    "tool/render_web_headers.dart": {
+      "origin": "working_tree_exact_receipt_hash",
+      "transformation": "none",
+      "sha256": "479a4a8aa7f5f8d0eeb83eee3b3f8fff2ff6b24f3b96e8d98d1f5094cfa3c5ce",
+      "bytes": 3047
+    },
+    "tool/stamp_web_release.dart": {
+      "origin": "working_tree_exact_receipt_hash",
+      "transformation": "none",
+      "sha256": "3c740c19dde2d5db0ad224ca8a66a68cf27a86fbf850268c270a2192d1cd9285",
+      "bytes": 1968
+    },
+    "web/_headers": {
+      "origin": "working_tree_exact_receipt_hash",
+      "transformation": "none",
+      "sha256": "687a7da910c09a10a548528c0e8ab8be8b5c6407ffa9a4a2fac9c47b9a96fbe7",
+      "bytes": 1444
+    },
+    "web/favicon.png": {
+      "origin": "working_tree_exact_receipt_hash",
+      "transformation": "none",
+      "sha256": "497c9da4dd6955bdf91e65d08c181fae9b3b201932c851bd4d3a0cc909431325",
+      "bytes": 851
+    },
+    "web/flutter_bootstrap.js": {
+      "origin": "working_tree_exact_receipt_hash",
+      "transformation": "none",
+      "sha256": "433eebcb2b461c48e6272a2798c5d9f8930954c414f16e05055152c23f1cda6f",
+      "bytes": 301
+    },
+    "web/icons/Icon-192.png": {
+      "origin": "working_tree_exact_receipt_hash",
+      "transformation": "none",
+      "sha256": "d5fdf62f7c0abcd7fbc198cfbde69619aaf8a425ea1d4d74c18285c1ce1428b6",
+      "bytes": 9163
+    },
+    "web/icons/Icon-512.png": {
+      "origin": "working_tree_exact_receipt_hash",
+      "transformation": "none",
+      "sha256": "099d7fdd89ac99e4a08a1542c483626ba47be691eca51554a31c4c6189dd8a8a",
+      "bytes": 24352
+    },
+    "web/icons/Icon-maskable-192.png": {
+      "origin": "working_tree_exact_receipt_hash",
+      "transformation": "none",
+      "sha256": "46d16310a9b51ef4a4b77a02c308c20932f7267875b1ac4d0d1e2580de846817",
+      "bytes": 8203
+    },
+    "web/icons/Icon-maskable-512.png": {
+      "origin": "working_tree_exact_receipt_hash",
+      "transformation": "none",
+      "sha256": "c611d07c87997c69eafa361bd6d1c2e6c66ca8ec6adc1f1c6be5637fa2128c3c",
+      "bytes": 21237
+    },
+    "web/index.html": {
+      "origin": "working_tree_exact_receipt_hash",
+      "transformation": "none",
+      "sha256": "d727f88345ece6dcfd453dad39ea75af2a29d4afd0acd938a89c9d737b119e1f",
+      "bytes": 2882
+    },
+    "web/install.css": {
+      "origin": "working_tree_exact_receipt_hash",
+      "transformation": "none",
+      "sha256": "080c837b9e13bc364f0e3fda9a5a2fa036fd73a100a2e91ad138008c9de3fc41",
+      "bytes": 1041
+    },
+    "web/install.js": {
+      "origin": "working_tree_exact_receipt_hash",
+      "transformation": "none",
+      "sha256": "0051a4c9ef66a7706c77bb070b692f30e21f6d94fd1e41f9bfdd5d2a51142faf",
+      "bytes": 2593
+    },
+    "web/manifest.json": {
+      "origin": "working_tree_exact_receipt_hash",
+      "transformation": "none",
+      "sha256": "7da2da946d96cb94fb1b54d6cdb28fa1c2a5c0d7c7107b1ccb03a9031e6aa969",
+      "bytes": 1002
+    },
+    "web/pruevia-sw.js": {
+      "origin": "working_tree_exact_receipt_hash",
+      "transformation": "none",
+      "sha256": "f36b66186c8d74a659ac2c1f3b6d14cc17d2df128955fd495a03d60bcf14817e",
+      "bytes": 1796
+    },
+    "web/pwa-updates.css": {
+      "origin": "working_tree_exact_receipt_hash",
+      "transformation": "none",
+      "sha256": "6596e0c1c6f0cf20ce2328f239b1acd7dd4a85139e77560b7dba98737d602d33",
+      "bytes": 1672
+    },
+    "web/pwa-updates.js": {
+      "origin": "working_tree_exact_receipt_hash",
+      "transformation": "none",
+      "sha256": "014db0fd1f3c7d5e36ad51373d54f19c8d207781bc6609cb77f02bb4a53eae1b",
+      "bytes": 3267
+    }
+  },
+  "all_required_runtime_source_hashes_recovered": true,
+  "project_templates_unpinned_to_release": "36f6a8099160245ba624cdc41065f4d666600d5f",
+  "patches": {
+    "main.dart.patch": "b272b77b340949abb08c8a54fbf653e2f29d8a738d976f1c6363bfd790f3aa8c",
+    "models.dart.patch": "f143eb81b69e2c3890a57b4f51c7acc3f3c08878153ca9defc650b15ccdb8982"
+  },
+  "deployed": false,
+  "database_writes": false,
+  "formal_tests_executed": false
+}
