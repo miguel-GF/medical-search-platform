@@ -17,6 +17,13 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Identidad43,21-oct local /22-oct04:02UTC:** una clínica ISSSTE Texmelucan añadida
+reutilizando marca íntegra. **205 marcas /291 sedes /563 conceptos /3,341 favorables /
+4,047 pendientes /234 ofertas /112 migraciones**. Tres candidatos retenidos por
+interiores/domicilio. Planificador conserva categoría de origen y su campo:
+inventario73 tiene2,263filas en categorías de imagen, sin prometer cierres.
+[Evidencia y siguiente acción](PUEBLA_IDENTITY_43_AND_SOURCE_ROUTING_20261021.md).
+
 **Reanudación e identidad42,21-oct local /22-oct03:53UTC:** cinco vínculos DENUE aplicados a sedes
 existentes; snapshots completos, RAW, bindings previos y fuentes conservados.
 205 marcas /290 sedes /563 conceptos /3,341 favorables /4,047 pendientes /

@@ -30,6 +30,17 @@ def signature(row: dict) -> str:
     return digest({'raw_text': row.get('raw_text'), 'context': context(row)})
 
 
+def source_category(row: dict) -> tuple[str, str]:
+    clinical = context(row)
+    for field, value in (
+        ('raw_study.Estudio', (clinical.get('raw_study') or {}).get('Estudio')),
+        ('area', clinical.get('area')), ('category', clinical.get('category')),
+    ):
+        if isinstance(value, str) and value.strip():
+            return field, value
+    return 'not_declared', 'not_declared'
+
+
 def schedule(memory: dict, rows: list[dict], receipt: dict) -> dict:
     if not isinstance(rows, list) or any(not isinstance(row, dict) or row.get('input_type') != 'crawler'
                                         or context(row).get('patient_data_present') for row in rows):
@@ -66,6 +77,8 @@ def schedule(memory: dict, rows: list[dict], receipt: dict) -> dict:
     for decision in result['decisions']:
         grouped[(decision['provider_brand_id'], decision['label'])].append(decision)
     queue = []
+    category_rows = defaultdict(int)
+    category_groups = defaultdict(set)
     for key, decisions in grouped.items():
         outcomes = sorted({item['outcome'] for item in decisions})
         hold, valid = holds.get(key, (None, False))
@@ -83,6 +96,16 @@ def schedule(memory: dict, rows: list[dict], receipt: dict) -> dict:
                 'occurrences': len(decisions), 'state': state, 'outcomes': outcomes,
                 'context_signatures': sorted(current), 'approved': False,
                 'writes_performed': False, 'offer_approved': False}
+        categories = defaultdict(int)
+        for item in decisions:
+            category = source_category(row_by_id[item['input_id']])
+            categories[category] += 1
+            category_rows[category] += 1
+            category_groups[category].add(key)
+        task['source_categories'] = [
+            {'field': field, 'value': value, 'rows': count}
+            for (field, value), count in sorted(categories.items())
+        ]
         if deferred:
             task.update(reason=hold['reason'], retry_when=hold['retry_when'],
                         expires_at=hold['expires_at'], evidence=hold['evidence'])
@@ -95,6 +118,12 @@ def schedule(memory: dict, rows: list[dict], receipt: dict) -> dict:
             'shadow_only': True, 'database_writes': 0, 'http_requests': 0,
             'input_memory_sha256': digest(memory), 'research_receipt_sha256': digest(receipt),
             'rows': len(rows), 'groups': len(queue),
+            'source_category_summary': [
+                {'field': field, 'value': value, 'rows': count,
+                 'groups': len(category_groups[(field, value)])}
+                for (field, value), count in sorted(category_rows.items(), key=lambda pair: (-pair[1], pair[0]))
+            ],
+            'source_categories_are_clinical_equivalences': False,
             'groups_by_state': {state: sum(task['state'] == state for task in queue) for state in states},
             'rows_by_state': {state: sum(task['occurrences'] for task in queue if task['state'] == state) for state in states},
             'queue': queue}

@@ -12,6 +12,7 @@ La conversación original no es lectura obligatoria para incorporarse.
 | [Guías de trabajo](WORK_GUIDE.md) | Procedimientos por tipo de cambio y traspaso. |
 | [Operación](OPERATIONS_GUIDE.md) | Directorios, comandos, comprobaciones y alcance de resultados. |
 | [Estado y prioridades](CURRENT_STATE.md) | Capacidades y pendientes con evidencia fechada. |
+| [ISSSTE Texmelucan y categorías de origen,21-oct](PUEBLA_IDENTITY_43_AND_SOURCE_ROUTING_20261021.md) | Una sede incorporada, tres candidatos retenidos y backlog separado por categoría sin inferir equivalencias clínicas. |
 | [Identidad42 y memoria de investigación,21-oct](PUEBLA_IDENTITIES_42_AND_RESEARCH_PLANNER_20261021.md) | Cinco vínculos aplicados sin duplicar sedes; algoritmo local evita repetir casos con bloqueo documentado. |
 | [Corte limpio,21-oct](CLEAN_CUT_20261021.md) | Contadores reconsultados, cola detenida, borradores preservados y límites de automatización. |
 | [Dos sedes y evidencia SEMIN,21-oct](PUEBLA_IDENTITIES_41_AND_SEMIN_EVIDENCE_20261021.md) | Identidad41 aplicada; collector conserva referencias y diferencia canales comerciales sin inferir disponibilidad. |

@@ -3,6 +3,14 @@
 > Informe de cobertura con snapshots fechados; sus cantidades y cadencias recomendadas no demuestran estado actual ni jobs activos.
 > Entrada: [índice vigente](README.md). Estado: [CURRENT_STATE](CURRENT_STATE.md).
 
+## Actualización — 21-oct local /22-oct-2026, 04:02 UTC
+
+**205 marcas /291 ubicaciones /234 ofertas**. CMF ISSSTE San Martín Texmelucan
+incorporada bajo marca existente íntegra; pendiente de verificación comercial,
+sin ofertas nuevas. Libres, Centro Médico Tecamachalco y BestTehuacán retenidos
+por diferencias explícitas de dirección/interior.
+[Identidad43 y evidencia](PUEBLA_IDENTITY_43_AND_SOURCE_ROUTING_20261021.md).
+
 ## Actualización — 21-oct local / 22-oct-2026, 03:53 UTC
 
 Cinco vínculos DENUE incorporados a sedes existentes de Salud Digna sin duplicar

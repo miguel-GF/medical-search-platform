@@ -1,0 +1,49 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261021:12",
+  "research_date": "2026-10-22",
+  "reviewed_by": "Codex; individual documented identity review",
+  "authorization": "D-021/D-022: factual identity only, preserve existing institution and all source evidence; no commercial coverage.",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "One new CMF San Martin Texmelucan location under unchanged existing ISSSTE; no new brand.",
+  "providers": [
+    {
+      "provider_key": "denue_clues_candidate_9123577",
+      "name": "ISSSTE",
+      "slug": "issste",
+      "website_url": "https://www.gob.mx/issste",
+      "existing_brand": {
+        "id": "34af9d27-132d-5133-a827-2fa76717c2c6",
+        "name": "ISSSTE",
+        "normalized_name": "issste",
+        "slug": "issste",
+        "website_url": "https://www.gob.mx/issste",
+        "status": "active",
+        "verification_status": "verification_pending"
+      },
+      "existing_brand_full_snapshot": {
+        "id": "34af9d27-132d-5133-a827-2fa76717c2c6",
+        "name": "ISSSTE",
+        "slug": "issste",
+        "status": "active",
+        "created_at": "2026-10-11T19:44:29.866613+00:00",
+        "updated_at": "2026-10-11T19:44:29.866613+00:00",
+        "description": "El padrón federal vigente de 14-may-2026 distingue tres clínicas hospital ISSSTE en Puebla. Clínica Hospital Tehuacán aparece en Manuel Pereyra Mejia1009, Cerritos, CP75730. DENUE3258609 identifica Clínica Hospital ISSSTE en Doctor Manuel Pereyra Mejia1009, Cerritos, Tehuacán, CP75731 y dominioISSSTE.GOB.MX. Institución, municipio, vialidad/exterior y colonia corroboran identidad candidata; se conserva CP75731 y se documenta diferencia75730, sin sustituir domicilio, completar contactos o asumir equivalencia postal completa. No se fusiona con ISSSTEP, IMSS o IMSS-Bienestar. Huauchinango queda fuera por calles/CP diferentes y Teziutlán sin establecimiento DENUE hospitalario inequívoco en este corte. Todo pending/verification_pending; la pertenencia institucional no afirma acceso universal, derechohabiencia, estudios, ofertas, tarifas o cobertura.",
+        "row_version": 1,
+        "website_url": "https://www.gob.mx/issste",
+        "logo_object_key": null,
+        "normalized_name": "issste",
+        "verification_status": "verification_pending",
+        "redirect_to_brand_id": null
+      },
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "9123577"
+      ],
+      "identity_note": "Identity43 individual review22-Oct-2026UTC, D-021/D-022. DENUE9123577 full name:INSTITUTO DE SEGURIDAD Y SERVICIOS SOCIALES DE LOS TRABAJADORES DEL ESTADO CLINICA DE MEDICINA FAMILIAR; CLUESPLIST000125 full unit name:CMF SAN MARTÍN TEXMELUCAN; institution:INSTITUTO DE SEGURIDAD Y SERVICIOS SOCIALES DE LOS TRABAJADORES DEL ESTADO. Complete municipality/locality codes, postal code74042, street type/name and exterior1600 match exactly after ordinary text normalization. All interior/letter fields empty in both sources. DENUE settlement:COLONIA OJO DE AGUA; CLUES settlement:CIUDAD OJO DE AGUA; retain literal differences. Explicit full institutional denomination supports reuse of existing ISSSTE brand; do not merge with ISSSTEP, IMSS or IMSS-Bienestar. Existing full brand snapshot is locked and preserved. DENUE activity621116/clinic retained. Licensed DENUE May2026 release captured9-Oct; CLUES August2026 local XLSX verified with fixed hash, reference only, no new ingestion policy. Monthly operation status does not prove current operation, operator, patient access or services. Branch pending, existing brand verification unchanged. Retain brand website without claiming branch-specific destination or selected branch. No studies, prices, appointments, offers or availability approved."
+    }
+  ]
+}
