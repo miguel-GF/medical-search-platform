@@ -1,0 +1,41 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261022:01",
+  "research_date": "2026-10-22",
+  "reviewed_by": "Codex; revisión individual de dos domicilios numerados, nombres genéricos y referencias completas",
+  "authorization": "D-021/D-022: identidades físicas candidatas con evidencia; sin asignar operador institucional o cobertura comercial.",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "Dos clínicas públicas independientes en Atzala y Naupan. Etiqueta de agrupación desambiguada con municipio DENUE, sin reutilizar marcas genéricas o institucionales. Nombre literal, domicilio, muestra de procedencia y coordenadas de sede preservados; sin cobertura inferida.",
+  "providers": [
+    {
+      "provider_key": "denue_independent_clinic_3437657",
+      "name": "CENTRO DE SALUD — Atzala",
+      "slug": "centro-de-salud-atzala-3437657",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio de la unidad; no usar directorios como website de sucursal.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "3437657"
+      ],
+      "identity_note": "Identidad física candidata investigada el 22-oct-2026, D-021/D-022. DENUE 3437657, publicación20-may-2026/captura9-oct. Nombre literal de sede CENTRO DE SALUD; etiqueta de agrupación independiente añade municipio DENUE Atzala para desambiguar nombres genéricos. CLUES PLIMB000322, fila42139 de agosto2026, XLSX SHA256 5a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b, corrobora centro de salud en la misma localidad, municipio y entidad, CP74590, CALLE EMILIANO ZAPATA exterior6. Letras e interiores vacíos en ambas fuentes. Asentamiento DENUE COLONIA CENTRO; referencia CLUES PUEBLO ATZALA; no homologados. No se deduce continuidad, sucesión ni operador actual desde la clave o institución declarada por CLUES; no se agrupa bajo IMSS, IMSS-Bienestar o SSA. Marca independiente verification_pending y sede pending no acreditan red jurídica, acceso, operación actual o cobertura comercial. Sólo campos DENUE de identidad/domicilio; CLUES es corroboración investigativa, sin nueva fuente de ingesta ni cambio de licencia. Website NULL, sin sitio propio probado. Sin estudios, ofertas, precios, disponibilidad u horarios nuevos."
+    },
+    {
+      "provider_key": "denue_independent_clinic_3415832",
+      "name": "CENTRO DE SALUD UN NUCLEO BASICO NORMAL — Naupan",
+      "slug": "centro-de-salud-un-nucleo-basico-normal-naupan-3415832",
+      "website_url": null,
+      "website_uncertainty": "No se acreditó sitio propio de la unidad; no usar directorios como website de sucursal.",
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621116"
+      ],
+      "denue_record_ids": [
+        "3415832"
+      ],
+      "identity_note": "Identidad física candidata investigada el 22-oct-2026, D-021/D-022. DENUE 3415832, publicación20-may-2026/captura9-oct. Nombre literal de sede CENTRO DE SALUD UN NUCLEO BASICO NORMAL; etiqueta de agrupación independiente añade municipio DENUE Naupan para desambiguar nombres genéricos. CLUES PLIMB001594, fila42266 de agosto2026, XLSX SHA256 5a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b, corrobora centro de salud en la misma localidad, municipio y entidad, CP73140, CALLE GUADALUPE VICTORIA exterior54. Letras e interiores vacíos en ambas fuentes. Asentamiento DENUE SECCION SEGUNDA; referencia CLUES PUEBLO NAUPAN; no homologados. No se deduce continuidad, sucesión ni operador actual desde la clave o institución declarada por CLUES; no se agrupa bajo IMSS, IMSS-Bienestar o SSA. Marca independiente verification_pending y sede pending no acreditan red jurídica, acceso, operación actual o cobertura comercial. Sólo campos DENUE de identidad/domicilio; CLUES es corroboración investigativa, sin nueva fuente de ingesta ni cambio de licencia. Website NULL, sin sitio propio probado. Sin estudios, ofertas, precios, disponibilidad u horarios nuevos."
+    }
+  ]
+}

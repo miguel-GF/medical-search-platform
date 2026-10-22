@@ -17,6 +17,15 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Identidad44 aplicada,22-oct13:03UTC:** centros de salud de Atzala y Naupan,
+dos agrupaciones independientes verification_pending y sedes pending. DENUE
+conservado, CLUES corroborado sin asignar operador actual; sin ofertas nuevas.
+**207marcas/293sedes/564conceptos/3,343favorables/4,045pendientes/234ofertas /
+112migraciones**. Commit único, lectura independiente y registros anteriores
+íntegros. El primer preview se detuvo por tamaño físico de DB, se inspeccionó
+sólo lectura sin replay y se confirmó recuperación lógica antes de aplicar.
+[Evidencia y límites](PUEBLA_IDENTITIES_44_20261022.md).
+
 **Revisión79 retenida,22-oct12:50UTC:** ocho RAW de tinción de Gram investigados;
 22consultas públicas SQL/22core observadas en rollback. Se pierde x2/negación y
 el core con proveedor confunde KOH con Gram. Estado protegido íntegro y ledger
