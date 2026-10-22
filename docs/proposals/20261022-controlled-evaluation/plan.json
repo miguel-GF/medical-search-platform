@@ -1,0 +1,112 @@
+{
+  "version": 1,
+  "prepared_at": "2026-10-22T04:53:17.017581+00:00",
+  "project_ref": "ymtcmfgwuzdqtsbuvzqf",
+  "purpose": "combined_clinical_rollback_evaluation_only",
+  "runner_sha256": "a3642b3e34bcafc25007752dbae95fc1ba3011d6e90f8aab0dc5fd41f350e927",
+  "sql_template_sha256": "7a862f2ebdd7799b3c61a58008dfbcefee2589af74fe2edee7245750d78e816d",
+  "snapshot_sql_sha256": "b65fe11f2033fce920a1db46f7762f3604f856e6bb37073dfd0857524d229e50",
+  "proposal_sql_sha256": "2b0cb7cbdb72fb92f7f7388d69e96a7f0450db8ef6e76259a327cf3c50c15cad",
+  "cases": [
+    {
+      "kind": "search_and_package",
+      "label": "Biometría hemática"
+    },
+    {
+      "kind": "search_and_package",
+      "label": "Biometría hemática INR"
+    },
+    {
+      "kind": "search_and_package",
+      "label": "Biometría hemática x2"
+    },
+    {
+      "kind": "search_and_package",
+      "label": "hematica"
+    },
+    {
+      "kind": "search_and_package",
+      "label": "biometria"
+    },
+    {
+      "kind": "search_and_package",
+      "label": "orina"
+    },
+    {
+      "kind": "search_and_package",
+      "label": "sangre"
+    },
+    {
+      "kind": "search_and_package",
+      "label": "electro"
+    },
+    {
+      "kind": "search_and_package",
+      "label": "electrocardiograma"
+    },
+    {
+      "kind": "search_and_package",
+      "label": "IgE específica contra gluten"
+    },
+    {
+      "kind": "search_and_package",
+      "label": "IgE específica contra gluten sin IgE"
+    },
+    {
+      "kind": "search_and_package",
+      "label": "TELERADIOGRAFIA DE TORAX PA"
+    },
+    {
+      "kind": "search_and_package",
+      "label": "TELERADIOGRAFIA TORAX PA Y LATERAL"
+    },
+    {
+      "kind": "search_and_package",
+      "label": "PERFIL ANTICUERPOS COVID (IGG IGM S)"
+    },
+    {
+      "kind": "search_and_package",
+      "label": "Perfil tiroideo ampliado"
+    },
+    {
+      "kind": "search_and_package",
+      "label": "Perfil tiroideo básico"
+    },
+    {
+      "kind": "search_and_package",
+      "label": "Química sanguínea ampliada"
+    },
+    {
+      "kind": "search_and_package",
+      "label": "Química sanguínea básica"
+    },
+    {
+      "kind": "panel_detail",
+      "label": "PERFIL ANTICUERPOS COVID (IGG IGM S)"
+    },
+    {
+      "kind": "panel_detail",
+      "label": "Perfil tiroideo ampliado"
+    },
+    {
+      "kind": "panel_detail",
+      "label": "Perfil tiroideo básico"
+    },
+    {
+      "kind": "panel_detail",
+      "label": "Química sanguínea ampliada"
+    },
+    {
+      "kind": "panel_detail",
+      "label": "Química sanguínea básica"
+    }
+  ],
+  "observation_rows_expected": 46,
+  "database_writes_submitted": false,
+  "formal_tests_executed": false,
+  "limitations": [
+    "Empty proposed registries; no pilot imports",
+    "Owner-session RPC observations, not HTTP/JWT or service-role execution",
+    "No clinical expected-outcome assertions or complete contract suite"
+  ]
+}

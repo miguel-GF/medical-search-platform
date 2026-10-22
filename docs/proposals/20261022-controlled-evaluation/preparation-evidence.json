@@ -1,0 +1,19 @@
+{
+  "captured_at": "2026-10-22T04:53:33.248128+00:00",
+  "read_only": true,
+  "functions": 127,
+  "protected_data_groups": 27,
+  "table_counts": {
+    "core.provider_brands": 205,
+    "core.provider_locations": 291,
+    "catalog.items": 563,
+    "migrations": 112
+  },
+  "local_baseline_sha256": "617d6469db7c30173260d7a6b11a546ea9ceb50228b491ac0b1ca5579b337f24",
+  "sql_template_sha256": "7a862f2ebdd7799b3c61a58008dfbcefee2589af74fe2edee7245750d78e816d",
+  "runner_sha256": "a3642b3e34bcafc25007752dbae95fc1ba3011d6e90f8aab0dc5fd41f350e927",
+  "approval_recorded": false,
+  "evaluation_attempt_created": false,
+  "evaluation_sql_submitted": false,
+  "formal_tests_executed": false
+}

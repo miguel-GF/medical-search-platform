@@ -102,11 +102,13 @@ statement_timeout10s e idle_in_transaction_session_timeout15s. Son límites por
 operación/inactividad, no un límite total; podrían existir bloqueos breves y
 esperas de consultas públicas durante el intento.
 
-Antes de una evaluación autorizada falta preparar sus observaciones concretas
-antes/después y el transporte de intento único. Se comprobarían después, con
+El [paquete de evaluación controlada](../20261022-controlled-evaluation/README.md)
+ya prepara observaciones antes/después y transporte de intento único, sin ejecutar
+el SQL. Requiere aprobación específica. Se comprobarían después, con
 cliente independiente, definiciones completas, permisos, tablas, contadores y
 fuentes intactos. Si el resultado fuera incierto, sólo lectura; nunca reenvío
-ciego. El archivo por sí solo no contiene todavía esas observaciones de casos.
+ciego. El archivo combinado por sí solo no contiene esas observaciones; están
+en la plantilla de evaluación fijada por el plan nuevo.
 
 Alternativa vigente: conservar la base actual y continuar datos ordinarios.
 Nada requiere recuperación ahora: sólo hay archivos aislados. En una evaluación,
@@ -127,7 +129,7 @@ Los borradoresv1/v2/v3/v4 se conservan como evidencia local, no son ejecutables
 autorizados. El anterior archivo de evaluación de tres funciones también queda
 retirado por falta de terminadores entre definiciones; nunca se envió.
 
-Siguiente trabajo: completar observaciones y transporte de evaluación acotada;
-después presentar la decisión específica D-006. Aún no se solicita activar este
+Siguiente trabajo: obtener la decisión específica D-006 sobre la evaluación
+acotada ya preparada. Aún no se solicita activar este
 SQL ni desplegar la API. Para producción faltan integrar el Patient actualizado,
 los importadores y los casos completos de panel, requisitos, imagen y recetas.

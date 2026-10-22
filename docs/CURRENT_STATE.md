@@ -17,9 +17,16 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Evaluación preparada,22-oct04:53UTC:** ejecutor de intento único y plantilla
+con23consultas/46observaciones antes/después, terminaROLLBACK; sin enviar.
+Captura real de sólo lectura:127funciones y27grupos protegidos;205marcas/291sedes /
+563items/112migraciones. Ejemplo de autorizaciónfalse y ningún intento creado.
+Pendiente aprobación específica AGENTS/D-006 para esta evaluación; datos ordinarios
+siguen independientes. [Alcance, riesgos y evidencia](proposals/20261022-controlled-evaluation/README.md).
+
 **Integración combinada,22-octUTC:** SQL de requisitos/paneles/imagen preparado,
 29funciones y4tablas propuestas; baseline27definiciones tras lectura127funciones.
-API aislada conserva selección/typos y TypeScript termina0; no SQL enviado ni
+API aislada conserva selección/typos y TypeScript termina0; borradorSQL sin ejecutar ni
 publicación. Cinco paneles históricos tienen una oferta activa que el registro
 vacío retendría. Evaluación anterior retirada por terminadores; completar
 observaciones/transporte antes de solicitar aprobación D-006 de nueva evaluación.

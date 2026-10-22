@@ -12,6 +12,7 @@ La conversación original no es lectura obligatoria para incorporarse.
 | [Guías de trabajo](WORK_GUIDE.md) | Procedimientos por tipo de cambio y traspaso. |
 | [Operación](OPERATIONS_GUIDE.md) | Directorios, comandos, comprobaciones y alcance de resultados. |
 | [Estado y prioridades](CURRENT_STATE.md) | Capacidades y pendientes con evidencia fechada. |
+| [Evaluación controlada preparada,22-oct](proposals/20261022-controlled-evaluation/README.md) | Ejecutor de intento único, snapshot real y comparación antes/después; aprobación D-006 pendiente, sin sustituciones ejecutadas. |
 | [Candidato combinado SQL/API,22-oct](proposals/20261021-combined-clinical/README.md) | Guardas de requisitos, paneles e imagen compuestas sin sobrescribir filtros; preparado sin ejecutar. |
 | [Imagen: fuentesPatient recuperadas,21-oct](proposals/20261021-imaging-patient/README.md) | Base runtime publicada reconstruida por hash y diff aislado de dos archivos; sin activación clínica. |
 | [ISSSTE Texmelucan y categorías de origen,21-oct](PUEBLA_IDENTITY_43_AND_SOURCE_ROUTING_20261021.md) | Una sede incorporada, tres candidatos retenidos y backlog separado por categoría sin inferir equivalencias clínicas. |

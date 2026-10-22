@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "approved_by_user": false,
+  "project_ref": "ymtcmfgwuzdqtsbuvzqf",
+  "purpose": "combined_clinical_rollback_evaluation_only",
+  "sql_template_sha256": "7a862f2ebdd7799b3c61a58008dfbcefee2589af74fe2edee7245750d78e816d",
+  "runner_sha256": "a3642b3e34bcafc25007752dbae95fc1ba3011d6e90f8aab0dc5fd41f350e927",
+  "user_approval_reference": ""
+}
