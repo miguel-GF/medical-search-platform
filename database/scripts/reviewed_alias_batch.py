@@ -31,6 +31,8 @@ def reviewed_title_specimen(row: dict, guard: dict, specimen: str) -> bool:
 
     The investigator still approves the order. No extraction or alias approval
     happens here; the SQL subsequently checks the complete original RAW value.
+    Both literal constructions "en orina" and "de orina" identify the matrix;
+    the complete title and provider scope remain mandatory.
     Multiple matrices, negation and partial title aliases remain unsupported.
     """
     def words(value: str) -> str:
@@ -57,7 +59,7 @@ def reviewed_title_specimen(row: dict, guard: dict, specimen: str) -> bool:
     present = {code for code, word in matrices.items() if re.search(r"\b" + word + r"\b", title)}
     return (marker is not None and present == {specimen}
             and not re.search(r"\b(?:sangre|seric[ao]s?|urinari[ao]s?|fecales?|salivales?|lcr|semen)\b", title)
-            and re.search(r"\ben " + marker + r"\b", title) is not None)
+            and re.search(r"\b(?:en|de) " + marker + r"\b", title) is not None)
 
 
 def reviewed_targets(row: dict) -> list[dict]:

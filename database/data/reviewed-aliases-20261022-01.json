@@ -1,0 +1,45 @@
+{
+  "review_id": "pruevia:evidence-review:20261022:01",
+  "research_date": "2026-10-22",
+  "scope": "Revisión78: dos títulos Lafer de evaluación de orina posterior a eyaculación. Una orden urinaria con condición de obtención conservada; no examen general de orina, seminograma ni procedimiento terapéutico. Otras cuatro filas Lafer excluidas. Sin ofertas ni cambios de funciones compartidas.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "d527d2270b97b440befd78042eb9c26b55592ed0187e22a77a82d49b4ed5b356",
+  "research_snapshot_sha256": "9ac1c521179a980121c627f13828e6d55610125d3d7fdfa31ea50004dbf46a76",
+  "definition_sha256": "316647af9555987c268b8d3cdeb1bb8e27272748a64ab63624ae66c247ebe3ed",
+  "new_concepts": [
+    {
+      "item_id": "84180f29-555d-5217-8147-7e97e5b3311e",
+      "canonical_name": "Búsqueda de espermatozoides en orina posterior a eyaculación",
+      "component": "Spermatozoa in post-ejaculatory urine",
+      "specimen_code": "urine",
+      "time_aspect": null,
+      "identity_scope": "specimen_order",
+      "evidence_url": "https://lafer.mx/laboratorio-de-andrologia/evaluacion-de-orina-post-eyaculado-eyaculacion-retrograda/",
+      "reason": "Lafer declara evaluación de orina post-eyaculado y búsqueda de espermatozoides en esa orina. Conservar condición posterior a eyaculación en nombre y componente, sin duración exacta o 24 horas inferidas. No convertir en seminograma, examen general de orina, cultivo de semen o recuperación terapéutica. Alias completo limitado al proveedor y guard del título original. Otras órdenes hiposmótica y postcoital excluidas por representación pendiente de muestra/protocolo. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "evaluacion de orina post eyaculado eyaculacion retrograda",
+      "item_id": "84180f29-555d-5217-8147-7e97e5b3311e",
+      "canonical_name": "Búsqueda de espermatozoides en orina posterior a eyaculación",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://lafer.mx/laboratorio-de-andrologia/evaluacion-de-orina-post-eyaculado-eyaculacion-retrograda/",
+      "reason": "Lafer declara evaluación de orina post-eyaculado y búsqueda de espermatozoides en esa orina. Conservar condición posterior a eyaculación en nombre y componente, sin duración exacta o 24 horas inferidas. No convertir en seminograma, examen general de orina, cultivo de semen o recuperación terapéutica. Alias completo limitado al proveedor y guard del título original. Otras órdenes hiposmótica y postcoital excluidas por representación pendiente de muestra/protocolo. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "27bcf56b-99bd-585e-ad98-ffbe26b7e43a",
+      "expected_rows": 2,
+      "raw_guard": {
+        "path": [
+          "provider_display_name"
+        ],
+        "value": "EVALUACIÓN DE ORINA POST-EYACULADO (EYACULACIÓN RETROGRADA)"
+      },
+      "source_attributes": {
+        "specimen_code": "urine"
+      }
+    }
+  ]
+}

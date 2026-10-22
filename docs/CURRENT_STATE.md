@@ -17,6 +17,16 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Revisión78 aplicada,22-oct12:45:29UTC:** una orden de búsqueda de espermatozoides
+en orina posterior a eyaculación y alias exclusivo Lafer; dos RAW resueltos.
+**205marcas/291sedes/564conceptos/3,343favorables/4,045pendientes/234ofertas /
+112migraciones**. Observación provisional16consultas públicas SQL/16core, rollback
+comprobado; commit único y ledger aplicado. Verificador inicial omitió candidatos
+exactos esperados; inspección posterior de sólo lectura confirmó sus dos filas y
+conservación de candidatos ajenos. Funciones/RAW/permisos intactos, cola y STOP
+sin reactivar. Cuatro filas Lafer de otras órdenes siguen retenidas.
+[Alcance, incidente del verificador y evidencia](CATALOG_REVIEW_78_20261022.md).
+
 **Inventario fresco,22-oct12:36:52UTC:** 205marcas/291sedes/563conceptos /
 3,341favorables/4,047pendientes;745grupos y1,349términos. Memoria66revisiones
 reconstruida por ledger; planificación739grupos/4,034filas por investigar y
