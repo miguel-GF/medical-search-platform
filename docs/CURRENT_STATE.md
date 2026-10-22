@@ -17,6 +17,13 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Inventario fresco,22-oct12:36:52UTC:** 205marcas/291sedes/563conceptos /
+3,341favorables/4,047pendientes;745grupos y1,349términos. Memoria66revisiones
+reconstruida por ledger; planificación739grupos/4,034filas por investigar y
+6grupos/13filas con retención temporal documentada. Seis RAW Lafer reconsultados,
+tres definiciones aclaradas por fuente oficial, aún sin fixture ni cierres.
+[Evidencia, límites y siguiente acción](CATALOG_REFRESH_AND_LAFER_20261022.md).
+
 **Investigación77,22-oct12:31UTC:** dos fichas SEMIN consultadas con HTTP200;
 `sinAcro` recuperado no distingue colesterol total/fracción ni actividad/concentración
 de renina. Ambos retenidos; cero cierres y cero escrituras en base. Evidencia nueva
