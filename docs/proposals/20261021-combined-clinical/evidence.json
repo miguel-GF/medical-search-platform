@@ -1,0 +1,458 @@
+{
+  "sql": {
+    "at": "2026-10-22T04:38:51.063272+00:00",
+    "database_writes": false,
+    "sql_submitted": false,
+    "formal_tests_executed": false,
+    "source_pins": {
+      "collectors/artifacts/combined-clinical-candidate-20261021/current-functions.json": "5c06f58158af726bfd84bb3d9f4069a995461ba340d473aa112d0fc2274d844c",
+      "collectors/artifacts/combined-clinical-candidate-20261021/dependency-functions.json": "4d5ebab099ff7c1b94a17f4ea43167b0b615c3ed3f9b79d6b3931840bff41188",
+      "collectors/artifacts/combined-clinical-candidate-20261021/proposed-object-presence.json": "0d4780785de5b4e32ca2963554f8482be5d87c2af9faa66fa54286e91fdac8d8",
+      "collectors/artifacts/puebla-expansion-20261009/priority-packages-20261016/proposed-panel-integration.sql": "b3d1672ac87c957b251ded837df19ac3275280ed0141339bda85e577089dd7a4",
+      "collectors/artifacts/puebla-expansion-20261009/clinical-research/short-requirements-proposal-20261019/catalog-resolve_items_v3-CURRENT.sql": "c2dfe577bdb0de0245703bea4979e9b7bd508ddb05adc8e56d3844e1851fbe45",
+      "collectors/artifacts/puebla-expansion-20261009/clinical-research/short-requirements-proposal-20261019/catalog-resolve_items_v4-CURRENT.sql": "626caceaee72f64c23545ae5b5c9ff42da6c877d1248c6e020ca938b5cec8d35",
+      "collectors/artifacts/puebla-expansion-20261009/clinical-research/short-requirements-proposal-20261019/catalog-resolve_items_v6-CURRENT.sql": "c85e58dd661f7d25b0f81c971bab409d9e7f518dbae165f3e5553eb485917f23",
+      "collectors/artifacts/puebla-expansion-20261009/clinical-research/short-requirements-proposal-20261019/catalog-resolve_items_v3-PROPOSED.sql": "2232d6645351b8abaace8f3302c27ddb6f921574f127d0b43172800dacd064ba",
+      "collectors/artifacts/puebla-expansion-20261009/clinical-research/short-requirements-proposal-20261019/catalog-resolve_items_v4-PROPOSED.sql": "87b21d4d7059c7e80069ebeaf962dfd417d169b9a2462e232ecc195dd8076a07",
+      "collectors/artifacts/puebla-expansion-20261009/clinical-research/short-requirements-proposal-20261019/catalog-resolve_items_v6-PROPOSED.sql": "e7086e1a1a1543b908fd3cddfcdb709290b0dbf7e2a1db033565aff7e549c480",
+      "collectors/artifacts/proposal-imaging-protocols-20261015/202610150003_rx_protocol_callers_PROPOSED.sql": "4dbee1eeefddf98e4ce5f6a01f8427e665abb8eeebe6105f78a09e1af2592f8c",
+      "collectors/artifacts/proposal-imaging-protocols-20261015/202610150001_rx_protocol_pilot_PROPOSED.sql": "7d7488828b07b9d7327884ce18c0d6f3ab61ec640600e9c4f25dfb0d52676a13",
+      "collectors/artifacts/puebla-expansion-20261009/priority-packages-20261016/panel_registry_draft.sql": "d144cbe65c7a3e0a3d212e7a777f1c6fcfc25d6185c608216f10c4c65f69fccf",
+      "collectors/artifacts/proposal-imaging-protocols-20261015/202610150002_rx_protocol_resolver_PROPOSED.sql": "072efe43e4fdfdddd7265e12a4e7a89eb12d92f13f0f29a69f6a180b7d14f02c",
+      "collectors/artifacts/proposal-imaging-protocols-20261015/integration-candidate-20261016/protocol-integrity-PROPOSED.sql": "c5b65d4bacf123c07ab6f41a159f0f8a00b40ebfcb550c5630cf7c7b3d0db978",
+      "collectors/artifacts/proposal-imaging-protocols-20261015/integration-candidate-20261016/package-originals-PROPOSED.sql": "42fab952478cf6d6bc99ebbe74bd0b931e087cc9260e0a5a5c3b3a904312b559"
+    },
+    "combined_sql_sha256": "2b0cb7cbdb72fb92f7f7388d69e96a7f0450db8ef6e76259a327cf3c50c15cad",
+    "function_count": 29,
+    "replaced_functions": [
+      "catalog.resolve_items_v3",
+      "catalog.resolve_items_v4",
+      "catalog.resolve_items_v6",
+      "catalog.search_items",
+      "public.api_provider_detail",
+      "public.api_resolve_package_links_legacy",
+      "public.api_resolve_search_v4",
+      "public.api_resolve_search_v4_links_legacy",
+      "public.api_search",
+      "public.api_service_detail"
+    ],
+    "new_functions": [
+      "catalog.resolve_items_v6_before_panels",
+      "catalog.resolve_items_v7",
+      "health.assert_rx_protocol_integrity",
+      "health.check_rx_protocol_integrity",
+      "health.panel_current_state",
+      "health.panel_query_is_compatible",
+      "health.parse_rx_chest_request",
+      "health.preserve_panel_audit_anchor",
+      "health.preserve_rx_protocol_review",
+      "health.prevent_panel_manifest_mutation",
+      "health.prevent_rx_protocol_truncate",
+      "health.rx_protocol_definition",
+      "health.rx_protocol_gate",
+      "health.validate_imaging_protocol_service",
+      "health.validate_panel_manifest_insert",
+      "health.validate_panel_quarantine_insert",
+      "public.api_resolve_rx_chest_package_pilot_v2",
+      "public.api_resolve_rx_chest_pilot",
+      "public.api_search_before_panels"
+    ],
+    "baseline_functions_guarded": 27,
+    "existing_acl_preservation_guarded": true,
+    "sections": [
+      "image_schema",
+      "latest_panel_registry_with_immutable_audit",
+      "requirements_v3",
+      "requirements_v4",
+      "requirements_v6_private_base",
+      "panel_v6_wrapper",
+      "image_v7_wrapper",
+      "image_definition_integrity",
+      "public.api_search_before_panels",
+      "public.api_search",
+      "public.api_service_detail",
+      "public.api_provider_detail",
+      "package_with_both_gates",
+      "catalog.search_items",
+      "public.api_resolve_search_v4",
+      "public.api_resolve_search_v4_links_legacy",
+      "package_original_alignment"
+    ],
+    "registry_contains_approved_rows": false,
+    "requirement_definition_terminators_explicit": true,
+    "postgresql_execution_proven": false,
+    "new_function_permissions": [
+      {
+        "name": "catalog.resolve_items_v6_before_panels",
+        "signature": "catalog.resolve_items_v6_before_panels(text,text,uuid,integer)",
+        "service_role": true
+      },
+      {
+        "name": "catalog.resolve_items_v7",
+        "signature": "catalog.resolve_items_v7(text,text,uuid,integer)",
+        "service_role": true
+      },
+      {
+        "name": "health.assert_rx_protocol_integrity",
+        "signature": "health.assert_rx_protocol_integrity(uuid)",
+        "service_role": false
+      },
+      {
+        "name": "health.check_rx_protocol_integrity",
+        "signature": "health.check_rx_protocol_integrity()",
+        "service_role": false
+      },
+      {
+        "name": "health.panel_current_state",
+        "signature": "health.panel_current_state(uuid)",
+        "service_role": true
+      },
+      {
+        "name": "health.panel_query_is_compatible",
+        "signature": "health.panel_query_is_compatible(text,uuid,uuid)",
+        "service_role": true
+      },
+      {
+        "name": "health.parse_rx_chest_request",
+        "signature": "health.parse_rx_chest_request(text)",
+        "service_role": true
+      },
+      {
+        "name": "health.preserve_panel_audit_anchor",
+        "signature": "health.preserve_panel_audit_anchor()",
+        "service_role": false
+      },
+      {
+        "name": "health.preserve_rx_protocol_review",
+        "signature": "health.preserve_rx_protocol_review()",
+        "service_role": false
+      },
+      {
+        "name": "health.prevent_panel_manifest_mutation",
+        "signature": "health.prevent_panel_manifest_mutation()",
+        "service_role": false
+      },
+      {
+        "name": "health.prevent_rx_protocol_truncate",
+        "signature": "health.prevent_rx_protocol_truncate()",
+        "service_role": false
+      },
+      {
+        "name": "health.rx_protocol_definition",
+        "signature": "health.rx_protocol_definition(uuid)",
+        "service_role": true
+      },
+      {
+        "name": "health.rx_protocol_gate",
+        "signature": "health.rx_protocol_gate(text,uuid)",
+        "service_role": true
+      },
+      {
+        "name": "health.validate_imaging_protocol_service",
+        "signature": "health.validate_imaging_protocol_service()",
+        "service_role": false
+      },
+      {
+        "name": "health.validate_panel_manifest_insert",
+        "signature": "health.validate_panel_manifest_insert()",
+        "service_role": false
+      },
+      {
+        "name": "health.validate_panel_quarantine_insert",
+        "signature": "health.validate_panel_quarantine_insert()",
+        "service_role": false
+      },
+      {
+        "name": "public.api_resolve_rx_chest_package_pilot_v2",
+        "signature": "public.api_resolve_rx_chest_package_pilot_v2(jsonb,text,double precision,double precision,uuid,integer,boolean,jsonb)",
+        "service_role": true
+      },
+      {
+        "name": "public.api_resolve_rx_chest_pilot",
+        "signature": "public.api_resolve_rx_chest_pilot(text,text,double precision,double precision,uuid,integer)",
+        "service_role": true
+      },
+      {
+        "name": "public.api_search_before_panels",
+        "signature": "public.api_search_before_panels(text,text,double precision,double precision,uuid,integer)",
+        "service_role": false
+      }
+    ],
+    "generator_sha256": "2c4365bbc70c071b00c1176db58f0d05c55eff1d50abfbd7586e5c3d27ea761a"
+  },
+  "api": {
+    "at": "2026-10-22T04:32:07.420889+00:00",
+    "base_frozen_candidate": "collectors/artifacts/search-flow-20261020/api-release-typo",
+    "base_is_published": false,
+    "base_contains_selection_and_typo_changes": true,
+    "files": {
+      "src/app.ts": {
+        "base_sha256": "b88f4e87e6d6233bb16531813716fc0ef6a2e235c1885d1166845223952139f7",
+        "candidate_sha256": "c322442dc72eab84a496c83438465d0aa5e4def36bce0410e662dbcbe1e6f0a9",
+        "changed": true
+      },
+      "src/batch.ts": {
+        "base_sha256": "d84cfe4c8d58205784901a7819c2f5cf82c95c7518ea9e84a2b795d849dc3b00",
+        "candidate_sha256": "d5afd0bf4a1c39d14d8fb7a2f4299374348f68623620c74b4d706539bb93c4ce",
+        "changed": true
+      },
+      "src/catalog_search_suggestions.ts": {
+        "base_sha256": "c5fd61553a469483294d79d70ba42e3a288d78afeb871eb7bbb6ab768a1f065a",
+        "candidate_sha256": "c5fd61553a469483294d79d70ba42e3a288d78afeb871eb7bbb6ab768a1f065a",
+        "changed": false
+      },
+      "src/index.ts": {
+        "base_sha256": "fb9e7f3266e72a29ff82537e16be37a5671ba060e158b6d8b1b79eb1f284d2e1",
+        "candidate_sha256": "fb9e7f3266e72a29ff82537e16be37a5671ba060e158b6d8b1b79eb1f284d2e1",
+        "changed": false
+      },
+      "src/ocr.ts": {
+        "base_sha256": "5d7c25d8a84caf13cc9bfb8744dfe3b3db99339f622f1b7910c2e2a0b109c4ee",
+        "candidate_sha256": "5d7c25d8a84caf13cc9bfb8744dfe3b3db99339f622f1b7910c2e2a0b109c4ee",
+        "changed": false
+      },
+      "src/provider-applications.ts": {
+        "base_sha256": "28db98ca42e8dec3a64f8e9bbce96a6da189079dd4a31e8d6ed7fb2188155046",
+        "candidate_sha256": "28db98ca42e8dec3a64f8e9bbce96a6da189079dd4a31e8d6ed7fb2188155046",
+        "changed": false
+      },
+      "src/provider-document-access.ts": {
+        "base_sha256": "4d435b58eaccae0ce036d4f489cb7438c08202153e1aa4990349b709c4d8f3a4",
+        "candidate_sha256": "4d435b58eaccae0ce036d4f489cb7438c08202153e1aa4990349b709c4d8f3a4",
+        "changed": false
+      },
+      "src/search_guidance.ts": {
+        "base_sha256": "f9fd7b919bb50b456907c4084b423a23e8fc7194b919bc19b9e5160174667e59",
+        "candidate_sha256": "f9fd7b919bb50b456907c4084b423a23e8fc7194b919bc19b9e5160174667e59",
+        "changed": false
+      },
+      "src/supabase.ts": {
+        "base_sha256": "91ee171c22c006540da6fd470a2c803a89186b9dc299ffd5c81680fc44bcdec6",
+        "candidate_sha256": "91ee171c22c006540da6fd470a2c803a89186b9dc299ffd5c81680fc44bcdec6",
+        "changed": false
+      },
+      "src/types.ts": {
+        "base_sha256": "ef8d8a7ae40202c32da4e0218c482aa67aa91cc186f4dfb468d2901b782eded1",
+        "candidate_sha256": "7c4dd0857afc1b08744b3181047f134ce864c944382d2665e5f0e64ee3cfd93c",
+        "changed": true
+      }
+    },
+    "typecheck_exit_code": 0,
+    "command": [
+      "C:/laragon/bin/nodejs/node-v24.19.0-win-x64/node.exe",
+      "C:\\laragon\\www\\medical-search-platform\\apps\\api\\node_modules\\typescript\\bin\\tsc",
+      "--project",
+      "C:\\laragon\\www\\medical-search-platform\\collectors\\artifacts\\combined-clinical-candidate-20261021\\api-candidate\\tsconfig.json",
+      "--noEmit"
+    ],
+    "new_flag_configured": false,
+    "configuration_byte_identical_to_base": true,
+    "deployed": false,
+    "database_writes": false,
+    "formal_tests_executed": false
+  },
+  "live_read": {
+    "at": "2026-10-22T04:21:40.568390+00:00",
+    "project_ref": "ymtcmfgwuzdqtsbuvzqf",
+    "function_count": 16,
+    "database_writes": false,
+    "formal_tests_executed": false
+  },
+  "dependency_closure": {
+    "at": "2026-10-22T04:34:03.730956+00:00",
+    "functions_scanned": 127,
+    "guarded_function_definitions": 27,
+    "affected_qualified_callers_and_roots": [
+      "catalog.resolve_items_v3",
+      "catalog.resolve_items_v4",
+      "catalog.resolve_items_v5",
+      "catalog.resolve_items_v6",
+      "catalog.search_items",
+      "public.api_provider_detail",
+      "public.api_resolve_ocr_package",
+      "public.api_resolve_ocr_package_internal",
+      "public.api_resolve_package",
+      "public.api_resolve_package_internal",
+      "public.api_resolve_package_links_legacy",
+      "public.api_resolve_package_unfiltered",
+      "public.api_resolve_search",
+      "public.api_resolve_search_unfiltered",
+      "public.api_resolve_search_v2",
+      "public.api_resolve_search_v3",
+      "public.api_resolve_search_v4",
+      "public.api_resolve_search_v4_links_legacy",
+      "public.api_search",
+      "public.api_search_links_legacy_v1",
+      "public.api_search_scoped_v1",
+      "public.api_service_detail"
+    ],
+    "dependency_names": [
+      "catalog.resolve_items",
+      "catalog.resolve_items_v2",
+      "catalog.resolve_items_v3",
+      "catalog.resolve_items_v4",
+      "catalog.resolve_items_v5",
+      "catalog.resolve_items_v6",
+      "catalog.search_items",
+      "core.normalized_text",
+      "public.api_provider_detail",
+      "public.api_resolve_ocr_package",
+      "public.api_resolve_ocr_package_internal",
+      "public.api_resolve_package",
+      "public.api_resolve_package_internal",
+      "public.api_resolve_package_links_legacy",
+      "public.api_resolve_package_unfiltered",
+      "public.api_resolve_search",
+      "public.api_resolve_search_unfiltered",
+      "public.api_resolve_search_v2",
+      "public.api_resolve_search_v3",
+      "public.api_resolve_search_v4",
+      "public.api_resolve_search_v4_links_legacy",
+      "public.api_search",
+      "public.api_search_links_legacy_v1",
+      "public.api_search_scoped_v1",
+      "public.api_service_detail",
+      "public.apply_package_confidence_guard",
+      "public.apply_resolution_confidence_guard"
+    ],
+    "qualified_edges": {
+      "catalog.resolve_items": [
+        "core.normalized_text"
+      ],
+      "catalog.resolve_items_v2": [
+        "catalog.resolve_items",
+        "core.normalized_text"
+      ],
+      "catalog.resolve_items_v3": [
+        "catalog.resolve_items_v2",
+        "core.normalized_text"
+      ],
+      "catalog.resolve_items_v4": [
+        "catalog.resolve_items_v3"
+      ],
+      "catalog.resolve_items_v5": [
+        "catalog.resolve_items_v4",
+        "core.normalized_text"
+      ],
+      "catalog.resolve_items_v6": [
+        "catalog.resolve_items_v5"
+      ],
+      "catalog.search_items": [
+        "catalog.resolve_items_v6"
+      ],
+      "core.normalized_text": [],
+      "public.api_provider_detail": [],
+      "public.api_resolve_ocr_package": [
+        "public.api_resolve_ocr_package_internal",
+        "public.api_resolve_package"
+      ],
+      "public.api_resolve_ocr_package_internal": [
+        "core.normalized_text",
+        "public.api_resolve_package"
+      ],
+      "public.api_resolve_package": [
+        "public.api_resolve_package_unfiltered",
+        "public.apply_package_confidence_guard"
+      ],
+      "public.api_resolve_package_internal": [
+        "public.api_resolve_package_links_legacy"
+      ],
+      "public.api_resolve_package_links_legacy": [
+        "catalog.resolve_items_v6",
+        "core.normalized_text"
+      ],
+      "public.api_resolve_package_unfiltered": [
+        "public.api_resolve_package_internal"
+      ],
+      "public.api_resolve_search": [
+        "public.api_resolve_search_unfiltered",
+        "public.apply_resolution_confidence_guard"
+      ],
+      "public.api_resolve_search_unfiltered": [
+        "public.api_resolve_search_v4"
+      ],
+      "public.api_resolve_search_v2": [
+        "catalog.resolve_items_v3",
+        "core.normalized_text",
+        "public.api_search"
+      ],
+      "public.api_resolve_search_v3": [
+        "core.normalized_text",
+        "public.api_resolve_search_v2"
+      ],
+      "public.api_resolve_search_v4": [
+        "catalog.resolve_items_v6",
+        "core.normalized_text",
+        "public.api_search"
+      ],
+      "public.api_resolve_search_v4_links_legacy": [
+        "catalog.resolve_items_v6",
+        "core.normalized_text",
+        "public.api_search"
+      ],
+      "public.api_search": [
+        "public.api_search_links_legacy_v1"
+      ],
+      "public.api_search_links_legacy_v1": [
+        "core.normalized_text",
+        "public.api_search_scoped_v1"
+      ],
+      "public.api_search_scoped_v1": [
+        "catalog.search_items"
+      ],
+      "public.api_service_detail": [],
+      "public.apply_package_confidence_guard": [],
+      "public.apply_resolution_confidence_guard": []
+    },
+    "static_text_scan_only": true,
+    "dynamic_and_external_schema_calls_not_proven_complete": true,
+    "database_writes": false
+  },
+  "panel_impact": {
+    "at": "2026-10-22T04:35:47.640507+00:00",
+    "existing_lab_panels": 5,
+    "active_offers_on_panels": 1,
+    "panels": [
+      {
+        "catalog_item_id": "d66b304c-afeb-53c9-9cae-1cdd529db5ad",
+        "name": "PERFIL ANTICUERPOS COVID (IGG IGM S)",
+        "status": "active",
+        "active_offers": 1
+      },
+      {
+        "catalog_item_id": "00000000-0000-0000-0000-000000001108",
+        "name": "Perfil tiroideo ampliado",
+        "status": "active",
+        "active_offers": 0
+      },
+      {
+        "catalog_item_id": "00000000-0000-0000-0000-000000001107",
+        "name": "Perfil tiroideo básico",
+        "status": "active",
+        "active_offers": 0
+      },
+      {
+        "catalog_item_id": "00000000-0000-0000-0000-000000001106",
+        "name": "Química sanguínea ampliada",
+        "status": "active",
+        "active_offers": 0
+      },
+      {
+        "catalog_item_id": "00000000-0000-0000-0000-000000001105",
+        "name": "Química sanguínea básica",
+        "status": "active",
+        "active_offers": 0
+      }
+    ],
+    "database_writes": false
+  },
+  "proposal_patch_sha256": {
+    "app.ts.patch": "8457ce7fb1007f7f693a29b6d568f239f5289712ba4a19950b8a033c4bfd30c6",
+    "batch.ts.patch": "17e6448f0556046e12f0c2f04fd42714fde5e8985ef88f31b7026c511d9e5519",
+    "types.ts.patch": "383545432839f349964c8744d5549f943e46110473e825cdd158253cea07a6db"
+  },
+  "postgresql_executed": false,
+  "deployed": false,
+  "formal_tests_executed": false,
+  "versioned_patch_line_endings": "LF; candidate source files preserve unchanged original bytes"
+}

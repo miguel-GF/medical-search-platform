@@ -1,0 +1,9 @@
+--- a/apps/api/src/types.ts
++++ b/apps/api/src/types.ts
+@@ -1,4 +1,6 @@
+ export interface Env {
++  /** Absent means disabled; isolated D-006 proposal only. */
++  IMAGING_PROTOCOL_PILOT_ENABLED?: string;
+   SUPABASE_URL: string;
+   SUPABASE_PUBLISHABLE_KEY?: string;
+   SUPABASE_SECRET_KEY?: string;

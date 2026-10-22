@@ -1,0 +1,19 @@
+--- a/apps/api/src/batch.ts
++++ b/apps/api/src/batch.ts
+@@ -22,6 +22,8 @@
+ export interface ParsedBatchRequest {
+   items: string[];
+   original_text: string;
++  /** Original entries before preparation extraction. */
++  original_items: string[];
+   /** Whether items came from free-form text and may need catalog segmentation. */
+   input_source: 'text' | 'items';
+   /** Explicit textual qualifiers kept outside the clinical catalog label. */
+@@ -101,6 +103,7 @@
+     ok: true,
+     value: {
+       items: prepared.items,
++      original_items: [...items],
+       original_text: originalText,
+       input_source: hasItems ? 'items' : 'text',
+       preparation_notes: prepared.notes,

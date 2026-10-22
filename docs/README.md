@@ -12,6 +12,7 @@ La conversación original no es lectura obligatoria para incorporarse.
 | [Guías de trabajo](WORK_GUIDE.md) | Procedimientos por tipo de cambio y traspaso. |
 | [Operación](OPERATIONS_GUIDE.md) | Directorios, comandos, comprobaciones y alcance de resultados. |
 | [Estado y prioridades](CURRENT_STATE.md) | Capacidades y pendientes con evidencia fechada. |
+| [Candidato combinado SQL/API,22-oct](proposals/20261021-combined-clinical/README.md) | Guardas de requisitos, paneles e imagen compuestas sin sobrescribir filtros; preparado sin ejecutar. |
 | [Imagen: fuentesPatient recuperadas,21-oct](proposals/20261021-imaging-patient/README.md) | Base runtime publicada reconstruida por hash y diff aislado de dos archivos; sin activación clínica. |
 | [ISSSTE Texmelucan y categorías de origen,21-oct](PUEBLA_IDENTITY_43_AND_SOURCE_ROUTING_20261021.md) | Una sede incorporada, tres candidatos retenidos y backlog separado por categoría sin inferir equivalencias clínicas. |
 | [Identidad42 y memoria de investigación,21-oct](PUEBLA_IDENTITIES_42_AND_RESEARCH_PLANNER_20261021.md) | Cinco vínculos aplicados sin duplicar sedes; algoritmo local evita repetir casos con bloqueo documentado. |
@@ -20,7 +21,7 @@ La conversación original no es lectura obligatoria para incorporarse.
 | [Moco nasal y retención74,21-oct](CATALOG_REVIEW_74_20261021.md) | Representación local compatible; observación del motor y ausencia de altas persistentes. |
 | [Cinco identidades40,21-oct](PUEBLA_IDENTITIES_40_20261021.md) | Coapan, Jesús Nazareno, dos consultorios escolares y Best; SEMIN excluido por vínculo previo. |
 | [Bence Jones y ocho identidades,21-oct](PUEBLA_REVIEW_73_AND_IDENTITIES_39_20261021.md) | Ocho registros resueltos, ocho establecimientos y evaluación del motor preparada sin ejecutar. |
-| [Propuesta de evaluación con rollback,21-oct](proposals/20261021-requirements-rollback-evaluation.md) | Diff acotado, guards y recuperación; aprobación específica D-006 pendiente. |
+| [Evaluación anterior retirada,21-oct](proposals/20261021-requirements-rollback-evaluation.md) | No ejecutar aquella versión; sustituida por preparación combinada aún sin enviar. |
 | [MuSK/T3 y cinco identidades,21-oct](PUEBLA_REVIEW_72_AND_IDENTITIES_38_20261021.md) | Dos órdenes incorporadas, cinco establecimientos y observación local del fallo INR/x2. |
 | [Cuatro UMF y trigo retenido,21-oct](PUEBLA_IDENTITIES_37_AND_REVIEW_71_20261021.md) | Identidades incorporadas sin cobertura inferida; observación de pérdida de isotipo, serie y negación. |
 | [Anticuerpos séricos70,21-oct](CATALOG_REVIEW_70_20261021.md) | Tres órdenes incorporadas con isotipo/muestra propios; observaciones y referencias separadas de fallos HTTP. |

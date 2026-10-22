@@ -2,6 +2,14 @@
 
 21-oct-2026,05:37UTC. **Preparada; no ejecutada. Requiere aprobación D-006.**
 
+**Actualización22-octUTC: versión retirada, no ejecutar el hash publicado abajo.**
+La inspección del SQL preparado encontró tres definiciones concatenadas sin
+terminador entre sentencias. Nunca se envió; no hay cambio remoto que revertir.
+El [candidato combinado](20261021-combined-clinical/README.md) conserva
+terminadores explícitos e incorpora las otras guardas; aún requiere completar
+observaciones/transporte y aprobación específica. La pregunta anterior no
+autoriza esta versión nueva ni constituye aprobación de la anterior.
+
 ## Problema y evidencia
 
 En el catálogo productivo, `Biometría hemática INR` y `Biometría hemática x2`

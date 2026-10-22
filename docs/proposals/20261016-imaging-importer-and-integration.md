@@ -4,6 +4,15 @@ Estado: propuesta D-006 aislada, **sin activar**. Fecha:16-oct-2026.
 La autorización ordinaria para investigar estudios no activa este cambio clínico.
 No se solicita aprobación todavía: falta completar el candidato de integración.
 
+## Actualización22-octUTC: SQL/API combinados preparados
+
+Se compuso un borrador único de requisitos, paneles e imagen:29funciones, cuatro
+tablas propuestas y27definiciones actuales fijadas con permisos. La API se rebasó
+sobre el candidato congelado con selección/typos y conserva siete módulos sin
+cambios; TypeScript terminó0. No se ejecutó SQL ni se publicó. Faltan observaciones
+de evaluación, transporte e integración final de importadores/Patient.
+[Evidencia, impacto y límites](20261021-combined-clinical/README.md).
+
 ## Actualización21-oct local /22-octUTC: fuentesPatient recuperadas
 
 Se recuperaron por hash las30entradas de runtime fijadas en recibos del18-oct,

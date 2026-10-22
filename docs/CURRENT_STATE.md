@@ -17,6 +17,14 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Integración combinada,22-octUTC:** SQL de requisitos/paneles/imagen preparado,
+29funciones y4tablas propuestas; baseline27definiciones tras lectura127funciones.
+API aislada conserva selección/typos y TypeScript termina0; no SQL enviado ni
+publicación. Cinco paneles históricos tienen una oferta activa que el registro
+vacío retendría. Evaluación anterior retirada por terminadores; completar
+observaciones/transporte antes de solicitar aprobación D-006 de nueva evaluación.
+[Candidato y evidencia](proposals/20261021-combined-clinical/README.md).
+
 **Imagen,21-oct local /22-octUTC:** recuperadas30entradas de fuentes runtime de
 Patient por hashes de recibos publicados; manifiesto y JS públicos200coinciden.
 Candidato aislado de guía de imagen sobre esa base, sólo2archivos cambiados;

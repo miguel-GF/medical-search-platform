@@ -1,0 +1,113 @@
+--- a/apps/api/src/app.ts
++++ b/apps/api/src/app.ts
+@@ -19,6 +19,12 @@
+   recognizeOrderImage,
+   recognizeOrderImageViaService,
+ } from './ocr.js';
++
++function isRxChestPilotQuery(query: string): boolean {
++  const text = query.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();
++  return /\btorax\b/u.test(text)
++    && !/\b(tc|rm|tac|resonancia|tomografia|ultrasonido)\b/u.test(text);
++}
+ 
+ interface Dependencies {
+   rpc: RpcClient;
+@@ -120,7 +126,7 @@
+         return await resolveResponse(request, dependencies.rpc, env, origin, requestId);
+       }
+       if (url.pathname === '/api/v1/resolve-batch' && request.method === 'POST') {
+-        return await resolveBatchResponse(request, dependencies.rpc, origin);
++        return await resolveBatchResponse(request, dependencies.rpc, env, origin);
+       }
+       if (url.pathname === '/api/v1/resolve-image' && request.method === 'POST') {
+         return await resolveImageResponse(request, dependencies.rpc, env, origin, requestId);
+@@ -278,6 +284,35 @@
+       return json({ query, results: [], suggestions: [], guidance }, 200, origin);
+     }
+   }
++  // Explicitly approved RX pilot only. The dedicated RPC retains v6 confidence
++  // guards and applies projection constraints before any commercial results.
++  if (domain === 'health_diagnostics' && env.IMAGING_PROTOCOL_PILOT_ENABLED === 'true' && isRxChestPilotQuery(query)) {
++    const payload = await rpc.call<ResolutionResponse>('api_resolve_rx_chest_pilot', {
++      p_query: query, p_domain_code: domain, p_latitude: latitude,
++      p_longitude: longitude, p_location_id: locationId, p_limit: limit,
++    });
++    const safe = sanitizePublicResolution(payload);
++    if (selectedId && (safe.status !== 'resolved'
++      || !safe.candidates.some((candidate) => candidate.service_id === selectedId && candidate.resolution_status === 'resolved'))) {
++      return json({ error: { code: 'selection_not_available', message: 'Confirma primero las proyecciones completas de tu orden.' } }, 409, origin);
++    }
++    if (safe.status !== 'resolved') {
++      return json({ query, results: [], suggestions: [], guidance: {
++        kind: 'imaging_projection', specimen: 'imaging',
++        title: 'Confirma las proyecciones de tu radiografía',
++        message: 'PA, AP y lateral son vistas diferentes. Copia el nombre completo de tu orden. No elegimos ni agregamos vistas por ti.',
++        options: safe.candidates.slice(0, 8).map((c) => ({
++          item_id: c.service_id, display_name: c.display_name,
++          detail: 'Comprueba que el nombre coincide completo con tu orden; no acredita una oferta disponible.',
++        })),
++      } }, 200, origin);
++    }
++    const candidates = selectedId ? safe.candidates.filter((candidate) => candidate.service_id === selectedId) : safe.candidates;
++    const groups = groupResolutionCandidates(candidates).map((group) => selectedId
++      ? { ...group, service: { ...group.service, selection_method: 'user_confirmed' } } : group);
++    const results = await addServiceSummaries(groups, rpc, requestId);
++    return json({ query, results, suggestions: [] }, 200, origin);
++  }
+   const rows = await rpc.call<SearchRow[]>('api_search', {
+     p_query: query,
+     p_domain_code: domain,
+@@ -471,7 +506,8 @@
+   if (locationId !== null && (typeof locationId !== 'string' || !isUuid(locationId))) {
+     return json({ error: { code: 'invalid_location_id', message: 'location_id must be a UUID' } }, 400, origin);
+   }
+-  const payload = await rpc.call<ResolutionResponse>('api_resolve_search', {
++  const pilot = domain === 'health_diagnostics' && env.IMAGING_PROTOCOL_PILOT_ENABLED === 'true' && isRxChestPilotQuery(query);
++  const payload = await rpc.call<ResolutionResponse>(pilot ? 'api_resolve_rx_chest_pilot' : 'api_resolve_search', {
+     p_query: query,
+     p_domain_code: domain,
+     p_latitude: latitude,
+@@ -865,14 +901,14 @@
+     || normalized.endsWith('_uri');
+ }
+ 
+-async function resolveBatchResponse(request: Request, rpc: RpcClient, origin: string): Promise<Response> {
++async function resolveBatchResponse(request: Request, rpc: RpcClient, env: Env, origin: string): Promise<Response> {
+   const input = await readJsonObject(request, 16_384, origin);
+   if (input instanceof Response) return input;
+   const parsed = parseBatchRequest(input);
+   if (!parsed.ok) return json({ error: parsed.error }, 400, origin);
+   const context = parsePackageContext(input, origin);
+   if (context instanceof Response) return context;
+-  return json(await resolvePackagePayload(parsed.value, context, rpc), 200, origin);
++  return json(await resolvePackagePayload(parsed.value, context, rpc, false, env.IMAGING_PROTOCOL_PILOT_ENABLED === 'true'), 200, origin);
+ }
+ 
+ async function resolveImageResponse(request: Request, rpc: RpcClient, env: Env, origin: string, requestId?: string): Promise<Response> {
+@@ -957,7 +993,7 @@
+       ocr: { engine: ocr.engine, model: ocr.model, text: ocr.text },
+     }, 422, origin);
+   }
+-  const packageResult = await resolvePackagePayload(parsed.value, context, rpc, true);
++  const packageResult = await resolvePackagePayload(parsed.value, context, rpc, true, env.IMAGING_PROTOCOL_PILOT_ENABLED === 'true');
+   const lowConfidenceLines = (ocr.lines ?? [])
+     .filter((line) => line.confidence !== null && line.confidence < 0.9)
+     .map((line) => line.text);
+@@ -1278,9 +1314,14 @@
+   context: PackageContext,
+   rpc: RpcClient,
+   fromOcr = false,
++  pilotEnabled = false,
+ ): Promise<PackageResolutionResponse> {
+-  const effective = await segmentFreeFormPackageText(parsed, context.domain, rpc);
+-  const raw = await rpc.call<unknown>(fromOcr ? 'api_resolve_ocr_package' : 'api_resolve_package', {
++  // Retain original entry boundaries before OCR correction or segmentation.
++  const pilot = pilotEnabled && context.domain === 'health_diagnostics'
++    && (fromOcr || parsed.original_items.some(isRxChestPilotQuery));
++  const effective = pilot ? parsed : await segmentFreeFormPackageText(parsed, context.domain, rpc);
++  const raw = await rpc.call<unknown>(pilot ? 'api_resolve_rx_chest_package_pilot_v2' : (fromOcr ? 'api_resolve_ocr_package' : 'api_resolve_package'), {
++    ...(pilot ? { p_from_ocr: fromOcr, p_original_items: effective.original_items } : {}),
+     p_items: effective.items,
+     p_domain_code: context.domain,
+     p_latitude: context.latitude,
