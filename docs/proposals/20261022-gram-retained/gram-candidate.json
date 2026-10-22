@@ -1,0 +1,44 @@
+{
+  "review_id": "pruevia:evidence-review:20261022:02",
+  "research_date": "2026-10-22",
+  "scope": "Revisión79: ocho títulos SD de tinción de Gram. Orden nominal genérica sin muestra escrita, distinta de cultivo y otras tinciones. Alias completo exclusivo del proveedor. Preparación pendiente de observación; sin cambios del motor, ofertas o publicaciones.",
+  "reviewed_by": "Codex, investigación delegada por el operador",
+  "human_review": false,
+  "authorization": "D-021/D-022: investigar fuentes primarias y decidir identidades claras; conservar ambigüedad clínica.",
+  "research_report_sha256": "125abffa35452ec67748bf4315911f883dd5344fec5076c4e5bc3631a63f5879",
+  "research_snapshot_sha256": "89cddc1cef762425a7a9ceeeeab20273c4a6f1f1583de9510b924457d40d171a",
+  "definition_sha256": "f672ca44a58c349d6e599a26f7087a5e4c1b061bde249db5db013b441c963d85",
+  "new_concepts": [
+    {
+      "item_id": "5e4f82ae-5ee2-5e13-8ea6-9d423ddb5e45",
+      "canonical_name": "Tinción de Gram",
+      "component": "Bacteria by Gram stain",
+      "specimen_code": null,
+      "time_aspect": null,
+      "identity_scope": "analyte_order",
+      "evidence_url": "https://medlineplus.gov/lab-tests/gram-stain/",
+      "reason": "SD escribe TINCION DE GRAM sin material o sitio. Identidad nominal de una tinción bacteriana; conservar Gram en nombre y componente. No equivale a cultivo, antibiograma, Ziehl-Neelsen, Giemsa, KOH, BAAR ni variante modificada de Gram. No inferir variante técnica, muestra, duración, metodología automatizada o sensibilidad. No trasladar preparación o instrucciones farmacológicas de una referencia externa. Alias completo exclusivo SD y guard del campo descriptivo íntegro. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "specimen_uncertainty": "La orden SD no escribe material ni sitio de obtención; no asignar orina, sangre, esputo, exudado ni otra matriz a partir de una referencia general. Duración desconocida; la identidad genérica no confirma cobertura de muestras específicas."
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "tincion de gram",
+      "item_id": "5e4f82ae-5ee2-5e13-8ea6-9d423ddb5e45",
+      "canonical_name": "Tinción de Gram",
+      "service_type": "lab_test",
+      "alias_scope": "provider",
+      "evidence_url": "https://medlineplus.gov/lab-tests/gram-stain/",
+      "reason": "SD escribe TINCION DE GRAM sin material o sitio. Identidad nominal de una tinción bacteriana; conservar Gram en nombre y componente. No equivale a cultivo, antibiograma, Ziehl-Neelsen, Giemsa, KOH, BAAR ni variante modificada de Gram. No inferir variante técnica, muestra, duración, metodología automatizada o sensibilidad. No trasladar preparación o instrucciones farmacológicas de una referencia externa. Alias completo exclusivo SD y guard del campo descriptivo íntegro. Sólo identidad de orden y atributos escritos; no equivalencia de resultados. Propiedad, método, escala, unidad y LOINC no aprobados salvo declaración literal registrada en el motivo. Original y preparación conservados, sin validar instrucciones farmacológicas. Sin ofertas, precio o disponibilidad nuevos.",
+      "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+      "expected_rows": 8,
+      "raw_guard": {
+        "path": [
+          "raw_study",
+          "Descripcion"
+        ],
+        "value": "TINCION DE GRAM"
+      }
+    }
+  ]
+}

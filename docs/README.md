@@ -12,6 +12,7 @@ La conversación original no es lectura obligatoria para incorporarse.
 | [Guías de trabajo](WORK_GUIDE.md) | Procedimientos por tipo de cambio y traspaso. |
 | [Operación](OPERATIONS_GUIDE.md) | Directorios, comandos, comprobaciones y alcance de resultados. |
 | [Estado y prioridades](CURRENT_STATE.md) | Capacidades y pendientes con evidencia fechada. |
+| [Gram retenido e identidad44,22-oct](proposals/20261022-gram-retained/README.md) | Ocho casos sin aplicar por pérdida de serie/negación y confusión de método; contraste fresco de hipótesis de establecimientos. |
 | [Lafer, revisión78 aplicada,22-oct](CATALOG_REVIEW_78_20261022.md) | Dos órdenes urinarias resueltas conservando condición posterior a eyaculación; aplicación única y comprobación independiente. |
 | [Inventario y Lafer,22-oct](CATALOG_REFRESH_AND_LAFER_20261022.md) | Recuento completo fresco, memoria y planificación ejecutadas; tres definiciones de proveedor aclaradas con seis filas aún abiertas. |
 | [Fichas SEMIN, revisión77,22-oct](CATALOG_RESEARCH_77_20261022.md) | Dos fuentes oficiales nuevas; abreviaturas insuficientes, retención documentada sin cierres ni cambios productivos. |

@@ -17,6 +17,14 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Revisión79 retenida,22-oct12:50UTC:** ocho RAW de tinción de Gram investigados;
+22consultas públicas SQL/22core observadas en rollback. Se pierde x2/negación y
+el core con proveedor confunde KOH con Gram. Estado protegido íntegro y ledger
+no aplicado; cero cierres. Candidata archivada fuera de database/data. Identidad44
+contrasta234pares históricos con bindings frescos:194pares/186DENUE sin vínculo;
+cero candidatos por filtro estricto de nombre idéntico y exterior numerado.
+[Evidencia, límites y siguiente acción](proposals/20261022-gram-retained/README.md).
+
 **Revisión78 aplicada,22-oct12:45:29UTC:** una orden de búsqueda de espermatozoides
 en orina posterior a eyaculación y alias exclusivo Lafer; dos RAW resueltos.
 **205marcas/291sedes/564conceptos/3,343favorables/4,045pendientes/234ofertas /
