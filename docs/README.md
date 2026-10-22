@@ -12,6 +12,7 @@ La conversación original no es lectura obligatoria para incorporarse.
 | [Guías de trabajo](WORK_GUIDE.md) | Procedimientos por tipo de cambio y traspaso. |
 | [Operación](OPERATIONS_GUIDE.md) | Directorios, comandos, comprobaciones y alcance de resultados. |
 | [Estado y prioridades](CURRENT_STATE.md) | Capacidades y pendientes con evidencia fechada. |
+| [Evaluación del algoritmo,22-oct: resultado y corrección](proposals/20261022-clinical-evaluation-results/README.md) | Primer intento autorizado falló por FK incompatible y se revirtió; corrección y comprobaciones locales, nuevo intento aún sin enviar. |
 | [Atzala y Naupan, identidad44 aplicada,22-oct](PUEBLA_IDENTITIES_44_20261022.md) | Dos clínicas candidatas independientes; fuente DENUE, corroboración CLUES y aplicación única verificada. |
 | [Gram retenido e identidad44,22-oct](proposals/20261022-gram-retained/README.md) | Ocho casos sin aplicar por pérdida de serie/negación y confusión de método; contraste fresco de hipótesis de establecimientos. |
 | [Lafer, revisión78 aplicada,22-oct](CATALOG_REVIEW_78_20261022.md) | Dos órdenes urinarias resueltas conservando condición posterior a eyaculación; aplicación única y comprobación independiente. |

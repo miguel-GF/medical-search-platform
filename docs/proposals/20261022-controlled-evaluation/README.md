@@ -1,6 +1,10 @@
 # Evaluación controlada preparada — 22 de octubre de 2026 UTC
 
-**No ejecutada. Aprobación específica D-006 pendiente.** El paquete permite
+**Autorizada y enviada una vez el22-oct13:05:58UTC; falló por FK UUID/bigint.**
+Recuperación independiente confirmada, sin resultados clínicos completos.
+No repetir este plan. [Diagnóstico y corrección preparada](../20261022-clinical-evaluation-results/README.md).
+
+El paquete original permitía
 observar el candidato combinado durante una sola transacción productiva que
 termina en ROLLBACK. El objetivo de cobertura de Puebla sigue incompleto.
 
@@ -96,9 +100,10 @@ un recorrido HTTP/JWT ni una ejecución con role service_role. Se captura salida
 para revisión manual, sin aserciones clínicas de aprobación ni suite completa
 de contratos. No se añadieron o ejecutaron suites formales.
 
-La lectura de preparación prueba el snapshot de estado; no prueba ejecución,
-aceptación de PostgreSQL o corrección del SQL propuesto. No se invocó execute,
-ni siquiera con el ejemplo falso. El registro de aprobación es una constancia:
+La lectura de preparación probaba el snapshot de estado; no probaba ejecución,
+aceptación de PostgreSQL o corrección del SQL propuesto. Durante esa preparación
+no se invocó execute; después se ejecutó el intento autorizado descrito arriba.
+El registro de aprobación es una constancia:
 el agente sólo debe crearlo después de una respuesta explícita del usuario.
 
 Alternativa: conservar el motor actual y continuar incorporaciones ordinarias
@@ -114,5 +119,6 @@ Paquete local vigente:
 La preparación inicial sin sufijov2 quedó reemplazada porque cambió el fingerprint
 del ejecutor; no debe utilizarse. El código rechaza esa divergencia.
 
-La siguiente acción dependiente es la decisión D-006 sobre esta evaluación
-concreta. Las incorporaciones ordinarias de datos siguen siendo independientes.
+Este intento ya terminó. La siguiente evaluación requiere el plan corregido
+descrito en el resultado enlazado arriba; no repetir el plan de esta carpeta.
+Las incorporaciones ordinarias de datos siguen siendo independientes.

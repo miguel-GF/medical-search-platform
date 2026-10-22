@@ -1,0 +1,64 @@
+--- original
++++ corrected
+@@ -26,8 +26,8 @@
+ -- PROPOSAL ONLY. NOT EXECUTED. Requires D-006 review before a new migration.
+ -- Additive schema and opt-in RPC; no replacement of current public functions.
+ 
+-set local lock_timeout='5s';
+-set local statement_timeout='30s';
++set local lock_timeout='250ms';
++set local statement_timeout='10s';
+ 
+ create table health.imaging_protocols (
+  service_id uuid primary key references health.services(catalog_item_id) on delete restrict,
+@@ -166,7 +166,7 @@
+  protocol jsonb not null check (jsonb_typeof(protocol)='object'),
+  approved_queries jsonb not null check (jsonb_typeof(approved_queries)='array'),
+  review_id text not null,
+- audit_event_id uuid not null references audit.events(id) on delete restrict,
++ audit_event_id bigint not null references audit.events(id) on delete restrict,
+  source_evidence jsonb not null check (jsonb_typeof(source_evidence)='array' and jsonb_array_length(source_evidence)>0),
+  created_at timestamptz not null default now(),
+  unique(panel_id,provider_brand_id,version)
+@@ -174,7 +174,7 @@
+ create table health.panel_composition_quarantines (
+  composition_id uuid primary key references health.reviewed_panel_compositions(id) on delete restrict,
+  reason text not null check (length(trim(reason))>0),
+- audit_event_id uuid not null references audit.events(id) on delete restrict,
++ audit_event_id bigint not null references audit.events(id) on delete restrict,
+  created_at timestamptz not null default now()
+ );
+ alter table health.reviewed_panel_compositions enable row level security;
+@@ -624,8 +624,8 @@
+ -- SECTION image_v7_wrapper
+ -- PROPOSAL ONLY. NOT EXECUTED. Central gate covers search and package callers.
+ 
+-set local lock_timeout='5s';
+-set local statement_timeout='30s';
++set local lock_timeout='250ms';
++set local statement_timeout='10s';
+ create function health.rx_protocol_gate(p_query text,p_service_id uuid) returns text
+ language plpgsql stable set search_path=pg_catalog as $$
+ declare request jsonb; protocol record; requested text[]; declared text[]; scoped boolean;
+@@ -683,8 +683,8 @@
+ -- Install after proposed001 schema and before the first reviewed import.
+ -- No review may omit the complete definition or retroactively redefine it.
+ 
+-set local lock_timeout='5s';
+-set local statement_timeout='30s';
++set local lock_timeout='250ms';
++set local statement_timeout='10s';
+ 
+ -- Exact JSONB equality is intentional. Include nullable attributes, ordered
+ -- views and every anatomy link; never derive view_count from the view array.
+@@ -1502,8 +1502,8 @@
+ -- ISOLATED D-006 PROPOSAL. NOT EXECUTED. Replaces the proposed package decorator,
+ -- not any currently installed public function. Original arrays are mandatory.
+ 
+-set local lock_timeout='5s';
+-set local statement_timeout='30s';
++set local lock_timeout='250ms';
++set local statement_timeout='10s';
+ create function public.api_resolve_rx_chest_package_pilot_v2(
+  p_items jsonb,p_domain_code text default 'health_diagnostics',
+  p_latitude double precision default null,p_longitude double precision default null,

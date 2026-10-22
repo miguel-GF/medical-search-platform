@@ -82,6 +82,15 @@ no ejecutar primero y avisar después. Avanzar tareas independientes mientras ta
 | --- | --- | --- |
 | D-024 | Reabrir landing/enlace de paciente, PWA y API con la misma base después de actualizar privacidad; recordatorio por navegador durante 180 días, sin identificar por IP ni asumir lectura o consentimiento médico. | Autorización explícita del usuario en esta sesión para volver a levantar la app en producción con su base y entregar documentación/PDF al abogado. Publicado 15-oct 12:25 UTC: landing `18d3718c-1e45-4054-8859-26bf6c25c6ca`, API `72bc81ed-f6a5-4dde-a834-15ae2dc30b63`, Patient `5bda3d31-f3b4-4fae-8f07-41c8339c5350`. D-020 se reemplaza sólo para API/Paciente; Admin sigue pausado. Captura D-019 y analítica false, sin crons; proveedores/documentos/feedback/testers cerrados. Sin nueva DB, migraciones, borrado histórico o reactivación de finalidades opcionales. La publicación no acredita aprobación jurídica. [Evidencia y recuperación](PRIVACY_PUBLICATION_20261015.md). |
 
+## D-025: evaluación controlada del algoritmo — 22-oct-2026
+
+El usuario autorizó el intento preparado con «adelante con el permiso no hay tema»,
+tras la explicación de D-006: evaluación en base productiva con reversión al
+terminar, sin activación persistente. Ejecutado una vez a las13:05:58UTC, falló
+por FK UUID/bigint; recuperación independiente confirmada a las13:06:15UTC.
+La corrección posterior y segundo plan están preparados localmente, sin registrar
+otra autorización ni reenviar el primero. [Resultado y alcance](proposals/20261022-clinical-evaluation-results/README.md).
+
 ## Cómo registrar o reemplazar una decisión
 
 Crear una entrada con ID estable, fecha, estado (`propuesta`, `aprobada`,

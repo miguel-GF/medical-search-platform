@@ -17,6 +17,15 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Evaluación autorizada,22-oct13:05–13:06UTC:** un envío real del candidato
+combinado falló por FK audit_event_idUUID frente a audit.events.idbigint (42804).
+Cliente independiente confirmó recuperación completa del estado protegido y cero
+sesiones activas; sin46observaciones clínicas. Corregidas localmente dos FK y
+ocho instrucciones de timeout; prueba local del fragmento reprodujo el error y
+aceptó la corrección. GramáticaPG17 analiza29cuerpos/4bloques; no validación clínica.
+Segundo plan23casos preparado sin enviar y con autorizaciónfalse.
+[Resultado, límites y corrección concreta](proposals/20261022-clinical-evaluation-results/README.md).
+
 **Identidad44 aplicada,22-oct13:03UTC:** centros de salud de Atzala y Naupan,
 dos agrupaciones independientes verification_pending y sedes pending. DENUE
 conservado, CLUES corroborado sin asignar operador actual; sin ofertas nuevas.

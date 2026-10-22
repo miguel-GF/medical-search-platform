@@ -1,0 +1,651 @@
+{
+  "local_fk_check": {
+    "original_exit": 3,
+    "corrected_exit": 0,
+    "production_calls": 0,
+    "postgres_version": "postgres (PostgreSQL) 12.22",
+    "host": "127.0.0.1",
+    "scope": "Two registry tables against empty parent tables with matching key types; not a full algorithm evaluation",
+    "port": 52478,
+    "at": "2026-10-22T13:17:40.5249121Z"
+  },
+  "candidate_syntax": {
+    "candidate_sha256": "22b9efd6a894690ab50a361fd243433d13fca1efac92fba8968e25b1050e59a1",
+    "parser_version": "v7.21",
+    "postgres_grammar_version": [
+      17,
+      7
+    ],
+    "sql_statements": 124,
+    "function_bodies": 29,
+    "anonymous_blocks": 4,
+    "body_grammar_failures": 0,
+    "observations": [
+      {
+        "statement": 5,
+        "kind": "anonymous_block",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 10,
+        "kind": "function",
+        "name": "health.validate_imaging_protocol_service",
+        "language": "plpgsql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 16,
+        "kind": "function",
+        "name": "health.parse_rx_chest_request",
+        "language": "sql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 17,
+        "kind": "function",
+        "name": "public.api_resolve_rx_chest_pilot",
+        "language": "plpgsql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 28,
+        "kind": "function",
+        "name": "health.panel_current_state",
+        "language": "sql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 29,
+        "kind": "function",
+        "name": "health.panel_query_is_compatible",
+        "language": "sql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 30,
+        "kind": "function",
+        "name": "health.validate_panel_manifest_insert",
+        "language": "plpgsql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 31,
+        "kind": "function",
+        "name": "health.prevent_panel_manifest_mutation",
+        "language": "plpgsql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 32,
+        "kind": "function",
+        "name": "health.validate_panel_quarantine_insert",
+        "language": "plpgsql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 33,
+        "kind": "function",
+        "name": "health.preserve_panel_audit_anchor",
+        "language": "plpgsql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 46,
+        "kind": "function",
+        "name": "catalog.resolve_items_v3",
+        "language": "sql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 47,
+        "kind": "function",
+        "name": "catalog.resolve_items_v4",
+        "language": "sql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 48,
+        "kind": "function",
+        "name": "catalog.resolve_items_v6_before_panels",
+        "language": "sql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 49,
+        "kind": "function",
+        "name": "catalog.resolve_items_v6",
+        "language": "sql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 52,
+        "kind": "function",
+        "name": "health.rx_protocol_gate",
+        "language": "plpgsql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 53,
+        "kind": "function",
+        "name": "catalog.resolve_items_v7",
+        "language": "plpgsql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 58,
+        "kind": "function",
+        "name": "health.rx_protocol_definition",
+        "language": "sql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 59,
+        "kind": "function",
+        "name": "health.assert_rx_protocol_integrity",
+        "language": "plpgsql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 60,
+        "kind": "function",
+        "name": "health.check_rx_protocol_integrity",
+        "language": "plpgsql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 68,
+        "kind": "function",
+        "name": "health.preserve_rx_protocol_review",
+        "language": "plpgsql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 70,
+        "kind": "function",
+        "name": "health.prevent_rx_protocol_truncate",
+        "language": "plpgsql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 80,
+        "kind": "anonymous_block",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 81,
+        "kind": "function",
+        "name": "public.api_search_before_panels",
+        "language": "sql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 82,
+        "kind": "function",
+        "name": "public.api_search",
+        "language": "sql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 83,
+        "kind": "function",
+        "name": "public.api_service_detail",
+        "language": "sql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 84,
+        "kind": "function",
+        "name": "public.api_provider_detail",
+        "language": "sql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 85,
+        "kind": "function",
+        "name": "public.api_resolve_package_links_legacy",
+        "language": "sql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 86,
+        "kind": "function",
+        "name": "catalog.search_items",
+        "language": "sql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 87,
+        "kind": "function",
+        "name": "public.api_resolve_search_v4",
+        "language": "sql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 88,
+        "kind": "function",
+        "name": "public.api_resolve_search_v4_links_legacy",
+        "language": "sql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 91,
+        "kind": "function",
+        "name": "public.api_resolve_rx_chest_package_pilot_v2",
+        "language": "plpgsql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 122,
+        "kind": "anonymous_block",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 123,
+        "kind": "anonymous_block",
+        "body_grammar_parsed": true
+      }
+    ],
+    "database_connections": 0,
+    "clinical_validation": false,
+    "catalog_types_and_dependencies_validated": false
+  },
+  "evaluation_syntax": {
+    "candidate_sha256": "b107d4b4819ab3f70447d8a567177038c0a4b581446c16f61cd906325aec2ff8",
+    "parser_version": "v7.21",
+    "postgres_grammar_version": [
+      17,
+      7
+    ],
+    "sql_statements": 173,
+    "function_bodies": 29,
+    "anonymous_blocks": 4,
+    "body_grammar_failures": 0,
+    "observations": [
+      {
+        "statement": 6,
+        "kind": "anonymous_block",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 35,
+        "kind": "function",
+        "name": "health.validate_imaging_protocol_service",
+        "language": "plpgsql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 41,
+        "kind": "function",
+        "name": "health.parse_rx_chest_request",
+        "language": "sql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 42,
+        "kind": "function",
+        "name": "public.api_resolve_rx_chest_pilot",
+        "language": "plpgsql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 53,
+        "kind": "function",
+        "name": "health.panel_current_state",
+        "language": "sql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 54,
+        "kind": "function",
+        "name": "health.panel_query_is_compatible",
+        "language": "sql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 55,
+        "kind": "function",
+        "name": "health.validate_panel_manifest_insert",
+        "language": "plpgsql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 56,
+        "kind": "function",
+        "name": "health.prevent_panel_manifest_mutation",
+        "language": "plpgsql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 57,
+        "kind": "function",
+        "name": "health.validate_panel_quarantine_insert",
+        "language": "plpgsql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 58,
+        "kind": "function",
+        "name": "health.preserve_panel_audit_anchor",
+        "language": "plpgsql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 71,
+        "kind": "function",
+        "name": "catalog.resolve_items_v3",
+        "language": "sql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 72,
+        "kind": "function",
+        "name": "catalog.resolve_items_v4",
+        "language": "sql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 73,
+        "kind": "function",
+        "name": "catalog.resolve_items_v6_before_panels",
+        "language": "sql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 74,
+        "kind": "function",
+        "name": "catalog.resolve_items_v6",
+        "language": "sql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 77,
+        "kind": "function",
+        "name": "health.rx_protocol_gate",
+        "language": "plpgsql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 78,
+        "kind": "function",
+        "name": "catalog.resolve_items_v7",
+        "language": "plpgsql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 83,
+        "kind": "function",
+        "name": "health.rx_protocol_definition",
+        "language": "sql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 84,
+        "kind": "function",
+        "name": "health.assert_rx_protocol_integrity",
+        "language": "plpgsql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 85,
+        "kind": "function",
+        "name": "health.check_rx_protocol_integrity",
+        "language": "plpgsql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 93,
+        "kind": "function",
+        "name": "health.preserve_rx_protocol_review",
+        "language": "plpgsql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 95,
+        "kind": "function",
+        "name": "health.prevent_rx_protocol_truncate",
+        "language": "plpgsql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 105,
+        "kind": "anonymous_block",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 106,
+        "kind": "function",
+        "name": "public.api_search_before_panels",
+        "language": "sql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 107,
+        "kind": "function",
+        "name": "public.api_search",
+        "language": "sql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 108,
+        "kind": "function",
+        "name": "public.api_service_detail",
+        "language": "sql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 109,
+        "kind": "function",
+        "name": "public.api_provider_detail",
+        "language": "sql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 110,
+        "kind": "function",
+        "name": "public.api_resolve_package_links_legacy",
+        "language": "sql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 111,
+        "kind": "function",
+        "name": "catalog.search_items",
+        "language": "sql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 112,
+        "kind": "function",
+        "name": "public.api_resolve_search_v4",
+        "language": "sql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 113,
+        "kind": "function",
+        "name": "public.api_resolve_search_v4_links_legacy",
+        "language": "sql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 116,
+        "kind": "function",
+        "name": "public.api_resolve_rx_chest_package_pilot_v2",
+        "language": "plpgsql",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 147,
+        "kind": "anonymous_block",
+        "body_grammar_parsed": true
+      },
+      {
+        "statement": 148,
+        "kind": "anonymous_block",
+        "body_grammar_parsed": true
+      }
+    ],
+    "database_connections": 0,
+    "clinical_validation": false,
+    "catalog_types_and_dependencies_validated": false
+  },
+  "referenced_key_types": [
+    {
+      "table_schema": "audit",
+      "table_name": "events",
+      "column_name": "id",
+      "data_type": "bigint",
+      "udt_name": "int8"
+    },
+    {
+      "table_schema": "core",
+      "table_name": "provider_brands",
+      "column_name": "id",
+      "data_type": "uuid",
+      "udt_name": "uuid"
+    },
+    {
+      "table_schema": "health",
+      "table_name": "services",
+      "column_name": "catalog_item_id",
+      "data_type": "uuid",
+      "udt_name": "uuid"
+    }
+  ],
+  "correction_preparation": {
+    "original_sha256": "2b0cb7cbdb72fb92f7f7388d69e96a7f0450db8ef6e76259a327cf3c50c15cad",
+    "files": {
+      "corrected-combined-ROLLBACK-PROPOSED.sql": "22b9efd6a894690ab50a361fd243433d13fca1efac92fba8968e25b1050e59a1",
+      "panel-registry-original.sql": "a52f1c6662c458b07f08545eb24e34a200ddcb341bed93443ffe312fff800c70",
+      "panel-registry-corrected.sql": "5bd88511e4ad3bc833b3c547cabcf856538d054685023a920e1e00304e692c47",
+      "correction.diff": "8e76d3af93347cd71b06610459df1033f9a3d7e5284115789cf996ae9f2680d3"
+    },
+    "audit_foreign_key_columns_corrected": 2,
+    "timeout_overrides_tightened": 8,
+    "clinical_function_bodies_changed": false,
+    "remote_sql_submitted": false,
+    "new_authorization_recorded": false
+  },
+  "evaluation_plan": {
+    "version": 1,
+    "prepared_at": "2026-10-22T13:20:58.719281+00:00",
+    "project_ref": "ymtcmfgwuzdqtsbuvzqf",
+    "purpose": "combined_clinical_rollback_evaluation_only",
+    "runner_sha256": "a3642b3e34bcafc25007752dbae95fc1ba3011d6e90f8aab0dc5fd41f350e927",
+    "sql_template_sha256": "b107d4b4819ab3f70447d8a567177038c0a4b581446c16f61cd906325aec2ff8",
+    "snapshot_sql_sha256": "b65fe11f2033fce920a1db46f7762f3604f856e6bb37073dfd0857524d229e50",
+    "proposal_sql_sha256": "22b9efd6a894690ab50a361fd243433d13fca1efac92fba8968e25b1050e59a1",
+    "cases": [
+      {
+        "kind": "search_and_package",
+        "label": "Biometría hemática"
+      },
+      {
+        "kind": "search_and_package",
+        "label": "Biometría hemática INR"
+      },
+      {
+        "kind": "search_and_package",
+        "label": "Biometría hemática x2"
+      },
+      {
+        "kind": "search_and_package",
+        "label": "hematica"
+      },
+      {
+        "kind": "search_and_package",
+        "label": "biometria"
+      },
+      {
+        "kind": "search_and_package",
+        "label": "orina"
+      },
+      {
+        "kind": "search_and_package",
+        "label": "sangre"
+      },
+      {
+        "kind": "search_and_package",
+        "label": "electro"
+      },
+      {
+        "kind": "search_and_package",
+        "label": "electrocardiograma"
+      },
+      {
+        "kind": "search_and_package",
+        "label": "IgE específica contra gluten"
+      },
+      {
+        "kind": "search_and_package",
+        "label": "IgE específica contra gluten sin IgE"
+      },
+      {
+        "kind": "search_and_package",
+        "label": "TELERADIOGRAFIA DE TORAX PA"
+      },
+      {
+        "kind": "search_and_package",
+        "label": "TELERADIOGRAFIA TORAX PA Y LATERAL"
+      },
+      {
+        "kind": "search_and_package",
+        "label": "PERFIL ANTICUERPOS COVID (IGG IGM S)"
+      },
+      {
+        "kind": "search_and_package",
+        "label": "Perfil tiroideo ampliado"
+      },
+      {
+        "kind": "search_and_package",
+        "label": "Perfil tiroideo básico"
+      },
+      {
+        "kind": "search_and_package",
+        "label": "Química sanguínea ampliada"
+      },
+      {
+        "kind": "search_and_package",
+        "label": "Química sanguínea básica"
+      },
+      {
+        "kind": "panel_detail",
+        "label": "PERFIL ANTICUERPOS COVID (IGG IGM S)"
+      },
+      {
+        "kind": "panel_detail",
+        "label": "Perfil tiroideo ampliado"
+      },
+      {
+        "kind": "panel_detail",
+        "label": "Perfil tiroideo básico"
+      },
+      {
+        "kind": "panel_detail",
+        "label": "Química sanguínea ampliada"
+      },
+      {
+        "kind": "panel_detail",
+        "label": "Química sanguínea básica"
+      }
+    ],
+    "observation_rows_expected": 46,
+    "database_writes_submitted": false,
+    "formal_tests_executed": false,
+    "limitations": [
+      "Empty proposed registries; no pilot imports",
+      "Owner-session RPC observations, not HTTP/JWT or service-role execution",
+      "No clinical expected-outcome assertions or complete contract suite"
+    ]
+  },
+  "original_attempt_inspection": {
+    "at": "2026-10-22T13:06:15.861497+00:00",
+    "active_evaluation_sessions": [],
+    "state_restored": true,
+    "different_sections": [],
+    "sql_replayed": false,
+    "recovery_writes": false
+  },
+  "second_attempt_submitted": false,
+  "second_attempt_authorized": false
+}
