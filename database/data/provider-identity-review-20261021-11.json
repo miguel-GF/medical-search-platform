@@ -1,0 +1,76 @@
+{
+  "review_id": "pruevia:provider-identity-review:20261021:11",
+  "reviewed_by": "Codex; revisión individual coordinada, pendiente ejecución",
+  "authorization": "D-021/D-022: sólo vínculoDENUE a identidad existente, snapshots completos sin modificación y sin cobertura comercial.",
+  "research_date": "2026-10-21",
+  "source_key": "denue_puebla_bulk",
+  "source_run_id": "f406e330-28ad-47de-9bf4-77debaa55cff",
+  "scope": "Un vínculoDENUE a sedeSaludDigna existente; sin marca/sede/oferta nueva. Microfixture independiente requerida por contrato existing_location del renderer.",
+  "providers": [
+    {
+      "provider_key": "salud_digna",
+      "name": "Salud Digna",
+      "slug": "salud-digna",
+      "website_url": "https://www.salud-digna.org",
+      "existing_brand": {
+        "id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+        "name": "Salud Digna",
+        "normalized_name": "salud digna",
+        "slug": "salud-digna",
+        "website_url": "https://www.salud-digna.org",
+        "status": "active",
+        "verification_status": "unverified"
+      },
+      "existing_brand_full_snapshot": {
+        "id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+        "name": "Salud Digna",
+        "slug": "salud-digna",
+        "status": "active",
+        "created_at": "2026-08-27T08:30:50.459189+00:00",
+        "updated_at": "2026-09-16T05:57:54.216906+00:00",
+        "description": null,
+        "row_version": 11,
+        "website_url": "https://www.salud-digna.org",
+        "logo_object_key": null,
+        "normalized_name": "salud digna",
+        "verification_status": "unverified",
+        "redirect_to_brand_id": null
+      },
+      "existing_location": {
+        "id": "b89f95f2-b978-5cc5-aed7-911299808fe0",
+        "name": "Puebla Azaleas",
+        "email": null,
+        "phone": "2222324709",
+        "status": "active",
+        "timezone": "America/Mexico_City",
+        "whatsapp": null,
+        "closed_at": null,
+        "opened_at": null,
+        "created_at": "2026-09-13T14:51:23.381059+00:00",
+        "updated_at": "2026-09-16T05:49:53.929338+00:00",
+        "coordinates": "0101000020E61000004AB9C0E4819058C06E76B591A4F93240",
+        "geo_area_id": null,
+        "postal_code": "72490",
+        "row_version": 4,
+        "website_url": "https://www.salud-digna.org/puebla-azaleas",
+        "locality_text": null,
+        "location_code": "329",
+        "location_type": "lab",
+        "address_line_1": "Azaleas #907, Col. San Ramón, C.P. 72490, Puebla.",
+        "address_line_2": null,
+        "normalized_name": "puebla azaleas",
+        "provider_brand_id": "f86e479a-548d-5ef9-a689-ee7cf8b78a05",
+        "moved_to_location_id": null,
+        "operating_organization_id": null
+      },
+      "identity_evidence_url": "https://gobi.salud.gob.mx/historico_clues/ESTABLECIMIENTO_SALUD_202608.xlsx?v=1.1",
+      "identity_activity_codes": [
+        "621511"
+      ],
+      "denue_record_ids": [
+        "12271887"
+      ],
+      "identity_note": "Identidad42: vínculoDENUE12271887 a sede existente SaludDigna Puebla Azaleas, IDb89f95f2-b978-5cc5-aed7-911299808fe0; cero marcas/sedes nuevas. DENUEINEGI20-may2026/captura9-oct y CLUESPLSMP009901, hojaCLUES_202608 fila44754, XLSXSHA2565a1cfbe7062b41d9e51249aa4b5fc8a1e623e935882e97fb5f0aac797165c95b. NombreDENUE íntegro:SALUD DIGNA PUEBLA AZALEAS; nombreCLUES íntegro:SALUD DIGNA, A. C.. Municipio/localidad/código postal, vía y exterior907 concordantes; letras/interiores vacíos. AsentamientoDENUE:COLONIA SAN RAMÓN; CLUES:COLONIA SAN RAMON 1RA SECCIÓN; conservar diferencias. Sede conserva dirección oficial previa íntegra:Azaleas #907, Col. San Ramón, C.P. 72490, Puebla.; fuenteoficial329, URLhttps://www.salud-digna.org/puebla-azaleas, observación aceptada2026-09-13 14:36:58.430459+00. Lecturaoficialfresca21-oct porwebtool502/inaccesible, no se atribuye contenido fresco ni se eluden controles; usar evidencia previa fechada con referenciaCLUESmensual y RAW íntegro actual. Proximidad sólo contexto, la decisión usa denominación institucional/sede específica y domicilio numerado. Preservar snapshotcompleto de marca y sede antes/después; estadoactive y tipolab existentes no cambian a pending/branch. Marcaunverified existente no se verifica por esta vinculación. No convertir sugerencia en cobertura, no estudios/ofertas/precios/horarios/disponibilidad aprobados. No titularidad jurídica o red nueva inferidas. CLUES ENOPERACION es sólo agosto, sin política de fuente nueva. Porvenir9448642 excluido por5001 frente a4815; no igualar exteriores ni duplicar sede."
+    }
+  ]
+}

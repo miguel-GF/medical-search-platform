@@ -17,6 +17,14 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Reanudación e identidad42,21-oct local /22-oct03:53UTC:** cinco vínculos DENUE aplicados a sedes
+existentes; snapshots completos, RAW, bindings previos y fuentes conservados.
+205 marcas /290 sedes /563 conceptos /3,341 favorables /4,047 pendientes /
+234 ofertas /112 migraciones. Planificador local conserva bloqueos con evidencia:
+ejecución sobre corte73 deja741 grupos por investigar y4 grupos/11 filas esperando
+cambio, sin cerrar registros. Agentes no reactivados; watcher y STOP siguen detenidos.
+[Evidencia y algoritmo](PUEBLA_IDENTITIES_42_AND_RESEARCH_PLANNER_20261021.md).
+
 **Corte solicitado,21-oct13:09UTC:** 205 marcas /290 sedes /563 conceptos /
 3,341 favorables /4,047 pendientes /234 ofertas /112 migraciones, reconsultados.
 Cola60 sin cambios y hashes íntegros; último ledger clínico already_applied.

@@ -1,5 +1,14 @@
 # Runbook: reducir la cola de normalización
 
+## Memoria de investigación — 21-oct-2026
+
+`database/scripts/plan_normalization_research.py` ordena el backlog por volumen
+y conserva bloqueos documentados con firma exacta de contexto, hashes de evidencia,
+dependencias y vencimiento. Al cambiar esos hechos devuelve el grupo a investigación.
+No aprueba ni escribe decisiones y no sustituye al importador ni al investigador.
+La primera ejecución sobre4,047registros conservó4grupos/11filas en espera de cambio
+y741grupos/4,036filas por investigar, sin cierres. [Contrato, ejecución y límites](PUEBLA_IDENTITIES_42_AND_RESEARCH_PLANNER_20261021.md).
+
 ## Operación delegada vigente — 13-oct-2026
 
 **Corte vigente 15-oct, 04:33 UTC:** 44 revisiones aplicadas, 349 aliases,
