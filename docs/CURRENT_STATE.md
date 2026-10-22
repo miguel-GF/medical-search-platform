@@ -17,6 +17,12 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Investigación77,22-oct12:31UTC:** dos fichas SEMIN consultadas con HTTP200;
+`sinAcro` recuperado no distingue colesterol total/fracción ni actividad/concentración
+de renina. Ambos retenidos; cero cierres y cero escrituras en base. Evidencia nueva
+evita repetir la hipótesis del campo omitido; contadores globales no reconsultados.
+[Fuentes, hashes y siguiente acción](CATALOG_RESEARCH_77_20261022.md).
+
 **Evaluación preparada,22-oct04:53UTC:** ejecutor de intento único y plantilla
 con23consultas/46observaciones antes/después, terminaROLLBACK; sin enviar.
 Captura real de sólo lectura:127funciones y27grupos protegidos;205marcas/291sedes /

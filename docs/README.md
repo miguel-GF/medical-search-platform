@@ -12,6 +12,7 @@ La conversación original no es lectura obligatoria para incorporarse.
 | [Guías de trabajo](WORK_GUIDE.md) | Procedimientos por tipo de cambio y traspaso. |
 | [Operación](OPERATIONS_GUIDE.md) | Directorios, comandos, comprobaciones y alcance de resultados. |
 | [Estado y prioridades](CURRENT_STATE.md) | Capacidades y pendientes con evidencia fechada. |
+| [Fichas SEMIN, revisión77,22-oct](CATALOG_RESEARCH_77_20261022.md) | Dos fuentes oficiales nuevas; abreviaturas insuficientes, retención documentada sin cierres ni cambios productivos. |
 | [Evaluación controlada preparada,22-oct](proposals/20261022-controlled-evaluation/README.md) | Ejecutor de intento único, snapshot real y comparación antes/después; aprobación D-006 pendiente, sin sustituciones ejecutadas. |
 | [Candidato combinado SQL/API,22-oct](proposals/20261021-combined-clinical/README.md) | Guardas de requisitos, paneles e imagen compuestas sin sobrescribir filtros; preparado sin ejecutar. |
 | [Imagen: fuentesPatient recuperadas,21-oct](proposals/20261021-imaging-patient/README.md) | Base runtime publicada reconstruida por hash y diff aislado de dos archivos; sin activación clínica. |
