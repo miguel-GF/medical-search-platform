@@ -6,10 +6,13 @@ en la prueba de Android. El aviso público se actualizó en
 Esta adición actualiza la sección que antes describía la convocatoria como cerrada;
 el PDF anterior es una fotografía del aviso del 15 de octubre.
 
-Se pide únicamente nombre y correo Gmail asociado con Google Play. La persona
+Se pide nombre y correo Gmail asociado con Google Play. La versión de Android
+es opcional, para revisar compatibilidad durante la prueba. La persona
 debe confirmar que es mayor de edad y aceptar el uso de esos datos para organizar
 la prueba. También se guarda cuándo se registró, qué aviso aceptó y su estado
-dentro del grupo. No se piden municipio, versión de Android ni modelo de teléfono.
+dentro del grupo. No se piden municipio ni modelo de teléfono. Los campos de
+Android y modelo se conservan en la base y permiten valores vacíos; este formulario
+no solicita el modelo ni lo modifica.
 
 La finalidad es organizar el grupo y administrar invitaciones. El registro no
 crea una cuenta de paciente, no pide información médica y no activa medición de uso.

@@ -7,15 +7,47 @@ Android con nombre y Gmail, sin versión de Android ni modelo del teléfono, con
 guardado real en la base. También pidió comprobar los botones antes de cambiarlos.
 
 La convocatoria está en [pruevia.com.mx/prueba-android](https://pruevia.com.mx/prueba-android).
-Recibe nombre, Gmail y confirmaciones de mayoría de edad y privacidad. Ya no pide
-municipio ni datos del teléfono; no se inventa una ubicación para cumplir el esquema.
+Recibe nombre, Gmail, versión de Android opcional y confirmaciones de mayoría de
+edad y privacidad. No pide municipio ni modelo del teléfono; no se inventa una
+ubicación para cumplir el esquema.
 El formulario conserva protección contra bots, límites de solicitudes y respuesta
 genérica para correos repetidos. El contador se consulta al servidor tras guardar.
 
 Aclaración del usuario confirmada por lectura productiva el23-oct: las columnas
-`android_version` y `device_model` se conservan y ambas permitenNULL. Sólo se
-retiraron del formulario; el RPC nuevo no borra valores anteriores al actualizar
-una solicitud existente. No se necesita otra migración para conservarlas.
+`android_version` y `device_model` se conservan y ambas permitenNULL. El usuario
+precisó después que Android sí se solicite opcionalmente. El RPC nuevo no borra
+valores anteriores al actualizar con Android vacío; el modelo no se solicita.
+
+## Actualización: Android opcional,23-oct12:51–12:55UTC
+
+Publicados API `4cbf0101-70b5-43ae-b2e5-a7ebcad85786`, landing
+`c8c862b5-b22c-476b-a6e6-2bc55a0dc83e` y Patient
+`3073f58a-f0f3-40ab-8a2b-ca823820f54b`. La nueva migración114,
+`20261023140000_android_tester_optional_version.sql`, añade RPCv3 compatible que
+reutiliza RPCv2 sin cambiarlo. Si se proporciona Android, lo guarda; vacío queda
+nulo en una solicitud nueva y conserva la versión anterior en una repetida.
+No modifica columnas, modelo ni permisos de tablas. Sólo service_role puede
+ejecutar el RPC. Revisión del caso API existente adaptada sin ejecutar suites.
+
+El formulario público se comprobó con dos registros sintéticos: Android vacío y
+Android15, ambos HTTP202 y campos verificados por lectura independiente. Otro
+envío vacío del segundo conservó Android15 sin duplicar la fila. Se eliminaron
+sólo esas dos solicitudes y se comprobó su ausencia. Sin correo enviado ni
+datos reales usados. Columnas Android/modelo todavía nullable; MD5 de RPCv2
+igual antes/después. Evidencia en `collectors/artifacts/android-optional-version-20261023/`.
+
+Aviso de testers `android-testers-2026-10-23-v3`, aviso general
+`pruevia-privacidad-2026-10-23-v3`. El formulario falla cerrado si su aviso
+compilado y el vigente del servidor no coinciden. Se conserva el periodo y meta
+anteriores. Patient servido coincide por SHA256 con el build congelado
+`d3bd08ce674709675f13ecc67a00ed5bef75e09cac641acd0f75eb69d511d430`.
+Admin permite ver/exportar Android cuando exista, preparado localmente sin reabrirlo.
+
+Recuperación de esta actualización: cerrar el intake o restaurar API
+`f8cd47d0-95a8-4bb0-ba14-badb20a213e8`, landing
+`fa775956-69bc-4b63-b3e5-7a817b98d8f0` y Patient
+`19b53ac9-6dbb-4817-9ff1-16701bae51cb`, coordinando la versión del aviso y
+conservando ambas migraciones y todos los datos. No borrar columnas ni participantes.
 
 La configuración conserva la meta existente de 20 participantes y 21 días de
 prueba. Se abrió el reclutamiento por 90 días, hasta el 21-ene-2027; esto **no inicia
@@ -23,7 +55,7 @@ los 21 días ni envía invitaciones de Google Play**. Admin y proveedores siguen
 cerrados públicamente. Feedback, analítica, captura de consultas y crons del Worker
 permanecen desactivados. No se publicó el candidato clínico completo.
 
-## Publicación y evidencia real
+## Primera publicación y evidencia real,12:14–12:18UTC
 
 | Superficie | Versión Cloudflare |
 | --- | --- |

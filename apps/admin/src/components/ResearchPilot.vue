@@ -99,8 +99,8 @@ function csvCell(value: unknown): string {
 function exportTesters() {
   const selected = rows.value.filter((row) => ['selected', 'invited', 'active', 'completed'].includes(String(row.status)));
   const lines = [
-    ['correo_google_play', 'nombre', 'estado', 'fecha_registro'].map(csvCell).join(','),
-    ...selected.map((row) => [row.email, row.name, row.status, row.created_at].map(csvCell).join(',')),
+    ['correo_google_play', 'nombre', 'android_opcional', 'estado', 'fecha_registro'].map(csvCell).join(','),
+    ...selected.map((row) => [row.email, row.name, row.android_version, row.status, row.created_at].map(csvCell).join(',')),
   ];
   const url = URL.createObjectURL(new Blob([lines.join('\r\n')], { type: 'text/csv;charset=utf-8' }));
   const link = document.createElement('a');
@@ -165,13 +165,13 @@ onUnmounted(() => { alive = false; generation++; });
         </tbody>
       </table>
       <table v-else>
-        <thead><tr><th>Correo de Google Play</th><th>Nombre</th><th>Registro</th><th>Estado</th><th>Acción</th></tr></thead>
+        <thead><tr><th>Correo de Google Play</th><th>Nombre</th><th>Android opcional</th><th>Registro</th><th>Estado</th><th>Acción</th></tr></thead>
         <tbody>
           <tr v-for="row in rows" :key="row.id">
-            <td><strong>{{ row.email }}</strong><small class="block">Aviso {{ row.notice_version }}</small></td><td>{{ row.name || 'Sin nombre registrado' }}</td><td>{{ formatDate(row.created_at) }}</td><td><span class="status" :class="row.status">{{ row.status }}</span></td>
+            <td><strong>{{ row.email }}</strong><small class="block">Aviso {{ row.notice_version }}</small></td><td>{{ row.name || 'Sin nombre registrado' }}</td><td>{{ row.android_version || 'No indicada' }}</td><td>{{ formatDate(row.created_at) }}</td><td><span class="status" :class="row.status">{{ row.status }}</span></td>
             <td><textarea v-model="row.draft_note" maxlength="1000" aria-label="Nota interna del candidato" placeholder="Nota interna"></textarea><select :value="row.status" @change="update(row, ($event.target as HTMLSelectElement).value)"><option v-for="item in testerStatuses.slice(1)" :key="item[0]" :value="item[0]">{{ item[1] }}</option></select></td>
           </tr>
-          <tr v-if="!rows.length"><td colspan="5" class="empty">No hay candidatos con este estado.</td></tr>
+          <tr v-if="!rows.length"><td colspan="6" class="empty">No hay candidatos con este estado.</td></tr>
         </tbody>
       </table>
     </div>

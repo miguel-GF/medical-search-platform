@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const config = useRuntimeConfig();
 const publication = config.public.publication;
-const form = reactive({ name: '', play_email: '', age_confirmed: false, notice_accepted: false, website: '' });
+const form = reactive({ name: '', play_email: '', android_version: '', age_confirmed: false, notice_accepted: false, website: '' });
 const checking = ref(Boolean(publication.apiUrl));
 const available = ref(false);
 const noticeVersion = ref(String(publication.testerNoticeVersion));
@@ -31,7 +31,8 @@ onMounted(async () => {
     const response = await fetch(`${publication.apiUrl}/api/v1/android-pilot`, { cache: 'no-store', redirect: 'error' });
     if (!response.ok) throw new Error('pilot unavailable');
     const data = await response.json() as { enabled?: boolean; notice_version?: string; pilot_ends_at?: string | null; phase?: string; registered_count?: number; active_count?: number; target_count?: number; test_duration_days?: number; test_day?: number | null };
-    available.value = publication.testerIntakeEnabled && data.enabled === true;
+    available.value = publication.testerIntakeEnabled && data.enabled === true
+      && data.notice_version === publication.testerNoticeVersion;
     phase.value = typeof data.phase === 'string' ? data.phase : 'closed';
     registeredCount.value = Number.isInteger(data.registered_count) ? Number(data.registered_count) : 0;
     activeCount.value = Number.isInteger(data.active_count) ? Number(data.active_count) : 0;
@@ -111,6 +112,7 @@ async function submit() {
           <fieldset class="form-fields" :disabled="!available || submitting">
             <label>Nombre<input v-model.trim="form.name" autocomplete="given-name" minlength="2" maxlength="120" required></label>
             <label>Correo Gmail asociado con Google Play<input v-model.trim="form.play_email" type="email" autocomplete="email" maxlength="254" pattern="[^\s@]+@gmail\.com" placeholder="tunombre@gmail.com" required></label>
+            <label>Versión de Android <span>(opcional)</span><input v-model.trim="form.android_version" maxlength="80" placeholder="Ej. Android 15"></label>
             <input v-model="form.website" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
             <label class="check-label"><input v-model="form.age_confirmed" type="checkbox" required><span>Confirmo que tengo 18 años o más.</span></label>
             <label class="check-label"><input v-model="form.notice_accepted" type="checkbox" required><span>Leí el <NuxtLink to="/privacidad">aviso de privacidad</NuxtLink> y acepto el tratamiento necesario para administrar el piloto.</span></label>

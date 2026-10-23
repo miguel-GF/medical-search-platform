@@ -18,6 +18,13 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Android opcional,23-oct12:51–12:55UTC:** por precisión del usuario, se solicita
+versión de Android opcional; modelo oculto. Ambas columnas conservadas/nullable.
+API/landing/Patient publicados; dos envíos públicos con/sin Android guardados y
+verificados; duplicado vacío conserva versión anterior. Casos sintéticos eliminados.
+Migración114 aditiva, RPCv2 intacto, RPCv3 compatible; sin cambios del catálogo.
+Avisosv3 coordinados. [Evidencia y versiones](ANDROID_INTAKE_PUBLICATION_20261023.md).
+
 **Puebla y captura nueva,23-oct12:25–12:33UTC:** inventario remoto completo
 207 marcas /293 sedes /564 conceptos /3,343 favorables /4,045 pendientes /
 234 ofertas /113 migraciones;67 revisiones aplicadas y744 grupos abiertos.

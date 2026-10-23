@@ -1075,20 +1075,24 @@ async function testerInterestResponse(request: Request, rpc: RpcClient, origin: 
   }
   const email = typeof body.play_email === 'string' ? body.play_email.trim().toLowerCase() : '';
   const name = typeof body.name === 'string' ? body.name.trim() : '';
+  const androidVersion = typeof body.android_version === 'string' ? body.android_version.trim() : null;
   const noticeVersion = typeof body.notice_version === 'string' ? body.notice_version.trim() : '';
   if (
     email.length > 254 || !/^[^\s@]+@gmail\.com$/.test(email)
     || name.length < 2 || name.length > 120 || /[\u0000-\u001f\u007f]/.test(name)
+    || (body.android_version !== undefined && body.android_version !== null && typeof body.android_version !== 'string')
+    || (androidVersion !== null && (androidVersion.length > 80 || /[\u0000-\u001f\u007f]/.test(androidVersion)))
     || body.age_confirmed !== true || body.notice_accepted !== true
     || noticeVersion.length < 3 || noticeVersion.length > 80
   ) {
     return json({ error: { code: 'invalid_tester_interest', message: 'tester interest is invalid' } }, 400, origin);
   }
-  const result = await rpc.call<Record<string, unknown>>('api_submit_tester_interest_v2', {
+  const result = await rpc.call<Record<string, unknown>>('api_submit_tester_interest_v3', {
     p_email: email,
     p_name: name,
     p_age_confirmed: true,
     p_notice_version: noticeVersion,
+    p_android_version: androidVersion || null,
   });
   if (result.error === 'tester_intake_disabled') {
     return json({ error: { code: 'tester_intake_disabled', message: 'tester intake is not currently available' } }, 503, origin);

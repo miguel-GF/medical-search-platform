@@ -105,6 +105,15 @@ El candidato clínico completo permanece aislado: la comparación local terminó
 pero no acredita todos sus contratos ni cierre automático del backlog.
 [Alcance, versiones y recuperación](ANDROID_INTAKE_PUBLICATION_20261023.md).
 
+## D-027: Android opcional, modelo conservado — 23-oct-2026
+
+**Implementada.** El usuario precisó que la versión de Android debe aparecer
+como opcional y que no se pida el modelo. Las dos columnas permanecen nullable;
+no se borran valores anteriores al omitir Android en un duplicado. Autorización
+concreta de esa modificación sobre la convocatoria recién publicada, sin repetir
+permisos de su despliegue. RPCv3 añadido, v2 conservado, sin reabrir otras funciones.
+[Resultado público y recuperación](ANDROID_INTAKE_PUBLICATION_20261023.md).
+
 ## Cómo registrar o reemplazar una decisión
 
 Crear una entrada con ID estable, fecha, estado (`propuesta`, `aprobada`,

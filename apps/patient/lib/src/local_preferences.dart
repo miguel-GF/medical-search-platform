@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-const privacyNoticeVersion = 'pruevia-privacidad-2026-10-23-v2';
+const privacyNoticeVersion = 'pruevia-privacidad-2026-10-23-v3';
 const privacyNoticeReminderPeriod = Duration(days: 180);
 
 class PatientPreferences {
