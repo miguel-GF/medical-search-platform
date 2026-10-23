@@ -67,6 +67,12 @@ def request_with_same_host_redirects(
     expected_host = expected.hostname.casefold().rstrip(".")
     expected_port = expected.port or (443 if expected.scheme == "https" else 80)
 
+    # The bounded reader deliberately rejects compression. Do not let the
+    # client's automatic gzip/br negotiation request a body it cannot accept.
+    headers = httpx.Headers(kwargs.get("headers") or {})
+    headers["Accept-Encoding"] = "identity"
+    kwargs["headers"] = headers
+
     current = url
     _validate_target(current, expected.scheme, expected_host, expected_port)
     for redirect_count in range(max_redirects + 1):

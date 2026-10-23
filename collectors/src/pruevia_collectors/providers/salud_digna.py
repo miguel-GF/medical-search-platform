@@ -100,8 +100,7 @@ class SaludDignaClient:
             timeout=timeout_seconds,
             follow_redirects=False,
             trust_env=False,
-            transport=PublicAddressTransport(),
-            verify=_ssl_context(),
+            transport=PublicAddressTransport(ssl_context=_ssl_context()),
         )
 
     def close(self) -> None:

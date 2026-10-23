@@ -58,6 +58,13 @@ El adapter de Laboratorios Ruiz recorre por defecto el catálogo acotado complet
 debe usarse para un piloto explícito; dejarlo omitido evita perder estudios que
 aparecen después de las primeras filas del endpoint, como Citometría hemática.
 
+Recuperación SD del23-oct-2026: el transporte con IP pública acepta el contexto
+TLS verificado configurado por el proveedor; pasarlo sólo a `httpx.Client` no
+configura un transporte personalizado. El helper de redirecciones solicita
+`Accept-Encoding: identity`, conforme al lector que rechaza compresión.
+Certificado, hostname, IP pública y límites siguen siendo obligatorios.
+[Captura real en ocho sucursales y alcance](../docs/PUEBLA_SOURCE_REFRESH_20261023.md).
+
 El collector de DENUE requiere `DENUE_API_TOKEN` y recibe coordenadas/radio explícitos.
 
 Para recorrer automáticamente los sitios web declarados por los candidatos

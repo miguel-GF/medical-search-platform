@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import ipaddress
 import socket
+import ssl
 
 import httpx
 
@@ -25,10 +26,15 @@ def public_address(value: str) -> bool:
 
 
 class PublicAddressTransport(httpx.BaseTransport):
-    def __init__(self) -> None:
+    def __init__(self, *, ssl_context: ssl.SSLContext | None = None) -> None:
+        if ssl_context is not None and (
+            not ssl_context.check_hostname or ssl_context.verify_mode != ssl.CERT_REQUIRED
+        ):
+            raise ValueError('public crawler TLS requires certificate and hostname verification')
         # Pool keys are IPs after pinning, so disable keepalive to prevent a
         # connection/certificate for one hostname being reused for another.
         self.transport = httpx.HTTPTransport(
+            verify=ssl_context if ssl_context is not None else True,
             trust_env=False, retries=0,
             limits=httpx.Limits(max_connections=10, max_keepalive_connections=0),
         )
