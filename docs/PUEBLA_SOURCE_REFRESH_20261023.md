@@ -93,3 +93,17 @@ Siguiente acción: evaluar las diferencias antes de ingerir el bloque y contrast
 precios con ofertas aprobadas y sus condiciones; avanzar la conservación de
 atributos del motor para los grupos clínicos retenidos. No se reactivó la cola
 ni se iniciaron bloques de agentes.
+
+## Contraste de precios guardado antes de la pausa
+
+Comparador de sólo lectura: `database/scripts/compare_current_source_prices.py`.
+Ejecución del23-oct13:15UTC sobre234 ofertas y691 filas de precio/alcance:
+369 importes iguales,321 sin fuente emparejada y una diferencia para revisión.
+La identidad se compara por ID externo, sucursal, tipo de precio y moneda;
+no por semejanza de nombres. Un importe igual no acredita condiciones o vigencia.
+
+La diferencia corresponde a mastografía en Salud Digna Municipio Libre:
+$285 guardados frente a $250 en la captura reciente, ID externo `332:888477`.
+No se publicó el precio ni se modificaron ofertas. Evidencia preservada:
+`collectors/artifacts/commercial-source-impact-20261023-v2/comparison.json`.
+La expansión sigue pausada; este hallazgo queda para su siguiente revisión.
