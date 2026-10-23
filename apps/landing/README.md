@@ -9,6 +9,12 @@ La página del piloto muestra el progreso agregado hacia 20 personas y, una vez
 iniciada la cohorte completa, `Día N de 21`; nunca publica correos ni el enlace
 privado de Google Play. Mientras se reúne el grupo ofrece la app web configurada.
 
+Apertura autorizada el23-oct-2026: el formulario solicita nombre y Gmail,
+confirmación de mayoría de edad y privacidad. Ya no solicita municipio, Android
+ni dispositivo. Usa RPC `api_submit_tester_interest_v2`; requiere la migración
+`20261023123000` y configuración remota además del flag de compilación.
+Las invitaciones de Google Play se administran por separado.
+
 ## Desarrollo
 
 Desde `apps/landing`, Node compatible con Nuxt 4.5.2 (Node 24.11+ recomendado):

@@ -1,8 +1,7 @@
 <script setup lang="ts">
 const config = useRuntimeConfig();
 const publication = config.public.publication;
-const municipalities = ['Puebla', 'San Andrés Cholula', 'San Pedro Cholula', 'Cuautlancingo', 'Coronango', 'Amozoc'];
-const form = reactive({ play_email: '', municipality: 'Puebla', android_version: '', device_model: '', age_confirmed: false, notice_accepted: false, website: '' });
+const form = reactive({ name: '', play_email: '', age_confirmed: false, notice_accepted: false, website: '' });
 const checking = ref(Boolean(publication.apiUrl));
 const available = ref(false);
 const noticeVersion = ref(String(publication.testerNoticeVersion));
@@ -64,7 +63,13 @@ async function submit() {
     });
     if (!response.ok) throw new Error('request rejected');
     submitted.value = true;
-    registeredCount.value = Math.min(targetCount.value, registeredCount.value + 1);
+    // The API intentionally treats duplicate submissions alike; do not invent
+    // an extra participant when the same Gmail is sent again.
+    try {
+      const progressResponse = await fetch(`${publication.apiUrl}/api/v1/android-pilot`, { cache: 'no-store' });
+      const progressData = await progressResponse.json() as { registered_count?: number };
+      if (progressResponse.ok && Number.isInteger(progressData.registered_count)) registeredCount.value = Number(progressData.registered_count);
+    } catch { /* Registration succeeded; an aggregate refresh must not undo it. */ }
   } catch {
     error.value = 'No pudimos registrar tu solicitud. Revisa los datos o inténtalo más tarde.';
   } finally {
@@ -104,9 +109,8 @@ async function submit() {
           <p>Usaremos estos datos únicamente para organizar la prueba cerrada. No escribas estudios, diagnósticos ni información de salud.</p>
           <p v-if="!available" class="form-closed-notice" role="status"><strong>Convocatoria cerrada:</strong> publicaremos aquí las fechas y habilitaremos el registro cuando comience el reclutamiento de la cohorte.</p>
           <fieldset class="form-fields" :disabled="!available || submitting">
-            <label>Correo asociado con Google Play<input v-model.trim="form.play_email" type="email" autocomplete="email" maxlength="254" required></label>
-            <label>Municipio<select v-model="form.municipality" required><option v-for="municipality in municipalities" :key="municipality" :value="municipality">{{ municipality }}</option></select></label>
-            <div class="form-grid"><label>Versión de Android <span>(opcional)</span><input v-model.trim="form.android_version" maxlength="80" placeholder="Ej. Android 15"></label><label>Modelo del teléfono <span>(opcional)</span><input v-model.trim="form.device_model" maxlength="120" placeholder="Ej. Samsung A54"></label></div>
+            <label>Nombre<input v-model.trim="form.name" autocomplete="given-name" minlength="2" maxlength="120" required></label>
+            <label>Correo Gmail asociado con Google Play<input v-model.trim="form.play_email" type="email" autocomplete="email" maxlength="254" pattern="[^\s@]+@gmail\.com" placeholder="tunombre@gmail.com" required></label>
             <input v-model="form.website" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
             <label class="check-label"><input v-model="form.age_confirmed" type="checkbox" required><span>Confirmo que tengo 18 años o más.</span></label>
             <label class="check-label"><input v-model="form.notice_accepted" type="checkbox" required><span>Leí el <NuxtLink to="/privacidad">aviso de privacidad</NuxtLink> y acepto el tratamiento necesario para administrar el piloto.</span></label>

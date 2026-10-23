@@ -1448,30 +1448,26 @@ describe('Pruevia API', () => {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({
-        play_email: ' Person@Example.test ',
-        municipality: 'San Andrés Cholula',
+        play_email: ' Person@Gmail.com ',
+        name: ' Persona de prueba ',
         age_confirmed: true,
         notice_accepted: true,
-        notice_version: 'android-testers-2026-09-v1',
-        android_version: 'Android 16',
-        device_model: 'Pixel test',
+        notice_version: 'android-testers-2026-10-23-v2',
         website: '',
       }),
     }), env);
     expect(response.status).toBe(202);
     expect(await response.json()).toEqual({ accepted: true });
-    expect(rpc.call).toHaveBeenCalledWith('api_submit_tester_interest', {
-      p_email: 'person@example.test',
-      p_municipality: 'San Andrés Cholula',
+    expect(rpc.call).toHaveBeenCalledWith('api_submit_tester_interest_v2', {
+      p_email: 'person@gmail.com',
+      p_name: 'Persona de prueba',
       p_age_confirmed: true,
-      p_notice_version: 'android-testers-2026-09-v1',
-      p_android_version: 'Android 16',
-      p_device_model: 'Pixel test',
+      p_notice_version: 'android-testers-2026-10-23-v2',
     });
 
     const minor = await handler(new Request('https://api.test/api/v1/tester-interest', {
       method: 'POST', headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ play_email: 'minor@example.test', municipality: 'Puebla', age_confirmed: false, notice_accepted: true, notice_version: 'android-testers-2026-09-v1' }),
+      body: JSON.stringify({ play_email: 'minor@gmail.com', name: 'Persona de prueba', age_confirmed: false, notice_accepted: true, notice_version: 'android-testers-2026-10-23-v2' }),
     }), env);
     expect(minor.status).toBe(400);
   });

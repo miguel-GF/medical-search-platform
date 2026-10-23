@@ -39,7 +39,8 @@ if (publication.siteUrl) useHead({ link: [{ rel: 'canonical', href: `${publicati
     <p>La implementación de medición utiliza un identificador aleatorio para relacionar eventos de un mismo navegador o instalación. Los clics podrían asociarlo con el estudio, oferta, proveedor o sede seleccionados: eso no equivale a anonimato completo. Retirar una preferencia local detiene los futuros envíos del cliente, pero no elimina por sí solo registros anteriores.</p>
 
     <h2>Convocatoria Android y proveedores</h2>
-    <p>La recopilación de solicitudes para testers y el acceso público de proveedores permanecen cerrados. Si se abre una convocatoria Android, se informarán sus datos y finalidades antes de recibir solicitudes. El correo asociado con Google Play podría utilizarse para administrar invitaciones; Google aplicará también sus propios términos y avisos.</p>
+    <p>La convocatoria Android recibe tu nombre y correo Gmail asociado con Google Play para organizar el grupo y administrar las invitaciones. Guardamos también tu confirmación de mayoría de edad, la versión del aviso aceptado y las fechas de registro y aceptación. No pedimos municipio, versión de Android ni modelo del teléfono. Google aplicará sus propios términos y avisos al utilizar Google Play. El acceso público de proveedores permanece cerrado.</p>
+    <p>Puedes retirar tu solicitud mediante el contacto de privacidad. Los datos se eliminan en un máximo de 7 días después del retiro; los registros restantes se eliminan o anonimizan 90 días después de cerrar el piloto. El registro no crea una cuenta de paciente ni activa medición de uso.</p>
     <p>No envíes recetas, diagnósticos, resultados ni imágenes médicas por formularios de testers o por correo de soporte. Un aviso publicado no activa esos formularios ni autoriza usos futuros.</p>
 
     <h2>Servicios externos y datos técnicos</h2>

@@ -62,14 +62,6 @@ const FEEDBACK_REASONS = new Set([
 ]);
 const FEEDBACK_RESULT_STATES = new Set(['results', 'no_match', 'ambiguous', 'manual']);
 const FEEDBACK_CHANNELS = new Set(['public', 'closed_android']);
-const PILOT_MUNICIPALITIES = new Set([
-  'Puebla',
-  'San Andrés Cholula',
-  'San Pedro Cholula',
-  'Cuautlancingo',
-  'Coronango',
-  'Amozoc',
-]);
 const AUTH_USER_MAX_RESPONSE_BYTES = 64 * 1024;
 const MAX_PUBLIC_PAYLOAD_DEPTH = 32;
 const MAX_PUBLIC_PAYLOAD_ENTRIES = 1_000;
@@ -1082,27 +1074,21 @@ async function testerInterestResponse(request: Request, rpc: RpcClient, origin: 
     return json({ accepted: true }, 202, origin);
   }
   const email = typeof body.play_email === 'string' ? body.play_email.trim().toLowerCase() : '';
-  const municipality = typeof body.municipality === 'string' ? body.municipality.trim() : '';
-  const androidVersion = typeof body.android_version === 'string' ? body.android_version.trim() : null;
-  const deviceModel = typeof body.device_model === 'string' ? body.device_model.trim() : null;
+  const name = typeof body.name === 'string' ? body.name.trim() : '';
   const noticeVersion = typeof body.notice_version === 'string' ? body.notice_version.trim() : '';
   if (
-    email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-    || !PILOT_MUNICIPALITIES.has(municipality)
+    email.length > 254 || !/^[^\s@]+@gmail\.com$/.test(email)
+    || name.length < 2 || name.length > 120 || /[\u0000-\u001f\u007f]/.test(name)
     || body.age_confirmed !== true || body.notice_accepted !== true
     || noticeVersion.length < 3 || noticeVersion.length > 80
-    || (androidVersion !== null && androidVersion.length > 80)
-    || (deviceModel !== null && deviceModel.length > 120)
   ) {
     return json({ error: { code: 'invalid_tester_interest', message: 'tester interest is invalid' } }, 400, origin);
   }
-  const result = await rpc.call<Record<string, unknown>>('api_submit_tester_interest', {
+  const result = await rpc.call<Record<string, unknown>>('api_submit_tester_interest_v2', {
     p_email: email,
-    p_municipality: municipality,
+    p_name: name,
     p_age_confirmed: true,
     p_notice_version: noticeVersion,
-    p_android_version: androidVersion || null,
-    p_device_model: deviceModel || null,
   });
   if (result.error === 'tester_intake_disabled') {
     return json({ error: { code: 'tester_intake_disabled', message: 'tester intake is not currently available' } }, 503, origin);

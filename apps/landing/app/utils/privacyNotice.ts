@@ -1,4 +1,4 @@
-export const PRIVACY_NOTICE_VERSION = 'pruevia-privacidad-2026-10-15-v1';
+export const PRIVACY_NOTICE_VERSION = 'pruevia-privacidad-2026-10-23-v2';
 export const PRIVACY_REMINDER_STORAGE_KEY = 'pruevia.privacyNoticeReminder';
 export const PRIVACY_REMINDER_RETENTION_MS = 180 * 24 * 60 * 60 * 1000;
 

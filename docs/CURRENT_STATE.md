@@ -1,6 +1,6 @@
 # Estado y prioridades de Pruevia
 
-Tipo: punto de continuidad. Actualizado el 21-oct-2026 para operación y datos;
+Tipo: punto de continuidad. Actualizado el 23-oct-2026 para operación y datos;
 el corte histórico de publicación de septiembre corresponde al árbol local, el
 ledger Supabase y los Workers de producción. El proyecto enlazado se llama
 `pruevia-dev`, pero también es la base inicial de producción: las migraciones
@@ -8,7 +8,8 @@ aplicadas allí afectan el catálogo público. Landing, PWA, API y Admin privado
 habían publicado en sus dominios finales. El 15-oct-2026 a las 12:25 UTC se
 reabrieron API y PWA por autorización expresa del usuario, tras actualizar el
 aviso de privacidad y su recordatorio de 180 días. Admin continúa pausado.
-Proveedores, feedback, analítica y registro Android continúan cerrados.
+Proveedores, feedback y analítica continúan cerrados. El registro Android se abrió
+el 23-oct-2026 con nombre y Gmail, por petición explícita del usuario.
 Los datos de septiembre citados abajo son cortes de evidencia, no contadores en vivo.
 Advertencia de entorno: el proyecto Supabase enlazado se llama `pruevia-dev`, pero
 la [decisión de publicación](ADR-003-PATIENT-FIRST-PUBLICATION.md) lo usa como
@@ -16,6 +17,23 @@ base inicial de producción. Una escritura o migración allí afecta datos que
 podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
+
+**Publicación y Android,23-oct12:14–12:18UTC:** API, Patient y landing publicados;
+registro abierto con nombre/Gmail, sin municipio ni datos del teléfono. Formulario
+público202 y fila real comprobada; registro sintético eliminado y ausencia verificada.
+Migración113 aplicada una vez, sin cambios clínicos. Veinte lugares, reclutamiento
+hasta21-ene-2027; no inicia la cohorte ni envía invitaciones. Botones públicos a390px:
+Buscar/Tengo una receta/Resolver/Subir con350px de ancho y márgenes20px, antes y
+después; diferencia no reproducida, sin atribuirla a caché del teléfono.
+[Publicación, evidencia y recuperación](ANDROID_INTAKE_PUBLICATION_20261023.md).
+
+**Algoritmo local completo,23-oct:** catálogo público15tablas/7funciones,
+4,045pendientes/744grupos más22controles,3,020invocaciones por comparación.
+PG12.22 y17.6 coinciden; variantePG17 conserva electro como propuesta ambigua
+y recupera IgEgluten exacta. Cero ganancias de sin coincidencia a resolución;
+16selecciones únicas observadas no son cierres. Sin cambios del motor productivo;
+candidato29funciones aún no acreditado integralmente.
+[Resultado, límites y fallos del arnés](ALGORITHM_LOCAL_EVALUATION_20261023.md).
 
 **Evaluación autorizada,22-oct13:05–13:06UTC:** un envío real del candidato
 combinado falló por FK audit_event_idUUID frente a audit.events.idbigint (42804).

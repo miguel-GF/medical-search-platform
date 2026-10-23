@@ -91,6 +91,20 @@ por FK UUID/bigint; recuperación independiente confirmada a las13:06:15UTC.
 La corrección posterior y segundo plan están preparados localmente, sin registrar
 otra autorización ni reenviar el primero. [Resultado y alcance](proposals/20261022-clinical-evaluation-results/README.md).
 
+## D-026: publicación y convocatoria Android — 23-oct-2026
+
+**Implementada.** El usuario autorizó publicar tras la prueba del algoritmo,
+independientemente de su resultado, y abrir expresamente el registro Android
+con nombre y Gmail guardados en la base, sin datos del teléfono. Posteriormente
+acotó la tarea visual a comprobar si los botones eran realmente más angostos.
+Se publicaron API, Patient y landing; migración aditiva113, registro abierto
+y guardado comprobado mediante un caso sintético luego eliminado. No se reabrió
+Admin ni se activaron analítica, feedback, captura o crons. No se interpreta
+como autorización para contactar participantes o enviar invitaciones.
+El candidato clínico completo permanece aislado: la comparación local terminó,
+pero no acredita todos sus contratos ni cierre automático del backlog.
+[Alcance, versiones y recuperación](ANDROID_INTAKE_PUBLICATION_20261023.md).
+
 ## Cómo registrar o reemplazar una decisión
 
 Crear una entrada con ID estable, fecha, estado (`propuesta`, `aprobada`,
