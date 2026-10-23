@@ -12,6 +12,8 @@ La conversación original no es lectura obligatoria para incorporarse.
 | [Guías de trabajo](WORK_GUIDE.md) | Procedimientos por tipo de cambio y traspaso. |
 | [Operación](OPERATIONS_GUIDE.md) | Directorios, comandos, comprobaciones y alcance de resultados. |
 | [Estado y prioridades](CURRENT_STATE.md) | Capacidades y pendientes con evidencia fechada. |
+| [Puebla y captura SD,23-oct](PUEBLA_SOURCE_REFRESH_20261023.md) | Inventario actual, transporte recuperado y6,916 registros en bloque local separado para evaluación. |
+| [Identidad explícita,23-oct](proposals/20261023-explicit-identity/README.md) | Comparación de564 nombres; fuzzy como propuesta,16 rechazos previos diagnosticados y variante sin activar. |
 | [Publicación y registro Android,23-oct](ANDROID_INTAKE_PUBLICATION_20261023.md) | Nombre/Gmail guardados desde formulario público, versiones, medidas móviles y recuperación. |
 | [Evaluación local completa,23-oct](ALGORITHM_LOCAL_EVALUATION_20261023.md) | 4,045 pendientes,744 grupos, núcleo realPG12/17, controles y límites sin cierres automáticos. |
 | [Adición Android para abogado,23-oct](legal/ADICION_ANDROID_20261023.md) | Datos y finalidades de la convocatoria ahora abierta, en lenguaje común. |

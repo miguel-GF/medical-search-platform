@@ -26,6 +26,7 @@ def main():
     parser.add_argument('--requirements-dir',type=Path,required=True)
     parser.add_argument('--run-name',default='local-core-runtime')
     parser.add_argument('--pg-bin',type=Path,default=PG_BIN)
+    parser.add_argument('--canonical-controls',action='store_true',help='Also compare every active primary health name and two underspecified-query controls')
     args=parser.parse_args()
     source=args.export.resolve();source.relative_to(ROOT/'collectors/artifacts')
     requirements=args.requirements_dir.resolve();requirements.relative_to(ROOT/'collectors/artifacts')
@@ -78,6 +79,19 @@ def main():
             'tiempo de protrombina','tiempo de protrombina con INR','tiempo de protrombina x2','sin tiempo de protrombina','cortisol en saliva','cortisol en saliva AM','cortisol en saliva x2',
             'IgE específica contra gluten','IgE específica contra gluten sin IgE','TELERADIOGRAFIA DE TORAX PA','TELERADIOGRAFIA TORAX PA Y LATERAL']
         cases.extend({'kind':'control','provider':None,'label':label,'query':label,'input_ids':[]} for label in labels)
+        canonical_controls=0
+        if args.canonical_controls:
+            active={r['id'] for r in json.loads((source/'catalog.items.json').read_bytes()) if r['status']=='active'}
+            health_ids={r['catalog_item_id'] for r in json.loads((source/'health.services.json').read_bytes())}
+            expected=defaultdict(set)
+            for row in json.loads((source/'catalog.item_names.json').read_bytes()):
+                if row['is_primary'] and row['item_id'] in active & health_ids:
+                    expected[row['name']].add(row['item_id'])
+            cases.extend({'kind':'control','control_type':'canonical_primary_name','expected_item_ids':sorted(ids),
+                'provider':None,'label':label,'query':label,'input_ids':[]} for label,ids in sorted(expected.items()))
+            canonical_controls=len(expected)
+            cases.extend({'kind':'control','control_type':'underspecified','provider':None,'label':label,'query':label,'input_ids':[]}
+                for label in ['renina','Plasmodium'])
         save(runtime/'cases.json',cases)
         def run_phase(phase):
             counts=Counter();start=time.monotonic()
@@ -101,7 +115,7 @@ def main():
             connection.execute(raw.decode('utf-8'))
         after=run_phase('after')
         summary={'at':datetime.now(timezone.utc).isoformat(),'server_version':version,'host':'127.0.0.1','port':port,'catalog_tables':len(receipt['tables']),'actual_functions':7,'replaced_local_functions':3,
-            'pending_contexts':len(contexts),'pending_query_groups':len(groups),'controls':len(labels),'before':before,'after':after,'requirements_source_sha256':pins,
+            'pending_contexts':len(contexts),'pending_query_groups':len(groups),'controls':sum(c['kind']=='control' for c in cases),'canonical_controls':canonical_controls,'before':before,'after':after,'requirements_source_sha256':pins,
             'remote_connections':0,'patient_inputs_used':False,'clinical_equivalences_approved':0,'complete_combined_candidate_tested':False,
             'limits':['Runtime version, extensions and locale are reported for this local instance','No production constraints/indexes/permissions or JWT replicated','Only clinical requirements core; panel/image wrappers excluded','Observed selections are not approvals of pending source equivalences']}
         save(runtime/'comparison-summary.json',summary)

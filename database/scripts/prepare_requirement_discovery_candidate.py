@@ -9,6 +9,7 @@ def main():
     parser.add_argument('--requirements-dir',type=Path,required=True)
     parser.add_argument('--baseline-receipt',type=Path,required=True)
     parser.add_argument('--output',type=Path,required=True)
+    parser.add_argument('--require-explicit-identity',action='store_true',help='Keep fuzzy-only candidates ambiguous; never approve by uniqueness alone')
     args=parser.parse_args()
     for path in [args.requirements_dir,args.baseline_receipt,args.output]:path.resolve().relative_to(ROOT/'collectors/artifacts')
     proof=json.loads(args.baseline_receipt.read_bytes())
@@ -31,6 +32,12 @@ def main():
     sources[key]=text
     key='catalog-resolve_items_v4-PROPOSED.sql'
     sources[key]=replace(sources[key],"or r.safe_count > 1 or r.term_source = 'disambiguation'", "or coalesce((r.explanation_data->>'prefix_discovery')::boolean,false)\n                 or r.safe_count > 1 or r.term_source = 'disambiguation'")
+    if args.require_explicit_identity:
+        sources[key]=replace(sources[key],
+            "case when coalesce((r.explanation_data->>'requirements_pruned')::boolean,false)",
+            "case when not coalesce((r.explanation_data->>'exact_identity_literal')::boolean,false)\n                 or coalesce((r.explanation_data->>'requirements_pruned')::boolean,false)")
+        sources[key]=replace(sources[key], '       r.explanation_data,',
+            "       r.explanation_data || jsonb_build_object('automatic_identity_policy','exact-reviewed-identity-only-LOCAL'),")
     args.output.mkdir(parents=True,exist_ok=False)
     diffs=[];pins={}
     for name,text in sources.items():
@@ -38,6 +45,7 @@ def main():
         diffs.extend(difflib.unified_diff(originals[name].splitlines(keepends=True),text.splitlines(keepends=True),fromfile='original/'+name,tofile='local-experiment/'+name))
     (args.output/'candidate.diff').write_text(''.join(diffs),encoding='utf-8')
     report={'source_sha256':proof['requirements_source_sha256'],'candidate_sha256':pins,'changes':['Exact approved name/alias with all literal requirements no longer downgraded solely by rejected fuzzy alternatives','Single alphabetic token prefix proposals retained as ambiguous discovery only'],
+        'require_explicit_identity':args.require_explicit_identity,
         'production_authorization':False,'remote_sql_submitted':False,'complete_combined_candidate_integrated':False}
     (args.output/'preparation.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
     print(json.dumps(report))

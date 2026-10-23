@@ -18,6 +18,24 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Puebla y captura nueva,23-oct12:25–12:33UTC:** inventario remoto completo
+207 marcas /293 sedes /564 conceptos /3,343 favorables /4,045 pendientes /
+234 ofertas /113 migraciones;67 revisiones aplicadas y744 grupos abiertos.
+Recolector SD recuperado: contexto TLS ahora llega al transporte y se solicita
+respuesta sin compresión, conservando certificados/IP pública y límites.
+Ocho sucursales capturadas,6,916 registros locales válidos:16 IDs añadidos,
+23 ausentes,15 diferencias de precio y32 de contexto respecto a las capturas
+anteriores. Bloque separado, sin ingestión, cierres, ofertas o borrados.
+[Fuente, fallos y evidencia](PUEBLA_SOURCE_REFRESH_20261023.md).
+
+**Identidad explícita,23-oct:** variante local comparada en4,152 invocaciones,
+incluidos564 nombres principales:548 correctos y16 ausentes antes/después.
+Elimina las27 observaciones resueltas por word_fuzzy; renina/Plasmodium ya no
+se convierten automáticamente en variantes no especificadas. Cero cierres.
+Diagnosticados12 conflictos de contraste,3 de anatomía y léxico que bloquea
+T3 libre. Sin modificar motor productivo ni retirar guardas globales.
+[Cambio aislado y límites](proposals/20261023-explicit-identity/README.md).
+
 **Publicación y Android,23-oct12:14–12:18UTC:** API, Patient y landing publicados;
 registro abierto con nombre/Gmail, sin municipio ni datos del teléfono. Formulario
 público202 y fila real comprobada; registro sintético eliminado y ausencia verificada.
