@@ -54,10 +54,19 @@ def main():
     if len(inputs)!=len(set(inputs)) or len(inputs)!=complete['pending_contexts']:raise ValueError('Pending denominator differs')
     canonical={}
     canonical_incomplete=[]
+    constraint_comparison={}
     for phase,observations in phases.items():
         checked=[]
+        constrained=[]
         for row in observations.values():
             case=cases[row['ordinal']]
+            if case.get('control_type')=='additional_constraint':
+                status,selected=outcome(row)
+                forbidden=set(selected)&set(case.get('must_not_resolve_ids',[]))
+                positive_ok=('expected_item_ids' not in case or
+                    (status=='resolved' and set(selected)<=set(case['expected_item_ids'])))
+                constrained.append({'query':case['query'],'passed':not forbidden and positive_ok,
+                    'forbidden_selected_ids':sorted(forbidden),'expected_positive_satisfied':positive_ok})
             if case.get('control_type')=='canonical_primary_name':
                 status,selected=outcome(row)
                 correct=status=='resolved' and set(selected)<=set(case['expected_item_ids'])
@@ -69,10 +78,14 @@ def main():
                 'absent':sum(not row['rows'] for row,_,_ in checked),
                 'incorrect_resolved':sum(any(c['resolution_status']=='resolved' and c['item_id'] not in case['expected_item_ids'] for c in row['rows']) for row,case,_ in checked),
                 'resolved_by_word_fuzzy_in_all_observations':sum(any(c['resolution_status']=='resolved' and c['match_method']=='word_fuzzy' for c in row['rows']) for row in observations.values())}
+        if constrained:
+            constraint_comparison[phase]={'cases':len(constrained),'passed':sum(c['passed'] for c in constrained),
+                'failed':[c for c in constrained if not c['passed']]}
     report={'server_version':complete['server_version'],'pending_contexts':len(inputs),'pending_groups':sum(c['kind']=='pending' for c in cases),'controls':len(controls),
         'observations_per_phase':len(expected),'core_invocations_total':len(expected)*2,'weighted_rows_by_status':weighted,'groups_by_status':grouped,
         'weighted_transitions':[{'scope':k[0],'before':k[1],'after':k[2],'rows':v} for k,v in sorted(transitions.items())],
         'changed_pending_cases':changes,'control_observations':controls,'canonical_comparison':canonical,'canonical_incomplete_after':canonical_incomplete,
+        'additional_constraint_comparison':constraint_comparison,
         'clinical_equivalences_approved':0,'production_changes':0,'complete_combined_candidate_tested':False}
     with destination.open('x',encoding='utf-8') as target:json.dump(report,target,ensure_ascii=False,indent=2)
     print(json.dumps({k:v for k,v in report.items() if k not in ['changed_pending_cases','control_observations','canonical_incomplete_after']}))

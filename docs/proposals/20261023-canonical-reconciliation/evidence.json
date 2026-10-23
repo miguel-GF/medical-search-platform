@@ -1,0 +1,362 @@
+{
+  "server_version": "17.6",
+  "pending_contexts": 4045,
+  "pending_groups": 744,
+  "controls": 674,
+  "observations_per_phase": 2162,
+  "core_invocations_total": 4324,
+  "weighted_rows_by_status": {
+    "before": [
+      {
+        "scope": "provider",
+        "status": "ambiguous",
+        "rows": 272
+      },
+      {
+        "scope": "provider",
+        "status": "no_match",
+        "rows": 3737
+      },
+      {
+        "scope": "provider",
+        "status": "resolved",
+        "rows": 36
+      },
+      {
+        "scope": "unscoped",
+        "status": "ambiguous",
+        "rows": 263
+      },
+      {
+        "scope": "unscoped",
+        "status": "no_match",
+        "rows": 3700
+      },
+      {
+        "scope": "unscoped",
+        "status": "resolved",
+        "rows": 82
+      }
+    ],
+    "after": [
+      {
+        "scope": "provider",
+        "status": "ambiguous",
+        "rows": 72
+      },
+      {
+        "scope": "provider",
+        "status": "no_match",
+        "rows": 3973
+      },
+      {
+        "scope": "unscoped",
+        "status": "ambiguous",
+        "rows": 72
+      },
+      {
+        "scope": "unscoped",
+        "status": "no_match",
+        "rows": 3973
+      }
+    ]
+  },
+  "groups_by_status": {
+    "before": [
+      {
+        "scope": "provider",
+        "status": "ambiguous",
+        "groups": 51
+      },
+      {
+        "scope": "provider",
+        "status": "no_match",
+        "groups": 686
+      },
+      {
+        "scope": "provider",
+        "status": "resolved",
+        "groups": 7
+      },
+      {
+        "scope": "unscoped",
+        "status": "ambiguous",
+        "groups": 49
+      },
+      {
+        "scope": "unscoped",
+        "status": "no_match",
+        "groups": 681
+      },
+      {
+        "scope": "unscoped",
+        "status": "resolved",
+        "groups": 14
+      }
+    ],
+    "after": [
+      {
+        "scope": "provider",
+        "status": "ambiguous",
+        "groups": 20
+      },
+      {
+        "scope": "provider",
+        "status": "no_match",
+        "groups": 724
+      },
+      {
+        "scope": "unscoped",
+        "status": "ambiguous",
+        "groups": 20
+      },
+      {
+        "scope": "unscoped",
+        "status": "no_match",
+        "groups": 724
+      }
+    ]
+  },
+  "weighted_transitions": [
+    {
+      "scope": "provider",
+      "before": "ambiguous",
+      "after": "ambiguous",
+      "rows": 56
+    },
+    {
+      "scope": "provider",
+      "before": "ambiguous",
+      "after": "no_match",
+      "rows": 216
+    },
+    {
+      "scope": "provider",
+      "before": "no_match",
+      "after": "no_match",
+      "rows": 3737
+    },
+    {
+      "scope": "provider",
+      "before": "resolved",
+      "after": "ambiguous",
+      "rows": 16
+    },
+    {
+      "scope": "provider",
+      "before": "resolved",
+      "after": "no_match",
+      "rows": 20
+    },
+    {
+      "scope": "unscoped",
+      "before": "ambiguous",
+      "after": "ambiguous",
+      "rows": 56
+    },
+    {
+      "scope": "unscoped",
+      "before": "ambiguous",
+      "after": "no_match",
+      "rows": 207
+    },
+    {
+      "scope": "unscoped",
+      "before": "no_match",
+      "after": "no_match",
+      "rows": 3700
+    },
+    {
+      "scope": "unscoped",
+      "before": "resolved",
+      "after": "ambiguous",
+      "rows": 16
+    },
+    {
+      "scope": "unscoped",
+      "before": "resolved",
+      "after": "no_match",
+      "rows": 66
+    }
+  ],
+  "canonical_comparison": {
+    "before": {
+      "names": 564,
+      "unique_correct": 548,
+      "absent": 16,
+      "incorrect_resolved": 0,
+      "resolved_by_word_fuzzy_in_all_observations": 28
+    },
+    "after": {
+      "names": 564,
+      "unique_correct": 564,
+      "absent": 0,
+      "incorrect_resolved": 0,
+      "resolved_by_word_fuzzy_in_all_observations": 0
+    }
+  },
+  "canonical_incomplete_after": [],
+  "additional_constraint_comparison": {
+    "before": {
+      "cases": 86,
+      "passed": 84,
+      "failed": [
+        {
+          "query": "t3 libre",
+          "passed": false,
+          "forbidden_selected_ids": [],
+          "expected_positive_satisfied": false
+        },
+        {
+          "query": "Triyodotironina libre (T3 libre)",
+          "passed": false,
+          "forbidden_selected_ids": [],
+          "expected_positive_satisfied": false
+        }
+      ]
+    },
+    "after": {
+      "cases": 86,
+      "passed": 86,
+      "failed": []
+    }
+  },
+  "clinical_equivalences_approved": 0,
+  "production_changes": 0,
+  "complete_combined_candidate_tested": false,
+  "independent_inspection": {
+    "loopback_only": true,
+    "read_only": true,
+    "functions_changed": [
+      "catalog.resolve_items",
+      "catalog.resolve_items_v3",
+      "catalog.resolve_items_v4",
+      "catalog.resolve_items_v6"
+    ],
+    "function_md5_after": {
+      "catalog.resolve_items": "b089868a091042280cef08a0aedf0aa8",
+      "catalog.resolve_items_v2": "7b0be9fb9a16bebd289e5e9b3ed71f05",
+      "catalog.resolve_items_v3": "0ccf3153803c21f8d0acc386dcdd1318",
+      "catalog.resolve_items_v4": "f5c0d43dce0f3035f117c83d71b3578d",
+      "catalog.resolve_items_v5": "32830b96541e6d803749987455572e9a",
+      "catalog.resolve_items_v6": "7c62bffb4201de36a7b37d194de562af",
+      "core.normalized_text": "316b789d77ac228427fc69104e65f83e"
+    },
+    "constraints": 3
+  },
+  "shutdown": {
+    "at": "2026-10-23T13:04:24.940888+00:00",
+    "server_stopped": true,
+    "password_file_removed": true
+  },
+  "source_inventory": {
+    "at": "2026-10-23T12:42:40.773841+00:00",
+    "project_ref": "ymtcmfgwuzdqtsbuvzqf",
+    "tables": {
+      "catalog.items": {
+        "md5": "3219615a48e8caf6acb107fbc8e723a6",
+        "rows": 564
+      },
+      "catalog.domains": {
+        "md5": "0c0f89cbf928cc36abb203c191330bb9",
+        "rows": 1
+      },
+      "health.services": {
+        "md5": "173b8ac0073f51c854a2660822fe5ab4",
+        "rows": 564
+      },
+      "catalog.item_names": {
+        "md5": "f572073173c3e60c3867935a5d6aff64",
+        "rows": 564
+      },
+      "catalog.item_aliases": {
+        "md5": "be228d500cb4494feaa6dcb028414c48",
+        "rows": 787
+      },
+      "health.query_lexicon": {
+        "md5": "f76d34b5e7b3327d7b01c24431576dbc",
+        "rows": 18
+      },
+      "health.specimen_types": {
+        "md5": "32a150bfbafa5fe195047d3902c55783",
+        "rows": 9
+      },
+      "health.service_anatomy": {
+        "md5": "2d55a0d37513b378375091c652b3b81e",
+        "rows": 2
+      },
+      "health.service_methods": {
+        "md5": "c9be98229d00097411f8137d7d9d661f",
+        "rows": 2
+      },
+      "health.anatomical_sites": {
+        "md5": "f7368d4d63ce6bd25e796d3cfd1a9074",
+        "rows": 2
+      },
+      "catalog.item_identifiers": {
+        "md5": "82555addd1541b36495c76cd55db7118",
+        "rows": 8
+      },
+      "health.service_specimens": {
+        "md5": "88913d8a014200960b2e7a0c157631bb",
+        "rows": 85
+      },
+      "catalog.item_descriptions": {
+        "md5": "543bf2d6687ddc049c0215cc6193d252",
+        "rows": 13
+      },
+      "catalog.disambiguation_terms": {
+        "md5": "5f1c015ca7cb2a5f65221afd50e16d31",
+        "rows": 4
+      },
+      "health.lab_service_definitions": {
+        "md5": "b31540f581e4ce3bb12a75e5a1555946",
+        "rows": 383
+      },
+      "catalog.disambiguation_candidates": {
+        "md5": "6d671377f3eb68bf354f2769ca373996",
+        "rows": 8
+      }
+    },
+    "functions": 7,
+    "pending_contexts": 4045,
+    "catalog_unchanged": true,
+    "remote_writes": false,
+    "patient_inputs_exported": false,
+    "files_sha256": {
+      "catalog-after.json": "86a764b8db612f2d3716cb49122f89afa00028ad251de1a612c8193caa646b48",
+      "catalog-before.json": "86a764b8db612f2d3716cb49122f89afa00028ad251de1a612c8193caa646b48",
+      "catalog.disambiguation_candidates.json": "8bfa8dae6594b884a22ad8ddb3c6a3eaf53a13e955da27b266e86af3cac960dc",
+      "catalog.disambiguation_terms.json": "dc91fd47fd6495c92c21e90690810fbd39822e0bb209e9eed5405263e9568a1d",
+      "catalog.domains.json": "0585306b03af1a63242034d854cf0177a396992e3944da58f6f27e152e065bbe",
+      "catalog.item_aliases.json": "dd99e7c85fd35382af3b46fbcbc793c2372213fed1e6fb7a680d52001faa0e99",
+      "catalog.item_descriptions.json": "636c16ae04bbc677545df6da02d377f9f651b7e4e0af7713c013fc35ae2da802",
+      "catalog.item_identifiers.json": "b47c0c69641d23c5e4b29818cc40e605a0737219859af2d5400f38491bb83fe5",
+      "catalog.item_names.json": "e4de1397b5bf32a6021bafd46c653ff69de78fb43f5eaf7ace8ce28187f227df",
+      "catalog.items.json": "536d8427794181c91e87c43199ce029e5b14fe08f32ecfc971393d97e872ae81",
+      "health.anatomical_sites.json": "052909d0e26e86ada78e98599f02f252f1cc33587c3c752950205b1778471547",
+      "health.lab_service_definitions.json": "28093b9556e4aba07cac4347ee87a63b7180cd571aff2a8f3b0bb168e8475ef0",
+      "health.query_lexicon.json": "690c9d569aa8b862bf79dfac86841d9196b1c1010474da8f430d1bc78e7b6f3f",
+      "health.service_anatomy.json": "e1cc9f1f2a546aac4ce66dd38f88bfce86e0e75d6a79fc40311e63d2fed03db3",
+      "health.service_methods.json": "1369dd7b30c1e803285969a0800eff7592968481278d5106025b551363b18eca",
+      "health.service_specimens.json": "4f02f0f4c92cc9cf2ed183fe2155140751b45c73b33be3f4d30eb1b3497e4f16",
+      "health.services.json": "5169d049bed28233ca69f3c17c10ffff38105a4d33ec9be0bc2f42012cd9bf19",
+      "health.specimen_types.json": "fc53d5e934fd674921e73f20dc8788cf8e80dd26deaf875f253b8395f69c47ef",
+      "metadata.json": "1603e103b69b0aa2573f150750fccea1a1674e7c5b6ec26f31e5802d3424d59e",
+      "pending-labels.json": "0c1c944f7f6ed66c8d8d0b379e4102cbda1d7f07b3bff1349efb07859f37821c",
+      "started.json": "10b7b9a607acbd779afd97764790dd3071872a84b716a671c52238ec13d99a42"
+    }
+  },
+  "proposal_file_sha256": {
+    "reconciliation-LOCAL-ONLY.sql": "296300559167bd121569afa631dba295f3d82ef6503b16717148e6528cb297c0",
+    "controls.json": "b22430136c90aa6fbb43cd5c6f5e467d2a917a9515a4bb36d202ed315f92986c",
+    "component-function.diff": "c6b945f3139426146e29ffe415c05ae906c38c07d388d95f60af70a4abf534cb",
+    "preparation.json": "5be6bcf85a1782512a30a1e8f7b254ec82bcd3ed4500d6c9ab3434a1241eda65"
+  },
+  "ruiz_comparison": {
+    "old_records": 4617,
+    "new_records": 4617,
+    "database_writes": 0,
+    "approvals": 0
+  }
+}

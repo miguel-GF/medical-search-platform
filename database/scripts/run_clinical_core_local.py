@@ -27,9 +27,25 @@ def main():
     parser.add_argument('--run-name',default='local-core-runtime')
     parser.add_argument('--pg-bin',type=Path,default=PG_BIN)
     parser.add_argument('--canonical-controls',action='store_true',help='Also compare every active primary health name and two underspecified-query controls')
+    parser.add_argument('--local-reconciliation',type=Path,help='Explicit local-only SQL function/data reconciliation after the baseline; never sent remotely')
+    parser.add_argument('--additional-controls',type=Path,help='Local JSON controls with explicit forbidden/expected IDs')
     args=parser.parse_args()
     source=args.export.resolve();source.relative_to(ROOT/'collectors/artifacts')
     requirements=args.requirements_dir.resolve();requirements.relative_to(ROOT/'collectors/artifacts')
+    reconciliation=None
+    if args.local_reconciliation:
+        patch_path=args.local_reconciliation.resolve();patch_path.relative_to(ROOT/'collectors/artifacts')
+        reconciliation=patch_path.read_bytes()
+    extra_controls=[]
+    if args.additional_controls:
+        extra_path=args.additional_controls.resolve();extra_path.relative_to(ROOT/'collectors/artifacts')
+        extra_controls=json.loads(extra_path.read_bytes())
+        if not isinstance(extra_controls,list) or len(extra_controls)>500:raise ValueError('Bound additional controls to 500 public queries')
+        for control in extra_controls:
+            if not isinstance(control,dict) or set(control)-{'query','expected_item_ids','must_not_resolve_ids'} or not isinstance(control.get('query'),str) or not 1<=len(control['query'])<=500:
+                raise ValueError('Invalid additional control')
+            for key in ['expected_item_ids','must_not_resolve_ids']:
+                if key in control and (not isinstance(control[key],list) or any(not re.fullmatch('[0-9a-f-]{36}',v) for v in control[key])):raise ValueError('Control IDs must be UUIDs')
     for version_number in (3,4,6):
         if not (requirements/f'catalog-resolve_items_v{version_number}-PROPOSED.sql').is_file():
             raise ValueError('Prepare all three candidate SQL files before starting PostgreSQL')
@@ -92,6 +108,7 @@ def main():
             canonical_controls=len(expected)
             cases.extend({'kind':'control','control_type':'underspecified','provider':None,'label':label,'query':label,'input_ids':[]}
                 for label in ['renina','Plasmodium'])
+        cases.extend({'kind':'control','control_type':'additional_constraint','provider':None,'label':c['query'],'input_ids':[],**c} for c in extra_controls)
         save(runtime/'cases.json',cases)
         def run_phase(phase):
             counts=Counter();start=time.monotonic()
@@ -107,15 +124,26 @@ def main():
                         counts[(case['kind'],scope,status)]+=1
                     if ordinal%40==0:print(json.dumps({'stage':phase,'cases_done':ordinal+1,'cases_total':len(cases),'elapsed_seconds':round(time.monotonic()-start,1)}),flush=True)
             return [{'kind':k[0],'scope':k[1],'status':k[2],'cases':v} for k,v in sorted(counts.items())]
+        def function_fingerprints():
+            return dict(connection.execute("select n.nspname||'.'||p.proname,md5(pg_get_functiondef(p.oid)) from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname||'.'||p.proname=any(%s) order by 1",[order]).fetchall())
+        functions_before=function_fingerprints()
         before=run_phase('before')
         pins={}
         for version_number in (3,4,6):
             path=requirements/f'catalog-resolve_items_v{version_number}-PROPOSED.sql'
             raw=path.read_bytes();pins[path.name]=hashlib.sha256(raw).hexdigest()
             connection.execute(raw.decode('utf-8'))
+        if reconciliation is not None:
+            connection.execute("set pruevia.local_evaluation='true'")
+            connection.execute(reconciliation.decode('utf-8'))
+        functions_after=function_fingerprints()
         after=run_phase('after')
-        summary={'at':datetime.now(timezone.utc).isoformat(),'server_version':version,'host':'127.0.0.1','port':port,'catalog_tables':len(receipt['tables']),'actual_functions':7,'replaced_local_functions':3,
+        changed_functions=[name for name in order if functions_before[name]!=functions_after[name]]
+        summary={'at':datetime.now(timezone.utc).isoformat(),'server_version':version,'host':'127.0.0.1','port':port,'catalog_tables':len(receipt['tables']),'actual_functions':7,'replaced_local_functions':len(changed_functions),
+            'requirements_functions_replaced':3,'function_fingerprints_before':functions_before,'function_fingerprints_after':functions_after,'changed_function_names':changed_functions,
             'pending_contexts':len(contexts),'pending_query_groups':len(groups),'controls':sum(c['kind']=='control' for c in cases),'canonical_controls':canonical_controls,'before':before,'after':after,'requirements_source_sha256':pins,
+            'local_reconciliation_sha256':hashlib.sha256(reconciliation).hexdigest() if reconciliation is not None else None,
+            'additional_controls_sha256':hashlib.sha256(args.additional_controls.read_bytes()).hexdigest() if args.additional_controls else None,
             'remote_connections':0,'patient_inputs_used':False,'clinical_equivalences_approved':0,'complete_combined_candidate_tested':False,
             'limits':['Runtime version, extensions and locale are reported for this local instance','No production constraints/indexes/permissions or JWT replicated','Only clinical requirements core; panel/image wrappers excluded','Observed selections are not approvals of pending source equivalences']}
         save(runtime/'comparison-summary.json',summary)

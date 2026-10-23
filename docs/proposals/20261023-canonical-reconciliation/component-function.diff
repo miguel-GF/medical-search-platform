@@ -1,0 +1,19 @@
+--- actual
++++ local-component-support
+@@ -88,6 +88,8 @@
+     coalesce((select count(*) from qattrs qa where
+       (qa.attribute_type = 'service_type' and exists (
+         select 1 from health.services hs where hs.catalog_item_id = b.item_id and hs.service_type = qa.attribute_value
++      )) or (qa.attribute_type = 'component' and exists (
++        select 1 from health.lab_service_definitions ld where ld.service_id = b.item_id and ld.component = qa.attribute_value
+       )) or (qa.attribute_type = 'method' and exists (
+         select 1 from health.service_methods sm where sm.service_id = b.item_id and sm.status = 'approved' and sm.method_code = qa.attribute_value
+       )) or (qa.attribute_type = 'modality' and exists (
+@@ -104,6 +106,7 @@
+     ),0)::integer as attribute_matches,
+     exists (select 1 from qattrs qa where
+       (qa.attribute_type = 'service_type' and not exists (select 1 from health.services hs where hs.catalog_item_id = b.item_id and hs.service_type = qa.attribute_value))
++      or (qa.attribute_type = 'component' and not exists (select 1 from health.lab_service_definitions ld where ld.service_id = b.item_id and ld.component = qa.attribute_value))
+       or (qa.attribute_type = 'method' and not exists (select 1 from health.service_methods sm where sm.service_id = b.item_id and sm.status = 'approved' and sm.method_code = qa.attribute_value))
+       or (qa.attribute_type = 'modality' and not exists (select 1 from health.services hs where hs.catalog_item_id = b.item_id and hs.modality = qa.attribute_value))
+       or (qa.attribute_type = 'anatomical_site' and not exists (select 1 from health.service_anatomy sa join health.anatomical_sites an on an.id = sa.anatomical_site_id where sa.service_id = b.item_id and an.code = qa.attribute_value))

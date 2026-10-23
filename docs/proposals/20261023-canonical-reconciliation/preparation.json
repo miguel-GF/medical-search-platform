@@ -1,0 +1,268 @@
+{
+  "scope": "loopback-only evaluation, no production activation",
+  "source_run_id": "8de158da-1cab-4a96-96bd-f2cb5cce8768",
+  "source_sha256": "2f6f22ceedf18b866667df04253a0283933bcf3d576357c0a864422854c515c6",
+  "imaging_changes": [
+    {
+      "item_id": "a7496ee8-e33f-5bb7-a10a-9fea7975ed0e",
+      "name": "RESONANCIA MAGNÉTICA ABDOMEN INFERIOR O PELVIS CON CONTRASTE GADOLINIO",
+      "before": {
+        "modality": null,
+        "contrast_mode": "not_applicable"
+      },
+      "after": {
+        "modality": "magnetic_resonance",
+        "contrast_mode": "with"
+      },
+      "anatomy_code_added": null,
+      "source_external_id": "2217",
+      "source_url": "https://laboratoriosruiz.com/estudios/resonancia-magnetica/resonancia-magnetica-abdomen-inferior-o-pelvis-con-contraste-gadolinio",
+      "source_record_hash": "b41f9ef3feb7dbd52dc80d6b7d527a37964bffb1bc8219af4cc4d899f3c4a131"
+    },
+    {
+      "item_id": "11e0ac3a-e10e-5b21-99ec-ab557993664d",
+      "name": "RESONANCIA MAGNÉTICA ABDOMEN SUPERIOR CON CONTRASTE GADOLINIO",
+      "before": {
+        "modality": null,
+        "contrast_mode": "not_applicable"
+      },
+      "after": {
+        "modality": "magnetic_resonance",
+        "contrast_mode": "with"
+      },
+      "anatomy_code_added": null,
+      "source_external_id": "2221",
+      "source_url": "https://laboratoriosruiz.com/estudios/resonancia-magnetica/resonancia-magnetica-abdomen-superior-con-contraste-gadolinio",
+      "source_record_hash": "3bf90870f1dc141a4d09d11480913478b1da668eeeccd43d7983cae9b43bad0a"
+    },
+    {
+      "item_id": "bef50d19-7f00-5057-9a3e-22d80b84cdba",
+      "name": "RESONANCIA MAGNÉTICA ANGIORESONANCIA DE ANTEBRAZO DERECHO CON CONTRASTE GADOLINIO",
+      "before": {
+        "modality": null,
+        "contrast_mode": "not_applicable",
+        "laterality": "not_applicable"
+      },
+      "after": {
+        "modality": "magnetic_resonance",
+        "contrast_mode": "with",
+        "laterality": "right"
+      },
+      "anatomy_code_added": null,
+      "source_external_id": "2223",
+      "source_url": "https://laboratoriosruiz.com/estudios/resonancia-magnetica/resonancia-magnetica-angioresonancia-de-antebrazo-derecho-con-contraste-gadolinio",
+      "source_record_hash": "cc35a81562527f6b2db0d6386138f9272ae1a43abe3275a9248ecac5f34255f5"
+    },
+    {
+      "item_id": "4077cf47-4538-547a-a9d7-38f53aacf55f",
+      "name": "RESONANCIA MAGNÉTICA ANGIORESONANCIA DE ANTEBRAZO IZQUIERDO CON CONTRASTE GADOLINIO",
+      "before": {
+        "modality": null,
+        "contrast_mode": "not_applicable",
+        "laterality": "not_applicable"
+      },
+      "after": {
+        "modality": "magnetic_resonance",
+        "contrast_mode": "with",
+        "laterality": "left"
+      },
+      "anatomy_code_added": null,
+      "source_external_id": "2225",
+      "source_url": "https://laboratoriosruiz.com/estudios/resonancia-magnetica/resonancia-magnetica-angioresonancia-de-antebrazo-izquierdo-con-contraste-gadolinio",
+      "source_record_hash": "9d3e8f518969dc9985d0802b8c35e5242f35c662c31f77d8bb3c036208803c61"
+    },
+    {
+      "item_id": "224e7dcf-d6ff-54a2-9612-504ae9fca5e9",
+      "name": "RESONANCIA MAGNÉTICA ANGIORESONANCIA DE ARTERIAS PULMONARES CON CONTRASTE GADOLINIO",
+      "before": {
+        "modality": null,
+        "contrast_mode": "not_applicable"
+      },
+      "after": {
+        "modality": "magnetic_resonance",
+        "contrast_mode": "with"
+      },
+      "anatomy_code_added": null,
+      "source_external_id": "2227",
+      "source_url": "https://laboratoriosruiz.com/estudios/resonancia-magnetica/resonancia-magnetica-angioresonancia-de-arterias-pulmonares-con-contraste-gadolinio",
+      "source_record_hash": "fdb1393cdf8233a2362cd1817ca7676ded41e6b9c0cc29a8f74b928ae79a3ee6"
+    },
+    {
+      "item_id": "37bd6a75-04d4-57f7-9607-81aeef80755f",
+      "name": "RESONANCIA MAGNÉTICA ANGIORESONANCIA DE BRAZO DERECHO CON CONTRASTE GADOLINIO",
+      "before": {
+        "modality": null,
+        "contrast_mode": "not_applicable",
+        "laterality": "not_applicable"
+      },
+      "after": {
+        "modality": "magnetic_resonance",
+        "contrast_mode": "with",
+        "laterality": "right"
+      },
+      "anatomy_code_added": null,
+      "source_external_id": "2229",
+      "source_url": "https://laboratoriosruiz.com/estudios/resonancia-magnetica/resonancia-magnetica-angioresonancia-de-brazo-derecho-con-contraste-gadolinio",
+      "source_record_hash": "e6e4f559a95bb48061546e0f71b7379a05927539668fee97506bb4fe4591f893"
+    },
+    {
+      "item_id": "77b3d480-92ae-58e8-ac53-d97738b04394",
+      "name": "RESONANCIA MAGNÉTICA ANGIORESONANCIA DE BRAZO IZQUIERDO CON CONTRASTE GADOLINIO",
+      "before": {
+        "modality": null,
+        "contrast_mode": "not_applicable",
+        "laterality": "not_applicable"
+      },
+      "after": {
+        "modality": "magnetic_resonance",
+        "contrast_mode": "with",
+        "laterality": "left"
+      },
+      "anatomy_code_added": null,
+      "source_external_id": "2231",
+      "source_url": "https://laboratoriosruiz.com/estudios/resonancia-magnetica/resonancia-magnetica-angioresonancia-de-brazo-izquierdo-con-contraste-gadolinio",
+      "source_record_hash": "f2cedd0fe91ebb2da3039bdf82c389bfe8ceaa3771ddab09f7fdfd0707f9a7d0"
+    },
+    {
+      "item_id": "faf3524d-76d3-5b37-8199-89e424f85e11",
+      "name": "RESONANCIA MAGNÉTICA ANGIORESONANCIA DE PIERNA DERECHA CON CONTRASTE",
+      "before": {
+        "modality": null,
+        "contrast_mode": "not_applicable",
+        "laterality": "not_applicable"
+      },
+      "after": {
+        "modality": "magnetic_resonance",
+        "contrast_mode": "with",
+        "laterality": "right"
+      },
+      "anatomy_code_added": null,
+      "source_external_id": "2233",
+      "source_url": "https://laboratoriosruiz.com/estudios/resonancia-magnetica/resonancia-magnetica-angioresonancia-de-pierna-derecha-con-contraste",
+      "source_record_hash": "b870416c428f1cf0757bc97d8f91ca4a87ac25e45bae2a1ef6bd35f945bcf1e7"
+    },
+    {
+      "item_id": "4dabc670-fd4f-565d-ac77-eb4e43c9d9c3",
+      "name": "RESONANCIA MAGNÉTICA ANGIORESONANCIA DE PIERNA IZQUIERDA CON CONTRASTE",
+      "before": {
+        "modality": null,
+        "contrast_mode": "not_applicable",
+        "laterality": "not_applicable"
+      },
+      "after": {
+        "modality": "magnetic_resonance",
+        "contrast_mode": "with",
+        "laterality": "left"
+      },
+      "anatomy_code_added": null,
+      "source_external_id": "2235",
+      "source_url": "https://laboratoriosruiz.com/estudios/resonancia-magnetica/resonancia-magnetica-angioresonancia-de-pierna-izquierda-con-contraste",
+      "source_record_hash": "2d7697f238a3086e6854f02d324f91a1fc1d559c0a2ebe7fb283b9af57ae02b7"
+    },
+    {
+      "item_id": "6280cf28-1d91-5ba0-8cf8-afef151b6105",
+      "name": "RESONANCIA MAGNÉTICA ANGIORESONANCIA DE POLIGONO DE WILLIS CON CONTRASTE GADOLINIO",
+      "before": {
+        "modality": null,
+        "contrast_mode": "not_applicable"
+      },
+      "after": {
+        "modality": "magnetic_resonance",
+        "contrast_mode": "with"
+      },
+      "anatomy_code_added": null,
+      "source_external_id": "2239",
+      "source_url": "https://laboratoriosruiz.com/estudios/resonancia-magnetica/resonancia-magnetica-angioresonancia-de-poligono-de-willis-con-contraste-gadolinio",
+      "source_record_hash": "26cde87de06a2d48e14df381afb0f91c0050f1eee0e7a8486be434ada7b84582"
+    },
+    {
+      "item_id": "d7bb634e-23b9-56e8-abd7-554af6d9ed36",
+      "name": "RESONANCIA MAGNÉTICA ANGIORESONANCIA DE SISTEMA PORTAL CON CONTRASTE GADOLINIO",
+      "before": {
+        "modality": null,
+        "contrast_mode": "not_applicable"
+      },
+      "after": {
+        "modality": "magnetic_resonance",
+        "contrast_mode": "with"
+      },
+      "anatomy_code_added": null,
+      "source_external_id": "2241",
+      "source_url": "https://laboratoriosruiz.com/estudios/resonancia-magnetica/resonancia-magnetica-angioresonancia-de-sistema-portal-con-contraste-gadolinio",
+      "source_record_hash": "b629bbcbf5d7aaf5daff396511fbcdedfa0efb722fbf527364ea006913543128"
+    },
+    {
+      "item_id": "c2322064-f938-5991-89f8-62d5452fb845",
+      "name": "TOMOGRAFÍA ANGIOTOMOGRAFIA DE EXTREMIDADES INFERIORES",
+      "before": {
+        "modality": null
+      },
+      "after": {
+        "modality": "tomography"
+      },
+      "anatomy_code_added": "lower_extremity",
+      "source_external_id": "2653",
+      "source_url": "https://laboratoriosruiz.com/estudios/tomografia/tomografia-angiotomografia-de-extremidades-inferiores",
+      "source_record_hash": "5615af009a5f2d09f4cfb01cc4fb5b9bb312ff9d92e0d7b7e210f3241ebde631"
+    },
+    {
+      "item_id": "82fb01ce-3677-55a5-8423-c216a1f8c3cf",
+      "name": "TOMOGRAFÍA ANTEBRAZO DERECHO CON CONTRASTE",
+      "before": {
+        "modality": null,
+        "contrast_mode": "not_applicable",
+        "laterality": "not_applicable"
+      },
+      "after": {
+        "modality": "tomography",
+        "contrast_mode": "with",
+        "laterality": "right"
+      },
+      "anatomy_code_added": null,
+      "source_external_id": "2661",
+      "source_url": "https://laboratoriosruiz.com/estudios/tomografia/tomografia-antebrazo-derecho-con-contraste",
+      "source_record_hash": "a8e7151bcf8553df8680ddaaae4fa29d17b2295d5b11d27426713d6e8c659797"
+    },
+    {
+      "item_id": "864084d2-d69f-5e79-86eb-cf26f6f0734e",
+      "name": "ULTRASONIDO DOPPLER ARTERIAL BILATERAL DE MIEMBROS INFERIORES",
+      "before": {
+        "modality": null,
+        "laterality": "not_applicable"
+      },
+      "after": {
+        "modality": "ultrasound",
+        "laterality": "bilateral"
+      },
+      "anatomy_code_added": "lower_extremity",
+      "source_external_id": "2883",
+      "source_url": "https://laboratoriosruiz.com/estudios/ultrasonido/ultrasonido-doppler-arterial-bilateral-de-miembros-inferiores",
+      "source_record_hash": "4dd30a4b107d7b91be38dcd887cd33df18d26ee387342ac12f9f83bb0ac4260c"
+    },
+    {
+      "item_id": "1ea42453-02e1-5236-9783-fc259ef5c147",
+      "name": "ULTRASONIDO DOPPLER ARTERIAL BILATERAL MIEMBROS SUPERIORES",
+      "before": {
+        "modality": null,
+        "laterality": "not_applicable"
+      },
+      "after": {
+        "modality": "ultrasound",
+        "laterality": "bilateral"
+      },
+      "anatomy_code_added": "upper_extremity",
+      "source_external_id": "2885",
+      "source_url": "https://laboratoriosruiz.com/estudios/ultrasonido/ultrasonido-doppler-arterial-bilateral-miembros-superiores",
+      "source_record_hash": "591ab37f696035b838c8f4339eca794604d96bb3d71aa14ff797e3527d0bb274"
+    }
+  ],
+  "positive_component_lexicon_ids": [
+    "6c6f85f6-9591-48e6-aa44-a2a9fbcc5ba5",
+    "bfd58a97-636b-411a-a25b-1c25037c61f1",
+    "0426f984-aefc-4ee1-b9b6-c4d1d2e353c9"
+  ],
+  "base_function_md5": "067b7a2fe0826ccaa48ece0a5dfd8d1d",
+  "additional_controls": 86,
+  "clinical_equivalences_approved": 0,
+  "remote_writes": 0
+}

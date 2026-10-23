@@ -18,6 +18,15 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Reconciliación local,23-oct13:04UTC:** fuente Ruiz completa actualizada,
+4,617 registros válidos;15 títulos de imagen confirmados exactamente por fuente
+y aliases vigentes. InstanciaPG17 nueva con16 tablas reales: reparaciones explícitas
+de contraste/anatomía/modalidad/lado y restricción positiva de T3 libre ensayadas
+con cuatro funciones. **564 /564 nombres completos recuperados**,86 /86 controles
+adicionales satisfechos,4,324 invocaciones y apagado confirmado. Cero cierres de
+los4,045 pendientes o cambios clínicos productivos; no pruebaRLS/JWT/HTTP.
+[Propuesta, fuentes y límites](proposals/20261023-canonical-reconciliation/README.md).
+
 **Android opcional,23-oct12:51–12:55UTC:** por precisión del usuario, se solicita
 versión de Android opcional; modelo oculto. Ambas columnas conservadas/nullable.
 API/landing/Patient publicados; dos envíos públicos con/sin Android guardados y

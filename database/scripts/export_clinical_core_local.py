@@ -11,7 +11,7 @@ from publish_golden_catalog import q
 ROOT=Path(__file__).resolve().parents[2]
 TABLES=['catalog.disambiguation_candidates','catalog.disambiguation_terms','catalog.domains',
  'catalog.item_aliases','catalog.item_descriptions','catalog.item_identifiers','catalog.item_names','catalog.items',
- 'health.anatomical_sites','health.query_lexicon','health.service_anatomy','health.service_methods',
+ 'health.anatomical_sites','health.lab_service_definitions','health.query_lexicon','health.service_anatomy','health.service_methods',
  'health.service_specimens','health.services','health.specimen_types']
 FUNCTIONS=['core.normalized_text','catalog.resolve_items','catalog.resolve_items_v2','catalog.resolve_items_v3',
  'catalog.resolve_items_v4','catalog.resolve_items_v5','catalog.resolve_items_v6']

@@ -12,6 +12,7 @@ La conversación original no es lectura obligatoria para incorporarse.
 | [Guías de trabajo](WORK_GUIDE.md) | Procedimientos por tipo de cambio y traspaso. |
 | [Operación](OPERATIONS_GUIDE.md) | Directorios, comandos, comprobaciones y alcance de resultados. |
 | [Estado y prioridades](CURRENT_STATE.md) | Capacidades y pendientes con evidencia fechada. |
+| [Reconciliación de16 nombres,23-oct](proposals/20261023-canonical-reconciliation/README.md) | Fuente Ruiz renovada,564 /564 nombres recuperados y86 controles adicionales en local; sin activación productiva. |
 | [Puebla y captura SD,23-oct](PUEBLA_SOURCE_REFRESH_20261023.md) | Inventario actual, transporte recuperado y6,916 registros en bloque local separado para evaluación. |
 | [Identidad explícita,23-oct](proposals/20261023-explicit-identity/README.md) | Comparación de564 nombres; fuzzy como propuesta,16 rechazos previos diagnosticados y variante sin activar. |
 | [Publicación y registro Android,23-oct](ANDROID_INTAKE_PUBLICATION_20261023.md) | Nombre/Gmail guardados desde formulario público, versiones, medidas móviles y recuperación. |
