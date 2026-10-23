@@ -12,6 +12,11 @@ municipio ni datos del teléfono; no se inventa una ubicación para cumplir el e
 El formulario conserva protección contra bots, límites de solicitudes y respuesta
 genérica para correos repetidos. El contador se consulta al servidor tras guardar.
 
+Aclaración del usuario confirmada por lectura productiva el23-oct: las columnas
+`android_version` y `device_model` se conservan y ambas permitenNULL. Sólo se
+retiraron del formulario; el RPC nuevo no borra valores anteriores al actualizar
+una solicitud existente. No se necesita otra migración para conservarlas.
+
 La configuración conserva la meta existente de 20 participantes y 21 días de
 prueba. Se abrió el reclutamiento por 90 días, hasta el 21-ene-2027; esto **no inicia
 los 21 días ni envía invitaciones de Google Play**. Admin y proveedores siguen
