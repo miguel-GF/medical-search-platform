@@ -1,0 +1,59 @@
+{
+  "project_ref": "ymtcmfgwuzdqtsbuvzqf",
+  "artifact": "collectors/artifacts/canonical-reconciliation-release-20261023-v1",
+  "files_sha256": {
+    "plan.json": "d8050c7f63a1fb49a5b8010a8990d404cf3fc466304c22e7bc740aa1c3183d15",
+    "authorization.json": "5087f8ec56ee947c2e8d62f377852e17b6113abd503c82be22f414ba48f72b0e",
+    "clinical-assessment.json": "f6eb0f70b9a8541d8399795ba13cd7fa4aa77bfffa2d291ee374388dce4084d4",
+    "attempt/verified.json": "ad6aec96f27b7d367c17d527526d973ecd812ffcf8c2c00d0876262743b1bc51",
+    "attempt/response.json": "d6b30d54ae05902ddf5611d39899c487c64482fa3afefe8abfbf51d2598eadb8",
+    "deployment/verified.json": "2148ba6bac09400060dc2df94d1db44c12b2962cecdee13034dae3f47cf0dfaa",
+    "deployment/ledger.json": "01414f1ea938aa934ea82d44ad811365d8ac4b2dfe0c0b64abf342db109c7867",
+    "deployment/send-attempt.json": "eda342fb7a0d73b61056db0b89f070060186b30e80ccae9fd0c28c97fefe6839",
+    "public-verification/summary-reassessed.json": "9e131823aaf342d2076e67bcd8c6445782ca1267e7222dba48af30f07f58b191",
+    "public-verification/inventory.json": "94d3949c93e3b997fe67b00926f8822adc23184a38528c4d26cb79f6df0f2d65",
+    "recovery-v2-PREPARED-DO-NOT-AUTO-RUN.sql": "05e0c246206d0d8e3ab1e19c313f6d31f909bbb35f19a725defd6d9a6b2d4eb2"
+  },
+  "evaluation": {
+    "at": "2026-10-23T13:24:15.446454+00:00",
+    "failures": [],
+    "specified_controls": 101,
+    "public_observations": 27,
+    "pass": true
+  },
+  "deployment": {
+    "at": "2026-10-23T13:26:10.606987+00:00",
+    "deployed": true,
+    "changed_functions": [
+      "resolve_items",
+      "resolve_items_v3",
+      "resolve_items_v4",
+      "resolve_items_v6"
+    ],
+    "changed_data_groups": [
+      "migrations",
+      "health.services",
+      "health.query_lexicon",
+      "health.service_anatomy"
+    ],
+    "permissions_preserved": true,
+    "new_audit_request": "canonical-reconciliation-20261023"
+  },
+  "inventory": [
+    {
+      "brands": 207,
+      "locations": 293,
+      "active_concepts": 564,
+      "active_offers": 234,
+      "migrations": 115,
+      "release_audits": 1
+    }
+  ],
+  "canonical_correct": 564,
+  "canonical_total": 564,
+  "public_checks_passed": 30,
+  "public_checks_total": 30,
+  "pending_closed": 0,
+  "expansion_paused": true,
+  "recovery_executed": false
+}

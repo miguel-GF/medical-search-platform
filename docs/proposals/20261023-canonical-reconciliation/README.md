@@ -1,5 +1,10 @@
 # Reconciliación de 16 nombres rechazados: resultado local
 
+**Actualización posterior:** el23-oct el usuario autorizó publicar esta reparación.
+La evaluación remota con reversión y la migración115 se completaron con alcance
+acotado. [Resultado productivo y recuperación](../../CLINICAL_RECONCILIATION_RELEASE_20261023.md).
+El texto y SQL siguientes conservan el alcance local del ensayo original.
+
 **Evaluada en local, no activada en producción.** Continúa la
 [comparación de identidad explícita](../20261023-explicit-identity/README.md).
 

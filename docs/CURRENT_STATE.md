@@ -18,6 +18,16 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Reparación publicada,23-oct13:26UTC:** permiso concreto del usuario para llevar
+la reconciliación a la base compartida. Evaluación con reversión:101 controles
+clínicos satisfechos,27 respuestas públicas por fase y restauración independiente
+completa. Migración115 aplicada una vez: cuatro funciones,15 servicios de imagen,
+tres relaciones anatómicas y tres restricciones de T3 libre. Permisos intactos;
+sin altas de conceptos, ofertas o cierres de los4,045 pendientes. Expansión pausada.
+Verificación posterior:564 /564 nombres correctos y30 /30 comprobacionesHTTP,
+incluidas tres selecciones de candidatos;207 marcas,293 sedes,234 ofertas.
+[Publicación, evidencia y recuperación](CLINICAL_RECONCILIATION_RELEASE_20261023.md).
+
 **Reconciliación local,23-oct13:04UTC:** fuente Ruiz completa actualizada,
 4,617 registros válidos;15 títulos de imagen confirmados exactamente por fuente
 y aliases vigentes. InstanciaPG17 nueva con16 tablas reales: reparaciones explícitas

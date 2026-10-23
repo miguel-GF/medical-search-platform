@@ -114,6 +114,18 @@ concreta de esa modificación sobre la convocatoria recién publicada, sin repet
 permisos de su despliegue. RPCv3 añadido, v2 conservado, sin reabrir otras funciones.
 [Resultado público y recuperación](ANDROID_INTAKE_PUBLICATION_20261023.md).
 
+## D-028: publicar la reconciliación canónica ensayada — 23-oct-2026
+
+**Implementada.** Tras describir que la reparación clínica seguía local, el
+usuario indicó que local y producción comparten base y dio permiso para subirla.
+Se acotó esa aprobación a cuatro funciones y los atributos expresos de15 estudios,
+tres relaciones anatómicas y tres restricciones positivas deT3 libre, con ensayo
+remoto reversible, auditoría y recuperación preparada. La migración115 quedó
+aplicada una vez; comprobación independiente de permisos y datos protegidos.
+No reanuda la expansión pausada, no cierra los4,045 pendientes ni autoriza activar
+la propuesta distinta de29 funciones, nuevos paneles o precios capturados.
+[Alcance, evidencia y límites](CLINICAL_RECONCILIATION_RELEASE_20261023.md).
+
 ## Cómo registrar o reemplazar una decisión
 
 Crear una entrada con ID estable, fecha, estado (`propuesta`, `aprobada`,
