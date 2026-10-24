@@ -21,6 +21,7 @@ self.addEventListener('fetch', (event) => {
   if (request.method !== 'GET' || url.origin !== self.location.origin || url.search || request.headers.has('Authorization')) return;
   const navigation = request.mode === 'navigate';
   const publicAsset = /^(\/assets\/|\/canvaskit\/|\/icons\/)/.test(url.pathname) ||
+    /^\/(main\.[a-f0-9]{64}\.dart|flutter_bootstrap\.[a-f0-9]{64})\.js$/.test(url.pathname) ||
     /^\/(flutter_bootstrap|flutter|main\.dart|install|pruevia-sw|pwa-updates)\.(js|css)$/.test(url.pathname) ||
     ['/manifest.json', '/favicon.png'].includes(url.pathname);
   if (!navigation && !publicAsset) return;

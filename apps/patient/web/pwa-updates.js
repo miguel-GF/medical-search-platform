@@ -64,7 +64,9 @@
       const version = await publishedBuild();
       if (!version || !navigator.onLine) throw new Error('update_unavailable');
       // Reload only after the person's explicit action and the visible draft warning.
-      window.location.reload();
+      const destination = new URL(window.location.href);
+      destination.searchParams.set('pruevia-release', version);
+      window.location.replace(destination.href);
     } catch (_) {
       message.textContent = 'No pudimos obtener la actualización. Tu consulta sigue abierta; inténtalo cuando tengas conexión.';
       update.disabled = false;

@@ -18,6 +18,14 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**PWA,23-oct22:32 local/24-oct04:32UTC:** sólo Patient publicado para reforzar
+la recepción de actualizaciones: bootstrap ymain con nombre por contenido,
+navegación identificada al aceptar. Flutter idéntico al release anterior.
+Navegador público: cuatro acciones350px en viewport390; Ajustes sin analítica
+desactivada. Analítica sigue apagada, no se activó un contador oculto. Landing
+consultado sin aviso; el reporte de otra persona aún no está reproducido.
+[Cambio, capturas, limitaciones y recuperación](PWA_REFRESH_20261023.md).
+
 **Reparación publicada,23-oct13:26UTC:** permiso concreto del usuario para llevar
 la reconciliación a la base compartida. Evaluación con reversión:101 controles
 clínicos satisfechos,27 respuestas públicas por fase y restauración independiente
