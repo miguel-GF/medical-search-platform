@@ -1576,7 +1576,8 @@ class SolutionCard extends StatelessWidget {
                   location.providerName +
                       (location.distanceMeters == null
                           ? ''
-                          : ' · ${_distance(location.distanceMeters!)}'),
+                          : ' · ${_distance(location.distanceMeters!)}') +
+                      '\n${location.address ?? 'Dirección no disponible'}',
                 ),
               ),
             ),
@@ -2081,6 +2082,12 @@ class _BranchGroup {
   final String name;
   final bool isUnscoped;
   final List<_ProviderServiceOffer> offers = <_ProviderServiceOffer>[];
+  String? get address {
+    for (final entry in offers) {
+      if (entry.offer.locationAddress != null) return entry.offer.locationAddress;
+    }
+    return null;
+  }
 }
 
 class _ProviderServiceOffer {
@@ -2373,7 +2380,7 @@ class _BranchCard extends StatelessWidget {
             leading: const Icon(Icons.location_on_outlined),
             title: Text(branch.name),
             subtitle: Text(
-              '${branch.offers.length} coincidencia${branch.offers.length == 1 ? '' : 's'}',
+              '${branch.isUnscoped ? 'Sucursal por confirmar' : branch.address ?? 'Dirección no disponible'}\n${branch.offers.length} coincidencia${branch.offers.length == 1 ? '' : 's'}',
             ),
           ),
           ...branch.offers.map(
@@ -2802,6 +2809,11 @@ class _OfferIdentity extends StatelessWidget {
         offer.locationName ?? 'Sin sucursal vinculada',
         style: Theme.of(context).textTheme.bodySmall,
       ),
+      if (offer.locationId != null)
+        Text(
+          offer.locationAddress ?? 'Dirección no disponible',
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
       if (offer.distanceMeters != null)
         Text(
           _distance(offer.distanceMeters!),

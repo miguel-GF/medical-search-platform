@@ -21,6 +21,13 @@ podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
 
+**Direcciones de sucursal,23-oct22:53local/24-oct04:53UTC:** API y Patient publicados.
+Dirección comercial existente añadida por ID a búsquedas y soluciones, mostrada
+bajo el nombre de la sede y en detalle móvil; sin dato inventado. Migración117
+de lectura, permiso sólo para el servidor; negocios y funciones clínicas intactos.
+Prueba pública:13 sucursales/13 direcciones, tres opciones de orden y Chopo Plaza
+Circuito visible en navegador móvil390px. [Evidencia y versiones](BRANCH_ADDRESSES_20261023.md).
+
 **Conteos internos,23-oct22:45local/24-oct04:45UTC:** permiso explícito de publicar
 totales diarios agregados, sin texto médico ni identificadores. Migración116
 aplicada tras ensayo con reversión; tres columnas y acceso sólo del servidor.

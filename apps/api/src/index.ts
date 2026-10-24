@@ -3,10 +3,11 @@ import { runScheduledDenueCollection } from './scheduled_denue.js';
 import { SupabaseRpcClient } from './supabase.js';
 import type { Env } from './types.js';
 import { countAggregateUsage, usageAction } from './aggregate_usage.js';
+import { withLocationAddresses } from './location_addresses.js';
 
 export default {
   async fetch(request: Request, env: Env, context: ExecutionContext): Promise<Response> {
-    const response = await createWorkerHandler(env)(request, env);
+    const response = await withLocationAddresses(await createWorkerHandler(env)(request, env), request, env);
     if (env.AGGREGATE_USAGE_ENABLED === 'true') {
       const action = usageAction(request, response);
       if (action) context.waitUntil(countAggregateUsage(env, action));

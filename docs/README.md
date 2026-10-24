@@ -12,6 +12,7 @@ La conversación original no es lectura obligatoria para incorporarse.
 | [Guías de trabajo](WORK_GUIDE.md) | Procedimientos por tipo de cambio y traspaso. |
 | [Operación](OPERATIONS_GUIDE.md) | Directorios, comandos, comprobaciones y alcance de resultados. |
 | [Estado y prioridades](CURRENT_STATE.md) | Capacidades y pendientes con evidencia fechada. |
+| [Direcciones por sucursal,23-oct](BRANCH_ADDRESSES_20261023.md) | API/PWA publicadas, lectura porID,13 direcciones contrastadas y presentación móvil comprobada. |
 | [Conteos internos y cuatroURLs,23-oct](AGGREGATE_USAGE_PUBLICATION_20261023.md) | Publicación coordinada, reporte privado, aviso, contador real y permisos; pendientes separados. |
 | [Actualización dePWA y capturas,23-oct](PWA_REFRESH_20261023.md) | Entrada por contenido publicada, cuatro botones al ancho móvil y Ajustes sin analítica desactivada; límite del teléfono no inspeccionado. |
 | [Reparación clínica publicada,23-oct](CLINICAL_RECONCILIATION_RELEASE_20261023.md) | Evaluación con reversión, migración115, alcance autorizado, respaldo y límites; expansión pausada. |

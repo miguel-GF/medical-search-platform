@@ -25,6 +25,7 @@ class SearchOffer {
     this.providerId,
     this.locationId,
     this.locationName,
+    this.locationAddress,
     this.distanceMeters,
     this.amountMinor,
     this.currency,
@@ -44,6 +45,7 @@ class SearchOffer {
   final String? providerId;
   final String? locationId;
   final String? locationName;
+  final String? locationAddress;
   final double? distanceMeters;
   final int? amountMinor;
   final String? currency;
@@ -75,6 +77,7 @@ class SearchOffer {
       providerId: _stringValue(provider['id']),
       locationId: _stringValue(location?['id']),
       locationName: _stringValue(location?['name']),
+      locationAddress: _stringValue(location?['address']),
       distanceMeters: _doubleValue(json['distance_meters']),
       amountMinor: _intValue(price?['amount_minor']),
       currency: _stringValue(price?['currency']),
@@ -341,15 +344,18 @@ class PackageLocation {
     required this.name,
     required this.providerName,
     this.distanceMeters,
+    this.address,
   });
 
   final String name;
   final String providerName;
+  final String? address;
   final double? distanceMeters;
 
   factory PackageLocation.fromJson(JsonMap json) => PackageLocation(
     name: _stringValue(json['name']) ?? 'Sucursal',
     providerName: _stringValue(json['provider_name']) ?? 'Proveedor',
+    address: _stringValue(json['address']),
     distanceMeters: _doubleValue(json['distance_meters']),
   );
 }
