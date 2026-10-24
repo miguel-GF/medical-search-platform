@@ -35,8 +35,11 @@ if (publication.siteUrl) useHead({ link: [{ rel: 'canonical', href: `${publicati
     <p>El 25 de septiembre de 2026 se detectó que una versión anterior había conservado términos normalizados de algunas consultas no resueltas para revisión interna. Esa captura se desactivó. No afirmamos que nunca se hayan guardado consultas ni que el histórico haya sido eliminado; puedes consultar al contacto de privacidad sobre este antecedente y tus derechos.</p>
 
     <h2>Medición y comentarios</h2>
-    <p>La medición de uso y los comentarios de producto permanecen desactivados en esta apertura. Si se habilitan, se informará qué datos se utilizan, con qué finalidad y qué decisión separada corresponde. La búsqueda no se condiciona a aceptar medición opcional.</p>
-    <p>La implementación de medición utiliza un identificador aleatorio para relacionar eventos de un mismo navegador o instalación. Los clics podrían asociarlo con el estudio, oferta, proveedor o sede seleccionados: eso no equivale a anonimato completo. Retirar una preferencia local detiene los futuros envíos del cliente, pero no elimina por sí solo registros anteriores.</p>
+    <p>La medición opcional que relaciona eventos mediante un identificador y los comentarios de producto permanecen desactivados. Si se habilitan, se informará qué datos se utilizan, con qué finalidad y qué decisión separada corresponde. La búsqueda no se condiciona a aceptar medición opcional.</p>
+    <p>El mecanismo opcional preparado utiliza un identificador aleatorio para relacionar eventos de un mismo navegador o instalación. Los clics podrían asociarlo con el estudio, oferta, proveedor o sede seleccionados: eso no equivale a anonimato completo. Ese mecanismo sigue apagado; es distinto del conteo diario descrito a continuación.</p>
+
+    <h2>Conteos internos de solicitudes</h2>
+    <p>Contamos por día las solicitudes atendidas de búsqueda, selección de estudio y resolución de órdenes, incluidas las imágenes. Este conteo interno sirve para conocer el uso general y mejorar el servicio. Conserva únicamente el día UTC, un tipo de acción predefinido y su total. Los reportes muestran hasta 365 días; los totales de fechas con más de 365 días de antigüedad se eliminan al recibirse nuevas solicitudes. No guarda el texto de búsqueda, imágenes, recetas, estudios seleccionados, IP, cookies ni identificadores de visitantes para esa medición. No permite saber cuántas personas distintas usaron Pruevia; una repetición puede contarse otra vez. Los datos técnicos que procesa la infraestructura para entregar el servicio y limitar abusos son un tratamiento separado.</p>
 
     <h2>Convocatoria Android y proveedores</h2>
     <p>La convocatoria Android recibe tu nombre y correo Gmail asociado con Google Play para organizar el grupo y administrar las invitaciones. Puedes indicar tu versión de Android de forma opcional para ayudarnos a revisar la compatibilidad durante la prueba. Guardamos también tu confirmación de mayoría de edad, la versión del aviso aceptado y las fechas de registro y aceptación. No pedimos municipio ni modelo del teléfono. Google aplicará sus propios términos y avisos al utilizar Google Play. El acceso público de proveedores permanece cerrado.</p>
@@ -63,7 +66,7 @@ if (publication.siteUrl) useHead({ link: [{ rel: 'canonical', href: `${publicati
     <h2>Qué ocurre al navegar</h2>
     <p>Este sitio no integra analítica publicitaria, píxeles de seguimiento ni cookies de marketing. El alojamiento puede procesar datos técnicos de conexión para entregar el sitio y mantener su seguridad.</p>
 
-    <p>Versión del aviso: {{ PRIVACY_NOTICE_VERSION }}. Actualizado el 15 de octubre de 2026.</p>
+    <p>Versión del aviso: {{ PRIVACY_NOTICE_VERSION }}. Actualizado el 23 de octubre de 2026.</p>
     <template v-if="publication.supportEmail">
       <h2>Soporte</h2>
       <p>Para problemas de acceso o uso de la aplicación escribe a <a :href="`mailto:${publication.supportEmail}`">{{ publication.supportEmail }}</a>. No envíes recetas, diagnósticos ni imágenes por correo.</p>

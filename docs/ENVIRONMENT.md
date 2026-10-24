@@ -54,6 +54,12 @@ La analítica anónima y los clics tienen además el gate independiente
 usan el prefijo reservado `NUXT_PUBLIC_`: así Nuxt no puede sobreescribir el
 resultado validado del `runtimeConfig` después de aplicar los gates.
 
+`AGGREGATE_USAGE_ENABLED` es independiente: habilita sólo el contador de solicitudes
+por día/acción en el Worker, sin identificador ni contenido clínico. Está activo
+desde23-oct-2026; no habilita `PUBLIC_ANALYTICS_ENABLED` ni el flag del cliente.
+Los reportes requieren la autorización administrativa existente. Publicar siempre
+el release revisado; la configuración histórica de crons no acredita su activación.
+
 En el Worker, Wrangler toma los valores locales desde `.dev.vars` y los secretos
 de producción deben cargarse con `wrangler secret put`. No se deben trasladar
 secretos del servidor a un `.env` del frontend.

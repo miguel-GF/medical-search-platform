@@ -126,6 +126,17 @@ No reanuda la expansión pausada, no cierra los4,045 pendientes ni autoriza acti
 la propuesta distinta de29 funciones, nuevos paneles o precios capturados.
 [Alcance, evidencia y límites](CLINICAL_RECONCILIATION_RELEASE_20261023.md).
 
+## D-029: conteos agregados internos y publicación coordinada — 23-oct-2026
+
+**Implementada.** El usuario pidió subir a producción después de la propuesta
+concreta de conteos sin contenido médico ni identificadores, reportes sólo para
+Admin y descripción en el aviso. Se implementó una tabla de totales por día/acción,
+incremento del servidor fuera de la respuesta y reporte privado; no se activó
+la analítica anterior que asocia eventos. Migración116 con ensayo reversible y
+aplicación única, aviso globalv4, cuatro Workers publicados. Access/MFA y permisos
+de recursos conservados. No autoriza reabrir proveedores, capturas, crons, reservas
+o crecimiento pausado. [Resultado y recuperación](AGGREGATE_USAGE_PUBLICATION_20261023.md).
+
 ## Cómo registrar o reemplazar una decisión
 
 Crear una entrada con ID estable, fecha, estado (`propuesta`, `aprobada`,

@@ -1,4 +1,5 @@
 export interface Env {
+  AGGREGATE_USAGE_ENABLED?: string;
   /** Public telemetry is independent of the notice reminder and defaults to disabled. */
   PUBLIC_ANALYTICS_ENABLED?: string;
   SUPABASE_URL: string;

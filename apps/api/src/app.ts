@@ -1393,6 +1393,11 @@ async function adminResponse(request: Request, url: URL, env: Env, rpc: RpcClien
       p_days: parseBoundedInt(url.searchParams.get('days'), 30, 1, 365),
     }, { admin: true }), 200, origin);
   }
+  if (request.method === 'GET' && url.pathname === '/api/v1/admin/analytics/usage') {
+    return json(await rpc.call('api_admin_usage_totals', {
+      p_days: parseBoundedInt(url.searchParams.get('days'), 30, 1, 365),
+    }, { admin: true }), 200, origin);
+  }
   if (request.method === 'GET' && url.pathname === '/api/v1/admin/research') {
     const kind = url.searchParams.get('kind');
     const status = (url.searchParams.get('status') ?? '').trim();

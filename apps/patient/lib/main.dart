@@ -271,7 +271,7 @@ class ConsentScreen extends StatelessWidget {
                   title: 'Privacidad desde el inicio',
                   text: analyticsEnabled
                       ? 'Los estudios que escribes y las imágenes que envías se procesan para ayudarte a buscar. La medición opcional usa un identificador aleatorio; consulta sus detalles en el aviso.'
-                      : 'Los estudios que escribes y las imágenes que envías se procesan para ayudarte a buscar. Esta versión no envía medición de uso. Consulta los detalles en el aviso de privacidad.',
+                      : 'Los estudios que escribes y las imágenes que envías se procesan para ayudarte a buscar. Contamos solicitudes por día sin guardar su contenido ni identificar visitantes para esa medición. Consulta el aviso de privacidad.',
                 ),
                 if (privacyPolicyUri(_privacyPolicyUrl)
                     case final Uri policyUri) ...[

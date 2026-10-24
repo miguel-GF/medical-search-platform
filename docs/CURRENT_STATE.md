@@ -7,8 +7,11 @@ ledger Supabase y los Workers de producción. El proyecto enlazado se llama
 aplicadas allí afectan el catálogo público. Landing, PWA, API y Admin privado se
 habían publicado en sus dominios finales. El 15-oct-2026 a las 12:25 UTC se
 reabrieron API y PWA por autorización expresa del usuario, tras actualizar el
-aviso de privacidad y su recordatorio de 180 días. Admin continúa pausado.
-Proveedores, feedback y analítica continúan cerrados. El registro Android se abrió
+aviso de privacidad y su recordatorio de 180 días. Admin privado se volvió a
+publicar el23-oct conservando Cloudflare Access y autenticación de servidor.
+Proveedores, feedback y analítica con identificador continúan cerrados; los
+conteos diarios agregados se activaron el23-oct por petición expresa.
+El registro Android se abrió
 el 23-oct-2026 con nombre y Gmail, por petición explícita del usuario.
 Los datos de septiembre citados abajo son cortes de evidencia, no contadores en vivo.
 Advertencia de entorno: el proyecto Supabase enlazado se llama `pruevia-dev`, pero
@@ -17,6 +20,15 @@ base inicial de producción. Una escritura o migración allí afecta datos que
 podría consultar el sitio público; el nombre DEV no ofrece aislamiento.
 
 ## Cómo leer el estado
+
+**Conteos internos,23-oct22:45local/24-oct04:45UTC:** permiso explícito de publicar
+totales diarios agregados, sin texto médico ni identificadores. Migración116
+aplicada tras ensayo con reversión; tres columnas y acceso sólo del servidor.
+API, landing, Patient y Admin privado publicados. Avisov4; reporte administrativo,
+incremento real comprobado de3 a4, petición inválida400 y lectura no autorizada401.
+Analítica con identificador y captura de consultas siguen apagadas; crons vacíos.
+Admin responde con Cloudflare Access; no se acredita el recorrido privado conMFA.
+[URLs, versiones, límites y recuperación](AGGREGATE_USAGE_PUBLICATION_20261023.md).
 
 **PWA,23-oct22:32 local/24-oct04:32UTC:** sólo Patient publicado para reforzar
 la recepción de actualizaciones: bootstrap ymain con nombre por contenido,

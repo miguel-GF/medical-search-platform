@@ -205,6 +205,7 @@ export interface AdminApi {
   pilotCohort(): Promise<PilotCohort>;
   pilotCohortAction(action: 'mark_invitations_released' | 'start_test'): Promise<PilotCohort>;
   clickMetrics(days?: number): Promise<ClickMetrics>;
+  usageTotals(days?: number): Promise<{ unit: string; total_requests: number; daily: { day: string; action: string; requests: number }[] }>;
   dashboard(): Promise<Dashboard>;
   normalizationQueue(status?: string, inputType?: string, cursor?: { before_created_at: string; before_id: string }): Promise<NormalizationRow[]>;
   normalizationGroups(status?: string, query?: string, offset?: number): Promise<NormalizationGroup[]>;
@@ -320,6 +321,7 @@ export function createAdminApi(baseUrl: string, accessToken: () => Promise<strin
     pilotCohort: () => request<PilotCohort>('/api/v1/admin/research/cohort'),
     pilotCohortAction: (action) => request<PilotCohort>('/api/v1/admin/research/cohort/action', { method: 'POST', body: JSON.stringify({ action }), headers: mutationHeaders() }),
     clickMetrics: (days = 30) => request<ClickMetrics>(`/api/v1/admin/analytics/clicks?days=${Math.min(365, Math.max(1, Math.trunc(days)))}`),
+    usageTotals: (days = 30) => request(`/api/v1/admin/analytics/usage?days=${Math.min(365, Math.max(1, Math.trunc(days)))}`),
     dashboard: () => request<Dashboard>('/api/v1/admin/dashboard'),
     normalizationQueue: (status, inputType = '', cursor) => {
       const params = new URLSearchParams({ limit: '100' });

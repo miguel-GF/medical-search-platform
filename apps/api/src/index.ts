@@ -2,10 +2,16 @@ import { createWorkerHandler, runScheduledNormalizationReprocess } from './app.j
 import { runScheduledDenueCollection } from './scheduled_denue.js';
 import { SupabaseRpcClient } from './supabase.js';
 import type { Env } from './types.js';
+import { countAggregateUsage, usageAction } from './aggregate_usage.js';
 
 export default {
-  fetch(request: Request, env: Env): Promise<Response> {
-    return createWorkerHandler(env)(request, env);
+  async fetch(request: Request, env: Env, context: ExecutionContext): Promise<Response> {
+    const response = await createWorkerHandler(env)(request, env);
+    if (env.AGGREGATE_USAGE_ENABLED === 'true') {
+      const action = usageAction(request, response);
+      if (action) context.waitUntil(countAggregateUsage(env, action));
+    }
+    return response;
   },
   async scheduled(controller: ScheduledController, env: Env): Promise<void> {
     if (controller.cron === '17 14 1 * *') {
