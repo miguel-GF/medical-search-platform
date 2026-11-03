@@ -38,7 +38,7 @@ dependencies:
   supabase: ^2.9.0
   qr_flutter: ^4.1.0
   file_selector: ^1.0.3
-  crypto: ^3.0.6
+  crypto: ^3.0.8
   web: ^1.1.1
 
   # The following adds the Cupertino Icons font to your application.
